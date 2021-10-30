@@ -17,6 +17,9 @@
 		DC5EB90C272D955E0015BF0D /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB90B272D955E0015BF0D /* API.swift */; };
 		DC5EB90E272D9C710015BF0D /* IssuesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB90D272D9C710015BF0D /* IssuesView.swift */; };
 		DC5EB910272DA2450015BF0D /* IssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB90F272DA2450015BF0D /* IssueView.swift */; };
+		DC5EB912272DB9D00015BF0D /* RepositoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB911272DB9D00015BF0D /* RepositoriesView.swift */; };
+		DC5EB914272DBDA20015BF0D /* MergeRequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB913272DBDA20015BF0D /* MergeRequestsView.swift */; };
+		DC5EB916272DD1310015BF0D /* ProjectsMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB915272DD1310015BF0D /* ProjectsMemberView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +34,9 @@
 		DC5EB90B272D955E0015BF0D /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DC5EB90D272D9C710015BF0D /* IssuesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuesView.swift; sourceTree = "<group>"; };
 		DC5EB90F272DA2450015BF0D /* IssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueView.swift; sourceTree = "<group>"; };
+		DC5EB911272DB9D00015BF0D /* RepositoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesView.swift; sourceTree = "<group>"; };
+		DC5EB913272DBDA20015BF0D /* MergeRequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeRequestsView.swift; sourceTree = "<group>"; };
+		DC5EB915272DD1310015BF0D /* ProjectsMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsMemberView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +92,6 @@
 				DC5EB8F4272D924D0015BF0D /* ContentView.swift */,
 				DC5EB907272D93AC0015BF0D /* Main */,
 				DC5EB908272D93B30015BF0D /* Secondary */,
-				DC5EB909272D93CA0015BF0D /* Components */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -95,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				DC5EB900272D934E0015BF0D /* HomeView.swift */,
+				DC5EB917272DD2310015BF0D /* Home */,
 				DC5EB903272D93830015BF0D /* ExploreView.swift */,
 				DC5EB905272D938E0015BF0D /* AccountView.swift */,
 			);
@@ -104,17 +110,10 @@
 		DC5EB908272D93B30015BF0D /* Secondary */ = {
 			isa = PBXGroup;
 			children = (
-				DC5EB90D272D9C710015BF0D /* IssuesView.swift */,
+				DC5EB911272DB9D00015BF0D /* RepositoriesView.swift */,
 				DC5EB90F272DA2450015BF0D /* IssueView.swift */,
 			);
 			path = Secondary;
-			sourceTree = "<group>";
-		};
-		DC5EB909272D93CA0015BF0D /* Components */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Components;
 			sourceTree = "<group>";
 		};
 		DC5EB90A272D954B0015BF0D /* Core */ = {
@@ -123,6 +122,16 @@
 				DC5EB90B272D955E0015BF0D /* API.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		DC5EB917272DD2310015BF0D /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				DC5EB90D272D9C710015BF0D /* IssuesView.swift */,
+				DC5EB913272DBDA20015BF0D /* MergeRequestsView.swift */,
+				DC5EB915272DD1310015BF0D /* ProjectsMemberView.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,12 +205,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */,
+				DC5EB914272DBDA20015BF0D /* MergeRequestsView.swift in Sources */,
 				DC5EB90E272D9C710015BF0D /* IssuesView.swift in Sources */,
 				DC5EB8F5272D924D0015BF0D /* ContentView.swift in Sources */,
 				DC5EB904272D93830015BF0D /* ExploreView.swift in Sources */,
 				DC5EB8F3272D924D0015BF0D /* GitLabApp.swift in Sources */,
 				DC5EB90C272D955E0015BF0D /* API.swift in Sources */,
+				DC5EB912272DB9D00015BF0D /* RepositoriesView.swift in Sources */,
 				DC5EB910272DA2450015BF0D /* IssueView.swift in Sources */,
+				DC5EB916272DD1310015BF0D /* ProjectsMemberView.swift in Sources */,
 				DC5EB906272D938E0015BF0D /* AccountView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

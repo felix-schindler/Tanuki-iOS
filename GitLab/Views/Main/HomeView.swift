@@ -18,13 +18,13 @@ struct HomeView: View {
                             Text("Issues")
                         }
                     }
-                    NavigationLink(destination: IssuesView()) {
+                    NavigationLink(destination: MergeRequestsView()) {
                         HStack {
                             Image(systemName: "arrow.merge")
                             Text("Merge Requests")
                         }
                     }
-                    NavigationLink(destination: IssuesView()) {
+                    NavigationLink(destination: ProjectsMemberView()) {
                         HStack {
                             Image(systemName: "folder")
                             Text("Repositories")

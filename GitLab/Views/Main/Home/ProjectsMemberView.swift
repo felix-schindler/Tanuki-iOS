@@ -1,5 +1,5 @@
 //
-//  ExploreView.swift
+//  ProjectsMemberView.swift
 //  GitLab
 //
 //  Created by Felix Schindler on 30.10.21.
@@ -7,43 +7,29 @@
 
 import SwiftUI
 
-struct Project: Decodable {
-    var id: Int
-    var description: String
-    var name: String
-    var nameWithNamespace: String
-    var httpUrlToRepo: String
-    var sshUrlToRepo: String
-    var forksCount: Int
-    var starCount: Int
-}
-
-struct ExploreView: View {
+struct ProjectsMemberView: View {
     @State var projects: [Project]? = nil
     @State var noConnection: Bool = false
     
     var body: some View {
-        NavigationView {
+        VStack {
             if (projects == nil) {
-                VStack {
-                    Spacer()
-                    ProgressView("Loading")
-                    Spacer()
-                }.navigationTitle("Explore")
+                Spacer()
+                ProgressView("Loading")
+                Spacer()
             } else {
                 RepositoriesView(projects: projects)
-                    .navigationTitle("Explore")
             }
         }.onAppear {
             Task.init {
                 await getProjects()
             }
-        }
+        }.navigationTitle("Explore")
     }
     
     private func getProjects() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "projects")
+            let apiData: Data? = API.GET(endpoint: "projects?membership=true")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -57,8 +43,8 @@ struct ExploreView: View {
     }
 }
 
-struct ExploreView_Previews: PreviewProvider {
+struct ProjectsMemberView_Previews: PreviewProvider {
     static var previews: some View {
-        ExploreView()
+        ProjectsMemberView()
     }
 }
