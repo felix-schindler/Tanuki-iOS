@@ -22,12 +22,38 @@ struct Issue: Decodable {
 
 struct IssuesView: View {
     @State var issues: [Issue]? = nil
-
-    @State var loading: Bool = true
     @State var noConnection: Bool = false
     
-    private func deleteIssue(id: Int) -> Bool {
-        return false
+    var body: some View {
+        ScrollView {
+            if (issues == nil) {
+                if (noConnection) {
+                    Text("Failed to load issues, please try with Internet connection")
+                        .foregroundColor(.red)
+                } else {
+                    Spacer()
+                    ProgressView("Loading issues...")
+                    Spacer()
+                }
+            } else {
+                List {
+                    Text("test")
+                    Text("test")
+                    Text("test")
+                }
+                List(issues!, id: \.id) { issue in
+                    // Section(header: Text(issue.title), footer: Text("Issue count: " + String(issues!.count))) {
+                    Text(issue.title)
+                    // }.headerProminence(.increased)
+                }.refreshable {
+                    getIssues()
+                }
+            }
+        }.onAppear {
+            getIssues()
+        }
+        .navigationTitle("Issues")
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     private func getIssues() -> Void {
@@ -41,58 +67,9 @@ struct IssuesView: View {
             } else {
                 noConnection = true
             }
-            loading = false
         } catch let jsonError as NSError {
             print("JSON error \(jsonError.localizedDescription)")
-            loading = false
         }
-    }
-
-    var body: some View {
-        ScrollView {
-            Text("test")
-            Text("test")
-            if (loading) {
-                Text("LOADING")
-                Spacer()
-                ProgressView("Loading issues...")
-                Spacer()
-            } else {
-                Text("NOT LOADING")
-                if (noConnection) {
-                    Text("Failed to load issues, please try with Internet connection")
-                        .foregroundColor(.red)
-                } else if (issues != nil) {
-                    List(issues!, id: \.id) { issue in
-                        Section(header: Text(issue.title), footer: Text("Issue count: " + String(issues!.count))) {
-                            Text(issue.title)
-                            /* NavigationLink(destination: IssueView(issue: issue)) {
-                                Text(issue.title)
-                            }.swipeActions {
-                                Button {
-                                    if (deleteIssue(id: issue.id)) {
-                                        // TODO remove issue
-                                        print("Implemt delete issue")
-                                    }
-                                } label: {
-                                    Image(systemName: "trash")
-                                }
-                                .tint(.red)
-                            } */
-                        }.headerProminence(.increased)
-                    }.refreshable {
-                        getIssues()
-                    }
-                } else {
-                    Text("Unknown error")
-                        .foregroundColor(.red)
-                }
-            }
-        }.onAppear {
-            getIssues()
-        }
-        .navigationTitle("Issues")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
