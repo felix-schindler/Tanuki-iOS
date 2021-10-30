@@ -24,7 +24,7 @@ struct ProjectsMemberView: View {
             Task.init {
                 await getProjects()
             }
-        }.navigationTitle("Explore")
+        }.navigationTitle("Repositories")
     }
     
     private func getProjects() async -> Void {
