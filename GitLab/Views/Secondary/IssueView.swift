@@ -25,8 +25,10 @@ struct IssueView: View {
                     .padding(.top)
                 if (issue.description != "") {
                     Text(issue.description)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 } else {
                     Text("No description available")
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }.padding()
             List {

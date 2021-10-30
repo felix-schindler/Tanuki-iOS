@@ -110,8 +110,8 @@
 		DC5EB908272D93B30015BF0D /* Secondary */ = {
 			isa = PBXGroup;
 			children = (
-				DC5EB911272DB9D00015BF0D /* RepositoriesView.swift */,
 				DC5EB90F272DA2450015BF0D /* IssueView.swift */,
+				DC5EB911272DB9D00015BF0D /* RepositoriesView.swift */,
 			);
 			path = Secondary;
 			sourceTree = "<group>";
