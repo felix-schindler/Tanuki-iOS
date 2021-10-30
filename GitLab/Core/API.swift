@@ -31,7 +31,7 @@ class API {
         
         // Session config with auth header and token, when required
         let sessionConfig = URLSessionConfiguration.default
-        sessionConfig.httpAdditionalHeaders = ["private_token": token]
+        sessionConfig.httpAdditionalHeaders = ["PRIVATE-TOKEN": token]
 
         // Send the request
         URLSession(configuration: sessionConfig).dataTask(with: URLRequest(url: url!), completionHandler: { (data, _, _) in
@@ -79,7 +79,7 @@ class API {
         
         // Session config with auth header and token, when required
         let sessionConfig = URLSessionConfiguration.default
-        sessionConfig.httpAdditionalHeaders = ["private_token": token]
+        sessionConfig.httpAdditionalHeaders = ["PRIVATE-TOKEN": token]
 
         // Send the request
         URLSession(configuration: sessionConfig).dataTask(with: request, completionHandler: { (data, res, _) in

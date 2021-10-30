@@ -17,6 +17,6 @@ struct IssueView: View {
 
 struct IssueView_Previews: PreviewProvider {
     static var previews: some View {
-        IssueView(issue: Issue(id: 0, title: "No issue given"))
+        IssueView(issue: Issue(id: 0, iid: 0, title: "No issue given"))
     }
 }
