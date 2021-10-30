@@ -12,7 +12,7 @@ struct MergeRequest: Decodable {
     var iid: Int
     var title: String
     var description: String
-    var user_notes_count: Int
+    var userNotesCount: Int
     var upvotes: Int
     var downvotes: Int
     var author: User
@@ -65,8 +65,6 @@ struct MergeRequestsView: View {
     private func getMRs() async -> Void {
         do {
             let apiData: Data? = API.GET(endpoint: "merge_requests?state=opened")
-            print("Inhalt")
-            print(apiData ?? "noting there")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
