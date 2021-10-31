@@ -29,10 +29,15 @@ struct SettingsView: View {
                     .disableAutocorrection(true)
                     .background(Color(.systemGray5))
                     .cornerRadius(10)
-                Button("Save") {
+                Button(action: {
                     API.setBase(url: url)
                     API.setToken(token: token)
-                }
+                }, label: {
+                    Text("Save configuration").frame(maxWidth: .infinity)
+                }).tint(.accentColor)
+                .buttonStyle(.borderedProminent)
+                .buttonBorderShape(.roundedRectangle)
+                .controlSize(.large)
             }.padding()
             .navigationBarTitle("Settings")
             .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))

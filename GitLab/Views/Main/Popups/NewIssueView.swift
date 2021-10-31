@@ -19,7 +19,7 @@ struct NewIssueView: View {
     var body: some View {
         NavigationView {
             VStack {
-                TextField("New GitLab URL", text: $title)
+                TextField("Title", text: $title)
                     .padding()
                     .background(Color(.systemGray5))
                     .cornerRadius(10)
@@ -29,11 +29,14 @@ struct NewIssueView: View {
                     .background(Color(.systemGray5))
                     .cornerRadius(10)
                 Spacer()
-                Button("Save new issue") {
-                    isError = !saveNewIssue()
-                }.alert(isPresented: $isError, content: {
+                Button(action: {isError = !saveNewIssue()}, label: {
+                    Text("Create new issue").frame(maxWidth: .infinity)
+                }).alert(isPresented: $isError, content: {
                     Alert(title: Text("Error"), message: Text("Failed to create issue"), dismissButton: .default(Text("OK")))
-                })
+                }).tint(.accentColor)
+                .buttonStyle(.borderedProminent)
+                .buttonBorderShape(.roundedRectangle)
+                .controlSize(.large)
             }.padding()
             .navigationBarTitle("New issue")
             .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))

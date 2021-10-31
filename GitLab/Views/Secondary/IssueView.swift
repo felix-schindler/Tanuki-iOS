@@ -13,13 +13,22 @@ struct IssueView: View {
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
-                // Meta data
-                Text("Meta")
+                VStack(alignment: .leading) {
+                    Text("Meta")
+                        .font(.headline)
+                    HStack {
+                        Image(systemName: "folder")
+                        Text("Project: " + issue.references.full)
+                    }
+                    HStack {
+                        Image(systemName: "person")
+                        Text("Author: " + issue.author.name)
+                    }
+                }
+                Text("Title")
                     .font(.headline)
-                Text("Ref: " + issue.references.full)
-                Text("Author: " + issue.author.name)
-
-                // Description
+                    .padding(.top)
+                Text(issue.title)
                 Text("Description")
                     .font(.headline)
                     .padding(.top)
@@ -32,7 +41,7 @@ struct IssueView: View {
                 }
             }.padding()
             List {
-                if (issue.assignees != nil) {
+                if (issue.assignees != nil && !(issue.assignees!.isEmpty)) {
                     Section(header: Text("Assignees")) {
                         ForEach(issue.assignees!, id: \.id) { assignee in
                             HStack {
@@ -44,7 +53,7 @@ struct IssueView: View {
                         }
                     }
                 }
-                if (issue.labels != nil) {
+                if (issue.labels != nil && !(issue.labels!.isEmpty)) {
                     Section(header: Text("Labels")) {
                         ForEach(issue.labels!, id: \.self) { label in
                             Text(label)
