@@ -13,14 +13,16 @@ struct MergeListView: View {
     
     var body: some View {
         List(mergeRequests, id: \.id) { mr in
-            HStack {
-                Text(mr.title)
-                Spacer()
-                VStack(alignment: .trailing) {
-                    Text(mr.author.name)
-                    Text(mr.references.full)
-                }.foregroundColor(.secondary)
-                .font(.caption)
+            NavigationLink(destination: MergeView(mergeRequest: mr)) {
+                HStack {
+                    Text(mr.title)
+                    Spacer()
+                    VStack(alignment: .trailing) {
+                        Text(mr.author.name)
+                        Text(mr.references.full)
+                    }.foregroundColor(.secondary)
+                    .font(.caption)
+                }
             }
         }.refreshable {
             await updateFunction()

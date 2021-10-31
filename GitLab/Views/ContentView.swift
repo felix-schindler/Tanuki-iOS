@@ -16,7 +16,7 @@ struct ContentView: View {
                     Text("Home")
                 }
                 .tag(0)
-            AllProjectsLoader()
+            ExploreView()
                 .tabItem {
                     Image(systemName: "safari")
                     Text("Explore")

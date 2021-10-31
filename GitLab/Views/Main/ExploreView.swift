@@ -11,7 +11,7 @@ struct ExploreView: View {
     var body: some View {
         NavigationView {
             AllProjectsLoader()
-        }.navigationTitle("Explore")
+        }
     }
 }
 

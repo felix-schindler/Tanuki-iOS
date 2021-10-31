@@ -14,7 +14,7 @@ struct IssueView: View {
         VStack {
             VStack(alignment: .leading) {
                 VStack(alignment: .leading) {
-                    Text("Meta")
+                    Text("meta")
                         .font(.headline)
                     HStack {
                         Image(systemName: "folder")
@@ -25,11 +25,11 @@ struct IssueView: View {
                         Text("Author: " + issue.author.name)
                     }
                 }
-                Text("Title")
+                Text("title")
                     .font(.headline)
                     .padding(.top)
                 Text(issue.title)
-                Text("Description")
+                Text("description")
                     .font(.headline)
                     .padding(.top)
                 if (issue.description != "") {
@@ -39,7 +39,7 @@ struct IssueView: View {
                     Text("No description available")
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-            }.padding()
+            }.padding(.horizontal)
             List {
                 if (issue.assignees != nil && !(issue.assignees!.isEmpty)) {
                     Section(header: Text("Assignees")) {

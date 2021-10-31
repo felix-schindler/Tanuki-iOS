@@ -11,7 +11,55 @@ struct ProjectView: View {
     @State var project: Project
     
     var body: some View {
-        Text(project.nameWithNamespace)
+        VStack {
+            Text("meta")
+                .font(.headline)
+                .padding(.top)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            VStack {
+                HStack {
+                    Image(systemName: "folder")
+                    Text(project.nameWithNamespace)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                HStack {
+                    VStack {
+                        Image(systemName: "fork.knife")
+                        Text(String(project.forksCount))
+                    }
+                    VStack {
+                        Image(systemName: "star")
+                        Text(String(project.starCount))
+                    }
+                }.frame(maxWidth: .infinity, alignment: .leading)
+            }.frame(maxWidth: .infinity, alignment: .leading)
+            Text("project_id")
+                .font(.headline)
+                .padding(.top)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Text(String(project.id))
+                .frame(maxWidth: .infinity, alignment: .leading)
+            if (project.description != "") {
+                Text("description")
+                    .font(.headline)
+                    .padding(.top)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(project.description)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            VStack {
+                Text("URL (http and ssh)")
+                    .font(.headline)
+                    .padding(.top)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Link(project.httpUrlToRepo, destination: URL(string: project.httpUrlToRepo)!)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Link(project.sshUrlToRepo, destination: URL(string: project.sshUrlToRepo)!)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            Spacer()
+        }.padding()
+        .navigationTitle(project.name)
     }
 }
 
