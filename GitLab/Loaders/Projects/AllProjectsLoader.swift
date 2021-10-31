@@ -12,7 +12,7 @@ struct AllProjectsLoader: View {
     @State var noConnection: Bool = false
     
     var body: some View {
-        NavigationView {
+        VStack {
             if (projects != nil) {
                 ProjectListView(projects: projects!, updateFunction: getProjects)
             } else {
@@ -28,7 +28,7 @@ struct AllProjectsLoader: View {
             Task.init {
                 await getProjects()
             }
-        }.navigationTitle("Explore")
+        }.navigationTitle("Projects")
     }
     
     private func getProjects() async -> Void {

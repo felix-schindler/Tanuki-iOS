@@ -86,7 +86,6 @@ struct AccountView: View {
                 }
                 Spacer()
             }.padding()
-            .navigationTitle("Account")
             .onAppear {
                 Task.init {
                     await getUser()
@@ -100,7 +99,7 @@ struct AccountView: View {
                 }
             }.sheet(isPresented: $showSettings) {
                 SettingsView()
-            }
+            }.navigationTitle("Account")
         }
     }
     

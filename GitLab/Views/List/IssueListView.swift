@@ -23,35 +23,11 @@ struct IssueListView: View {
                     }.foregroundColor(.secondary)
                     .font(.caption)
                 }
-            }/* .swipeActions {
-                Button {
-                    if (closeIssue(id: issue.id)) {
-                        print("Implement close issue")
-                    }
-                } label: {
-                    Image(systemName: "checkmark.circle")
-                }.tint(.green)
-                Button {
-                    if (deleteIssue(id: issue.id)) {
-                        // TODO remove issue
-                        print("Implement delete issue")
-                    }
-                } label: {
-                    Image(systemName: "trash")
-                }.tint(.red)
-            } */
+            }
         }.refreshable {
             await updateFunction()
         }
     }
-    
-    /* UNUSED private func closeIssue(id: Int) -> Bool {
-        return false
-    }
-    
-    private func deleteIssue(id: Int) -> Bool {
-        return false
-    } */
 }
 
 struct IssueListView_Previews: PreviewProvider {

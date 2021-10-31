@@ -26,23 +26,6 @@ struct ProjectListView: View {
             await updateFunction()
         }
     }
-
-    /* private func starProject(id: Int) -> Bool {
-        do {
-            let apiData: Data? = API.POST(endpoint: "projects/"+String(id)+"/star")
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                projects = try decoder.decode([Project].self, from: apiData!)
-                return false
-            } else {
-                return false
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-            return false
-        }
-    } */
 }
 
 struct ProjectListView_Previews: PreviewProvider {

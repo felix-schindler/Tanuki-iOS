@@ -12,7 +12,7 @@ struct AllIssuesLoader: View {
     @State var noConnection: Bool = false
     
     var body: some View {
-        NavigationView {
+        VStack {
             if (issues != nil) {
                 IssueListView(issues: issues!, updateFunction: getIssues)
             } else {

@@ -13,12 +13,16 @@ struct MemberProjectsLoader: View {
     
     var body: some View {
         VStack {
-            if (projects == nil) {
-                Spacer()
-                ProgressView("Loading")
-                Spacer()
-            } else {
+            if (projects != nil) {
                 ProjectListView(projects: projects!, updateFunction: getProjects)
+            } else {
+                if (noConnection) {
+                    Text("req_failed")
+                } else {
+                    Spacer()
+                    ProgressView("Loading")
+                    Spacer()
+                }
             }
         }.onAppear {
             Task.init {

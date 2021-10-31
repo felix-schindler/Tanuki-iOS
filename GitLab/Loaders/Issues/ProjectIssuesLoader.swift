@@ -29,7 +29,7 @@ struct ProjectIssuesLoader: View {
             Task.init {
                 await getIssues()
             }
-        }
+        }.navigationTitle("Issues")
     }
     
     private func getMRs() async -> Void {

@@ -12,7 +12,7 @@ struct AllMergeLoader: View {
     @State var noConnection: Bool = false
     
     var body: some View {
-        NavigationView {
+        VStack {
             if (mergeRequests != nil) {
                 MergeListView(mergeRequests: mergeRequests!, updateFunction: getMRs)
             } else {
@@ -30,8 +30,7 @@ struct AllMergeLoader: View {
             Task.init {
                 await getMRs()
             }
-        }
-        .navigationTitle("Merge requests")
+        }.navigationTitle("Merge requests")
     }
     
     private func getMRs() async -> Void {
