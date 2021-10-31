@@ -60,6 +60,6 @@ struct IssueView: View {
 
 struct IssueView_Previews: PreviewProvider {
     static var previews: some View {
-        IssueView(issue: Issue(id: 0, iid: 0, title: "No issue given", description: "❌", assignees: nil, author: User(id: 0, name: "", username: ""), references: Reference(full: "lost/lost#1")))
+        IssueView(issue: Issue(id: 0, iid: 0, title: "No issue given", description: "❌", assignees: nil, author: UserSmall(id: 0, name: "", username: ""), references: Reference(full: "lost/lost#1")))
     }
 }

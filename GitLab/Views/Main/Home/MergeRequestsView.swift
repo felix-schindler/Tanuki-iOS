@@ -15,9 +15,9 @@ struct MergeRequest: Decodable {
     var userNotesCount: Int
     var upvotes: Int
     var downvotes: Int
-    var author: User
-    var assignees: [User]
-    var reviewers: [User]
+    var author: UserSmall
+    var assignees: [UserSmall]
+    var reviewers: [UserSmall]
     var labels: [String]?
     var references: Reference
 }

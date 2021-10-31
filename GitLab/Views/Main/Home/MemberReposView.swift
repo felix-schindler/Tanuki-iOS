@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProjectsMemberView: View {
+struct MemberReposView: View {
     @State var projects: [Project]? = nil
     @State var noConnection: Bool = false
     
@@ -43,8 +43,8 @@ struct ProjectsMemberView: View {
     }
 }
 
-struct ProjectsMemberView_Previews: PreviewProvider {
+struct MemberReposView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectsMemberView()
+        MemberReposView()
     }
 }

@@ -19,7 +19,7 @@
 		DC5EB910272DA2450015BF0D /* IssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB90F272DA2450015BF0D /* IssueView.swift */; };
 		DC5EB912272DB9D00015BF0D /* RepositoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB911272DB9D00015BF0D /* RepositoriesView.swift */; };
 		DC5EB914272DBDA20015BF0D /* MergeRequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB913272DBDA20015BF0D /* MergeRequestsView.swift */; };
-		DC5EB916272DD1310015BF0D /* ProjectsMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB915272DD1310015BF0D /* ProjectsMemberView.swift */; };
+		DC5EB916272DD1310015BF0D /* MemberReposView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB915272DD1310015BF0D /* MemberReposView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +36,7 @@
 		DC5EB90F272DA2450015BF0D /* IssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueView.swift; sourceTree = "<group>"; };
 		DC5EB911272DB9D00015BF0D /* RepositoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesView.swift; sourceTree = "<group>"; };
 		DC5EB913272DBDA20015BF0D /* MergeRequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeRequestsView.swift; sourceTree = "<group>"; };
-		DC5EB915272DD1310015BF0D /* ProjectsMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsMemberView.swift; sourceTree = "<group>"; };
+		DC5EB915272DD1310015BF0D /* MemberReposView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberReposView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,7 +129,7 @@
 			children = (
 				DC5EB90D272D9C710015BF0D /* IssuesView.swift */,
 				DC5EB913272DBDA20015BF0D /* MergeRequestsView.swift */,
-				DC5EB915272DD1310015BF0D /* ProjectsMemberView.swift */,
+				DC5EB915272DD1310015BF0D /* MemberReposView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -213,7 +213,7 @@
 				DC5EB90C272D955E0015BF0D /* API.swift in Sources */,
 				DC5EB912272DB9D00015BF0D /* RepositoriesView.swift in Sources */,
 				DC5EB910272DA2450015BF0D /* IssueView.swift in Sources */,
-				DC5EB916272DD1310015BF0D /* ProjectsMemberView.swift in Sources */,
+				DC5EB916272DD1310015BF0D /* MemberReposView.swift in Sources */,
 				DC5EB906272D938E0015BF0D /* AccountView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -15,7 +15,7 @@ struct RepositoriesView: View {
         if (projects != nil) {
             List(projects!, id: \.id) { project in
             // NavigationLink(destination: IssueView(issue: issue)) {
-            Text(project.name)
+            Text(project.nameWithNamespace)
                 .swipeActions {
                     Button {
                         if (starProject(id: project.id)) {

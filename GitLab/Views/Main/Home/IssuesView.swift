@@ -12,8 +12,8 @@ struct Issue: Decodable {
     var iid: Int
     var title: String
     var description: String
-    var assignees: [User]?
-    var author: User
+    var assignees: [UserSmall]?
+    var author: UserSmall
     var labels: [String]?
     var references: Reference
 }
@@ -22,7 +22,7 @@ struct Reference: Decodable {
     var full: String
 }
 
-struct User: Decodable, Identifiable {
+struct UserSmall: Decodable, Identifiable {
     var id: Int
     var name: String
     var username: String
