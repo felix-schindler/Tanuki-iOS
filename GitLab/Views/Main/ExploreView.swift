@@ -43,7 +43,7 @@ struct ExploreView: View {
     
     private func getProjects() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "projects")
+            let apiData: Data? = API.GET(endpoint: "projects?order_by=last_activity_at")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

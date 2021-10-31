@@ -16,6 +16,8 @@ struct User: Decodable {
     var location: String
     var publicEmail: String
     var websiteUrl: String
+    var followers: Int
+    var following: Int
 }
 
 struct Status: Decodable {
@@ -23,34 +25,51 @@ struct Status: Decodable {
     var message: String
 }
 
-struct AccountView: View {
-    @State var url = ""
-    @State var token = ""
-    
+struct AccountView: View {    
     @State var user: User? = nil
     @State var status: Status? = nil
     @State var noConnection: Bool = false
+    
+    @State var showSettings: Bool = false
 
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(alignment: .leading) {
                 if (user != nil) {
-                    AsyncImage(url: URL(string: user!.avatarUrl))
-                        .scaledToFit()
-                        .frame(width: 200, height: 200)
-                        .cornerRadius(20)
-                    Text(user!.name)
-                    Text(user!.username)
-                        .foregroundColor(.secondary)
+                    HStack {
+                        AsyncImage(url: URL(string: user!.avatarUrl)) { image in
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .cornerRadius(10)
+                        } placeholder: {
+                            ProgressView()
+                        }.frame(width: 50, height: 50)
+                        VStack {
+                            Text(user!.name)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            Text(user!.username)
+                                .foregroundColor(.secondary)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
                     if (status != nil) {
-                        Text("Status")
-                            .font(.headline)
-                        Text(status!.message)
+                        VStack {
+                            Text("Status")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            Text(status!.message)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }.padding(.vertical, 5)
                     }
                     if (user!.bio != "") {
-                        Text("Bio")
-                            .font(.headline)
-                        Text(user!.bio)
+                        VStack {
+                            Text("Bio")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            Text(user!.bio)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }.padding(.vertical, 5)
                     }
                     if (user!.location != "") {
                         HStack {
@@ -70,45 +89,35 @@ struct AccountView: View {
                             Link(user!.websiteUrl, destination: URL(string: user!.websiteUrl)!)
                         }
                     }
+                    HStack {
+                        Image(systemName: "person.2")
+                        Text(String(user!.followers) + " followers · " + String(user!.following) + " following")
+                    }
                 } else {
                     if (noConnection) {
                         Text("No internet connection")
                             .foregroundColor(.red)
                     } else {
+                        Spacer()
                         ProgressView("Loading")
                     }
                 }
                 Spacer()
-                TextField("New GitLab URL", text: $url)
-                    .padding()
-                    .textContentType(.emailAddress)
-                    .keyboardType(.emailAddress)
-                    .disableAutocorrection(true)
-                    .background(Color(.systemGray5))
-                    .cornerRadius(10)
-                    .onSubmit {
-                        if (url != "") {
-                            API.setBase(url: url)
-                        }
-                    }
-                TextField("New GitLab Token", text: $token)
-                    .padding()
-                    .textContentType(.emailAddress)
-                    .keyboardType(.emailAddress)
-                    .disableAutocorrection(true)
-                    .background(Color(.systemGray5))
-                    .cornerRadius(10)
-                    .onSubmit {
-                        if (token != "") {
-                            API.setBase(url: token)
-                        }
-                    }
             }.padding()
             .navigationTitle("Account")
             .onAppear {
                 Task.init {
                     await getUser()
+                    await getStatus()
                 }
+            }.toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button (action: {showSettings = true}) {
+                        Image(systemName: "gearshape")
+                    }
+                }
+            }.sheet(isPresented: $showSettings) {
+                SettingsView()
             }
         }
     }
@@ -120,9 +129,6 @@ struct AccountView: View {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 user = try decoder.decode(User.self, from: apiData!)
-                Task.init {
-                    await getStatus()
-                }
             } else {
                 noConnection = true
             }
@@ -133,7 +139,7 @@ struct AccountView: View {
     
     private func getStatus() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "user")
+            let apiData: Data? = API.GET(endpoint: "user/status")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @State var starredProjects: [Project]? = nil
     @State var showNewIssue: Bool = false
+    @State var showEvents: Bool = false
     
     var body: some View {
         NavigationView {
@@ -50,16 +51,21 @@ struct HomeView: View {
             }
             .navigationBarTitle("Home")
             .toolbar {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    Button (action: {showEvents = true}) {
+                        Image(systemName: "bell.circle")
+                    }
+                }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showNewIssue = true
-                    }) {
+                    Button(action: {showNewIssue = true}) {
                         Image(systemName: "plus.circle")
                     }
                 }
-            }.sheet(isPresented: $showNewIssue, content: {
+            }.sheet(isPresented: $showNewIssue) {
                 NewIssueView()
-            })
+            }.sheet(isPresented: $showEvents) {
+                EventsView()
+            }
         }
     }
     
@@ -74,46 +80,6 @@ struct HomeView: View {
         } catch let jsonError as NSError {
             print("JSON error \(jsonError.localizedDescription)")
         }
-    }
-}
-
-struct NewIssueView: View {
-    @Environment(\.presentationMode)
-    var presentationMode: Binding<PresentationMode>
-    
-    @State var title: String = ""
-    @State var description: String = ""
-    
-    @State var isError: Bool = false
-
-    var body: some View {
-        NavigationView {
-            VStack {
-                TextField("New GitLab URL", text: $title)
-                    .padding()
-                    .background(Color(.systemGray5))
-                    .cornerRadius(10)
-                TextField("Description", text: $description)
-                    .frame(maxHeight: 250, alignment: .topLeading)
-                    .padding()
-                    .background(Color(.systemGray5))
-                    .cornerRadius(10)
-                Spacer()
-                Button("Save new issue") {
-                    isError = !saveNewIssue()
-                }.alert(isPresented: $isError, content: {
-                    Alert(title: Text("Error"), message: Text("Failed to create issue"), dismissButton: .default(Text("OK")))
-                })
-            }.padding()
-            .navigationBarTitle("New issue")
-            .navigationBarItems(trailing: Button("Cancel", action: {
-                self.presentationMode.wrappedValue.dismiss()
-            }))
-        }
-    }
-    
-    private func saveNewIssue() -> Bool {
-        return false
     }
 }
 

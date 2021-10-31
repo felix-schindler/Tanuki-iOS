@@ -20,6 +20,10 @@
 		DC5EB912272DB9D00015BF0D /* RepositoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB911272DB9D00015BF0D /* RepositoriesView.swift */; };
 		DC5EB914272DBDA20015BF0D /* MergeRequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB913272DBDA20015BF0D /* MergeRequestsView.swift */; };
 		DC5EB916272DD1310015BF0D /* MemberReposView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB915272DD1310015BF0D /* MemberReposView.swift */; };
+		DC90CA5C272E762200B758E7 /* NewIssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA5B272E762200B758E7 /* NewIssueView.swift */; };
+		DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA5D272E763F00B758E7 /* EventsView.swift */; };
+		DC90CA61272E78D900B758E7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA60272E78D900B758E7 /* SettingsView.swift */; };
+		DC90CA63272E878900B758E7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA62272E878900B758E7 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +41,10 @@
 		DC5EB911272DB9D00015BF0D /* RepositoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesView.swift; sourceTree = "<group>"; };
 		DC5EB913272DBDA20015BF0D /* MergeRequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeRequestsView.swift; sourceTree = "<group>"; };
 		DC5EB915272DD1310015BF0D /* MemberReposView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberReposView.swift; sourceTree = "<group>"; };
+		DC90CA5B272E762200B758E7 /* NewIssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIssueView.swift; sourceTree = "<group>"; };
+		DC90CA5D272E763F00B758E7 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
+		DC90CA60272E78D900B758E7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		DC90CA62272E878900B758E7 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,9 +108,10 @@
 			isa = PBXGroup;
 			children = (
 				DC5EB900272D934E0015BF0D /* HomeView.swift */,
-				DC5EB917272DD2310015BF0D /* Home */,
 				DC5EB903272D93830015BF0D /* ExploreView.swift */,
 				DC5EB905272D938E0015BF0D /* AccountView.swift */,
+				DC5EB917272DD2310015BF0D /* Home */,
+				DC90CA5A272E759100B758E7 /* Popups */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -120,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				DC5EB90B272D955E0015BF0D /* API.swift */,
+				DC90CA62272E878900B758E7 /* Utils.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -132,6 +142,16 @@
 				DC5EB915272DD1310015BF0D /* MemberReposView.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		DC90CA5A272E759100B758E7 /* Popups */ = {
+			isa = PBXGroup;
+			children = (
+				DC90CA5B272E762200B758E7 /* NewIssueView.swift */,
+				DC90CA5D272E763F00B758E7 /* EventsView.swift */,
+				DC90CA60272E78D900B758E7 /* SettingsView.swift */,
+			);
+			path = Popups;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,11 +224,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */,
 				DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */,
 				DC5EB914272DBDA20015BF0D /* MergeRequestsView.swift in Sources */,
 				DC5EB90E272D9C710015BF0D /* IssuesView.swift in Sources */,
+				DC90CA5C272E762200B758E7 /* NewIssueView.swift in Sources */,
+				DC90CA63272E878900B758E7 /* Utils.swift in Sources */,
 				DC5EB8F5272D924D0015BF0D /* ContentView.swift in Sources */,
 				DC5EB904272D93830015BF0D /* ExploreView.swift in Sources */,
+				DC90CA61272E78D900B758E7 /* SettingsView.swift in Sources */,
 				DC5EB8F3272D924D0015BF0D /* GitLabApp.swift in Sources */,
 				DC5EB90C272D955E0015BF0D /* API.swift in Sources */,
 				DC5EB912272DB9D00015BF0D /* RepositoriesView.swift in Sources */,
