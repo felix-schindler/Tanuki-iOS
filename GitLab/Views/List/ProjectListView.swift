@@ -16,19 +16,28 @@ struct ProjectListView: View {
             NavigationLink(destination: ProjectView(project: project)) {
                 if (project.avatarUrl != nil) {
                     HStack {
-                        AsyncImage(url: URL(string: project.avatarUrl)) { image in
-                            image
-                                .resizable()
-                                .scaledToFit()
-                                .cornerRadius(10)
-                        } placeholder: {
-                            ProgressView()
-                        }.frame(width: 50, height: 50)
-                        if (project.description != "") {
-                            VStack {
-                                Text(project.nameWithNamespace)
+                        AsyncImage(url: URL(string: project.avatarUrl!)) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFit()
+                                    .cornerRadius(10)
+                            case .failure:
+                                Text("img_load_err")
+                            @unknown default:
+                                Text("unkown_err")
+                            }
+                        }.frame(width: 50, height: 50, alignment: .leading)
+                        VStack {
+                            Text(project.nameWithNamespace)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            if (project.description != "") {
                                 Text(project.description)
-                                .foregroundColor(.secondary)
+                                    .foregroundColor(.secondary)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
                             }
                         }
                     }
@@ -36,11 +45,14 @@ struct ProjectListView: View {
                     if (project.description != "") {
                         VStack {
                             Text(project.nameWithNamespace)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                             Text(project.description)
-                            .foregroundColor(.secondary)
+                                .foregroundColor(.secondary)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     } else {
                         Text(project.nameWithNamespace)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
             }.swipeActions {
@@ -58,6 +70,6 @@ struct ProjectListView: View {
 
 struct ProjectListView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectListView(projects: [Project]([Project(id: 1, description: "Test", name: "Test", nameWithNamespace: "test", httpUrlToRepo: "test", sshUrlToRepo: "test", forksCount: 0, starCount: 0)]), updateFunction: {})
+        ProjectListView(projects: [Project](), updateFunction: {})
     }
 }

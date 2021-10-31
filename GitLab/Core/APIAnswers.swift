@@ -18,7 +18,7 @@ struct Project: Decodable {
     var forksCount: Int
     var starCount: Int
     var issuesEnabled: Bool
-    var openIssuesCount: Int
+    // var openIssuesCount: Int
     var mergeRequestsEnabled: Bool
 }
 

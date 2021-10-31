@@ -33,6 +33,7 @@
 		DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA5D272E763F00B758E7 /* EventsView.swift */; };
 		DC90CA61272E78D900B758E7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA60272E78D900B758E7 /* SettingsView.swift */; };
 		DC90CA63272E878900B758E7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA62272E878900B758E7 /* Utils.swift */; };
+		DCAAE3E8272F096A00A7C89B /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAE3E7272F096A00A7C89B /* AboutView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 		DC90CA5D272E763F00B758E7 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
 		DC90CA60272E78D900B758E7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DC90CA62272E878900B758E7 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		DCAAE3E7272F096A00A7C89B /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +211,7 @@
 				DC90CA5B272E762200B758E7 /* NewIssueView.swift */,
 				DC90CA5D272E763F00B758E7 /* EventsView.swift */,
 				DC90CA60272E78D900B758E7 /* SettingsView.swift */,
+				DCAAE3E7272F096A00A7C89B /* AboutView.swift */,
 			);
 			path = Popups;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 				DC4F9568272EBA3F00354E1D /* MergeDiscussionLoader.swift in Sources */,
 				DC4F9562272EB92200354E1D /* MergeView.swift in Sources */,
 				DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */,
+				DCAAE3E8272F096A00A7C89B /* AboutView.swift in Sources */,
 				DC5EB914272DBDA20015BF0D /* MergeListView.swift in Sources */,
 				DC5EB90E272D9C710015BF0D /* IssueListView.swift in Sources */,
 				DC90CA5C272E762200B758E7 /* NewIssueView.swift in Sources */,

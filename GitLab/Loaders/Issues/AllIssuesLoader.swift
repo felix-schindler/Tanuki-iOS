@@ -10,8 +10,6 @@ import SwiftUI
 struct AllIssuesLoader: View {
     @State var issues: [Issue]? = nil
     @State var noConnection: Bool = false
-
-    @State var showNewIssue: Bool = false
     
     var body: some View {
         VStack {
@@ -31,15 +29,6 @@ struct AllIssuesLoader: View {
                 await getIssues()
             }
         }.navigationTitle("Issues")
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button(action: {showNewIssue = true}) {
-                    Image(systemName: "plus.circle")
-                }
-            }
-        }.sheet(isPresented: $showNewIssue) {
-            NewIssueView()
-        }
     }
     
     private func getIssues() async -> Void {

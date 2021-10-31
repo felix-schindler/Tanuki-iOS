@@ -11,6 +11,8 @@ struct IssueListView: View {
     @State var issues: [Issue]
     @State var updateFunction: () async -> Void
     
+    @State var showNewIssue: Bool = false
+
     var body: some View {
         List(issues, id: \.id) { issue in
             NavigationLink(destination: IssueView(issue: issue)) {
@@ -26,6 +28,14 @@ struct IssueListView: View {
             }
         }.refreshable {
             await updateFunction()
+        }.toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button(action: {showNewIssue = true}) {
+                    Image(systemName: "plus.circle")
+                }
+            }
+        }.sheet(isPresented: $showNewIssue) {
+            NewIssueView()
         }
     }
 }
