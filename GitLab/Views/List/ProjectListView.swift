@@ -14,7 +14,35 @@ struct ProjectListView: View {
     var body: some View {
         List(projects, id: \.id) { project in
             NavigationLink(destination: ProjectView(project: project)) {
-                Text(project.nameWithNamespace)
+                if (project.avatarUrl != nil) {
+                    HStack {
+                        AsyncImage(url: URL(string: project.avatarUrl)) { image in
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .cornerRadius(10)
+                        } placeholder: {
+                            ProgressView()
+                        }.frame(width: 50, height: 50)
+                        if (project.description != "") {
+                            VStack {
+                                Text(project.nameWithNamespace)
+                                Text(project.description)
+                                .foregroundColor(.secondary)
+                            }
+                        }
+                    }
+                } else {
+                    if (project.description != "") {
+                        VStack {
+                            Text(project.nameWithNamespace)
+                            Text(project.description)
+                            .foregroundColor(.secondary)
+                        }
+                    } else {
+                        Text(project.nameWithNamespace)
+                    }
+                }
             }.swipeActions {
                 Button {
                     print("Implement start project")

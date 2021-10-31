@@ -12,8 +12,9 @@ struct Project: Decodable {
     var description: String
     var name: String
     var nameWithNamespace: String
-    var httpUrlToRepo: String
     var sshUrlToRepo: String
+    var httpUrlToRepo: String
+    var avatarUrl: String?
     var forksCount: Int
     var starCount: Int
     var issuesEnabled: Bool
