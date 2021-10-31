@@ -7,21 +7,6 @@
 
 import SwiftUI
 
-struct Event: Decodable {
-    var id: Int
-    var actionName: String
-    var targetType: String? = ""
-    var targetTitle: String? = ""
-    // var pushData: PushData? = nil
-    var author: UserSmall
-}
-
-struct PushData: Decodable {
-    var refType: String
-    var ref: String
-    var commitTitle: String
-}
-
 struct EventsView: View {
     @Environment(\.presentationMode)
     var presentationMode: Binding<PresentationMode>

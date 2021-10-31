@@ -16,22 +16,22 @@ struct HomeView: View {
         NavigationView {
             List {
                 Section (header: Text("Your work")) {
-                    NavigationLink(destination: IssuesView()) {
+                    NavigationLink(destination: AllIssuesLoader()) {
                         HStack {
                             Image(systemName: "square.on.square")
                             Text("Issues")
                         }
                     }
-                    NavigationLink(destination: MergeRequestsView()) {
+                    NavigationLink(destination: AllMergeLoader()) {
                         HStack {
                             Image(systemName: "arrow.merge")
                             Text("Merge Requests")
                         }
                     }
-                    NavigationLink(destination: MemberReposView()) {
+                    NavigationLink(destination: MemberProjectsLoader()) {
                         HStack {
                             Image(systemName: "folder")
-                            Text("Repositories")
+                            Text("Projects")
                         }
                     }
                 }.headerProminence(.increased)

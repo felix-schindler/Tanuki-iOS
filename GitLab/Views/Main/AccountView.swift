@@ -7,27 +7,9 @@
 
 import SwiftUI
 
-struct User: Decodable {
-    var id: Int
-    var name: String
-    var username: String
-    var avatarUrl: String
-    var bio: String
-    var location: String
-    var publicEmail: String
-    var websiteUrl: String
-    var followers: Int
-    var following: Int
-}
-
-struct Status: Decodable {
-    // var emoji: String
-    var message: String
-}
-
 struct AccountView: View {    
     @State var user: User? = nil
-    @State var status: Status? = nil
+    @State var status: UserStatus? = nil
     @State var noConnection: Bool = false
     
     @State var showSettings: Bool = false
@@ -143,7 +125,7 @@ struct AccountView: View {
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                status = try decoder.decode(Status.self, from: apiData!)
+                status = try decoder.decode(UserStatus.self, from: apiData!)
             } else {
                 noConnection = true
             }

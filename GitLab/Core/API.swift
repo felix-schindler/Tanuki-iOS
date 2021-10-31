@@ -51,7 +51,7 @@ class API {
      - Parameter values: Hashmap with values to be send as POST values
      - Returns: Data to be decoded as e. g. JSON or nil if no connection
      */
-    public static func POST(endpoint: String, values: Dictionary<String,String>) -> Data? {
+    public static func POST(endpoint: String, values: Dictionary<String,String>? = nil) -> Data? {
         // No internet connection or link does not exist
         let url: URL? = URL(string: API.base + endpoint);
         if (url == nil) {
@@ -64,11 +64,13 @@ class API {
         
         // Build post data string
         var dataStr: String = ""
-        for (k,v) in values {   // Key and value
-            if (dataStr != "") {
-                dataStr += "&"
+        if (values != nil) {
+            for (k,v) in values! {   // Key and value
+                if (dataStr != "") {
+                    dataStr += "&"
+                }
+                dataStr += "\(k)=\(v)"
             }
-            dataStr += "\(k)=\(v)"
         }
 
         // POST-Request with data

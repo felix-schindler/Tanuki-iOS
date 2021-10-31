@@ -7,19 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC4F9552272EB49700354E1D /* AllIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */; };
+		DC4F9554272EB4AF00354E1D /* ProjectIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */; };
+		DC4F9558272EB5A900354E1D /* AllProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */; };
+		DC4F955C272EB89900354E1D /* AllMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F955B272EB89900354E1D /* AllMergeLoader.swift */; };
+		DC4F955E272EB8A700354E1D /* ProjectMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F955D272EB8A700354E1D /* ProjectMergeLoader.swift */; };
+		DC4F9560272EB8EE00354E1D /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F955F272EB8EE00354E1D /* ProjectView.swift */; };
+		DC4F9562272EB92200354E1D /* MergeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9561272EB92200354E1D /* MergeView.swift */; };
+		DC4F9566272EBA3400354E1D /* IssueDiscussionLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9565272EBA3400354E1D /* IssueDiscussionLoader.swift */; };
+		DC4F9568272EBA3F00354E1D /* MergeDiscussionLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9567272EBA3F00354E1D /* MergeDiscussionLoader.swift */; };
+		DC4F956A272EC3B100354E1D /* APIAnswers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9569272EC3B100354E1D /* APIAnswers.swift */; };
 		DC5EB8F3272D924D0015BF0D /* GitLabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB8F2272D924D0015BF0D /* GitLabApp.swift */; };
 		DC5EB8F5272D924D0015BF0D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB8F4272D924D0015BF0D /* ContentView.swift */; };
 		DC5EB8F7272D924F0015BF0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC5EB8F6272D924F0015BF0D /* Assets.xcassets */; };
-		DC5EB8FA272D924F0015BF0D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC5EB8F9272D924F0015BF0D /* Preview Assets.xcassets */; };
 		DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB900272D934E0015BF0D /* HomeView.swift */; };
-		DC5EB904272D93830015BF0D /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB903272D93830015BF0D /* ExploreView.swift */; };
 		DC5EB906272D938E0015BF0D /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB905272D938E0015BF0D /* AccountView.swift */; };
 		DC5EB90C272D955E0015BF0D /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB90B272D955E0015BF0D /* API.swift */; };
-		DC5EB90E272D9C710015BF0D /* IssuesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB90D272D9C710015BF0D /* IssuesView.swift */; };
+		DC5EB90E272D9C710015BF0D /* IssueListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB90D272D9C710015BF0D /* IssueListView.swift */; };
 		DC5EB910272DA2450015BF0D /* IssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB90F272DA2450015BF0D /* IssueView.swift */; };
-		DC5EB912272DB9D00015BF0D /* RepositoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB911272DB9D00015BF0D /* RepositoriesView.swift */; };
-		DC5EB914272DBDA20015BF0D /* MergeRequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB913272DBDA20015BF0D /* MergeRequestsView.swift */; };
-		DC5EB916272DD1310015BF0D /* MemberReposView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB915272DD1310015BF0D /* MemberReposView.swift */; };
+		DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB911272DB9D00015BF0D /* ProjectListView.swift */; };
+		DC5EB914272DBDA20015BF0D /* MergeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB913272DBDA20015BF0D /* MergeListView.swift */; };
+		DC5EB916272DD1310015BF0D /* MemberProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB915272DD1310015BF0D /* MemberProjectsLoader.swift */; };
 		DC90CA5C272E762200B758E7 /* NewIssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA5B272E762200B758E7 /* NewIssueView.swift */; };
 		DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA5D272E763F00B758E7 /* EventsView.swift */; };
 		DC90CA61272E78D900B758E7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA60272E78D900B758E7 /* SettingsView.swift */; };
@@ -27,20 +35,28 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllIssuesLoader.swift; sourceTree = "<group>"; };
+		DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectIssuesLoader.swift; sourceTree = "<group>"; };
+		DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsLoader.swift; sourceTree = "<group>"; };
+		DC4F955B272EB89900354E1D /* AllMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMergeLoader.swift; sourceTree = "<group>"; };
+		DC4F955D272EB8A700354E1D /* ProjectMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMergeLoader.swift; sourceTree = "<group>"; };
+		DC4F955F272EB8EE00354E1D /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
+		DC4F9561272EB92200354E1D /* MergeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeView.swift; sourceTree = "<group>"; };
+		DC4F9565272EBA3400354E1D /* IssueDiscussionLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiscussionLoader.swift; sourceTree = "<group>"; };
+		DC4F9567272EBA3F00354E1D /* MergeDiscussionLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeDiscussionLoader.swift; sourceTree = "<group>"; };
+		DC4F9569272EC3B100354E1D /* APIAnswers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAnswers.swift; sourceTree = "<group>"; };
 		DC5EB8EF272D924D0015BF0D /* GitLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC5EB8F2272D924D0015BF0D /* GitLabApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLabApp.swift; sourceTree = "<group>"; };
 		DC5EB8F4272D924D0015BF0D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DC5EB8F6272D924F0015BF0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		DC5EB8F9272D924F0015BF0D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DC5EB900272D934E0015BF0D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		DC5EB903272D93830015BF0D /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		DC5EB905272D938E0015BF0D /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		DC5EB90B272D955E0015BF0D /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		DC5EB90D272D9C710015BF0D /* IssuesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuesView.swift; sourceTree = "<group>"; };
+		DC5EB90D272D9C710015BF0D /* IssueListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueListView.swift; sourceTree = "<group>"; };
 		DC5EB90F272DA2450015BF0D /* IssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueView.swift; sourceTree = "<group>"; };
-		DC5EB911272DB9D00015BF0D /* RepositoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesView.swift; sourceTree = "<group>"; };
-		DC5EB913272DBDA20015BF0D /* MergeRequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeRequestsView.swift; sourceTree = "<group>"; };
-		DC5EB915272DD1310015BF0D /* MemberReposView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberReposView.swift; sourceTree = "<group>"; };
+		DC5EB911272DB9D00015BF0D /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
+		DC5EB913272DBDA20015BF0D /* MergeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeListView.swift; sourceTree = "<group>"; };
+		DC5EB915272DD1310015BF0D /* MemberProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberProjectsLoader.swift; sourceTree = "<group>"; };
 		DC90CA5B272E762200B758E7 /* NewIssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIssueView.swift; sourceTree = "<group>"; };
 		DC90CA5D272E763F00B758E7 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
 		DC90CA60272E78D900B758E7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -58,6 +74,61 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC4F954F272EB3B600354E1D /* Issues */ = {
+			isa = PBXGroup;
+			children = (
+				DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */,
+				DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */,
+			);
+			path = Issues;
+			sourceTree = "<group>";
+		};
+		DC4F9555272EB4DD00354E1D /* List */ = {
+			isa = PBXGroup;
+			children = (
+				DC5EB911272DB9D00015BF0D /* ProjectListView.swift */,
+				DC5EB90D272D9C710015BF0D /* IssueListView.swift */,
+				DC5EB913272DBDA20015BF0D /* MergeListView.swift */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
+		DC4F9556272EB59200354E1D /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */,
+				DC5EB915272DD1310015BF0D /* MemberProjectsLoader.swift */,
+			);
+			path = Projects;
+			sourceTree = "<group>";
+		};
+		DC4F9559272EB6DC00354E1D /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				DC5EB900272D934E0015BF0D /* HomeView.swift */,
+				DC5EB905272D938E0015BF0D /* AccountView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		DC4F955A272EB74B00354E1D /* Merge Requests */ = {
+			isa = PBXGroup;
+			children = (
+				DC4F955B272EB89900354E1D /* AllMergeLoader.swift */,
+				DC4F955D272EB8A700354E1D /* ProjectMergeLoader.swift */,
+			);
+			path = "Merge Requests";
+			sourceTree = "<group>";
+		};
+		DC4F9563272EBA0B00354E1D /* Discussion */ = {
+			isa = PBXGroup;
+			children = (
+				DC4F9565272EBA3400354E1D /* IssueDiscussionLoader.swift */,
+				DC4F9567272EBA3F00354E1D /* MergeDiscussionLoader.swift */,
+			);
+			path = Discussion;
+			sourceTree = "<group>";
+		};
 		DC5EB8E6272D924D0015BF0D = {
 			isa = PBXGroup;
 			children = (
@@ -77,20 +148,12 @@
 		DC5EB8F1272D924D0015BF0D /* GitLab */ = {
 			isa = PBXGroup;
 			children = (
+				DC5EB8F6272D924F0015BF0D /* Assets.xcassets */,
 				DC5EB90A272D954B0015BF0D /* Core */,
 				DC5EB902272D93700015BF0D /* Views */,
-				DC5EB8F6272D924F0015BF0D /* Assets.xcassets */,
-				DC5EB8F8272D924F0015BF0D /* Preview Content */,
+				DC5EB907272D93AC0015BF0D /* Loaders */,
 			);
 			path = GitLab;
-			sourceTree = "<group>";
-		};
-		DC5EB8F8272D924F0015BF0D /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				DC5EB8F9272D924F0015BF0D /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		DC5EB902272D93700015BF0D /* Views */ = {
@@ -98,50 +161,43 @@
 			children = (
 				DC5EB8F2272D924D0015BF0D /* GitLabApp.swift */,
 				DC5EB8F4272D924D0015BF0D /* ContentView.swift */,
-				DC5EB907272D93AC0015BF0D /* Main */,
-				DC5EB908272D93B30015BF0D /* Secondary */,
+				DC4F9559272EB6DC00354E1D /* Main */,
+				DC5EB908272D93B30015BF0D /* Single */,
+				DC4F9555272EB4DD00354E1D /* List */,
+				DC90CA5A272E759100B758E7 /* Popups */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		DC5EB907272D93AC0015BF0D /* Main */ = {
+		DC5EB907272D93AC0015BF0D /* Loaders */ = {
 			isa = PBXGroup;
 			children = (
-				DC5EB900272D934E0015BF0D /* HomeView.swift */,
-				DC5EB903272D93830015BF0D /* ExploreView.swift */,
-				DC5EB905272D938E0015BF0D /* AccountView.swift */,
-				DC5EB917272DD2310015BF0D /* Home */,
-				DC90CA5A272E759100B758E7 /* Popups */,
+				DC4F9556272EB59200354E1D /* Projects */,
+				DC4F954F272EB3B600354E1D /* Issues */,
+				DC4F955A272EB74B00354E1D /* Merge Requests */,
+				DC4F9563272EBA0B00354E1D /* Discussion */,
 			);
-			path = Main;
+			path = Loaders;
 			sourceTree = "<group>";
 		};
-		DC5EB908272D93B30015BF0D /* Secondary */ = {
+		DC5EB908272D93B30015BF0D /* Single */ = {
 			isa = PBXGroup;
 			children = (
+				DC4F955F272EB8EE00354E1D /* ProjectView.swift */,
 				DC5EB90F272DA2450015BF0D /* IssueView.swift */,
-				DC5EB911272DB9D00015BF0D /* RepositoriesView.swift */,
+				DC4F9561272EB92200354E1D /* MergeView.swift */,
 			);
-			path = Secondary;
+			path = Single;
 			sourceTree = "<group>";
 		};
 		DC5EB90A272D954B0015BF0D /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				DC5EB90B272D955E0015BF0D /* API.swift */,
+				DC4F9569272EC3B100354E1D /* APIAnswers.swift */,
 				DC90CA62272E878900B758E7 /* Utils.swift */,
 			);
 			path = Core;
-			sourceTree = "<group>";
-		};
-		DC5EB917272DD2310015BF0D /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				DC5EB90D272D9C710015BF0D /* IssuesView.swift */,
-				DC5EB913272DBDA20015BF0D /* MergeRequestsView.swift */,
-				DC5EB915272DD1310015BF0D /* MemberReposView.swift */,
-			);
-			path = Home;
 			sourceTree = "<group>";
 		};
 		DC90CA5A272E759100B758E7 /* Popups */ = {
@@ -212,7 +268,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC5EB8FA272D924F0015BF0D /* Preview Assets.xcassets in Resources */,
 				DC5EB8F7272D924F0015BF0D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -225,20 +280,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */,
+				DC4F9568272EBA3F00354E1D /* MergeDiscussionLoader.swift in Sources */,
+				DC4F9562272EB92200354E1D /* MergeView.swift in Sources */,
 				DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */,
-				DC5EB914272DBDA20015BF0D /* MergeRequestsView.swift in Sources */,
-				DC5EB90E272D9C710015BF0D /* IssuesView.swift in Sources */,
+				DC5EB914272DBDA20015BF0D /* MergeListView.swift in Sources */,
+				DC5EB90E272D9C710015BF0D /* IssueListView.swift in Sources */,
 				DC90CA5C272E762200B758E7 /* NewIssueView.swift in Sources */,
+				DC4F955E272EB8A700354E1D /* ProjectMergeLoader.swift in Sources */,
 				DC90CA63272E878900B758E7 /* Utils.swift in Sources */,
 				DC5EB8F5272D924D0015BF0D /* ContentView.swift in Sources */,
-				DC5EB904272D93830015BF0D /* ExploreView.swift in Sources */,
+				DC4F955C272EB89900354E1D /* AllMergeLoader.swift in Sources */,
+				DC4F9558272EB5A900354E1D /* AllProjectsLoader.swift in Sources */,
 				DC90CA61272E78D900B758E7 /* SettingsView.swift in Sources */,
 				DC5EB8F3272D924D0015BF0D /* GitLabApp.swift in Sources */,
+				DC4F9552272EB49700354E1D /* AllIssuesLoader.swift in Sources */,
 				DC5EB90C272D955E0015BF0D /* API.swift in Sources */,
-				DC5EB912272DB9D00015BF0D /* RepositoriesView.swift in Sources */,
+				DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */,
 				DC5EB910272DA2450015BF0D /* IssueView.swift in Sources */,
-				DC5EB916272DD1310015BF0D /* MemberReposView.swift in Sources */,
+				DC5EB916272DD1310015BF0D /* MemberProjectsLoader.swift in Sources */,
+				DC4F9560272EB8EE00354E1D /* ProjectView.swift in Sources */,
 				DC5EB906272D938E0015BF0D /* AccountView.swift in Sources */,
+				DC4F956A272EC3B100354E1D /* APIAnswers.swift in Sources */,
+				DC4F9566272EBA3400354E1D /* IssueDiscussionLoader.swift in Sources */,
+				DC4F9554272EB4AF00354E1D /* ProjectIssuesLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,7 +450,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -415,7 +479,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

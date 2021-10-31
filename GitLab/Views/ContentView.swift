@@ -16,14 +16,12 @@ struct ContentView: View {
                     Text("Home")
                 }
                 .tag(0)
-            
-            ExploreView()
+            AllProjectsLoader()
                 .tabItem {
                     Image(systemName: "safari")
                     Text("Explore")
                 }
                 .tag(1)
-            
             AccountView()
                 .tabItem {
                     Image(systemName: "person")

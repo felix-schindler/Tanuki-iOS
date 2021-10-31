@@ -1,0 +1,54 @@
+//
+//  AllProjectsIssueLoader.swift
+//  GitLab
+//
+//  Created by Felix Schindler on 31.10.21.
+//
+
+import SwiftUI
+
+struct AllIssuesLoader: View {
+    @State var issues: [Issue]? = nil
+    @State var noConnection: Bool = false
+    
+    var body: some View {
+        NavigationView {
+            if (issues != nil) {
+                IssueListView(issues: issues!, updateFunction: getIssues)
+            } else {
+                if (noConnection) {
+                    Text("req_failed")
+                } else {
+                    Spacer()
+                    ProgressView("loading")
+                    Spacer()
+                }
+            }
+        }.onAppear {
+            Task.init {
+                await getIssues()
+            }
+        }.navigationTitle("Issues")
+    }
+    
+    private func getIssues() async -> Void {
+        do {
+            let apiData: Data? = API.GET(endpoint: "issues?state=opened")
+            if (apiData != nil) {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                issues = try decoder.decode([Issue].self, from: apiData!)
+            } else {
+                noConnection = true
+            }
+        } catch let jsonError as NSError {
+            print("JSON error \(jsonError.localizedDescription)")
+        }
+    }
+}
+
+struct AllIssuesLoader_Previews: PreviewProvider {
+    static var previews: some View {
+        AllIssuesLoader()
+    }
+}
