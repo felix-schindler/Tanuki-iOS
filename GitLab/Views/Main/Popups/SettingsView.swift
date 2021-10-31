@@ -14,10 +14,13 @@ struct SettingsView: View {
     @State var url = ""
     @State var token = ""
     
+    @State var isError: Bool = false
+    
     var body: some View {
         NavigationView {
-            // TODO implement
             VStack {
+                Text("Change GitLab server")
+                    .font(.title)
                 TextField("New GitLab URL", text: $url)
                     .padding()
                     .textContentType(.URL)
@@ -30,10 +33,11 @@ struct SettingsView: View {
                     .background(Color(.systemGray5))
                     .cornerRadius(10)
                 Button(action: {
-                    API.setBase(url: url)
-                    API.setToken(token: token)
+                    isError = !validGitConfig()
                 }, label: {
                     Text("Save configuration").frame(maxWidth: .infinity)
+                }).alert(isPresented: $isError, content: {
+                    Alert(title: Text("Error"), message: Text("Invalid configuration, check the entered url and token"), dismissButton: .default(Text("OK")))
                 }).tint(.accentColor)
                 .buttonStyle(.borderedProminent)
                 .buttonBorderShape(.roundedRectangle)
@@ -41,6 +45,34 @@ struct SettingsView: View {
             }.padding()
             .navigationBarTitle("Settings")
             .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
+        }
+    }
+    
+    private func validGitConfig() -> Bool {
+        let oldUrl = API.base, oldToken = API.token
+        
+        API.base = url
+        API.token = token
+
+        do {
+            let apiData: Data? = API.GET(endpoint: "user")
+            if (apiData != nil) {
+                var user: User
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                user = try decoder.decode(User.self, from: apiData!)
+                print(user.name + " logged in")
+                return true
+            } else {
+                API.base = oldUrl
+                API.token = oldToken
+                return false
+            }
+        } catch let jsonError as NSError {
+            print("JSON error \(jsonError.localizedDescription)")
+            API.base = oldUrl
+            API.token = oldToken
+            return false
         }
     }
 }

@@ -9,17 +9,9 @@ import Foundation
 import SwiftUI
 
 class API {
-    @AppStorage("api_base") private static var base: String = "https://gitlab.mi.hdm-stuttgart.de/api/v4/"
-    @AppStorage("token") private static var token: String = "s45iJhBUikdyjsj9x3yt"
-    
-    public static func setBase(url: String) -> Void {
-        API.base = url
-    }
-    
-    public static func setToken(token: String) -> Void {
-        API.token = token
-    }
-    
+    @AppStorage("api_base") public static var base: String = "https://gitlab.mi.hdm-stuttgart.de/api/v4/"
+    @AppStorage("token") public static var token: String = "s45iJhBUikdyjsj9x3yt"
+        
     /**
      Make a GET request to an API endpoint
      
