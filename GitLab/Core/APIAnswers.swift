@@ -16,6 +16,9 @@ struct Project: Decodable {
     var sshUrlToRepo: String
     var forksCount: Int
     var starCount: Int
+    var issuesEnabled: Bool
+    var openIssuesCount: Int
+    var mergeRequestsEnabled: Bool
 }
 
 struct User: Decodable {
@@ -80,7 +83,7 @@ struct Event: Decodable {
     var author: UserSmall
 }
 
-/* UNUSED struct PushData: Decodable {
+/* TODO UNUSED struct PushData: Decodable {
     var refType: String
     var ref: String
     var commitTitle: String

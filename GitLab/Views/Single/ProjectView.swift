@@ -59,6 +59,26 @@ struct ProjectView: View {
             }
             Spacer()
         }.padding()
+        List {
+            if (project.issuesEnabled) {
+                NavigationLink(destination: ProjectIssuesLoader(project.id)) {
+                    HStack {
+                        Image(systemName: "square.on.square")
+                        Text("Issues")
+                        Spacer()
+                        Text(String(project.openIssuesCount))
+                    }
+                }
+            }
+            if (project.mergeRequestsEnabled) {
+                NavigationLink(destination: ProjectMergeLoader(project.id)) {
+                    HStack {
+                        Image(systemName: "arrow.merge")
+                        Text("Merge Requests")
+                    }
+                }
+            }
+        }
         .navigationTitle(project.name)
     }
 }

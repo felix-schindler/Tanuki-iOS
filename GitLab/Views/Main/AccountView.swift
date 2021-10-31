@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AccountView: View {    
+struct AccountView: View {
     @State var user: User? = nil
     @State var status: UserStatus? = nil
     @State var noConnection: Bool = false

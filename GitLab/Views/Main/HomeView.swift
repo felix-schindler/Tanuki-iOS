@@ -35,13 +35,15 @@ struct HomeView: View {
                         }
                     }
                 }.headerProminence(.increased)
-                Section (header: Text("Starred repositories")) {
+                Section (header: Text("Starred projects")) {
                     if (starredProjects != nil && !(starredProjects!.isEmpty)) {
                         ForEach(starredProjects!, id: \.id) { project in
-                            Text(project.nameWithNamespace)
+                            NavigationLink(destination: ProjectView(project: project)) {
+                                Text(project.nameWithNamespace)
+                            } // TODO unstar swipe
                         }
                     } else {
-                        Text("No starred repositories")
+                        Text("No starred projects")
                     }
                 }.headerProminence(.increased)
             }.onAppear {
