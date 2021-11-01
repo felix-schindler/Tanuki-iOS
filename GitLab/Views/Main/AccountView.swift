@@ -77,7 +77,7 @@ struct AccountView: View {
                     }
                 } else {
                     if (noConnection) {
-                        Text("No internet connection")
+                        Text("Failed to load, please check your internet connection and your token")
                             .foregroundColor(.red)
                     } else {
                         Spacer()

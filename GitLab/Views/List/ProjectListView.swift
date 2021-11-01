@@ -12,28 +12,41 @@ struct ProjectListView: View {
     @State var updateFunction: () async -> Void
 
     var body: some View {
-        List(projects, id: \.id) { project in
-            NavigationLink(destination: ProjectView(project: project)) {
-                if (project.avatarUrl != nil) {
+        if (projects.isEmpty) {
+            Text("No projects")
+        } else {
+            List(projects, id: \.id) { project in
+                NavigationLink(destination: ProjectView(project: project)) {
                     HStack {
-                        AsyncImage(url: URL(string: project.avatarUrl!)) { phase in
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                                    .cornerRadius(10)
-                            case .failure:
-                                Text("img_load_err")
-                            @unknown default:
-                                Text("unkown_err")
-                            }
-                        }.frame(width: 50, height: 50, alignment: .leading)
+                        if (project.avatarUrl != nil || project.owner != nil) {
+                            AsyncImage(url: URL(string: project.avatarUrl ?? project.owner!.avatarUrl)) { phase in
+                                switch phase {
+                                case .empty:
+                                    ProgressView()
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                        .cornerRadius(10)
+                                case .failure:
+                                    Text("Failed to load")
+                                @unknown default:
+                                    Text("Unkown error")
+                                }
+                            }.frame(width: 50, height: 50, alignment: .leading)
+                        }
                         VStack {
-                            Text(project.nameWithNamespace)
-                                .frame(maxWidth: .infinity, alignment: .leading)
+                            HStack {
+                                Text(project.nameWithNamespace)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                if (project.visibility == "private") {
+                                    Image(systemName: "lock")
+                                } else if (project.visibility == "internal") {
+                                    Image(systemName: "shield.lefthalf.filled")
+                                } else if (project.visibility == "public") {
+                                    Image(systemName: "globe")
+                                }
+                            }
                             if (project.description != "") {
                                 Text(project.description)
                                     .foregroundColor(.secondary)
@@ -41,29 +54,16 @@ struct ProjectListView: View {
                             }
                         }
                     }
-                } else {
-                    if (project.description != "") {
-                        VStack {
-                            Text(project.nameWithNamespace)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            Text(project.description)
-                                .foregroundColor(.secondary)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                    } else {
-                        Text(project.nameWithNamespace)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
+                }.swipeActions {
+                    Button {
+                        print("Implement start project")
+                    } label: {
+                        Image(systemName: "star")
+                    }.tint(.yellow)
                 }
-            }.swipeActions {
-                Button {
-                    print("Implement start project")
-                } label: {
-                    Image(systemName: "star")
-                }.tint(.yellow)
+            }.refreshable {
+                await updateFunction()
             }
-        }.refreshable {
-            await updateFunction()
         }
     }
 }

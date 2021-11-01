@@ -12,20 +12,24 @@ struct MergeListView: View {
     @State var updateFunction: () async -> Void
     
     var body: some View {
-        List(mergeRequests, id: \.id) { mr in
-            NavigationLink(destination: MergeView(mergeRequest: mr)) {
-                HStack {
-                    Text(mr.title)
-                    Spacer()
-                    VStack(alignment: .trailing) {
-                        Text(mr.author.name)
-                        Text(mr.references.full)
-                    }.foregroundColor(.secondary)
-                    .font(.caption)
+        if (mergeRequests.isEmpty) {
+            Text("No merge requests")
+        } else {
+            List(mergeRequests, id: \.id) { mr in
+                NavigationLink(destination: MergeView(mergeRequest: mr)) {
+                    HStack {
+                        Text(mr.title)
+                        Spacer()
+                        VStack(alignment: .trailing) {
+                            Text(mr.author.name)
+                            Text(mr.references.full)
+                        }.foregroundColor(.secondary)
+                        .font(.caption)
+                    }
                 }
+            }.refreshable {
+                await updateFunction()
             }
-        }.refreshable {
-            await updateFunction()
         }
     }
 }

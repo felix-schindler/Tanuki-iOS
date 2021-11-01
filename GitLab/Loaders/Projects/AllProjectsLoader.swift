@@ -17,7 +17,7 @@ struct AllProjectsLoader: View {
                 ProjectListView(projects: projects!, updateFunction: getProjects)
             } else {
                 if (noConnection) {
-                    Text("req_failed")
+                    Text("Failed to load, please check your internet connection and your token")
                 } else {
                     Spacer()
                     ProgressView("loading")

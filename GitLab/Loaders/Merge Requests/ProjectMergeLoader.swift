@@ -18,11 +18,11 @@ struct ProjectMergeLoader: View {
                 MergeListView(mergeRequests: mergeRequests!, updateFunction: getMRs)
             } else {
                 if (noConnection) {
-                    Text("req_failed")
+                    Text("Failed to load, please check your internet connection and your token")
                 } else {
                     VStack {
                         Spacer()
-                        ProgressView("loading")
+                        ProgressView("Loading")
                         Spacer()
                     }
                 }

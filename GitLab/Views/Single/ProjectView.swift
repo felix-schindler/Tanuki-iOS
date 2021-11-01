@@ -12,74 +12,49 @@ struct ProjectView: View {
     
     var body: some View {
         ScrollView {
-            VStack {
-                Text("meta")
+            VStack(alignment: .leading) {
+                Text("Details")
                     .font(.headline)
-                    .padding(.top)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                if (project.avatarUrl != nil) {
-                    AsyncImage(url: URL(string: project.avatarUrl!)) { phase in
-                        switch phase {
-                        case .empty:
-                            ProgressView()
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 200, height: 200)
-                                .cornerRadius(10)
-                        case .failure:
-                            EmptyView()
-                        @unknown default:
-                            EmptyView()
-                        }
-                    }
-                }
-                VStack {
-                    HStack {
-                        Image(systemName: "folder")
-                        Text(project.nameWithNamespace)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    HStack {
-                        VStack {
-                            Image(systemName: "fork.knife")
-                            Text(String(project.forksCount))
-                        }
-                        VStack {
-                            Image(systemName: "star")
-                            Text(String(project.starCount))
-                        }
-                    }.frame(maxWidth: .infinity, alignment: .leading)
-                }.frame(maxWidth: .infinity, alignment: .leading)
-                Text("project_id")
-                    .font(.headline)
-                    .padding(.top)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text(String(project.id))
-                    .frame(maxWidth: .infinity, alignment: .leading)
                 if (project.description != "") {
-                    Text("description")
-                        .font(.headline)
-                        .padding(.top)
-                        .frame(maxWidth: .infinity, alignment: .leading)
                     Text(project.description)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                VStack {
-                    Text("URL (http and ssh)")
-                        .font(.headline)
-                        .padding(.top)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Link(project.httpUrlToRepo, destination: URL(string: project.httpUrlToRepo)!)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Link(project.sshUrlToRepo, destination: URL(string: project.sshUrlToRepo)!)
+                HStack {
+                    if (project.avatarUrl != nil) {
+                        AsyncImage(url: URL(string: project.avatarUrl!)) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50, height: 50)
+                                    .cornerRadius(10)
+                            case .failure:
+                                EmptyView()
+                            @unknown default:
+                                EmptyView()
+                            }
+                        }
+                    }
+                    Text(project.nameWithNamespace)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                Spacer()
+                HStack {
+                    HStack {
+                        Image(systemName: "star")
+                        Text(String(project.starCount) + " stars")
+                    }
+                    Text(" · ")
+                    HStack {
+                        Image(systemName: "tuningfork")
+                        Text(String(project.forksCount) + " forks")
+                    }
+                }
             }.padding()
             VStack(alignment: .leading) {
-                Text("")
+                Text("Issues and Merge Requests")
                     .font(.headline)
                 if (project.issuesEnabled) {
                     NavigationLink(destination: ProjectIssuesLoader(id: project.id)) {
@@ -87,10 +62,10 @@ struct ProjectView: View {
                             Image(systemName: "square.on.square")
                             Text("Issues")
                             Spacer()
-                            // Text(String(project.openIssuesCount))
+                            Text(String(project.openIssuesCount!))
                         }
-                    }.tint(.accentColor)
-                    .buttonStyle(.borderedProminent)
+                    }.foregroundColor(.primary)
+                    .buttonStyle(.bordered)
                     .buttonBorderShape(.roundedRectangle)
                     .controlSize(.large)
                 }
@@ -101,8 +76,8 @@ struct ProjectView: View {
                             Text("Merge Requests")
                             Spacer()
                         }
-                    }.tint(.accentColor)
-                    .buttonStyle(.borderedProminent)
+                    }.foregroundColor(.primary)
+                    .buttonStyle(.bordered)
                     .buttonBorderShape(.roundedRectangle)
                     .controlSize(.large)
                 }
@@ -114,6 +89,6 @@ struct ProjectView: View {
 
 struct ProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectView(project: Project(id: 0, description: "", name: "No project", nameWithNamespace: "", sshUrlToRepo: "", httpUrlToRepo: "", forksCount: 0, starCount: 0, issuesEnabled: false, /* openIssuesCount: 0, */ mergeRequestsEnabled: false))
+        ProjectView(project: Project(id: 0, description: "", name: "No project", nameWithNamespace: "", sshUrlToRepo: "", httpUrlToRepo: "", forksCount: 0, starCount: 0, visibility: "", owner: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), issuesEnabled: false, mergeRequestsEnabled: false))
     }
 }

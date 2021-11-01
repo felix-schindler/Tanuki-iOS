@@ -34,6 +34,7 @@
 		DC90CA61272E78D900B758E7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA60272E78D900B758E7 /* SettingsView.swift */; };
 		DC90CA63272E878900B758E7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA62272E878900B758E7 /* Utils.swift */; };
 		DCAAE3E8272F096A00A7C89B /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAE3E7272F096A00A7C89B /* AboutView.swift */; };
+		DCBC391327300A6C00EF502F /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = DCBC391227300A6C00EF502F /* MarkdownUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCBC391327300A6C00EF502F /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +234,9 @@
 			dependencies = (
 			);
 			name = GitLab;
+			packageProductDependencies = (
+				DCBC391227300A6C00EF502F /* MarkdownUI */,
+			);
 			productName = GitLab;
 			productReference = DC5EB8EF272D924D0015BF0D /* GitLab.app */;
 			productType = "com.apple.product-type.application";
@@ -260,6 +265,9 @@
 				Base,
 			);
 			mainGroup = DC5EB8E6272D924D0015BF0D;
+			packageReferences = (
+				DCBC391127300A6C00EF502F /* XCRemoteSwiftPackageReference "MarkdownUI" */,
+			);
 			productRefGroup = DC5EB8F0272D924D0015BF0D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -513,6 +521,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DCBC391127300A6C00EF502F /* XCRemoteSwiftPackageReference "MarkdownUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/MarkdownUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DCBC391227300A6C00EF502F /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DCBC391127300A6C00EF502F /* XCRemoteSwiftPackageReference "MarkdownUI" */;
+			productName = MarkdownUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DC5EB8E7272D924D0015BF0D /* Project object */;
 }

@@ -6,38 +6,31 @@
 //
 
 import SwiftUI
+import MarkdownUI
 
 struct IssueView: View {
     @State var issue: Issue
     
     var body: some View {
-        VStack {
+        ScrollView {
             VStack(alignment: .leading) {
-                VStack(alignment: .leading) {
-                    Text("meta")
-                        .font(.headline)
+                HStack {
                     HStack {
-                        Image(systemName: "folder")
-                        Text("Project: " + issue.references.full)
+                        Image(systemName: "square.on.square")
+                        Text(issue.references.full)
                     }
+                    Spacer()
                     HStack {
                         Image(systemName: "person")
-                        Text("Author: " + issue.author.name)
+                        Text(issue.author.username)
                     }
-                }
-                Text("title")
-                    .font(.headline)
-                    .padding(.top)
+                }.foregroundColor(.secondary)
                 Text(issue.title)
-                Text("description")
-                    .font(.headline)
+                    .font(.title)
                     .padding(.top)
                 if (issue.description != "") {
-                    Text(issue.description)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                } else {
-                    Text("No description available")
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Markdown(Document(issue.description))
+                       .multilineTextAlignment(.leading)
                 }
             }.padding(.horizontal)
             List {
@@ -61,7 +54,6 @@ struct IssueView: View {
                     }
                 }
             }
-            Spacer()
         }.navigationTitle(issue.title)
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -69,6 +61,6 @@ struct IssueView: View {
 
 struct IssueView_Previews: PreviewProvider {
     static var previews: some View {
-        IssueView(issue: Issue(id: 0, iid: 0, title: "No issue given", description: "❌", assignees: nil, author: UserSmall(id: 0, name: "", username: ""), references: Reference(full: "lost/lost#1")))
+        IssueView(issue: Issue(id: 0, iid: 0, title: "No issue given", description: "❌", assignees: nil, author: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), references: Reference(full: "lost/lost#1")))
     }
 }

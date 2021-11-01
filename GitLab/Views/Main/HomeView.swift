@@ -39,8 +39,18 @@ struct HomeView: View {
                     if (starredProjects != nil && !(starredProjects!.isEmpty)) {
                         ForEach(starredProjects!, id: \.id) { project in
                             NavigationLink(destination: ProjectView(project: project)) {
-                                Text(project.nameWithNamespace)
-                            } // TODO unstar swipe
+                                HStack {
+                                    Text(project.nameWithNamespace)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    if (project.visibility == "private") {
+                                        Image(systemName: "lock")
+                                    } else if (project.visibility == "internal") {
+                                        Image(systemName: "shield.lefthalf.filled")
+                                    } else if (project.visibility == "public") {
+                                        Image(systemName: "globe")
+                                    }
+                                }
+                            } // TODO (un)star swipe
                         }
                     } else {
                         Text("No starred projects")

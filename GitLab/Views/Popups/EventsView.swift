@@ -47,12 +47,14 @@ struct EventsView: View {
     }
     
     private func getStupidText(event: Event) -> String {
-        var ret: String = event.author.name
+        var ret: String = event.author.username
         ret += " " + event.actionName
         if (event.targetType != nil) {
             ret += " \(event.targetType!)"
         }; if (event.targetTitle != nil) {
             ret += " '\(event.targetTitle!)'"
+        }; if (event.pushData != nil) {
+            ret += " '\(event.pushData!.ref)'"
         }
         return ret.trim()
     }

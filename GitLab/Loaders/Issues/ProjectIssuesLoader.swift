@@ -18,10 +18,10 @@ struct ProjectIssuesLoader: View {
                 IssueListView(issues: issues!, updateFunction: getIssues)
             } else {
                 if (noConnection) {
-                    Text("req_failed")
+                    Text("Failed to load, please check your internet connection and your token")
                 } else {
                     Spacer()
-                    ProgressView("loading")
+                    ProgressView("Loading")
                     Spacer()
                 }
             }

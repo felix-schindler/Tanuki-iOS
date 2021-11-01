@@ -17,8 +17,10 @@ struct Project: Decodable {
     var avatarUrl: String?
     var forksCount: Int
     var starCount: Int
+    var visibility: String
+    var owner: UserSmall? = nil
     var issuesEnabled: Bool
-    // var openIssuesCount: Int
+    var openIssuesCount: Int? = 0
     var mergeRequestsEnabled: Bool
 }
 
@@ -39,6 +41,7 @@ struct UserSmall: Decodable, Identifiable {
     var id: Int
     var name: String
     var username: String
+    var avatarUrl: String
 }
 
 struct UserStatus: Decodable {
@@ -80,12 +83,12 @@ struct Event: Decodable {
     var actionName: String
     var targetType: String? = ""
     var targetTitle: String? = ""
-    // var pushData: PushData? = nil
+    var pushData: PushData? = nil
     var author: UserSmall
 }
 
-/* TODO UNUSED struct PushData: Decodable {
+struct PushData: Decodable {
     var refType: String
     var ref: String
-    var commitTitle: String
-} */
+    var commitTitle: String? = nil
+}

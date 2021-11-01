@@ -14,28 +14,32 @@ struct IssueListView: View {
     @State var showNewIssue: Bool = false
 
     var body: some View {
-        List(issues, id: \.id) { issue in
-            NavigationLink(destination: IssueView(issue: issue)) {
-                HStack {
-                    Text(issue.title)
-                    Spacer()
-                    VStack(alignment: .trailing) {
-                        Text(issue.author.name)
-                        Text(issue.references.full)
-                    }.foregroundColor(.secondary)
-                    .font(.caption)
+        if (issues.isEmpty) {
+            Text("No issues")
+        } else {
+            List(issues, id: \.id) { issue in
+                NavigationLink(destination: IssueView(issue: issue)) {
+                    HStack {
+                        Text(issue.title)
+                        Spacer()
+                        VStack(alignment: .trailing) {
+                            Text(issue.author.name)
+                            Text(issue.references.full)
+                        }.foregroundColor(.secondary)
+                        .font(.caption)
+                    }
                 }
-            }
-        }.refreshable {
-            await updateFunction()
-        }.toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button(action: {showNewIssue = true}) {
-                    Image(systemName: "plus.circle")
+            }.refreshable {
+                await updateFunction()
+            }.toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button(action: {showNewIssue = true}) {
+                        Image(systemName: "plus.circle")
+                    }
                 }
+            }.sheet(isPresented: $showNewIssue) {
+                NewIssueView()
             }
-        }.sheet(isPresented: $showNewIssue) {
-            NewIssueView()
         }
     }
 }

@@ -6,37 +6,30 @@
 //
 
 import SwiftUI
+import MarkdownUI
 
 struct MergeView: View {
     @State var mergeRequest: MergeRequest
     
     var body: some View {
         VStack {
-            VStack {
-                Text("reference")
-                    .font(.headline)
-                    .padding(.top)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text(mergeRequest.references.full)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text("author")
-                    .font(.headline)
-                    .padding(.top)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text(mergeRequest.author.name)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text("title")
-                    .font(.headline)
-                    .padding(.top)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            VStack(alignment: .leading) {
+                HStack {
+                    HStack {
+                        Image(systemName: "arrow.merge")
+                        Text(mergeRequest.references.full)
+                    }
+                    Spacer()
+                    HStack {
+                        Image(systemName: "person")
+                        Text(mergeRequest.author.username)
+                    }
+                }.foregroundColor(.secondary)
                 Text(mergeRequest.title)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text("description")
-                    .font(.headline)
+                    .font(.title)
                     .padding(.top)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text(mergeRequest.description)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                Markdown(Document(mergeRequest.description))
+                    .multilineTextAlignment(.leading)
                 Text("votes")
                     .font(.headline)
                     .padding(.top)
@@ -76,11 +69,12 @@ struct MergeView: View {
             }
             Spacer()
         }.navigationTitle(mergeRequest.title)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct MergeView_Previews: PreviewProvider {
     static var previews: some View {
-        MergeView(mergeRequest: MergeRequest(id: 0, iid: 0, title: "No merge request", description: "", userNotesCount: 0, upvotes: 0, downvotes: 0, author: UserSmall(id: 0, name: "", username: ""), assignees: [UserSmall](), reviewers: [UserSmall](), labels: [""], references: Reference(full: "")))
+        MergeView(mergeRequest: MergeRequest(id: 0, iid: 0, title: "No merge request", description: "", userNotesCount: 0, upvotes: 0, downvotes: 0, author: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), assignees: [UserSmall](), reviewers: [UserSmall](), labels: [""], references: Reference(full: "")))
     }
 }
