@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC0897FD2730516600B8ACDA /* NoteListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0897FC2730516600B8ACDA /* NoteListView.swift */; };
 		DC4F9552272EB49700354E1D /* AllIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */; };
 		DC4F9554272EB4AF00354E1D /* ProjectIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */; };
 		DC4F9558272EB5A900354E1D /* AllProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */; };
@@ -14,8 +15,7 @@
 		DC4F955E272EB8A700354E1D /* ProjectMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F955D272EB8A700354E1D /* ProjectMergeLoader.swift */; };
 		DC4F9560272EB8EE00354E1D /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F955F272EB8EE00354E1D /* ProjectView.swift */; };
 		DC4F9562272EB92200354E1D /* MergeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9561272EB92200354E1D /* MergeView.swift */; };
-		DC4F9566272EBA3400354E1D /* IssueDiscussionLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9565272EBA3400354E1D /* IssueDiscussionLoader.swift */; };
-		DC4F9568272EBA3F00354E1D /* MergeDiscussionLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9567272EBA3F00354E1D /* MergeDiscussionLoader.swift */; };
+		DC4F9568272EBA3F00354E1D /* DiscussionsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9567272EBA3F00354E1D /* DiscussionsLoader.swift */; };
 		DC4F956A272EC3B100354E1D /* APIAnswers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9569272EC3B100354E1D /* APIAnswers.swift */; };
 		DC4F956E272ECD0100354E1D /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F956D272ECD0100354E1D /* ExploreView.swift */; };
 		DC5EB8F3272D924D0015BF0D /* GitLabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB8F2272D924D0015BF0D /* GitLabApp.swift */; };
@@ -38,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DC0897FC2730516600B8ACDA /* NoteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListView.swift; sourceTree = "<group>"; };
 		DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllIssuesLoader.swift; sourceTree = "<group>"; };
 		DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectIssuesLoader.swift; sourceTree = "<group>"; };
 		DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsLoader.swift; sourceTree = "<group>"; };
@@ -45,8 +46,7 @@
 		DC4F955D272EB8A700354E1D /* ProjectMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMergeLoader.swift; sourceTree = "<group>"; };
 		DC4F955F272EB8EE00354E1D /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		DC4F9561272EB92200354E1D /* MergeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeView.swift; sourceTree = "<group>"; };
-		DC4F9565272EBA3400354E1D /* IssueDiscussionLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueDiscussionLoader.swift; sourceTree = "<group>"; };
-		DC4F9567272EBA3F00354E1D /* MergeDiscussionLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeDiscussionLoader.swift; sourceTree = "<group>"; };
+		DC4F9567272EBA3F00354E1D /* DiscussionsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionsLoader.swift; sourceTree = "<group>"; };
 		DC4F9569272EC3B100354E1D /* APIAnswers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAnswers.swift; sourceTree = "<group>"; };
 		DC4F956D272ECD0100354E1D /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		DC5EB8EF272D924D0015BF0D /* GitLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +95,7 @@
 				DC5EB911272DB9D00015BF0D /* ProjectListView.swift */,
 				DC5EB90D272D9C710015BF0D /* IssueListView.swift */,
 				DC5EB913272DBDA20015BF0D /* MergeListView.swift */,
+				DC0897FC2730516600B8ACDA /* NoteListView.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -130,8 +131,7 @@
 		DC4F9563272EBA0B00354E1D /* Discussion */ = {
 			isa = PBXGroup;
 			children = (
-				DC4F9565272EBA3400354E1D /* IssueDiscussionLoader.swift */,
-				DC4F9567272EBA3F00354E1D /* MergeDiscussionLoader.swift */,
+				DC4F9567272EBA3F00354E1D /* DiscussionsLoader.swift */,
 			);
 			path = Discussion;
 			sourceTree = "<group>";
@@ -294,7 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */,
-				DC4F9568272EBA3F00354E1D /* MergeDiscussionLoader.swift in Sources */,
+				DC4F9568272EBA3F00354E1D /* DiscussionsLoader.swift in Sources */,
 				DC4F9562272EB92200354E1D /* MergeView.swift in Sources */,
 				DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */,
 				DCAAE3E8272F096A00A7C89B /* AboutView.swift in Sources */,
@@ -305,6 +305,7 @@
 				DC90CA63272E878900B758E7 /* Utils.swift in Sources */,
 				DC5EB8F5272D924D0015BF0D /* ContentView.swift in Sources */,
 				DC4F955C272EB89900354E1D /* AllMergeLoader.swift in Sources */,
+				DC0897FD2730516600B8ACDA /* NoteListView.swift in Sources */,
 				DC4F9558272EB5A900354E1D /* AllProjectsLoader.swift in Sources */,
 				DC90CA61272E78D900B758E7 /* SettingsView.swift in Sources */,
 				DC5EB8F3272D924D0015BF0D /* GitLabApp.swift in Sources */,
@@ -317,7 +318,6 @@
 				DC4F9560272EB8EE00354E1D /* ProjectView.swift in Sources */,
 				DC5EB906272D938E0015BF0D /* AccountView.swift in Sources */,
 				DC4F956A272EC3B100354E1D /* APIAnswers.swift in Sources */,
-				DC4F9566272EBA3400354E1D /* IssueDiscussionLoader.swift in Sources */,
 				DC4F9554272EB4AF00354E1D /* ProjectIssuesLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

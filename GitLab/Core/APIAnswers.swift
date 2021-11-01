@@ -51,6 +51,7 @@ struct UserStatus: Decodable {
 struct Issue: Decodable {
     var id: Int
     var iid: Int
+    var projectId: Int
     var title: String
     var description: String
     var assignees: [UserSmall]?
@@ -66,6 +67,7 @@ struct Reference: Decodable {
 struct MergeRequest: Decodable {
     var id: Int
     var iid: Int
+    var projectId: Int
     var title: String
     var description: String
     var userNotesCount: Int
@@ -91,4 +93,15 @@ struct PushData: Decodable {
     var refType: String
     var ref: String
     var commitTitle: String? = nil
+}
+
+struct Discussion: Decodable {
+    var id: String
+    var notes: [Note]
+}
+
+struct Note: Decodable {
+    var id: Int
+    var body: String
+    var author: UserSmall
 }

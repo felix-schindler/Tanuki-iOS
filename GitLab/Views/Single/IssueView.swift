@@ -33,27 +33,33 @@ struct IssueView: View {
                        .multilineTextAlignment(.leading)
                 }
             }.padding(.horizontal)
-            List {
-                if (issue.assignees != nil && !(issue.assignees!.isEmpty)) {
-                    Section(header: Text("Assignees")) {
-                        ForEach(issue.assignees!, id: \.id) { assignee in
-                            HStack {
-                                Text(assignee.name)
-                                Spacer()
-                                Text(assignee.username)
-                                    .foregroundColor(.secondary)
-                            }
+            if (issue.assignees != nil && !(issue.assignees!.isEmpty)) {
+                VStack {
+                    Text("Assignees")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    ForEach(issue.assignees!, id: \.id) { assignee in
+                        HStack {
+                            Text(assignee.name)
+                            Spacer()
+                            Text(assignee.username)
+                                .foregroundColor(.secondary)
                         }
                     }
-                }
-                if (issue.labels != nil && !(issue.labels!.isEmpty)) {
-                    Section(header: Text("Labels")) {
-                        ForEach(issue.labels!, id: \.self) { label in
-                            Text(label)
-                        }
-                    }
-                }
+                }.padding()
             }
+            if (issue.labels != nil && !(issue.labels!.isEmpty)) {
+                VStack {
+                    Text("Labels")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    ForEach(issue.labels!, id: \.self) { label in
+                        Text(label)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }.padding()
+            }
+            DiscussionsLoader(id: issue.projectId, iid: issue.iid, type: discussionType.Issue)
         }.navigationTitle(issue.title)
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -61,6 +67,6 @@ struct IssueView: View {
 
 struct IssueView_Previews: PreviewProvider {
     static var previews: some View {
-        IssueView(issue: Issue(id: 0, iid: 0, title: "No issue given", description: "❌", assignees: nil, author: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), references: Reference(full: "lost/lost#1")))
+        IssueView(issue: Issue(id: 0, iid: 0, projectId: 0, title: "No issue given", description: "❌", assignees: nil, author: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), references: Reference(full: "lost/lost#1")))
     }
 }
