@@ -73,6 +73,7 @@ struct ProjectView: View {
                         Text(String(project.forksCount) + " forks")
                     }
                 }
+                PipelineLoader(id: project.id, branch: project.defaultBranch, statusHorizontal: true)
             }.padding()
             HStack {
                 Button(action: {showCommits = true}) {

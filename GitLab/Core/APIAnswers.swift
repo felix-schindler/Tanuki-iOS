@@ -131,3 +131,9 @@ struct Branch: Decodable {
     var developersCanMerge: Bool
     var canPush: Bool
 }
+
+struct Pipeline: Decodable {
+    var id: Int
+    var ref: String
+    var status: String
+}
