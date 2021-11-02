@@ -7,27 +7,27 @@
 
 import SwiftUI
 
-struct PiepelineStatusView: View {
+struct PipelineStatusView: View {
     @State var pipeline: Pipeline
-    @State var horizonzal: Bool = false
-
+    @State var horizontal: Bool = false
+    @State var showStatus: Bool = false
+    
     var body: some View {
-        if (horizonzal) {
+        if (horizontal) {
             HStack {
                 if (pipeline.status == "success") {
                     Image(systemName: "checkmark.circle")
                         .foregroundColor(.green)
-                    Text(pipeline.status.firstCapitalized)
                 } else if (pipeline.status == "failed") {
                     Image(systemName: "minus.circle")
                         .foregroundColor(.red)
-                    Text(pipeline.status.firstCapitalized)
                 } else if (pipeline.status == "canceled") {
                     Image(systemName: "slash.circle")
-                    Text(pipeline.status.firstCapitalized)
                 } else {
                     Image(systemName: "arrow.2.circlepath.circle")
                         .foregroundColor(.orange)
+                }
+                if (showStatus) {
                     Text(pipeline.status.firstCapitalized)
                 }
             }
@@ -36,17 +36,16 @@ struct PiepelineStatusView: View {
                 if (pipeline.status == "success") {
                     Image(systemName: "checkmark.circle")
                         .foregroundColor(.green)
-                    Text(pipeline.status.firstCapitalized)
                 } else if (pipeline.status == "failed") {
                     Image(systemName: "minus.circle")
                         .foregroundColor(.red)
-                    Text(pipeline.status.firstCapitalized)
                 } else if (pipeline.status == "canceled") {
                     Image(systemName: "slash.circle")
-                    Text(pipeline.status.firstCapitalized)
                 } else {
                     Image(systemName: "arrow.2.circlepath.circle")
                         .foregroundColor(.orange)
+                }
+                if (showStatus) {
                     Text(pipeline.status.firstCapitalized)
                 }
             }
@@ -54,8 +53,8 @@ struct PiepelineStatusView: View {
     }
 }
 
-struct MergeView_Previews: PreviewProvider {
+struct PipelineStatusView_Previews: PreviewProvider {
     static var previews: some View {
-        PiepelineStatusView(pipeline: Pipeline())
+        PipelineStatusView(pipeline: Pipeline(id: Int(), ref: String(), status: String()))
     }
 }

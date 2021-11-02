@@ -14,46 +14,26 @@ struct SettingsView: View {
     @State var url = ""
     @State var token = ""
     
-    @State var isError: Bool = false
-    @State var showAbout: Bool = false
+    @State var showChangeConfig: Bool = false
     
     var body: some View {
         NavigationView {
             VStack {
                 Spacer()
-                VStack {
-                    Text("Change GitLab server")
-                        .font(.title)
-                    TextField("New GitLab URL", text: $url)
-                        .padding()
-                        .textContentType(.URL)
-                        .keyboardType(.URL)
-                        .background(Color(.systemGray5))
-                        .cornerRadius(10)
-                    TextField("New GitLab Token", text: $token)
-                        .padding()
-                        .disableAutocorrection(true)
-                        .background(Color(.systemGray5))
-                        .cornerRadius(10)
-                    Button(action: {
-                        isError = !validGitConfig()
-                    }, label: {
-                        Text("Save configuration").frame(maxWidth: .infinity)
-                    }).alert(isPresented: $isError, content: {
-                        Alert(title: Text("Error"), message: Text("Invalid configuration, check the entered url and token"), dismissButton: .default(Text("OK")))
-                    }).tint(.accentColor)
-                    .buttonStyle(.borderedProminent)
-                    .buttonBorderShape(.roundedRectangle)
-                    .controlSize(.large)
-                }.padding()
-                Spacer()
-                Button (action: {showAbout = true}) {
-                    Text("About this app")
+                Button(action: {showChangeConfig = true}) {
+                    Text("Change GitLab configuration")
                 }
                 Spacer()
-            }.sheet(isPresented: $showAbout) {
-                AboutView()
-            }.navigationBarTitle("Settings")
+                HStack {
+                    Text("Made with ❤️‍🔥 by")
+                    Link("Felix Schindler", destination: URL(string: "https://schindlerfelix.de")!)
+                }
+                Link("Find this App on GitHub", destination: URL(string: "https://github.com/felix-schindler/gitlab_ios")!)
+                Spacer()
+            }.sheet(isPresented: $showChangeConfig) {
+                ChangeConfigView()
+            }
+            .navigationBarTitle("Settings")
             .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
         }
     }
@@ -63,7 +43,7 @@ struct SettingsView: View {
         
         API.base = url
         API.token = token
-
+        
         do {
             let apiData: Data? = API.GET(endpoint: "user")
             if (apiData != nil) {

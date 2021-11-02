@@ -14,14 +14,18 @@ struct PipelineLoader: View {
     @State var branch: String = ""
 
     @State var statusHorizontal: Bool = false
+    @State var onlyStatus: Bool = true
+    @State var showStatusStr: Bool = false
 
     var body: some View {
         VStack {
             if (pipelines != nil) {
                 if (onlyStatus) {
-                    PipelineStatusView(pipeline: pipelines![0], horizontal: statusHorizontal)
+                    if (!pipelines!.isEmpty) {
+                        PipelineStatusView(pipeline: pipelines![0], horizontal: statusHorizontal, showStatus: showStatusStr)
+                    }
                 } else {
-                    PipelineListStatus(pipelines: pipelines!, updateFunction: getPipeline)
+                    PipelineListView(pipelines: pipelines!, updateFunction: getPipeline)
                 }
             }
         }.onAppear {

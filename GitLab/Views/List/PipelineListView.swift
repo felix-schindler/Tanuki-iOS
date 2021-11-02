@@ -28,8 +28,8 @@ struct PipelineListView: View {
     }
 }
 
-struct MergeListView_Previews: PreviewProvider {
+struct PipelineListView_Previews: PreviewProvider {
     static var previews: some View {
-        MergeListView(mergeRequests: [MergeRequest](), updateFunction: {})
+        PipelineListView(pipelines: [Pipeline](), updateFunction: {})
     }
 }

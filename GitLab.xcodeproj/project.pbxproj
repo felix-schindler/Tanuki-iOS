@@ -31,11 +31,14 @@
 		DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB911272DB9D00015BF0D /* ProjectListView.swift */; };
 		DC5EB914272DBDA20015BF0D /* MergeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB913272DBDA20015BF0D /* MergeListView.swift */; };
 		DC5EB916272DD1310015BF0D /* MemberProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB915272DD1310015BF0D /* MemberProjectsLoader.swift */; };
+		DC7A85BA27319D010000CF4D /* PipelineLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A85B927319D010000CF4D /* PipelineLoader.swift */; };
+		DC7A85BC27319D1A0000CF4D /* PipelineStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A85BB27319D1A0000CF4D /* PipelineStatusView.swift */; };
+		DC7A85BE27319D290000CF4D /* PipelineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A85BD27319D290000CF4D /* PipelineListView.swift */; };
+		DC7A85C02731AB4E0000CF4D /* ChangeConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A85BF2731AB4E0000CF4D /* ChangeConfigView.swift */; };
 		DC90CA5C272E762200B758E7 /* NewIssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA5B272E762200B758E7 /* NewIssueView.swift */; };
 		DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA5D272E763F00B758E7 /* EventsView.swift */; };
 		DC90CA61272E78D900B758E7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA60272E78D900B758E7 /* SettingsView.swift */; };
 		DC90CA63272E878900B758E7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA62272E878900B758E7 /* Utils.swift */; };
-		DCAAE3E8272F096A00A7C89B /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAE3E7272F096A00A7C89B /* AboutView.swift */; };
 		DCBC391327300A6C00EF502F /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = DCBC391227300A6C00EF502F /* MarkdownUI */; };
 		DCEE698F27311EE500AE666C /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEE698E27311EE500AE666C /* FileLoader.swift */; };
 		DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEE699127312F8A00AE666C /* EmojiCodes.swift */; };
@@ -67,11 +70,14 @@
 		DC5EB911272DB9D00015BF0D /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		DC5EB913272DBDA20015BF0D /* MergeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeListView.swift; sourceTree = "<group>"; };
 		DC5EB915272DD1310015BF0D /* MemberProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberProjectsLoader.swift; sourceTree = "<group>"; };
+		DC7A85B927319D010000CF4D /* PipelineLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PipelineLoader.swift; sourceTree = "<group>"; };
+		DC7A85BB27319D1A0000CF4D /* PipelineStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PipelineStatusView.swift; sourceTree = "<group>"; };
+		DC7A85BD27319D290000CF4D /* PipelineListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PipelineListView.swift; sourceTree = "<group>"; };
+		DC7A85BF2731AB4E0000CF4D /* ChangeConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeConfigView.swift; sourceTree = "<group>"; };
 		DC90CA5B272E762200B758E7 /* NewIssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIssueView.swift; sourceTree = "<group>"; };
 		DC90CA5D272E763F00B758E7 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
 		DC90CA60272E78D900B758E7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DC90CA62272E878900B758E7 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		DCAAE3E7272F096A00A7C89B /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		DCEE698E27311EE500AE666C /* FileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
 		DCEE699127312F8A00AE666C /* EmojiCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCodes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +106,7 @@
 		DC4F9555272EB4DD00354E1D /* List */ = {
 			isa = PBXGroup;
 			children = (
+				DC7A85BD27319D290000CF4D /* PipelineListView.swift */,
 				DC5EB911272DB9D00015BF0D /* ProjectListView.swift */,
 				DC5EB90D272D9C710015BF0D /* IssueListView.swift */,
 				DC5EB913272DBDA20015BF0D /* MergeListView.swift */,
@@ -183,6 +190,7 @@
 				DC4F954F272EB3B600354E1D /* Issues */,
 				DC4F955A272EB74B00354E1D /* Merge Requests */,
 				DC4F9567272EBA3F00354E1D /* DiscussionsLoader.swift */,
+				DC7A85B927319D010000CF4D /* PipelineLoader.swift */,
 				DCEE698E27311EE500AE666C /* FileLoader.swift */,
 			);
 			path = Loaders;
@@ -194,6 +202,7 @@
 				DC4F955F272EB8EE00354E1D /* ProjectView.swift */,
 				DC5EB90F272DA2450015BF0D /* IssueView.swift */,
 				DC4F9561272EB92200354E1D /* MergeView.swift */,
+				DC7A85BB27319D1A0000CF4D /* PipelineStatusView.swift */,
 			);
 			path = Single;
 			sourceTree = "<group>";
@@ -217,7 +226,7 @@
 				DC90CA5D272E763F00B758E7 /* EventsView.swift */,
 				DC90CA5B272E762200B758E7 /* NewIssueView.swift */,
 				DC90CA60272E78D900B758E7 /* SettingsView.swift */,
-				DCAAE3E7272F096A00A7C89B /* AboutView.swift */,
+				DC7A85BF2731AB4E0000CF4D /* ChangeConfigView.swift */,
 			);
 			path = Popups;
 			sourceTree = "<group>";
@@ -302,14 +311,17 @@
 				DC4F9562272EB92200354E1D /* MergeView.swift in Sources */,
 				DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */,
 				DC10C39A2731537D00CAE425 /* CommitsView.swift in Sources */,
-				DCAAE3E8272F096A00A7C89B /* AboutView.swift in Sources */,
+				DC7A85BA27319D010000CF4D /* PipelineLoader.swift in Sources */,
 				DC5EB914272DBDA20015BF0D /* MergeListView.swift in Sources */,
+				DC7A85BC27319D1A0000CF4D /* PipelineStatusView.swift in Sources */,
 				DCEE698F27311EE500AE666C /* FileLoader.swift in Sources */,
 				DC10C39C27315D6400CAE425 /* BranchesView.swift in Sources */,
 				DC5EB90E272D9C710015BF0D /* IssueListView.swift in Sources */,
 				DC90CA5C272E762200B758E7 /* NewIssueView.swift in Sources */,
+				DC7A85BE27319D290000CF4D /* PipelineListView.swift in Sources */,
 				DC4F955E272EB8A700354E1D /* ProjectMergeLoader.swift in Sources */,
 				DC90CA63272E878900B758E7 /* Utils.swift in Sources */,
+				DC7A85C02731AB4E0000CF4D /* ChangeConfigView.swift in Sources */,
 				DC5EB8F5272D924D0015BF0D /* ContentView.swift in Sources */,
 				DC4F955C272EB89900354E1D /* AllMergeLoader.swift in Sources */,
 				DC0897FD2730516600B8ACDA /* NoteListView.swift in Sources */,

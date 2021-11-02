@@ -38,11 +38,7 @@ struct BranchesView: View {
                                         .foregroundColor(.secondary)
                                 }
                                 Spacer()
-                                PipelineLoader(id: id, branch: branch.name)
-                                VStack {
-                                    Text("Merged: " + String(branch.merged))
-                                    Text("Can push: " + String(branch.canPush))
-                                }
+                                PipelineLoader(id: id, branch: branch.name, statusHorizontal: false, showStatusStr: false)
                             }
                         }.refreshable {
                             await getCommits()

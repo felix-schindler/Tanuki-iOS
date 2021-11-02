@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var showChangeConf: Bool = false
+    
     var body: some View {
         TabView {
             HomeView()
@@ -28,6 +30,10 @@ struct ContentView: View {
                     Text("Account")
                 }
                 .tag(2)
+        }.onAppear {
+            showChangeConf = (API.base.isEmpty || API.token.isEmpty)
+        }.sheet(isPresented: $showChangeConf) {
+            ChangeConfigView()
         }
     }
 }
