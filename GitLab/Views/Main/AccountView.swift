@@ -40,8 +40,11 @@ struct AccountView: View {
                             Text("Status")
                                 .font(.headline)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                            Text(status!.message)
-                                .frame(maxWidth: .infinity, alignment: .leading)
+                            HStack {
+                                Text((":" + status!.emoji + ":").emojized())
+                                Text(status!.message)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
                         }.padding(.vertical, 5)
                     }
                     if (user!.bio != "") {

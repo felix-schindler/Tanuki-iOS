@@ -54,7 +54,10 @@ struct EventsView: View {
         }; if (event.targetTitle != nil) {
             ret += " '\(event.targetTitle!)'"
         }; if (event.pushData != nil) {
-            ret += " '\(event.pushData!.ref)'"
+            ret += " \(event.pushData!.refType) '\(event.pushData!.ref)'"
+            if (event.pushData!.commitTitle != nil) {
+                ret += " with message '\(event.pushData!.commitTitle!.emojized())'"
+            }
         }
         return ret.trim()
     }

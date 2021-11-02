@@ -25,11 +25,11 @@ struct IssueView: View {
                         Text(issue.author.username)
                     }
                 }.foregroundColor(.secondary)
-                Text(issue.title)
+                Text(issue.title.emojized())
                     .font(.title)
                     .padding(.top)
                 if (issue.description != "") {
-                    Markdown(Document(issue.description))
+                    Markdown(Document(issue.description.emojized()))
                        .multilineTextAlignment(.leading)
                 }
             }.padding(.horizontal)

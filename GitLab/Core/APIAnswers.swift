@@ -12,6 +12,7 @@ struct Project: Decodable {
     var description: String
     var name: String
     var nameWithNamespace: String
+    var defaultBranch: String
     var sshUrlToRepo: String
     var httpUrlToRepo: String
     var avatarUrl: String?
@@ -45,6 +46,7 @@ struct UserSmall: Decodable, Identifiable {
 }
 
 struct UserStatus: Decodable {
+    var emoji: String
     var message: String
 }
 
@@ -104,4 +106,28 @@ struct Note: Decodable {
     var id: Int
     var body: String
     var author: UserSmall
+}
+
+struct File: Decodable {
+    var filePath: String
+    var content: String
+}
+
+struct Commit: Decodable {
+    var id: String
+    var shortId: String
+    var title: String
+    var message: String
+    var authorName: String
+    var authorEmail: String
+}
+
+struct Branch: Decodable {
+    var name: String
+    var commit: Commit
+    var merged: Bool
+    var protected: Bool
+    var developersCanPush: Bool
+    var developersCanMerge: Bool
+    var canPush: Bool
 }

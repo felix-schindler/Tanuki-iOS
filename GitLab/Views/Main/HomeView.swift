@@ -60,8 +60,7 @@ struct HomeView: View {
                 Task.init {
                     await getStarredProjects()
                 }
-            }
-            .navigationBarTitle("Home")
+            }.navigationBarTitle("Home")
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarLeading) {
                     Button (action: {showEvents = true}) {

@@ -10,36 +10,57 @@ import SwiftUI
 struct ProjectView: View {
     @State var project: Project
     
+    @State var showCommits: Bool = false
+    @State var showBranches: Bool = false
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                Text("Details")
-                    .font(.headline)
                 if (project.description != "") {
                     Text(project.description)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                HStack {
-                    if (project.avatarUrl != nil) {
-                        AsyncImage(url: URL(string: project.avatarUrl!)) { phase in
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 50, height: 50)
-                                    .cornerRadius(10)
-                            case .failure:
-                                EmptyView()
-                            @unknown default:
-                                EmptyView()
+                VStack {
+                    Text("Details")
+                        .font(.headline)
+                        .padding(.top)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    HStack {
+                        if (project.avatarUrl != nil) {
+                            AsyncImage(url: URL(string: project.avatarUrl!)) { phase in
+                                switch phase {
+                                case .empty:
+                                    ProgressView()
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 50, height: 50)
+                                        .cornerRadius(10)
+                                case .failure:
+                                    EmptyView()
+                                @unknown default:
+                                    EmptyView()
+                                }
                             }
                         }
+                        VStack {
+                            Text(project.nameWithNamespace)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            Text("Project ID: " + String(project.id))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                     }
-                    Text(project.nameWithNamespace)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                }.frame(maxWidth: .infinity, alignment: .leading)
+                HStack {
+                    if (project.visibility == "private") {
+                        Image(systemName: "lock")
+                    } else if (project.visibility == "internal") {
+                        Image(systemName: "shield.lefthalf.filled")
+                    } else if (project.visibility == "public") {
+                        Image(systemName: "globe")
+                    }
+                    Text(project.visibility.firstCapitalized)
                 }
                 HStack {
                     HStack {
@@ -52,6 +73,22 @@ struct ProjectView: View {
                         Text(String(project.forksCount) + " forks")
                     }
                 }
+            }.padding()
+            HStack {
+                Button(action: {showCommits = true}) {
+                    Text("Commits")
+                        .frame(maxWidth: .infinity)
+                }.foregroundColor(.primary)
+                    .buttonStyle(.bordered)
+                    .buttonBorderShape(.roundedRectangle)
+                    .controlSize(.large)
+                Button(action: {showBranches = true}) {
+                    Text("Branches")
+                        .frame(maxWidth: .infinity)
+                }.foregroundColor(.primary)
+                    .buttonStyle(.bordered)
+                    .buttonBorderShape(.roundedRectangle)
+                    .controlSize(.large)
             }.padding()
             VStack(alignment: .leading) {
                 Text("Issues and Merge Requests")
@@ -82,13 +119,19 @@ struct ProjectView: View {
                     .controlSize(.large)
                 }
             }.padding(.horizontal)
+            FileLoader(id: project.id, filePath: "README.md", branch: project.defaultBranch)
+        }.navigationTitle(project.name)
+        .sheet(isPresented: $showCommits) {
+            CommitsView(id: project.id, refName: project.defaultBranch)
         }
-        .navigationTitle(project.name)
+        .sheet(isPresented: $showBranches) {
+            BranchesView(id: project.id)
+        }
     }
 }
 
 struct ProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectView(project: Project(id: 0, description: "", name: "No project", nameWithNamespace: "", sshUrlToRepo: "", httpUrlToRepo: "", forksCount: 0, starCount: 0, visibility: "", owner: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), issuesEnabled: false, mergeRequestsEnabled: false))
+        ProjectView(project: Project(id: 0, description: "", name: "No project", nameWithNamespace: "", defaultBranch: "", sshUrlToRepo: "", httpUrlToRepo: "", forksCount: 0, starCount: 0, visibility: "", owner: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), issuesEnabled: false, mergeRequestsEnabled: false))
     }
 }

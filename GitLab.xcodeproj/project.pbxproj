@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		DC0897FD2730516600B8ACDA /* NoteListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0897FC2730516600B8ACDA /* NoteListView.swift */; };
+		DC10C39A2731537D00CAE425 /* CommitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC10C3992731537D00CAE425 /* CommitsView.swift */; };
+		DC10C39C27315D6400CAE425 /* BranchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC10C39B27315D6400CAE425 /* BranchesView.swift */; };
 		DC4F9552272EB49700354E1D /* AllIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */; };
 		DC4F9554272EB4AF00354E1D /* ProjectIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */; };
 		DC4F9558272EB5A900354E1D /* AllProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */; };
@@ -35,10 +37,14 @@
 		DC90CA63272E878900B758E7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA62272E878900B758E7 /* Utils.swift */; };
 		DCAAE3E8272F096A00A7C89B /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAE3E7272F096A00A7C89B /* AboutView.swift */; };
 		DCBC391327300A6C00EF502F /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = DCBC391227300A6C00EF502F /* MarkdownUI */; };
+		DCEE698F27311EE500AE666C /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEE698E27311EE500AE666C /* FileLoader.swift */; };
+		DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEE699127312F8A00AE666C /* EmojiCodes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		DC0897FC2730516600B8ACDA /* NoteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListView.swift; sourceTree = "<group>"; };
+		DC10C3992731537D00CAE425 /* CommitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitsView.swift; sourceTree = "<group>"; };
+		DC10C39B27315D6400CAE425 /* BranchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchesView.swift; sourceTree = "<group>"; };
 		DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllIssuesLoader.swift; sourceTree = "<group>"; };
 		DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectIssuesLoader.swift; sourceTree = "<group>"; };
 		DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsLoader.swift; sourceTree = "<group>"; };
@@ -66,6 +72,8 @@
 		DC90CA60272E78D900B758E7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DC90CA62272E878900B758E7 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DCAAE3E7272F096A00A7C89B /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		DCEE698E27311EE500AE666C /* FileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
+		DCEE699127312F8A00AE666C /* EmojiCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCodes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,14 +136,6 @@
 			path = "Merge Requests";
 			sourceTree = "<group>";
 		};
-		DC4F9563272EBA0B00354E1D /* Discussion */ = {
-			isa = PBXGroup;
-			children = (
-				DC4F9567272EBA3F00354E1D /* DiscussionsLoader.swift */,
-			);
-			path = Discussion;
-			sourceTree = "<group>";
-		};
 		DC5EB8E6272D924D0015BF0D = {
 			isa = PBXGroup;
 			children = (
@@ -182,7 +182,8 @@
 				DC4F9556272EB59200354E1D /* Projects */,
 				DC4F954F272EB3B600354E1D /* Issues */,
 				DC4F955A272EB74B00354E1D /* Merge Requests */,
-				DC4F9563272EBA0B00354E1D /* Discussion */,
+				DC4F9567272EBA3F00354E1D /* DiscussionsLoader.swift */,
+				DCEE698E27311EE500AE666C /* FileLoader.swift */,
 			);
 			path = Loaders;
 			sourceTree = "<group>";
@@ -203,6 +204,7 @@
 				DC5EB90B272D955E0015BF0D /* API.swift */,
 				DC4F9569272EC3B100354E1D /* APIAnswers.swift */,
 				DC90CA62272E878900B758E7 /* Utils.swift */,
+				DCEE699127312F8A00AE666C /* EmojiCodes.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -210,8 +212,10 @@
 		DC90CA5A272E759100B758E7 /* Popups */ = {
 			isa = PBXGroup;
 			children = (
-				DC90CA5B272E762200B758E7 /* NewIssueView.swift */,
+				DC10C3992731537D00CAE425 /* CommitsView.swift */,
+				DC10C39B27315D6400CAE425 /* BranchesView.swift */,
 				DC90CA5D272E763F00B758E7 /* EventsView.swift */,
+				DC90CA5B272E762200B758E7 /* NewIssueView.swift */,
 				DC90CA60272E78D900B758E7 /* SettingsView.swift */,
 				DCAAE3E7272F096A00A7C89B /* AboutView.swift */,
 			);
@@ -297,8 +301,11 @@
 				DC4F9568272EBA3F00354E1D /* DiscussionsLoader.swift in Sources */,
 				DC4F9562272EB92200354E1D /* MergeView.swift in Sources */,
 				DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */,
+				DC10C39A2731537D00CAE425 /* CommitsView.swift in Sources */,
 				DCAAE3E8272F096A00A7C89B /* AboutView.swift in Sources */,
 				DC5EB914272DBDA20015BF0D /* MergeListView.swift in Sources */,
+				DCEE698F27311EE500AE666C /* FileLoader.swift in Sources */,
+				DC10C39C27315D6400CAE425 /* BranchesView.swift in Sources */,
 				DC5EB90E272D9C710015BF0D /* IssueListView.swift in Sources */,
 				DC90CA5C272E762200B758E7 /* NewIssueView.swift in Sources */,
 				DC4F955E272EB8A700354E1D /* ProjectMergeLoader.swift in Sources */,
@@ -317,6 +324,7 @@
 				DC5EB916272DD1310015BF0D /* MemberProjectsLoader.swift in Sources */,
 				DC4F9560272EB8EE00354E1D /* ProjectView.swift in Sources */,
 				DC5EB906272D938E0015BF0D /* AccountView.swift in Sources */,
+				DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */,
 				DC4F956A272EC3B100354E1D /* APIAnswers.swift in Sources */,
 				DC4F9554272EB4AF00354E1D /* ProjectIssuesLoader.swift in Sources */,
 			);
