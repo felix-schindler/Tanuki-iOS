@@ -18,19 +18,22 @@ struct HomeView: View {
                 Section (header: Text("Your work")) {
                     NavigationLink(destination: AllIssuesLoader()) {
                         HStack {
-                            Image(systemName: "square.on.square")
+                            Image(systemName: "smallcircle.circle")
+                                .foregroundColor(.green)
                             Text("Issues")
                         }
                     }
                     NavigationLink(destination: AllMergeLoader()) {
                         HStack {
-                            Image(systemName: "arrow.merge")
+                            Image(systemName: "arrow.triangle.pull")
+                                .foregroundColor(.blue)
                             Text("Merge Requests")
                         }
                     }
                     NavigationLink(destination: MemberProjectsLoader()) {
                         HStack {
-                            Image(systemName: "folder")
+                            Image(systemName: "appclip")
+                                .foregroundColor(.gray)
                             Text("Projects")
                         }
                     }

@@ -56,10 +56,26 @@ struct Issue: Decodable {
     var projectId: Int
     var title: String
     var description: String
+    var labels: [Label]?
+    var milestone: Milestone?
     var assignees: [UserSmall]?
     var author: UserSmall
-    var labels: [String]?
+    var type: String
     var references: Reference
+}
+
+struct Label: Decodable {
+    var id: Int
+    var name: String
+    var color: String
+    var textColor: String
+}
+
+struct Milestone: Decodable {
+    var id: Int
+    var iid: Int
+    var title: String
+    var description: String
 }
 
 struct Reference: Decodable {
@@ -78,7 +94,7 @@ struct MergeRequest: Decodable {
     var author: UserSmall
     var assignees: [UserSmall]?
     var reviewers: [UserSmall]?
-    var labels: [String]?
+    var labels: [Label]?
     var references: Reference
 }
 

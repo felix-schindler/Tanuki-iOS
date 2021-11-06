@@ -20,6 +20,13 @@ struct IssueListView: View {
             List(issues, id: \.id) { issue in
                 NavigationLink(destination: IssueView(issue: issue)) {
                     HStack {
+                        if (issue.type == "INCIDENT") {
+                            Image(systemName: "exclamationmark.circle")
+                                .foregroundColor(.red)
+                        } else {
+                            Image(systemName: "smallcircle.circle")
+                                .foregroundColor(.green)
+                        }
                         Text(issue.title)
                         Spacer()
                         VStack(alignment: .trailing) {

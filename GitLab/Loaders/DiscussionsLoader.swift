@@ -23,12 +23,14 @@ struct DiscussionsLoader: View {
     
     var body: some View {
         VStack {
-            Text("Discussions")
-                .font(.title)
-                .frame(maxWidth: .infinity, alignment: .leading)
             if (discussions != nil) {
-                ForEach(discussions!, id: \.id) { discussion in
-                    NoteListView(notes: discussion.notes)
+                if (!discussions!.isEmpty) {
+                    Text("Discussion")
+                        .font(.title)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    ForEach(discussions!, id: \.id) { discussion in
+                        NoteListView(notes: discussion.notes)
+                    }
                 }
             } else {
                 if (noConnection) {
@@ -45,7 +47,7 @@ struct DiscussionsLoader: View {
             Task.init {
                 await getDiscussions()
             }
-        }.padding()
+        }
     }
     
     private func getDiscussions() async -> Void {

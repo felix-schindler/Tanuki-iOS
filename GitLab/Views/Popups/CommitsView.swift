@@ -14,6 +14,8 @@ struct CommitsView: View {
     @State var id: Int
     @State var refName: String
     
+    @State var branches: [Branch]? = nil
+    
     @State var commits: [Commit]? = nil
     @State var noConnection: Bool = false
     
@@ -24,6 +26,23 @@ struct CommitsView: View {
                     if (commits!.isEmpty) {
                         Text("No commits")
                     } else {
+                        HStack {
+                            Text("On branch")
+                            if (branches != nil) {
+                                Picker("Branch", selection: $refName) {
+                                    ForEach(branches!, id: \.name) { branch in
+                                        Text(branch.name).tag(branch.name)
+                                    }
+                                }.pickerStyle(.menu)
+                                .onChange(of: refName) { _ in
+                                    Task.init { await getCommits() }
+                                }
+                            } else {
+                                Picker("Branch", selection: $refName) {
+                                    Text(refName).tag(refName)
+                                }
+                            }
+                        }
                         List(commits!, id: \.id) { commit in
                             HStack {
                                 Text(commit.title.emojized())
@@ -52,6 +71,7 @@ struct CommitsView: View {
             }.onAppear {
                 Task.init {
                     await getCommits()
+                    await getBranches()
                 }
             }.navigationBarTitle("Commits")
             .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
@@ -65,6 +85,21 @@ struct CommitsView: View {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 commits = try decoder.decode([Commit].self, from: apiData!)
+            } else {
+                noConnection = true
+            }
+        } catch let jsonError as NSError {
+            print("JSON error \(jsonError.localizedDescription)")
+        }
+    }
+    
+    private func getBranches() async -> Void {
+        do {
+            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/repository/branches")
+            if (apiData != nil) {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                branches = try decoder.decode([Branch].self, from: apiData!)
             } else {
                 noConnection = true
             }

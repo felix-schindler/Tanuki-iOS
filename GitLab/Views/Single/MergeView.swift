@@ -16,7 +16,8 @@ struct MergeView: View {
             VStack(alignment: .leading) {
                 HStack {
                     HStack {
-                        Image(systemName: "arrow.merge")
+                        Image(systemName: "arrow.triangle.pull")
+                            .foregroundColor(.blue)
                         Text(mergeRequest.references.full)
                     }
                     Spacer()
@@ -62,15 +63,8 @@ struct MergeView: View {
                 }.padding()
             }
             if (mergeRequest.labels != nil && !(mergeRequest.labels!.isEmpty)) {
-                VStack {
-                    Text("Labels")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    ForEach(mergeRequest.labels!, id: \.self) { label in
-                        Text(label)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                }.padding()
+                LabelListView(labels: mergeRequest.labels!)
+                    .padding()
             }
             DiscussionsLoader(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge)
         }.navigationTitle(mergeRequest.title)
@@ -80,6 +74,6 @@ struct MergeView: View {
 
 struct MergeView_Previews: PreviewProvider {
     static var previews: some View {
-        MergeView(mergeRequest: MergeRequest(id: 0, iid: 0, projectId: 0, title: "No merge request", description: "", userNotesCount: 0, upvotes: 0, downvotes: 0, author: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), assignees: [UserSmall](), reviewers: [UserSmall](), labels: [""], references: Reference(full: "")))
+        MergeView(mergeRequest: MergeRequest(id: 0, iid: 0, projectId: 0, title: "No merge request", description: "", userNotesCount: 0, upvotes: 0, downvotes: 0, author: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), assignees: [UserSmall](), reviewers: [UserSmall](), labels: [Label](), references: Reference(full: "")))
     }
 }

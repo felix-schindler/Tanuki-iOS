@@ -34,7 +34,7 @@ struct ProjectIssuesLoader: View {
         
     private func getIssues() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/issues?state=opened")
+            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/issues?state=opened&with_labels_details=true")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

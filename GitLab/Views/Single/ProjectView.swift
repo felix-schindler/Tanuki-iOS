@@ -10,6 +10,7 @@ import SwiftUI
 struct ProjectView: View {
     @State var project: Project
     
+    @State var showNewIssue: Bool = false
     @State var showCommits: Bool = false
     @State var showBranches: Bool = false
 
@@ -97,7 +98,8 @@ struct ProjectView: View {
                     if (project.issuesEnabled) {
                         NavigationLink(destination: ProjectIssuesLoader(id: project.id)) {
                             HStack {
-                                Image(systemName: "square.on.square")
+                                Image(systemName: "smallcircle.circle")
+                                    .foregroundColor(.green)
                                 Text("Issues")
                                 Spacer()
                                 Text(String(project.openIssuesCount!))
@@ -110,7 +112,8 @@ struct ProjectView: View {
                     if (project.mergeRequestsEnabled) {
                         NavigationLink(destination: ProjectMergeLoader(id: project.id)) {
                             HStack {
-                                Image(systemName: "arrow.merge")
+                                Image(systemName: "arrow.triangle.pull")
+                                    .foregroundColor(.blue)
                                 Text("Merge Requests")
                                 Spacer()
                             }
@@ -123,10 +126,17 @@ struct ProjectView: View {
             }.padding(.horizontal)
             FileLoader(id: project.id, filePath: "README.md", branch: project.defaultBranch)
         }.navigationTitle(project.name)
-        .sheet(isPresented: $showCommits) {
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button(action: {showNewIssue = true}) {
+                    Image(systemName: "plus.circle")
+                }
+            }
+        }.sheet(isPresented: $showNewIssue) {
+            NewIssueView()
+        }.sheet(isPresented: $showCommits) {
             CommitsView(id: project.id, refName: project.defaultBranch)
-        }
-        .sheet(isPresented: $showBranches) {
+        }.sheet(isPresented: $showBranches) {
             BranchesView(id: project.id)
         }
     }

@@ -41,7 +41,7 @@ struct BranchesView: View {
                                 PipelineLoader(id: id, branch: branch.name, statusHorizontal: false, showStatusStr: false)
                             }
                         }.refreshable {
-                            await getCommits()
+                            await getBranches()
                         }
                         Spacer()
                     }
@@ -57,14 +57,14 @@ struct BranchesView: View {
                 }
             }.onAppear {
                 Task.init {
-                    await getCommits()
+                    await getBranches()
                 }
             }.navigationBarTitle("Branches")
             .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
         }
     }
     
-    private func getCommits() async -> Void {
+    private func getBranches() async -> Void {
         do {
             let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/repository/branches")
             if (apiData != nil) {
