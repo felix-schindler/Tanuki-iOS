@@ -13,37 +13,40 @@ struct CommitsView: View {
 
     @State var id: Int
     @State var refName: String
-    
+
     @State var branches: [Branch]? = nil
-    
+
     @State var commits: [Commit]? = nil
     @State var noConnection: Bool = false
-    
+
     var body: some View {
         NavigationView {
-            VStack {
-                if (commits != nil) {
-                    if (commits!.isEmpty) {
-                        Text("No commits")
-                    } else {
-                        HStack {
-                            Text("On branch")
-                            if (branches != nil) {
-                                Picker("Branch", selection: $refName) {
-                                    ForEach(branches!, id: \.name) { branch in
-                                        Text(branch.name).tag(branch.name)
+            if (commits != nil) {
+                if (commits!.isEmpty) {
+                    Text("No commits")
+                } else {
+                    List(commits!, id: \.id) { commit in
+                        Section(header: Text("Branches")) {
+                            HStack {
+                                Text("On branch")
+                                if (branches != nil) {
+                                    Picker("Branch", selection: $refName) {
+                                        ForEach(branches!, id: \.name) { branch in
+                                            Text(branch.name).tag(branch.name)
+                                        }
+                                    }.pickerStyle(.menu)
+                                    .onChange(of: refName) { _ in
+                                        Task.init { await getCommits() }
                                     }
-                                }.pickerStyle(.menu)
-                                .onChange(of: refName) { _ in
-                                    Task.init { await getCommits() }
-                                }
-                            } else {
-                                Picker("Branch", selection: $refName) {
-                                    Text(refName).tag(refName)
+                                } else {
+                                    Picker("Branch", selection: $refName) {
+                                        Text(refName).tag(refName)
+                                    }
                                 }
                             }
-                        }
-                        List(commits!, id: \.id) { commit in
+                        }.headerProminence(.increased)
+
+                        Section(header: Text("Commits")) {
                             HStack {
                                 Text(commit.title.emojized())
                                 Spacer()
@@ -53,12 +56,14 @@ struct CommitsView: View {
                                 }.foregroundColor(.secondary)
                                 .font(.caption)
                             }
-                        }.refreshable {
-                            await getCommits()
-                        }
-                        Spacer()
+                        }.headerProminence(.increased)
+                    }.refreshable {
+                        await getCommits()
                     }
-                } else {
+                    // Spacer()
+                }
+            } else {
+                VStack {
                     Spacer()
                     if (noConnection) {
                         Text("Failed to load, please check your internet connection and your token")
@@ -68,16 +73,16 @@ struct CommitsView: View {
                     }
                     Spacer()
                 }
-            }.onAppear {
-                Task.init {
-                    await getCommits()
-                    await getBranches()
-                }
             }.navigationBarTitle("Commits")
-            .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
+        .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
+        }.onAppear {
+            Task.init {
+                await getCommits()
+                await getBranches()
+            }
         }
     }
-    
+
     private func getCommits() async -> Void {
         do {
             let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/repository/commits?ref_name=" + refName)
@@ -92,7 +97,7 @@ struct CommitsView: View {
             print("JSON error \(jsonError.localizedDescription)")
         }
     }
-    
+
     private func getBranches() async -> Void {
         do {
             let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/repository/branches")

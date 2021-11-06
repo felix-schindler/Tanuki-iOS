@@ -11,10 +11,10 @@ import SwiftUI
 class API {
     @AppStorage("api_base") public static var base: String = ""
     @AppStorage("token") public static var token: String = ""
-    
+
     /**
      Make a GET request to an API endpoint
-     
+
      - Parameter endpoint: API endpoint (/api/:endpoint)
      - Returns: Data to be decoded as e. g. JSON
      */
@@ -24,11 +24,11 @@ class API {
         if (url == nil) {
             return nil
         }
-        
+
         // Initialize variables
         var apiData: Data? = nil
         let semaphore = DispatchSemaphore(value: 0)
-        
+
         // Session config with auth header and token, when required
         let sessionConfig = URLSessionConfiguration.default
         sessionConfig.httpAdditionalHeaders = ["PRIVATE-TOKEN": token]
@@ -46,7 +46,7 @@ class API {
 
     /**
      Make a POST request to an API endpoint
-     
+
      - Parameter endpoint: API endpoint (/api/:endpoint)
      - Parameter values: Hashmap with values to be send as POST values
      - Returns: Data to be decoded as e. g. JSON or nil if no connection
@@ -61,7 +61,7 @@ class API {
         // Initialize variables
         var apiData: Data? = nil
         let semaphore = DispatchSemaphore(value: 0)
-        
+
         // Build post data string
         var dataStr: String = ""
         if (values != nil) {
@@ -69,7 +69,7 @@ class API {
                 if (dataStr != "") {
                     dataStr += "&"
                 }
-                dataStr += "\(k)=\(v)"
+                dataStr += "\(k.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))=\(v.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))"
             }
         }
 
@@ -78,7 +78,7 @@ class API {
             request.httpMethod = "POST"
             request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type");
             request.httpBody = dataStr.data(using: .utf8)!
-        
+
         // Session config with auth header and token, when required
         let sessionConfig = URLSessionConfiguration.default
         sessionConfig.httpAdditionalHeaders = ["PRIVATE-TOKEN": token]

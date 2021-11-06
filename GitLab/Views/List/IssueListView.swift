@@ -10,7 +10,7 @@ import SwiftUI
 struct IssueListView: View {
     @State var issues: [Issue]
     @State var updateFunction: () async -> Void
-    
+
     @State var showNewIssue: Bool = false
 
     var body: some View {

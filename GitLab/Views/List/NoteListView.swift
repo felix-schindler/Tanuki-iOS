@@ -6,16 +6,17 @@
 //
 
 import SwiftUI
+import MarkdownUI
 
 struct NoteListView: View {
     @State var notes: [Note]
-    
+
     var body: some View {
         if (!notes.isEmpty) {
             VStack {
                 ForEach(notes, id: \.id) { note in
-                    Text(note.author.username + " " + note.body)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Markdown(Document(note.author.username + " " + note.body))
+                        .multilineTextAlignment(.leading)
                 }
             }
         }

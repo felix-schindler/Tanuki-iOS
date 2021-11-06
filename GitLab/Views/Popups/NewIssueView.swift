@@ -10,10 +10,10 @@ import SwiftUI
 struct NewIssueView: View {
     @Environment(\.presentationMode)
     var presentationMode: Binding<PresentationMode>
-    
+
     @State var title: String = ""
     @State var description: String = ""
-    
+
     @State var isError: Bool = false
 
     var body: some View {
@@ -42,8 +42,26 @@ struct NewIssueView: View {
             .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
         }
     }
-    
+
     private func saveNewIssue() -> Bool {
+        do {
+            let apiData: Data? = API.POST(endpoint: "projects/" + String(id) + "/issues?title=" + title.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) + "&description=" + description.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))
+            if (apiData != nil) {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let event = try decoder.decode(Event.self, from: apiData!)
+                events.append(event)
+                return true
+            }
+        } catch let jsonError as NSError {
+            print("JSON error \(jsonError.localizedDescription)")
+        }
         return false
+    }
+}
+
+struct NewIssueView_Previews: PreviewProvider {
+    static var previews: some View {
+        NewIssueView(id: Int())
     }
 }

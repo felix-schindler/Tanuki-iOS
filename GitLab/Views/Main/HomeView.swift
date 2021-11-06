@@ -11,11 +11,11 @@ struct HomeView: View {
     @State var starredProjects: [Project]? = nil
     @State var showNewIssue: Bool = false
     @State var showEvents: Bool = false
-    
+
     var body: some View {
         NavigationView {
             List {
-                Section (header: Text("Your work")) {
+                Section(header: Text("Your work")) {
                     NavigationLink(destination: AllIssuesLoader()) {
                         HStack {
                             Image(systemName: "smallcircle.circle")
@@ -38,7 +38,7 @@ struct HomeView: View {
                         }
                     }
                 }.headerProminence(.increased)
-                Section (header: Text("Starred projects")) {
+                Section(header: Text("Starred projects")) {
                     if (starredProjects != nil && !(starredProjects!.isEmpty)) {
                         ForEach(starredProjects!, id: \.id) { project in
                             NavigationLink(destination: ProjectView(project: project)) {
@@ -82,7 +82,7 @@ struct HomeView: View {
             }
         }
     }
-    
+
     private func getStarredProjects() async -> Void {
         do {
             let apiData: Data? = API.GET(endpoint: "projects?starred=true")

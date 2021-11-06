@@ -8,12 +8,13 @@
 import Foundation
 import SwiftUI
 
-// TODO documentation
 extension String {
+    /// Removes whitespaces and new lines from a string
     func trim() -> String {
         return self.trimmingCharacters(in: .whitespacesAndNewlines)
     }
-    
+
+    /// Decodes string from base64
     func fromBase64() -> String? {
         guard let data = Data(base64Encoded: self) else {
             return nil
@@ -21,18 +22,26 @@ extension String {
 
         return String(data: data, encoding: .utf8)
     }
-    
+
+    /// Replace :emojis: by actual emojis
     func emojized() -> String {
         return emojizedStringWithString(text: self)
     }
 }
 
 extension StringProtocol {
+    /// Calipalize only the first character of a string
     var firstCapitalized: String { prefix(1).capitalized + dropFirst() }
 }
 
 
 extension Color {
+    /**
+    Initializes a color from a hex string.
+
+    - Parameter hex: The hex value of the color
+    - Returns: Color
+    */
     init(hex string: String) {
         var string: String = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         if string.hasPrefix("#") {
@@ -130,18 +139,18 @@ func emojizedStringWithString(text: String) -> String {
     } catch {
         print("RegExp error")
     }
-    
+
     return resultText
 }
 
 func emojiAliases(key: String) -> String {
     var value: String = ""
     let regex = try! NSRegularExpression(pattern: "(:[a-z0-9-+_]+:)", options: .caseInsensitive)
-    
+
     if (regex.firstMatch(in: key, options: [], range: NSMakeRange(0, key.utf8.count)) != nil) {
         value = EMOJI_HASH[key]!
     }
-    
+
     return value
 }
 
