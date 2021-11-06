@@ -10,8 +10,8 @@ import SwiftUI
 struct IssueListView: View {
     @State var issues: [Issue]
     @State var updateFunction: () async -> Void
-
-    @State var showNewIssue: Bool = false
+    
+    @State var isError: Bool = false
 
     var body: some View {
         if (issues.isEmpty) {
@@ -35,20 +35,36 @@ struct IssueListView: View {
                         }.foregroundColor(.secondary)
                         .font(.caption)
                     }
+                }.swipeActions {
+                    Button(action: {
+                        isError = !closeIssue(id: issue.iid, projectId: issue.projectId)
+                    }, label: {
+                        Label("Close issue", systemImage: "checkmark.circle")
+                    }).alert(isPresented: $isError, content: {
+                        Alert(title: Text("Error"), message: Text("Failed to close issue"), dismissButton: .default(Text("OK")))
+                    }).tint(.purple)
                 }
             }.refreshable {
                 await updateFunction()
-            }.toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Button(action: {showNewIssue = true}) {
-                        Image(systemName: "plus.circle")
-                    }
-                }
-            }.sheet(isPresented: $showNewIssue) {
-                NewIssueView()
             }
         }
     }
+}
+
+// TODO remove from array
+func closeIssue(id: Int, projectId: Int) -> Bool {
+    do {
+        let apiData: Data? = API.PUT(endpoint: "projects/" + String(projectId) + "/issues/" + String(id) + "?state_event=close")
+        if (apiData != nil) {
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            _ = try decoder.decode(Issue.self, from: apiData!)
+            return true
+        }
+    } catch let jsonError as NSError {
+        print("JSON error \(jsonError.localizedDescription)")
+    }
+    return false
 }
 
 struct IssueListView_Previews: PreviewProvider {

@@ -74,6 +74,6 @@ struct MergeView: View {
 
 struct MergeView_Previews: PreviewProvider {
     static var previews: some View {
-        MergeView(mergeRequest: MergeRequest(id: 0, iid: 0, projectId: 0, title: "No merge request", description: "", userNotesCount: 0, upvotes: 0, downvotes: 0, author: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), assignees: [UserSmall](), reviewers: [UserSmall](), labels: [Label](), references: Reference(full: "")))
+        MergeView(mergeRequest: MergeRequest(id: 0, iid: 0, projectId: 0, title: "No merge request", description: "", userNotesCount: 0, upvotes: 0, downvotes: 0, author: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), assignees: [UserSmall](), reviewers: [UserSmall](), labels: [APILabel](), references: Reference(full: "")))
     }
 }

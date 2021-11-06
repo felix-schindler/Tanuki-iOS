@@ -76,7 +76,7 @@ struct IssueView: View {
                 }
             }
         }.sheet(isPresented: $showNewIssue) {
-            NewIssueView()
+            NewIssueView(id: issue.projectId)
         }
     }
 }

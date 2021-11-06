@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LabelListView: View {
-    @State var labels: [Label]
+    @State var labels: [APILabel]
     
     var body: some View {
         VStack {
@@ -28,6 +28,6 @@ struct LabelListView: View {
 
 struct LabelListView_Previews: PreviewProvider {
     static var previews: some View {
-        LabelListView(labels: [Label]())
+        LabelListView(labels: [APILabel]())
     }
 }

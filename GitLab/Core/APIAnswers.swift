@@ -12,7 +12,7 @@ struct Project: Decodable {
     var description: String
     var name: String
     var nameWithNamespace: String
-    var defaultBranch: String
+    var defaultBranch: String? = ""     // Not all projects have a repository. (WTF!?)
     var sshUrlToRepo: String
     var httpUrlToRepo: String
     var avatarUrl: String?
@@ -56,7 +56,7 @@ struct Issue: Decodable {
     var projectId: Int
     var title: String
     var description: String
-    var labels: [Label]?
+    var labels: [APILabel]?
     var milestone: Milestone?
     var assignees: [UserSmall]?
     var author: UserSmall
@@ -64,7 +64,7 @@ struct Issue: Decodable {
     var references: Reference
 }
 
-struct Label: Decodable {
+struct APILabel: Decodable {
     var id: Int
     var name: String
     var color: String
@@ -94,7 +94,7 @@ struct MergeRequest: Decodable {
     var author: UserSmall
     var assignees: [UserSmall]?
     var reviewers: [UserSmall]?
-    var labels: [Label]?
+    var labels: [APILabel]?
     var references: Reference
 }
 

@@ -124,18 +124,20 @@ struct ProjectView: View {
                     }
                 }
             }.padding(.horizontal)
-            FileLoader(id: project.id, filePath: "README.md", branch: project.defaultBranch)
+            FileLoader(id: project.id, filePath: "README.md", branch: project.defaultBranch ?? "")
         }.navigationTitle(project.name)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button(action: {showNewIssue = true}) {
-                    Image(systemName: "plus.circle")
+                if (project.issuesEnabled) {
+                    Button(action: {showNewIssue = true}) {
+                        Image(systemName: "plus.circle")
+                    }
                 }
             }
         }.sheet(isPresented: $showNewIssue) {
-            NewIssueView()
+            NewIssueView(id: project.id)
         }.sheet(isPresented: $showCommits) {
-            CommitsView(id: project.id, refName: project.defaultBranch)
+            CommitsView(id: project.id, refName: project.defaultBranch ?? "")
         }.sheet(isPresented: $showBranches) {
             BranchesView(id: project.id)
         }

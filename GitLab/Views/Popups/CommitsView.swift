@@ -25,42 +25,42 @@ struct CommitsView: View {
                 if (commits!.isEmpty) {
                     Text("No commits")
                 } else {
-                    List(commits!, id: \.id) { commit in
-                        Section(header: Text("Branches")) {
-                            HStack {
-                                Text("On branch")
-                                if (branches != nil) {
-                                    Picker("Branch", selection: $refName) {
-                                        ForEach(branches!, id: \.name) { branch in
-                                            Text(branch.name).tag(branch.name)
-                                        }
-                                    }.pickerStyle(.menu)
-                                    .onChange(of: refName) { _ in
-                                        Task.init { await getCommits() }
+                    List {
+                        HStack {
+                            Text("On branch")
+                            if (branches != nil) {
+                                Picker("Branch", selection: $refName) {
+                                    ForEach(branches!, id: \.name) { branch in
+                                        Text(branch.name).tag(branch.name)
                                     }
-                                } else {
-                                    Picker("Branch", selection: $refName) {
-                                        Text(refName).tag(refName)
-                                    }
+                                }.pickerStyle(.menu)
+                                .onChange(of: refName) { _ in
+                                    Task.init { await getCommits() }
+                                }
+                            } else {
+                                Picker("Branch", selection: $refName) {
+                                    Text(refName).tag(refName)
                                 }
                             }
-                        }.headerProminence(.increased)
+                        }
 
                         Section(header: Text("Commits")) {
-                            HStack {
-                                Text(commit.title.emojized())
-                                Spacer()
-                                VStack(alignment: .trailing) {
-                                    Text(commit.shortId)
-                                    Text(commit.authorName)
-                                }.foregroundColor(.secondary)
-                                .font(.caption)
+                            ForEach(commits!, id: \.id) { commit in
+                                HStack {
+                                    Text(commit.title.emojized())
+                                    Spacer()
+                                    VStack(alignment: .trailing) {
+                                        Text(commit.shortId)
+                                        Text(commit.authorName)
+                                    }.foregroundColor(.secondary)
+                                    .font(.caption)
+                                }
                             }
                         }.headerProminence(.increased)
                     }.refreshable {
                         await getCommits()
-                    }
-                    // Spacer()
+                    }.navigationBarTitle("Commits")
+                    .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
                 }
             } else {
                 VStack {
@@ -72,9 +72,9 @@ struct CommitsView: View {
                         ProgressView("Loading")
                     }
                     Spacer()
-                }
-            }.navigationBarTitle("Commits")
-        .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
+                }.navigationBarTitle("Commits")
+                .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
+            }
         }.onAppear {
             Task.init {
                 await getCommits()

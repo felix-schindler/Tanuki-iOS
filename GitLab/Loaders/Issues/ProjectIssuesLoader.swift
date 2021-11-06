@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ProjectIssuesLoader: View {
     @State var id: Int
+    @State var showNewIssue: Bool = false
+
     @State var issues: [Issue]? = nil
     @State var noConnection: Bool = false
     
@@ -16,6 +18,13 @@ struct ProjectIssuesLoader: View {
         VStack {
             if (issues != nil) {
                 IssueListView(issues: issues!, updateFunction: getIssues)
+                    .toolbar {
+                        ToolbarItemGroup(placement: .navigationBarTrailing) {
+                            Button(action: {showNewIssue = true}) {
+                                Image(systemName: "plus.circle")
+                            }
+                        }
+                    }
             } else {
                 if (noConnection) {
                     Text("Failed to load, please check your internet connection and your token")
@@ -30,6 +39,9 @@ struct ProjectIssuesLoader: View {
                 await getIssues()
             }
         }.navigationTitle("Issues")
+        .sheet(isPresented: $showNewIssue) {
+            NewIssueView(id: id)
+        }
     }
         
     private func getIssues() async -> Void {

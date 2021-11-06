@@ -18,34 +18,34 @@ struct BranchesView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                if (branches != nil) {
-                    if (branches!.isEmpty) {
-                        Text("No branches")
-                    } else {
-                        List(branches!, id: \.name) { branch in
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    HStack {
-                                        if (branch.protected) {
-                                            Image(systemName: "lock")
-                                        }
-                                        Text(branch.name.emojized())
-                                            .font(.headline)
-                                    }
-                                    Text(branch.commit.shortId + " · " + branch.commit.title.emojized())
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-                                }
-                                Spacer()
-                                PipelineLoader(id: id, branch: branch.name, statusHorizontal: false, showStatusStr: false)
-                            }
-                        }.refreshable {
-                            await getBranches()
-                        }
-                        Spacer()
-                    }
+            if (branches != nil) {
+                if (branches!.isEmpty) {
+                    Text("No branches")
                 } else {
+                    List(branches!, id: \.name) { branch in
+                        HStack {
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    if (branch.protected) {
+                                        Image(systemName: "lock")
+                                    }
+                                    Text(branch.name.emojized())
+                                        .font(.headline)
+                                }
+                                Text(branch.commit.shortId + " · " + branch.commit.title.emojized())
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            Spacer()
+                            PipelineLoader(id: id, branch: branch.name, statusHorizontal: false, showStatusStr: false)
+                        }
+                    }.refreshable {
+                        await getBranches()
+                    }.navigationBarTitle("Branches")
+                    .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
+                }
+            } else {
+                VStack {
                     Spacer()
                     if (noConnection) {
                         Text("Failed to load, please check your internet connection and your token")
@@ -54,13 +54,13 @@ struct BranchesView: View {
                         ProgressView("Loading")
                     }
                     Spacer()
-                }
-            }.onAppear {
-                Task.init {
-                    await getBranches()
-                }
-            }.navigationBarTitle("Branches")
-            .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
+                }.navigationBarTitle("Branches")
+                .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
+            }
+        }.onAppear {
+            Task.init {
+                await getBranches()
+            }
         }
     }
     

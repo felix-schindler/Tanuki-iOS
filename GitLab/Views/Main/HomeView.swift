@@ -70,13 +70,6 @@ struct HomeView: View {
                         Image(systemName: "bell.circle")
                     }
                 }
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Button(action: {showNewIssue = true}) {
-                        Image(systemName: "plus.circle")
-                    }
-                }
-            }.sheet(isPresented: $showNewIssue) {
-                NewIssueView()
             }.sheet(isPresented: $showEvents) {
                 EventsView()
             }

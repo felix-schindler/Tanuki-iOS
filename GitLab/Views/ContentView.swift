@@ -14,20 +14,17 @@ struct ContentView: View {
         TabView {
             HomeView()
                 .tabItem {
-                    Image(systemName: "house")
-                    Text("Home")
+                    Label("Home", systemImage: "house")
                 }
                 .tag(0)
             ExploreView()
                 .tabItem {
-                    Image(systemName: "safari")
-                    Text("Explore")
+                    Label("Explore", systemImage: "safari")
                 }
                 .tag(1)
             AccountView()
                 .tabItem {
-                    Image(systemName: "person")
-                    Text("Account")
+                    Label("Account", systemImage: "person")
                 }
                 .tag(2)
         }.onAppear {

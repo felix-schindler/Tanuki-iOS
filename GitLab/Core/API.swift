@@ -69,7 +69,7 @@ class API {
                 if (dataStr != "") {
                     dataStr += "&"
                 }
-                dataStr += "\(k.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))=\(v.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))"
+                dataStr += "\(String(describing: k.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)))=\(String(describing: v.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)))"
             }
         }
 
@@ -85,6 +85,34 @@ class API {
 
         // Send the request
         URLSession(configuration: sessionConfig).dataTask(with: request, completionHandler: { (data, res, _) in
+            apiData = data
+            semaphore.signal()
+        }).resume()
+
+        // Wait for the signal (finished API request)
+        _ = semaphore.wait(wallTimeout: .distantFuture)
+        return apiData
+    }
+    
+    public static func PUT(endpoint: String) -> Data? {
+        // No internet connection or link does not exist
+        let url: URL? = URL(string: API.base + endpoint);
+        if (url == nil) {
+            return nil
+        }
+
+        var apiData: Data? = nil
+        let semaphore = DispatchSemaphore(value: 0)
+
+        var request: URLRequest = URLRequest(url: url!)
+            request.httpMethod = "PUT"
+
+        // Session config with auth header and token, when required
+        let sessionConfig = URLSessionConfiguration.default
+        sessionConfig.httpAdditionalHeaders = ["PRIVATE-TOKEN": token]
+
+        // Send the request
+        URLSession(configuration: sessionConfig).dataTask(with: request, completionHandler: { (data, _, _) in
             apiData = data
             semaphore.signal()
         }).resume()

@@ -16,16 +16,15 @@ struct EventsView: View {
 
     var body: some View {
         NavigationView {
-            VStack {
-                if (events != nil) {
-                    List(events!, id: \.id) { event in
-                        Text(getStupidText(event: event))
-                    }.listStyle(.plain)
-                    .refreshable {
-                        await getEvents()
-                    }
-                    Spacer()
-                } else {
+            if (events != nil) {
+                List(events!, id: \.id) { event in
+                    Text(getStupidText(event: event))
+                }.refreshable {
+                    await getEvents()
+                }.navigationBarTitle("Events")
+                .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
+            } else {
+                VStack {
                     Spacer()
                     if (noConnection) {
                         Text("Failed to load, please check your internet connection and your token")
@@ -34,15 +33,13 @@ struct EventsView: View {
                         ProgressView("Loading")
                     }
                     Spacer()
-                }
+                }.navigationBarTitle("Events")
+                .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
             }
-            .onAppear {
-                Task.init {
-                    await getEvents()
-                }
+        }.onAppear {
+            Task.init {
+                await getEvents()
             }
-            .navigationBarTitle("Events")
-            .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
         }
     }
     

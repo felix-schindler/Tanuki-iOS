@@ -10,7 +10,8 @@ import SwiftUI
 struct NewIssueView: View {
     @Environment(\.presentationMode)
     var presentationMode: Binding<PresentationMode>
-
+    
+    @State var id: Int
     @State var title: String = ""
     @State var description: String = ""
 
@@ -29,7 +30,12 @@ struct NewIssueView: View {
                     .background(Color(.systemGray5))
                     .cornerRadius(10)
                 Spacer()
-                Button(action: {isError = !saveNewIssue()}, label: {
+                Button(action: {
+                    isError = !saveNewIssue()
+                    if (!isError) {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
+                }, label: {
                     Text("Create new issue").frame(maxWidth: .infinity)
                 }).alert(isPresented: $isError, content: {
                     Alert(title: Text("Error"), message: Text("Failed to create issue"), dismissButton: .default(Text("OK")))
@@ -45,13 +51,17 @@ struct NewIssueView: View {
 
     private func saveNewIssue() -> Bool {
         do {
-            let apiData: Data? = API.POST(endpoint: "projects/" + String(id) + "/issues?title=" + title.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) + "&description=" + description.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed))
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let event = try decoder.decode(Event.self, from: apiData!)
-                events.append(event)
-                return true
+            let encTitle: String? = title.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            let encDesc: String? = description.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+            if (encTitle != nil || encDesc != nil) {
+                let reqUrl: String = "projects/" + String(id) + "/issues?title=" + encTitle! + "&description=" + encDesc!
+                let apiData: Data? = API.POST(endpoint: reqUrl)
+                if (apiData != nil) {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    _ = try decoder.decode(Issue.self, from: apiData!)
+                    return true
+                }
             }
         } catch let jsonError as NSError {
             print("JSON error \(jsonError.localizedDescription)")
