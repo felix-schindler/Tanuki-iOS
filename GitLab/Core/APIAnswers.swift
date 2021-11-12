@@ -136,6 +136,7 @@ struct Commit: Decodable {
     var message: String
     var authorName: String
     var authorEmail: String
+    var authoredDate: Date
 }
 
 struct Branch: Decodable {

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+// import MarkdownUI
 
 struct CommitsView: View {
     @Environment(\.presentationMode)
@@ -29,7 +30,7 @@ struct CommitsView: View {
                         HStack {
                             Text("On branch")
                             if (branches != nil) {
-                                Picker("Branch", selection: $refName) {
+                                Picker("", selection: $refName) {
                                     ForEach(branches!, id: \.name) { branch in
                                         Text(branch.name).tag(branch.name)
                                     }
@@ -38,20 +39,23 @@ struct CommitsView: View {
                                     Task.init { await getCommits() }
                                 }
                             } else {
-                                Picker("Branch", selection: $refName) {
+                                Picker("", selection: $refName) {
                                     Text(refName).tag(refName)
-                                }
+                                }.pickerStyle(.menu)
                             }
                         }
-
+                        
                         Section(header: Text("Commits")) {
                             ForEach(commits!, id: \.id) { commit in
                                 HStack {
                                     Text(commit.title.emojized())
+                                    /* Markdown(Document(commit.message.emojized()))
+                                        .multilineTextAlignment(.leading) */
                                     Spacer()
                                     VStack(alignment: .trailing) {
                                         Text(commit.shortId)
                                         Text(commit.authorName)
+                                        Text(commit.authoredDate.toString())
                                     }.foregroundColor(.secondary)
                                     .font(.caption)
                                 }
@@ -89,6 +93,7 @@ struct CommitsView: View {
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
+                decoder.dateDecodingStrategy = .custom(iso8601Decoder())
                 commits = try decoder.decode([Commit].self, from: apiData!)
             } else {
                 noConnection = true
@@ -104,6 +109,7 @@ struct CommitsView: View {
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
+                decoder.dateDecodingStrategy = .custom(iso8601Decoder())
                 branches = try decoder.decode([Branch].self, from: apiData!)
             } else {
                 noConnection = true

@@ -35,6 +35,38 @@ extension StringProtocol {
 }
 
 
+extension Date {
+    /// Convert date to string with short time and medium date
+    func toString() -> String {
+        let dateFormat = DateFormatter()
+        dateFormat.dateStyle = .medium
+        dateFormat.timeStyle = .short
+        return dateFormat.string(from: self)
+    }
+}
+
+func iso8601Decoder() -> (Decoder) throws -> Date {
+    { (decoder) -> Date in
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+
+        let container = try decoder.singleValueContainer()
+        let dateStr = try container.decode(String.self)
+
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+        if let date = formatter.date(from: dateStr) {
+            return date
+        }
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
+        if let date = formatter.date(from: dateStr) {
+            return date
+        }
+        throw DateError.invalidDate
+    }
+}
+
 extension Color {
     /**
     Initializes a color from a hex string.
