@@ -6,5 +6,5 @@ Right now you would have to clone this repository, open the project and install 
 
 ## How to develop
 
-- Run `git clone git@github.com:felix-schindler/gitlab_ios.git`
+- Run `git clone git@github.com:felix-schindler/gitlab-ios.git`
 - Open in Xcode
