@@ -22,7 +22,7 @@ struct ProjectView: View {
                         .font(.callout)
                         .foregroundColor(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    if (project.description != "") {
+                    if (project.description != nil) {
                         Text(project.description!)
                             .padding(.bottom)
                             .frame(maxWidth: .infinity, alignment: .leading)
