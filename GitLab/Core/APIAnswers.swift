@@ -52,7 +52,7 @@ struct UserStatus: Decodable {
 }
 
 struct Permissions: Decodable {
-    var projectAccess: Access
+    var projectAccess: Access? = nil
 }
 
 struct Access: Decodable {

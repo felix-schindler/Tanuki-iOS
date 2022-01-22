@@ -19,13 +19,13 @@ struct ChangeConfigView: View {
     var body: some View {
         NavigationView {
             VStack {
-                TextField("New GitLab URL", text: $url)
+                TextField(API.base == "" ? "New GitLab URL" : "GitLab URL", text: $url)
                     .padding()
                     .textContentType(.URL)
                     .keyboardType(.URL)
                     .background(Color(.systemGray5))
                     .cornerRadius(10)
-                TextField("New GitLab Token", text: $token)
+                TextField(API.token == "" ? "New GitLab Token" : "GitLab Token" , text: $token)
                     .padding()
                     .disableAutocorrection(true)
                     .background(Color(.systemGray5))

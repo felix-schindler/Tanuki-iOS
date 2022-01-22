@@ -29,9 +29,13 @@ struct ProjectListView: View {
                                         .scaledToFit()
                                         .cornerRadius(10)
                                 case .failure:
-                                    Text("Failed to load")
+                                    Image(systemName: "exclamationmark.icloud")
+                                        .resizable()
+                                        .scaledToFit()
                                 @unknown default:
-                                    Text("Unkown error")
+                                    Image(systemName: "xmark.icloud")
+                                        .resizable()
+                                        .scaledToFit()
                                 }
                             }.frame(width: 50, height: 50, alignment: .leading)
                         }
@@ -45,11 +49,13 @@ struct ProjectListView: View {
                                 } else if (project.visibility == "public") {
                                     Image(systemName: "globe")
                                 }
-                                Text(accessRole(code: project.permissions.projectAccess.accessLevel))
-                                    .font(.caption)
-                                    .padding(3)
-                                    .background(.secondary)
-                                    .cornerRadius(10)
+                                if (project.permissions.projectAccess != nil) {
+                                    Text(accessRole(code: project.permissions.projectAccess!.accessLevel))
+                                        .font(.caption)
+                                        .padding(3)
+                                        .background(.secondary)
+                                        .cornerRadius(10)
+                                }
                             }.frame(maxWidth: .infinity, alignment: .leading)
                             if (project.description != nil) {
                                 Text(project.description!)
