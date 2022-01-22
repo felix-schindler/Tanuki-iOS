@@ -48,16 +48,18 @@ struct CommitsView: View {
                         Section(header: Text("Commits")) {
                             ForEach(commits!, id: \.id) { commit in
                                 HStack {
-                                    Text(commit.title.emojized())
-                                    /* Markdown(Document(commit.message.emojized()))
-                                        .multilineTextAlignment(.leading) */
+                                    VStack(alignment: .leading) {
+                                        Text(commit.title.emojized())
+                                        /* Markdown(Document(commit.message.emojized()))
+                                            .multilineTextAlignment(.leading) */
+                                        Text(commit.authorName + " · " + commit.authoredDate.toString())
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
                                     Spacer()
-                                    VStack(alignment: .trailing) {
-                                        Text(commit.shortId)
-                                        Text(commit.authorName)
-                                        Text(commit.authoredDate.toString())
-                                    }.foregroundColor(.secondary)
-                                    .font(.caption)
+                                    Text(commit.shortId)
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
                                 }
                             }
                         }.headerProminence(.increased)

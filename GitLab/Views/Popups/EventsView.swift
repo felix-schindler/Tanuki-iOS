@@ -49,7 +49,7 @@ struct EventsView: View {
         if (event.targetType != nil) {
             ret += " \(event.targetType!)"
         }; if (event.targetTitle != nil) {
-            ret += " '\(event.targetTitle!)'"
+            ret += " '\(event.targetTitle!.emojized())'"
         }; if (event.pushData != nil) {
             ret += " \(event.pushData!.refType) '\(event.pushData!.ref)'"
             if (event.pushData!.commitTitle != nil) {

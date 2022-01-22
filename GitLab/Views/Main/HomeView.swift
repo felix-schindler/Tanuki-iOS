@@ -71,7 +71,7 @@ struct HomeView: View {
                 }
             }.navigationBarTitle("Home")
             .toolbar {
-                ToolbarItemGroup(placement: .navigationBarLeading) {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button (action: {showEvents = true}) {
                         Image(systemName: "bell.circle")
                     }
