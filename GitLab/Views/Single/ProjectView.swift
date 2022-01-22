@@ -18,14 +18,16 @@ struct ProjectView: View {
         ScrollView {
             VStack {
                 VStack(alignment: .leading) {
+                    Text("Project ID: " + String(project.id))
+                        .font(.callout)
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     if (project.description != "") {
-                        Text(project.description)
+                        Text(project.description!)
                             .padding(.bottom)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     VStack {
-                        Text("Details")
-                            .font(.headline)
                         HStack {
                             if (project.avatarUrl != nil) {
                                 AsyncImage(url: URL(string: project.avatarUrl!)) { phase in
@@ -45,11 +47,11 @@ struct ProjectView: View {
                                     }
                                 }
                             }
-                            VStack {
-                                Text(project.nameWithNamespace)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("Project ID: " + String(project.id))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            if (project.owner != nil) {
+                                HStack {
+                                    Image(systemName: "person")
+                                    Text(project.owner!.username)
+                                }
                             }
                         }.frame(maxWidth: .infinity, alignment: .leading)
                         HStack {
@@ -69,7 +71,7 @@ struct ProjectView: View {
                             }
                             Text(" · ")
                             HStack {
-                                Image(systemName: "tuningfork")
+                                Image(systemName: "arrow.branch")
                                 Text(String(project.forksCount) + " forks")
                             }
                         }.frame(maxWidth: .infinity, alignment: .leading)
@@ -92,9 +94,6 @@ struct ProjectView: View {
                         .controlSize(.large)
                 }
                 VStack {
-                    Text("Issues and Merge Requests")
-                        .font(.headline)
-                        .padding(.top)
                     if (project.issuesEnabled) {
                         NavigationLink(destination: ProjectIssuesLoader(id: project.id)) {
                             HStack {
@@ -146,6 +145,6 @@ struct ProjectView: View {
 
 struct ProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectView(project: Project(id: Int(), description: String(), name: "No project", nameWithNamespace: "", defaultBranch: "", sshUrlToRepo: "", httpUrlToRepo: "", forksCount: 0, starCount: 0, visibility: "", owner: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), issuesEnabled: false, mergeRequestsEnabled: false))
+        ProjectView(project: Project(id: Int(), description: String(), name: "No project", nameWithNamespace: "", defaultBranch: "", sshUrlToRepo: "", httpUrlToRepo: "", forksCount: 0, starCount: 0, visibility: "", owner: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), issuesEnabled: false, mergeRequestsEnabled: false, permissions: Permissions(projectAccess: Access(accessLevel: 0, notificationLevel: 3))))
     }
 }

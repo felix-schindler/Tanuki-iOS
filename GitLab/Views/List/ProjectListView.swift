@@ -38,7 +38,6 @@ struct ProjectListView: View {
                         VStack {
                             HStack {
                                 Text(project.nameWithNamespace)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
                                 if (project.visibility == "private") {
                                     Image(systemName: "lock")
                                 } else if (project.visibility == "internal") {
@@ -46,9 +45,14 @@ struct ProjectListView: View {
                                 } else if (project.visibility == "public") {
                                     Image(systemName: "globe")
                                 }
-                            }
-                            if (project.description != "") {
-                                Text(project.description)
+                                Text(accessRole(code: project.permissions.projectAccess.accessLevel))
+                                    .font(.caption)
+                                    .padding(3)
+                                    .background(.secondary)
+                                    .cornerRadius(10)
+                            }.frame(maxWidth: .infinity, alignment: .leading)
+                            if (project.description != nil) {
+                                Text(project.description!)
                                     .foregroundColor(.secondary)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
@@ -65,6 +69,28 @@ struct ProjectListView: View {
                 await updateFunction()
             }
         }
+    }
+    
+    func accessRole(code: Int) -> String {
+        switch code {
+        case 0:
+            return "No access"
+        case 5:
+            return "Minimal access"
+        case 10:
+            return "Guest"
+        case 20:
+            return "Reporter"
+        case 30:
+            return "Developer"
+        case 40:
+            return "Maintainer"
+        case 50:
+            return "Owner"
+        default:
+            return ""
+        }
+
     }
 }
 

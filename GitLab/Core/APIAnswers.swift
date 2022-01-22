@@ -9,7 +9,7 @@ import Foundation
 
 struct Project: Decodable {
     var id: Int
-    var description: String
+    var description: String? = ""
     var name: String
     var nameWithNamespace: String
     var defaultBranch: String? = ""     // Not all projects have a repository. (WTF!?)
@@ -23,6 +23,7 @@ struct Project: Decodable {
     var issuesEnabled: Bool
     var openIssuesCount: Int? = 0
     var mergeRequestsEnabled: Bool
+    var permissions: Permissions
 }
 
 struct User: Decodable {
@@ -48,6 +49,15 @@ struct UserSmall: Decodable, Identifiable {
 struct UserStatus: Decodable {
     var emoji: String
     var message: String
+}
+
+struct Permissions: Decodable {
+    var projectAccess: Access
+}
+
+struct Access: Decodable {
+    var accessLevel: Int
+    var notificationLevel: Int
 }
 
 struct Issue: Decodable {

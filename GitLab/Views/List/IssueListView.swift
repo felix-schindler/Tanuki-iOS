@@ -27,7 +27,7 @@ struct IssueListView: View {
                             Image(systemName: "smallcircle.circle")
                                 .foregroundColor(.green)
                         }
-                        Text(issue.title)
+                        Text(issue.title.emojized())
                         Spacer()
                         VStack(alignment: .trailing) {
                             Text(issue.author.name)
