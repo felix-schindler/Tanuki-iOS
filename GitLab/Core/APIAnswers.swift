@@ -66,6 +66,8 @@ struct Issue: Decodable {
     var projectId: Int
     var title: String
     var description: String
+    var createdAt: Date
+    var state: String
     var labels: [APILabel]?
     var milestone: Milestone?
     var assignees: [UserSmall]?

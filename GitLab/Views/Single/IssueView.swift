@@ -28,9 +28,14 @@ struct IssueView: View {
                             Text(issue.author.username)
                         }
                     }.foregroundColor(.secondary)
-                    Text(issue.title.emojized())
-                        .font(.title)
-                        .padding(.top)
+                    HStack {
+                        Text(issue.state)
+                            .padding(5)
+                            .background(issue.state == "opened" ? .green : .blue)
+                            .cornerRadius(10)
+                        Text(issue.title.emojized())
+                            .font(.title)
+                    }.padding(.top)
                     if (issue.description != "") {
                         Markdown(Document(issue.description.emojized()))
                            .multilineTextAlignment(.leading)
@@ -83,6 +88,6 @@ struct IssueView: View {
 
 struct IssueView_Previews: PreviewProvider {
     static var previews: some View {
-        IssueView(issue: Issue(id: 0, iid: 0, projectId: 0, title: "No issue given", description: "❌", assignees: nil, author: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), type: "", references: Reference(full: "lost/lost#1")))
+        IssueView(issue: Issue(id: 0, iid: 0, projectId: 0, title: "No issue given", description: "❌", createdAt: Date(), state: "", assignees: nil, author: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), type: "", references: Reference(full: "lost/lost#1")))
     }
 }

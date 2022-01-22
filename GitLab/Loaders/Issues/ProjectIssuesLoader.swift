@@ -14,9 +14,22 @@ struct ProjectIssuesLoader: View {
     @State var issues: [Issue]? = nil
     @State var noConnection: Bool = false
     
+    @State var type = 0
+    
     var body: some View {
         VStack {
             if (issues != nil) {
+                Picker("State", selection: $type) {
+                    Text("Open").tag(0)
+                    Text("Closed").tag(1)
+                    Text("All").tag(2)
+                }.pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal)
+                .onChange(of: type, perform: { type in
+                    Task.init {
+                        await getIssues()
+                    }
+                })
                 IssueListView(issues: issues!, updateFunction: getIssues)
                     .toolbar {
                         ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -46,10 +59,17 @@ struct ProjectIssuesLoader: View {
         
     private func getIssues() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/issues?state=opened&with_labels_details=true")
+            var state: String = ""
+            if (type == 0) {
+                state = "state=opened&"
+            } else if (type == 1) {
+                state = "state=closed&"
+            }
+            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/issues?\(state)with_labels_details=true")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
+                decoder.dateDecodingStrategy = .custom(iso8601Decoder())
                 issues = try decoder.decode([Issue].self, from: apiData!)
             } else {
                 noConnection = true

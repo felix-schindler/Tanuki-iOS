@@ -28,11 +28,16 @@ struct IssueListView: View {
                             Image(systemName: "smallcircle.circle")
                                 .foregroundColor(.green)
                         }
-                        Text(issue.title.emojized())
+                        VStack(alignment: .leading) {
+                            Text(issue.title.emojized())
+                            Text(issue.references.full)
+                                .foregroundColor(.secondary)
+                                .font(.caption)
+                        }
                         Spacer()
                         VStack(alignment: .trailing) {
                             Text(issue.author.name)
-                            Text(issue.references.full)
+                            Text(issue.createdAt.toString())
                         }.foregroundColor(.secondary)
                         .font(.caption)
                     }

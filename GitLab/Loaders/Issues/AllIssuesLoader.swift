@@ -37,6 +37,7 @@ struct AllIssuesLoader: View {
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
+                decoder.dateDecodingStrategy = .custom(iso8601Decoder())
                 issues = try decoder.decode([Issue].self, from: apiData!)
             } else {
                 noConnection = true
