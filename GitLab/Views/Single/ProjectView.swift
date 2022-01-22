@@ -18,42 +18,43 @@ struct ProjectView: View {
         ScrollView {
             VStack {
                 VStack(alignment: .leading) {
-                    Text("Project ID: " + String(project.id))
-                        .font(.callout)
-                        .foregroundColor(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    if (project.description != nil) {
-                        Text(project.description!)
-                            .padding(.bottom)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
+                    HStack {
+                        VStack {
+                            Text("Project ID: " + String(project.id))
+                                .font(.callout)
+                                .foregroundColor(.secondary)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            if (project.description != nil) {
+                                Text(project.description!)
+                                    .padding(.bottom)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                        }
+                        Spacer()
+                        if (project.avatarUrl != nil) {
+                            AsyncImage(url: URL(string: project.avatarUrl!)) { phase in
+                                switch phase {
+                                case .empty:
+                                    ProgressView()
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 50, height: 50)
+                                        .cornerRadius(10)
+                                default:
+                                    EmptyView()
+                                }
+                            }
+                        }
+                    }.frame(maxWidth: .infinity, alignment: .leading)
                     VStack {
-                        HStack {
-                            if (project.avatarUrl != nil) {
-                                AsyncImage(url: URL(string: project.avatarUrl!)) { phase in
-                                    switch phase {
-                                    case .empty:
-                                        ProgressView()
-                                    case .success(let image):
-                                        image
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 50, height: 50)
-                                            .cornerRadius(10)
-                                    case .failure:
-                                        EmptyView()
-                                    @unknown default:
-                                        EmptyView()
-                                    }
-                                }
-                            }
-                            if (project.owner != nil) {
-                                HStack {
-                                    Image(systemName: "person")
-                                    Text(project.owner!.username)
-                                }
-                            }
-                        }.frame(maxWidth: .infinity, alignment: .leading)
+                        if (project.owner != nil) {
+                            HStack {
+                                Image(systemName: "person")
+                                Text(project.owner!.username)
+                            }.frame(maxWidth: .infinity, alignment: .leading)
+                        }
                         HStack {
                             if (project.visibility == "private") {
                                 Image(systemName: "lock")

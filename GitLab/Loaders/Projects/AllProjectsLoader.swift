@@ -10,11 +10,30 @@ import SwiftUI
 struct AllProjectsLoader: View {
     @State var projects: [Project]? = nil
     @State var noConnection: Bool = false
-    
+
+    @State var search: String = ""
+
     var body: some View {
         VStack {
+            HStack {
+                TextField("Search anything..." , text: $search)
+                    .padding()
+                    .background(Color(.systemGray5))
+                    .cornerRadius(10)
+                    .frame(maxWidth: .infinity)
+                Button(action: {
+                    Task.init {
+                        await getProjects()
+                    }
+                }, label: {
+                    Text("Search")
+                }).tint(.accentColor)
+                    .buttonStyle(.borderedProminent)
+                    .buttonBorderShape(.roundedRectangle)
+                    .controlSize(.large)
+            }.padding()
             if (projects != nil) {
-                ProjectListView(projects: projects!, updateFunction: getProjects)
+               ProjectListView(projects: projects!, updateFunction: getProjects)
             } else {
                 if (noConnection) {
                     Text("Failed to load, please check your internet connection and your token")
@@ -33,7 +52,8 @@ struct AllProjectsLoader: View {
     
     private func getProjects() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "projects?order_by=last_activity_at")
+            let endpoint = "projects" + (search != "" ? "?search=\(String(describing: search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)))" : "?order_by=last_activity_at")
+            let apiData: Data? = API.GET(endpoint: endpoint)
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

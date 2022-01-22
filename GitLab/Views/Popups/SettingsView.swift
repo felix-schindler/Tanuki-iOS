@@ -28,7 +28,7 @@ struct SettingsView: View {
                     Text("Made with ❤️‍🔥 by")
                     Link("Felix Schindler", destination: URL(string: "https://schindlerfelix.de")!)
                 }
-                Link("Find this App on GitHub", destination: URL(string: "https://github.com/felix-schindler/gitlab_ios")!)
+                Link("Find this App on GitLab", destination: URL(string: "https://gitlab.com/felix-schindler/gitlab_ios")!)
                 Spacer()
             }.sheet(isPresented: $showChangeConfig) {
                 ChangeConfigView()

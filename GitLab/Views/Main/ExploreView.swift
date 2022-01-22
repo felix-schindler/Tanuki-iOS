@@ -10,8 +10,10 @@ import SwiftUI
 struct ExploreView: View {
     var body: some View {
         NavigationView {
-            AllProjectsLoader()
-        }
+            VStack {
+                AllProjectsLoader()
+            }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

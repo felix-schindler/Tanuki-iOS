@@ -11,16 +11,26 @@ import SwiftUI
 class API {
     @AppStorage("api_base") public static var base: String = ""
     @AppStorage("token") public static var token: String = ""
+    
+    private static func url(endpoint: String) -> URL? {
+        let url: URL? = URL(string: endpoint.contains("https://") ? endpoint : API.base + endpoint)
+        if (url == nil) {
+            return nil
+        }
+
+        print("[API] url: " + url!.absoluteString)
+        return url
+    }
 
     /**
      Make a GET request to an API endpoint
 
-     - Parameter endpoint: API endpoint (/api/:endpoint)
+     - Parameter endpoint: API endpoint (/api/v4/:endpoint)
      - Returns: Data to be decoded as e. g. JSON
      */
     public static func GET(endpoint: String) -> Data? {
         // No internet connection or link does not exist
-        let url: URL? = URL(string: API.base + endpoint);
+        let url: URL? = API.url(endpoint: endpoint)
         if (url == nil) {
             return nil
         }
@@ -53,7 +63,7 @@ class API {
      */
     public static func POST(endpoint: String, values: Dictionary<String,String>? = nil) -> Data? {
         // No internet connection or link does not exist
-        let url: URL? = URL(string: API.base + endpoint);
+        let url: URL? = API.url(endpoint: endpoint)
         if (url == nil) {
             return nil
         }
@@ -96,7 +106,7 @@ class API {
     
     public static func PUT(endpoint: String) -> Data? {
         // No internet connection or link does not exist
-        let url: URL? = URL(string: API.base + endpoint);
+        let url: URL? = API.url(endpoint: endpoint)
         if (url == nil) {
             return nil
         }

@@ -55,7 +55,7 @@ struct HomeView: View {
                                         Image(systemName: "globe")
                                     }
                                 }
-                            } // TODO (un)star swipe
+                            }
                         }
                     } else {
                         if (progress == 100) {

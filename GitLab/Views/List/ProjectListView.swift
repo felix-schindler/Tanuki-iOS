@@ -64,12 +64,6 @@ struct ProjectListView: View {
                             }
                         }
                     }
-                }.swipeActions {
-                    Button {
-                        print("Implement start project")
-                    } label: {
-                        Image(systemName: "star")
-                    }.tint(.yellow)
                 }
             }.refreshable {
                 await updateFunction()

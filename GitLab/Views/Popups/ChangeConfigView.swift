@@ -14,7 +14,7 @@ struct ChangeConfigView: View {
     @State var url: String = API.base
     @State var token: String = API.token
     
-    @State var isError: Bool = false
+    @State var swipeError: Bool = false
     
     var body: some View {
         NavigationView {
@@ -31,13 +31,13 @@ struct ChangeConfigView: View {
                     .background(Color(.systemGray5))
                     .cornerRadius(10)
                 Button(action: {
-                    isError = !validGitConfig()
-                    if (!isError) {
+                    swipeError = !validGitConfig()
+                    if (!swipeError) {
                         self.presentationMode.wrappedValue.dismiss()
                     }
                 }, label: {
                     Text("Save configuration").frame(maxWidth: .infinity)
-                }).alert(isPresented: $isError, content: {
+                }).alert(isPresented: $swipeError, content: {
                     Alert(title: Text("Error"), message: Text("Invalid configuration, check the entered url and token"), dismissButton: .default(Text("OK")))
                 }).tint(.accentColor)
                 .buttonStyle(.borderedProminent)

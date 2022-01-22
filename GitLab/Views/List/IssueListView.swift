@@ -15,7 +15,8 @@ struct IssueListView: View {
 
     var body: some View {
         if (issues.isEmpty) {
-            Text("No issues")
+            Text("There are no issues in this project🚀")
+                .font(.title)
         } else {
             List(issues, id: \.id) { issue in
                 NavigationLink(destination: IssueView(issue: issue)) {
