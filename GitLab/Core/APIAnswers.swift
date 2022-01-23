@@ -141,6 +141,13 @@ struct File: Decodable {
     var content: String
 }
 
+struct TreeFile: Decodable {
+    var id: String
+    var name: String
+    var type: String
+    var path: String
+}
+
 struct Commit: Decodable {
     var id: String
     var shortId: String

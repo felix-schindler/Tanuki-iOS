@@ -29,7 +29,7 @@ struct IssueView: View {
                         }
                     }.foregroundColor(.secondary)
                     HStack {
-                        Text(issue.state)
+                        Text(issue.state == "opened" ? "Open" : "Closed")
                             .padding(5)
                             .background(issue.state == "opened" ? .green : .blue)
                             .cornerRadius(10)

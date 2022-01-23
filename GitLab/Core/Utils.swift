@@ -30,7 +30,7 @@ extension String {
     
     /// Url encode content
     func url() -> String {
-        let new = self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        let new = self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         return new ?? self
     }
 }

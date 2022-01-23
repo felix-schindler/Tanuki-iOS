@@ -15,21 +15,28 @@ struct FileLoader: View {
     
     @State var id: Int
     @State var filePath: String
-    @State var branch: String
+    @State var refName: String
+    
+    @State var inline: Bool = false
 
     var body: some View {
         VStack {
             if (file != nil) {
                 let content: String? = file!.content.fromBase64()
                 if (content != nil) {
-                    Text(file!.filePath)
-                        .font(.headline)
-                    if (filePath.contains(".md")) {
-                        Markdown(Document(content!))
-                            .multilineTextAlignment(.leading)
+                    if (inline) {
+                        Text(file!.filePath)
+                            .font(.headline)
+
+                        if (filePath.lowercased().contains(".md")) {
+                            Markdown(Document(content!))
+                                .multilineTextAlignment(.leading)
+                        } else {
+                            Text(content!)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                     } else {
-                        Text(content!)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                        FileView(fileName: file!.filePath, content: content!)
                     }
                 }
             } else {
@@ -54,7 +61,7 @@ struct FileLoader: View {
     
     private func getFile() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/repository/files/" + filePath + "?ref=" + branch)
+            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/repository/files/" + filePath.url() + "?ref=" + refName.url())
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -70,6 +77,6 @@ struct FileLoader: View {
 
 struct FileLoader_Previews: PreviewProvider {
     static var previews: some View {
-        FileLoader(id: Int(), filePath: String(), branch: String())
+        FileLoader(id: Int(), filePath: String(), refName: String())
     }
 }

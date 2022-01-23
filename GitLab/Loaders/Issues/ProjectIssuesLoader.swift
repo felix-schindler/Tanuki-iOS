@@ -19,7 +19,7 @@ struct ProjectIssuesLoader: View {
     var body: some View {
         VStack {
             if (issues != nil) {
-                Picker("State", selection: $type) {
+                Picker("", selection: $type) {
                     Text("Open").tag(0)
                     Text("Closed").tag(1)
                     Text("All").tag(2)

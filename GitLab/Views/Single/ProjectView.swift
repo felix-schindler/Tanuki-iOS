@@ -122,9 +122,20 @@ struct ProjectView: View {
                         .buttonBorderShape(.roundedRectangle)
                         .controlSize(.large)
                     }
+                    NavigationLink(destination: TreeLoader(id: project.id, refName: project.defaultBranch ?? "")) {
+                        HStack {
+                            Image(systemName: "folder.fill")
+                                .foregroundColor(.yellow)
+                            Text("Files")
+                            Spacer()    // TODO: Set width to infinity
+                        }
+                    }.foregroundColor(.primary)
+                    .buttonStyle(.bordered)
+                    .buttonBorderShape(.roundedRectangle)
+                    .controlSize(.large)
                 }
             }.padding(.horizontal)
-            FileLoader(id: project.id, filePath: "README.md", branch: project.defaultBranch ?? "")
+            FileLoader(id: project.id, filePath: "README.md", refName: project.defaultBranch ?? "", inline: true)
         }.navigationTitle(project.name)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
