@@ -52,7 +52,7 @@ struct AllProjectsLoader: View {
     
     private func getProjects() async -> Void {
         do {
-            let endpoint = "projects" + (search != "" ? "?search=\(String(describing: search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)))" : "?order_by=last_activity_at")
+            let endpoint = "projects" + (search != "" ? "?search=\(String(search).url())" : "?order_by=last_activity_at")
             let apiData: Data? = API.GET(endpoint: endpoint)
             if (apiData != nil) {
                 let decoder = JSONDecoder()

@@ -27,6 +27,12 @@ extension String {
     func emojized() -> String {
         return emojizedStringWithString(text: self)
     }
+    
+    /// Url encode content
+    func url() -> String {
+        let new = self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        return new ?? self
+    }
 }
 
 extension StringProtocol {

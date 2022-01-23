@@ -79,7 +79,7 @@ class API {
                 if (dataStr != "") {
                     dataStr += "&"
                 }
-                dataStr += "\(String(describing: k.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)))=\(String(describing: v.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)))"
+                dataStr += "\(String(k).url())=\(String(v).url())"
             }
         }
 

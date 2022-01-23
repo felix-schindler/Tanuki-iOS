@@ -33,7 +33,7 @@ struct MemberProjectsLoader: View {
     
     private func getProjects() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "projects?membership=true")
+            let apiData: Data? = API.GET(endpoint: "projects?membership=true&order_by=last_activity_at")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

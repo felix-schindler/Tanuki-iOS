@@ -51,17 +51,14 @@ struct NewIssueView: View {
 
     private func saveNewIssue() -> Bool {
         do {
-            let encTitle: String? = title.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-            let encDesc: String? = description.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-            if (encTitle != nil || encDesc != nil) {
-                let reqUrl: String = "projects/" + String(id) + "/issues?title=" + encTitle! + "&description=" + encDesc!
-                let apiData: Data? = API.POST(endpoint: reqUrl)
-                if (apiData != nil) {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    _ = try decoder.decode(Issue.self, from: apiData!)
-                    return true
-                }
+            let reqUrl: String = "projects/" + String(id) + "/issues?title=" + title.url() + "&description=" + description.url()
+            let apiData: Data? = API.POST(endpoint: reqUrl)
+            if (apiData != nil) {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                decoder.dateDecodingStrategy = .custom(iso8601Decoder())
+                _ = try decoder.decode(Issue.self, from: apiData!)
+                return true
             }
         } catch let jsonError as NSError {
             print("JSON error \(jsonError.localizedDescription)")
