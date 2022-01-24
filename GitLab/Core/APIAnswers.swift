@@ -93,6 +93,7 @@ struct Milestone: Decodable {
 }
 
 struct Reference: Decodable {
+    var short: String
     var full: String
 }
 

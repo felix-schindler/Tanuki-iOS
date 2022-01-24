@@ -11,6 +11,7 @@ struct IssueListView: View {
     @State var issues: [Issue]
     @State var updateFunction: () async -> Void
     
+    @State var showRef: Bool = false
     @State var isError: Bool = false
 
     var body: some View {
@@ -53,11 +54,13 @@ struct IssueListView: View {
                         }
                         Spacer()
                         VStack(alignment: .trailing) {
-                            Text(issue.references.full)
-                                .foregroundColor(.secondary)
-                                .font(.caption)
-                        }.foregroundColor(.secondary)
-                        .font(.caption)
+                            if (showRef || UIDevice.current.userInterfaceIdiom == .pad) {
+                                Text(issue.references.full)
+                            } else {
+                                Text(issue.references.short)
+                            }
+                        }.font(.caption)
+                        .foregroundColor(.secondary)
                     }
                 }.swipeActions {
                     Button(action: {

@@ -14,7 +14,7 @@ struct AllIssuesLoader: View {
     var body: some View {
         VStack {
             if (issues != nil) {
-                IssueListView(issues: issues!, updateFunction: getIssues)
+                IssueListView(issues: issues!, updateFunction: getIssues, showRef: true)
             } else {
                 if (noConnection) {
                     Text("Failed to load, please check your internet connection and your token")
