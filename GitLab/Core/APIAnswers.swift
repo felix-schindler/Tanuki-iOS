@@ -39,7 +39,7 @@ struct User: Decodable {
     var following: Int
 }
 
-struct UserSmall: Decodable, Identifiable {
+struct UserSmall: Decodable {
     var id: Int
     var name: String
     var username: String
@@ -136,6 +136,7 @@ struct Note: Decodable {
     var id: Int
     var body: String
     var author: UserSmall
+    var createdAt: Date
 }
 
 struct Group: Decodable {

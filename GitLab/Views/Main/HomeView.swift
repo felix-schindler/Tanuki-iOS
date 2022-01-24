@@ -42,7 +42,7 @@ struct HomeView: View {
                     NavigationLink(destination: MemberGroupsLoader()) {
                         HStack {
                             Image(systemName: "person.3")
-                                .foregroundColor(.orange)
+                                .foregroundColor(.red)
                             Text("Groups")
                         }
                     }
@@ -76,8 +76,7 @@ struct HomeView: View {
                 Task.init {
                     await getStarredProjects()
                 }
-            }.navigationBarTitle("Home")
-            .toolbar {
+            }.toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     Button (action: {showEvents = true}) {
                         Image(systemName: "bell.circle")
@@ -85,7 +84,8 @@ struct HomeView: View {
                 }
             }.sheet(isPresented: $showEvents) {
                 EventsView()
-            }
+            }.listStyle(.sidebar)
+            .navigationBarTitle("Home")
         }
     }
 

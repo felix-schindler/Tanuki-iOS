@@ -32,6 +32,7 @@ struct IssueView: View {
                         Text(issue.state == "opened" ? "Open" : "Closed")
                             .padding(5)
                             .background(issue.state == "opened" ? .green : .blue)
+                                .foregroundColor(.white)
                             .cornerRadius(10)
                         Text(issue.title.emojized())
                             .font(.title)

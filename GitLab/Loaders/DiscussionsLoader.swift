@@ -56,6 +56,7 @@ struct DiscussionsLoader: View {
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
+                decoder.dateDecodingStrategy = .custom(iso8601Decoder())
                 discussions = try decoder.decode([Discussion].self, from: apiData!)
             } else {
                 noConnection = true

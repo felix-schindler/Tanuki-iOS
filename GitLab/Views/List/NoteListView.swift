@@ -15,9 +15,36 @@ struct NoteListView: View {
         if (!notes.isEmpty) {
             VStack {
                 ForEach(notes, id: \.id) { note in
-                    Markdown(Document(note.author.username + " " + note.body))
-                        .multilineTextAlignment(.leading)
-                }
+                    VStack {
+                        HStack {
+                            AsyncImage(url: URL(string: note.author.avatarUrl)) { phase in
+                                switch phase {
+                                case .empty:
+                                    ProgressView()
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                        .cornerRadius(10)
+                                default:
+                                    Image(systemName: "exclamationmark.icloud")
+                                        .resizable()
+                                        .scaledToFit()
+                                }
+                            }.frame(width: 50, height: 50, alignment: .leading)
+                            VStack {
+                                Text(note.author.name)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                Text(note.author.username)
+                                    .font(.callout)
+                                    .foregroundColor(.secondary)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                        }.frame(maxWidth: .infinity, alignment: .leading)
+                        Markdown(Document(note.body))
+                            .multilineTextAlignment(.leading)
+                    }
+                }.listStyle(.plain)     // TODO: Does this even work??
             }
         }
     }
