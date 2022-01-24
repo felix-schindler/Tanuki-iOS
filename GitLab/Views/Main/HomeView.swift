@@ -39,6 +39,13 @@ struct HomeView: View {
                             Text("Projects")
                         }
                     }
+                    NavigationLink(destination: MemberGroupsLoader()) {
+                        HStack {
+                            Image(systemName: "person.3")
+                                .foregroundColor(.orange)
+                            Text("Groups")
+                        }
+                    }
                 }.headerProminence(.increased)
                 Section(header: Text("Starred projects")) {
                     if (starredProjects != nil && !(starredProjects!.isEmpty)) {

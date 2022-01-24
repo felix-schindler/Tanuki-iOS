@@ -1,10 +1,12 @@
-#  GitLab for iOS
+#  GitLab Client for iOS
 
-## How to install
+## Disclaimer
 
-Right now you would have to clone this repository, open the project and install it via Xcode.
+This is **not** an official repository of GitLab Inc. You will find the original [GitLab-Repository here](https://gitlab.com/gitlab-org/gitlab).
 
-## How to develop
+I'm just a student who started working on this out of boredom.
 
-- Run `git clone git@github.com:felix-schindler/gitlab-ios.git`
-- Open in Xcode
+## Dev
+
+- Run `git clone git@gitlab.com:felix-schindler/gitlab-ios.git`
+- Open GitLab.xcodeproj in Xcode

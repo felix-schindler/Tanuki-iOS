@@ -49,6 +49,18 @@ extension Date {
         dateFormat.timeStyle = .short
         return dateFormat.string(from: self)
     }
+    
+    func toDateString() -> String {
+        let dateFormat = DateFormatter()
+        dateFormat.dateStyle = .medium
+        return dateFormat.string(from: self)
+    }
+    
+    func toTimeString() -> String {
+        let dateFormat = DateFormatter()
+        dateFormat.timeStyle = .short
+        return dateFormat.string(from: self)
+    }
 }
 
 func iso8601Decoder() -> (Decoder) throws -> Date {

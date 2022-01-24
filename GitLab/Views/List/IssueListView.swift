@@ -29,15 +29,33 @@ struct IssueListView: View {
                                 .foregroundColor(.green)
                         }
                         VStack(alignment: .leading) {
-                            Text(issue.title.emojized())
-                            Text(issue.references.full)
+                            HStack {
+                                Text(issue.title.emojized())
+                                if (issue.confidential) {
+                                    Image(systemName: "lock")
+                                }
+                            }.frame(maxWidth: .infinity, alignment: .leading)
+                            HStack {
+                                HStack {
+                                    Image(systemName: "text.bubble")
+                                    Text(String(issue.userNotesCount))
+                                }
+                                HStack {
+                                    Image(systemName: "clock")
+                                    Text(issue.createdAt.toDateString())
+                                }
+                                HStack {
+                                    Text(issue.author.name)
+                                }
+                            }.frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.footnote)
                                 .foregroundColor(.secondary)
-                                .font(.caption)
                         }
                         Spacer()
                         VStack(alignment: .trailing) {
-                            Text(issue.author.name)
-                            Text(issue.createdAt.toString())
+                            Text(issue.references.full)
+                                .foregroundColor(.secondary)
+                                .font(.caption)
                         }.foregroundColor(.secondary)
                         .font(.caption)
                     }

@@ -14,12 +14,14 @@ struct FileView: View {
 
     var body: some View {
         VStack {
-            if (fileName.lowercased().contains(".md")) {
-                Markdown(Document(content))
-                    .multilineTextAlignment(.leading)
-            } else {
-                Text(content)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            ScrollView {
+                if (fileName.lowercased().contains(".md")) {
+                    Markdown(Document(content))
+                        .multilineTextAlignment(.leading)
+                } else {
+                    Text(content)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
             }
             Spacer()
         }.navigationTitle(fileName)

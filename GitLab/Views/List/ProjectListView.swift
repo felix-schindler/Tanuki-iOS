@@ -18,7 +18,7 @@ struct ProjectListView: View {
             List(projects, id: \.id) { project in
                 NavigationLink(destination: ProjectView(project: project)) {
                     HStack {
-                        if (project.avatarUrl != nil || project.owner != nil) {
+                        if (project.avatarUrl != nil || project.owner != nil) {     // TODO: Replace owner.avatarUrl with namespace.avatarUrl
                             AsyncImage(url: URL(string: project.avatarUrl ?? project.owner!.avatarUrl)) { phase in
                                 switch phase {
                                 case .empty:
@@ -28,12 +28,8 @@ struct ProjectListView: View {
                                         .resizable()
                                         .scaledToFit()
                                         .cornerRadius(10)
-                                case .failure:
+                                default:
                                     Image(systemName: "exclamationmark.icloud")
-                                        .resizable()
-                                        .scaledToFit()
-                                @unknown default:
-                                    Image(systemName: "xmark.icloud")
                                         .resizable()
                                         .scaledToFit()
                                 }
@@ -53,7 +49,7 @@ struct ProjectListView: View {
                                     Text(accessRole(code: project.permissions.projectAccess!.accessLevel))
                                         .font(.caption)
                                         .padding(3)
-                                        .background(.secondary)
+                                        .background(Color(.systemGray3))
                                         .cornerRadius(10)
                                 }
                             }.frame(maxWidth: .infinity, alignment: .leading)
@@ -90,7 +86,6 @@ struct ProjectListView: View {
         default:
             return ""
         }
-
     }
 }
 

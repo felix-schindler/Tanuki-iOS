@@ -73,6 +73,8 @@ struct Issue: Decodable {
     var assignees: [UserSmall]?
     var author: UserSmall
     var type: String
+    var userNotesCount: Int
+    var confidential: Bool
     var references: Reference
 }
 
@@ -134,6 +136,14 @@ struct Note: Decodable {
     var id: Int
     var body: String
     var author: UserSmall
+}
+
+struct Group: Decodable {
+    var id: Int
+    var name: String
+    var description: String
+    var visibility: String
+    var avatarUrl: String? = nil
 }
 
 struct File: Decodable {

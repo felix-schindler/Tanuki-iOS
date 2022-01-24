@@ -1,0 +1,67 @@
+//
+//  GroupListView.swift
+//  GitLab
+//
+//  Created by Felix Schindler on 24.01.22.
+//
+
+import SwiftUI
+
+struct GroupListView: View {
+    @State var groups: [Group]
+    @State var updateFunction: () async -> Void
+
+    var body: some View {
+        if (groups.isEmpty) {
+            Text("There are no groups")
+        } else {
+            List(groups, id: \.id) { group in
+                HStack {
+                    if (group.avatarUrl != nil) {
+                        AsyncImage(url: URL(string: group.avatarUrl!)) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFit()
+                                    .cornerRadius(10)
+                            default:
+                                Image(systemName: "exclamationmark.icloud")
+                                    .resizable()
+                                    .scaledToFit()
+                            }
+                        }.frame(width: 50, height: 50, alignment: .leading)
+                    }
+                    VStack {
+                        HStack {
+                            Text(group.name)
+                            if (group.visibility == "private") {
+                                Image(systemName: "lock")
+                            } else if (group.visibility == "internal") {
+                                Image(systemName: "shield.lefthalf.filled")
+                            } else if (group.visibility == "public") {
+                                Image(systemName: "globe")
+                            }
+                        }.frame(maxWidth: .infinity, alignment: .leading)
+                        if (group.description != "") {      // For some reason, this is not null when not set. 
+                            Text(group.description)
+                                .font(.callout)
+                                .foregroundColor(.secondary)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                }
+            }.refreshable {
+                await updateFunction()
+            }
+        }
+    }
+}
+
+struct GroupListView_Previews: PreviewProvider {
+    static var previews: some View {
+        GroupListView(groups: [Group](), updateFunction: {})
+    }
+}
