@@ -41,7 +41,7 @@ struct NoteListView: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                         }.frame(maxWidth: .infinity, alignment: .leading)
-                        Markdown(Document(note.body))
+                        Markdown(note.body)
                             .multilineTextAlignment(.leading)
                     }
                 }.listStyle(.plain)     // TODO: Does this even work??

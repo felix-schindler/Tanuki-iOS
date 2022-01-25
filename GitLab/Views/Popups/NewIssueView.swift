@@ -24,11 +24,14 @@ struct NewIssueView: View {
                     .padding()
                     .background(Color(.systemGray5))
                     .cornerRadius(10)
-                TextField("Description", text: $description)
-                    .frame(maxHeight: 250, alignment: .topLeading)
+                Text("Description")
+                    .font(.headline)
+                    .padding(.top)
+                TextEditor(text: $description)
                     .padding()
                     .background(Color(.systemGray5))
                     .cornerRadius(10)
+                    .frame(maxHeight: 250, alignment: .topLeading)
                 Spacer()
                 Button(action: {
                     isError = !saveNewIssue()
@@ -45,7 +48,7 @@ struct NewIssueView: View {
                 .controlSize(.large)
             }.padding()
             .navigationBarTitle("New issue")
-            .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
+            .navigationBarItems(trailing: Button("Cancel", action: {self.presentationMode.wrappedValue.dismiss()}).foregroundColor(.red))
         }
     }
 

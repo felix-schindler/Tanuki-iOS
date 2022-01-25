@@ -10,7 +10,7 @@ import SwiftUI
 struct ProjectIssuesLoader: View {
     @State var id: Int
     @State var showNewIssue: Bool = false
-    // @State var showFilter: Bool = false
+    @State var showFilter: Bool = false
 
     @State var issues: [Issue]? = nil
     @State var noConnection: Bool = false
@@ -23,11 +23,25 @@ struct ProjectIssuesLoader: View {
                 IssueListView(issues: issues!, updateFunction: getIssues)
                     .toolbar {
                         ToolbarItemGroup(placement: .navigationBarTrailing) {
-                            /* Button(action: {showFilter = true}) {
+                            Button(action: {showFilter = true}) {
                                 Image(systemName: "line.3.horizontal.decrease.circle")
-                            } */
+                            }
                             Button(action: {showNewIssue = true}) {
                                 Image(systemName: "plus.circle")
+                            }
+                        }
+                    }.sheet(isPresented: $showNewIssue) {
+                        NewIssueView(id: id)
+                    }.sheet(isPresented: $showFilter) {
+                        Picker("Issue state", selection: $type) {
+                            Text("Open").tag(0)
+                            Text("Closed").tag(1)
+                            Text("All").tag(2)
+                        }.pickerStyle(WheelPickerStyle())
+                        Button("Apply") {
+                            Task.init {
+                                showFilter = false
+                                await getIssues()
                             }
                         }
                     }
@@ -44,33 +58,18 @@ struct ProjectIssuesLoader: View {
             Task.init {
                 await getIssues()
             }
-        }.sheet(isPresented: $showNewIssue) {
-            NewIssueView(id: id)
-        }/* .sheet(isPresented: $showFilter) {
-            Picker("Issue state", selection: $type) {
-                Text("Open").tag(0)
-                Text("Closed").tag(1)
-                Text("All").tag(2)
-            }.pickerStyle(WheelPickerStyle())
-            Button("Apply") {
-                Task.init {
-                    showFilter = false
-                    await getIssues()
-                }
-            }
-        } */.navigationTitle("Issues")
+        }.navigationTitle("Issues")
     }
         
     private func getIssues() async -> Void {
         do {
-            /*var state: String = ""
+            var state: String = ""
             if (type == 0) {
                 state = "state=opened&"
             } else if (type == 1) {
                 state = "state=closed&"
             }
-            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/issues?\(state)with_labels_details=true")*/
-            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/issues?state=opened&with_labels_details=true")
+            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/issues?\(state)with_labels_details=true")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

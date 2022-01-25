@@ -26,7 +26,7 @@ struct ProjectView: View {
                                 .foregroundColor(.secondary)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             if (project.description != nil) {
-                                Markdown(Document(project.description!.emojized()))
+                                Markdown(project.description!.emojized())
                                    .multilineTextAlignment(.leading)
                                    .padding(.bottom)
                             }
@@ -125,8 +125,8 @@ struct ProjectView: View {
                     }
                     NavigationLink(destination: TreeLoader(id: project.id, refName: project.defaultBranch ?? "")) {
                         HStack {
-                            Image(systemName: "folder.fill")
-                                .foregroundColor(.yellow)
+                            Image(systemName: "chevron.left.forwardslash.chevron.right")
+                                .foregroundColor(.pink)
                             Text("Files")
                             Spacer()    // TODO: Set width to infinity
                         }
@@ -158,6 +158,6 @@ struct ProjectView: View {
 
 struct ProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectView(project: Project(id: Int(), description: String(), name: "No project", nameWithNamespace: "", defaultBranch: "", sshUrlToRepo: "", httpUrlToRepo: "", forksCount: 0, starCount: 0, visibility: "", owner: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), issuesEnabled: false, mergeRequestsEnabled: false, permissions: Permissions(projectAccess: Access(accessLevel: 0, notificationLevel: 3))))
+        ProjectView(project: Project(id: Int(), description: String(), name: "No project", nameWithNamespace: "", pathWithNamespace: "", defaultBranch: "", sshUrlToRepo: "", httpUrlToRepo: "", forksCount: 0, starCount: 0, visibility: "", owner: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), issuesEnabled: false, mergeRequestsEnabled: false, permissions: Permissions(projectAccess: Access(accessLevel: 0, notificationLevel: 3))))
     }
 }

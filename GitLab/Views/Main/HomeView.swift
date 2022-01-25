@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State var starredProjects: [Project]? = nil
-    @State var progress: Double = 0
+    @State var progress: Float = 0
 
     @State var showNewIssue: Bool = false
     @State var showEvents: Bool = false
@@ -65,10 +65,10 @@ struct HomeView: View {
                             }
                         }
                     } else {
-                        if (progress == 100) {
+                        if (progress == 6) {
                             Text("No starred projects")
                         } else {
-                            ProgressView(value: progress, total: 100)
+                            ProgressView(value: progress, total: 6)
                         }
                     }
                 }.headerProminence(.increased)
@@ -90,22 +90,22 @@ struct HomeView: View {
     }
 
     private func getStarredProjects() async -> Void {
-        progress = 10
+        progress = 1
         do {
             let apiData: Data? = API.GET(endpoint: "projects?starred=true")
-            progress = 40
+            progress = 2
             if (apiData != nil) {
-                progress = 60
+                progress = 3
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                progress = 70
+                progress = 4
                 starredProjects = try decoder.decode([Project].self, from: apiData!)
-                progress = 90
+                progress = 5
             }
         } catch let jsonError as NSError {
             print("JSON error \(jsonError.localizedDescription)")
         }
-        progress = 100
+        progress = 6
     }
 }
 

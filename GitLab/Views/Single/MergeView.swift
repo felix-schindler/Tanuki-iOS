@@ -29,7 +29,7 @@ struct MergeView: View {
                 Text(mergeRequest.title)
                     .font(.title)
                     .padding(.top)
-                Markdown(Document(mergeRequest.description))
+                Markdown(mergeRequest.description)
                     .multilineTextAlignment(.leading)
                 Text("votes")
                     .font(.headline)

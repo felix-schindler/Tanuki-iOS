@@ -16,7 +16,7 @@ struct FileView: View {
         VStack {
             ScrollView {
                 if (fileName.lowercased().contains(".md")) {
-                    Markdown(Document(content))
+                    Markdown(content)
                         .multilineTextAlignment(.leading)
                 } else {
                     Text(content)

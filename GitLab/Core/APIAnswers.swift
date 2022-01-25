@@ -12,6 +12,7 @@ struct Project: Decodable {
     var description: String? = ""
     var name: String
     var nameWithNamespace: String
+    var pathWithNamespace: String
     var defaultBranch: String? = ""     // Not all projects have a repository. (WTF!?)
     var sshUrlToRepo: String
     var httpUrlToRepo: String

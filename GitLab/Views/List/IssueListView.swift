@@ -76,22 +76,22 @@ struct IssueListView: View {
             }
         }
     }
-}
-
-// TODO remove from array
-func closeIssue(id: Int, projectId: Int) -> Bool {
-    do {
-        let apiData: Data? = API.PUT(endpoint: "projects/" + String(projectId) + "/issues/" + String(id) + "?state_event=close")
-        if (apiData != nil) {
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            _ = try decoder.decode(Issue.self, from: apiData!)
-            return true
+    
+    // TODO: remove from array
+    private func closeIssue(id: Int, projectId: Int) -> Bool {
+        do {
+            let apiData: Data? = API.PUT(endpoint: "projects/" + String(projectId) + "/issues/" + String(id) + "?state_event=close")
+            if (apiData != nil) {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                _ = try decoder.decode(Issue.self, from: apiData!)
+                return true
+            }
+        } catch let jsonError as NSError {
+            print("JSON error \(jsonError.localizedDescription)")
         }
-    } catch let jsonError as NSError {
-        print("JSON error \(jsonError.localizedDescription)")
+        return false
     }
-    return false
 }
 
 struct IssueListView_Previews: PreviewProvider {

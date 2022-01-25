@@ -8,13 +8,34 @@
 import SwiftUI
 
 struct MemberProjectsLoader: View {
+    @State var showFilter: Bool = false
+    @State var filter: Int = 0
+
     @State var projects: [Project]? = nil
     @State var noConnection: Bool = false
-    
+
     var body: some View {
         VStack {
             if (projects != nil) {
                 ProjectListView(projects: projects!, updateFunction: getProjects)
+                    .toolbar {
+                        ToolbarItemGroup(placement: .navigationBarTrailing) {
+                            Button(action: {showFilter = true}) {
+                                Image(systemName: "line.3.horizontal.decrease.circle")
+                            }
+                        }
+                    }.sheet(isPresented: $showFilter) {
+                        Picker("Issue state", selection: $filter) {
+                            Text("All").tag(0)
+                            Text("Owner").tag(1)
+                        }.pickerStyle(WheelPickerStyle())
+                        Button("Apply") {
+                            Task.init {
+                                showFilter = false
+                                await getProjects()
+                            }
+                        }
+                    }
             } else {
                 if (noConnection) {
                     Text("Failed to load, please check your internet connection and your token")
@@ -33,7 +54,11 @@ struct MemberProjectsLoader: View {
     
     private func getProjects() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "projects?membership=true&order_by=last_activity_at")
+            var endpoint: String = "projects?membership=true&order_by=last_activity_at"
+            if (filter == 1) {
+                endpoint = "&owned=true"
+            }
+            let apiData: Data? = API.GET(endpoint: endpoint)
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

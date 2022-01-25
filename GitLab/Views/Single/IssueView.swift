@@ -38,7 +38,7 @@ struct IssueView: View {
                             .font(.title)
                     }.padding(.top)
                     if (issue.description != "") {
-                        Markdown(Document(issue.description.emojized()))
+                        Markdown(issue.description.emojized())
                            .multilineTextAlignment(.leading)
                     }
                 }
