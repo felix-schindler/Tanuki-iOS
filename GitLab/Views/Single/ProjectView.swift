@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MarkdownUI
 
 struct ProjectView: View {
     @State var project: Project
@@ -25,9 +26,9 @@ struct ProjectView: View {
                                 .foregroundColor(.secondary)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             if (project.description != nil) {
-                                Text(project.description!)
-                                    .padding(.bottom)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                Markdown(Document(project.description!.emojized()))
+                                   .multilineTextAlignment(.leading)
+                                   .padding(.bottom)
                             }
                         }
                         Spacer()
