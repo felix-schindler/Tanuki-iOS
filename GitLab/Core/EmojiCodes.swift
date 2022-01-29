@@ -116,6 +116,7 @@ let EMOJI_HASH: [String: String] = [
     ":bouquet:"                           : "\u{1F490}",
     ":bow:"                               : "\u{1F647}",
     ":bowling:"                           : "\u{1F3B3}",
+    ":boxing_glove:"                      : "\u{1F94A}",
     ":boy:"                               : "\u{1F466}",
     ":bread:"                             : "\u{1F35E}",
     ":bride_with_veil:"                   : "\u{1F470}",

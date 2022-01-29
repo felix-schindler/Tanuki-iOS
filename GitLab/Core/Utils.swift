@@ -194,14 +194,14 @@ func emojizedStringWithString(text: String) -> String {
 }
 
 func emojiAliases(key: String) -> String {
-    var value: String = ""
+    var value: String?
     let regex = try! NSRegularExpression(pattern: "(:[a-z0-9-+_]+:)", options: .caseInsensitive)
 
     if (regex.firstMatch(in: key, options: [], range: NSMakeRange(0, key.utf8.count)) != nil) {
-        value = EMOJI_HASH[key]!
+        value = EMOJI_HASH[key]
     }
 
-    return value
+    return value ?? key
 }
 
 // } catch let DecodingError.dataCorrupted(context) {

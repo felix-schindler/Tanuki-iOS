@@ -184,6 +184,6 @@ struct ProjectView: View {
 
 struct ProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectView(project: Project(id: Int(), description: String(), name: "No project", nameWithNamespace: "", pathWithNamespace: "", defaultBranch: "", sshUrlToRepo: "", httpUrlToRepo: "", forksCount: 0, starCount: 0, namespace: Namespace(name: "", path: ""), visibility: "", owner: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), issuesEnabled: false, mergeRequestsEnabled: false, permissions: Permissions(projectAccess: Access(accessLevel: 0, notificationLevel: 3))))
+        ProjectView(project: Project(id: Int(), description: String(), name: "No project", nameWithNamespace: "", pathWithNamespace: "", defaultBranch: "", forksCount: 0, starCount: 0, namespace: Namespace(name: "", path: ""), visibility: "", owner: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), issuesEnabled: false, mergeRequestsEnabled: false, permissions: Permissions(projectAccess: Access(accessLevel: 0, notificationLevel: 3))))
     }
 }

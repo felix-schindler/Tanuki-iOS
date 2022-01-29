@@ -22,12 +22,11 @@ struct FileLoader: View {
     var body: some View {
         VStack {
             if (file != nil) {
-                let content: String? = file!.content.fromBase64()
+                let content: String? = file!.content.fromBase64()?.emojized()
                 if (content != nil) {
                     if (inline) {
                         Text(file!.filePath)
                             .font(.headline)
-
                         if (filePath.lowercased().contains(".md")) {
                             Markdown(content!)
                                 .multilineTextAlignment(.leading)
