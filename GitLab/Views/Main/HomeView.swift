@@ -85,6 +85,11 @@ struct HomeView: View {
             }.sheet(isPresented: $showEvents) {
                 EventsView()
             }.listStyle(.sidebar)
+            .refreshable {
+                Task.init {
+                    await getStarredProjects()
+                }
+            }
             .navigationBarTitle("Home")
         }
     }

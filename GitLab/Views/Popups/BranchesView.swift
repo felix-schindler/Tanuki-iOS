@@ -37,7 +37,7 @@ struct BranchesView: View {
                                     .foregroundColor(.secondary)
                             }
                             Spacer()
-                            PipelineLoader(id: id, branch: branch.name, statusHorizontal: false, showStatusStr: false)
+                            PipelineLoader(id: id, branch: branch.name)
                         }
                     }.refreshable {
                         await getBranches()

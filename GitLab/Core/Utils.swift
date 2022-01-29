@@ -167,7 +167,7 @@ extension Color {
 }
 
 
-// Emojized string helper functions
+/// Emojized string helper functions
 func emojizedStringWithString(text: String) -> String {
     var resultText = text
     do {

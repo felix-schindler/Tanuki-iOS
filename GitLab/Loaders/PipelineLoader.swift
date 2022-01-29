@@ -9,30 +9,41 @@ import SwiftUI
 
 struct PipelineLoader: View {
     @State var pipelines: [Pipeline]? = nil
+    @State var noConnection: Bool = false
 
     @State var id: Int
     @State var branch: String = ""
 
-    @State var statusHorizontal: Bool = false
     @State var onlyStatus: Bool = true
-    @State var showStatusStr: Bool = false
 
     var body: some View {
         VStack {
-            if (pipelines != nil) {
+            if (pipelines == nil) {
+                if (noConnection && !onlyStatus) {
+                    Text("Failed to load, please check your internet connection and your token")
+                } else {
+                    ProgressView()
+                }
+            } else {
                 if (onlyStatus) {
-                    if (!pipelines!.isEmpty) {
-                        PipelineStatusView(pipeline: pipelines![0], horizontal: statusHorizontal, showStatus: showStatusStr)
+                    if (pipelines == nil || pipelines!.isEmpty) {
+                        EmptyView()
+                    } else {
+                        PipelineStatusView(pipeline: pipelines![0])
                     }
                 } else {
-                    PipelineListView(pipelines: pipelines!, updateFunction: getPipeline)
+                    if (pipelines == nil || pipelines!.isEmpty) {
+                        Text("There are no pipelines.\nTo get startet with pipelines, create a .gitlab-ci.yml file")
+                    } else {
+                        PipelineListView(pipelines: pipelines!, updateFunction: getPipeline)
+                    }
                 }
             }
         }.onAppear {
             Task.init {
                 await getPipeline()
             }
-        }.padding()
+        }
     }
 
     private func getPipeline() async -> Void {
@@ -41,16 +52,20 @@ struct PipelineLoader: View {
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
+                decoder.dateDecodingStrategy = .custom(iso8601Decoder())
                 pipelines = try decoder.decode([Pipeline].self, from: apiData!)
+            } else {
+                noConnection = true
             }
         } catch let jsonError as NSError {
             print("JSON error \(jsonError.localizedDescription)")
+            pipelines = [Pipeline]()
         }
     }
 }
 
 struct PipelineLoader_Previews: PreviewProvider {
     static var previews: some View {
-        PipelineLoader(id: Int(), branch: String(), statusHorizontal: Bool())
+        PipelineLoader(id: Int(), branch: String(), onlyStatus: Bool())
     }
 }

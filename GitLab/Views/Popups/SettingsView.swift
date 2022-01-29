@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MarkdownUI
 
 struct SettingsView: View {
     @Environment(\.presentationMode)
@@ -25,15 +26,20 @@ struct SettingsView: View {
                 }
                 Spacer()
                 HStack {
-                    Text("Made with ❤️‍🔥 by")
-                    Link("Felix Schindler", destination: URL(string: "https://schindlerfelix.de")!)
+                    Markdown("""
+### About this project
+
+Made with ❤️‍🔥 by [Felix Schindler](https://schindlerfelix.de)
+
+I am just working on this app in my free time. I am a web developer and not a SwiftUI expert, so please forgive my mistakes. If there are any improvements you would like to contribute, report bugs or anything else please visit the [GitLab project](https://gitlab.com/felix-schindler/gitlab-ios).
+""")
+                    .multilineTextAlignment(.center)
+                    .padding()
                 }
-                Link("Find this App on GitLab", destination: URL(string: "https://gitlab.com/felix-schindler/gitlab_ios")!)
                 Spacer()
             }.sheet(isPresented: $showChangeConfig) {
                 ChangeConfigView()
-            }
-            .navigationBarTitle("Settings")
+            }.navigationBarTitle("Settings")
             .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
         }
     }

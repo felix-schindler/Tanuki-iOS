@@ -9,16 +9,17 @@ import Foundation
 
 struct Project: Decodable {
     var id: Int
-    var description: String? = ""
+    var description: String? = nil
     var name: String
     var nameWithNamespace: String
     var pathWithNamespace: String
-    var defaultBranch: String? = ""     // Not all projects have a repository. (WTF!?)
+    var defaultBranch: String? = nil     // Not all projects have a repository. Maybe they are just issue trackers, wikis, ...
     var sshUrlToRepo: String
     var httpUrlToRepo: String
     var avatarUrl: String?
     var forksCount: Int
     var starCount: Int
+    var namespace: Namespace
     var visibility: String
     var owner: UserSmall? = nil
     var issuesEnabled: Bool
@@ -50,6 +51,12 @@ struct UserSmall: Decodable {
 struct UserStatus: Decodable {
     var emoji: String
     var message: String
+}
+
+struct Namespace: Decodable {
+    var name: String
+    var path: String
+    var avatarUrl: String? = nil
 }
 
 struct Permissions: Decodable {
@@ -144,7 +151,7 @@ struct Note: Decodable {
 struct Group: Decodable {
     var id: Int
     var name: String
-    var description: String
+    var description: String? = nil
     var visibility: String
     var avatarUrl: String? = nil
 }
@@ -185,4 +192,10 @@ struct Pipeline: Decodable {
     var id: Int
     var ref: String
     var status: String
+    var source: String
+    var createdAt: Date
+}
+
+struct ToggleStar: Decodable {
+    var starCount: Int
 }

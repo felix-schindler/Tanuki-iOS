@@ -11,7 +11,7 @@ struct ChangeConfigView: View {
     @Environment(\.presentationMode)
     var presentationMode: Binding<PresentationMode>
     
-    @State var url: String = API.base
+    @State var url: String = API.domain
     @State var token: String = API.token
     
     @State var swipeError: Bool = false
@@ -19,7 +19,7 @@ struct ChangeConfigView: View {
     var body: some View {
         NavigationView {
             VStack {
-                TextField(API.base == "" ? "New GitLab URL" : "GitLab URL", text: $url)
+                TextField(API.domain == "" ? "New GitLab URL" : "GitLab URL", text: $url)
                     .padding()
                     .textContentType(.URL)
                     .keyboardType(.URL)
@@ -45,14 +45,14 @@ struct ChangeConfigView: View {
                 .controlSize(.large)
             }.padding()
             .navigationBarTitle("Change GitLab config")
-            .navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
-        }
+            .navigationBarItems(trailing: Button("Cancel", action: {self.presentationMode.wrappedValue.dismiss()}).foregroundColor(.red))
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
     
     private func validGitConfig() -> Bool {
         let oldUrl = API.base, oldToken = API.token
         
-        API.base = url
+        API.domain = url
         API.token = token
 
         do {

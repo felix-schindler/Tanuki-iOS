@@ -50,12 +50,14 @@ struct ProjectView: View {
                         }
                     }.frame(maxWidth: .infinity, alignment: .leading)
                     VStack {
-                        if (project.owner != nil) {
-                            HStack {
+                        HStack {
+                            if (project.owner != nil) {
                                 Image(systemName: "person")
-                                Text(project.owner!.username)
-                            }.frame(maxWidth: .infinity, alignment: .leading)
-                        }
+                            } else {
+                                Image(systemName: "person.3")
+                            }
+                            Text(project.namespace.name)
+                        }.frame(maxWidth: .infinity, alignment: .leading)
                         HStack {
                             if (project.visibility == "private") {
                                 Image(systemName: "lock")
@@ -69,12 +71,16 @@ struct ProjectView: View {
                         HStack {
                             HStack {
                                 Image(systemName: "star")
-                                Text(String(project.starCount) + " stars")
+                                Button(action: {Task.init {await starProject()}}) {
+                                    Text("\(project.starCount) stars")
+                                }
                             }
                             Text(" · ")
-                            HStack {
-                                Image(systemName: "arrow.branch")
-                                Text(String(project.forksCount) + " forks")
+                            if let url = URL(string: "\(API.domain)/\(project.pathWithNamespace)/-/forks/new") {    // If valid link, show fork link
+                                HStack {
+                                    Image(systemName: "arrow.branch")
+                                    Link("\(project.forksCount) forks", destination: url)
+                                }
                             }
                         }.frame(maxWidth: .infinity, alignment: .leading)
                     }.frame(maxWidth: .infinity, alignment: .leading)
@@ -116,7 +122,7 @@ struct ProjectView: View {
                                 Image(systemName: "arrow.triangle.pull")
                                     .foregroundColor(.blue)
                                 Text("Merge Requests")
-                                Spacer()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
                             }
                         }.foregroundColor(.primary)
                         .buttonStyle(.bordered)
@@ -128,7 +134,20 @@ struct ProjectView: View {
                             Image(systemName: "chevron.left.forwardslash.chevron.right")
                                 .foregroundColor(.pink)
                             Text("Files")
-                            Spacer()    // TODO: Set width to infinity
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }.foregroundColor(.primary)
+                    .buttonStyle(.bordered)
+                    .buttonBorderShape(.roundedRectangle)
+                    .controlSize(.large)
+                    NavigationLink(destination: PipelineLoader(id: project.id, branch: "", onlyStatus: false)) {
+                        HStack {
+                            Text("🚀")
+                            Text("Pipelines")
+                            Spacer()
+                            if (project.defaultBranch != nil) {
+                                PipelineLoader(id: project.id, branch: project.defaultBranch!)
+                            }
                         }
                     }.foregroundColor(.primary)
                     .buttonStyle(.bordered)
@@ -154,10 +173,17 @@ struct ProjectView: View {
             BranchesView(id: project.id)
         }
     }
+    
+    private func starProject() async -> Void {
+        let res = API.POST(endpoint: "\(API.domain)/\(project.pathWithNamespace)/toggle_star.json")
+        if (res != nil) {
+            print(String(data: res!, encoding: .utf8)!)
+        }
+    }
 }
 
 struct ProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectView(project: Project(id: Int(), description: String(), name: "No project", nameWithNamespace: "", pathWithNamespace: "", defaultBranch: "", sshUrlToRepo: "", httpUrlToRepo: "", forksCount: 0, starCount: 0, visibility: "", owner: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), issuesEnabled: false, mergeRequestsEnabled: false, permissions: Permissions(projectAccess: Access(accessLevel: 0, notificationLevel: 3))))
+        ProjectView(project: Project(id: Int(), description: String(), name: "No project", nameWithNamespace: "", pathWithNamespace: "", defaultBranch: "", sshUrlToRepo: "", httpUrlToRepo: "", forksCount: 0, starCount: 0, namespace: Namespace(name: "", path: ""), visibility: "", owner: UserSmall(id: 0, name: "", username: "", avatarUrl: ""), issuesEnabled: false, mergeRequestsEnabled: false, permissions: Permissions(projectAccess: Access(accessLevel: 0, notificationLevel: 3))))
     }
 }

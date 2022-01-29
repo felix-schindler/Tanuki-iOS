@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MarkdownUI
 
 struct ProjectListView: View {
     @State var projects: [Project]
@@ -18,8 +19,8 @@ struct ProjectListView: View {
             List(projects, id: \.id) { project in
                 NavigationLink(destination: ProjectView(project: project)) {
                     HStack {
-                        if (project.avatarUrl != nil || project.owner != nil) {     // TODO: Replace owner.avatarUrl with namespace.avatarUrl
-                            AsyncImage(url: URL(string: project.avatarUrl ?? project.owner!.avatarUrl)) { phase in
+                        if (project.avatarUrl != nil || project.namespace.avatarUrl != nil) {
+                            AsyncImage(url: URL(string: project.avatarUrl ?? API.domain + project.namespace.avatarUrl!)) { phase in
                                 switch phase {
                                 case .empty:
                                     ProgressView()
@@ -53,8 +54,8 @@ struct ProjectListView: View {
                                         .cornerRadius(10)
                                 }
                             }.frame(maxWidth: .infinity, alignment: .leading)
-                            if (project.description != nil) {
-                                Text(project.description!)
+                            if (project.description != nil && project.description != "") {
+                                Text(project.description!.emojized())
                                     .foregroundColor(.secondary)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }

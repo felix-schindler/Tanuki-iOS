@@ -36,7 +36,7 @@ struct NoteListView: View {
                                 Text(note.author.name)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 Text(note.author.username)
-                                    .font(.callout)
+                                    .font(.footnote)
                                     .foregroundColor(.secondary)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }

@@ -12,19 +12,29 @@ struct PipelineListView: View {
     @State var updateFunction: () async -> Void
 
     var body: some View {
-        if (pipelines.isEmpty) {
-            Text("No pipelines")
-        } else {
+        VStack {
             List(pipelines, id: \.id) { pipeline in
                 HStack {
-                    Text(pipeline.ref)
+                    VStack {
+                        Text(pipeline.ref)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("\(pipeline.source) · \(pipeline.createdAt.toString())")
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
                     Spacer()
-                    PipelineStatusView(pipeline: pipeline)
+                    HStack {
+                        Text(pipeline.status.firstCapitalized)
+                            .foregroundColor(.secondary)
+                            .font(.footnote)
+                        PipelineStatusView(pipeline: pipeline)
+                    }
                 }
             }.refreshable {
                 await updateFunction()
             }
-        }
+        }.navigationTitle("Pipelines")
     }
 }
 

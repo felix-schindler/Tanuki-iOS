@@ -103,7 +103,7 @@ struct AccountView: View {
             }.sheet(isPresented: $showSettings) {
                 SettingsView()
             }.navigationTitle("Account")
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
     
     private func getUser() async -> Void {

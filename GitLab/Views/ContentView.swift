@@ -28,7 +28,7 @@ struct ContentView: View {
                 }
                 .tag(2)
         }.onAppear {
-            showChangeConf = (API.base.isEmpty || API.token.isEmpty)
+            showChangeConf = (API.domain.isEmpty || API.token.isEmpty)
         }.sheet(isPresented: $showChangeConf) {
             ChangeConfigView()
         }

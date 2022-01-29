@@ -9,11 +9,12 @@ import Foundation
 import SwiftUI
 
 class API {
-    @AppStorage("api_base") public static var base: String = ""
+    @AppStorage("domain") public static var domain: String = ""
+    @AppStorage("api_base") public static var base: String = "/api/v4/"
     @AppStorage("token") public static var token: String = ""
     
     private static func url(endpoint: String) -> URL? {
-        let url: URL? = URL(string: endpoint.contains("https://") ? endpoint : API.base + endpoint)
+        let url: URL? = URL(string: (endpoint.contains("http://") || endpoint.contains("https://")) ? endpoint : API.domain + API.base + endpoint)
         if (url == nil) {
             return nil
         }

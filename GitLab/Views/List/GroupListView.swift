@@ -45,9 +45,9 @@ struct GroupListView: View {
                                 Image(systemName: "globe")
                             }
                         }.frame(maxWidth: .infinity, alignment: .leading)
-                        if (group.description != "") {      // For some reason, this is not null when not set. 
-                            Text(group.description)
-                                .font(.callout)
+                        if (group.description != nil && group.description! != "") {
+                            Text(group.description!.emojized())
+                                .font(.footnote)
                                 .foregroundColor(.secondary)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }

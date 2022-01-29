@@ -15,25 +15,14 @@ struct AllProjectsLoader: View {
 
     var body: some View {
         VStack {
-            HStack {
-                TextField("Search anything..." , text: $search)
-                    .padding()
-                    .background(Color(.systemGray5))
-                    .cornerRadius(10)
-                    .frame(maxWidth: .infinity)
-                Button(action: {
-                    Task.init {
-                        await getProjects()
-                    }
-                }, label: {
-                    Text("Search")
-                }).tint(.accentColor)
-                    .buttonStyle(.borderedProminent)
-                    .buttonBorderShape(.roundedRectangle)
-                    .controlSize(.large)
-            }.padding()
             if (projects != nil) {
                ProjectListView(projects: projects!, updateFunction: getProjects)
+                    .searchable(text: $search)
+                    .onSubmit {
+                        Task.init {
+                            await getProjects()
+                        }
+                    }
             } else {
                 if (noConnection) {
                     Text("Failed to load, please check your internet connection and your token")
