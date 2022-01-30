@@ -29,7 +29,6 @@ struct FileLoader: View {
                             .font(.headline)
                         if (filePath.lowercased().contains(".md")) {
                             Markdown(content!)
-                                .multilineTextAlignment(.leading)
                         } else {
                             Text(content!)
                                 .frame(maxWidth: .infinity, alignment: .leading)

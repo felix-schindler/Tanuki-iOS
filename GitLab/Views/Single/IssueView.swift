@@ -13,8 +13,8 @@ struct IssueView: View {
     @State var showNewIssue: Bool = false
     
     var body: some View {
-        ScrollView {
-            VStack {
+        List {
+            Section("Issue") {
                 VStack(alignment: .leading) {
                     HStack {
                         HStack {
@@ -39,41 +39,36 @@ struct IssueView: View {
                     }.padding(.top)
                     if (issue.description != "") {
                         Markdown(issue.description.emojized())
-                           .multilineTextAlignment(.leading)
                     }
                 }
-                if (issue.assignees != nil && !(issue.assignees!.isEmpty)) {
-                    VStack {
-                        Text("Assignees")
-                            .font(.headline)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        ForEach(issue.assignees!, id: \.id) { assignee in
-                            HStack {
-                                Text(assignee.name)
-                                Spacer()
-                                Text(assignee.username)
-                                    .foregroundColor(.secondary)
-                            }
+            }
+            if (issue.assignees != nil && !(issue.assignees!.isEmpty)) {
+                Section("Assignees") {
+                    ForEach(issue.assignees!, id: \.id) { assignee in
+                        HStack {
+                            Text(assignee.name)
+                            Spacer()
+                            Text(assignee.username)
+                                .foregroundColor(.secondary)
                         }
-                    }.padding(.top)
+                    }
                 }
-                if (issue.labels != nil && !(issue.labels!.isEmpty)) {
+            }
+            if (issue.labels != nil && !(issue.labels!.isEmpty)) {
+                Section("Labels") {
                     LabelListView(labels: issue.labels!)
-                        .padding(.top)
                 }
-                if (issue.milestone != nil) {
-                    VStack {
-                        Text("Milestone")
-                            .font(.headline)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        Text(issue.milestone!.title.emojized())
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }.padding(.top)
+            }
+            if (issue.milestone != nil) {
+                Section("Milestone") {
+                    Text(issue.milestone!.title.emojized())
                 }
-                DiscussionsLoader(id: issue.projectId, iid: issue.iid, type: discussionType.Issue)
-                    .padding(.top)
-            }.padding(.horizontal)
-        }.navigationTitle(issue.title)
+            }
+            Section("Notes") {
+                NotesLoader(id: issue.projectId, iid: issue.iid, type: discussionType.Issue)
+            }
+        }.listStyle(.grouped)
+        .navigationTitle(issue.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {

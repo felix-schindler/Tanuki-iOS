@@ -50,8 +50,7 @@ struct CommitsView: View {
                                 HStack {
                                     VStack(alignment: .leading) {
                                         Text(commit.title.emojized())
-                                        /* Markdown(Document(commit.message.emojized()))
-                                            .multilineTextAlignment(.leading) */
+                                        // Markdown(Document(commit.message.emojized()))
                                         Text(commit.authorName + " · " + commit.authoredDate.toString())
                                             .font(.caption)
                                             .foregroundColor(.secondary)

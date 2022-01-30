@@ -6,30 +6,46 @@
 //
 
 import SwiftUI
+import MarkdownUI
 
+/// This View is meant to be used as a sheet.
+/// Lets the user change the GitLab configuration (URL, Token)
 struct ChangeConfigView: View {
     @Environment(\.presentationMode)
     var presentationMode: Binding<PresentationMode>
     
-    @State var url: String = API.domain
-    @State var token: String = API.token
+    @State var url: String = API.domain     // New GitLab URL
+    @State var token: String = API.token    // New GitLab Token
     
     @State var swipeError: Bool = false
     
     var body: some View {
         NavigationView {
             VStack {
-                TextField(API.domain == "" ? "New GitLab URL" : "GitLab URL", text: $url)
+                Text("GitLab URL")
+                    .font(.headline)
+                TextField("https://gitlab.com", text: $url)
                     .padding()
                     .textContentType(.URL)
                     .keyboardType(.URL)
                     .background(Color(.systemGray5))
                     .cornerRadius(10)
-                TextField(API.token == "" ? "New GitLab Token" : "GitLab Token" , text: $token)
+                Text("Personal Access Token")
+                    .font(.headline)
+                TextField("glpat-4Rzq-VKwapmWqj4MfBsi", text: $token)
                     .padding()
                     .disableAutocorrection(true)
                     .background(Color(.systemGray5))
                     .cornerRadius(10)
+                Markdown("""
+### Minimum permission level
+- [x] api
+- [x] read_user
+- [x] read_api
+- [x] read_repository
+
+The required API version is v4.
+""").foregroundColor(.secondary)
                 Button(action: {
                     swipeError = !validGitConfig()
                     if (!swipeError) {
@@ -38,7 +54,7 @@ struct ChangeConfigView: View {
                 }, label: {
                     Text("Save configuration").frame(maxWidth: .infinity)
                 }).alert(isPresented: $swipeError, content: {
-                    Alert(title: Text("Error"), message: Text("Invalid configuration, check the entered url and token"), dismissButton: .default(Text("OK")))
+                    Alert(title: Text("Error"), message: Text("Invalid configuration, please check the entered url and token"), dismissButton: .default(Text("OK")))
                 }).tint(.accentColor)
                 .buttonStyle(.borderedProminent)
                 .buttonBorderShape(.roundedRectangle)

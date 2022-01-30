@@ -46,7 +46,7 @@ struct HomeView: View {
                             Text("Groups")
                         }
                     }
-                }.headerProminence(.increased)
+                }
                 Section(header: Text("Starred projects")) {
                     if (starredProjects != nil && !(starredProjects!.isEmpty)) {
                         ForEach(starredProjects!, id: \.id) { project in
@@ -71,8 +71,14 @@ struct HomeView: View {
                             ProgressView(value: progress, total: 6)
                         }
                     }
-                }.headerProminence(.increased)
-            }.onAppear {
+                }
+            }
+            .refreshable {
+                Task.init {
+                    await getStarredProjects()
+                }
+            }
+            .onAppear {
                 Task.init {
                     await getStarredProjects()
                 }
@@ -84,12 +90,8 @@ struct HomeView: View {
                 }
             }.sheet(isPresented: $showEvents) {
                 EventsView()
-            }.listStyle(.sidebar)
-            .refreshable {
-                Task.init {
-                    await getStarredProjects()
-                }
-            }
+            }.headerProminence(.increased)
+            .listStyle(.sidebar)
             .navigationBarTitle("Home")
         }
     }

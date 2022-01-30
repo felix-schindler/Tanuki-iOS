@@ -21,8 +21,8 @@ struct SettingsView: View {
         NavigationView {
             VStack {
                 Spacer()
-                Button(action: {showChangeConfig = true}) {
-                    Text("Change GitLab configuration")
+                Button("Change GitLab configuration") {
+                    showChangeConfig = true
                 }
                 Spacer()
                 HStack {

@@ -134,11 +134,6 @@ struct PushData: Decodable {
     var commitTitle: String? = nil
 }
 
-struct Discussion: Decodable {
-    var id: String
-    var notes: [Note]
-}
-
 struct Note: Decodable {
     var id: Int
     var body: String

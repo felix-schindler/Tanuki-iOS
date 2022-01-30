@@ -21,7 +21,7 @@
 		DC4F955E272EB8A700354E1D /* ProjectMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F955D272EB8A700354E1D /* ProjectMergeLoader.swift */; };
 		DC4F9560272EB8EE00354E1D /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F955F272EB8EE00354E1D /* ProjectView.swift */; };
 		DC4F9562272EB92200354E1D /* MergeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9561272EB92200354E1D /* MergeView.swift */; };
-		DC4F9568272EBA3F00354E1D /* DiscussionsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9567272EBA3F00354E1D /* DiscussionsLoader.swift */; };
+		DC4F9568272EBA3F00354E1D /* NotesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9567272EBA3F00354E1D /* NotesLoader.swift */; };
 		DC4F956A272EC3B100354E1D /* APIAnswers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9569272EC3B100354E1D /* APIAnswers.swift */; };
 		DC4F956E272ECD0100354E1D /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F956D272ECD0100354E1D /* ExploreView.swift */; };
 		DC5EB8F3272D924D0015BF0D /* GitLabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB8F2272D924D0015BF0D /* GitLabApp.swift */; };
@@ -65,7 +65,7 @@
 		DC4F955D272EB8A700354E1D /* ProjectMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMergeLoader.swift; sourceTree = "<group>"; };
 		DC4F955F272EB8EE00354E1D /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		DC4F9561272EB92200354E1D /* MergeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeView.swift; sourceTree = "<group>"; };
-		DC4F9567272EBA3F00354E1D /* DiscussionsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscussionsLoader.swift; sourceTree = "<group>"; };
+		DC4F9567272EBA3F00354E1D /* NotesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesLoader.swift; sourceTree = "<group>"; };
 		DC4F9569272EC3B100354E1D /* APIAnswers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAnswers.swift; sourceTree = "<group>"; };
 		DC4F956D272ECD0100354E1D /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		DC5EB8EF272D924D0015BF0D /* GitLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,7 +214,7 @@
 				DC0EC643279E1742006A7C75 /* Repository */,
 				DC4F954F272EB3B600354E1D /* Issues */,
 				DC4F955A272EB74B00354E1D /* Merge Requests */,
-				DC4F9567272EBA3F00354E1D /* DiscussionsLoader.swift */,
+				DC4F9567272EBA3F00354E1D /* NotesLoader.swift */,
 				DC7A85B927319D010000CF4D /* PipelineLoader.swift */,
 				DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */,
 			);
@@ -337,7 +337,7 @@
 				DCAAC170279ED63800EC685F /* MemberGroupsLoader.swift in Sources */,
 				DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */,
 				DC0EC641279E1733006A7C75 /* FileLoader.swift in Sources */,
-				DC4F9568272EBA3F00354E1D /* DiscussionsLoader.swift in Sources */,
+				DC4F9568272EBA3F00354E1D /* NotesLoader.swift in Sources */,
 				DC4F9562272EB92200354E1D /* MergeView.swift in Sources */,
 				DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */,
 				DC10C39A2731537D00CAE425 /* CommitsView.swift in Sources */,

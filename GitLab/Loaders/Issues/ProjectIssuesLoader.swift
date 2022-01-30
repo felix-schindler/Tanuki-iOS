@@ -69,7 +69,7 @@ struct ProjectIssuesLoader: View {
             } else if (type == 1) {
                 state = "state=closed&"
             }
-            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/issues?\(state)with_labels_details=true")
+            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/issues?\(state)with_labels_details=true&sort=asc&order_by=created_at")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

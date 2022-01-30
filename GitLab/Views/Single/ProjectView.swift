@@ -18,7 +18,7 @@ struct ProjectView: View {
     var body: some View {
         ScrollView {
             VStack {
-                VStack(alignment: .leading) {
+                VStack {
                     HStack {
                         VStack {
                             Text("Project ID: " + String(project.id))

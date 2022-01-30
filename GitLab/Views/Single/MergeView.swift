@@ -30,8 +30,7 @@ struct MergeView: View {
                     .font(.title)
                     .padding(.top)
                 Markdown(mergeRequest.description)
-                    .multilineTextAlignment(.leading)
-                Text("votes")
+                Text("Votes")
                     .font(.headline)
                     .padding(.top)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -66,7 +65,7 @@ struct MergeView: View {
                 LabelListView(labels: mergeRequest.labels!)
                     .padding()
             }
-            DiscussionsLoader(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge)
+            NotesLoader(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge)
         }.navigationTitle(mergeRequest.title)
         .navigationBarTitleDisplayMode(.inline)
     }

@@ -13,39 +13,36 @@ struct NoteListView: View {
 
     var body: some View {
         if (!notes.isEmpty) {
-            VStack {
-                ForEach(notes, id: \.id) { note in
+            ForEach(notes, id: \.id) { note in
+                HStack(alignment: .top) {
+                    AsyncImage(url: URL(string: note.author.avatarUrl)) { phase in
+                        switch phase {
+                        case .empty:
+                            ProgressView()
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .cornerRadius(10)
+                        default:
+                            Image(systemName: "exclamationmark.icloud")
+                                .resizable()
+                                .scaledToFit()
+                        }
+                    }.frame(width: 50, height: 50)
                     VStack {
                         HStack {
-                            AsyncImage(url: URL(string: note.author.avatarUrl)) { phase in
-                                switch phase {
-                                case .empty:
-                                    ProgressView()
-                                case .success(let image):
-                                    image
-                                        .resizable()
-                                        .scaledToFit()
-                                        .cornerRadius(10)
-                                default:
-                                    Image(systemName: "exclamationmark.icloud")
-                                        .resizable()
-                                        .scaledToFit()
-                                }
-                            }.frame(width: 50, height: 50, alignment: .leading)
-                            VStack {
-                                Text(note.author.name)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Text(note.author.username)
-                                    .font(.footnote)
-                                    .foregroundColor(.secondary)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                            }
+                            Text(note.author.name)
+                            Text("\(note.author.username) · \(note.createdAt.toString())")
+                                .font(.footnote)
+                                .foregroundColor(.secondary)
                         }.frame(maxWidth: .infinity, alignment: .leading)
-                        Markdown(note.body)
-                            .multilineTextAlignment(.leading)
+                        Markdown(note.body.emojized())
                     }
-                }.listStyle(.plain)     // TODO: Does this even work??
+                }
             }
+        } else {
+            Text("There are no notes")
         }
     }
 }

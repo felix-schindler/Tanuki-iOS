@@ -11,17 +11,14 @@ struct LabelListView: View {
     @State var labels: [APILabel]
     
     var body: some View {
-        VStack {
-            Text("Labels")
-                .font(.headline)
-                .frame(maxWidth: .infinity, alignment: .leading)
+        HStack(spacing: 5) {
             ForEach(labels, id: \.id) { label in
                 Text(label.name.emojized())
                     .padding(.horizontal, 5)
                     .background(Color.init(hex: label.color))
                     .cornerRadius(10)
                     .foregroundColor(Color.init(hex: label.textColor))
-            }.frame(maxWidth: .infinity, alignment: .leading)
+            }
         }
     }
 }
