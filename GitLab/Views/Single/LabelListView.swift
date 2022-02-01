@@ -14,9 +14,10 @@ struct LabelListView: View {
         HStack(spacing: 5) {
             ForEach(labels, id: \.id) { label in
                 Text(label.name.emojized())
-                    .padding(.horizontal, 5)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 4)
                     .background(Color.init(hex: label.color))
-                    .cornerRadius(10)
+                    .cornerRadius(25)
                     .foregroundColor(Color.init(hex: label.textColor))
             }
         }

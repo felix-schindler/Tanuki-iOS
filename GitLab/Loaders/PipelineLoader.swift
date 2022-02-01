@@ -48,7 +48,7 @@ struct PipelineLoader: View {
 
     private func getPipeline() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/pipelines?ref=" + branch)
+            let apiData: Data? = API.GET(endpoint: "projects/\(id)/pipelines?ref=" + branch)
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

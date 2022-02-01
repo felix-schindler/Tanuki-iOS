@@ -40,6 +40,7 @@ struct NoteListView: View {
                         Markdown(note.body.emojized())
                     }
                 }
+                Divider()
             }
         } else {
             Text("There are no notes")

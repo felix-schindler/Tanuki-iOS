@@ -76,7 +76,7 @@ struct AccountView: View {
                     }
                     HStack {
                         Image(systemName: "person.2")
-                        Text(String(user!.followers) + " followers · " + String(user!.following) + " following")
+                        Text("\(user!.followers) followers · \(user!.following) following")
                     }
                 } else {
                     if (noConnection) {

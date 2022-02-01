@@ -21,10 +21,23 @@ struct ProjectView: View {
                 VStack {
                     HStack {
                         VStack {
-                            Text("Project ID: " + String(project.id))
+                            Text("Project ID: \(project.id)")
                                 .font(.callout)
                                 .foregroundColor(.secondary)
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                            if (!project.tagList.isEmpty) {
+                                HStack {
+                                    Image(systemName: "tag")
+                                    ForEach(project.tagList, id: \.hashValue) { tag in
+                                        Text(tag)
+                                            .font(.caption)
+                                            .padding(.horizontal, 6)
+                                            .padding(.vertical, 4)
+                                            .background(Color(.systemGray3))
+                                            .cornerRadius(10)
+                                    }
+                                }.frame(maxWidth: .infinity, alignment: .leading)
+                            }
                             if (project.description != nil) {
                                 Markdown(project.description!.emojized())
                                    .multilineTextAlignment(.leading)

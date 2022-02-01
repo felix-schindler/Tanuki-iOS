@@ -13,33 +13,23 @@ struct IssueView: View {
     @State var showNewIssue: Bool = false
     
     var body: some View {
+        HStack {
+            HStack {
+                Image(systemName: "smallcircle.circle")
+                    .foregroundColor(.green)
+                Text(issue.references.full)
+            }
+            Spacer()
+            HStack {
+                Image(systemName: "person")
+                Text(issue.author.username)
+            }
+        }.foregroundColor(.secondary)
+            .padding(.horizontal)
         List {
-            Section("Issue") {
-                VStack(alignment: .leading) {
-                    HStack {
-                        HStack {
-                            Image(systemName: "smallcircle.circle")
-                                .foregroundColor(.green)
-                            Text(issue.references.full)
-                        }
-                        Spacer()
-                        HStack {
-                            Image(systemName: "person")
-                            Text(issue.author.username)
-                        }
-                    }.foregroundColor(.secondary)
-                    HStack {
-                        Text(issue.state.firstCapitalized)
-                            .padding(5)
-                            .background(issue.state == "opened" ? .green : .blue)
-                                .foregroundColor(.white)
-                            .cornerRadius(10)
-                        Text(issue.title.emojized())
-                            .font(.title)
-                    }.padding(.top)
-                    if (issue.description != "") {
-                        Markdown(issue.description.emojized())
-                    }
+            if (issue.description != "") {              // Description is "" and NOT nil when not set
+                Section("Description") {
+                    Markdown(issue.description.emojized())
                 }
             }
             if (issue.assignees != nil && !(issue.assignees!.isEmpty)) {
@@ -68,10 +58,16 @@ struct IssueView: View {
                 NotesLoader(id: issue.projectId, iid: issue.iid, type: discussionType.Issue)
             }
         }.listStyle(.grouped)
-        .navigationTitle(issue.title)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(issue.title.emojized())
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Text(issue.state.firstCapitalized)
+                    .font(.footnote)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 4)
+                    .background(issue.state == "opened" ? .green : .blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
                 Button(action: {showNewIssue = true}) {
                     Image(systemName: "plus.circle")
                 }

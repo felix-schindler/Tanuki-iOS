@@ -36,7 +36,7 @@ struct ProjectMergeLoader: View {
     
     private func getMRs() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/merge_requests")
+            let apiData: Data? = API.GET(endpoint: "projects/\(id)/merge_requests")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

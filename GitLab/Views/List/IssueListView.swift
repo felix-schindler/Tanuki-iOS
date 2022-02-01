@@ -80,7 +80,7 @@ struct IssueListView: View {
     // TODO: remove from array
     private func closeIssue(id: Int, projectId: Int) -> Bool {
         do {
-            let apiData: Data? = API.PUT(endpoint: "projects/" + String(projectId) + "/issues/" + String(id) + "?state_event=close")
+            let apiData: Data? = API.PUT(endpoint: "projects/\(projectId)/issues/\(id)?state_event=close")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

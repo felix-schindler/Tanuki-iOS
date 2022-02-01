@@ -17,7 +17,7 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text("Your work")) {
+                Section("Your work") {
                     NavigationLink(destination: AllIssuesLoader()) {
                         HStack {
                             Image(systemName: "smallcircle.circle")
@@ -47,7 +47,7 @@ struct HomeView: View {
                         }
                     }
                 }
-                Section(header: Text("Starred projects")) {
+                Section("Starred projects") {
                     if (starredProjects != nil && !(starredProjects!.isEmpty)) {
                         ForEach(starredProjects!, id: \.id) { project in
                             NavigationLink(destination: ProjectView(project: project)) {

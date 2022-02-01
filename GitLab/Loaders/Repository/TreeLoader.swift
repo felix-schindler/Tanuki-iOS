@@ -41,7 +41,7 @@ struct TreeLoader: View {
                     if (tree!.isEmpty) {
                         Text("There are no files")
                     } else {
-                        Section(header: Text("Files")) {
+                        Section("Files") {
                             ForEach(tree!, id: \.id) { file in
                                 if (file.type == "tree") {
                                     // TODO: NavigationView
@@ -81,7 +81,7 @@ struct TreeLoader: View {
     
     private func getTree() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/repository/tree?ref=" + refName.url() + (filePath != nil ? "&path=" + filePath!.url() : ""))
+            let apiData: Data? = API.GET(endpoint: "projects/\(id)/repository/tree?ref=\(refName.url())\(filePath != nil ? "&path=" + filePath!.url() : "")")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -96,7 +96,7 @@ struct TreeLoader: View {
     
     private func getBranches() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/repository/branches")
+            let apiData: Data? = API.GET(endpoint: "projects/\(id)/repository/branches")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

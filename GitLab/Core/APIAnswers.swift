@@ -14,6 +14,7 @@ struct Project: Decodable {
     var nameWithNamespace: String
     var pathWithNamespace: String
     var defaultBranch: String? = nil     // Not all projects have a repository. Maybe they are just issue trackers, wikis, ...
+    var tagList = [String]()
     var avatarUrl: String?
     var forksCount: Int
     var starCount: Int

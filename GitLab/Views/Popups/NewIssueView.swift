@@ -54,7 +54,7 @@ struct NewIssueView: View {
 
     private func saveNewIssue() -> Bool {
         do {
-            let reqUrl: String = "projects/" + String(id) + "/issues?title=" + title.url() + "&description=" + description.url()
+            let reqUrl: String = "projects/\(id)/issues?title=\(title.url())&description=\(description.url())"
             let apiData: Data? = API.POST(endpoint: reqUrl)
             if (apiData != nil) {
                 let decoder = JSONDecoder()

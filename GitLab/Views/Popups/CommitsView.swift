@@ -44,8 +44,7 @@ struct CommitsView: View {
                                 }.pickerStyle(.menu)
                             }
                         }
-                        
-                        Section(header: Text("Commits")) {
+                        Section("Commits") {
                             ForEach(commits!, id: \.id) { commit in
                                 HStack {
                                     VStack(alignment: .leading) {
@@ -90,7 +89,7 @@ struct CommitsView: View {
 
     private func getCommits() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/repository/commits?ref_name=" + refName)
+            let apiData: Data? = API.GET(endpoint: "projects/\(id)/repository/commits?ref_name=\(refName)")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -106,7 +105,7 @@ struct CommitsView: View {
 
     private func getBranches() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/repository/branches")
+            let apiData: Data? = API.GET(endpoint: "projects/\(id)/repository/branches")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

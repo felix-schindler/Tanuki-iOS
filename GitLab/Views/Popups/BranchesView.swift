@@ -66,7 +66,7 @@ struct BranchesView: View {
     
     private func getBranches() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/repository/branches")
+            let apiData: Data? = API.GET(endpoint: "projects/\(id)/repository/branches")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

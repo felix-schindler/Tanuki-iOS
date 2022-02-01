@@ -59,7 +59,7 @@ struct FileLoader: View {
     
     private func getFile() async -> Void {
         do {
-            let apiData: Data? = API.GET(endpoint: "projects/" + String(id) + "/repository/files/" + filePath.url() + "?ref=" + refName.url())
+            let apiData: Data? = API.GET(endpoint: "projects/\(id)/repository/files/\(filePath.url())?ref=\(refName.url())")
             if (apiData != nil) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

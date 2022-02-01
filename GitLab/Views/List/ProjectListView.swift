@@ -49,7 +49,8 @@ struct ProjectListView: View {
                                 if (project.permissions.projectAccess != nil) {
                                     Text(accessRole(code: project.permissions.projectAccess!.accessLevel))
                                         .font(.caption)
-                                        .padding(3)
+                                        .padding(.horizontal, 6)
+                                        .padding(.vertical, 4)
                                         .background(Color(.systemGray3))
                                         .cornerRadius(10)
                                 }
