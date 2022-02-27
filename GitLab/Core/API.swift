@@ -77,17 +77,18 @@ class API {
         var dataStr: String = ""
         if (values != nil) {
             for (k,v) in values! {   // Key and value
-                if (dataStr != "") {
-                    dataStr += "&"
+                if (dataStr == "") {
+                    dataStr += "{"
                 }
-                dataStr += "\(String(k).url())=\(String(v).url())"
+                dataStr += "\(String(k).url()): \(String(v).url())"
             }
+            dataStr += "}"
         }
 
         // POST-Request with data
         var request: URLRequest = URLRequest(url: url!)
             request.httpMethod = "POST"
-            request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type");
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type");
             request.httpBody = dataStr.data(using: .utf8)!
 
         // Session config with auth header and token, when required

@@ -46,6 +46,7 @@ struct ChangeConfigView: View {
 
 The required API version is v4.
 """).foregroundColor(.secondary)
+                Spacer()
                 Button(action: {
                     swipeError = !validGitConfig()
                     if (!swipeError) {

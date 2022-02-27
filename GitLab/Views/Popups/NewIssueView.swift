@@ -19,36 +19,25 @@ struct NewIssueView: View {
 
     var body: some View {
         NavigationView {
-            VStack {
-                TextField("Title", text: $title)
-                    .padding()
-                    .background(Color(.systemGray5))
-                    .cornerRadius(10)
-                Text("Description")
-                    .font(.headline)
-                    .padding(.top)
-                TextEditor(text: $description)
-                    .padding()
-                    .background(Color(.systemGray5))
-                    .cornerRadius(10)
-                    .frame(maxHeight: 250, alignment: .topLeading)
-                Spacer()
-                Button(action: {
-                    isError = !saveNewIssue()
-                    if (!isError) {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }
-                }, label: {
-                    Text("Create new issue").frame(maxWidth: .infinity)
-                }).alert(isPresented: $isError, content: {
-                    Alert(title: Text("Error"), message: Text("Failed to create issue"), dismissButton: .default(Text("OK")))
-                }).tint(.accentColor)
-                .buttonStyle(.borderedProminent)
-                .buttonBorderShape(.roundedRectangle)
-                .controlSize(.large)
-            }.padding()
-            .navigationBarTitle("New issue")
-            .navigationBarItems(trailing: Button("Cancel", action: {self.presentationMode.wrappedValue.dismiss()}).foregroundColor(.red))
+            List {
+                Section("Title") {
+                    TextField("🚀 To the moon", text: $title)
+                }
+                Section("Description - Not needed") {
+                    TextEditor(text: $description)
+                        .shadow(radius: 1)
+                }
+            }.alert(isPresented: $isError, content: {
+                Alert(title: Text("Error"), message: Text("Failed to create issue"), dismissButton: .default(Text("OK")))
+            }).navigationBarTitle("New issue")
+            .navigationBarItems(leading: Button("Cancel", action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }).foregroundColor(.red), trailing: Button("Save", action: {
+                isError = !saveNewIssue()
+                if (!isError) {
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            }))
         }
     }
 
