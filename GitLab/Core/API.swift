@@ -83,6 +83,7 @@ class API {
                 dataStr += "\(String(k).url()): \(String(v).url())"
             }
             dataStr += "}"
+            print("[API.POST] DEBUG: " + dataStr)
         }
 
         // POST-Request with data

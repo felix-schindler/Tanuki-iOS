@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import MarkdownUI
+// import MarkdownUI
 
 struct ProjectView: View {
     @State var project: Project
@@ -39,7 +39,8 @@ struct ProjectView: View {
                                 }.frame(maxWidth: .infinity, alignment: .leading)
                             }
                             if (project.description != nil) {
-                                Markdown(project.description!.emojized())
+                                // Markdown(project.description!.emojized())
+                                Text(project.description!.emojized())
                                    .multilineTextAlignment(.leading)
                                    .padding(.bottom)
                             }
@@ -168,7 +169,8 @@ struct ProjectView: View {
                     .controlSize(.large)
                 }
             }.padding(.horizontal)
-            FileLoader(id: project.id, filePath: "README.md", refName: project.defaultBranch ?? "", inline: true)
+            NewFileLoader(id: project.id, filePath: "README.md", refName: project.defaultBranch ?? "")
+            // FileLoader(id: project.id, filePath: "README.md", refName: project.defaultBranch ?? "", inline: true)
         }.navigationTitle(project.name)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {

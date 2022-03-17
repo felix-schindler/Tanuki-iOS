@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import MarkdownUI
+// import MarkdownUI
 
 struct MergeView: View {
     @State var mergeRequest: MergeRequest
@@ -29,7 +29,8 @@ struct MergeView: View {
                 Text(mergeRequest.title)
                     .font(.title)
                     .padding(.top)
-                Markdown(mergeRequest.description)
+                // Markdown(mergeRequest.description)
+                Text(mergeRequest.description)
                 Text("Votes")
                     .font(.headline)
                     .padding(.top)

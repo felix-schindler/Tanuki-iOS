@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import MarkdownUI
+// import MarkdownUI
 
 struct NoteListView: View {
     @State var notes: [Note]
@@ -37,7 +37,8 @@ struct NoteListView: View {
                                 .font(.footnote)
                                 .foregroundColor(.secondary)
                         }.frame(maxWidth: .infinity, alignment: .leading)
-                        Markdown(note.body.emojized())
+                        // Markdown(note.body.emojized())
+                        Text(note.body.emojized())
                     }
                 }
                 Divider()

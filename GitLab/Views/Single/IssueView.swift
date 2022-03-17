@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import MarkdownUI
+// import MarkdownUI
 
 struct IssueView: View {
     @State var issue: Issue
@@ -29,7 +29,8 @@ struct IssueView: View {
         List {
             if (issue.description != "") {              // Description is "" and NOT nil when not set
                 Section("Description") {
-                    Markdown(issue.description.emojized())
+                    // Markdown(issue.description.emojized())
+                    Text(issue.description.emojized())
                 }
             }
             if (issue.assignees != nil && !(issue.assignees!.isEmpty)) {

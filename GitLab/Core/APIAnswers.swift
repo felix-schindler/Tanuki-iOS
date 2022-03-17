@@ -193,3 +193,7 @@ struct Pipeline: Decodable {
 struct ToggleStar: Decodable {
     var starCount: Int
 }
+
+struct MarkdownHTML: Decodable {
+    var html: String
+}

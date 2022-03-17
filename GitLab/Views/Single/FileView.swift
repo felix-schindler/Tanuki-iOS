@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import MarkdownUI
+// import MarkdownUI
 
 struct FileView: View {
     @State var fileName: String
@@ -16,7 +16,8 @@ struct FileView: View {
         VStack {
             ScrollView {
                 if (fileName.lowercased().contains(".md")) {
-                    Markdown(content)
+                    // Markdown(content)
+                    Text(content)
                 } else {
                     Text(content)
                         .frame(maxWidth: .infinity, alignment: .leading)

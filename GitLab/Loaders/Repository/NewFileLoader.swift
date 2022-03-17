@@ -1,14 +1,14 @@
 //
-//  FileLoader.swift
+//  NewFileLoader.swift
 //  GitLab
 //
-//  Created by Felix Schindler on 02.11.21.
+//  Created by Felix Schindler on 27.02.22.
 //
 
 import SwiftUI
 // import MarkdownUI
 
-struct FileLoader: View {
+struct NewFileLoader: View {
     @State var file: File? = nil
     @State var noConnection: Bool = false
     @State var showNotFound: Bool = false
@@ -29,7 +29,7 @@ struct FileLoader: View {
                             .font(.headline)
                         if (filePath.lowercased().contains(".md")) {
                             // Markdown(content!)
-                            Text(content!)
+                            MarkdownLoader(content: content!, project: refName)
                         } else {
                             Text(content!)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -71,11 +71,5 @@ struct FileLoader: View {
         } catch let jsonError as NSError {
             print("JSON error \(jsonError.localizedDescription)")
         }
-    }
-}
-
-struct FileLoader_Previews: PreviewProvider {
-    static var previews: some View {
-        FileLoader(id: Int(), filePath: String(), refName: String())
     }
 }

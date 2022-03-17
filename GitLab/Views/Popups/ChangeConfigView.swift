@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import MarkdownUI
+// import MarkdownUI
 
 /// This View is meant to be used as a sheet.
 /// Lets the user change the GitLab configuration (URL, Token)
@@ -22,7 +22,8 @@ struct ChangeConfigView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("GitLab URL")
+                Spacer()
+                Label("GitLab URL", systemImage: "link")
                     .font(.headline)
                 TextField("https://gitlab.com", text: $url)
                     .padding()
@@ -30,22 +31,34 @@ struct ChangeConfigView: View {
                     .keyboardType(.URL)
                     .background(Color(.systemGray5))
                     .cornerRadius(10)
-                Text("Personal Access Token")
+                Label("Personal Access Token", systemImage: "key")
                     .font(.headline)
+                    .padding(.top)
                 TextField("glpat-4Rzq-VKwapmWqj4MfBsi", text: $token)
                     .padding()
                     .disableAutocorrection(true)
                     .background(Color(.systemGray5))
                     .cornerRadius(10)
-                Markdown("""
-### Minimum permission level
-- [x] api
-- [x] read_user
-- [x] read_api
-- [x] read_repository
-
-The required API version is v4.
-""").foregroundColor(.secondary)
+                Spacer()
+                /* VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: "checkmark.square")
+                        Text("api")
+                    }
+                    HStack {
+                        Image(systemName: "checkmark.square")
+                        Text("read_user")
+                    }
+                    HStack {
+                        Image(systemName: "checkmark.square")
+                        Text("read_api")
+                    }
+                    HStack {
+                        Image(systemName: "checkmark.square")
+                        Text("read_repository")
+                    }
+                    Text("The required API version is v4")
+                }.foregroundColor(.secondary) */
                 Spacer()
                 Button(action: {
                     swipeError = !validGitConfig()
@@ -53,7 +66,9 @@ The required API version is v4.
                         self.presentationMode.wrappedValue.dismiss()
                     }
                 }, label: {
-                    Text("Save configuration").frame(maxWidth: .infinity)
+                    Text("Save configuration")
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity)
                 }).alert(isPresented: $swipeError, content: {
                     Alert(title: Text("Error"), message: Text("Invalid configuration, please check the entered url and token"), dismissButton: .default(Text("OK")))
                 }).tint(.accentColor)
@@ -61,7 +76,7 @@ The required API version is v4.
                 .buttonBorderShape(.roundedRectangle)
                 .controlSize(.large)
             }.padding()
-            .navigationBarTitle("Change GitLab config")
+            .navigationBarTitle("GitLab config")
             .navigationBarItems(trailing: Button("Cancel", action: {self.presentationMode.wrappedValue.dismiss()}).foregroundColor(.red))
         }.navigationViewStyle(StackNavigationViewStyle())
     }
