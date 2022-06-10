@@ -80,34 +80,13 @@ struct TreeLoader: View {
     }
     
     private func getTree() async -> Void {
-        do {
-            let apiData: Data? = API.GET(endpoint: "projects/\(id)/repository/tree?ref=\(refName.url())\(filePath != nil ? "&path=" + filePath!.url() : "")")
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                tree = try decoder.decode([TreeFile].self, from: apiData!)
-            } else {
-                noConnection = true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
+        tree = await API.get(type: [TreeFile].self, endpoint: "projects/\(id)/repository/tree", query: ["ref": refName.url(), "path": filePath != nil ? filePath!.url() : ""])
+        noConnection = tree == nil
     }
     
     private func getBranches() async -> Void {
-        do {
-            let apiData: Data? = API.GET(endpoint: "projects/\(id)/repository/branches")
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                decoder.dateDecodingStrategy = .custom(iso8601Decoder())
-                branches = try decoder.decode([Branch].self, from: apiData!)
-            } else {
-                noConnection = true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
+        branches = await API.get(type: [Branch].self, endpoint: "projects/\(id)/repository/branches")
+        noConnection = branches == nil
     }
 }
 

@@ -65,19 +65,8 @@ struct BranchesView: View {
     }
     
     private func getBranches() async -> Void {
-        do {
-            let apiData: Data? = API.GET(endpoint: "projects/\(id)/repository/branches")
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                decoder.dateDecodingStrategy = .custom(iso8601Decoder())
-                branches = try decoder.decode([Branch].self, from: apiData!)
-            } else {
-                noConnection = true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
+        branches = await API.get(type: [Branch].self, endpoint: "projects/\(id)/repository/branches")
+        noConnection = branches == nil
     }
 }
 

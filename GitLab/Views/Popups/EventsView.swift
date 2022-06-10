@@ -60,17 +60,7 @@ struct EventsView: View {
     }
     
     private func getEvents() async -> Void {
-        do {
-            let apiData: Data? = API.GET(endpoint: "events")
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                events = try decoder.decode([Event].self, from: apiData!)
-            } else {
-                noConnection = true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
+        events = await API.get(type: [Event].self, endpoint: "events")
+        noConnection = events == nil
     }
 }

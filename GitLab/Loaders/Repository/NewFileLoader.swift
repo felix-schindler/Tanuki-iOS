@@ -59,17 +59,7 @@ struct NewFileLoader: View {
     }
     
     private func getFile() async -> Void {
-        do {
-            let apiData: Data? = API.GET(endpoint: "projects/\(id)/repository/files/\(filePath.url())?ref=\(refName.url())")
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                file = try decoder.decode(File.self, from: apiData!)
-            } else {
-                noConnection = true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
+        file = await API.get(type: File.self, endpoint: "projects/\(id)/repository/files/\(filePath.url())", query: ["ref": refName.url()])
+        noConnection = file == nil
     }
 }

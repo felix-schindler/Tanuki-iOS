@@ -40,19 +40,8 @@ struct NotesLoader: View {
     }
     
     private func getDiscussions() async -> Void {
-        do {
-            let apiData: Data? = API.GET(endpoint: "projects/\(id)/\(type.rawValue)/\(iid)/notes?sort=asc&order_by=updated_at")
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                decoder.dateDecodingStrategy = .custom(iso8601Decoder())
-                notes = try decoder.decode([Note].self, from: apiData!)
-            } else {
-                noConnection = true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
+        notes = await API.get(type: [Note].self, endpoint: "projects/\(id)/\(type.rawValue)/\(iid)/notes", query: ["sort": "asc", "order_by": "updated_at"])
+        noConnection = notes == nil
     }
 }
 

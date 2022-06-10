@@ -61,9 +61,11 @@ struct ChangeConfigView: View {
                 }.foregroundColor(.secondary) */
                 Spacer()
                 Button(action: {
-                    swipeError = !validGitConfig()
-                    if (!swipeError) {
-                        self.presentationMode.wrappedValue.dismiss()
+                    Task {
+                        swipeError = await !validGitConfig()
+                        if (!swipeError) {
+                            self.presentationMode.wrappedValue.dismiss()
+                        }
                     }
                 }, label: {
                     Text("Save configuration")
@@ -81,28 +83,17 @@ struct ChangeConfigView: View {
         }.navigationViewStyle(StackNavigationViewStyle())
     }
     
-    private func validGitConfig() -> Bool {
+    private func validGitConfig() async -> Bool {
         let oldUrl = API.base, oldToken = API.token
         
         API.domain = url
         API.token = token
-
-        do {
-            let apiData: Data? = API.GET(endpoint: "user")
-            if (apiData != nil) {
-                var user: User
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                user = try decoder.decode(User.self, from: apiData!)
-                print(user.name + " logged in")
-                return true
-            } else {
-                API.base = oldUrl
-                API.token = oldToken
-                return false
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
+        
+        let user = await API.get(type: User.self, endpoint: "user")
+        if (user != nil) {
+            print(user!.name + " logged in")
+            return true
+        } else {
             API.base = oldUrl
             API.token = oldToken
             return false

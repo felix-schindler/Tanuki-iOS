@@ -32,19 +32,8 @@ struct AllIssuesLoader: View {
     }
     
     private func getIssues() async -> Void {
-        do {
-            let apiData: Data? = API.GET(endpoint: "issues?state=opened&with_labels_details=true&order_by=updated_at")
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                decoder.dateDecodingStrategy = .custom(iso8601Decoder())
-                issues = try decoder.decode([Issue].self, from: apiData!)
-            } else {
-                noConnection = true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
+        issues = await API.get(type: [Issue].self, endpoint: "issues", query: ["state": "opened", "with_labels_details": "true", "order_by": "updated_at"])
+        noConnection = issues == nil
     }
 }
 

@@ -34,16 +34,8 @@ struct MemberGroupsLoader: View {
     }
 
     private func getGroups() async -> Void {
-        do {
-            let apiData: Data? = API.GET(endpoint: "groups")
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                groups = try decoder.decode([Group].self, from: apiData!)
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
+        groups = await API.get(type: [Group].self, endpoint: "groups")
+        noConnection = groups == nil
     }
 }
 

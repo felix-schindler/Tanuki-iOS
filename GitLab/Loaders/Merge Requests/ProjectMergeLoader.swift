@@ -35,18 +35,8 @@ struct ProjectMergeLoader: View {
     }
     
     private func getMRs() async -> Void {
-        do {
-            let apiData: Data? = API.GET(endpoint: "projects/\(id)/merge_requests")
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                mergeRequests = try decoder.decode([MergeRequest].self, from: apiData!)
-            } else {
-                noConnection = true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
+        mergeRequests = await API.get(type: [MergeRequest].self, endpoint: "projects/\(id)/merge_requests")
+        noConnection = mergeRequests == nil
     }
 }
 

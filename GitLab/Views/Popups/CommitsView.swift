@@ -89,35 +89,13 @@ struct CommitsView: View {
     }
 
     private func getCommits() async -> Void {
-        do {
-            let apiData: Data? = API.GET(endpoint: "projects/\(id)/repository/commits?ref_name=\(refName)")
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                decoder.dateDecodingStrategy = .custom(iso8601Decoder())
-                commits = try decoder.decode([Commit].self, from: apiData!)
-            } else {
-                noConnection = true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
+        commits = await API.get(type: [Commit].self, endpoint: "projects/\(id)/repository/commits?ref_name=\(refName)")
+        noConnection = commits == nil
     }
 
     private func getBranches() async -> Void {
-        do {
-            let apiData: Data? = API.GET(endpoint: "projects/\(id)/repository/branches")
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                decoder.dateDecodingStrategy = .custom(iso8601Decoder())
-                branches = try decoder.decode([Branch].self, from: apiData!)
-            } else {
-                noConnection = true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
+        branches = await API.get(type: [Branch].self, endpoint: "projects/\(id)/repository/branches")
+        noConnection = branches == nil
     }
 }
 

@@ -7,54 +7,42 @@
 
 import Foundation
 import SwiftUI
+import SwiftHttp
 
 class API {
     @AppStorage("domain") public static var domain: String = ""
-    @AppStorage("api_base") public static var base: String = "/api/v4/"
+    @AppStorage("api_base") public static var base: String = "api/v4"
     @AppStorage("token") public static var token: String = ""
     
-    private static func url(endpoint: String) -> URL? {
-        let url: URL? = URL(string: (endpoint.contains("http://") || endpoint.contains("https://")) ? endpoint : API.domain + API.base + endpoint)
-        if (url == nil) {
+    private static let client: HttpClient = UrlSessionHttpClient(log: false)
+    private static let decoder = JSONDecoder()
+    
+    public static func get<T: Codable>(type: T.Type, endpoint: String, query: Dictionary<String, String>? = [:]) async -> T? {
+        let url = HttpUrl(host: domain.replacingOccurrences(of: "https://", with: ""), path: [base, endpoint], query: [:])
+
+        let req = HttpRawRequest(url: url,
+                                 method: .get,
+                                 headers: [
+                                    .key(.authorization): "Bearer \(token)"
+                                 ],
+                                 body: nil)
+
+        do {
+            let response = try await client.dataTask(req)
+            
+            print("URL: \(req.urlRequest.curlString)")
+            print(String(decoding: response.data, as: UTF8.self))
+
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            decoder.dateDecodingStrategy = .custom(iso8601Decoder())
+
+            return try decoder.decode(T.self, from: response.data)
+        } catch {
+            print(error)
             return nil
         }
-
-        print("[API] url: " + url!.absoluteString)
-        return url
     }
-
-    /**
-     Make a GET request to an API endpoint
-
-     - Parameter endpoint: API endpoint (/api/v4/:endpoint)
-     - Returns: Data to be decoded as e. g. JSON
-     */
-    public static func GET(endpoint: String) -> Data? {
-        // No internet connection or link does not exist
-        let url: URL? = API.url(endpoint: endpoint)
-        if (url == nil) {
-            return nil
-        }
-
-        // Initialize variables
-        var apiData: Data? = nil
-        let semaphore = DispatchSemaphore(value: 0)
-
-        // Session config with auth header and token, when required
-        let sessionConfig = URLSessionConfiguration.default
-        sessionConfig.httpAdditionalHeaders = ["PRIVATE-TOKEN": token]
-
-        // Send the request
-        URLSession(configuration: sessionConfig).dataTask(with: URLRequest(url: url!), completionHandler: { (data, _, _) in
-            apiData = data
-            semaphore.signal()
-        }).resume()
-
-        // Wait for the signal (finished API request)
-        _ = semaphore.wait(wallTimeout: .distantFuture)
-        return apiData
-    }
-
+    
     /**
      Make a POST request to an API endpoint
 
@@ -64,7 +52,7 @@ class API {
      */
     public static func POST(endpoint: String, values: Dictionary<String,String>? = nil) -> Data? {
         // No internet connection or link does not exist
-        let url: URL? = API.url(endpoint: endpoint)
+        let url: URL? = URL(string: domain + "/" + base + "/" + endpoint)
         if (url == nil) {
             return nil
         }
@@ -109,7 +97,7 @@ class API {
     
     public static func PUT(endpoint: String) -> Data? {
         // No internet connection or link does not exist
-        let url: URL? = API.url(endpoint: endpoint)
+        let url: URL? = URL(string: domain + "/" + base + "/" + endpoint)
         if (url == nil) {
             return nil
         }

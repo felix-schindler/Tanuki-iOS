@@ -62,25 +62,15 @@ struct ProjectIssuesLoader: View {
     }
         
     private func getIssues() async -> Void {
-        do {
-            var state: String = ""
-            if (type == 0) {
-                state = "state=opened&"
-            } else if (type == 1) {
-                state = "state=closed&"
-            }
-            let apiData: Data? = API.GET(endpoint: "projects/\(id)/issues?\(state)with_labels_details=true&sort=asc&order_by=created_at")
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                decoder.dateDecodingStrategy = .custom(iso8601Decoder())
-                issues = try decoder.decode([Issue].self, from: apiData!)
-            } else {
-                noConnection = true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
+        var state: String = ""
+        if (type == 0) {
+            state = "opened"
+        } else if (type == 1) {
+            state = "closed"
         }
+        
+        issues = await API.get(type: [Issue].self, endpoint: "projects/\(id)/issues", query: ["state": state, "with_labels_details": "true", "sort": "asc", "order_by": "created_at"])
+        noConnection = issues == nil
     }
 }
 

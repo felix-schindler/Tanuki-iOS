@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Project: Decodable {
+struct Project: Codable {
     var id: Int
     var description: String? = nil
     var name: String
@@ -27,7 +27,7 @@ struct Project: Decodable {
     var permissions: Permissions
 }
 
-struct User: Decodable {
+struct User: Codable {
     var id: Int
     var name: String
     var username: String
@@ -40,34 +40,34 @@ struct User: Decodable {
     var following: Int
 }
 
-struct UserSmall: Decodable {
+struct UserSmall: Codable {
     var id: Int
     var name: String
     var username: String
     var avatarUrl: String
 }
 
-struct UserStatus: Decodable {
+struct UserStatus: Codable {
     var emoji: String
     var message: String
 }
 
-struct Namespace: Decodable {
+struct Namespace: Codable {
     var name: String
     var path: String
     var avatarUrl: String? = nil
 }
 
-struct Permissions: Decodable {
+struct Permissions: Codable {
     var projectAccess: Access? = nil
 }
 
-struct Access: Decodable {
+struct Access: Codable {
     var accessLevel: Int
     var notificationLevel: Int
 }
 
-struct Issue: Decodable {
+struct Issue: Codable {
     var id: Int
     var iid: Int
     var projectId: Int
@@ -85,26 +85,26 @@ struct Issue: Decodable {
     var references: Reference
 }
 
-struct APILabel: Decodable {
+struct APILabel: Codable {
     var id: Int
     var name: String
     var color: String
     var textColor: String
 }
 
-struct Milestone: Decodable {
+struct Milestone: Codable {
     var id: Int
     var iid: Int
     var title: String
     var description: String
 }
 
-struct Reference: Decodable {
+struct Reference: Codable {
     var short: String
     var full: String
 }
 
-struct MergeRequest: Decodable {
+struct MergeRequest: Codable {
     var id: Int
     var iid: Int
     var projectId: Int
@@ -120,7 +120,7 @@ struct MergeRequest: Decodable {
     var references: Reference
 }
 
-struct Event: Decodable {
+struct Event: Codable {
     var id: Int
     var actionName: String
     var targetType: String? = ""
@@ -129,20 +129,20 @@ struct Event: Decodable {
     var author: UserSmall
 }
 
-struct PushData: Decodable {
+struct PushData: Codable {
     var refType: String
     var ref: String
     var commitTitle: String? = nil
 }
 
-struct Note: Decodable {
+struct Note: Codable {
     var id: Int
     var body: String
     var author: UserSmall
     var createdAt: Date
 }
 
-struct Group: Decodable {
+struct Group: Codable {
     var id: Int
     var name: String
     var description: String? = nil
@@ -150,19 +150,19 @@ struct Group: Decodable {
     var avatarUrl: String? = nil
 }
 
-struct File: Decodable {
+struct File: Codable {
     var filePath: String
     var content: String
 }
 
-struct TreeFile: Decodable {
+struct TreeFile: Codable {
     var id: String
     var name: String
     var type: String
     var path: String
 }
 
-struct Commit: Decodable {
+struct Commit: Codable {
     var id: String
     var shortId: String
     var title: String
@@ -172,7 +172,7 @@ struct Commit: Decodable {
     var authoredDate: Date
 }
 
-struct Branch: Decodable {
+struct Branch: Codable {
     var name: String
     var commit: Commit
     var merged: Bool
@@ -182,7 +182,7 @@ struct Branch: Decodable {
     var canPush: Bool
 }
 
-struct Pipeline: Decodable {
+struct Pipeline: Codable {
     var id: Int
     var ref: String
     var status: String
@@ -190,10 +190,10 @@ struct Pipeline: Decodable {
     var createdAt: Date
 }
 
-struct ToggleStar: Decodable {
+struct ToggleStar: Codable {
     var starCount: Int
 }
 
-struct MarkdownHTML: Decodable {
+struct MarkdownHTML: Codable {
     var html: String
 }

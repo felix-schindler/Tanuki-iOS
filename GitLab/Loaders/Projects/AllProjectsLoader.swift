@@ -40,19 +40,11 @@ struct AllProjectsLoader: View {
     }
     
     private func getProjects() async -> Void {
-        do {
-            let endpoint = "projects" + (search != "" ? "?search=\(String(search).url())" : "?order_by=last_activity_at")
-            let apiData: Data? = API.GET(endpoint: endpoint)
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                projects = try decoder.decode([Project].self, from: apiData!)
-            } else {
-                noConnection = true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
+        projects = await API.get(type: [Project].self, endpoint: "projects", query: [
+            "search": String(search).url(),
+            "order_by": "last_activity_at"
+        ])
+        noConnection = projects == nil
     }
 }
 

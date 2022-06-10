@@ -113,33 +113,13 @@ struct AccountView: View {
     }
     
     private func getUser() async -> Void {
-        do {
-            let apiData: Data? = API.GET(endpoint: "user")
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                user = try decoder.decode(User.self, from: apiData!)
-            } else {
-                noConnection = true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
+        user = await API.get(type: User.self, endpoint: "user")
+        noConnection = user == nil
     }
     
     private func getStatus() async -> Void {
-        do {
-            let apiData: Data? = API.GET(endpoint: "user/status")
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                status = try decoder.decode(UserStatus.self, from: apiData!)
-            } else {
-                noConnection = true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
+        status = await API.get(type: UserStatus.self, endpoint: "user/status")
+        noConnection = status == nil
     }
 }
 

@@ -47,18 +47,8 @@ struct PipelineLoader: View {
     }
 
     private func getPipeline() async -> Void {
-        do {
-            let apiData: Data? = API.GET(endpoint: "projects/\(id)/pipelines?ref=" + branch)
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                decoder.dateDecodingStrategy = .custom(iso8601Decoder())
-                pipelines = try decoder.decode([Pipeline].self, from: apiData!)
-            } else {
-                noConnection = true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
+        pipelines = await API.get(type: [Pipeline].self, endpoint: "projects/\(id)/pipelines", query: ["ref": branch])
+        if (pipelines == nil) {
             pipelines = [Pipeline]()
         }
     }

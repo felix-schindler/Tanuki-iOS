@@ -53,22 +53,8 @@ struct MemberProjectsLoader: View {
     }
     
     private func getProjects() async -> Void {
-        do {
-            var endpoint: String = "projects?membership=true&order_by=last_activity_at"
-            if (filter == 1) {
-                endpoint = "&owned=true"
-            }
-            let apiData: Data? = API.GET(endpoint: endpoint)
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                projects = try decoder.decode([Project].self, from: apiData!)
-            } else {
-                noConnection = true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
+        projects = await API.get(type: [Project].self, endpoint: "projects", query: ["membership": "true", "order_by": "last_activity_at"])
+        noConnection = projects == nil
     }
 }
 
