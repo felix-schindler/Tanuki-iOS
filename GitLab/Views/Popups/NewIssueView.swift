@@ -33,29 +33,19 @@ struct NewIssueView: View {
             .navigationBarItems(leading: Button("Cancel", action: {
                 self.presentationMode.wrappedValue.dismiss()
             }).foregroundColor(.red), trailing: Button("Save", action: {
-                isError = !saveNewIssue()
-                if (!isError) {
-                    self.presentationMode.wrappedValue.dismiss()
+                Task.init {
+                    isError = await !saveNewIssue()
+                    if (!isError) {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
                 }
             }))
         }
     }
 
-    private func saveNewIssue() -> Bool {
-        do {
-            let reqUrl: String = "projects/\(id)/issues?title=\(title.url())&description=\(description.url())"
-            let apiData: Data? = API.POST(endpoint: reqUrl)
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                decoder.dateDecodingStrategy = .custom(iso8601Decoder())
-                _ = try decoder.decode(Issue.self, from: apiData!)
-                return true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
-        return false
+    private func saveNewIssue() async -> Bool {
+        let newIssue = await API.req(type: Issue.self, method: .post, endpoint: "projects/\(id)/issues?title=\(title.url())&description=\(description.url())")
+        return newIssue != nil
     }
 }
 

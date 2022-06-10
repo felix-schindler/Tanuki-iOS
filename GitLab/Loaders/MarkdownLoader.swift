@@ -29,19 +29,14 @@ struct MarkdownLoader: View {
     }
     
     private func loadMarkdown() async -> Void {
-        do {
-            let apiData: Data? = API.POST(endpoint: "markdown", values: [
-                "text": content,
-                "mode": mode,
-                "project": project
-            ])
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                let temp = try decoder.decode(MarkdownHTML.self, from: apiData!)
-                htmlStr = temp.html
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
+        let temp = await API.req(type: MarkdownHTML.self, method: .post, endpoint: "markdown", body: [
+            "text": content,
+            "mode": mode,
+            "project": project
+        ])
+        
+        if (temp != nil) {
+            htmlStr = temp!.html
         }
     }
 }

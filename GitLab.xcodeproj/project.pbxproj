@@ -14,7 +14,6 @@
 		DC0EC642279E1733006A7C75 /* TreeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EC640279E1733006A7C75 /* TreeLoader.swift */; };
 		DC10C39A2731537D00CAE425 /* CommitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC10C3992731537D00CAE425 /* CommitsView.swift */; };
 		DC10C39C27315D6400CAE425 /* BranchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC10C39B27315D6400CAE425 /* BranchesView.swift */; };
-		DC30FAA42852A80C00F74C6A /* SwiftHttp in Frameworks */ = {isa = PBXBuildFile; productRef = DC30FAA32852A80C00F74C6A /* SwiftHttp */; };
 		DC4F9552272EB49700354E1D /* AllIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */; };
 		DC4F9554272EB4AF00354E1D /* ProjectIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */; };
 		DC4F9558272EB5A900354E1D /* AllProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */; };
@@ -50,6 +49,7 @@
 		DCBC378127CB79A7001319A6 /* HTMLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBC378027CB79A7001319A6 /* HTMLView.swift */; };
 		DCBC378327CB7B16001319A6 /* NewFileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBC378227CB7B16001319A6 /* NewFileLoader.swift */; };
 		DCCC715F273602750091C216 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC715E273602750091C216 /* LabelListView.swift */; };
+		DCD9ACAA285319150016C13D /* SwiftHttp in Frameworks */ = {isa = PBXBuildFile; productRef = DCD9ACA9285319150016C13D /* SwiftHttp */; };
 		DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEE699127312F8A00AE666C /* EmojiCodes.swift */; };
 /* End PBXBuildFile section */
 
@@ -106,7 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC30FAA42852A80C00F74C6A /* SwiftHttp in Frameworks */,
+				DCD9ACAA285319150016C13D /* SwiftHttp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,7 +285,7 @@
 			);
 			name = GitLab;
 			packageProductDependencies = (
-				DC30FAA32852A80C00F74C6A /* SwiftHttp */,
+				DCD9ACA9285319150016C13D /* SwiftHttp */,
 			);
 			productName = GitLab;
 			productReference = DC5EB8EF272D924D0015BF0D /* GitLab.app */;
@@ -317,7 +317,7 @@
 			mainGroup = DC5EB8E6272D924D0015BF0D;
 			packageReferences = (
 				DCADDF6227E33D6C0083B31F /* XCRemoteSwiftPackageReference "MarkdownUI" */,
-				DC30FAA22852A80C00F74C6A /* XCRemoteSwiftPackageReference "swift-http" */,
+				DCD9ACA8285319150016C13D /* XCRemoteSwiftPackageReference "swift-http" */,
 			);
 			productRefGroup = DC5EB8F0272D924D0015BF0D /* Products */;
 			projectDirPath = "";
@@ -519,6 +519,8 @@
 				DEVELOPMENT_TEAM = S2D94HHFAY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Tanuki;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -548,6 +550,8 @@
 				DEVELOPMENT_TEAM = S2D94HHFAY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Tanuki;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -590,14 +594,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		DC30FAA22852A80C00F74C6A /* XCRemoteSwiftPackageReference "swift-http" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/binarybirds/swift-http/";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		DCADDF6227E33D6C0083B31F /* XCRemoteSwiftPackageReference "MarkdownUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gonzalezreal/MarkdownUI";
@@ -606,12 +602,20 @@
 				minimumVersion = 1.1.0;
 			};
 		};
+		DCD9ACA8285319150016C13D /* XCRemoteSwiftPackageReference "swift-http" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/felix-schindler/swift-http";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		DC30FAA32852A80C00F74C6A /* SwiftHttp */ = {
+		DCD9ACA9285319150016C13D /* SwiftHttp */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DC30FAA22852A80C00F74C6A /* XCRemoteSwiftPackageReference "swift-http" */;
+			package = DCD9ACA8285319150016C13D /* XCRemoteSwiftPackageReference "swift-http" */;
 			productName = SwiftHttp;
 		};
 /* End XCSwiftPackageProductDependency section */

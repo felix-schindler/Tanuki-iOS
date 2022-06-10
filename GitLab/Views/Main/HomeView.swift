@@ -71,9 +71,7 @@ struct HomeView: View {
                 }
             }
             .refreshable {
-                Task.init {
-                    await getStarredProjects()
-                }
+                await getStarredProjects()
             }
             .onAppear {
                 Task.init {

@@ -39,10 +39,10 @@
     {
       "identity" : "swift-http",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/binarybirds/swift-http/",
+      "location" : "https://github.com/felix-schindler/swift-http",
       "state" : {
-        "revision" : "512f5e31cac5753dbf40a00f8612235152c27c68",
-        "version" : "1.0.1"
+        "branch" : "main",
+        "revision" : "572abe4039b60b63455931ff64bebdf2ff4a0a77"
       }
     },
     {

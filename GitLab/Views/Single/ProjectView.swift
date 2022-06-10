@@ -85,9 +85,7 @@ struct ProjectView: View {
                         HStack {
                             HStack {
                                 Image(systemName: "star")
-                                Button(action: {Task.init {await starProject()}}) {
-                                    Text("\(project.starCount) stars")
-                                }
+                                Text("\(project.starCount) stars")
                             }
                             Text(" · ")
                             if let url = URL(string: "\(API.domain)/\(project.pathWithNamespace)/-/forks/new") {    // If valid link, show fork link
@@ -169,8 +167,8 @@ struct ProjectView: View {
                     .controlSize(.large)
                 }
             }.padding(.horizontal)
-            NewFileLoader(id: project.id, filePath: "README.md", refName: project.defaultBranch ?? "")
-            // FileLoader(id: project.id, filePath: "README.md", refName: project.defaultBranch ?? "", inline: true)
+            // NewFileLoader(id: project.id, filePath: "README.md", refName: project.defaultBranch ?? "")
+            FileLoader(id: project.id, filePath: "README.md", refName: project.defaultBranch ?? "", inline: true)
         }.navigationTitle(project.name)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -186,13 +184,6 @@ struct ProjectView: View {
             CommitsView(id: project.id, refName: project.defaultBranch ?? "")
         }.sheet(isPresented: $showBranches) {
             BranchesView(id: project.id)
-        }
-    }
-    
-    private func starProject() async -> Void {
-        let res = API.POST(endpoint: "\(API.domain)/\(project.pathWithNamespace)/toggle_star.json")
-        if (res != nil) {
-            print(String(data: res!, encoding: .utf8)!)
         }
     }
 }

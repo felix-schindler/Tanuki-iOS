@@ -63,11 +63,9 @@ struct TreeLoader: View {
                         }
                     }
                 }.refreshable {
-                    Task.init {
-                        await getTree()
-                        if (filePath == nil) {
-                            await getBranches()
-                        }
+                    await getTree()
+                    if (filePath == nil) {
+                        await getBranches()
                     }
                 }
             }

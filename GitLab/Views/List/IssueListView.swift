@@ -64,7 +64,9 @@ struct IssueListView: View {
                     }
                 }.swipeActions {
                     Button(action: {
-                        isError = !closeIssue(id: issue.iid, projectId: issue.projectId)
+                        Task.init {
+                            isError = await !closeIssue(id: issue.iid, projectId: issue.projectId)
+                        }
                     }, label: {
                         Label("Close issue", systemImage: "checkmark.circle")
                     }).alert(isPresented: $isError, content: {
@@ -78,19 +80,9 @@ struct IssueListView: View {
     }
     
     // TODO: remove from array
-    private func closeIssue(id: Int, projectId: Int) -> Bool {
-        do {
-            let apiData: Data? = API.PUT(endpoint: "projects/\(projectId)/issues/\(id)?state_event=close")
-            if (apiData != nil) {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                _ = try decoder.decode(Issue.self, from: apiData!)
-                return true
-            }
-        } catch let jsonError as NSError {
-            print("JSON error \(jsonError.localizedDescription)")
-        }
-        return false
+    private func closeIssue(id: Int, projectId: Int) async -> Bool {
+        let removedIssue = await API.req(type: Issue.self, method: .put, endpoint: "projects/\(projectId)/issues/\(id)?state_event=close")
+        return removedIssue != nil
     }
 }
 
