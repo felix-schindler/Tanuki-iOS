@@ -35,6 +35,7 @@
 		DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB911272DB9D00015BF0D /* ProjectListView.swift */; };
 		DC5EB914272DBDA20015BF0D /* MergeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB913272DBDA20015BF0D /* MergeListView.swift */; };
 		DC5EB916272DD1310015BF0D /* MemberProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB915272DD1310015BF0D /* MemberProjectsLoader.swift */; };
+		DC64E3A429198CC2003B14D6 /* SwiftHttp in Frameworks */ = {isa = PBXBuildFile; productRef = DC64E3A329198CC2003B14D6 /* SwiftHttp */; };
 		DC7A85BA27319D010000CF4D /* PipelineLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A85B927319D010000CF4D /* PipelineLoader.swift */; };
 		DC7A85BC27319D1A0000CF4D /* PipelineStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A85BB27319D1A0000CF4D /* PipelineStatusView.swift */; };
 		DC7A85BE27319D290000CF4D /* PipelineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A85BD27319D290000CF4D /* PipelineListView.swift */; };
@@ -49,7 +50,6 @@
 		DCBC378127CB79A7001319A6 /* HTMLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBC378027CB79A7001319A6 /* HTMLView.swift */; };
 		DCBC378327CB7B16001319A6 /* NewFileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBC378227CB7B16001319A6 /* NewFileLoader.swift */; };
 		DCCC715F273602750091C216 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC715E273602750091C216 /* LabelListView.swift */; };
-		DCD9ACAA285319150016C13D /* SwiftHttp in Frameworks */ = {isa = PBXBuildFile; productRef = DCD9ACA9285319150016C13D /* SwiftHttp */; };
 		DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEE699127312F8A00AE666C /* EmojiCodes.swift */; };
 /* End PBXBuildFile section */
 
@@ -106,7 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCD9ACAA285319150016C13D /* SwiftHttp in Frameworks */,
+				DC64E3A429198CC2003B14D6 /* SwiftHttp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,7 +285,7 @@
 			);
 			name = GitLab;
 			packageProductDependencies = (
-				DCD9ACA9285319150016C13D /* SwiftHttp */,
+				DC64E3A329198CC2003B14D6 /* SwiftHttp */,
 			);
 			productName = GitLab;
 			productReference = DC5EB8EF272D924D0015BF0D /* GitLab.app */;
@@ -317,7 +317,7 @@
 			mainGroup = DC5EB8E6272D924D0015BF0D;
 			packageReferences = (
 				DCADDF6227E33D6C0083B31F /* XCRemoteSwiftPackageReference "MarkdownUI" */,
-				DCD9ACA8285319150016C13D /* XCRemoteSwiftPackageReference "swift-http" */,
+				DC64E3A229198CC2003B14D6 /* XCRemoteSwiftPackageReference "swift-http" */,
 			);
 			productRefGroup = DC5EB8F0272D924D0015BF0D /* Products */;
 			projectDirPath = "";
@@ -594,6 +594,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		DC64E3A229198CC2003B14D6 /* XCRemoteSwiftPackageReference "swift-http" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/binarybirds/swift-http/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		DCADDF6227E33D6C0083B31F /* XCRemoteSwiftPackageReference "MarkdownUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gonzalezreal/MarkdownUI";
@@ -602,20 +610,12 @@
 				minimumVersion = 1.1.0;
 			};
 		};
-		DCD9ACA8285319150016C13D /* XCRemoteSwiftPackageReference "swift-http" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/felix-schindler/swift-http";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		DCD9ACA9285319150016C13D /* SwiftHttp */ = {
+		DC64E3A329198CC2003B14D6 /* SwiftHttp */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DCD9ACA8285319150016C13D /* XCRemoteSwiftPackageReference "swift-http" */;
+			package = DC64E3A229198CC2003B14D6 /* XCRemoteSwiftPackageReference "swift-http" */;
 			productName = SwiftHttp;
 		};
 /* End XCSwiftPackageProductDependency section */

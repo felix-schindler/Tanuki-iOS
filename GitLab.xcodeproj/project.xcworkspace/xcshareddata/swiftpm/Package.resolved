@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gonzalezreal/AttributedText",
       "state" : {
-        "revision" : "2dc2d7864e0fee4b524a5850d7d7cf9a7eeda0fc",
-        "version" : "1.0.0"
+        "revision" : "0e811cb14de367bbd58a94d12259687e5ee08bea",
+        "version" : "1.0.1"
       }
     },
     {
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/combine-schedulers",
       "state" : {
-        "revision" : "4cf088c29a20f52be0f2ca54992b492c54e0076b",
-        "version" : "0.5.3"
+        "revision" : "882ac01eb7ef9e36d4467eb4b1151e74fcef85ab",
+        "version" : "0.9.1"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gonzalezreal/MarkdownUI",
       "state" : {
-        "revision" : "4c164300337a35d002188a83a878346819b203c0",
-        "version" : "1.1.0"
+        "revision" : "6a33c60ad430772d69ac5278e35474d6b3e5d30a",
+        "version" : "1.1.1"
       }
     },
     {
@@ -39,10 +39,10 @@
     {
       "identity" : "swift-http",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/felix-schindler/swift-http",
+      "location" : "https://github.com/binarybirds/swift-http/",
       "state" : {
-        "branch" : "main",
-        "revision" : "572abe4039b60b63455931ff64bebdf2ff4a0a77"
+        "revision" : "25d8d3c1afdde0ec23c6e6b3e68e67b55fd4fe94",
+        "version" : "1.1.0"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
       "state" : {
-        "revision" : "50a70a9d3583fe228ce672e8923010c8df2deddd",
-        "version" : "0.2.1"
+        "revision" : "16e6409ee82e1b81390bdffbf217b9c08ab32784",
+        "version" : "0.5.0"
       }
     }
   ],
