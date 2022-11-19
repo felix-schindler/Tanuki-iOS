@@ -30,8 +30,11 @@ struct FileLoader: View {
                         if (filePath.lowercased().contains(".md")) {
                             // Markdown(content!)
                             Text(content!)
+                                .font(.system(.body, design: .monospaced))
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         } else {
                             Text(content!)
+                                .font(.system(.body, design: .monospaced))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     } else {
