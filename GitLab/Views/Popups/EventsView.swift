@@ -18,7 +18,12 @@ struct EventsView: View {
         NavigationView {
             if (events != nil) {
                 List(events!, id: \.id) { event in
-                    Text(getStupidText(event: event))
+                    VStack(alignment: .leading) {
+                        Text(getStupidText(event: event))
+                        Text(event.createdAt.toString())
+                            .font(.callout)
+                            .foregroundColor(.secondary)
+                    }
                 }.refreshable {
                     await getEvents()
                 }.navigationBarTitle("Events")
@@ -48,6 +53,8 @@ struct EventsView: View {
         ret += " " + event.actionName
         if (event.targetType != nil) {
             ret += " \(event.targetType!)"
+        }; if (event.targetIid != nil) {
+            ret += " \(event.targetIid!)"
         }; if (event.targetTitle != nil) {
             ret += " '\(event.targetTitle!.emojized())'"
         }; if (event.pushData != nil) {

@@ -123,8 +123,10 @@ struct MergeRequest: Codable {
 struct Event: Codable {
     var id: Int
     var actionName: String
+    var targetIid: Int?
     var targetType: String? = ""
     var targetTitle: String? = ""
+    var createdAt: Date
     var pushData: PushData? = nil
     var author: UserSmall
 }
