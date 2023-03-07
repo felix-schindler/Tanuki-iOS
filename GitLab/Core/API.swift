@@ -18,7 +18,7 @@ class API {
     private static let decoder = JSONDecoder()
     
     public static func req<T: Codable>(type: T.Type, method: HttpMethod, endpoint: String, query: Dictionary<String, String> = [:], body: Dictionary<String, String> = [:]) async -> T? {
-        let httpUrl = HttpUrl(host: domain, path: [base, endpoint], query: query)
+        let httpUrl = HttpUrl(host: domain, path: [base, endpoint], query: query, trailingSlashEnabled: false)
         do {
             var reqBody: Data? = nil
             if (!body.isEmpty) {
@@ -33,6 +33,7 @@ class API {
                                      ],
                                      body: reqBody)
         
+            print(method, httpUrl.url.absoluteString)
             let response = try await client.dataTask(req)
 
             decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -40,7 +41,7 @@ class API {
 
             return try decoder.decode(T.self, from: response.data)
         } catch let DecodingError.dataCorrupted(context) {
-            print(context)
+            print("dataCorrupted", context)
         } catch let DecodingError.keyNotFound(key, context) {
             print("Key '\(key)' not found:", context.debugDescription)
             print("codingPath:", context.codingPath)
