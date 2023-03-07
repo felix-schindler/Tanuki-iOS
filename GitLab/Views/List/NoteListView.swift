@@ -38,6 +38,7 @@ struct NoteListView: View {
                                 .foregroundColor(.secondary)
                         }.frame(maxWidth: .infinity, alignment: .leading)
                         Markdown(note.body.emojized())
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
                 Divider()

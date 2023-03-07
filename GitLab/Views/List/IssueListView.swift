@@ -30,12 +30,15 @@ struct IssueListView: View {
                                 .foregroundColor(.green)
                         }
                         VStack(alignment: .leading) {
-                            HStack {
-                                Text(issue.title.emojized())
-                                if (issue.confidential) {
+                            if (issue.confidential) {
+                                HStack {
+                                    Text(issue.title.emojized())
                                     Image(systemName: "lock")
-                                }
-                            }.frame(maxWidth: .infinity, alignment: .leading)
+                                        .foregroundColor(.orange)
+                                }.frame(maxWidth: .infinity, alignment: .leading)
+                            } else {
+                                Text(issue.title.emojized())
+                            }
                             HStack {
                                 HStack {
                                     Image(systemName: "text.bubble")
@@ -45,15 +48,13 @@ struct IssueListView: View {
                                     Image(systemName: "clock")
                                     Text(issue.createdAt.toDateString())
                                 }
-                                HStack {
-                                    Text(issue.author.name)
-                                }
                             }.frame(maxWidth: .infinity, alignment: .leading)
                                 .font(.footnote)
                                 .foregroundColor(.secondary)
                         }
                         Spacer()
                         VStack(alignment: .trailing) {
+                            Text(issue.author.name)
                             if (showRef || UIDevice.current.userInterfaceIdiom == .pad) {
                                 Text(issue.references.full)
                             } else {
