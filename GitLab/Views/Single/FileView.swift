@@ -17,7 +17,7 @@ struct FileView: View {
             ScrollView {
                 if (fileName.lowercased().contains(".md")) {
                     Markdown(content)
-                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 } else {
                     Text(content)
                         .frame(maxWidth: .infinity, alignment: .leading)

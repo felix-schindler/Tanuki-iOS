@@ -30,7 +30,6 @@ struct IssueView: View {
             if (issue.description != "") {              // Description is "" and NOT nil when not set
                 Section("Description") {
                     Markdown(issue.description.emojized())
-                        .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
