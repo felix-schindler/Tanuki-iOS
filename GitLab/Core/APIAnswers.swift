@@ -8,53 +8,53 @@
 import Foundation
 
 struct Project: Codable {
-    var id: Int
+    let id: Int
     var description: String? = nil
-    var name: String
-    var nameWithNamespace: String
-    var pathWithNamespace: String
+    let name: String
+    let nameWithNamespace: String
+    let pathWithNamespace: String
     var defaultBranch: String? = nil     // Not all projects have a repository. Maybe they are just issue trackers, wikis, ...
     var tagList = [String]()
-    var avatarUrl: String?
-    var forksCount: Int
-    var starCount: Int
-    var namespace: Namespace
-    var visibility: String
+    let avatarUrl: String?
+    let forksCount: Int
+    let starCount: Int
+    let namespace: Namespace
+    let visibility: String
     var owner: UserSmall? = nil
-    var issuesEnabled: Bool
+    let issuesEnabled: Bool
     var openIssuesCount: Int? = 0
-    var mergeRequestsEnabled: Bool
-    var permissions: Permissions
+    let mergeRequestsEnabled: Bool
+    let permissions: Permissions
 }
 
 struct User: Codable {
-    var id: Int
-    var name: String
-    var username: String
-    var avatarUrl: String
-    var bio: String
-    var location: String
-    var publicEmail: String
-    var websiteUrl: String
-    var followers: Int
-    var following: Int
+    let id: Int
+    let name: String
+    let username: String
+    let avatarUrl: String
+    let bio: String
+    let location: String
+    let publicEmail: String
+    let websiteUrl: String
+    let followers: Int
+    let following: Int
 }
 
 struct UserSmall: Codable {
-    var id: Int
-    var name: String
-    var username: String
-    var avatarUrl: String
+    let id: Int
+    let name: String
+    let username: String
+    let avatarUrl: String
 }
 
 struct UserStatus: Codable {
-    var emoji: String
-    var message: String
+    let emoji: String
+    let message: String
 }
 
 struct Namespace: Codable {
-    var name: String
-    var path: String
+    let name: String
+    let path: String
     var avatarUrl: String? = nil
 }
 
@@ -63,139 +63,135 @@ struct Permissions: Codable {
 }
 
 struct Access: Codable {
-    var accessLevel: Int
-    var notificationLevel: Int
+    let accessLevel: Int
+    let notificationLevel: Int
 }
 
 struct Issue: Codable {
-    var id: Int
-    var iid: Int
-    var projectId: Int
-    var title: String
-    var description: String
-    var createdAt: Date
-    var state: String
-    var labels: [APILabel]?
-    var milestone: Milestone?
-    var assignees: [UserSmall]?
-    var author: UserSmall
-    var type: String
-    var userNotesCount: Int
-    var confidential: Bool
-    var references: Reference
+    let id: Int
+    let iid: Int
+    let projectId: Int
+    let title: String
+    let description: String
+    let createdAt: Date
+    let state: String
+    let labels: [APILabel]?
+    let milestone: Milestone?
+    let assignees: [UserSmall]?
+    let author: UserSmall
+    let type: String
+    let userNotesCount: Int
+    let confidential: Bool
+    let references: Reference
 }
 
 struct APILabel: Codable {
-    var id: Int
-    var name: String
-    var color: String
-    var textColor: String
+    let id: Int
+    let name: String
+    let color: String
+    let textColor: String
 }
 
 struct Milestone: Codable {
-    var id: Int
-    var iid: Int
-    var title: String
-    var description: String
+    let id: Int
+    let iid: Int
+    let title: String
+    let description: String
 }
 
 struct Reference: Codable {
-    var short: String
-    var full: String
+    let short: String
+    let full: String
 }
 
 struct MergeRequest: Codable {
-    var id: Int
-    var iid: Int
-    var projectId: Int
-    var title: String
-    var description: String
-    var userNotesCount: Int
-    var upvotes: Int
-    var downvotes: Int
-    var author: UserSmall
-    var assignees: [UserSmall]?
-    var reviewers: [UserSmall]?
-    var labels: [APILabel]?
-    var references: Reference
+    let id: Int
+    let iid: Int
+    let projectId: Int
+    let title: String
+    let description: String
+    let userNotesCount: Int
+    let upvotes: Int
+    let downvotes: Int
+    let author: UserSmall
+    let assignees: [UserSmall]?
+    let reviewers: [UserSmall]?
+    let labels: [APILabel]?
+    let references: Reference
 }
 
 struct Event: Codable {
-    var id: Int
-    var actionName: String
-    var targetIid: Int?
+    let id: Int
+    let actionName: String
+    let targetIid: Int?
     var targetType: String? = ""
     var targetTitle: String? = ""
-    var createdAt: Date
+    let createdAt: Date
     var pushData: PushData? = nil
-    var author: UserSmall
+    let author: UserSmall
 }
 
 struct PushData: Codable {
-    var refType: String
-    var ref: String
+    let refType: String
+    let ref: String
     var commitTitle: String? = nil
 }
 
 struct Note: Codable {
-    var id: Int
-    var body: String
-    var author: UserSmall
-    var createdAt: Date
+    let id: Int
+    let body: String
+    let author: UserSmall
+    let createdAt: Date
 }
 
 struct Group: Codable {
-    var id: Int
-    var name: String
+    let id: Int
+    let name: String
     var description: String? = nil
-    var visibility: String
+    let visibility: String
     var avatarUrl: String? = nil
 }
 
 struct File: Codable {
-    var filePath: String
-    var content: String
+    let filePath: String
+    let content: String
 }
 
 struct TreeFile: Codable {
-    var id: String
-    var name: String
-    var type: String
-    var path: String
+    let id: String
+    let name: String
+    let type: String
+    let path: String
 }
 
 struct Commit: Codable {
-    var id: String
-    var shortId: String
-    var title: String
-    var message: String
-    var authorName: String
-    var authorEmail: String
-    var authoredDate: Date
+    let id: String
+    let shortId: String
+    let title: String
+    let message: String
+    let authorName: String
+    let authorEmail: String
+    let authoredDate: Date
 }
 
 struct Branch: Codable {
-    var name: String
-    var commit: Commit
-    var merged: Bool
-    var protected: Bool
-    var developersCanPush: Bool
-    var developersCanMerge: Bool
-    var canPush: Bool
+    let name: String
+    let commit: Commit
+    let merged: Bool
+    let protected: Bool
+    let developersCanPush: Bool
+    let developersCanMerge: Bool
+    let canPush: Bool
 }
 
 struct Pipeline: Codable {
-    var id: Int
-    var ref: String
-    var status: String
-    var source: String
-    var createdAt: Date
+    let id: Int
+    let ref: String
+    let status: String
+    let source: String
+    let createdAt: Date
 }
 
 struct ToggleStar: Codable {
-    var starCount: Int
-}
-
-struct MarkdownHTML: Codable {
-    var html: String
+    let starCount: Int
 }
