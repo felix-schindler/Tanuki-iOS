@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-// import MarkdownUI
+import MarkdownUI
 
 struct NewFileLoader: View {
     @State var file: File? = nil
@@ -28,8 +28,7 @@ struct NewFileLoader: View {
                         Text(file!.filePath)
                             .font(.headline)
                         if (filePath.lowercased().contains(".md")) {
-                            // Markdown(content!)
-                            MarkdownLoader(content: content!, project: refName)
+                            Markdown(content!)
                         } else {
                             Text(content!)
                                 .frame(maxWidth: .infinity, alignment: .leading)

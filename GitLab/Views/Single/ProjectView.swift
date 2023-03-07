@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-// import MarkdownUI
+import MarkdownUI
 
 struct ProjectView: View {
     @State var project: Project
@@ -21,7 +21,7 @@ struct ProjectView: View {
                 VStack {
                     HStack {
                         VStack {
-                            Text("Project ID: \(project.id)")
+                            Text("Project ID: \(String(project.id))")
                                 .font(.callout)
                                 .foregroundColor(.secondary)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -39,10 +39,9 @@ struct ProjectView: View {
                                 }.frame(maxWidth: .infinity, alignment: .leading)
                             }
                             if (project.description != nil) {
-                                // Markdown(project.description!.emojized())
-                                Text(project.description!.emojized())
-                                   .multilineTextAlignment(.leading)
-                                   .padding(.bottom)
+                                Markdown(project.description!.emojized())
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.bottom)
                             }
                         }
                         Spacer()
@@ -88,7 +87,7 @@ struct ProjectView: View {
                                 Text("\(project.starCount) stars")
                             }
                             Text(" · ")
-                            if let url = URL(string: "\(API.domain)/\(project.pathWithNamespace)/-/forks/new") {    // If valid link, show fork link
+                            if let url = URL(string: "https://\(API.domain)/\(project.pathWithNamespace)/-/forks/new") {    // If valid link, show fork link
                                 HStack {
                                     Image(systemName: "arrow.branch")
                                     Link("\(project.forksCount) forks", destination: url)

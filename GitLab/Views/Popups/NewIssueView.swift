@@ -23,7 +23,7 @@ struct NewIssueView: View {
                 Section("Title") {
                     TextField("🚀 To the moon", text: $title)
                 }
-                Section("Description - Not needed") {
+                Section("Description - NOT NEEDED") {
                     TextEditor(text: $description)
                         .shadow(radius: 1)
                 }

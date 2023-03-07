@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-// import MarkdownUI
+import MarkdownUI
 
 struct CommitsView: View {
     @Environment(\.presentationMode)
@@ -49,8 +49,8 @@ struct CommitsView: View {
                                 HStack {
                                     VStack(alignment: .leading) {
                                         Text(commit.title.emojized())
-                                        // Markdown(Document(commit.message.emojized()))
-                                        // Text(commit.message.emojized())
+                                        Markdown(commit.message.emojized())
+                                            .foregroundColor(.secondary)
                                         Text(commit.authorName + " · " + commit.authoredDate.toString())
                                             .font(.caption)
                                             .foregroundColor(.secondary)
@@ -95,12 +95,12 @@ struct CommitsView: View {
 
     private func getBranches() async -> Void {
         branches = await API.get(type: [Branch].self, endpoint: "projects/\(id)/repository/branches")
-        noConnection = branches == nil
+        noConnection = (branches == nil)
     }
 }
 
 struct CommitsView_Previews: PreviewProvider {
     static var previews: some View {
-        CommitsView(id: Int(), refName: String())
+        CommitsView(id: Int(), refName: "felix-schindler/gitlab-ios")
     }
 }
