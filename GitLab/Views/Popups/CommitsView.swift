@@ -18,7 +18,7 @@ struct CommitsView: View {
     @State var branches: [Branch]? = nil
 
     @State var commits: [Commit]? = nil
-    @State var noConnection: Bool = false
+    @State var loadFailed: Bool = false
 
     var body: some View {
         NavigationView {
@@ -48,8 +48,9 @@ struct CommitsView: View {
                             ForEach(commits!, id: \.id) { commit in
                                 HStack {
                                     VStack(alignment: .leading) {
-                                        Text(commit.title.emojized())
+                                        // FIXME: I don't think this .font(.footnote) thing is working
                                         Markdown(commit.message.emojized())
+                                            .font(.footnote)
                                             .foregroundColor(.secondary)
                                         Text(commit.authorName + " · " + commit.authoredDate.toString())
                                             .font(.caption)
@@ -70,7 +71,7 @@ struct CommitsView: View {
             } else {
                 VStack {
                     Spacer()
-                    if (noConnection) {
+                    if (loadFailed) {
                         Text("Failed to load, please check your internet connection and your token")
                             .foregroundColor(.red)
                     } else {
@@ -84,18 +85,17 @@ struct CommitsView: View {
             Task.init {
                 await getCommits()
                 await getBranches()
+                loadFailed = (commits == nil) || (branches == nil)
             }
         }
     }
 
     private func getCommits() async -> Void {
-        commits = await API.get(type: [Commit].self, endpoint: "projects/\(id)/repository/commits?ref_name=\(refName)")
-        noConnection = commits == nil
+        commits = await API.get(type: [Commit].self, endpoint: "projects/\(id)/repository/commits", query: ["ref_name": refName])
     }
 
     private func getBranches() async -> Void {
         branches = await API.get(type: [Branch].self, endpoint: "projects/\(id)/repository/branches")
-        noConnection = (branches == nil)
     }
 }
 
