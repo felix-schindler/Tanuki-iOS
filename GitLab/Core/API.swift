@@ -36,13 +36,24 @@ class API {
             let response = try await client.dataTask(req)
 
             decoder.keyDecodingStrategy = .convertFromSnakeCase
-            decoder.dateDecodingStrategy = .custom(iso8601Decoder())
+            decoder.dateDecodingStrategy = .custom(iso8601Decoder())    // FIXME: this may introduce data races
 
             return try decoder.decode(T.self, from: response.data)
+        } catch let DecodingError.dataCorrupted(context) {
+            print(context)
+        } catch let DecodingError.keyNotFound(key, context) {
+            print("Key '\(key)' not found:", context.debugDescription)
+            print("codingPath:", context.codingPath)
+        } catch let DecodingError.valueNotFound(value, context) {
+            print("Value '\(value)' not found:", context.debugDescription)
+            print("codingPath:", context.codingPath)
+        } catch let DecodingError.typeMismatch(type, context)  {
+            print("Type '\(type)' mismatch:", context.debugDescription)
+            print("codingPath:", context.codingPath)
         } catch {
-            print(error)
-            return nil
+            print("error: ", error)
         }
+        return nil
     }
     
     public static func get<T: Codable>(type: T.Type, endpoint: String, query: Dictionary<String, String> = [:]) async -> T? {
