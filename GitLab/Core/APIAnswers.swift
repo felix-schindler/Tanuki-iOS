@@ -24,7 +24,7 @@ struct Project: Codable {
     let issuesEnabled: Bool
     var openIssuesCount: Int? = 0
     let mergeRequestsEnabled: Bool
-    let permissions: Permissions
+    var permissions: Permissions? = nil
 }
 
 struct User: Codable {
@@ -148,6 +148,15 @@ struct Note: Codable {
 }
 
 struct Group: Codable {
+    let id: Int
+    let name: String
+    let description: String
+    let visibility: String
+    var avatarUrl: String? = nil
+    let projects: [Project]
+}
+
+struct SmallGroup: Codable {
     let id: Int
     let name: String
     var description: String? = nil

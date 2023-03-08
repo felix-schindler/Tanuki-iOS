@@ -46,8 +46,8 @@ struct ProjectListView: View {
                                 } else if (project.visibility == "public") {
                                     Image(systemName: "globe")
                                 }
-                                if (project.permissions.projectAccess != nil) {
-                                    Text(accessRole(code: project.permissions.projectAccess!.accessLevel))
+                                if (project.permissions != nil && project.permissions!.projectAccess != nil) {
+                                    Text(accessRole(code: project.permissions!.projectAccess!.accessLevel))
                                         .font(.caption)
                                         .padding(.horizontal, 6)
                                         .padding(.vertical, 4)
@@ -131,6 +131,6 @@ struct ProjectListView: View {
 
 struct ProjectListView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectListView(projects: [Project](), updateFunction: {})
+        ProjectListView(projects: [], updateFunction: {})
     }
 }

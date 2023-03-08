@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MemberGroupsLoader: View {
-    @State var groups: [Group]? = nil
+    @State var groups: [SmallGroup]? = nil
     @State var noConnection: Bool = false    
 
     var body: some View {
@@ -34,7 +34,7 @@ struct MemberGroupsLoader: View {
     }
 
     private func getGroups() async -> Void {
-        groups = await API.get(type: [Group].self, endpoint: "groups")
+        groups = await API.get(type: [SmallGroup].self, endpoint: "groups")
         noConnection = groups == nil
     }
 }
