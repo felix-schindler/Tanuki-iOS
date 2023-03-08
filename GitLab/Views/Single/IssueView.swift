@@ -13,19 +13,41 @@ struct IssueView: View {
     @State var showNewIssue: Bool = false
     
     var body: some View {
-        HStack {
+        VStack {
             HStack {
-                Image(systemName: "smallcircle.circle")
-                    .foregroundColor(.green)
-                Text(issue.references.full)
-            }
-            Spacer()
+                HStack {
+                    Image(systemName: "smallcircle.circle")
+                        .foregroundColor(.green)
+                    Text(issue.references.full)
+                }
+                Spacer()
+                HStack {
+                    Image(systemName: "person")
+                    Text(issue.author.username)
+                }
+            }.foregroundColor(.secondary)
             HStack {
-                Image(systemName: "person")
-                Text(issue.author.username)
-            }
-        }.foregroundColor(.secondary)
-            .padding(.horizontal)
+                if (issue.confidential) {
+                    Image(systemName: "lock")
+                        .foregroundColor(.orange)
+                }
+                HStack(spacing: 1) {
+                    Image(systemName: "hand.thumbsup")
+                    Text(String(issue.upvotes))
+                }
+                HStack(spacing: 1) {
+                    Image(systemName: "hand.thumbsdown")
+                    Text(String(issue.downvotes))
+                }
+                if (issue.dueDate != nil) {
+                    HStack(spacing: 1) {
+                        Image(systemName: "calendar")
+                        Text(issue.dueDate!)
+                    }
+                }
+            }.frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 2)
+        }.padding(.horizontal)
         List {
             if (issue.description != "") {              // Description is "" and NOT nil when not set
                 Section("Description") {
@@ -81,6 +103,6 @@ struct IssueView: View {
 
 struct IssueView_Previews: PreviewProvider {
     static var previews: some View {
-        IssueView(issue: Issue(id: 119029091, iid: 21, projectId: 33025310, title: "View Pipeline in Live Activities", description: "Should be shown of the latest project (with repository) in the latest branch that was viewed", createdAt: Date(), state: "opened", labels: [], milestone: nil, assignees: nil, author: UserSmall(id: 9005085, name: "Felix", username: "felix-schindler", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png"), type: "ISSUE", userNotesCount: 0, confidential: false, references: Reference(short: "#21", full: "felix-schindler/gitlab-ios#21")))
+        IssueView(issue: Issue(id: 119029091, iid: 21, projectId: 33025310, title: "View Pipeline in Live Activities", description: "Should be shown of the latest project (with repository) in the latest branch that was viewed", createdAt: Date(), state: "opened", labels: [], milestone: nil, assignees: nil, author: UserSmall(id: 9005085, name: "Felix", username: "felix-schindler", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png"), type: "ISSUE", userNotesCount: 0, upvotes: 5, downvotes: 2, confidential: false, references: Reference(short: "#21", full: "felix-schindler/gitlab-ios#21")))
     }
 }

@@ -81,6 +81,9 @@ struct Issue: Codable {
     let author: UserSmall
     let type: String
     let userNotesCount: Int
+    let upvotes: Int
+    let downvotes: Int
+    var dueDate: String? = nil
     let confidential: Bool
     let references: Reference
 }
