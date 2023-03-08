@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-// import MarkdownUI
+import MarkdownUI
 
 struct ProjectListView: View {
     @State var projects: [Project]
@@ -56,10 +56,46 @@ struct ProjectListView: View {
                                 }
                             }.frame(maxWidth: .infinity, alignment: .leading)
                             if (project.description != nil && project.description != "") {
-                                Text(project.description!.emojized())
-                                    .foregroundColor(.secondary)
+                                Markdown(project.description!.emojized())
+                                    .markdownTextStyle {
+                                        ForegroundColor(.secondary)
+                                    }
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
+                            VStack {
+                                HStack {
+                                    HStack(spacing: 1) {
+                                        Image(systemName: "star")
+                                        Text(String(project.starCount))
+                                    }
+
+                                    HStack(spacing: 1) {
+                                        Image(systemName: "arrow.branch")
+                                        Text(String(project.forksCount))
+                                    }
+
+                                    if (project.issuesEnabled && project.openIssuesCount != nil) {
+                                        HStack(spacing: 1) {
+                                            Image(systemName: "smallcircle.circle")
+                                            Text(String(project.openIssuesCount!))
+                                        }
+                                    }
+                                }.frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.top, 0.25)
+                                if (!project.tagList.isEmpty) {
+                                    HStack {
+                                        ForEach(project.tagList, id: \.hashValue) { tag in
+                                            Text(tag)
+                                                .padding(.horizontal, 6)
+                                                .padding(.vertical, 4)
+                                                .background(Color(.systemGray3))
+                                                .cornerRadius(10)
+                                                .foregroundColor(.primary)
+                                        }
+                                    }.frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                            }.font(.caption)
+                             .foregroundColor(.secondary)
                         }
                     }
                 }
