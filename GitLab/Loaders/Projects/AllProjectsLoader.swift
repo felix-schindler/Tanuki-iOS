@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AllProjectsLoader: View {
     @State var projects: [Project]? = nil
-    @State var noConnection: Bool = false
+    @State var loadFailed: Bool = false
 
     @State var search: String = ""
 
@@ -18,13 +18,13 @@ struct AllProjectsLoader: View {
             if (projects != nil) {
                ProjectListView(projects: projects!, updateFunction: getProjects)
                     .searchable(text: $search)
-                    .onSubmit {
+                    .onSubmit(of: .search) {
                         Task.init {
                             await getProjects()
                         }
                     }
             } else {
-                if (noConnection) {
+                if (loadFailed) {
                     Text("Failed to load, please check your internet connection and your token")
                 } else {
                     Spacer()
@@ -40,11 +40,12 @@ struct AllProjectsLoader: View {
     }
     
     private func getProjects() async -> Void {
+        projects = nil
         projects = await API.get(type: [Project].self, endpoint: "projects", query: [
             "search": String(search).url(),
             "order_by": "last_activity_at"
         ])
-        noConnection = projects == nil
+        loadFailed = (projects == nil)
     }
 }
 
