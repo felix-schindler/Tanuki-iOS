@@ -33,7 +33,7 @@ struct PipelineLoader: View {
                     }
                 } else {
                     if (pipelines == nil || pipelines!.isEmpty) {
-                        Text("There are no pipelines.\nTo get startet with pipelines, create a .gitlab-ci.yml file")
+                        Text("To get startet with pipelines, create a .gitlab-ci.yml file")
                     } else {
                         PipelineListView(pipelines: pipelines!, updateFunction: getPipeline)
                     }

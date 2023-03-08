@@ -24,7 +24,7 @@ struct CommitsView: View {
         NavigationView {
             if (commits != nil) {
                 if (commits!.isEmpty) {
-                    Text("No commits")
+                    Text("You'll see your commits after you pushed something to branch \(refName)")
                 } else {
                     List {
                         HStack {

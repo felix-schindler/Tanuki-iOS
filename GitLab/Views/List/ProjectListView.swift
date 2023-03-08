@@ -14,7 +14,7 @@ struct ProjectListView: View {
 
     var body: some View {
         if (projects.isEmpty) {
-            Text("No projects")
+            Text("There are no projects")
         } else {
             List(projects, id: \.id) { project in
                 NavigationLink(destination: ProjectView(project: project)) {

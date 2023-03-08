@@ -13,7 +13,7 @@ struct MergeListView: View {
     
     var body: some View {
         if (mergeRequests.isEmpty) {
-            Text("All done, there are no open merge requests🥳")
+            Text("You're all caught up, there are no open merge requests! 🥳")
                 .font(.title)
         } else {
             List(mergeRequests, id: \.id) { mr in

@@ -20,7 +20,7 @@ struct BranchesView: View {
         NavigationView {
             if (branches != nil) {
                 if (branches!.isEmpty) {
-                    Text("No branches")
+                    Text("You'll see your branches after you pushed them")
                 } else {
                     List(branches!, id: \.name) { branch in
                         HStack {

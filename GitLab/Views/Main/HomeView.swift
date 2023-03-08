@@ -49,7 +49,7 @@ struct HomeView: View {
                 Section("Starred projects") {
                     if (starredProjects != nil) {
                         if (starredProjects!.isEmpty) {
-                            Text("No starred projects")
+                            Text("You have no starred projects")
                         } else {
                             ForEach(starredProjects!, id: \.id) { project in
                                 NavigationLink(destination: ProjectView(project: project)) {

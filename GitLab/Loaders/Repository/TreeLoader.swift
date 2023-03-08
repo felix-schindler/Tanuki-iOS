@@ -39,7 +39,7 @@ struct TreeLoader: View {
                         }
                     }
                     if (tree!.isEmpty) {
-                        Text("There are no files")
+                        Text("There are no files yet. You'll see them after you pushed them to branch \(refName)")
                     } else {
                         Section("Files") {
                             ForEach(tree!, id: \.id) { file in
