@@ -83,8 +83,12 @@ struct ProjectView: View {
                         }.frame(maxWidth: .infinity, alignment: .leading)
                         HStack {
                             HStack {
-                                Image(systemName: "star")
-                                Text("\(project.starCount) stars")
+                                Button(action: {
+                                    Task.init { await toggleStar() }
+                                }) {
+                                    Image(systemName: "star")
+                                    Text("\(project.starCount) stars")
+                                }
                             }
                             Text(" · ")
                             if let url = URL(string: "https://\(API.domain)/\(project.pathWithNamespace)/-/forks/new") {    // If valid link, show fork link
@@ -183,6 +187,13 @@ struct ProjectView: View {
             CommitsView(id: project.id, refName: project.defaultBranch ?? "")
         }.sheet(isPresented: $showBranches) {
             BranchesView(id: project.id)
+        }
+    }
+    
+    private func toggleStar() async -> Void {
+        let toggle = await API.raw(type: ToggleStar.self, method: .post, url: "https://\(API.domain)/\(project.pathWithNamespace)/toggle_star.json")
+        if (toggle != nil) {
+            project.starCount = toggle!.starCount;
         }
     }
 }

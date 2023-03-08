@@ -17,8 +17,44 @@ class API {
     private static let client: HttpClient = UrlSessionHttpClient(log: false)
     private static let decoder = JSONDecoder()
     
-    public static func req<T: Codable>(type: T.Type, method: HttpMethod, endpoint: String, query: Dictionary<String, String> = [:], body: Dictionary<String, String> = [:]) async -> T? {
-        let httpUrl = HttpUrl(host: domain, path: [base, endpoint], query: query, trailingSlashEnabled: false)
+    public static func raw<T: Codable>(type: T.Type, method: HttpMethod, url: String, query: Dictionary<String, String> = [:], body: Dictionary<String, String> = [:]) async -> T? {
+        let httpUrl = HttpUrl(string: url)
+        
+        do {
+            if (httpUrl == nil) {
+                throw UrlError.invalid
+            }
+
+            var reqBody: Data? = nil
+            if (!body.isEmpty) {
+                reqBody = try JSONEncoder().encode(body)
+            }
+            
+            let req = HttpRawRequest(url: httpUrl!,
+                                     method: method,
+                                     headers: [
+                                        .authorization: "Bearer \(token)",
+                                        .contentType: "application/json"
+                                     ],
+                                     body: reqBody)
+            
+            print(method, httpUrl!.url.absoluteString)
+            let response = try await client.dataTask(req)
+
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            decoder.dateDecodingStrategy = .custom(iso8601Decoder())    // FIXME: this may introduce data races
+            
+            // print(String(decoding: response.data, as: UTF8.self))
+            return try decoder.decode(T.self, from: response.data)
+        } catch {
+            print("Error: ", error)
+        }
+        
+        return nil;
+    }
+    
+    public static func req<T: Codable>(type: T.Type, method: HttpMethod, endpoint: String, resource: String? = nil, query: Dictionary<String, String> = [:], body: Dictionary<String, String> = [:]) async -> T? {
+        let httpUrl = HttpUrl(host: domain, path: [base, endpoint], resource: resource, query: query, trailingSlashEnabled: false)
         do {
             var reqBody: Data? = nil
             if (!body.isEmpty) {
@@ -41,7 +77,8 @@ class API {
 
             return try decoder.decode(T.self, from: response.data)
         } catch let DecodingError.dataCorrupted(context) {
-            print("dataCorrupted", context)
+            print("Data corrupted: ", context.debugDescription)
+            print("codingPath:", context.codingPath)
         } catch let DecodingError.keyNotFound(key, context) {
             print("Key '\(key)' not found:", context.debugDescription)
             print("codingPath:", context.codingPath)
@@ -52,7 +89,7 @@ class API {
             print("Type '\(type)' mismatch:", context.debugDescription)
             print("codingPath:", context.codingPath)
         } catch {
-            print("error: ", error)
+            print("Error: ", error)
         }
         return nil
     }

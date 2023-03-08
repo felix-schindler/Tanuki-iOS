@@ -10,3 +10,7 @@ import Foundation
 enum DateError: String, Error {
     case invalidDate
 }
+
+enum UrlError: String, Error {
+    case invalid
+}

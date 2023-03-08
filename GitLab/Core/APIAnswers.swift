@@ -17,7 +17,7 @@ struct Project: Codable {
     var tagList = [String]()
     let avatarUrl: String?
     let forksCount: Int
-    let starCount: Int
+    var starCount: Int
     let namespace: Namespace
     let visibility: String
     var owner: UserSmall? = nil
