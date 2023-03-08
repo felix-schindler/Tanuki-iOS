@@ -47,7 +47,6 @@ extension Date {
         inFormat.dateFormat = "yyyy-MM-dd"
         let outFormat = DateFormatter()
         outFormat.dateStyle = .medium
-        outFormat.timeStyle = .short
         return outFormat.string(from: inFormat.date(from: date)!)
     }
     

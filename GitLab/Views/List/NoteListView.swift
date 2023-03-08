@@ -41,7 +41,9 @@ struct NoteListView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
-                Divider()
+                if (note.id != notes.last!.id) {
+                    Divider()
+                }
             }
         } else {
             Text("There are no notes")
