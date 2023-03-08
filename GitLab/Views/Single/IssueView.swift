@@ -42,7 +42,7 @@ struct IssueView: View {
                 if (issue.dueDate != nil) {
                     HStack(spacing: 1) {
                         Image(systemName: "calendar")
-                        Text(issue.dueDate!)
+                        Text(Date.formToString(issue.dueDate!))
                     }
                 }
             }.frame(maxWidth: .infinity, alignment: .leading)

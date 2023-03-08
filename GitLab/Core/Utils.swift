@@ -42,6 +42,15 @@ extension StringProtocol {
 
 
 extension Date {
+    static func formToString(_ date: String) -> String {
+        let inFormat = DateFormatter()
+        inFormat.dateFormat = "yyyy-MM-dd"
+        let outFormat = DateFormatter()
+        outFormat.dateStyle = .medium
+        outFormat.timeStyle = .short
+        return outFormat.string(from: inFormat.date(from: date)!)
+    }
+    
     /// Convert date to string with short time and medium date
     func toString() -> String {
         let dateFormat = DateFormatter()
