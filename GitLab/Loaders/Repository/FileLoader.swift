@@ -26,6 +26,7 @@ struct FileLoader: View {
                 if (content != nil) {
                     if (inline) {
                         Text(file!.filePath)
+                            .font(.headline)
                         FileView(fileName: file!.filePath, content: content!)
                     } else {
                         FileView(fileName: file!.filePath, content: content!)
@@ -60,6 +61,6 @@ struct FileLoader: View {
 
 struct FileLoader_Previews: PreviewProvider {
     static var previews: some View {
-        FileLoader(id: Int(), filePath: String(), refName: String())
+        FileLoader(id: 33025310, filePath: "README.md", refName: "main", inline: true)
     }
 }

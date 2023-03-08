@@ -19,20 +19,22 @@ struct PipelineLoader: View {
     var body: some View {
         VStack {
             if (pipelines == nil) {
-                if (noConnection && !onlyStatus) {
+                if (onlyStatus) {
+                    EmptyView()
+                } else if (noConnection) {
                     Text("Failed to load, please check your internet connection and your token")
                 } else {
                     ProgressView()
                 }
             } else {
                 if (onlyStatus) {
-                    if (pipelines == nil || pipelines!.isEmpty) {
+                    if (pipelines!.isEmpty) {
                         EmptyView()
                     } else {
                         PipelineStatusView(pipeline: pipelines![0])
                     }
                 } else {
-                    if (pipelines == nil || pipelines!.isEmpty) {
+                    if (pipelines!.isEmpty) {
                         Text("To get startet with pipelines, create a .gitlab-ci.yml file")
                     } else {
                         PipelineListView(pipelines: pipelines!, updateFunction: getPipeline)
@@ -56,6 +58,6 @@ struct PipelineLoader: View {
 
 struct PipelineLoader_Previews: PreviewProvider {
     static var previews: some View {
-        PipelineLoader(id: Int(), branch: String(), onlyStatus: Bool())
+        PipelineLoader(id: 42346328, branch: "main", onlyStatus: false)
     }
 }

@@ -24,7 +24,7 @@ struct FileView: View {
                         .font(.system(.body, design: .monospaced))
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-            }
+            }.padding()
             Spacer()
         }
     }
@@ -32,6 +32,6 @@ struct FileView: View {
 
 struct FileView_Previews: PreviewProvider {
     static var previews: some View {
-        FileView(fileName: "", content: "")
+        FileView(fileName: ".editorconfig", content: "root = true\n\n[*]\nend_of_line = lf\ninsert_final_newline = true")
     }
 }
