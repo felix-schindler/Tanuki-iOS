@@ -79,6 +79,8 @@ struct AccountView: View {
                         Image(systemName: "person.2")
                         Text("\(user!.followers) followers · \(user!.following) following")
                     }
+                    ContributionLoader(username: user!.username)
+                    Spacer()
                 } else {
                     if (noConnection) {
                         Text("Failed to load, please check your internet connection and your token")

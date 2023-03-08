@@ -24,6 +24,8 @@
 		DC4F9568272EBA3F00354E1D /* NotesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9567272EBA3F00354E1D /* NotesLoader.swift */; };
 		DC4F956A272EC3B100354E1D /* APIAnswers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9569272EC3B100354E1D /* APIAnswers.swift */; };
 		DC4F956E272ECD0100354E1D /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F956D272ECD0100354E1D /* ExploreView.swift */; };
+		DC56FDE229B888EA005841B3 /* ContributionLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC56FDE129B888EA005841B3 /* ContributionLoader.swift */; };
+		DC56FDE529B8899A005841B3 /* ContributionChart in Frameworks */ = {isa = PBXBuildFile; productRef = DC56FDE429B8899A005841B3 /* ContributionChart */; };
 		DC5EB8F3272D924D0015BF0D /* GitLabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB8F2272D924D0015BF0D /* GitLabApp.swift */; };
 		DC5EB8F5272D924D0015BF0D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB8F4272D924D0015BF0D /* ContentView.swift */; };
 		DC5EB8F7272D924F0015BF0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC5EB8F6272D924F0015BF0D /* Assets.xcassets */; };
@@ -71,6 +73,7 @@
 		DC4F9567272EBA3F00354E1D /* NotesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesLoader.swift; sourceTree = "<group>"; };
 		DC4F9569272EC3B100354E1D /* APIAnswers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAnswers.swift; sourceTree = "<group>"; };
 		DC4F956D272ECD0100354E1D /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
+		DC56FDE129B888EA005841B3 /* ContributionLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributionLoader.swift; sourceTree = "<group>"; };
 		DC5EB8EF272D924D0015BF0D /* GitLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC5EB8F2272D924D0015BF0D /* GitLabApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLabApp.swift; sourceTree = "<group>"; };
 		DC5EB8F4272D924D0015BF0D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -107,6 +110,7 @@
 			files = (
 				DC64E3A429198CC2003B14D6 /* SwiftHttp in Frameworks */,
 				DCFCB06E29B7C3D800F18CDC /* MarkdownUI in Frameworks */,
+				DC56FDE529B8899A005841B3 /* ContributionChart in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +229,7 @@
 				DC4F9567272EBA3F00354E1D /* NotesLoader.swift */,
 				DC7A85B927319D010000CF4D /* PipelineLoader.swift */,
 				DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */,
+				DC56FDE129B888EA005841B3 /* ContributionLoader.swift */,
 			);
 			path = Loaders;
 			sourceTree = "<group>";
@@ -286,6 +291,7 @@
 			packageProductDependencies = (
 				DC64E3A329198CC2003B14D6 /* SwiftHttp */,
 				DCFCB06D29B7C3D800F18CDC /* MarkdownUI */,
+				DC56FDE429B8899A005841B3 /* ContributionChart */,
 			);
 			productName = GitLab;
 			productReference = DC5EB8EF272D924D0015BF0D /* GitLab.app */;
@@ -318,6 +324,7 @@
 			packageReferences = (
 				DC64E3A229198CC2003B14D6 /* XCRemoteSwiftPackageReference "swift-http" */,
 				DCFCB06C29B7C3D800F18CDC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+				DC56FDE329B8899A005841B3 /* XCRemoteSwiftPackageReference "SwiftUI-ContributionChart" */,
 			);
 			productRefGroup = DC5EB8F0272D924D0015BF0D /* Products */;
 			projectDirPath = "";
@@ -364,6 +371,7 @@
 				DC4F955E272EB8A700354E1D /* ProjectMergeLoader.swift in Sources */,
 				DC90CA63272E878900B758E7 /* Utils.swift in Sources */,
 				DC7A85C02731AB4E0000CF4D /* ChangeConfigView.swift in Sources */,
+				DC56FDE229B888EA005841B3 /* ContributionLoader.swift in Sources */,
 				DC5EB8F5272D924D0015BF0D /* ContentView.swift in Sources */,
 				DC4F955C272EB89900354E1D /* AllMergeLoader.swift in Sources */,
 				DC0897FD2730516600B8ACDA /* NoteListView.swift in Sources */,
@@ -595,6 +603,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		DC56FDE329B8899A005841B3 /* XCRemoteSwiftPackageReference "SwiftUI-ContributionChart" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/VIkill33/SwiftUI-ContributionChart#demo-code";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.1;
+			};
+		};
 		DC64E3A229198CC2003B14D6 /* XCRemoteSwiftPackageReference "swift-http" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/binarybirds/swift-http/";
@@ -614,6 +630,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DC56FDE429B8899A005841B3 /* ContributionChart */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC56FDE329B8899A005841B3 /* XCRemoteSwiftPackageReference "SwiftUI-ContributionChart" */;
+			productName = ContributionChart;
+		};
 		DC64E3A329198CC2003B14D6 /* SwiftHttp */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DC64E3A229198CC2003B14D6 /* XCRemoteSwiftPackageReference "swift-http" */;
