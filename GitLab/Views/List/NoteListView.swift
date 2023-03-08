@@ -53,6 +53,6 @@ struct NoteListView: View {
 
 struct NoteListView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteListView(notes: [Note]())
+        NoteListView(notes: [])
     }
 }

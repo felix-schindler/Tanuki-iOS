@@ -20,7 +20,7 @@ struct NotesLoader: View {
     @State var id: Int      // Project ID
     @State var iid: Int     // IID of Merge, Issue or Commit
     @State var type: discussionType
-    
+        
     var body: some View {
         VStack {
             if (notes != nil) {
@@ -34,19 +34,19 @@ struct NotesLoader: View {
             }
         }.onAppear {
             Task.init {
-                await getDiscussions()
+                await getNotes()
             }
         }
     }
     
-    private func getDiscussions() async -> Void {
+    private func getNotes() async -> Void {
         notes = await API.get(type: [Note].self, endpoint: "projects/\(id)/\(type.rawValue)/\(iid)/notes", query: ["sort": "asc", "order_by": "updated_at"])
-        noConnection = notes == nil
+        noConnection = (notes == nil)
     }
 }
 
 struct NotesLoader_Previews: PreviewProvider {
     static var previews: some View {
-        NotesLoader(id: 0, iid: 0, type: discussionType.Issue)
+        NotesLoader(id: 33025310, iid: 26, type: discussionType.Issue)
     }
 }

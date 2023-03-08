@@ -33,7 +33,7 @@ struct AllIssuesLoader: View {
     
     private func getIssues() async -> Void {
         issues = await API.get(type: [Issue].self, endpoint: "issues", query: ["state": "opened", "with_labels_details": "true", "order_by": "updated_at"])
-        noConnection = issues == nil
+        noConnection = (issues == nil)
     }
 }
 

@@ -22,7 +22,7 @@ struct ProjectView: View {
                 VStack {
                     HStack {
                         VStack {
-                            Text("Project ID: \(String(project.id))")
+                            Text("Project ID: " + String(project.id))
                                 .font(.callout)
                                 .foregroundColor(.secondary)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -42,7 +42,7 @@ struct ProjectView: View {
                             if (project.description != nil) {
                                 Markdown(project.description!.emojized())
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.bottom)
+                                    .padding(.bottom, 0.5)
                             }
                         }
                         Spacer()

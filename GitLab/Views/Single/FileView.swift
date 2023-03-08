@@ -18,10 +18,12 @@ struct FileView: View {
                 if (fileName.lowercased().contains(".md")) {
                     Markdown(content)
                         .markdownTheme(.gitHub)
+                        .textSelection(.enabled)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 } else {
                     Text(content)
                         .font(.system(.body, design: .monospaced))
+                        .textSelection(.enabled)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }.padding()

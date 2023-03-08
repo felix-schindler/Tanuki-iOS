@@ -41,6 +41,9 @@
 		DC7A85BC27319D1A0000CF4D /* PipelineStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A85BB27319D1A0000CF4D /* PipelineStatusView.swift */; };
 		DC7A85BE27319D290000CF4D /* PipelineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A85BD27319D290000CF4D /* PipelineListView.swift */; };
 		DC7A85C02731AB4E0000CF4D /* ChangeConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A85BF2731AB4E0000CF4D /* ChangeConfigView.swift */; };
+		DC7C83D729B8E80400B3BE41 /* GroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7C83D629B8E80400B3BE41 /* GroupView.swift */; };
+		DC7C83D929B8E8A700B3BE41 /* GroupLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7C83D829B8E8A700B3BE41 /* GroupLoader.swift */; };
+		DC7C83DB29B8F32900B3BE41 /* NewNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7C83DA29B8F32900B3BE41 /* NewNoteView.swift */; };
 		DC90CA5C272E762200B758E7 /* NewIssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA5B272E762200B758E7 /* NewIssueView.swift */; };
 		DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA5D272E763F00B758E7 /* EventsView.swift */; };
 		DC90CA61272E78D900B758E7 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA60272E78D900B758E7 /* InfoView.swift */; };
@@ -87,6 +90,9 @@
 		DC7A85BB27319D1A0000CF4D /* PipelineStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PipelineStatusView.swift; sourceTree = "<group>"; };
 		DC7A85BD27319D290000CF4D /* PipelineListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PipelineListView.swift; sourceTree = "<group>"; };
 		DC7A85BF2731AB4E0000CF4D /* ChangeConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeConfigView.swift; sourceTree = "<group>"; };
+		DC7C83D629B8E80400B3BE41 /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
+		DC7C83D829B8E8A700B3BE41 /* GroupLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupLoader.swift; sourceTree = "<group>"; };
+		DC7C83DA29B8F32900B3BE41 /* NewNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteView.swift; sourceTree = "<group>"; };
 		DC90CA5B272E762200B758E7 /* NewIssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIssueView.swift; sourceTree = "<group>"; };
 		DC90CA5D272E763F00B758E7 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
 		DC90CA60272E78D900B758E7 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
@@ -224,6 +230,7 @@
 				DC7A85B927319D010000CF4D /* PipelineLoader.swift */,
 				DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */,
 				DC56FDE129B888EA005841B3 /* ContributionLoader.swift */,
+				DC7C83D829B8E8A700B3BE41 /* GroupLoader.swift */,
 			);
 			path = Loaders;
 			sourceTree = "<group>";
@@ -237,6 +244,7 @@
 				DC7A85BB27319D1A0000CF4D /* PipelineStatusView.swift */,
 				DCCC715E273602750091C216 /* LabelListView.swift */,
 				DC0EC639279E16E6006A7C75 /* FileView.swift */,
+				DC7C83D629B8E80400B3BE41 /* GroupView.swift */,
 			);
 			path = Single;
 			sourceTree = "<group>";
@@ -262,6 +270,7 @@
 				DC90CA5B272E762200B758E7 /* NewIssueView.swift */,
 				DC90CA60272E78D900B758E7 /* InfoView.swift */,
 				DC7A85BF2731AB4E0000CF4D /* ChangeConfigView.swift */,
+				DC7C83DA29B8F32900B3BE41 /* NewNoteView.swift */,
 			);
 			path = Popups;
 			sourceTree = "<group>";
@@ -365,9 +374,12 @@
 				DC4F955E272EB8A700354E1D /* ProjectMergeLoader.swift in Sources */,
 				DC90CA63272E878900B758E7 /* Utils.swift in Sources */,
 				DC7A85C02731AB4E0000CF4D /* ChangeConfigView.swift in Sources */,
+				DC7C83DB29B8F32900B3BE41 /* NewNoteView.swift in Sources */,
 				DC56FDE229B888EA005841B3 /* ContributionLoader.swift in Sources */,
+				DC7C83D729B8E80400B3BE41 /* GroupView.swift in Sources */,
 				DC4F955C272EB89900354E1D /* AllMergeLoader.swift in Sources */,
 				DC0897FD2730516600B8ACDA /* NoteListView.swift in Sources */,
+				DC7C83D929B8E8A700B3BE41 /* GroupLoader.swift in Sources */,
 				DC4F9558272EB5A900354E1D /* AllProjectsLoader.swift in Sources */,
 				DC90CA61272E78D900B758E7 /* InfoView.swift in Sources */,
 				DC5EB8F3272D924D0015BF0D /* GitLabApp.swift in Sources */,
