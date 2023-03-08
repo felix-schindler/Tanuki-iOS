@@ -8,12 +8,23 @@
 import SwiftUI
 import MarkdownUI
 
+enum ActiveSheet {
+   case newIssue, newNote
+}
+
 struct IssueView: View {
     @State var issue: Issue
-    @State var showNewIssue: Bool = false
-    
+
+    @State var showSheet = false
+    @State var sheetType: ActiveSheet? = nil
+
     var body: some View {
         VStack {
+            Text(issue.title.emojized())
+                .font(.title)
+                .fontWeight(.semibold)
+                .padding(.bottom, 1)
+                .frame(maxWidth: .infinity, alignment: .leading)
             HStack {
                 HStack {
                     Image(systemName: "smallcircle.circle")
@@ -46,7 +57,7 @@ struct IssueView: View {
                     }
                 }
             }.frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 2)
+             .padding(.top, 2)
         }.padding(.horizontal)
         List {
             if (issue.description != "") {              // Description is "" and NOT nil when not set
@@ -78,10 +89,14 @@ struct IssueView: View {
                 }
             }
             Section("Notes") {
+                Button("Add new note", action: {
+                    sheetType = ActiveSheet.newNote
+                    showSheet = true
+                })
                 NotesLoader(id: issue.projectId, iid: issue.iid, type: discussionType.Issue)
             }
         }.listStyle(.grouped)
-        .navigationTitle(issue.title.emojized())
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Text(issue.state.firstCapitalized)
@@ -91,13 +106,26 @@ struct IssueView: View {
                     .background(issue.state == "opened" ? .green : .blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
-                Button(action: {showNewIssue = true}) {
+                Button(action: {
+                    sheetType = ActiveSheet.newIssue
+                    showSheet = true
+                }) {
                     Image(systemName: "plus.circle")
                 }
             }
-        }.sheet(isPresented: $showNewIssue) {
-            NewIssueView(id: issue.projectId)
-        }
+        }.sheet(isPresented: $showSheet) {
+            if (self.sheetType == ActiveSheet.newIssue) {
+                NewIssueView(id: issue.projectId)
+            } else {
+                NewNoteView(id: issue.projectId, iid: issue.iid, type: discussionType.Issue)
+            }
+        }/* This does not work because the option "with_labels_details" is missing for single issues
+          .refreshable {
+            let temp = await API.get(type: Issue.self, endpoint: "projects/\(issue.projectId)/issues/\(issue.iid)", query: ["with_labels_details": "true"])
+            if (temp != nil) {
+                issue = temp!
+            }
+        } */
     }
 }
 
