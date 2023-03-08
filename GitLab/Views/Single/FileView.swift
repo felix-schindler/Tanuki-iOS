@@ -17,14 +17,16 @@ struct FileView: View {
             ScrollView {
                 if (fileName.lowercased().contains(".md")) {
                     Markdown(content)
+                        .markdownTheme(.gitHub)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 } else {
                     Text(content)
+                        .font(.system(.body, design: .monospaced))
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
             Spacer()
-        }.navigationTitle(fileName)
+        }
     }
 }
 

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-// import MarkdownUI
 
 struct InfoView: View {
     @Environment(\.presentationMode)

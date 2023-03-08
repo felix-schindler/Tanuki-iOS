@@ -68,6 +68,6 @@ struct EventsView: View {
     
     private func getEvents() async -> Void {
         events = await API.get(type: [Event].self, endpoint: "events")
-        noConnection = events == nil
+        noConnection = (events == nil)
     }
 }

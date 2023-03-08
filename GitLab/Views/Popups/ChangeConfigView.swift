@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-// import MarkdownUI
 
 /// This View is meant to be used as a sheet.
 /// Lets the user change the GitLab configuration (URL, Token)

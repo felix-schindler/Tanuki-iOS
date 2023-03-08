@@ -11,7 +11,7 @@ struct TreeLoader: View {
     @State var tree: [TreeFile]? = nil
     @State var branches: [Branch]? = nil
 
-    @State var noConnection: Bool = false
+    @State var loadFailed: Bool = false
 
     @State var id: Int
     @State var refName: String
@@ -73,18 +73,17 @@ struct TreeLoader: View {
             Task.init {
                 await getTree()
                 await getBranches()
+                loadFailed = (tree == nil) || (branches == nil)
             }
         }).navigationTitle(filePath ?? "Files")
     }
     
     private func getTree() async -> Void {
-        tree = await API.get(type: [TreeFile].self, endpoint: "projects/\(id)/repository/tree", query: ["ref": refName.url(), "path": filePath != nil ? filePath!.url() : ""])
-        noConnection = tree == nil
+        tree = await API.get(type: [TreeFile].self, endpoint: "projects/\(id)/repository/tree", query: ["ref": refName.url(), "path": filePath != nil ? filePath! : ""])
     }
     
     private func getBranches() async -> Void {
         branches = await API.get(type: [Branch].self, endpoint: "projects/\(id)/repository/branches")
-        noConnection = branches == nil
     }
 }
 

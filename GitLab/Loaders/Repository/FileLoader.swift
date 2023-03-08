@@ -26,18 +26,10 @@ struct FileLoader: View {
                 if (content != nil) {
                     if (inline) {
                         Text(file!.filePath)
-                            .font(.headline)
-                        if (filePath.lowercased().contains(".md")) {
-                            Markdown(content!)
-                                .font(.system(.body, design: .monospaced))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        } else {
-                            Text(content!)
-                                .font(.system(.body, design: .monospaced))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
+                        FileView(fileName: file!.filePath, content: content!)
                     } else {
                         FileView(fileName: file!.filePath, content: content!)
+                            .navigationTitle(file!.filePath)
                     }
                 }
             } else {
@@ -57,11 +49,11 @@ struct FileLoader: View {
             Task.init {
                 await getFile()
             }
-        }.padding()
+        }
     }
     
     private func getFile() async -> Void {
-        file = await API.get(type: File.self, endpoint: "projects/\(id)/repository/files/\(filePath.url())", query: ["ref": refName.url()])
+        file = await API.req(type: File.self, method: .get, endpoint: "projects/\(id)/repository/files/\(filePath.url())", query: ["ref": refName.url()])
         noConnection = file == nil
     }
 }
