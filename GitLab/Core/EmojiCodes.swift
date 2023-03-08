@@ -7,7 +7,7 @@
 
 import Foundation
 
-let EMOJI_HASH: [String: String] = [
+let EMOJI_HASH: Dictionary<String, String> = [
     ":+1:"                                : "\u{1F44D}",
     ":-1:"                                : "\u{1F44E}",
     ":100:"                               : "\u{1F4AF}",

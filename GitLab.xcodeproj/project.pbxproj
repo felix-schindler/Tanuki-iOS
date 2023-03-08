@@ -27,7 +27,6 @@
 		DC56FDE229B888EA005841B3 /* ContributionLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC56FDE129B888EA005841B3 /* ContributionLoader.swift */; };
 		DC56FDE529B8899A005841B3 /* ContributionChart in Frameworks */ = {isa = PBXBuildFile; productRef = DC56FDE429B8899A005841B3 /* ContributionChart */; };
 		DC5EB8F3272D924D0015BF0D /* GitLabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB8F2272D924D0015BF0D /* GitLabApp.swift */; };
-		DC5EB8F5272D924D0015BF0D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB8F4272D924D0015BF0D /* ContentView.swift */; };
 		DC5EB8F7272D924F0015BF0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC5EB8F6272D924F0015BF0D /* Assets.xcassets */; };
 		DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB900272D934E0015BF0D /* HomeView.swift */; };
 		DC5EB906272D938E0015BF0D /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB905272D938E0015BF0D /* AccountView.swift */; };
@@ -48,7 +47,6 @@
 		DC90CA63272E878900B758E7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA62272E878900B758E7 /* Utils.swift */; };
 		DCAAC170279ED63800EC685F /* MemberGroupsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */; };
 		DCAAC172279ED8B600EC685F /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC171279ED8B600EC685F /* GroupListView.swift */; };
-		DCBC378127CB79A7001319A6 /* HTMLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBC378027CB79A7001319A6 /* HTMLView.swift */; };
 		DCBC378327CB7B16001319A6 /* NewFileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBC378227CB7B16001319A6 /* NewFileLoader.swift */; };
 		DCCC715F273602750091C216 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC715E273602750091C216 /* LabelListView.swift */; };
 		DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEE699127312F8A00AE666C /* EmojiCodes.swift */; };
@@ -76,7 +74,6 @@
 		DC56FDE129B888EA005841B3 /* ContributionLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributionLoader.swift; sourceTree = "<group>"; };
 		DC5EB8EF272D924D0015BF0D /* GitLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC5EB8F2272D924D0015BF0D /* GitLabApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLabApp.swift; sourceTree = "<group>"; };
-		DC5EB8F4272D924D0015BF0D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DC5EB8F6272D924F0015BF0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC5EB900272D934E0015BF0D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DC5EB905272D938E0015BF0D /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
@@ -96,7 +93,6 @@
 		DC90CA62272E878900B758E7 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberGroupsLoader.swift; sourceTree = "<group>"; };
 		DCAAC171279ED8B600EC685F /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
-		DCBC378027CB79A7001319A6 /* HTMLView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLView.swift; sourceTree = "<group>"; };
 		DCBC378227CB7B16001319A6 /* NewFileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFileLoader.swift; sourceTree = "<group>"; };
 		DCCC715D2735E9910091C216 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DCCC715E273602750091C216 /* LabelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListView.swift; sourceTree = "<group>"; };
@@ -209,8 +205,6 @@
 			isa = PBXGroup;
 			children = (
 				DC5EB8F2272D924D0015BF0D /* GitLabApp.swift */,
-				DC5EB8F4272D924D0015BF0D /* ContentView.swift */,
-				DCBC378027CB79A7001319A6 /* HTMLView.swift */,
 				DC4F9559272EB6DC00354E1D /* Main */,
 				DC5EB908272D93B30015BF0D /* Single */,
 				DC4F9555272EB4DD00354E1D /* List */,
@@ -372,12 +366,10 @@
 				DC90CA63272E878900B758E7 /* Utils.swift in Sources */,
 				DC7A85C02731AB4E0000CF4D /* ChangeConfigView.swift in Sources */,
 				DC56FDE229B888EA005841B3 /* ContributionLoader.swift in Sources */,
-				DC5EB8F5272D924D0015BF0D /* ContentView.swift in Sources */,
 				DC4F955C272EB89900354E1D /* AllMergeLoader.swift in Sources */,
 				DC0897FD2730516600B8ACDA /* NoteListView.swift in Sources */,
 				DC4F9558272EB5A900354E1D /* AllProjectsLoader.swift in Sources */,
 				DC90CA61272E78D900B758E7 /* InfoView.swift in Sources */,
-				DCBC378127CB79A7001319A6 /* HTMLView.swift in Sources */,
 				DC5EB8F3272D924D0015BF0D /* GitLabApp.swift in Sources */,
 				DC0EC63A279E16E6006A7C75 /* FileView.swift in Sources */,
 				DC4F956E272ECD0100354E1D /* ExploreView.swift in Sources */,
