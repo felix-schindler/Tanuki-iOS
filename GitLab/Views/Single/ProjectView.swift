@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MarkdownUI
+import SwiftHttp
 
 struct ProjectView: View {
     @State var project: Project
@@ -92,9 +93,11 @@ struct ProjectView: View {
                             }
                             Text(" · ")
                             if let url = URL(string: "https://\(API.domain)/\(project.pathWithNamespace)/-/forks/new") {    // If valid link, show fork link
-                                HStack {
-                                    Image(systemName: "arrow.branch")
-                                    Link("\(project.forksCount) forks", destination: url)
+                                if (project.forksCount != nil) {
+                                    HStack {
+                                        Image(systemName: "arrow.branch")
+                                        Link("\(project.forksCount!) forks", destination: url)
+                                    }
                                 }
                             }
                         }.frame(maxWidth: .infinity, alignment: .leading)
@@ -191,7 +194,7 @@ struct ProjectView: View {
     }
     
     private func toggleStar() async -> Void {
-        let toggle = await API.raw(type: ToggleStar.self, method: .post, url: "https://\(API.domain)/\(project.pathWithNamespace)/toggle_star.json")
+        let toggle = await API.req(type: ToggleStar.self, method: .post, endpoint: "\(project.pathWithNamespace)/toggle_star.json", useBase: false)
         if (toggle != nil) {
             project.starCount = toggle!.starCount;
         }

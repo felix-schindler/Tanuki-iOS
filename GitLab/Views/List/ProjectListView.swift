@@ -69,9 +69,11 @@ struct ProjectListView: View {
                                         Text(String(project.starCount))
                                     }
 
-                                    HStack(spacing: 1) {
-                                        Image(systemName: "arrow.branch")
-                                        Text(String(project.forksCount))
+                                    if (project.forksCount != nil) {
+                                        HStack(spacing: 1) {
+                                            Image(systemName: "arrow.branch")
+                                            Text(String(project.forksCount!))
+                                        }
                                     }
 
                                     if (project.issuesEnabled && project.openIssuesCount != nil) {
