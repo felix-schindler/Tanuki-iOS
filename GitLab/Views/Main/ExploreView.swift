@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct ExploreView: View {
-    var body: some View {
-        NavigationView {
-            AllProjectsLoader()
-        }.navigationViewStyle(StackNavigationViewStyle())
-    }
+	var body: some View {
+		NavigationView {
+			AllProjectsLoader()
+		}.navigationViewStyle(StackNavigationViewStyle())
+	}
 }
 
 struct ExploreView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExploreView()
-    }
+	static var previews: some View {
+		ExploreView()
+	}
 }
