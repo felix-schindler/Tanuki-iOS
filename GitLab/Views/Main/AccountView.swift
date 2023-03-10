@@ -12,7 +12,6 @@ struct AccountView: View {
 	@State var status: UserStatus? = nil
 	@State var noConnection: Bool = false
 	
-	@State var showInfo: Bool = false
 	@State var showSettings: Bool = false
 	
 	var body: some View {
@@ -79,7 +78,7 @@ struct AccountView: View {
 						Image(systemName: "person.2")
 						Text("\(user!.followers) followers · \(user!.following) following")
 					}
-					ContributionLoader(username: user!.username)
+					// ContributionLoader(username: user!.username)
 					Spacer()
 				} else {
 					if (noConnection) {
@@ -99,17 +98,12 @@ struct AccountView: View {
 					}
 				}.toolbar {
 					ToolbarItemGroup(placement: .navigationBarTrailing) {
-						Button (action: {showInfo = true}) {
-							Image(systemName: "info.circle")
-						}
 						Button (action: {showSettings = true}) {
 							Image(systemName: "gearshape")
 						}
 					}
-				}.sheet(isPresented: $showInfo) {
-					InfoView()
 				}.sheet(isPresented: $showSettings) {
-					ChangeConfigView()
+					SettingsView()
 				}.navigationTitle("Account")
 		}.navigationViewStyle(StackNavigationViewStyle())
 	}
