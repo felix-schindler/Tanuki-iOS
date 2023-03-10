@@ -173,11 +173,18 @@ struct ProjectView: View {
 						.controlSize(.large)
 				}
 			}.padding(.horizontal)
-			// NewFileLoader(id: project.id, filePath: "README.md", refName: project.defaultBranch ?? "")
-			FileLoader(id: project.id, filePath: "README.md", refName: project.defaultBranch ?? "", inline: true)
+			if (project.readmeUrl != nil) {
+				let readmePath = project.readmeUrl!.split(separator: "/").last
+				if (readmePath != nil) {
+					FileLoader(id: project.id, filePath: String(readmePath!), refName: project.defaultBranch ?? "", inline: true)
+				}
+			}
 		}.navigationTitle(project.name)
 			.toolbar {
 				ToolbarItemGroup(placement: .navigationBarTrailing) {
+					Button(action: { share() }) {
+						Image(systemName: "square.and.arrow.up")
+					}
 					if (project.issuesEnabled) {
 						Button(action: {showNewIssue = true}) {
 							Image(systemName: "plus.circle")
@@ -199,10 +206,16 @@ struct ProjectView: View {
 			project.starCount = toggle!.starCount;
 		}
 	}
+	
+	private func share() {
+		guard let urlShare = URL(string: project.webUrl) else { return }
+		let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
+		UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+	}
 }
 
 struct ProjectView_Previews: PreviewProvider {
 	static var previews: some View {
-		ProjectView(project: Project(id: 33025310, description: "The native SwiftUI GitLab client for iOS and iPadOS.", name: "Tanuki for GitLab", nameWithNamespace: "Felix / Tanuki for GitLab", pathWithNamespace: "felix-schindler/gitlab-ios", defaultBranch: "main", avatarUrl: "", forksCount: 0, starCount: 1, namespace: Namespace(name: "Felix", path: "felix-schindler"), visibility: "public", owner: UserSmall(id: 9005085, name: "Felix", username: "felix-schindler", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png"), issuesEnabled: true, mergeRequestsEnabled: true, permissions: Permissions(projectAccess: Access(accessLevel: 50, notificationLevel: 3))))
+		ProjectView(project: Project(id: 33025310, description: "The native SwiftUI GitLab client for iOS and iPadOS.", name: "Tanuki for GitLab", nameWithNamespace: "Felix / Tanuki for GitLab", pathWithNamespace: "felix-schindler/gitlab-ios", defaultBranch: "main", webUrl: "https://gitlab.com/felix-schindler/gitlab-ios", readmeUrl: "https://gitlab.com/felix-schindler/gitlab-ios/-/blob/main/README.md", avatarUrl: "", forksCount: 0, starCount: 1, namespace: Namespace(name: "Felix", path: "felix-schindler"), visibility: "public", owner: UserSmall(id: 9005085, name: "Felix", username: "felix-schindler", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png"), issuesEnabled: true, mergeRequestsEnabled: true, permissions: Permissions(projectAccess: Access(accessLevel: 50, notificationLevel: 3))))
 	}
 }

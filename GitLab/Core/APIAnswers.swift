@@ -15,6 +15,8 @@ struct Project: Codable {
 	let pathWithNamespace: String
 	var defaultBranch: String? = nil     // Not all projects have a repository. Maybe they are just issue trackers, wikis, ...
 	var tagList = [String]()
+	let webUrl: String
+	var readmeUrl: String? = nil
 	let avatarUrl: String?
 	var forksCount: Int? = nil           // Not all projects have a repository. Maybe they are just issue trackers, wikis, ...
 	var starCount: Int
