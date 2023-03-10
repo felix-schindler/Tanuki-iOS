@@ -10,14 +10,14 @@ import SwiftUI
 struct ProjectMergeLoader: View {
 	@State var id: Int
 	@State var mergeRequests: [MergeRequest]? = nil
-	@State var noConnection: Bool = false
+	@State var loadFailed: Bool = false
 	
 	var body: some View {
 		VStack {
 			if (mergeRequests != nil) {
 				MergeListView(mergeRequests: mergeRequests!, updateFunction: getMRs)
 			} else {
-				if (noConnection) {
+				if (loadFailed) {
 					Text("Failed to load, please check your internet connection and your token")
 				} else {
 					VStack {
@@ -35,8 +35,8 @@ struct ProjectMergeLoader: View {
 	}
 	
 	private func getMRs() async -> Void {
-		mergeRequests = await API.get(type: [MergeRequest].self, endpoint: "projects/\(id)/merge_requests")
-		noConnection = mergeRequests == nil
+		mergeRequests = await API.get(type: [MergeRequest].self, endpoint: "projects/\(id)/merge_requests", query: ["with_labels_details": "true"])
+		loadFailed = (mergeRequests == nil)
 	}
 }
 

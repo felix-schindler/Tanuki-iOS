@@ -7,12 +7,16 @@
 
 import SwiftUI
 
+private enum Filter {
+	case membership, owner
+}
+
 struct MemberProjectsLoader: View {
-	@State var showFilter: Bool = false
-	@State var filter: Int = 0
+	@State private var showFilter: Bool = false
+	@State private var filter: Filter = Filter.membership
 	
-	@State var projects: [Project]? = nil
-	@State var noConnection: Bool = false
+	@State private var projects: [Project]? = nil
+	@State private var noConnection: Bool = false
 	
 	var body: some View {
 		VStack {
@@ -25,9 +29,9 @@ struct MemberProjectsLoader: View {
 							}
 						}
 					}.sheet(isPresented: $showFilter) {
-						Picker("Issue state", selection: $filter) {
-							Text("All").tag(0)
-							Text("Owner").tag(1)
+						Picker("Project access", selection: $filter) {
+							Text("Membership").tag(Filter.membership)
+							Text("Owner").tag(Filter.owner)
 						}.pickerStyle(WheelPickerStyle())
 						Button("Apply") {
 							Task.init {
@@ -36,14 +40,12 @@ struct MemberProjectsLoader: View {
 							}
 						}
 					}
+			} else if (noConnection) {
+				Text("Failed to load, please check your internet connection and your token")
 			} else {
-				if (noConnection) {
-					Text("Failed to load, please check your internet connection and your token")
-				} else {
-					Spacer()
-					ProgressView("Loading")
-					Spacer()
-				}
+				Spacer()
+				ProgressView("Loading")
+				Spacer()
 			}
 		}.onAppear {
 			Task.init {
@@ -53,8 +55,18 @@ struct MemberProjectsLoader: View {
 	}
 	
 	private func getProjects() async -> Void {
-		projects = await API.get(type: [Project].self, endpoint: "projects", query: ["membership": "true", "order_by": "last_activity_at"])
-		noConnection = projects == nil
+		projects = nil
+		noConnection = false
+		
+		var filters: Dictionary<String, String> = ["order_by": "last_activity_at"]
+		if (filter == Filter.membership) {
+			filters["membership"] = "true"
+		} else if (filter == Filter.owner) {
+			filters["owned"] = "true"
+		}
+		
+		projects = await API.get(type: [Project].self, endpoint: "projects", query: filters)
+		noConnection = (projects == nil)
 	}
 }
 
