@@ -210,7 +210,9 @@ struct ProjectView: View {
 	private func share() {
 		guard let urlShare = URL(string: project.webUrl) else { return }
 		let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
-		UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+
+		let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+		windowScene?.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
 	}
 }
 
