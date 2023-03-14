@@ -69,6 +69,13 @@ extension Date {
 		dateFormat.timeStyle = .short
 		return dateFormat.string(from: self)
 	}
+	
+	func toShortString() -> String {
+		let dateFormat = DateFormatter()
+		dateFormat.dateStyle = .short
+		dateFormat.timeStyle = .short
+		return dateFormat.string(from: self)
+	}
 }
 
 @Sendable

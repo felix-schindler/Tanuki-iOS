@@ -26,30 +26,31 @@ struct IssueView: View {
 					.fontWeight(.semibold)
 					.padding(.bottom, 1)
 					.frame(maxWidth: .infinity, alignment: .leading)
-
+				
 				if (issue.description != "") {              // Description is "" and NOT nil when not set
 					Markdown(issue.description.emojized())
 						.frame(maxWidth: .infinity, alignment: .leading)
 				}
-
+				
 				HStack {
 					HStack {
-						Image(systemName: "smallcircle.circle")
-							.foregroundColor(.green)
-						Text(issue.references.full)
+						Image(systemName: "number.circle")
+						Text(String(issue.iid))
+							.textSelection(.enabled)
 					}
 					Spacer()
 					HStack {
 						Image(systemName: "person")
 						Text(issue.author.name)
 					}
-				}.foregroundColor(.secondary)
-
-				HStack {
-					if (issue.confidential) {
-						Image(systemName: "lock")
-							.foregroundColor(.orange)
+					Spacer()
+					HStack {
+						Image(systemName: "clock")
+						Text(issue.createdAt.toShortString())
 					}
+				}
+				
+				HStack(spacing: 12) {
 					HStack(spacing: 1) {
 						Image(systemName: "hand.thumbsup")
 						Text(String(issue.upvotes))
@@ -58,10 +59,11 @@ struct IssueView: View {
 						Image(systemName: "hand.thumbsdown")
 						Text(String(issue.downvotes))
 					}
-					if (issue.dueDate != nil) {
+					if (issue.confidential) {
 						HStack(spacing: 1) {
-							Image(systemName: "calendar")
-							Text(Date.formToString(issue.dueDate!))
+							Image(systemName: "lock")
+								.foregroundColor(.orange)
+							Text("Confidential")
 						}
 					}
 				}.frame(maxWidth: .infinity, alignment: .leading)
@@ -70,22 +72,35 @@ struct IssueView: View {
 			
 			Section("Details") {
 				if (issue.assignees != nil && !(issue.assignees!.isEmpty)) {
-					Section("Assignees") {
-						ForEach(issue.assignees!, id: \.id) { assignee in
-							HStack {
+					HStack {
+						Image(systemName: "person.circle")
+						ScrollView(.horizontal) {
+							ForEach(issue.assignees!, id: \.id) { assignee in
 								Text(assignee.name)
-								Spacer()
-								Text(assignee.username)
-									.foregroundColor(.secondary)
 							}
 						}
 					}
 				}
+
 				if (issue.labels != nil && !(issue.labels!.isEmpty)) {
-					LabelListView(labels: issue.labels!)
+					HStack {
+						Image(systemName: "tag.circle")
+						LabelListView(labels: issue.labels!)
+					}
 				}
+
 				if (issue.milestone != nil) {
-					Text(issue.milestone!.title.emojized())
+					HStack {
+						Image(systemName: "signpost.right.and.left")
+						Text(issue.milestone!.title.emojized())
+					}
+				}
+
+				if (issue.dueDate != nil) {
+					HStack {
+						Image(systemName: "calendar.badge.clock")
+						Text(Date.formToString(issue.dueDate!))
+					}
 				}
 			}
 			Section("Notes") {
@@ -128,7 +143,7 @@ struct IssueView: View {
 struct IssueView_Previews: PreviewProvider {
 	static var previews: some View {
 		NavigationView {
-			IssueView(issue: Issue(id: 119029091, iid: 21, projectId: 33025310, title: "View Pipeline in Live Activities", description: "Should be shown of the latest project (with repository) in the latest branch that was viewed", createdAt: Date(), state: "opened", labels: [APILabel(id: 1, name: "enhancement", color: "#5cb85c", textColor: "#FFFFFF"), APILabel(id: 2, name: "bug", color: "#d9534f", textColor: "#FFFFFF"), APILabel(id: 3, name: "documentation", color: "#f0ad4e", textColor: "#FFFFFF")], milestone: nil, assignees: nil, author: UserSmall(id: 9005085, name: "Felix", username: "felix-schindler", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png"), type: "ISSUE", userNotesCount: 0, upvotes: 5, downvotes: 2, confidential: false, references: Reference(short: "#21", full: "felix-schindler/gitlab-ios#21")))
+			IssueView(issue: Issue(id: 119029091, iid: 21, projectId: 33025310, title: "View Pipeline in Live Activities", description: "Should be shown of the latest project (with repository) in the latest branch that was viewed", createdAt: Date(), state: "opened", labels: [APILabel(id: 1, name: "enhancement", color: "#5cb85c", textColor: "#FFFFFF"), APILabel(id: 2, name: "bug", color: "#d9534f", textColor: "#FFFFFF"), APILabel(id: 3, name: "documentation", color: "#f0ad4e", textColor: "#FFFFFF")], milestone: Milestone(id: 1, iid: 1, title: "v1.0.1", description: ""), assignees: [UserSmall(id: 9005085, name: "Felix", username: "felix-schindler", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png")], author: UserSmall(id: 9005085, name: "Felix", username: "felix-schindler", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png"), type: "ISSUE", userNotesCount: 0, upvotes: 1, downvotes: 0, dueDate: "2022-04-01", confidential: true, references: Reference(short: "#21", full: "felix-schindler/gitlab-ios#21")))
 		}
 	}
 }
