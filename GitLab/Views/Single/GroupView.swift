@@ -13,25 +13,27 @@ struct GroupView: View {
 	@State var updateFunction: () async -> Void
 	
 	var body: some View {
-		VStack {
+		VStack(alignment: .leading) {
 			VStack {
 				HStack {
-					AsyncImage(url: URL(string: group.avatarUrl!)) { phase in
-						switch phase {
-						case .empty:
-							ProgressView()
-						case .success(let image):
-							image
-								.resizable()
-								.scaledToFit()
-								.cornerRadius(10)
-						default:
-							Image(systemName: "exclamationmark.icloud")
-								.resizable()
-								.scaledToFit()
-						}
-					}.frame(width: 50, height: 50, alignment: .leading)
-					VStack {
+					if (group.avatarUrl != nil) {
+						AsyncImage(url: URL(string: group.avatarUrl!)) { phase in
+							switch phase {
+							case .empty:
+								ProgressView()
+							case .success(let image):
+								image
+									.resizable()
+									.scaledToFit()
+									.cornerRadius(10)
+							default:
+								Image(systemName: "exclamationmark.icloud")
+									.resizable()
+									.scaledToFit()
+							}
+						}.frame(width: 50, height: 50, alignment: .leading)
+					}
+					VStack(alignment: .leading) {
 						HStack(spacing: 5) {
 							if (group.visibility == "private") {
 								Image(systemName: "lock")
@@ -41,18 +43,17 @@ struct GroupView: View {
 								Image(systemName: "globe")
 							}
 							Text(group.name)
-						}.frame(maxWidth: .infinity, alignment: .leading)
-						Text("Group ID: " + String(group.id))
+						}
+						Text("ID: " + String(group.id))
 							.font(.caption)
 							.foregroundColor(.secondary)
 							.padding(.bottom, 0.5)
-							.frame(maxWidth: .infinity, alignment: .leading)
 					}
 				}.frame(maxWidth: .infinity, alignment: .leading)
 				Markdown(group.description.emojized())
-					.frame(maxWidth: .infinity, alignment: .leading)
 			}.padding()
 			ProjectListView(projects: group.projects, updateFunction: updateFunction)
+			Spacer()
 		}.refreshable(action: {
 			Task.init {
 				await updateFunction()
