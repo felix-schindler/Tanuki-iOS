@@ -44,7 +44,7 @@ struct NewProjectView: View {
 						}
 					}
 				}
-
+				
 				if (project.description != nil && project.description != "") {
 					Markdown(project.description!.emojized())
 						.frame(maxWidth: .infinity, alignment: .leading)
@@ -67,7 +67,7 @@ struct NewProjectView: View {
 				}
 				
 				HStack {
-					Image(systemName: "grid.circle")
+					Image(systemName: "number.circle")
 					Text(String(project.id))
 					Spacer()
 					if (project.owner != nil) {
@@ -107,26 +107,50 @@ struct NewProjectView: View {
 							}
 						}
 						if (project.permissions?.projectAccess?.notificationLevel != nil) {
-							Picker(selection: .constant(project.permissions!.projectAccess!.notificationLevel), content: {
-								Text(notificationLevel(0).firstCapitalized).tag(0)
-								Text(notificationLevel(1).firstCapitalized).tag(1)
-								Text(notificationLevel(2).firstCapitalized).tag(2)
-								Text(notificationLevel(3).firstCapitalized).tag(3)
-								Text(notificationLevel(5).firstCapitalized).tag(4)
-								Text(notificationLevel(6).firstCapitalized).tag(5)
-							}, label: {
-								Label("Notifications", systemName: "bell.circle")
-									.labelStyle(.iconOnly)
-							}).pickerStyle(MenuPickerStyle())
-								.buttonStyle(.bordered)
+							/* There's a bug (explained here: https://gist.github.com/atrinh0/3df23140ba39df05692befb7153c8285)
+							 * where the icon of a label in a Picker is not displayed. You still have to give the Picker a Label.
+							 * Therefore we have to use a Picker inside a Menu. The menu label is displayed correctly.
+							 * When this is fixed (which I don't think will happen) we can delete the Menu alltogether.
+							 */
+							Menu {
+								Picker(selection: .constant(project.permissions!.projectAccess!.notificationLevel),
+											 content: {
+									Text(notificationLevel(0).firstCapitalized).tag(0)
+									Text(notificationLevel(1).firstCapitalized).tag(1)
+									Text(notificationLevel(2).firstCapitalized).tag(2)
+									Text(notificationLevel(3).firstCapitalized).tag(3)
+									Text(notificationLevel(5).firstCapitalized).tag(4)
+									Text(notificationLevel(6).firstCapitalized).tag(5)
+								}, label: {
+									Label("Notifications", systemImage: "bell.circle")
+										.labelStyle(.iconOnly)
+								})
+							} label: {
+								Label(notificationLevel(project.permissions!.projectAccess!.notificationLevel).firstCapitalized, systemImage: "bell.circle")
+							}.buttonStyle(.bordered)
 								.foregroundColor(.primary)
 						}
 					}
 				}
 			}
 			
-			
 			Section("Project") {
+				HStack {
+					Image(systemName: "text.line.first.and.arrowtriangle.forward")
+						.foregroundColor(.purple)
+					Button(action: {showCommits = true}) {
+						Text("Commits")
+					}.foregroundColor(.primary)
+				}
+				
+				HStack {
+					Image(systemName: "square.on.square.intersection.dashed")
+						.foregroundColor(.orange)
+					Button(action: {showBranches = true}) {
+						Text("Branches")
+					}.foregroundColor(.primary)
+				}
+
 				if (project.issuesEnabled) {
 					NavigationLink(destination: ProjectIssuesLoader(id: project.id)) {
 						HStack {
@@ -138,6 +162,7 @@ struct NewProjectView: View {
 						}
 					}.foregroundColor(.primary)
 				}
+				
 				if (project.mergeRequestsEnabled) {
 					NavigationLink(destination: ProjectMergeLoader(id: project.id)) {
 						HStack {
@@ -149,6 +174,15 @@ struct NewProjectView: View {
 					}.foregroundColor(.primary)
 				}
 				
+				NavigationLink(destination: TreeLoader(id: project.id, refName: project.defaultBranch ?? "")) {
+					HStack {
+						Image(systemName: "chevron.left.forwardslash.chevron.right")
+							.foregroundColor(.pink)
+						Text("Files")
+							.frame(maxWidth: .infinity, alignment: .leading)
+					}
+				}.foregroundColor(.primary)
+
 				NavigationLink(destination: PipelineLoader(id: project.id, branch: "", onlyStatus: false)) {
 					HStack {
 						Text("🚀")
@@ -157,24 +191,6 @@ struct NewProjectView: View {
 						if (project.defaultBranch != nil) {
 							PipelineLoader(id: project.id, branch: project.defaultBranch!)
 						}
-					}
-				}.foregroundColor(.primary)
-				HStack {
-					Button(action: {showCommits = true}) {
-						Text("Commits")
-					}.foregroundColor(.primary)
-				}
-				HStack {
-					Button(action: {showBranches = true}) {
-						Text("Branches")
-					}.foregroundColor(.primary)
-				}
-				NavigationLink(destination: TreeLoader(id: project.id, refName: project.defaultBranch ?? "")) {
-					HStack {
-						Image(systemName: "chevron.left.forwardslash.chevron.right")
-							.foregroundColor(.pink)
-						Text("Files")
-							.frame(maxWidth: .infinity, alignment: .leading)
 					}
 				}.foregroundColor(.primary)
 			}
@@ -188,7 +204,6 @@ struct NewProjectView: View {
 					}
 				}
 			}
-
 		}.navigationTitle(project.name)
 			.toolbar {
 				ToolbarItemGroup(placement: .navigationBarTrailing) {
