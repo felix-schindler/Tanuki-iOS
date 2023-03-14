@@ -15,13 +15,12 @@
 		DC10C39A2731537D00CAE425 /* CommitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC10C3992731537D00CAE425 /* CommitsView.swift */; };
 		DC10C39C27315D6400CAE425 /* BranchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC10C39B27315D6400CAE425 /* BranchesView.swift */; };
 		DC2B2FFD29C06609009ADC0D /* ContributionChart in Frameworks */ = {isa = PBXBuildFile; productRef = DC2B2FFC29C06609009ADC0D /* ContributionChart */; };
-		DC2B2FFF29C0679B009ADC0D /* NewProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B2FFE29C0679B009ADC0D /* NewProjectView.swift */; };
+		DC2B2FFF29C0679B009ADC0D /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B2FFE29C0679B009ADC0D /* ProjectView.swift */; };
 		DC4F9552272EB49700354E1D /* AllIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */; };
 		DC4F9554272EB4AF00354E1D /* ProjectIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */; };
 		DC4F9558272EB5A900354E1D /* AllProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */; };
 		DC4F955C272EB89900354E1D /* AllMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F955B272EB89900354E1D /* AllMergeLoader.swift */; };
 		DC4F955E272EB8A700354E1D /* ProjectMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F955D272EB8A700354E1D /* ProjectMergeLoader.swift */; };
-		DC4F9560272EB8EE00354E1D /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F955F272EB8EE00354E1D /* ProjectView.swift */; };
 		DC4F9562272EB92200354E1D /* MergeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9561272EB92200354E1D /* MergeView.swift */; };
 		DC4F9568272EBA3F00354E1D /* NotesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9567272EBA3F00354E1D /* NotesLoader.swift */; };
 		DC4F956A272EC3B100354E1D /* APIAnswers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9569272EC3B100354E1D /* APIAnswers.swift */; };
@@ -64,13 +63,12 @@
 		DC0EC640279E1733006A7C75 /* TreeLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeLoader.swift; sourceTree = "<group>"; };
 		DC10C3992731537D00CAE425 /* CommitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitsView.swift; sourceTree = "<group>"; };
 		DC10C39B27315D6400CAE425 /* BranchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchesView.swift; sourceTree = "<group>"; };
-		DC2B2FFE29C0679B009ADC0D /* NewProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProjectView.swift; sourceTree = "<group>"; };
+		DC2B2FFE29C0679B009ADC0D /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllIssuesLoader.swift; sourceTree = "<group>"; };
 		DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectIssuesLoader.swift; sourceTree = "<group>"; };
 		DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsLoader.swift; sourceTree = "<group>"; };
 		DC4F955B272EB89900354E1D /* AllMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMergeLoader.swift; sourceTree = "<group>"; };
 		DC4F955D272EB8A700354E1D /* ProjectMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMergeLoader.swift; sourceTree = "<group>"; };
-		DC4F955F272EB8EE00354E1D /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		DC4F9561272EB92200354E1D /* MergeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeView.swift; sourceTree = "<group>"; };
 		DC4F9567272EBA3F00354E1D /* NotesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesLoader.swift; sourceTree = "<group>"; };
 		DC4F9569272EC3B100354E1D /* APIAnswers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAnswers.swift; sourceTree = "<group>"; };
@@ -238,8 +236,7 @@
 		DC5EB908272D93B30015BF0D /* Single */ = {
 			isa = PBXGroup;
 			children = (
-				DC4F955F272EB8EE00354E1D /* ProjectView.swift */,
-				DC2B2FFE29C0679B009ADC0D /* NewProjectView.swift */,
+				DC2B2FFE29C0679B009ADC0D /* ProjectView.swift */,
 				DC5EB90F272DA2450015BF0D /* IssueView.swift */,
 				DC4F9561272EB92200354E1D /* MergeView.swift */,
 				DC7A85BB27319D1A0000CF4D /* PipelineStatusView.swift */,
@@ -363,7 +360,7 @@
 				DC10C39A2731537D00CAE425 /* CommitsView.swift in Sources */,
 				DC7A85BA27319D010000CF4D /* PipelineLoader.swift in Sources */,
 				DC06BE63273F1D3C0049599E /* Errors.swift in Sources */,
-				DC2B2FFF29C0679B009ADC0D /* NewProjectView.swift in Sources */,
+				DC2B2FFF29C0679B009ADC0D /* ProjectView.swift in Sources */,
 				DC5EB914272DBDA20015BF0D /* MergeListView.swift in Sources */,
 				DCAAC172279ED8B600EC685F /* GroupListView.swift in Sources */,
 				DC7A85BC27319D1A0000CF4D /* PipelineStatusView.swift in Sources */,
@@ -390,7 +387,6 @@
 				DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */,
 				DC5EB910272DA2450015BF0D /* IssueView.swift in Sources */,
 				DC5EB916272DD1310015BF0D /* MemberProjectsLoader.swift in Sources */,
-				DC4F9560272EB8EE00354E1D /* ProjectView.swift in Sources */,
 				DC5EB906272D938E0015BF0D /* AccountView.swift in Sources */,
 				DC0EC642279E1733006A7C75 /* TreeLoader.swift in Sources */,
 				DCBC378327CB7B16001319A6 /* NewFileLoader.swift in Sources */,
