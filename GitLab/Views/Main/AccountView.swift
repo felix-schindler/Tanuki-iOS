@@ -31,7 +31,7 @@ struct AccountView: View {
 						VStack {
 							Text(user!.name)
 								.frame(maxWidth: .infinity, alignment: .leading)
-							Text(user!.username)
+							Text("@\(user!.username)")
 								.foregroundColor(.secondary)
 								.frame(maxWidth: .infinity, alignment: .leading)
 						}
@@ -79,8 +79,7 @@ struct AccountView: View {
 						Image(systemName: "person.2")
 						Text("\(user!.followers) followers · \(user!.following) following")
 					}
-					// ContributionLoader(username: user!.username)
-					Spacer()
+					ContributionLoader(username: user!.username)
 				} else {
 					if (noConnection) {
 						Text("Failed to load, please check your internet connection and your token")
