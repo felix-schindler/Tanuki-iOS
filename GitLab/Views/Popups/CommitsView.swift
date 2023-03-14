@@ -16,7 +16,6 @@ struct CommitsView: View {
 	@State var refName: String
 	
 	@State var branches: [Branch]? = nil
-	
 	@State var commits: [Commit]? = nil
 	@State var loadFailed: Bool = false
 	
@@ -101,6 +100,12 @@ struct CommitsView: View {
 
 struct CommitsView_Previews: PreviewProvider {
 	static var previews: some View {
-		CommitsView(id: Int(), refName: "felix-schindler/gitlab-ios")
+		NavigationView {
+			CommitsView(id: 33025310, refName: "felix-schindler/gitlab-ios", branches: [
+				Branch(name: "main", commit: Commit(id: "00761f920931144587a5b213976e41243e6ae746", shortId: "shortId", title: "Update CommitsView.swift", message: "Update CommitsView.swift", authorName: "Felix", authorEmail: "felix-schindler@outlook.com", authoredDate: Date()), merged: false, protected: false, developersCanPush: true, developersCanMerge: true, canPush: true)
+			], commits: [
+				Commit(id: "00761f920931144587a5b213976e41243e6ae746", shortId: "shortId", title: "Update CommitsView.swift", message: "Update CommitsView.swift", authorName: "Felix", authorEmail: "felix-schindler@outlook.com", authoredDate: Date())
+			])
+		}
 	}
 }
