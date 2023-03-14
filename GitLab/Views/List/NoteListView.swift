@@ -30,17 +30,14 @@ struct NoteListView: View {
 								.scaledToFit()
 						}
 					}.frame(width: 50, height: 50)
-					VStack {
-						HStack {
-							Text(note.author.name)
-							Text("\(note.author.username) · \(note.createdAt.toString())")
-								.font(.footnote)
-								.foregroundColor(.secondary)
-						}.frame(maxWidth: .infinity, alignment: .leading)
+					VStack(alignment: .leading) {
+						Text(note.createdAt.toString())
+							.font(.footnote)
+							.foregroundColor(.secondary)
+						Text(note.author.name)
 						Markdown(note.body.emojized())
-							.frame(maxWidth: .infinity, alignment: .leading)
 					}
-				}
+				}.frame(maxWidth: .infinity, alignment: .leading)
 				if (note.id != notes.last!.id) {
 					Divider()
 				}
@@ -53,6 +50,8 @@ struct NoteListView: View {
 
 struct NoteListView_Previews: PreviewProvider {
 	static var previews: some View {
-		NoteListView(notes: [])
+		NoteListView(notes: [
+			Note(id: 1, body: "assigned to @felix-schindler", author: UserSmall(id: 3946912, name: "Felix Schindler", username: "felix-schindler", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png"), createdAt: Date())
+		])
 	}
 }
