@@ -14,7 +14,7 @@ struct AllMergeLoader: View {
 	var body: some View {
 		VStack {
 			if (mergeRequests != nil) {
-				MergeListView(mergeRequests: mergeRequests!, updateFunction: getMRs)
+				MergeListView(mergeRequests: mergeRequests!, updateFunction: getMRs, showRef: true)
 			} else {
 				if (noConnection) {
 					Text("Failed to load, please check your internet connection and your token")

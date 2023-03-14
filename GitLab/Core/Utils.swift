@@ -58,9 +58,9 @@ extension Date {
 		return dateFormat.string(from: self)
 	}
 	
-	func toDateString() -> String {
+	func toDateString(_ style: DateFormatter.Style = .medium) -> String {
 		let dateFormat = DateFormatter()
-		dateFormat.dateStyle = .medium
+		dateFormat.dateStyle = style
 		return dateFormat.string(from: self)
 	}
 	

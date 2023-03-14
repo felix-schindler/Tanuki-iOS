@@ -115,6 +115,15 @@ struct MergeRequest: Codable {
 	let projectId: Int
 	let title: String
 	let description: String
+	let state: String
+	let createdAt: Date
+	let mergedBy: UserSmall?
+	let mergeUser: UserSmall?
+	let mergedAt: Date?
+	let closedBy: UserSmall?
+	let closedAt: Date?
+	let targetBranch: String
+	let sourceBranch: String
 	let userNotesCount: Int
 	let upvotes: Int
 	let downvotes: Int
@@ -122,7 +131,16 @@ struct MergeRequest: Codable {
 	let assignees: [UserSmall]?
 	let reviewers: [UserSmall]?
 	let labels: [APILabel]?
+	let draft: Bool
+	let workInProgress: Bool
+	let milestone: Milestone?
+	let mergeWhenPipelineSucceeds: Bool
+	let mergeStatus: String
+	let detailedMergeStatus: String
 	let references: Reference
+	let webUrl: String
+	let pipeline: Pipeline?
+	let mergeError: String?
 }
 
 struct Event: Codable {
