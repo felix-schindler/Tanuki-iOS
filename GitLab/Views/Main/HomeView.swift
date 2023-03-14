@@ -55,7 +55,7 @@ struct HomeView: View {
 								Text("You have no starred projects")
 							} else {
 								ForEach(starredProjects!, id: \.id) { project in
-									NavigationLink(destination: ProjectView(project: project)) {
+									NavigationLink(destination: NewProjectView(project: project)) {
 										HStack {
 											Text(project.nameWithNamespace)
 												.frame(maxWidth: .infinity, alignment: .leading)
