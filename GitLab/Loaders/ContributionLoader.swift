@@ -16,11 +16,15 @@ struct ContributionLoader: View {
 	var body: some View {
 		VStack {
 			if (data != nil) {
-				ContributionChartView(data: data!,
-															rows: 4,
-															columns: 14,
-															targetValue: 5,
-															blockColor: .green)
+				if (data!.count >= 56) {
+					ContributionChartView(data: data!,
+																rows: 4,
+																columns: 14,
+																targetValue: 5,
+																blockColor: .green)
+				} else {
+					Text("You need at least 56 entries. You got \(data!.count)")
+				}
 			} else {
 				if (loadFailed) {
 					Text("Failed to load contributions, please check your internet connection and your token")
@@ -47,6 +51,6 @@ struct ContributionLoader: View {
 
 struct ContributionLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		ContributionLoader(username: "felix-schindler")
+		ContributionLoader(username: "felix-schindler", data: [0,1,2,3,4,5,6,7,8,9])
 	}
 }

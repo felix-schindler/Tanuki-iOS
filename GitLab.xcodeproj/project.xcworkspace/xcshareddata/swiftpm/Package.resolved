@@ -19,12 +19,12 @@
       }
     },
     {
-      "identity" : "swiftui-contributionchart#demo-code",
+      "identity" : "swiftui-contributionchart",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/VIkill33/SwiftUI-ContributionChart#demo-code",
+      "location" : "https://github.com/felix-schindler/SwiftUI-ContributionChart",
       "state" : {
-        "revision" : "0ec68a020d03a87fa1a7dabd9c3c576603373187",
-        "version" : "1.0.1"
+        "branch" : "main",
+        "revision" : "1e0a68e6103b5a911c3a8d26bb978a5d39ebc7a6"
       }
     }
   ],

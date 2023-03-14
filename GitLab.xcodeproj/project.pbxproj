@@ -14,6 +14,8 @@
 		DC0EC642279E1733006A7C75 /* TreeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EC640279E1733006A7C75 /* TreeLoader.swift */; };
 		DC10C39A2731537D00CAE425 /* CommitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC10C3992731537D00CAE425 /* CommitsView.swift */; };
 		DC10C39C27315D6400CAE425 /* BranchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC10C39B27315D6400CAE425 /* BranchesView.swift */; };
+		DC2B2FFD29C06609009ADC0D /* ContributionChart in Frameworks */ = {isa = PBXBuildFile; productRef = DC2B2FFC29C06609009ADC0D /* ContributionChart */; };
+		DC2B2FFF29C0679B009ADC0D /* NewProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B2FFE29C0679B009ADC0D /* NewProjectView.swift */; };
 		DC4F9552272EB49700354E1D /* AllIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */; };
 		DC4F9554272EB4AF00354E1D /* ProjectIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */; };
 		DC4F9558272EB5A900354E1D /* AllProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */; };
@@ -25,7 +27,6 @@
 		DC4F956A272EC3B100354E1D /* APIAnswers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9569272EC3B100354E1D /* APIAnswers.swift */; };
 		DC4F956E272ECD0100354E1D /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F956D272ECD0100354E1D /* ExploreView.swift */; };
 		DC56FDE229B888EA005841B3 /* ContributionLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC56FDE129B888EA005841B3 /* ContributionLoader.swift */; };
-		DC56FDE529B8899A005841B3 /* ContributionChart in Frameworks */ = {isa = PBXBuildFile; productRef = DC56FDE429B8899A005841B3 /* ContributionChart */; };
 		DC5EB8F3272D924D0015BF0D /* GitLabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB8F2272D924D0015BF0D /* GitLabApp.swift */; };
 		DC5EB8F7272D924F0015BF0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC5EB8F6272D924F0015BF0D /* Assets.xcassets */; };
 		DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB900272D934E0015BF0D /* HomeView.swift */; };
@@ -63,6 +64,7 @@
 		DC0EC640279E1733006A7C75 /* TreeLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeLoader.swift; sourceTree = "<group>"; };
 		DC10C3992731537D00CAE425 /* CommitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitsView.swift; sourceTree = "<group>"; };
 		DC10C39B27315D6400CAE425 /* BranchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchesView.swift; sourceTree = "<group>"; };
+		DC2B2FFE29C0679B009ADC0D /* NewProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProjectView.swift; sourceTree = "<group>"; };
 		DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllIssuesLoader.swift; sourceTree = "<group>"; };
 		DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectIssuesLoader.swift; sourceTree = "<group>"; };
 		DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsLoader.swift; sourceTree = "<group>"; };
@@ -110,7 +112,7 @@
 			files = (
 				DC64E3A429198CC2003B14D6 /* SwiftHttp in Frameworks */,
 				DCFCB06E29B7C3D800F18CDC /* MarkdownUI in Frameworks */,
-				DC56FDE529B8899A005841B3 /* ContributionChart in Frameworks */,
+				DC2B2FFD29C06609009ADC0D /* ContributionChart in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				DC4F955F272EB8EE00354E1D /* ProjectView.swift */,
+				DC2B2FFE29C0679B009ADC0D /* NewProjectView.swift */,
 				DC5EB90F272DA2450015BF0D /* IssueView.swift */,
 				DC4F9561272EB92200354E1D /* MergeView.swift */,
 				DC7A85BB27319D1A0000CF4D /* PipelineStatusView.swift */,
@@ -291,7 +294,7 @@
 			packageProductDependencies = (
 				DC64E3A329198CC2003B14D6 /* SwiftHttp */,
 				DCFCB06D29B7C3D800F18CDC /* MarkdownUI */,
-				DC56FDE429B8899A005841B3 /* ContributionChart */,
+				DC2B2FFC29C06609009ADC0D /* ContributionChart */,
 			);
 			productName = GitLab;
 			productReference = DC5EB8EF272D924D0015BF0D /* GitLab.app */;
@@ -324,7 +327,7 @@
 			packageReferences = (
 				DC64E3A229198CC2003B14D6 /* XCRemoteSwiftPackageReference "swift-http" */,
 				DCFCB06C29B7C3D800F18CDC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
-				DC56FDE329B8899A005841B3 /* XCRemoteSwiftPackageReference "SwiftUI-ContributionChart" */,
+				DC2B2FFB29C06609009ADC0D /* XCRemoteSwiftPackageReference "SwiftUI-ContributionChart" */,
 			);
 			productRefGroup = DC5EB8F0272D924D0015BF0D /* Products */;
 			projectDirPath = "";
@@ -360,6 +363,7 @@
 				DC10C39A2731537D00CAE425 /* CommitsView.swift in Sources */,
 				DC7A85BA27319D010000CF4D /* PipelineLoader.swift in Sources */,
 				DC06BE63273F1D3C0049599E /* Errors.swift in Sources */,
+				DC2B2FFF29C0679B009ADC0D /* NewProjectView.swift in Sources */,
 				DC5EB914272DBDA20015BF0D /* MergeListView.swift in Sources */,
 				DCAAC172279ED8B600EC685F /* GroupListView.swift in Sources */,
 				DC7A85BC27319D1A0000CF4D /* PipelineStatusView.swift in Sources */,
@@ -603,12 +607,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		DC56FDE329B8899A005841B3 /* XCRemoteSwiftPackageReference "SwiftUI-ContributionChart" */ = {
+		DC2B2FFB29C06609009ADC0D /* XCRemoteSwiftPackageReference "SwiftUI-ContributionChart" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/VIkill33/SwiftUI-ContributionChart#demo-code";
+			repositoryURL = "https://github.com/felix-schindler/SwiftUI-ContributionChart";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.1;
+				branch = main;
+				kind = branch;
 			};
 		};
 		DC64E3A229198CC2003B14D6 /* XCRemoteSwiftPackageReference "swift-http" */ = {
@@ -630,9 +634,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		DC56FDE429B8899A005841B3 /* ContributionChart */ = {
+		DC2B2FFC29C06609009ADC0D /* ContributionChart */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DC56FDE329B8899A005841B3 /* XCRemoteSwiftPackageReference "SwiftUI-ContributionChart" */;
+			package = DC2B2FFB29C06609009ADC0D /* XCRemoteSwiftPackageReference "SwiftUI-ContributionChart" */;
 			productName = ContributionChart;
 		};
 		DC64E3A329198CC2003B14D6 /* SwiftHttp */ = {
