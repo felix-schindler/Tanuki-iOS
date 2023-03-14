@@ -26,7 +26,7 @@ struct FileView: View {
 						.textSelection(.enabled)
 						.frame(maxWidth: .infinity, alignment: .leading)
 				}
-			}.padding()
+			}
 			Spacer()
 		}
 	}

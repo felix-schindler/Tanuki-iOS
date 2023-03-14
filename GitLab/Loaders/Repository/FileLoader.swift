@@ -25,11 +25,10 @@ struct FileLoader: View {
 				let content: String? = file!.content.fromBase64()?.emojized()
 				if (content != nil) {
 					if (inline) {
-						Text(file!.filePath)
-							.font(.headline)
 						FileView(fileName: file!.filePath, content: content!)
 					} else {
 						FileView(fileName: file!.filePath, content: content!)
+							.padding()
 							.navigationTitle(file!.filePath)
 					}
 				}
@@ -61,6 +60,6 @@ struct FileLoader: View {
 
 struct FileLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		FileLoader(id: 33025310, filePath: "README.md", refName: "main", inline: true)
+		FileLoader(id: 33025310, filePath: "README.md", refName: "main", inline: false)
 	}
 }
