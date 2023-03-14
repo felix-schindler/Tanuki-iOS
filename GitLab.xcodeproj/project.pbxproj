@@ -16,6 +16,7 @@
 		DC10C39C27315D6400CAE425 /* BranchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC10C39B27315D6400CAE425 /* BranchesView.swift */; };
 		DC2B2FFD29C06609009ADC0D /* ContributionChart in Frameworks */ = {isa = PBXBuildFile; productRef = DC2B2FFC29C06609009ADC0D /* ContributionChart */; };
 		DC2B2FFF29C0679B009ADC0D /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B2FFE29C0679B009ADC0D /* ProjectView.swift */; };
+		DC2B300129C09625009ADC0D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B300029C09625009ADC0D /* InfoView.swift */; };
 		DC4F9552272EB49700354E1D /* AllIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */; };
 		DC4F9554272EB4AF00354E1D /* ProjectIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */; };
 		DC4F9558272EB5A900354E1D /* AllProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */; };
@@ -64,6 +65,7 @@
 		DC10C3992731537D00CAE425 /* CommitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitsView.swift; sourceTree = "<group>"; };
 		DC10C39B27315D6400CAE425 /* BranchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchesView.swift; sourceTree = "<group>"; };
 		DC2B2FFE29C0679B009ADC0D /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
+		DC2B300029C09625009ADC0D /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllIssuesLoader.swift; sourceTree = "<group>"; };
 		DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectIssuesLoader.swift; sourceTree = "<group>"; };
 		DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsLoader.swift; sourceTree = "<group>"; };
@@ -266,8 +268,9 @@
 				DC10C39B27315D6400CAE425 /* BranchesView.swift */,
 				DC90CA5D272E763F00B758E7 /* EventsView.swift */,
 				DC90CA5B272E762200B758E7 /* NewIssueView.swift */,
-				DC7A85BF2731AB4E0000CF4D /* SettingsView.swift */,
 				DC7C83DA29B8F32900B3BE41 /* NewNoteView.swift */,
+				DC7A85BF2731AB4E0000CF4D /* SettingsView.swift */,
+				DC2B300029C09625009ADC0D /* InfoView.swift */,
 			);
 			path = Popups;
 			sourceTree = "<group>";
@@ -377,6 +380,7 @@
 				DC7C83D729B8E80400B3BE41 /* GroupView.swift in Sources */,
 				DC4F955C272EB89900354E1D /* AllMergeLoader.swift in Sources */,
 				DC0897FD2730516600B8ACDA /* NoteListView.swift in Sources */,
+				DC2B300129C09625009ADC0D /* InfoView.swift in Sources */,
 				DC7C83D929B8E8A700B3BE41 /* GroupLoader.swift in Sources */,
 				DC4F9558272EB5A900354E1D /* AllProjectsLoader.swift in Sources */,
 				DC5EB8F3272D924D0015BF0D /* GitLabApp.swift in Sources */,

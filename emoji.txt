@@ -4430,9 +4430,10 @@
 1F4F4 📴mobile phone off
 
 # subgroup: gender
-2640 FE0F ♀️female sign
 2642 FE0F ♂️male sign
-26A7 FE0F ⚧️transgender symbol
+{2640} {FE0F} female sign
+{2642} {FE0F} male sign
+{26A7} {FE0F} transgender symbol
 
 # subgroup: math
 2716 FE0F ✖️multiply

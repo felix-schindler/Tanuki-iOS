@@ -12,6 +12,7 @@ struct AccountView: View {
 	@State var status: UserStatus? = nil
 	@State var noConnection: Bool = false
 	
+	@State var showInfo: Bool = false
 	@State var showSettings: Bool = false
 	
 	var body: some View {
@@ -98,12 +99,17 @@ struct AccountView: View {
 					}
 				}.toolbar {
 					ToolbarItemGroup(placement: .navigationBarTrailing) {
+						Button (action: {showInfo = true}) {
+							Image(systemName: "info.circle")
+						}
 						Button (action: {showSettings = true}) {
 							Image(systemName: "gearshape")
 						}
 					}
 				}.sheet(isPresented: $showSettings) {
 					SettingsView()
+				}.sheet(isPresented: $showInfo) {
+					InfoView()
 				}.navigationTitle("Account")
 		}.navigationViewStyle(StackNavigationViewStyle())
 	}
