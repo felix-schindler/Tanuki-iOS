@@ -11,14 +11,16 @@ struct LabelListView: View {
 	@State var labels: [APILabel]
 	
 	var body: some View {
-		HStack(spacing: 5) {
-			ForEach(labels, id: \.id) { label in
-				Text(label.name.emojized())
-					.padding(.horizontal, 6)
-					.padding(.vertical, 4)
-					.background(Color.init(hex: label.color))
-					.cornerRadius(25)
-					.foregroundColor(Color.init(hex: label.textColor))
+		ScrollView(.horizontal) {
+			HStack(spacing: 4) {
+				ForEach(labels, id: \.id) { label in
+					Text(label.name.emojized())
+						.padding(.horizontal, 8)
+						.padding(.vertical, 3)
+						.background(Color.init(hex: label.color))
+						.foregroundColor(Color.init(hex: label.textColor))
+						.cornerRadius(25)
+				}
 			}
 		}
 	}
