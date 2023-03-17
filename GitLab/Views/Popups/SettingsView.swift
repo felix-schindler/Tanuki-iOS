@@ -13,17 +13,14 @@ struct SettingsView: View {
 	@Environment(\.presentationMode)
 	var presentationMode: Binding<PresentationMode>
 	
-	@AppStorage("home_view") public static var homeShowsProjects: Bool = false
-
 	@State var url: String = API.domain     // New GitLab URL
 	@State var token: String = API.token    // New GitLab Token
-
+	
 	@State var configError: Bool = false
 	
 	var body: some View {
 		NavigationView {
 			VStack {
-				Toggle("Show Projects List on Home", isOn: SettingsView.$homeShowsProjects)
 				Spacer()
 				Label("GitLab URL", systemImage: "link")
 					.font(.headline)
@@ -86,9 +83,20 @@ struct SettingsView: View {
 	}
 	
 	private func validGitConfig() async -> Bool {
+		var host = url
+		
+		if (host.contains("://")) {
+			let tempUrl = URL(string: url)
+			if (tempUrl != nil && tempUrl!.host != nil) {
+				host = tempUrl!.host!
+			} else {
+				return false
+			}
+		}
+		
 		let oldUrl = API.base, oldToken = API.token
 		
-		API.domain = url
+		API.domain = host
 		API.token = token
 		
 		let user = await API.get(type: User.self, endpoint: "user")
