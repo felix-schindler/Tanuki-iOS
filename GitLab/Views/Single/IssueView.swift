@@ -18,6 +18,8 @@ struct IssueView: View {
 	@State var showNewIssue = false
 	@State var showNewNote = false
 	
+	@State var stateError = false
+	
 	var body: some View {
 		List {
 			Section("Info") {
@@ -68,44 +70,63 @@ struct IssueView: View {
 					.padding(.top, 2)
 			}
 			
-			Section("Details") {
-				if (issue.assignees != nil && !(issue.assignees!.isEmpty)) {
-					HStack {
-						Image(systemName: "person.circle")
-						ScrollView(.horizontal) {
-							ForEach(issue.assignees!, id: \.id) { assignee in
-								Text(assignee.name)
+			let showAssignees = (issue.assignees != nil && !(issue.assignees!.isEmpty))
+			let showLabels = (issue.labels != nil && !(issue.labels!.isEmpty))
+			let showMilestone = (issue.milestone != nil)
+			let showDueDate = (issue.dueDate != nil)
+			
+			if (showAssignees || showLabels || showMilestone || showDueDate) {
+				Section("Details") {
+					if (showAssignees) {
+						HStack {
+							Image(systemName: "person.circle")
+							ScrollView(.horizontal) {
+								ForEach(issue.assignees!, id: \.id) { assignee in
+									Text(assignee.name)
+								}
 							}
 						}
 					}
-				}
-
-				if (issue.labels != nil && !(issue.labels!.isEmpty)) {
-					HStack {
-						Image(systemName: "tag.circle")
-						LabelListView(labels: issue.labels!)
+					
+					if (showLabels) {
+						HStack {
+							Image(systemName: "tag.circle")
+							LabelListView(labels: issue.labels!)
+						}
 					}
-				}
-
-				if (issue.milestone != nil) {
-					HStack {
-						Image(systemName: "signpost.right.and.left")
-						Text(issue.milestone!.title.emojized())
+					
+					if (showMilestone) {
+						HStack {
+							Image(systemName: "signpost.right.and.left")
+							Text(issue.milestone!.title.emojized())
+						}
 					}
-				}
-
-				if (issue.dueDate != nil) {
-					HStack {
-						Image(systemName: "calendar.badge.clock")
-						Text(Date.formToString(issue.dueDate!))
+					
+					if (showDueDate) {
+						HStack {
+							Image(systemName: "calendar.badge.clock")
+							Text(Date.formToString(issue.dueDate!))
+						}
 					}
 				}
 			}
+			
+			
 			Section("Notes") {
+				NotesLoader(id: issue.projectId, iid: issue.iid, type: discussionType.Issue)
+			}
+			
+			Section("Actions") {
 				Button("Add new note", action: {
 					showNewNote = true
 				})
-				NotesLoader(id: issue.projectId, iid: issue.iid, type: discussionType.Issue)
+				
+				let name: String = (issue.state == "opened" ? "Close issue" : "Reopen issue")
+				Button(name) {
+					Task.init {
+						await changeState()
+					}
+				}
 			}
 		}.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
@@ -127,7 +148,9 @@ struct IssueView: View {
 				NewIssueView(id: issue.projectId)
 			}.sheet(isPresented: $showNewNote) {
 				NewNoteView(id: issue.projectId, iid: issue.iid, type: discussionType.Issue)
-			}
+			}.alert(isPresented: $stateError, content: {
+				Alert(title: Text("Error"), message: Text("Failed to change issue state"), dismissButton: .default(Text("OK")))
+			})
 		/* This does not work because the option "with_labels_details" is missing for single issues
 		 .refreshable {
 		 let temp = await API.get(type: Issue.self, endpoint: "projects/\(issue.projectId)/issues/\(issue.iid)", query: ["with_labels_details": "true"])
@@ -135,6 +158,16 @@ struct IssueView: View {
 		 issue = temp!
 		 }
 		 } */
+	}
+	
+	private func changeState() async -> Void {
+		let stateChange = (issue.state == "opened" ? "close" : "reopen")
+		let res = await API.req(type: Issue.self, method: .put, endpoint: "projects/\(issue.projectId)/issues/\(issue.iid)", query: ["state_event": stateChange])
+		if (res != nil) {
+			issue = res!
+		} else {
+			stateError = true
+		}
 	}
 }
 
