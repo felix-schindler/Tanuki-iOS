@@ -62,7 +62,7 @@ struct ProjectIssuesLoader: View {
 	}
 	
 	private func getIssues() async -> Void {
-		var filter = ["with_labels_details": "true", "sort": "desc", "order_by": "created_at"];
+		var filter = ["with_labels_details": "true", "sort": "desc", "order_by": "created_at"]
 		
 		if (type == 0) {
 			filter["state"] = "opened"
@@ -71,7 +71,6 @@ struct ProjectIssuesLoader: View {
 			filter["order_by"] = "updated_at"
 		}
 		
-		issues = nil
 		issues = await API.get(type: [Issue].self, endpoint: "projects/\(id)/issues", query: filter)
 		noConnection = (issues == nil)
 	}
