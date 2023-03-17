@@ -144,7 +144,7 @@ struct ProjectView: View {
 						Text("Branches")
 					}.foregroundColor(.primary)
 				}
-
+				
 				if (project.issuesEnabled) {
 					NavigationLink(destination: ProjectIssuesLoader(id: project.id)) {
 						HStack {
@@ -176,7 +176,7 @@ struct ProjectView: View {
 							.frame(maxWidth: .infinity, alignment: .leading)
 					}
 				}.foregroundColor(.primary)
-
+				
 				NavigationLink(destination: PipelineLoader(id: project.id, branch: "", onlyStatus: false)) {
 					HStack {
 						Text("🚀")
@@ -190,11 +190,11 @@ struct ProjectView: View {
 			}
 			
 			if (project.readmeUrl != nil) {
-				Section("README") {
-					let readmePath = project.readmeUrl!.split(separator: "/").last
-					if (readmePath != nil) {
+				let readmePath = project.readmeUrl!.split(separator: "/").last
+				if (readmePath != nil) {
+					Section("README") {
 						FileLoader(id: project.id, filePath: String(readmePath!), refName: project.defaultBranch ?? "", inline: true)
-							.padding(.top)
+							.padding(.top, 7.5)
 					}
 				}
 			}
@@ -241,7 +241,7 @@ struct ProjectView: View {
 	private func toggleStar() async -> Void {
 		let toggle = await API.req(type: ToggleStar.self, method: .post, endpoint: "\(project.pathWithNamespace)/toggle_star.json", useBase: false)
 		if (toggle != nil) {
-			project.starCount = toggle!.starCount;
+			project.starCount = toggle!.starCount
 		}
 	}
 	

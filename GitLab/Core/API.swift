@@ -56,7 +56,7 @@ class API {
 			print("Error: ", error)
 		}
 		
-		return nil;
+		return nil
 	}
 	
 	public static func req<T: Codable>(type: T.Type, method: HttpMethod, endpoint: String, resource: String? = nil, query: Dictionary<String, String> = [:], body: Dictionary<String, String> = [:], useBase: Bool = true) async -> T? {
