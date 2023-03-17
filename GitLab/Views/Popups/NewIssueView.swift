@@ -44,7 +44,7 @@ struct NewIssueView: View {
 	}
 	
 	private func saveNewIssue() async -> Bool {
-		let newIssue = await API.req(type: Issue.self, method: .post, endpoint: "projects/\(id)/issues?title=\(title.url())&description=\(description.url())")
+		let newIssue = await API.req(type: Issue.self, method: .post, endpoint: "projects/\(id)/issues", query: ["title": title, "description": description])
 		return newIssue != nil
 	}
 }
