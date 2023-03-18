@@ -41,7 +41,7 @@ struct AllProjectsLoader: View {
 	
 	private func getProjects() async -> Void {
 		projects = await API.get(type: [Project].self, endpoint: "projects", query: [
-			"search": String(search).url(),
+			"search": search,
 			"order_by": "last_activity_at"
 		])
 		loadFailed = (projects == nil)

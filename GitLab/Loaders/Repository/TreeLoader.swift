@@ -79,7 +79,7 @@ struct TreeLoader: View {
 	}
 	
 	private func getTree() async -> Void {
-		tree = await API.get(type: [TreeFile].self, endpoint: "projects/\(id)/repository/tree", query: ["ref": refName.url(), "path": filePath != nil ? filePath! : ""])
+		tree = await API.get(type: [TreeFile].self, endpoint: "projects/\(id)/repository/tree", query: ["ref": refName, "path": filePath != nil ? filePath! : ""])
 	}
 	
 	private func getBranches() async -> Void {
