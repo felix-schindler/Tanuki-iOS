@@ -40,8 +40,9 @@ struct ProjectIssuesLoader: View {
 						}.pickerStyle(WheelPickerStyle())
 						Button("Apply") {
 							Task.init {
+								issues = await getIssues()
+								noConnection = (issues == nil)
 								showFilter = false
-								await getIssues()
 							}
 						}
 					}
@@ -56,12 +57,13 @@ struct ProjectIssuesLoader: View {
 			}
 		}.onAppear {
 			Task.init {
-				await getIssues()
+				issues = await getIssues()
+				noConnection = (issues == nil)
 			}
 		}.navigationTitle("Issues")
 	}
 	
-	private func getIssues() async -> Void {
+	private func getIssues() async -> [Issue]? {
 		var filter = ["with_labels_details": "true", "sort": "desc", "order_by": "created_at"]
 		
 		if (type == 0) {
@@ -71,8 +73,7 @@ struct ProjectIssuesLoader: View {
 			filter["order_by"] = "updated_at"
 		}
 		
-		issues = await API.get(type: [Issue].self, endpoint: "projects/\(id)/issues", query: filter)
-		noConnection = (issues == nil)
+		return await API.get(type: [Issue].self, endpoint: "projects/\(id)/issues", query: filter)
 	}
 }
 

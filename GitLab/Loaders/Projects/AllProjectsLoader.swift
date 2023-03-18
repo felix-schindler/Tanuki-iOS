@@ -40,7 +40,6 @@ struct AllProjectsLoader: View {
 	}
 	
 	private func getProjects() async -> Void {
-		projects = nil
 		projects = await API.get(type: [Project].self, endpoint: "projects", query: [
 			"search": String(search).url(),
 			"order_by": "last_activity_at"

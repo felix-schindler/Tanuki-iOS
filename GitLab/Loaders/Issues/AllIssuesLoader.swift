@@ -10,7 +10,7 @@ import SwiftUI
 struct AllIssuesLoader: View {
 	@State var issues: [Issue]? = nil
 	@State var noConnection: Bool = false
-	
+
 	var body: some View {
 		VStack {
 			if (issues != nil) {
@@ -26,14 +26,14 @@ struct AllIssuesLoader: View {
 			}
 		}.onAppear {
 			Task.init {
-				await getIssues()
+				issues = await getIssues()
+				noConnection = (issues == nil)
 			}
 		}.navigationTitle("Issues")
 	}
-	
-	private func getIssues() async -> Void {
-		issues = await API.get(type: [Issue].self, endpoint: "issues", query: ["state": "opened", "with_labels_details": "true", "order_by": "updated_at"])
-		noConnection = (issues == nil)
+
+	private func getIssues() async -> [Issue]? {
+		return await API.get(type: [Issue].self, endpoint: "issues", query: ["state": "opened", "with_labels_details": "true", "order_by": "updated_at"])
 	}
 }
 
