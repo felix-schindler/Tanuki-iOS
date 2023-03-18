@@ -31,6 +31,8 @@ struct GitLabApp: App {
 					.tag(2)
 			}.sheet(isPresented: $showChangeConf) {
 				SettingsView()
+			}.sheet(isPresented: Store.$showInfo) {
+				InfoView()
 			}
 		}
 	}
