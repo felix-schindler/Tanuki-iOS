@@ -26,14 +26,14 @@ struct GroupLoader: View {
 			}
 		}.onAppear {
 			Task.init {
-				await getGroup()
+				group = await getGroup()
+				loadFailed = (group == nil)
 			}
 		}
 	}
 	
-	private func getGroup() async -> Void {
-		group = await API.get(type: Group.self, endpoint: "groups/\(id)")
-		loadFailed = (group == nil)
+	private func getGroup() async -> Group? {
+		return await API.get(type: Group.self, endpoint: "groups/\(id)")
 	}
 }
 

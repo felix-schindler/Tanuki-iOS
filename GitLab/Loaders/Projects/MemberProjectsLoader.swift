@@ -36,7 +36,8 @@ struct MemberProjectsLoader: View {
 						Button("Apply") {
 							Task.init {
 								showFilter = false
-								await getProjects()
+								projects = await getProjects()
+								noConnection = (projects == nil)
 							}
 						}
 					}
@@ -49,15 +50,13 @@ struct MemberProjectsLoader: View {
 			}
 		}.onAppear {
 			Task.init {
-				await getProjects()
+				projects = await getProjects()
+				noConnection = (projects == nil)
 			}
 		}.navigationTitle("Projects")
 	}
 	
-	private func getProjects() async -> Void {
-		projects = nil
-		noConnection = false
-		
+	private func getProjects() async -> [Project]? {
 		var filters: Dictionary<String, String> = ["order_by": "last_activity_at"]
 		if (filter == Filter.membership) {
 			filters["membership"] = "true"
@@ -65,8 +64,7 @@ struct MemberProjectsLoader: View {
 			filters["owned"] = "true"
 		}
 		
-		projects = await API.get(type: [Project].self, endpoint: "projects", query: filters)
-		noConnection = (projects == nil)
+		return await API.get(type: [Project].self, endpoint: "projects", query: filters)
 	}
 }
 

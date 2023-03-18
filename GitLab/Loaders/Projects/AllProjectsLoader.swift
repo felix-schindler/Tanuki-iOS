@@ -34,17 +34,17 @@ struct AllProjectsLoader: View {
 			}
 		}.onAppear {
 			Task.init {
-				await getProjects()
+				projects = await getProjects()
+				loadFailed = (projects == nil)
 			}
 		}.navigationTitle("Projects")
 	}
 	
-	private func getProjects() async -> Void {
-		projects = await API.get(type: [Project].self, endpoint: "projects", query: [
+	private func getProjects() async -> [Project]? {
+		return await API.get(type: [Project].self, endpoint: "projects", query: [
 			"search": search,
 			"order_by": "last_activity_at"
 		])
-		loadFailed = (projects == nil)
 	}
 }
 

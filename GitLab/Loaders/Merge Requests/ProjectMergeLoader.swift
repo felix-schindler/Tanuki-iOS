@@ -29,14 +29,14 @@ struct ProjectMergeLoader: View {
 			}
 		}.onAppear {
 			Task.init {
-				await getMRs()
+				mergeRequests = await getMRs()
+				loadFailed = (mergeRequests == nil)
 			}
 		}.navigationTitle("Merge requests")
 	}
 	
-	private func getMRs() async -> Void {
-		mergeRequests = await API.get(type: [MergeRequest].self, endpoint: "projects/\(id)/merge_requests", query: ["with_labels_details": "true"])
-		loadFailed = (mergeRequests == nil)
+	private func getMRs() async -> [MergeRequest]? {
+		return await API.get(type: [MergeRequest].self, endpoint: "projects/\(id)/merge_requests", query: ["with_labels_details": "true"])
 	}
 }
 

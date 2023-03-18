@@ -10,7 +10,7 @@ import MarkdownUI
 
 struct ProjectListView: View {
 	@State var projects: [Project]
-	@State var updateFunction: () async -> Void
+	@State var updateFunction: () async -> [Project]?
 	
 	var body: some View {
 		if (projects.isEmpty) {
@@ -102,7 +102,10 @@ struct ProjectListView: View {
 					}
 				}
 			}.refreshable {
-				await updateFunction()
+				let temp = await updateFunction()
+				if (temp != nil) {
+					projects = temp!
+				}
 			}
 		}
 	}
@@ -131,6 +134,6 @@ struct ProjectListView: View {
 
 struct ProjectListView_Previews: PreviewProvider {
 	static var previews: some View {
-		ProjectListView(projects: [], updateFunction: {})
+		ProjectListView(projects: [], updateFunction: { nil })
 	}
 }

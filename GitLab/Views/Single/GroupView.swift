@@ -10,7 +10,7 @@ import MarkdownUI
 
 struct GroupView: View {
 	@State var group: Group
-	@State var updateFunction: () async -> Void
+	@State var updateFunction: () async -> Group?
 	
 	var body: some View {
 		VStack(alignment: .leading) {
@@ -52,11 +52,15 @@ struct GroupView: View {
 				}.frame(maxWidth: .infinity, alignment: .leading)
 				Markdown(group.description.emojized())
 			}.padding()
-			ProjectListView(projects: group.projects, updateFunction: updateFunction)
+			// FIXME: This should actually load the groups projects
+			ProjectListView(projects: group.projects, updateFunction: { return group.projects })
 			Spacer()
 		}.refreshable(action: {
 			Task.init {
-				await updateFunction()
+				let temp = await updateFunction()
+				if (temp != nil) {
+					group = temp!
+				}
 			}
 		}).navigationTitle(group.name)
 			.navigationBarTitleDisplayMode(.inline)
@@ -65,6 +69,6 @@ struct GroupView: View {
 
 struct GroupView_Previews: PreviewProvider {
 	static var previews: some View {
-		GroupView(group: Group(id: 59430464, name: "mc-webshop", description: "Collection of repositories for the Minecraft Webshop Plugin", visibility: "public", avatarUrl: "https://gitlab.com/uploads/-/system/group/avatar/59430464/server-icon.png", projects: []), updateFunction: {})
+		GroupView(group: Group(id: 59430464, name: "mc-webshop", description: "Collection of repositories for the Minecraft Webshop Plugin", visibility: "public", avatarUrl: "https://gitlab.com/uploads/-/system/group/avatar/59430464/server-icon.png", projects: []), updateFunction: { nil })
 	}
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PipelineListView: View {
 	@State var pipelines: [Pipeline]
-	@State var updateFunction: () async -> Void
+	@State var updateFunction: () async -> [Pipeline]?
 	
 	var body: some View {
 		VStack {
@@ -32,7 +32,10 @@ struct PipelineListView: View {
 					}
 				}
 			}.refreshable {
-				await updateFunction()
+				let temp = await updateFunction()
+				if (temp != nil) {
+					pipelines = temp!
+				}
 			}
 		}.navigationTitle("Pipelines")
 	}
@@ -40,6 +43,10 @@ struct PipelineListView: View {
 
 struct PipelineListView_Previews: PreviewProvider {
 	static var previews: some View {
-		PipelineListView(pipelines: [Pipeline](), updateFunction: {})
+		PipelineListView(pipelines: [
+			Pipeline(id: 1, ref: "main", status: "success", source: "some-source", createdAt: Date()),
+			Pipeline(id: 1, ref: "main", status: "success", source: "some-source", createdAt: Date()),
+			Pipeline(id: 1, ref: "main", status: "success", source: "some-source", createdAt: Date())
+		], updateFunction: { nil })
 	}
 }

@@ -28,14 +28,14 @@ struct AllMergeLoader: View {
 			}
 		}.onAppear {
 			Task.init {
-				await getMRs()
+				mergeRequests = await getMRs()
+				noConnection = mergeRequests == nil
 			}
 		}.navigationTitle("Merge requests")
 	}
 	
-	private func getMRs() async -> Void {
-		mergeRequests = await API.get(type: [MergeRequest].self, endpoint: "merge_requests", query: ["state": "opened"])
-		noConnection = mergeRequests == nil
+	private func getMRs() async -> [MergeRequest]? {
+		return await API.get(type: [MergeRequest].self, endpoint: "merge_requests", query: ["state": "opened"])
 	}
 }
 

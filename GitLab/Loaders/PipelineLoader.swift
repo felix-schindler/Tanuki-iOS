@@ -43,16 +43,14 @@ struct PipelineLoader: View {
 			}
 		}.onAppear {
 			Task.init {
-				await getPipeline()
+				pipelines = await getPipeline()
+				noConnection = (pipelines == nil)
 			}
 		}
 	}
 	
-	private func getPipeline() async -> Void {
-		pipelines = await API.get(type: [Pipeline].self, endpoint: "projects/\(id)/pipelines", query: ["ref": branch])
-		if (pipelines == nil) {
-			pipelines = [Pipeline]()
-		}
+	private func getPipeline() async -> [Pipeline]? {
+		return await API.get(type: [Pipeline].self, endpoint: "projects/\(id)/pipelines", query: ["ref": branch])
 	}
 }
 

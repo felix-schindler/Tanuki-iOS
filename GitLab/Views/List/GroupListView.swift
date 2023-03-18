@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GroupListView: View {
 	@State var groups: [SmallGroup]
-	@State var updateFunction: () async -> Void
+	@State var updateFunction: () async -> [SmallGroup]?
 	
 	var body: some View {
 		if (groups.isEmpty) {
@@ -56,7 +56,10 @@ struct GroupListView: View {
 					}
 				}
 			}.refreshable {
-				await updateFunction()
+				let temp = await updateFunction()
+				if (temp != nil) {
+					groups = temp!
+				}
 			}
 		}
 	}
@@ -64,6 +67,6 @@ struct GroupListView: View {
 
 struct GroupListView_Previews: PreviewProvider {
 	static var previews: some View {
-		GroupListView(groups: [], updateFunction: {})
+		GroupListView(groups: [], updateFunction: { nil })
 	}
 }

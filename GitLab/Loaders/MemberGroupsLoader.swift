@@ -28,14 +28,14 @@ struct MemberGroupsLoader: View {
 			}
 		}.onAppear {
 			Task.init {
-				await getGroups()
+				groups = await getGroups()
+				noConnection = (groups == nil)
 			}
 		}.navigationTitle("Groups")
 	}
 	
-	private func getGroups() async -> Void {
-		groups = await API.get(type: [SmallGroup].self, endpoint: "groups")
-		noConnection = groups == nil
+	private func getGroups() async -> [SmallGroup]? {
+		return await API.get(type: [SmallGroup].self, endpoint: "groups")
 	}
 }
 
