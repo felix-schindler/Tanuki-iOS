@@ -16,10 +16,12 @@ struct InfoView: View {
 			"""
 			## Tanuki for GitLab
 			
-			This app is still in early development so bugs
-			are expected. If you encounter any, you can
-			report them in our
-			[GitLab Repository](https://gitlab.com/felix-schindler/gitlab-ios/-/issues).
+			This app is still in early development.
+			When you encounter any bugs or have feature requests,
+			please create an issue in our
+			[GitLab repository](https://gitlab.com/felix-schindler/gitlab-ios/-/issues)
+			or
+			[send an email](mailto:contact-project+felix-schindler-gitlab-ios-33025310-issue-@incoming.gitlab.com).
 			"""
 			}	.font(.body)
 				.padding()
