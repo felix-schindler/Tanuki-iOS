@@ -7,18 +7,26 @@
 
 import SwiftUI
 import MarkdownUI
+import SwiftHttp
 
 enum ActiveSheet {
 	case newIssue, newNote
 }
 
 struct IssueView: View {
+	/// Issue that's being displayed
 	@State var issue: Issue
 	
+	/// Controls whether to show "new" sheets
 	@State var showNewIssue = false
 	@State var showNewNote = false
 	
+	/// Controlls the alert after an error occured while changing state
 	@State var stateError = false
+	
+	/// Controlls the alert after issue was deleted
+	@State var deletion = false
+	@State var deletionError = true
 	
 	var body: some View {
 		List {
@@ -127,6 +135,12 @@ struct IssueView: View {
 						await changeState()
 					}
 				}
+				
+				Button("Delete issue", role: .destructive) {
+					Task.init {
+						await deleteIssue()
+					}
+				}
 			}
 		}.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
@@ -150,6 +164,10 @@ struct IssueView: View {
 				NewNoteView(id: issue.projectId, iid: issue.iid, type: discussionType.Issue)
 			}.alert(isPresented: $stateError, content: {
 				Alert(title: Text("Error"), message: Text("Failed to change issue state"), dismissButton: .default(Text("OK")))
+			}).alert(isPresented: $deletion, content: {
+				Alert(title: Text("Deletion"), message: Text("Issue has been deleted"), dismissButton: .default(Text("OK")))
+			}).alert(isPresented: $deletionError, content: {
+				Alert(title: Text("Error"), message: Text("Failed to delete issue"), dismissButton: .default(Text("OK")))
 			})
 		/* This does not work because the option "with_labels_details" is missing for single issues
 		 .refreshable {
@@ -168,6 +186,12 @@ struct IssueView: View {
 		} else {
 			stateError = true
 		}
+	}
+	
+	private func deleteIssue() async -> Void {
+		let status = await API.delete(endpoint: "projects/\(issue.projectId)/issues/\(issue.iid)")
+		deletion = (status.rawValue >= 200 && status.rawValue < 300)
+		deletionError = !deletion
 	}
 }
 
