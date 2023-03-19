@@ -78,7 +78,7 @@ struct SettingsView: View {
 					.controlSize(.large)
 			}.padding()
 				.navigationBarTitle("Settings")
-				.navigationBarItems(trailing: Button("Cancel", action: {self.presentationMode.wrappedValue.dismiss()}).foregroundColor(.red))
+				.navigationBarItems(trailing: Button("Cancel", role: .cancel, action: { self.presentationMode.wrappedValue.dismiss() }).foregroundColor(.red))
 		}.navigationViewStyle(StackNavigationViewStyle())
 	}
 	

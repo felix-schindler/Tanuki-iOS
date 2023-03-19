@@ -30,7 +30,7 @@ struct NewIssueView: View {
 			}.alert(isPresented: $isError, content: {
 				Alert(title: Text("Error"), message: Text("Failed to create issue"), dismissButton: .default(Text("OK")))
 			}).navigationBarTitle("New issue")
-				.navigationBarItems(leading: Button("Cancel", action: {
+				.navigationBarItems(leading: Button("Cancel", role: .cancel, action: {
 					self.presentationMode.wrappedValue.dismiss()
 				}).foregroundColor(.red), trailing: Button("Save", action: {
 					Task.init {
