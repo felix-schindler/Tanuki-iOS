@@ -93,6 +93,7 @@ struct Issue: Codable {
 struct APILabel: Codable {
 	let id: Int
 	let name: String
+	let description: String?
 	let color: String
 	let textColor: String
 }

@@ -29,9 +29,9 @@ struct LabelListView: View {
 struct LabelListView_Previews: PreviewProvider {
 	static var previews: some View {
 		LabelListView(labels: [
-      APILabel(id: 1, name: "enhancement", color: "#5cb85c", textColor: "#FFFFFF"),
-      APILabel(id: 2, name: "bug", color: "#d9534f", textColor: "#FFFFFF"),
-      APILabel(id: 3, name: "documentation", color: "#f0ad4e", textColor: "#FFFFFF")
+      APILabel(id: 1, name: "enhancement", description: "", color: "#5cb85c", textColor: "#FFFFFF"),
+      APILabel(id: 2, name: "bug", description: "", color: "#d9534f", textColor: "#FFFFFF"),
+      APILabel(id: 3, name: "documentation", description: "", color: "#f0ad4e", textColor: "#FFFFFF")
     ])
 	}
 }
