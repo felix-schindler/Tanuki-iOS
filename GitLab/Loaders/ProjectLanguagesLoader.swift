@@ -22,7 +22,7 @@ struct ProjectLanguagesLoader: View {
 				Text("Failed to load, please check your internet connection and your token")
 			} else {
 				Spacer()
-				ProgressView("Loading")
+				ProgressView()
 				Spacer()
 			}
 		}.onAppear {

@@ -127,7 +127,10 @@ struct ProjectView: View {
 					}
 				}
 				
-				ProjectLanguagesLoader(id: project.id)
+				HStack(spacing: 2) {
+					Image(systemName: "character")
+					ProjectLanguagesLoader(id: project.id)
+				}
 			}
 			
 			Section("Project") {
@@ -197,7 +200,7 @@ struct ProjectView: View {
 							Text("Members")
 						}
 					}.foregroundColor(.primary)
-
+					
 					NavigationLink(destination: ProjectLabelsLoader(id: project.id)) {
 						HStack {
 							Image(systemName: "tag.circle")
