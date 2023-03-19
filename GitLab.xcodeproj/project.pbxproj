@@ -52,6 +52,12 @@
 		DCAAC170279ED63800EC685F /* MemberGroupsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */; };
 		DCAAC172279ED8B600EC685F /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC171279ED8B600EC685F /* GroupListView.swift */; };
 		DCCC715F273602750091C216 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC715E273602750091C216 /* LabelListView.swift */; };
+		DCD3164A29C77D8900AF7A3E /* ProjectMemberLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164929C77D8900AF7A3E /* ProjectMemberLoader.swift */; };
+		DCD3164C29C77E3600AF7A3E /* UserSmallListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164B29C77E3600AF7A3E /* UserSmallListView.swift */; };
+		DCD3164E29C7811200AF7A3E /* LabelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164D29C7811200AF7A3E /* LabelsView.swift */; };
+		DCD3165029C793E600AF7A3E /* ProjectLabelsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164F29C793E600AF7A3E /* ProjectLabelsLoader.swift */; };
+		DCD3165229C7993800AF7A3E /* ProjectLanguagesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3165129C7993800AF7A3E /* ProjectLanguagesLoader.swift */; };
+		DCD3165429C799A700AF7A3E /* LanguagesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3165329C799A700AF7A3E /* LanguagesListView.swift */; };
 		DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEE699127312F8A00AE666C /* EmojiCodes.swift */; };
 		DCF14E3D29C71B8800D1F43B /* IssueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */; };
 		DCF14E3F29C720E800D1F43B /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF14E3E29C720E800D1F43B /* AsyncButton.swift */; };
@@ -104,6 +110,12 @@
 		DCAAC171279ED8B600EC685F /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
 		DCCC715D2735E9910091C216 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DCCC715E273602750091C216 /* LabelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListView.swift; sourceTree = "<group>"; };
+		DCD3164929C77D8900AF7A3E /* ProjectMemberLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMemberLoader.swift; sourceTree = "<group>"; };
+		DCD3164B29C77E3600AF7A3E /* UserSmallListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSmallListView.swift; sourceTree = "<group>"; };
+		DCD3164D29C7811200AF7A3E /* LabelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelsView.swift; sourceTree = "<group>"; };
+		DCD3164F29C793E600AF7A3E /* ProjectLabelsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLabelsLoader.swift; sourceTree = "<group>"; };
+		DCD3165129C7993800AF7A3E /* ProjectLanguagesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLanguagesLoader.swift; sourceTree = "<group>"; };
+		DCD3165329C799A700AF7A3E /* LanguagesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagesListView.swift; sourceTree = "<group>"; };
 		DCEE699127312F8A00AE666C /* EmojiCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCodes.swift; sourceTree = "<group>"; };
 		DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilter.swift; sourceTree = "<group>"; };
 		DCF14E3E29C720E800D1F43B /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
@@ -150,6 +162,9 @@
 				DC5EB913272DBDA20015BF0D /* MergeListView.swift */,
 				DC0897FC2730516600B8ACDA /* NoteListView.swift */,
 				DCAAC171279ED8B600EC685F /* GroupListView.swift */,
+				DCD3164B29C77E3600AF7A3E /* UserSmallListView.swift */,
+				DCD3164D29C7811200AF7A3E /* LabelsView.swift */,
+				DCD3165329C799A700AF7A3E /* LanguagesListView.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -235,6 +250,9 @@
 				DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */,
 				DC56FDE129B888EA005841B3 /* ContributionLoader.swift */,
 				DC7C83D829B8E8A700B3BE41 /* GroupLoader.swift */,
+				DCD3164929C77D8900AF7A3E /* ProjectMemberLoader.swift */,
+				DCD3164F29C793E600AF7A3E /* ProjectLabelsLoader.swift */,
+				DCD3165129C7993800AF7A3E /* ProjectLanguagesLoader.swift */,
 			);
 			path = Loaders;
 			sourceTree = "<group>";
@@ -368,12 +386,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCD3164C29C77E3600AF7A3E /* UserSmallListView.swift in Sources */,
 				DCAAC170279ED63800EC685F /* MemberGroupsLoader.swift in Sources */,
 				DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */,
 				DC0EC641279E1733006A7C75 /* FileLoader.swift in Sources */,
 				DC4F9568272EBA3F00354E1D /* NotesLoader.swift in Sources */,
 				DC4F9562272EB92200354E1D /* MergeView.swift in Sources */,
 				DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */,
+				DCD3164A29C77D8900AF7A3E /* ProjectMemberLoader.swift in Sources */,
 				DC10C39A2731537D00CAE425 /* CommitsView.swift in Sources */,
 				DC7A85BA27319D010000CF4D /* PipelineLoader.swift in Sources */,
 				DC06BE63273F1D3C0049599E /* Errors.swift in Sources */,
@@ -403,12 +423,16 @@
 				DC4F956E272ECD0100354E1D /* ExploreView.swift in Sources */,
 				DC4F9552272EB49700354E1D /* AllIssuesLoader.swift in Sources */,
 				DC5EB90C272D955E0015BF0D /* API.swift in Sources */,
+				DCD3165029C793E600AF7A3E /* ProjectLabelsLoader.swift in Sources */,
+				DCD3165229C7993800AF7A3E /* ProjectLanguagesLoader.swift in Sources */,
+				DCD3164E29C7811200AF7A3E /* LabelsView.swift in Sources */,
 				DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */,
 				DC5EB910272DA2450015BF0D /* IssueView.swift in Sources */,
 				DC5EB916272DD1310015BF0D /* MemberProjectsLoader.swift in Sources */,
 				DC5EB906272D938E0015BF0D /* AccountView.swift in Sources */,
 				DC0EC642279E1733006A7C75 /* TreeLoader.swift in Sources */,
 				DC8FE05329C6499A001C5D82 /* Store.swift in Sources */,
+				DCD3165429C799A700AF7A3E /* LanguagesListView.swift in Sources */,
 				DCF14E3F29C720E800D1F43B /* AsyncButton.swift in Sources */,
 				DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */,
 				DC4F956A272EC3B100354E1D /* APIAnswers.swift in Sources */,

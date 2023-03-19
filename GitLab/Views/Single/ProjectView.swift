@@ -126,6 +126,8 @@ struct ProjectView: View {
 						}
 					}
 				}
+				
+				ProjectLanguagesLoader(id: project.id)
 			}
 			
 			Section("Project") {
@@ -187,6 +189,27 @@ struct ProjectView: View {
 						}
 					}
 				}.foregroundColor(.primary)
+				
+				DisclosureGroup(content: {
+					NavigationLink(destination: ProjectMemberLoader(id: project.id)) {
+						HStack {
+							Image(systemName: "person.2")
+							Text("Members")
+						}
+					}.foregroundColor(.primary)
+
+					NavigationLink(destination: ProjectLabelsLoader(id: project.id)) {
+						HStack {
+							Image(systemName: "tag.circle")
+							Text("Labels")
+						}
+					}.foregroundColor(.primary)
+				}, label: {
+					HStack {
+						Image(systemName: "ellipsis.circle")
+						Text("More")
+					}
+				})
 			}
 			
 			if (project.readmeUrl != nil) {
