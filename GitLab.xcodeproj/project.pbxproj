@@ -53,6 +53,8 @@
 		DCAAC172279ED8B600EC685F /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC171279ED8B600EC685F /* GroupListView.swift */; };
 		DCCC715F273602750091C216 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC715E273602750091C216 /* LabelListView.swift */; };
 		DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEE699127312F8A00AE666C /* EmojiCodes.swift */; };
+		DCF14E3D29C71B8800D1F43B /* IssueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */; };
+		DCF14E3F29C720E800D1F43B /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF14E3E29C720E800D1F43B /* AsyncButton.swift */; };
 		DCFCB06E29B7C3D800F18CDC /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = DCFCB06D29B7C3D800F18CDC /* MarkdownUI */; };
 /* End PBXBuildFile section */
 
@@ -103,6 +105,8 @@
 		DCCC715D2735E9910091C216 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DCCC715E273602750091C216 /* LabelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListView.swift; sourceTree = "<group>"; };
 		DCEE699127312F8A00AE666C /* EmojiCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCodes.swift; sourceTree = "<group>"; };
+		DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilter.swift; sourceTree = "<group>"; };
+		DCF14E3E29C720E800D1F43B /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +218,7 @@
 				DC5EB908272D93B30015BF0D /* Single */,
 				DC4F9555272EB4DD00354E1D /* List */,
 				DC90CA5A272E759100B758E7 /* Popups */,
+				DCF14E3E29C720E800D1F43B /* AsyncButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -251,6 +256,7 @@
 		DC5EB90A272D954B0015BF0D /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				DCF14E3B29C71B7D00D1F43B /* Helpers */,
 				DC5EB90B272D955E0015BF0D /* API.swift */,
 				DC4F9569272EC3B100354E1D /* APIAnswers.swift */,
 				DC90CA62272E878900B758E7 /* Utils.swift */,
@@ -273,6 +279,14 @@
 				DC2B300029C09625009ADC0D /* InfoView.swift */,
 			);
 			path = Popups;
+			sourceTree = "<group>";
+		};
+		DCF14E3B29C71B7D00D1F43B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,6 +383,7 @@
 				DC7A85BC27319D1A0000CF4D /* PipelineStatusView.swift in Sources */,
 				DC10C39C27315D6400CAE425 /* BranchesView.swift in Sources */,
 				DC5EB90E272D9C710015BF0D /* IssueListView.swift in Sources */,
+				DCF14E3D29C71B8800D1F43B /* IssueFilter.swift in Sources */,
 				DC90CA5C272E762200B758E7 /* NewIssueView.swift in Sources */,
 				DC7A85BE27319D290000CF4D /* PipelineListView.swift in Sources */,
 				DCCC715F273602750091C216 /* LabelListView.swift in Sources */,
@@ -394,6 +409,7 @@
 				DC5EB906272D938E0015BF0D /* AccountView.swift in Sources */,
 				DC0EC642279E1733006A7C75 /* TreeLoader.swift in Sources */,
 				DC8FE05329C6499A001C5D82 /* Store.swift in Sources */,
+				DCF14E3F29C720E800D1F43B /* AsyncButton.swift in Sources */,
 				DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */,
 				DC4F956A272EC3B100354E1D /* APIAnswers.swift in Sources */,
 				DC4F9554272EB4AF00354E1D /* ProjectIssuesLoader.swift in Sources */,
