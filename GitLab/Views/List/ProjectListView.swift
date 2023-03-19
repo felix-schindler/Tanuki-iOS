@@ -36,9 +36,8 @@ struct ProjectListView: View {
 								}
 							}.frame(width: 50, height: 50, alignment: .leading)
 						}
-						VStack {
-							HStack {
-								Text(project.nameWithNamespace)
+						VStack(alignment: .leading, spacing: 2) {
+							HStack(spacing: 2) {
 								if (project.visibility == "private") {
 									Image(systemName: "lock")
 								} else if (project.visibility == "internal") {
@@ -46,7 +45,10 @@ struct ProjectListView: View {
 								} else if (project.visibility == "public") {
 									Image(systemName: "globe")
 								}
-								if (project.permissions != nil && project.permissions!.projectAccess != nil) {
+								Text(project.nameWithNamespace)
+									.fontWeight(.medium)
+								if (project.permissions?.projectAccess != nil) {
+									Spacer()
 									Text(accessRole(code: project.permissions!.projectAccess!.accessLevel))
 										.font(.caption)
 										.padding(.horizontal, 6)
@@ -54,50 +56,46 @@ struct ProjectListView: View {
 										.background(Color(.systemGray3))
 										.cornerRadius(10)
 								}
-							}.frame(maxWidth: .infinity, alignment: .leading)
+							}
 							if (project.description != nil && project.description != "") {
 								Markdown(project.description!.emojized())
-									.markdownTextStyle {
-										ForegroundColor(.secondary)
-									}
-									.frame(maxWidth: .infinity, alignment: .leading)
 							}
-							VStack {
+							VStack(alignment: .leading, spacing: 2) {
 								HStack {
-									HStack(spacing: 1) {
+									HStack(spacing: 2) {
 										Image(systemName: "star")
 										Text(String(project.starCount))
 									}
 									
 									if (project.forksCount != nil) {
-										HStack(spacing: 1) {
+										HStack(spacing: 2) {
 											Image(systemName: "arrow.branch")
 											Text(String(project.forksCount!))
 										}
 									}
 									
 									if (project.issuesEnabled && project.openIssuesCount != nil) {
-										HStack(spacing: 1) {
+										HStack(spacing: 2) {
 											Image(systemName: "smallcircle.circle")
 											Text(String(project.openIssuesCount!))
 										}
 									}
-								}.frame(maxWidth: .infinity, alignment: .leading)
-									.padding(.top, 0.25)
+								}.font(.caption)
+									.foregroundColor(.secondary)
 								if (!project.tagList.isEmpty) {
-									HStack {
-										ForEach(project.tagList, id: \.hashValue) { tag in
-											Text(tag)
-												.padding(.horizontal, 6)
-												.padding(.vertical, 4)
-												.background(Color(.systemGray3))
-												.cornerRadius(10)
-												.foregroundColor(.primary)
-										}
-									}.frame(maxWidth: .infinity, alignment: .leading)
+									ScrollView(.horizontal) {
+										HStack {
+											ForEach(project.tagList, id: \.hashValue) { tag in
+												Text(tag)
+													.padding(.horizontal, 6)
+													.padding(.vertical, 4)
+													.background(Color(.systemGray3))
+													.cornerRadius(10)
+											}
+										}.font(.caption)
+									}
 								}
-							}.font(.caption)
-								.foregroundColor(.secondary)
+							}.padding(.top, 2)
 						}
 					}
 				}

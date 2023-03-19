@@ -47,7 +47,7 @@ struct IssueListView: View {
 								}
 								VStack(alignment: .leading, spacing: 2) {
 									Text(issue.title.emojized())
-										.fontWeight(Font.Weight.medium)
+										.fontWeight(.medium)
 									HStack {
 										HStack(spacing: 2) {
 											Image(systemName: "text.bubble")
