@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct ProjectIssuesLoader: View {
-	@State var id: Int
+struct IssuesLoader: View {
+	@State var id: Int? = nil
 	@State var showNewIssue: Bool = false
 	@State var showFilter: Bool = false
 	
@@ -41,7 +41,7 @@ struct ProjectIssuesLoader: View {
 	var body: some View {
 		VStack {
 			if (issues != nil) {
-				IssueListView(issues: issues!, updateFunction: getIssues)
+				IssueListView(issues: issues!, updateFunction: getIssues, showRef: (id == nil))
 					.searchable(text: $search)
 					.onSubmit(of: .search) {
 						Task.init {
@@ -55,12 +55,14 @@ struct ProjectIssuesLoader: View {
 							Button(action: {showFilter = true}) {
 								Image(systemName: "line.3.horizontal.decrease.circle")
 							}
-							Button(action: {showNewIssue = true}) {
-								Image(systemName: "plus.circle")
+							if (id != nil) {
+								Button(action: {showNewIssue = true}) {
+									Image(systemName: "plus.circle")
+								}
 							}
 						}
 					}.sheet(isPresented: $showNewIssue) {
-						NewIssueView(id: id)
+						NewIssueView(id: id!)
 					}.sheet(isPresented: $showFilter) {
 						List {
 							Section {
@@ -165,6 +167,7 @@ struct ProjectIssuesLoader: View {
 			filter[IssueState.NAME.rawValue] = state.rawValue
 		}
 		
+		filter[IssueSort.NAME.rawValue] = sort.rawValue
 		filter[IssueOrder.NAME.rawValue] = orderBy.rawValue
 		
 		if (type != .all) {
@@ -181,12 +184,17 @@ struct ProjectIssuesLoader: View {
 		
 		filter[IssueScope.NAME.rawValue] = scope.rawValue
 		
-		return await API.get(type: [Issue].self, endpoint: "projects/\(id)/issues", query: filter)
+		var endpoint = "issues"
+		if (id != nil) {
+			endpoint = "projects/\(id!)/issues"
+		}
+		
+		return await API.get(type: [Issue].self, endpoint: endpoint, query: filter)
 	}
 }
 
-struct ProjectIssuesLoader_Previews: PreviewProvider {
+struct IssuesLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		ProjectIssuesLoader(id: Int(0))
+		IssuesLoader(id: nil)
 	}
 }

@@ -151,7 +151,7 @@ struct ProjectView: View {
 				}
 				
 				if (project.issuesEnabled) {
-					NavigationLink(destination: ProjectIssuesLoader(id: project.id)) {
+					NavigationLink(destination: IssuesLoader(id: project.id)) {
 						HStack {
 							Image(systemName: "smallcircle.circle")
 								.foregroundColor(.green)
