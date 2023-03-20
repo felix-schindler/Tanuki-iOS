@@ -26,8 +26,8 @@ struct SingleUserView: View {
 						if (user.name != "") {
 							Text(user.name)
 						}
-						if (user.pronouns != "") {
-							Text(user.pronouns)
+						if (user.pronouns != nil && user.pronouns! != "") {
+							Text(user.pronouns!)
 								.foregroundColor(.secondary)
 								.font(.callout)
 						}
@@ -99,10 +99,10 @@ struct SingleUserView: View {
 				}
 			}
 			
-			if (user.publicEmail != "") {
+			if (user.publicEmail != nil && user.publicEmail! != "") {
 				HStack {
 					Image(systemName: "envelope")
-					Text(user.publicEmail)
+					Text(user.publicEmail!)
 						.textSelection(.enabled)
 				}
 			}

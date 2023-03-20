@@ -40,7 +40,7 @@ struct User: Codable {
 	let bio: String
 	let bot: Bool
 	let location: String?
-	let publicEmail: String
+	let publicEmail: String?
 	let skype: String
 	let linkedin: String
 	let twitter: String
@@ -48,7 +48,7 @@ struct User: Codable {
 	let websiteUrl: String
 	let organization: String
 	let jobTitle: String
-	let pronouns: String
+	let pronouns: String?
 	let workInformation: String?
 	let followers: Int
 	let following: Int
