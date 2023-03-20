@@ -13,7 +13,10 @@ struct ProjectIssuesLoader: View {
 	@State var showFilter: Bool = false
 	
 	@State var issues: [Issue]? = nil
-	@State var noConnection: Bool = false
+	@State var loadFailed: Bool = false
+	
+	// Search
+	@State var search: String = ""
 	
 	// Filters
 	@State var state: IssueState = .opened
@@ -39,6 +42,14 @@ struct ProjectIssuesLoader: View {
 		VStack {
 			if (issues != nil) {
 				IssueListView(issues: issues!, updateFunction: getIssues)
+					.searchable(text: $search)
+					.onSubmit(of: .search) {
+						Task.init {
+							issues = nil
+							issues = await getIssues()
+							loadFailed = (issues == nil)
+						}
+					}
 					.toolbar {
 						ToolbarItemGroup(placement: .navigationBarTrailing) {
 							Button(action: {showFilter = true}) {
@@ -116,7 +127,7 @@ struct ProjectIssuesLoader: View {
 							AsyncButton(action: {
 								issues = nil
 								issues = await getIssues()
-								noConnection = (issues == nil)
+								loadFailed = (issues == nil)
 								showFilter = false
 							}, label: {
 								Text("Apply")
@@ -124,7 +135,7 @@ struct ProjectIssuesLoader: View {
 						}
 					}
 			} else {
-				if (noConnection) {
+				if (loadFailed) {
 					Text("Failed to load, please check your internet connection and your token")
 				} else {
 					Spacer()
@@ -135,7 +146,7 @@ struct ProjectIssuesLoader: View {
 		}.onAppear {
 			Task.init {
 				issues = await getIssues()
-				noConnection = (issues == nil)
+				loadFailed = (issues == nil)
 			}
 		}.navigationTitle("Issues")
 	}
@@ -143,6 +154,13 @@ struct ProjectIssuesLoader: View {
 	private func getIssues() async -> [Issue]? {
 		var filter = ["with_labels_details": "true"]
 		
+		// Search
+		let _search: String = search.trim()
+		if (_search != "") {
+			filter["search"] = _search
+		}
+		
+		// Filters
 		if (state != .all) {
 			filter[IssueState.NAME.rawValue] = state.rawValue
 		}
