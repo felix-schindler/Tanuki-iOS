@@ -15,22 +15,23 @@ struct ProjectLabelsLoader: View {
 	@State var loadFailed: Bool = false
 	
 	var body: some View {
-		VStack {
+		List {
 			if (labels != nil) {
-				LabelsView(labels: labels!, updateFunction: getLabels)
+				LabelListView(labels: labels!, showDescription: true)
 			} else if (loadFailed) {
 				Text("Failed to load, please check your internet connection and your token")
 			} else {
-				Spacer()
-				ProgressView("Loading")
-				Spacer()
+				ProgressView()
 			}
 		}.onAppear {
 			Task.init {
 				labels = await getLabels()
 				loadFailed = (labels == nil)
 			}
-		}
+		}.refreshable {
+			labels = await getLabels()
+			loadFailed = (labels == nil)
+		}.navigationTitle("Labels")
 	}
 	
 	private func getLabels() async -> [APILabel]? {

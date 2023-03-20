@@ -56,7 +56,6 @@
 		DCCC715F273602750091C216 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC715E273602750091C216 /* LabelListView.swift */; };
 		DCD3164A29C77D8900AF7A3E /* ProjectMemberLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164929C77D8900AF7A3E /* ProjectMemberLoader.swift */; };
 		DCD3164C29C77E3600AF7A3E /* UserSmallListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164B29C77E3600AF7A3E /* UserSmallListView.swift */; };
-		DCD3164E29C7811200AF7A3E /* LabelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164D29C7811200AF7A3E /* LabelsView.swift */; };
 		DCD3165029C793E600AF7A3E /* ProjectLabelsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164F29C793E600AF7A3E /* ProjectLabelsLoader.swift */; };
 		DCD3165229C7993800AF7A3E /* ProjectLanguagesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3165129C7993800AF7A3E /* ProjectLanguagesLoader.swift */; };
 		DCD3165429C799A700AF7A3E /* LanguagesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3165329C799A700AF7A3E /* LanguagesListView.swift */; };
@@ -116,7 +115,6 @@
 		DCCC715E273602750091C216 /* LabelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListView.swift; sourceTree = "<group>"; };
 		DCD3164929C77D8900AF7A3E /* ProjectMemberLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMemberLoader.swift; sourceTree = "<group>"; };
 		DCD3164B29C77E3600AF7A3E /* UserSmallListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSmallListView.swift; sourceTree = "<group>"; };
-		DCD3164D29C7811200AF7A3E /* LabelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelsView.swift; sourceTree = "<group>"; };
 		DCD3164F29C793E600AF7A3E /* ProjectLabelsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLabelsLoader.swift; sourceTree = "<group>"; };
 		DCD3165129C7993800AF7A3E /* ProjectLanguagesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLanguagesLoader.swift; sourceTree = "<group>"; };
 		DCD3165329C799A700AF7A3E /* LanguagesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagesListView.swift; sourceTree = "<group>"; };
@@ -157,7 +155,6 @@
 				DC5EB90D272D9C710015BF0D /* IssueListView.swift */,
 				DC5EB913272DBDA20015BF0D /* MergeListView.swift */,
 				DCCC715E273602750091C216 /* LabelListView.swift */,
-				DCD3164D29C7811200AF7A3E /* LabelsView.swift */,
 				DC7A85BD27319D290000CF4D /* PipelineListView.swift */,
 				DCAAC171279ED8B600EC685F /* GroupListView.swift */,
 				DC0897FC2730516600B8ACDA /* NoteListView.swift */,
@@ -426,7 +423,6 @@
 				DC5EB90C272D955E0015BF0D /* API.swift in Sources */,
 				DCD3165029C793E600AF7A3E /* ProjectLabelsLoader.swift in Sources */,
 				DCD3165229C7993800AF7A3E /* ProjectLanguagesLoader.swift in Sources */,
-				DCD3164E29C7811200AF7A3E /* LabelsView.swift in Sources */,
 				DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */,
 				DC5EB910272DA2450015BF0D /* IssueView.swift in Sources */,
 				DC5EB916272DD1310015BF0D /* MemberProjectsLoader.swift in Sources */,

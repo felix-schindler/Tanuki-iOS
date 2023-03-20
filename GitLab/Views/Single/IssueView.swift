@@ -26,7 +26,7 @@ struct IssueView: View {
 	
 	/// Controlls the alert after issue was deleted
 	@State var deletion = false
-	@State var deletionError = true
+	@State var deletionError = false
 	
 	var body: some View {
 		List {
@@ -58,24 +58,23 @@ struct IssueView: View {
 					}
 				}
 				
-				HStack(spacing: 12) {
-					HStack(spacing: 1) {
+				HStack {
+					HStack(spacing: 2) {
 						Image(systemName: "hand.thumbsup")
 						Text(String(issue.upvotes))
 					}
-					HStack(spacing: 1) {
+					HStack(spacing: 2) {
 						Image(systemName: "hand.thumbsdown")
 						Text(String(issue.downvotes))
 					}
 					if (issue.confidential) {
-						HStack(spacing: 1) {
+						HStack(spacing: 2) {
 							Image(systemName: "lock")
 								.foregroundColor(.orange)
 							Text("Confidential")
 						}
 					}
-				}.frame(maxWidth: .infinity, alignment: .leading)
-					.padding(.top, 2)
+				}
 			}
 			
 			let showAssignees = (issue.assignees != nil && !(issue.assignees!.isEmpty))
@@ -99,7 +98,11 @@ struct IssueView: View {
 					if (showLabels) {
 						HStack {
 							Image(systemName: "tag.circle")
-							LabelListView(labels: issue.labels!)
+							ScrollView(.horizontal) {
+								HStack(spacing: 4) {
+									LabelListView(labels: issue.labels!, showDescription: false)
+								}
+							}
 						}
 					}
 					
