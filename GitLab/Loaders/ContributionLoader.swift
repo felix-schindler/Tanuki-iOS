@@ -16,20 +16,25 @@ struct ContributionLoader: View {
 	var body: some View {
 		VStack {
 			if (data != nil) {
-				if (data!.count >= 56) {
+				let rows = 3
+				let columns = 16
+				let sum = rows * columns
+				
+				if (data!.count >= sum) {
 					ContributionChartView(data: data!,
-																rows: 4,
-																columns: 14,
+																rows: rows,
+																columns: columns,
 																targetValue: 5,
 																blockColor: .green)
+					.padding()
 				} else {
-					Text("You need at least 56 entries. You got \(data!.count)")
+					Text("You need at least \(sum) entries. You got \(data!.count)")
 				}
 			} else {
 				if (loadFailed) {
 					Text("Failed to load contributions, please check your internet connection and your token")
 				} else {
-					ProgressView("Loading contributions")
+					ProgressView()
 				}
 			}
 		}.onAppear {

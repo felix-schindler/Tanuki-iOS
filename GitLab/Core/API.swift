@@ -53,7 +53,7 @@ class API {
 		
 		do {
 			let res = try await API.raw(method: method, url: httpUrl, body: body)
-
+			
 			decoder.keyDecodingStrategy = .convertFromSnakeCase
 			decoder.dateDecodingStrategy = .custom(iso8601Decoder())    // FIXME: this may introduce data races
 			
@@ -88,7 +88,7 @@ class API {
 		} catch {
 			print("Error", error)
 		}
-
+		
 		return HttpStatusCode.internalServerError
 	}
 }

@@ -31,15 +31,29 @@ struct Project: Codable {
 
 struct User: Codable {
 	let id: Int
-	let name: String
 	let username: String
+	let name: String
+	let state: String
 	let avatarUrl: String
+	let webUrl: String
+	let createdAt: Date
 	let bio: String
-	let location: String
+	let bot: Bool
+	let location: String?
 	let publicEmail: String
+	let skype: String
+	let linkedin: String
+	let twitter: String
+	let discord: String
 	let websiteUrl: String
+	let organization: String
+	let jobTitle: String
+	let pronouns: String
+	let workInformation: String?
 	let followers: Int
 	let following: Int
+	let localTime: String?
+	let isFollowed: Bool
 }
 
 struct UserSmall: Codable {
@@ -50,8 +64,8 @@ struct UserSmall: Codable {
 }
 
 struct UserStatus: Codable {
-	let emoji: String
-	let message: String
+	let emoji: String?
+	let message: String?
 }
 
 struct Namespace: Codable {

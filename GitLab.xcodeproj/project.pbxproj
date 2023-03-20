@@ -37,6 +37,8 @@
 		DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB911272DB9D00015BF0D /* ProjectListView.swift */; };
 		DC5EB914272DBDA20015BF0D /* MergeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB913272DBDA20015BF0D /* MergeListView.swift */; };
 		DC5EB916272DD1310015BF0D /* MemberProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB915272DD1310015BF0D /* MemberProjectsLoader.swift */; };
+		DC6F1D6229C840C900E0401C /* UserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F1D6129C840C900E0401C /* UserLoader.swift */; };
+		DC6F1D6429C8456200E0401C /* SingleUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F1D6329C8456200E0401C /* SingleUserView.swift */; };
 		DC7A85BA27319D010000CF4D /* PipelineLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A85B927319D010000CF4D /* PipelineLoader.swift */; };
 		DC7A85BC27319D1A0000CF4D /* PipelineStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A85BB27319D1A0000CF4D /* PipelineStatusView.swift */; };
 		DC7A85BE27319D290000CF4D /* PipelineListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A85BD27319D290000CF4D /* PipelineListView.swift */; };
@@ -95,6 +97,8 @@
 		DC5EB911272DB9D00015BF0D /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		DC5EB913272DBDA20015BF0D /* MergeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeListView.swift; sourceTree = "<group>"; };
 		DC5EB915272DD1310015BF0D /* MemberProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberProjectsLoader.swift; sourceTree = "<group>"; };
+		DC6F1D6129C840C900E0401C /* UserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoader.swift; sourceTree = "<group>"; };
+		DC6F1D6329C8456200E0401C /* SingleUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleUserView.swift; sourceTree = "<group>"; };
 		DC7A85B927319D010000CF4D /* PipelineLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PipelineLoader.swift; sourceTree = "<group>"; };
 		DC7A85BB27319D1A0000CF4D /* PipelineStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PipelineStatusView.swift; sourceTree = "<group>"; };
 		DC7A85BD27319D290000CF4D /* PipelineListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PipelineListView.swift; sourceTree = "<group>"; };
@@ -174,6 +178,7 @@
 			children = (
 				DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */,
 				DC5EB915272DD1310015BF0D /* MemberProjectsLoader.swift */,
+				DC7A85B927319D010000CF4D /* PipelineLoader.swift */,
 			);
 			path = Projects;
 			sourceTree = "<group>";
@@ -246,13 +251,13 @@
 				DC4F954F272EB3B600354E1D /* Issues */,
 				DC4F955A272EB74B00354E1D /* Merge Requests */,
 				DC4F9567272EBA3F00354E1D /* NotesLoader.swift */,
-				DC7A85B927319D010000CF4D /* PipelineLoader.swift */,
 				DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */,
 				DC56FDE129B888EA005841B3 /* ContributionLoader.swift */,
 				DC7C83D829B8E8A700B3BE41 /* GroupLoader.swift */,
 				DCD3164929C77D8900AF7A3E /* ProjectMemberLoader.swift */,
 				DCD3164F29C793E600AF7A3E /* ProjectLabelsLoader.swift */,
 				DCD3165129C7993800AF7A3E /* ProjectLanguagesLoader.swift */,
+				DC6F1D6129C840C900E0401C /* UserLoader.swift */,
 			);
 			path = Loaders;
 			sourceTree = "<group>";
@@ -267,6 +272,7 @@
 				DCCC715E273602750091C216 /* LabelListView.swift */,
 				DC0EC639279E16E6006A7C75 /* FileView.swift */,
 				DC7C83D629B8E80400B3BE41 /* GroupView.swift */,
+				DC6F1D6329C8456200E0401C /* SingleUserView.swift */,
 			);
 			path = Single;
 			sourceTree = "<group>";
@@ -396,6 +402,7 @@
 				DCD3164A29C77D8900AF7A3E /* ProjectMemberLoader.swift in Sources */,
 				DC10C39A2731537D00CAE425 /* CommitsView.swift in Sources */,
 				DC7A85BA27319D010000CF4D /* PipelineLoader.swift in Sources */,
+				DC6F1D6429C8456200E0401C /* SingleUserView.swift in Sources */,
 				DC06BE63273F1D3C0049599E /* Errors.swift in Sources */,
 				DC2B2FFF29C0679B009ADC0D /* ProjectView.swift in Sources */,
 				DC5EB914272DBDA20015BF0D /* MergeListView.swift in Sources */,
@@ -411,6 +418,7 @@
 				DC90CA63272E878900B758E7 /* Utils.swift in Sources */,
 				DC7A85C02731AB4E0000CF4D /* SettingsView.swift in Sources */,
 				DC7C83DB29B8F32900B3BE41 /* NewNoteView.swift in Sources */,
+				DC6F1D6229C840C900E0401C /* UserLoader.swift in Sources */,
 				DC56FDE229B888EA005841B3 /* ContributionLoader.swift in Sources */,
 				DC7C83D729B8E80400B3BE41 /* GroupView.swift in Sources */,
 				DC4F955C272EB89900354E1D /* AllMergeLoader.swift in Sources */,
@@ -582,7 +590,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -617,7 +625,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.4;
+				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

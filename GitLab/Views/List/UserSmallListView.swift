@@ -17,20 +17,22 @@ struct UserSmallListView: View {
 				Text("There are no users")
 			} else {
 				ForEach(users, id: \.id) { user in
-					HStack {
-						AsyncImage(url: URL(string: user.avatarUrl)) { image in
-							image
-								.resizable()
-								.scaledToFit()
-								.cornerRadius(10)
-						} placeholder: {
-							ProgressView()
-						}.frame(width: 50, height: 50)
-						VStack(alignment: .leading) {
-							Text(user.name)
-							Text("@\(user.username)")
-								.font(.callout)
-								.foregroundColor(.secondary)
+					NavigationLink(destination: UserLoader(id: user.id)) {
+						HStack {
+							AsyncImage(url: URL(string: user.avatarUrl)) { image in
+								image
+									.resizable()
+									.scaledToFit()
+									.cornerRadius(10)
+							} placeholder: {
+								ProgressView()
+							}.frame(width: 50, height: 50)
+							VStack(alignment: .leading) {
+								Text(user.name)
+								Text("@\(user.username)")
+									.font(.callout)
+									.foregroundColor(.secondary)
+							}
 						}
 					}
 				}

@@ -53,7 +53,7 @@ struct FileLoader: View {
 	}
 	
 	private func getFile() async -> Void {
-        file = await API.req(type: File.self, method: .get, endpoint: "projects/\(id)/repository/files", resource: filePath, query: ["ref": refName])
+		file = await API.req(type: File.self, method: .get, endpoint: "projects/\(id)/repository/files", resource: filePath, query: ["ref": refName])
 		noConnection = file == nil
 	}
 }
