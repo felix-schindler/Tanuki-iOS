@@ -163,7 +163,7 @@ struct ProjectView: View {
 				}
 				
 				if (project.mergeRequestsEnabled) {
-					NavigationLink(destination: ProjectMergeLoader(id: project.id)) {
+					NavigationLink(destination: MergeLoader(id: project.id)) {
 						HStack {
 							Image(systemName: "arrow.triangle.pull")
 								.foregroundColor(.blue)

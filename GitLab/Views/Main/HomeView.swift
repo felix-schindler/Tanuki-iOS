@@ -24,7 +24,7 @@ struct HomeView: View {
 							Text("Issues")
 						}
 					}
-					NavigationLink(destination: AllMergeLoader()) {
+					NavigationLink(destination: MergeLoader()) {
 						HStack {
 							Image(systemName: "arrow.triangle.pull")
 								.foregroundColor(.blue)
