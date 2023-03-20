@@ -19,7 +19,6 @@
 		DC2B300129C09625009ADC0D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B300029C09625009ADC0D /* InfoView.swift */; };
 		DC4F9552272EB49700354E1D /* AllIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */; };
 		DC4F9554272EB4AF00354E1D /* ProjectIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */; };
-		DC4F9558272EB5A900354E1D /* AllProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */; };
 		DC4F955C272EB89900354E1D /* AllMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F955B272EB89900354E1D /* AllMergeLoader.swift */; };
 		DC4F955E272EB8A700354E1D /* ProjectMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F955D272EB8A700354E1D /* ProjectMergeLoader.swift */; };
 		DC4F9562272EB92200354E1D /* MergeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9561272EB92200354E1D /* MergeView.swift */; };
@@ -36,7 +35,7 @@
 		DC5EB910272DA2450015BF0D /* IssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB90F272DA2450015BF0D /* IssueView.swift */; };
 		DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB911272DB9D00015BF0D /* ProjectListView.swift */; };
 		DC5EB914272DBDA20015BF0D /* MergeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB913272DBDA20015BF0D /* MergeListView.swift */; };
-		DC5EB916272DD1310015BF0D /* MemberProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB915272DD1310015BF0D /* MemberProjectsLoader.swift */; };
+		DC5EB916272DD1310015BF0D /* ProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB915272DD1310015BF0D /* ProjectsLoader.swift */; };
 		DC6F1D6229C840C900E0401C /* UserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F1D6129C840C900E0401C /* UserLoader.swift */; };
 		DC6F1D6429C8456200E0401C /* SingleUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F1D6329C8456200E0401C /* SingleUserView.swift */; };
 		DC6F1D6629C85CA000E0401C /* PipelineLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F1D6529C85CA000E0401C /* PipelineLoader.swift */; };
@@ -53,6 +52,7 @@
 		DC90CA63272E878900B758E7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA62272E878900B758E7 /* Utils.swift */; };
 		DCAAC170279ED63800EC685F /* MemberGroupsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */; };
 		DCAAC172279ED8B600EC685F /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC171279ED8B600EC685F /* GroupListView.swift */; };
+		DCC6DD2829C8E32500945D8C /* ProjectFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC6DD2729C8E32500945D8C /* ProjectFilter.swift */; };
 		DCCC715F273602750091C216 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC715E273602750091C216 /* LabelListView.swift */; };
 		DCD3164A29C77D8900AF7A3E /* ProjectMemberLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164929C77D8900AF7A3E /* ProjectMemberLoader.swift */; };
 		DCD3164C29C77E3600AF7A3E /* UserSmallListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164B29C77E3600AF7A3E /* UserSmallListView.swift */; };
@@ -77,7 +77,6 @@
 		DC2B300029C09625009ADC0D /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllIssuesLoader.swift; sourceTree = "<group>"; };
 		DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectIssuesLoader.swift; sourceTree = "<group>"; };
-		DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsLoader.swift; sourceTree = "<group>"; };
 		DC4F955B272EB89900354E1D /* AllMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMergeLoader.swift; sourceTree = "<group>"; };
 		DC4F955D272EB8A700354E1D /* ProjectMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMergeLoader.swift; sourceTree = "<group>"; };
 		DC4F9561272EB92200354E1D /* MergeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeView.swift; sourceTree = "<group>"; };
@@ -95,7 +94,7 @@
 		DC5EB90F272DA2450015BF0D /* IssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueView.swift; sourceTree = "<group>"; };
 		DC5EB911272DB9D00015BF0D /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		DC5EB913272DBDA20015BF0D /* MergeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeListView.swift; sourceTree = "<group>"; };
-		DC5EB915272DD1310015BF0D /* MemberProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberProjectsLoader.swift; sourceTree = "<group>"; };
+		DC5EB915272DD1310015BF0D /* ProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsLoader.swift; sourceTree = "<group>"; };
 		DC6F1D6129C840C900E0401C /* UserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoader.swift; sourceTree = "<group>"; };
 		DC6F1D6329C8456200E0401C /* SingleUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleUserView.swift; sourceTree = "<group>"; };
 		DC6F1D6529C85CA000E0401C /* PipelineLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PipelineLoader.swift; path = GitLab/loaders/projects/PipelineLoader.swift; sourceTree = SOURCE_ROOT; };
@@ -111,6 +110,7 @@
 		DC90CA62272E878900B758E7 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberGroupsLoader.swift; sourceTree = "<group>"; };
 		DCAAC171279ED8B600EC685F /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
+		DCC6DD2729C8E32500945D8C /* ProjectFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFilter.swift; sourceTree = "<group>"; };
 		DCCC715D2735E9910091C216 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DCCC715E273602750091C216 /* LabelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListView.swift; sourceTree = "<group>"; };
 		DCD3164929C77D8900AF7A3E /* ProjectMemberLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMemberLoader.swift; sourceTree = "<group>"; };
@@ -167,7 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				DC0EC643279E1742006A7C75 /* repository */,
-				DC5EB915272DD1310015BF0D /* MemberProjectsLoader.swift */,
+				DC5EB915272DD1310015BF0D /* ProjectsLoader.swift */,
 				DCD3165129C7993800AF7A3E /* ProjectLanguagesLoader.swift */,
 				DC4F9553272EB4AF00354E1D /* ProjectIssuesLoader.swift */,
 				DC4F955D272EB8A700354E1D /* ProjectMergeLoader.swift */,
@@ -233,7 +233,6 @@
 		DC5EB907272D93AC0015BF0D /* loaders */ = {
 			isa = PBXGroup;
 			children = (
-				DC4F9557272EB5A900354E1D /* AllProjectsLoader.swift */,
 				DC4F955B272EB89900354E1D /* AllMergeLoader.swift */,
 				DC4F9551272EB49700354E1D /* AllIssuesLoader.swift */,
 				DC4F9556272EB59200354E1D /* projects */,
@@ -299,6 +298,7 @@
 			children = (
 				DC4F9569272EC3B100354E1D /* APIAnswers.swift */,
 				DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */,
+				DCC6DD2729C8E32500945D8C /* ProjectFilter.swift */,
 			);
 			path = types;
 			sourceTree = "<group>";
@@ -386,6 +386,7 @@
 				DCAAC170279ED63800EC685F /* MemberGroupsLoader.swift in Sources */,
 				DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */,
 				DC0EC641279E1733006A7C75 /* FileLoader.swift in Sources */,
+				DCC6DD2829C8E32500945D8C /* ProjectFilter.swift in Sources */,
 				DC4F9568272EBA3F00354E1D /* NotesLoader.swift in Sources */,
 				DC4F9562272EB92200354E1D /* MergeView.swift in Sources */,
 				DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */,
@@ -415,7 +416,6 @@
 				DC0897FD2730516600B8ACDA /* NoteListView.swift in Sources */,
 				DC2B300129C09625009ADC0D /* InfoView.swift in Sources */,
 				DC7C83D929B8E8A700B3BE41 /* GroupLoader.swift in Sources */,
-				DC4F9558272EB5A900354E1D /* AllProjectsLoader.swift in Sources */,
 				DC5EB8F3272D924D0015BF0D /* GitLabApp.swift in Sources */,
 				DC0EC63A279E16E6006A7C75 /* FileView.swift in Sources */,
 				DC4F956E272ECD0100354E1D /* ExploreView.swift in Sources */,
@@ -425,7 +425,7 @@
 				DCD3165229C7993800AF7A3E /* ProjectLanguagesLoader.swift in Sources */,
 				DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */,
 				DC5EB910272DA2450015BF0D /* IssueView.swift in Sources */,
-				DC5EB916272DD1310015BF0D /* MemberProjectsLoader.swift in Sources */,
+				DC5EB916272DD1310015BF0D /* ProjectsLoader.swift in Sources */,
 				DC5EB906272D938E0015BF0D /* AccountView.swift in Sources */,
 				DC0EC642279E1733006A7C75 /* TreeLoader.swift in Sources */,
 				DC8FE05329C6499A001C5D82 /* Store.swift in Sources */,

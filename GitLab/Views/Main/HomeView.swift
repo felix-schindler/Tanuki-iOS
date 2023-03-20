@@ -31,7 +31,7 @@ struct HomeView: View {
 							Text("Merge Requests")
 						}
 					}
-					NavigationLink(destination: MemberProjectsLoader()) {
+					NavigationLink(destination: ProjectsLoader(membership: true, orderBy: .updatedAt)) {
 						HStack {
 							Image(systemName: "appclip")
 								.foregroundColor(.gray)
