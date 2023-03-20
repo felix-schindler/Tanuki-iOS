@@ -9,7 +9,8 @@ import SwiftUI
 
 struct SingleUserView: View {
 	@State var user: User
-	
+	@State var status: UserStatus
+
 	var body: some View {
 		List {
 			HStack {
@@ -47,6 +48,20 @@ struct SingleUserView: View {
 					Text(user.createdAt.toDateString())
 				}.font(.footnote)
 					.foregroundColor(.secondary)
+			}
+			
+
+			let showEmoji = (status.emoji != nil && status.emoji! != "")
+			let showMessage = (status.message != nil && status.message != "")
+			if (showEmoji || showMessage) {
+				HStack(spacing: 2) {
+					if (showEmoji) {
+						Text(":\(status.emoji!):".emojized())
+					}
+					if (showMessage) {
+						Text(status.message!)
+					}
+				}
 			}
 			
 			if (user.bio != "") {
@@ -164,6 +179,6 @@ struct SingleUserView: View {
 
 struct SingleUserView_Previews: PreviewProvider {
 	static var previews: some View {
-		SingleUserView(user: User(id: 9005085, username: "felix-schindler", name: "Felix", state: "active", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png", webUrl: "https://gitlab.com/felix-schindler", createdAt: Date(), bio: "Studying computer science as a German-Chinese double degree", bot: true, location: "Stuttgart, Germany", publicEmail: "", skype: "", linkedin: "", twitter: "", discord: "", websiteUrl: "https://schindlerfelix.de", organization: "WUD", jobTitle: "Software Developer", pronouns: "he/him", workInformation: "Software Developer at WUD", followers: 0, following: 0, localTime: "8:51 AM", isFollowed: false))
+		SingleUserView(user: User(id: 9005085, username: "felix-schindler", name: "Felix", state: "active", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png", webUrl: "https://gitlab.com/felix-schindler", createdAt: Date(), bio: "Studying computer science as a German-Chinese double degree", bot: true, location: "Stuttgart, Germany", publicEmail: "", skype: "", linkedin: "", twitter: "", discord: "", websiteUrl: "https://schindlerfelix.de", organization: "WUD", jobTitle: "Software Developer", pronouns: "he/him", workInformation: "Software Developer at WUD", followers: 0, following: 0, localTime: "8:51 AM", isFollowed: false), status: UserStatus(emoji: nil, message: "This is a status."))
 	}
 }

@@ -15,13 +15,16 @@ struct UserLoader: View {
 	@State var loadSelf = false
 	
 	@State var user: User? = nil
-	// @State var status: UserStatus? = nil
+	@State var status: UserStatus? = nil
 	@State var loadFailed = false
 	
 	var body: some View {
 		VStack {
-			if (user != nil) {
-				SingleUserView(user: user!)
+			if (user != nil && status != nil) {
+				SingleUserView(user: user!, status: status!)
+					.refreshable {
+						await loadUserAndStatus()
+					}
 			} else {
 				Spacer()
 				if (loadFailed) {
@@ -33,20 +36,15 @@ struct UserLoader: View {
 			}
 		}.onAppear() {
 			Task.init {
-				user = await loadUser()
-				loadFailed = (user == nil)
-				// status = await loadStatus()
-				// loadFailed = (user == nil || status == nil)
+				await loadUserAndStatus()
 			}
 		}
 	}
 	
-	private func loadUser() async -> User? {
-		return await API.get(type: User.self, endpoint: loadSelf ? "user" : "users/\(id)")
-	}
-	
-	private func loadStatus() async -> UserStatus? {
-		return await API.get(type: UserStatus.self, endpoint: loadSelf ? "user/status" : "users/\(id)/status")
+	private func loadUserAndStatus() async -> Void {
+		user = await API.get(type: User.self, endpoint: loadSelf ? "user" : "users/\(id)")
+		status = await API.get(type: UserStatus.self, endpoint: loadSelf ? "user/status" : "users/\(id)/status")
+		loadFailed = (user == nil || status == nil)
 	}
 }
 
