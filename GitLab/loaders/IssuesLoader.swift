@@ -25,7 +25,7 @@ struct IssuesLoader: View {
 	@State var type: IssueType = .all
 	@State var confidential: IssueConfidential = .all
 	@State var dueDate: IssueDue = .all
-	@State var scope: IssueScope = .createdByMe
+	@State var scope: IssueScope = .all
 	
 	// @State var assignees
 	// @State var author

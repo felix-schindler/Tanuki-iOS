@@ -17,7 +17,7 @@ struct HomeView: View {
 		NavigationView {
 			List {
 				Section("Your work") {
-					NavigationLink(destination: IssuesLoader()) {
+					NavigationLink(destination: IssuesLoader(scope: .createdByMe)) {
 						HStack {
 							Image(systemName: "smallcircle.circle")
 								.foregroundColor(.green)
