@@ -16,6 +16,8 @@ struct MergeLoader: View {
 	
 	@State var showFilter = false
 	
+	@State var search: String = ""
+	
 	// Filters
 	@State var orderBy: MergeOrder = .createdAt
 	@State var sort: IssueSort = .desc
@@ -25,6 +27,14 @@ struct MergeLoader: View {
 		VStack {
 			if (mergeRequests != nil) {
 				MergeListView(mergeRequests: mergeRequests!, updateFunction: getMRs, showRef: id == nil)
+					.searchable(text: $search)
+					.onSubmit(of: .search) {
+						Task.init {
+							mergeRequests = nil
+							mergeRequests = await getMRs()
+							loadFailed = (mergeRequests == nil)
+						}
+					}
 					.toolbar {
 						ToolbarItemGroup(placement: .navigationBarTrailing) {
 							Button(action: {showFilter = true}) {
@@ -84,6 +94,10 @@ struct MergeLoader: View {
 	
 	private func getMRs() async -> [MergeRequest]? {
 		var filter = ["with_labels_details": "true"]
+		
+		if (search != "") {
+			filter["search"] = search
+		}
 		
 		filter[MergeOrder.NAME.rawValue] = orderBy.rawValue
 		filter[IssueSort.NAME.rawValue] = sort.rawValue
