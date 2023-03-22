@@ -227,7 +227,9 @@ struct ProjectView: View {
 		}.navigationTitle(project.name)
 			.toolbar {
 				ToolbarItemGroup(placement: .navigationBarTrailing) {
-					Button(action: { share() }) {
+					Button(action: {
+						URL(string: project.webUrl)!.share()
+					}) {
 						Image(systemName: "square.and.arrow.up")
 					}
 					if (project.issuesEnabled) {
@@ -269,14 +271,6 @@ struct ProjectView: View {
 		if (toggle != nil) {
 			project.starCount = toggle!.starCount
 		}
-	}
-	
-	private func share() {
-		guard let urlShare = URL(string: project.webUrl) else { return }
-		let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
-		
-		let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-		windowScene?.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
 	}
 }
 

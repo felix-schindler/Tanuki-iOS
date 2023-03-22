@@ -64,11 +64,20 @@ struct GroupView: View {
 			}
 		}).navigationTitle(group.name)
 			.navigationBarTitleDisplayMode(.inline)
+			.toolbar {
+				ToolbarItemGroup(placement: .navigationBarTrailing) {
+					Button(action: {
+						URL(string: group.webUrl)!.share()
+					}) {
+						Image(systemName: "square.and.arrow.up")
+					}
+				}
+			}
 	}
 }
 
 struct GroupView_Previews: PreviewProvider {
 	static var previews: some View {
-		GroupView(group: Group(id: 59430464, name: "mc-webshop", description: "Collection of repositories for the Minecraft Webshop Plugin", visibility: "public", avatarUrl: "https://gitlab.com/uploads/-/system/group/avatar/59430464/server-icon.png", projects: []), updateFunction: { nil })
+		GroupView(group: Group(id: 59430464, webUrl: "https://gitlab.com/groups/mc-webshop", name: "mc-webshop", description: "Collection of repositories for the Minecraft Webshop Plugin", visibility: "public", avatarUrl: "https://gitlab.com/uploads/-/system/group/avatar/59430464/server-icon.png", projects: []), updateFunction: { nil })
 	}
 }

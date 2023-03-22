@@ -98,6 +98,11 @@ struct MergeView: View {
 						.background(mergeRequest.state == "opened" ? .green : .blue)
 						.foregroundColor(.white)
 						.cornerRadius(10)
+					Button(action: {
+						URL(string: mergeRequest.webUrl)!.share()
+					}) {
+						Image(systemName: "square.and.arrow.up")
+					}
 				}
 			}.sheet(isPresented: $showNewNote) {
 				NewNoteView(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge)

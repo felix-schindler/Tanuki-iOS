@@ -97,6 +97,16 @@ extension Color {
 }
 
 
+extension URL {
+	func share() {
+		let activityVC = UIActivityViewController(activityItems: [self], applicationActivities: nil)
+		
+		let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+		windowScene?.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+	}
+}
+
+
 @Sendable
 func iso8601Decoder() -> (Decoder) throws -> Date {
 	{ (decoder) -> Date in

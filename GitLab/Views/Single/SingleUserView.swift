@@ -10,7 +10,7 @@ import SwiftUI
 struct SingleUserView: View {
 	@State var user: User
 	@State var status: UserStatus
-
+	
 	var body: some View {
 		List {
 			HStack {
@@ -50,7 +50,7 @@ struct SingleUserView: View {
 					.foregroundColor(.secondary)
 			}
 			
-
+			
 			let showEmoji = (status.emoji != nil && status.emoji! != "")
 			let showMessage = (status.message != nil && status.message != "")
 			if (showEmoji || showMessage) {
@@ -67,7 +67,7 @@ struct SingleUserView: View {
 			if (user.bio != "") {
 				Text(user.bio.emojized())
 			}
-
+			
 			
 			let showLocation = (user.location != nil && user.location! != "")
 			let showTime = (user.localTime != nil && user.localTime! != "")
@@ -169,11 +169,20 @@ struct SingleUserView: View {
 				Image(systemName: "person.2")
 				Text("\(user.followers) followers · \(user.following) following")
 			}
-
+			
 			Section("Contributions") {
 				ContributionLoader(username: user.username)
 			}
 		}.navigationTitle(user.name != "" ? user.name : user.username)
+			.toolbar {
+				ToolbarItemGroup(placement: .navigationBarTrailing) {
+					Button(action: {
+						URL(string: user.webUrl)!.share()
+					}) {
+						Image(systemName: "square.and.arrow.up")
+					}
+				}
+			}
 	}
 }
 

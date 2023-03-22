@@ -101,6 +101,7 @@ struct Issue: Codable {
 	let downvotes: Int
 	var dueDate: String? = nil
 	let confidential: Bool
+	let webUrl: String
 	let references: Reference
 }
 
@@ -184,6 +185,7 @@ struct Note: Codable {
 
 struct Group: Codable {
 	let id: Int
+	let webUrl: String
 	let name: String
 	let description: String
 	let visibility: String
