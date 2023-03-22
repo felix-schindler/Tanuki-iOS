@@ -16,35 +16,38 @@ struct EventsView: View {
 	
 	var body: some View {
 		NavigationView {
-			if (events != nil) {
-				List(events!, id: \.id) { event in
-					VStack(alignment: .leading) {
-						Text(getStupidText(event: event))
-						Text(event.createdAt.toString())
-							.font(.callout)
-							.foregroundColor(.secondary)
+			VStack {
+				if (events != nil) {
+					if (events!.isEmpty) {
+						Text("There are no events")
+					} else {
+						List(events!, id: \.id) { event in
+							VStack(alignment: .leading) {
+								Text(getStupidText(event: event))
+								Text(event.createdAt.toString())
+									.font(.callout)
+									.foregroundColor(.secondary)
+							}
+						}.refreshable {
+							await getEvents()
+						}
 					}
-				}.refreshable {
-					await getEvents()
-				}.navigationBarTitle("Events")
-					.navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
-			} else {
-				VStack {
+				} else {
 					Spacer()
 					if (noConnection) {
 						Text("Failed to load, please check your internet connection and your token")
-							.foregroundColor(.red)
 					} else {
 						ProgressView("Loading")
 					}
 					Spacer()
-				}.navigationBarTitle("Events")
-					.navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
-			}
-		}.onAppear {
-			Task.init {
-				await getEvents()
-			}
+				}
+			}.navigationBarTitle("Events")
+				.navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
+				.onAppear {
+					Task.init {
+						await getEvents()
+					}
+				}
 		}
 	}
 	
