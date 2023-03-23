@@ -22,10 +22,10 @@ struct CommitsView: View {
 	var body: some View {
 		NavigationView {
 			if (commits != nil) {
-				if (commits!.isEmpty) {
-					Text("You'll see your commits after you pushed something to branch \(refName)")
-				} else {
-					List {
+				List {
+					if (commits!.isEmpty) {
+						Text("You'll see your commits after you pushed something to branch \(refName)")
+					} else {
 						HStack {
 							Text("On branch")
 							if (branches != nil) {
@@ -62,11 +62,11 @@ struct CommitsView: View {
 								}
 							}
 						}.headerProminence(.increased)
-					}.refreshable {
-						await getCommits()
-					}.navigationBarTitle("Commits")
-						.navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
-				}
+					}
+				}.refreshable {
+					await getCommits()
+				}.navigationBarTitle("Commits")
+					.navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
 			} else {
 				VStack {
 					Spacer()

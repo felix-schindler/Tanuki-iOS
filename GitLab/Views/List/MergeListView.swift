@@ -14,56 +14,58 @@ struct MergeListView: View {
 	@State var showRef = false
 	
 	var body: some View {
-		if (mergeRequests.isEmpty) {
-			Text("You're all caught up, there are no open merge requests! 🥳")
-		} else {
-			List(mergeRequests, id: \.id) { mr in
-				NavigationLink(destination: MergeView(mergeRequest: mr)) {
-					HStack {
-						Image(systemName: "exclamationmark.circle")
-							.foregroundColor(.blue)
-						VStack(alignment: .leading) {
-							if (showRef || UIDevice.current.userInterfaceIdiom == .pad) {
-								Text(mr.references.full)
-									.font(.caption)
-									.foregroundColor(.secondary)
-							} else {
-								Text(mr.references.short)
-									.font(.caption)
-									.foregroundColor(.secondary)
-							}
-							VStack(alignment: .leading, spacing: 2) {
-								Text(mr.title.emojized())
-									.fontWeight(.medium)
-								HStack {
-									HStack(spacing: 2) {
-										Image(systemName: "text.bubble")
-										Text(String(mr.userNotesCount))
-									}
-									HStack(spacing: 2) {
-										Image(systemName: "hand.thumbsup")
-										Text(String(mr.upvotes))
-									}
-									HStack(spacing: 2) {
-										Image(systemName: "clock")
-										Text(mr.createdAt.toDateString(.short))
-									}
-									HStack(spacing: 2) {
-										Image(systemName: "person")
-										Text(mr.author.name)
-									}
-								}.font(.footnote)
+		List {
+			if (mergeRequests.isEmpty) {
+				Text("You're all caught up, there are no open merge requests! 🥳")
+			} else {
+				ForEach(mergeRequests, id: \.id) { mr in
+					NavigationLink(destination: MergeView(mergeRequest: mr)) {
+						HStack {
+							Image(systemName: "exclamationmark.circle")
+								.foregroundColor(.blue)
+							VStack(alignment: .leading) {
+								if (showRef || UIDevice.current.userInterfaceIdiom == .pad) {
+									Text(mr.references.full)
+										.font(.caption)
+										.foregroundColor(.secondary)
+								} else {
+									Text(mr.references.short)
+										.font(.caption)
+										.foregroundColor(.secondary)
+								}
+								VStack(alignment: .leading, spacing: 2) {
+									Text(mr.title.emojized())
+										.fontWeight(.medium)
+									HStack {
+										HStack(spacing: 2) {
+											Image(systemName: "text.bubble")
+											Text(String(mr.userNotesCount))
+										}
+										HStack(spacing: 2) {
+											Image(systemName: "hand.thumbsup")
+											Text(String(mr.upvotes))
+										}
+										HStack(spacing: 2) {
+											Image(systemName: "clock")
+											Text(mr.createdAt.toDateString(.short))
+										}
+										HStack(spacing: 2) {
+											Image(systemName: "person")
+											Text(mr.author.name)
+										}
+									}.font(.footnote)
+								}
 							}
 						}
 					}
 				}
-			}.refreshable {
-				let temp = await updateFunction()
-				if (temp != nil) {
-					mergeRequests = temp!
-				}
 			}
-		}
+		}.refreshable {
+			let temp = await updateFunction()
+			 if (temp != nil) {
+				 mergeRequests = temp!
+			 }
+		 }
 	}
 }
 

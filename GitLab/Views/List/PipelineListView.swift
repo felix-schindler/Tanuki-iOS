@@ -12,30 +12,26 @@ struct PipelineListView: View {
 	@State var updateFunction: () async -> [Pipeline]?
 	
 	var body: some View {
-		VStack {
-			List(pipelines, id: \.id) { pipeline in
+		List(pipelines, id: \.id) { pipeline in
+			HStack {
+				VStack(alignment: .leading) {
+					Text(pipeline.ref)
+					Text("\(pipeline.source) · \(pipeline.createdAt.toString())")
+						.font(.footnote)
+						.foregroundColor(.secondary)
+				}
+				Spacer()
 				HStack {
-					VStack {
-						Text(pipeline.ref)
-							.frame(maxWidth: .infinity, alignment: .leading)
-						Text("\(pipeline.source) · \(pipeline.createdAt.toString())")
-							.font(.footnote)
-							.foregroundColor(.secondary)
-							.frame(maxWidth: .infinity, alignment: .leading)
-					}
-					Spacer()
-					HStack {
-						Text(pipeline.status.firstCapitalized)
-							.foregroundColor(.secondary)
-							.font(.footnote)
-						PipelineStatusView(pipeline: pipeline)
-					}
+					Text(pipeline.status.firstCapitalized)
+						.foregroundColor(.secondary)
+						.font(.caption)
+					PipelineStatusView(pipeline: pipeline)
 				}
-			}.refreshable {
-				let temp = await updateFunction()
-				if (temp != nil) {
-					pipelines = temp!
-				}
+			}
+		}.refreshable {
+			let temp = await updateFunction()
+			if (temp != nil) {
+				pipelines = temp!
 			}
 		}.navigationTitle("Pipelines")
 	}
