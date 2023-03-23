@@ -177,18 +177,10 @@ struct IssueView: View {
 			}).alert(isPresented: $deletionError, content: {
 				Alert(title: Text("Error"), message: Text("Failed to delete issue"), dismissButton: .default(Text("OK")))
 			})
-		/* This does not work because the option "with_labels_details" is missing for single issues
-		 .refreshable {
-		 let temp = await API.get(type: Issue.self, endpoint: "projects/\(issue.projectId)/issues/\(issue.iid)", query: ["with_labels_details": "true"])
-		 if (temp != nil) {
-		 issue = temp!
-		 }
-		 } */
 	}
 	
 	private func changeState() async -> Void {
-		let stateChange = (issue.state == "opened" ? "close" : "reopen")
-		let res = await API.req(type: Issue.self, method: .put, endpoint: "projects/\(issue.projectId)/issues/\(issue.iid)", query: ["state_event": stateChange])
+		let res = await IssueModel.changeState(issue.iid, projectId: issue.projectId, state: issue.state)
 		if (res != nil) {
 			issue = res!
 		} else {
@@ -197,8 +189,7 @@ struct IssueView: View {
 	}
 	
 	private func deleteIssue() async -> Void {
-		let status = await API.delete(endpoint: "projects/\(issue.projectId)/issues/\(issue.iid)")
-		deletion = (status.rawValue >= 200 && status.rawValue < 300)
+		deletion = await IssueModel.deleteIssue(issue.iid, projectId: issue.projectId)
 		deletionError = !deletion
 	}
 }

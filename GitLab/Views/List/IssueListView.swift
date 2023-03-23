@@ -12,7 +12,9 @@ struct IssueListView: View {
 	@State var updateFunction: () async -> [Issue]?
 	
 	@State var showRef: Bool = false
-	@State var isError: Bool = false
+	
+	@State var stateError: Bool = false
+	@State var deleteError: Bool = false
 	
 	var body: some View {
 		if (issues.isEmpty) {
@@ -73,13 +75,30 @@ struct IssueListView: View {
 				}.swipeActions {
 					Button(action: {
 						Task.init {
-							isError = await !closeIssue(id: issue.iid, projectId: issue.projectId)
+							// TODO: Remove issue from list when (filter.state != .all)
+							let removedIssue = await IssueModel.changeState(issue.iid, projectId: issue.projectId, state: issue.state)
+							stateError = (removedIssue == nil)
 						}
 					}, label: {
-						Label("Close issue", systemImage: "checkmark.circle")
-					}).alert(isPresented: $isError, content: {
-						Alert(title: Text("Error"), message: Text("Failed to close issue"), dismissButton: .default(Text("OK")))
-					}).tint(.purple)
+						if (issue.state == "opened") {
+							Label("Close issue", systemImage: "checkmark.circle")
+						} else {
+							Label("Reopen issue", systemImage: "circle.circle")
+						}
+					}).alert(isPresented: $stateError, content: {
+						Alert(title: Text("Error"), message: Text("Failed to change the state of the issue"), dismissButton: .default(Text("OK")))
+					}).tint(.blue)
+					Button(role: .destructive,
+								 action: {
+						Task.init {
+							// TODO: Remove issue from list
+							deleteError = await IssueModel.deleteIssue(issue.iid, projectId: issue.projectId)
+						}
+					}, label: {
+						Label("Delete issue", systemImage: "trash.circle")
+					}).alert(isPresented: $deleteError, content: {
+						Alert(title: Text("Error"), message: Text("Failed delete issue"), dismissButton: .default(Text("OK")))
+					})
 				}
 			}.refreshable {
 				let temp = await updateFunction()
@@ -88,12 +107,6 @@ struct IssueListView: View {
 				}
 			}
 		}
-	}
-	
-	// TODO: remove from array
-	private func closeIssue(id: Int, projectId: Int) async -> Bool {
-		let removedIssue = await API.req(type: Issue.self, method: .put, endpoint: "projects/\(projectId)/issues/\(id)?state_event=close")
-		return removedIssue != nil
 	}
 }
 
