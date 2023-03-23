@@ -16,7 +16,7 @@ struct MergeListView: View {
 	var body: some View {
 		List {
 			if (mergeRequests.isEmpty) {
-				Text("You're all caught up, there are no open merge requests! 🥳")
+				Text("You're all caught up, there are no merge requests! 🥳")
 			} else {
 				ForEach(mergeRequests, id: \.id) { mr in
 					NavigationLink(destination: MergeView(mergeRequest: mr)) {

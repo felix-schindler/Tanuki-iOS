@@ -19,7 +19,7 @@ struct IssueListView: View {
 	var body: some View {
 		List {
 			if (issues.isEmpty) {
-				Text("You're all caught up, there are no issues in this project! 🚀")
+				Text("You're all caught up, there are no issues! 🚀")
 			} else {
 				ForEach(issues, id: \.id) { issue in
 					NavigationLink(destination: IssueView(issue: issue)) {
