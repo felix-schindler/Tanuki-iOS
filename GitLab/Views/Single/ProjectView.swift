@@ -182,7 +182,7 @@ struct ProjectView: View {
 					}
 				}.foregroundColor(.primary)
 				
-				NavigationLink(destination: PipelineLoader(id: project.id, branch: project.defaultBranch ?? "", onlyStatus: false)) {
+				NavigationLink(destination: PipelineLoader(id: project.id, onlyStatus: false)) {
 					HStack {
 						Text("🚀")
 						Text("Pipelines")

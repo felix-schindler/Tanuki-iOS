@@ -50,7 +50,12 @@ struct PipelineLoader: View {
 	}
 	
 	private func getPipeline() async -> [Pipeline]? {
-		return await API.get(type: [Pipeline].self, endpoint: "projects/\(id)/pipelines", query: ["ref": branch])
+		var filter: Dictionary<String, String> = [:]
+		if (branch != "") {
+			filter["ref"] = branch
+		}
+		
+		return await API.get(type: [Pipeline].self, endpoint: "projects/\(id)/pipelines", query: filter)
 	}
 }
 
