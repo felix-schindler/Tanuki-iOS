@@ -12,7 +12,7 @@ struct ProjectsLoader: View {
 	@State private var showFilter: Bool = false
 	
 	@State private var projects: [Project]? = nil
-	@State private var noConnection: Bool = false
+	@State private var loadFailed: Bool = false
 	
 	@State var search: String = ""
 	
@@ -87,7 +87,7 @@ struct ProjectsLoader: View {
 							AsyncButton(action: {
 								projects = nil
 								projects = await getProjects()
-								noConnection = (projects == nil)
+								loadFailed = (projects == nil)
 								showFilter = false
 							}, label: {
 								Text("Apply")
@@ -98,10 +98,10 @@ struct ProjectsLoader: View {
 						Task.init {
 							projects = nil
 							projects = await getProjects()
-							noConnection = (projects == nil)
+							loadFailed = (projects == nil)
 						}
 					}
-			} else if (noConnection) {
+			} else if (loadFailed) {
 				Text("Failed to load, please check your internet connection and your token")
 			} else {
 				Spacer()
@@ -111,7 +111,7 @@ struct ProjectsLoader: View {
 		}.onAppear {
 			Task.init {
 				projects = await getProjects()
-				noConnection = (projects == nil)
+				loadFailed = (projects == nil)
 			}
 		}.navigationTitle("Projects")
 	}

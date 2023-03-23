@@ -15,7 +15,7 @@ enum discussionType: String {
 
 struct NotesLoader: View {
 	@State var notes: [Note]? = nil
-	@State var noConnection: Bool = false
+	@State var loadFailed: Bool = false
 	
 	@State var id: Int      // Project ID
 	@State var iid: Int     // IID of Merge, Issue or Commit
@@ -26,7 +26,7 @@ struct NotesLoader: View {
 			if (notes != nil) {
 				NoteListView(notes: notes!)
 			} else {
-				if (noConnection) {
+				if (loadFailed) {
 					Text("Failed to load, please check your internet connection and your token")
 				} else {
 					ProgressView()
@@ -41,7 +41,7 @@ struct NotesLoader: View {
 	
 	private func getNotes() async -> Void {
 		notes = await API.get(type: [Note].self, endpoint: "projects/\(id)/\(type.rawValue)/\(iid)/notes", query: ["sort": "asc", "order_by": "updated_at"])
-		noConnection = (notes == nil)
+		loadFailed = (notes == nil)
 	}
 }
 

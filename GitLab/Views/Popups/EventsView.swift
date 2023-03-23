@@ -12,7 +12,7 @@ struct EventsView: View {
 	var presentationMode: Binding<PresentationMode>
 	
 	@State var events: [Event]? = nil
-	@State var noConnection: Bool = false
+	@State var loadFailed: Bool = false
 	
 	var body: some View {
 		NavigationView {
@@ -34,7 +34,7 @@ struct EventsView: View {
 					}
 				} else {
 					Spacer()
-					if (noConnection) {
+					if (loadFailed) {
 						Text("Failed to load, please check your internet connection and your token")
 					} else {
 						ProgressView("Loading")
@@ -71,6 +71,6 @@ struct EventsView: View {
 	
 	private func getEvents() async -> Void {
 		events = await API.get(type: [Event].self, endpoint: "events")
-		noConnection = (events == nil)
+		loadFailed = (events == nil)
 	}
 }

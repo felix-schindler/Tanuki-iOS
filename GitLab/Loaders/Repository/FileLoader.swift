@@ -10,7 +10,7 @@ import MarkdownUI
 
 struct FileLoader: View {
 	@State var file: File? = nil
-	@State var noConnection: Bool = false
+	@State var loadFailed: Bool = false
 	@State var showNotFound: Bool = false
 	
 	@State var id: Int
@@ -34,7 +34,7 @@ struct FileLoader: View {
 				}
 			} else {
 				if (showNotFound) {
-					if (noConnection) {
+					if (loadFailed) {
 						Text("Failed to load, please check your internet connection and your token")
 					} else {
 						VStack {
@@ -54,7 +54,7 @@ struct FileLoader: View {
 	
 	private func getFile() async -> Void {
 		file = await API.req(type: File.self, method: .get, endpoint: "projects/\(id)/repository/files", resource: filePath, query: ["ref": refName])
-		noConnection = file == nil
+		loadFailed = (file == nil)
 	}
 }
 

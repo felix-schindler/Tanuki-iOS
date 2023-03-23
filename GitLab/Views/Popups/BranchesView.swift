@@ -14,7 +14,7 @@ struct BranchesView: View {
 	@State var id: Int
 	
 	@State var branches: [Branch]? = nil
-	@State var noConnection: Bool = false
+	@State var loadFailed: Bool = false
 	
 	var body: some View {
 		NavigationView {
@@ -47,7 +47,7 @@ struct BranchesView: View {
 			} else {
 				VStack {
 					Spacer()
-					if (noConnection) {
+					if (loadFailed) {
 						Text("Failed to load, please check your internet connection and your token")
 							.foregroundColor(.red)
 					} else {
@@ -66,7 +66,7 @@ struct BranchesView: View {
 	
 	private func getBranches() async -> Void {
 		branches = await API.get(type: [Branch].self, endpoint: "projects/\(id)/repository/branches")
-		noConnection = branches == nil
+		loadFailed = branches == nil
 	}
 }
 

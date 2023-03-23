@@ -9,14 +9,14 @@ import SwiftUI
 
 struct MemberGroupsLoader: View {
 	@State var groups: [SmallGroup]? = nil
-	@State var noConnection: Bool = false    
+	@State var loadFailed: Bool = false
 	
 	var body: some View {
 		VStack {
 			if (groups != nil) {
 				GroupListView(groups: groups!, updateFunction: getGroups)
 			} else {
-				if (noConnection) {
+				if (loadFailed) {
 					Text("Failed to load, please check your internet connection and your token")
 				} else {
 					VStack {
@@ -29,7 +29,7 @@ struct MemberGroupsLoader: View {
 		}.onAppear {
 			Task.init {
 				groups = await getGroups()
-				noConnection = (groups == nil)
+				loadFailed = (groups == nil)
 			}
 		}.navigationTitle("Groups")
 	}

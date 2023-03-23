@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PipelineLoader: View {
 	@State var pipelines: [Pipeline]? = nil
-	@State var noConnection: Bool = false
+	@State var loadFailed: Bool = false
 	
 	@State var id: Int
 	@State var branch: String = ""
@@ -21,7 +21,7 @@ struct PipelineLoader: View {
 			if (pipelines == nil) {
 				if (onlyStatus) {
 					EmptyView()
-				} else if (noConnection) {
+				} else if (loadFailed) {
 					Text("Failed to load, please check your internet connection and your token")
 				} else {
 					ProgressView()
@@ -44,7 +44,7 @@ struct PipelineLoader: View {
 		}.onAppear {
 			Task.init {
 				pipelines = await getPipeline()
-				noConnection = (pipelines == nil)
+				loadFailed = (pipelines == nil)
 			}
 		}
 	}
