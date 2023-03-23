@@ -25,7 +25,11 @@ class API {
 	private static let client: HttpClient = UrlSessionHttpClient(log: false)
 	private static let decoder = JSONDecoder()
 	
-	private static func raw(method: HttpMethod, url: HttpUrl, body: Dictionary<String, String> = [:]) async throws -> HttpResponse {
+	private static func raw(
+		method: HttpMethod,
+		url: HttpUrl,
+		body: Dictionary<String, String> = [:]
+	) async throws -> HttpResponse {
 		var reqBody: Data? = nil
 		if (!body.isEmpty) {
 			reqBody = try JSONEncoder().encode(body)
@@ -43,16 +47,34 @@ class API {
 		return try await client.dataTask(req)
 	}
 	
-	public static func req<T: Codable>(type: T.Type, method: HttpMethod, endpoint: String, resource: String? = nil, query: Dictionary<String, String> = [:], body: Dictionary<String, String> = [:], useBase: Bool = true) async -> T? {
-		var httpUrl: HttpUrl
+	public static func req<T: Codable>(
+		type: T.Type,
+		method: HttpMethod,
+		endpoint: String,
+		resource: String? = nil,
+		query: Dictionary<String, String> = [:],
+		body: Dictionary<String, String> = [:],
+		useBase: Bool = true
+	) async -> T? {
+		var httpUrl = HttpUrl(
+			host: domain,
+			resource: resource,
+			query: query,
+			trailingSlashEnabled: false
+		)
+
 		if (useBase) {
-			httpUrl = HttpUrl(host: domain, path: [base, endpoint], resource: resource, query: query, trailingSlashEnabled: false)
+			httpUrl = httpUrl.path([base, endpoint])
 		} else {
-			httpUrl = HttpUrl(host: domain, path: [endpoint], resource: resource, query: query, trailingSlashEnabled: false)
+			httpUrl = httpUrl.path([endpoint])
 		}
 		
 		do {
-			let res = try await API.raw(method: method, url: httpUrl, body: body)
+			let res = try await API.raw(
+				method: method,
+				url: httpUrl,
+				body: body
+			)
 			
 			decoder.keyDecodingStrategy = .convertFromSnakeCase
 			decoder.dateDecodingStrategy = .custom(iso8601Decoder())    // FIXME: this may introduce data races
@@ -78,13 +100,35 @@ class API {
 		return nil
 	}
 	
-	public static func get<T: Codable>(type: T.Type, endpoint: String, query: Dictionary<String, String> = [:], useBase: Bool = true) async -> T? {
-		return await API.req(type: type, method: .get, endpoint: endpoint, query: query, useBase: useBase)
+	public static func get<T: Codable>(
+		type: T.Type,
+		endpoint: String,
+		query: Dictionary<String, String> = [:],
+		useBase: Bool = true
+	) async -> T? {
+		return await API.req(
+			type: type,
+			method: .get,
+			endpoint: endpoint,
+			query: query,
+			useBase: useBase
+		)
 	}
 	
-	public static func delete(endpoint: String, query: Dictionary<String, String> = [:]) async -> HttpStatusCode {
+	public static func delete(
+		endpoint: String,
+		query: Dictionary<String, String> = [:]
+	) async -> HttpStatusCode {
 		do {
-			return try await API.raw(method: .delete, url: HttpUrl(host: domain, path: [base, endpoint], query: query, trailingSlashEnabled: false)).statusCode
+			return try await API.raw(
+				method: .delete,
+				url: HttpUrl(
+					host: domain,
+					path: [base, endpoint],
+					query: query,
+					trailingSlashEnabled: false
+				)
+			).statusCode
 		} catch {
 			print("Error", error)
 		}

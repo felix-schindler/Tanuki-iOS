@@ -106,12 +106,12 @@ struct IssueListView: View {
 							Label("Share", systemImage: "square.and.arrow.up")
 						})
 					}
-				}.refreshable {
-					let temp = await updateFunction()
-					if (temp != nil) {
-						issues = temp!
-					}
 				}
+			}
+		}.refreshable {
+			let temp = await updateFunction()
+			if (temp != nil) {
+				issues = temp!
 			}
 		}
 	}
