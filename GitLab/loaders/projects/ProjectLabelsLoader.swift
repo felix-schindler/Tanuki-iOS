@@ -14,23 +14,34 @@ struct ProjectLabelsLoader: View {
 	@State var labels: [APILabel]? = nil
 	@State var loadFailed: Bool = false
 	
+	@State var showNewLabel: Bool = false
+	
 	var body: some View {
 		List {
 			if (labels != nil) {
-				LabelListView(labels: labels!, showDescription: true)
+				LabelListView(labels: labels!, showDescription: true, projectId: id)
 			} else if (loadFailed) {
 				Text("Failed to load, please check your internet connection and your token")
 			} else {
 				ProgressView()
 			}
+		}.refreshable {
+			labels = nil
+			labels = await getLabels()
+			loadFailed = (labels == nil)
 		}.onAppear {
 			Task.init {
 				labels = await getLabels()
 				loadFailed = (labels == nil)
 			}
-		}.refreshable {
-			labels = await getLabels()
-			loadFailed = (labels == nil)
+		}.toolbar {
+			ToolbarItemGroup(placement: .navigationBarTrailing) {
+				Button (action: { showNewLabel = true }) {
+					Image(systemName: "plus.circle")
+				}
+			}
+		}.sheet(isPresented: $showNewLabel) {
+			NewLabelView(id: id)
 		}.navigationTitle("Labels")
 	}
 	

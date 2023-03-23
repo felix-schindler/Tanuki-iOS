@@ -77,9 +77,9 @@ class API {
 			)
 			
 			decoder.keyDecodingStrategy = .convertFromSnakeCase
-			decoder.dateDecodingStrategy = .custom(iso8601Decoder())    // FIXME: this may introduce data races
+			decoder.dateDecodingStrategy = .custom(iso8601Decoder())    // FIXME: this may introduce data
 			
-			// print("\(response.statusCode): \(response.utf8String ?? "")")
+			// print("\(res.statusCode): \(res.utf8String ?? "")")
 			return try decoder.decode(T.self, from: res.data)
 		} catch let DecodingError.dataCorrupted(context) {
 			print("Data corrupted: ", context.debugDescription)

@@ -11,6 +11,10 @@ struct LabelListView: View {
 	@State var labels: [APILabel]
 	@State var showDescription = false
 	
+	/// Project ID (needed for deletion)
+	@State var projectId: Int?
+	@State var deletionError = false
+	
 	var body: some View {
 		ForEach(labels, id: \.id) { label in
 			VStack(alignment: .leading) {
@@ -25,6 +29,21 @@ struct LabelListView: View {
 						.font(.callout)
 						.foregroundColor(.secondary)
 				}
+			}.swipeActions(edge: .trailing) {
+				Button(role: .destructive, action: {
+					if (projectId != nil) {
+						Task.init {
+							let code = await API.delete(endpoint: "projects/\(projectId!)/labels/\(label.id)")
+							deletionError = (code.rawValue < 200 || code.rawValue >= 300)
+						}
+					} else {
+						deletionError = true
+					}
+				}, label: {
+					Label("Delete", systemImage: "trash")
+				}).alert(isPresented: $deletionError, content: {
+					Alert(title: Text("Error"), message: Text("Failed to delete label"), dismissButton: .default(Text("OK")))
+				})
 			}
 		}
 	}
