@@ -58,7 +58,7 @@
 		DCD3165029C793E600AF7A3E /* ProjectLabelsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164F29C793E600AF7A3E /* ProjectLabelsLoader.swift */; };
 		DCD3165229C7993800AF7A3E /* ProjectLanguagesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3165129C7993800AF7A3E /* ProjectLanguagesLoader.swift */; };
 		DCD3165429C799A700AF7A3E /* LanguagesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3165329C799A700AF7A3E /* LanguagesListView.swift */; };
-		DCDCACC729CC54600011230D /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDCACC629CC54600011230D /* Issue.swift */; };
+		DCDCACC729CC54600011230D /* IssueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDCACC629CC54600011230D /* IssueModel.swift */; };
 		DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEE699127312F8A00AE666C /* EmojiCodes.swift */; };
 		DCF14E3D29C71B8800D1F43B /* IssueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */; };
 		DCF14E3F29C720E800D1F43B /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF14E3E29C720E800D1F43B /* AsyncButton.swift */; };
@@ -117,7 +117,7 @@
 		DCD3164F29C793E600AF7A3E /* ProjectLabelsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLabelsLoader.swift; sourceTree = "<group>"; };
 		DCD3165129C7993800AF7A3E /* ProjectLanguagesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLanguagesLoader.swift; sourceTree = "<group>"; };
 		DCD3165329C799A700AF7A3E /* LanguagesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagesListView.swift; sourceTree = "<group>"; };
-		DCDCACC629CC54600011230D /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
+		DCDCACC629CC54600011230D /* IssueModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueModel.swift; sourceTree = "<group>"; };
 		DCEE699127312F8A00AE666C /* EmojiCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCodes.swift; sourceTree = "<group>"; };
 		DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilter.swift; sourceTree = "<group>"; };
 		DCF14E3E29C720E800D1F43B /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
@@ -295,7 +295,7 @@
 		DCDCACC529CC52E40011230D /* models */ = {
 			isa = PBXGroup;
 			children = (
-				DCDCACC629CC54600011230D /* Issue.swift */,
+				DCDCACC629CC54600011230D /* IssueModel.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -393,7 +393,7 @@
 				DCD3164C29C77E3600AF7A3E /* UserSmallListView.swift in Sources */,
 				DCAAC170279ED63800EC685F /* MemberGroupsLoader.swift in Sources */,
 				DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */,
-				DCDCACC729CC54600011230D /* Issue.swift in Sources */,
+				DCDCACC729CC54600011230D /* IssueModel.swift in Sources */,
 				DC0EC641279E1733006A7C75 /* FileLoader.swift in Sources */,
 				DCC6DD2829C8E32500945D8C /* ProjectFilter.swift in Sources */,
 				DC4F9568272EBA3F00354E1D /* NotesLoader.swift in Sources */,

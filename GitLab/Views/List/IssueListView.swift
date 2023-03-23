@@ -81,7 +81,7 @@ struct IssueListView: View {
 						}
 					}, label: {
 						if (issue.state == "opened") {
-							Label("Close issue", systemImage: "checkmark.circle")
+							Label("Close issue", systemImage: "minus.circle")
 						} else {
 							Label("Reopen issue", systemImage: "circle.circle")
 						}
@@ -95,9 +95,14 @@ struct IssueListView: View {
 							deleteError = await IssueModel.deleteIssue(issue.iid, projectId: issue.projectId)
 						}
 					}, label: {
-						Label("Delete issue", systemImage: "trash.circle")
+						Label("Delete issue", systemImage: "trash")
 					}).alert(isPresented: $deleteError, content: {
 						Alert(title: Text("Error"), message: Text("Failed delete issue"), dismissButton: .default(Text("OK")))
+					})
+					Button(action: {
+						URL(string: issue.webUrl)!.share()
+					}, label: {
+						Label("Share", systemImage: "square.and.arrow.up")
 					})
 				}
 			}.refreshable {
