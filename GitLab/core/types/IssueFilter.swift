@@ -42,13 +42,6 @@ enum IssueType: String {
 			 all
 }
 
-enum IssueConfidential: String {
-	case NAME = "confidential"
-	case confidential = "true",
-			 _public = "false",
-			 all
-}
-
 enum IssueDue: String {
 	case NAME = "due_date"
 	case noDueDate = "0",

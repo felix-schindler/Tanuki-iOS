@@ -23,7 +23,7 @@ struct IssuesLoader: View {
 	@State var sort: IssueSort = .desc
 	@State var orderBy: IssueOrder = .createdAt
 	@State var type: IssueType = .all
-	@State var confidential: IssueConfidential = .all
+	@State var confidential: Bool = false
 	@State var dueDate: IssueDue = .all
 	@State var scope: IssueScope = .all
 	
@@ -119,10 +119,8 @@ struct IssuesLoader: View {
 									Text("Test case").tag(IssueType.testCase)
 								}
 								
-								Picker("Confidential", selection: $confidential) {
-									Text("All").tag(IssueConfidential.all)
-									Text("Confidential").tag(IssueConfidential.confidential)
-									Text("Public").tag(IssueConfidential._public)
+								Toggle(isOn: $confidential) {
+									Text("Confidential")
 								}
 							}
 							
@@ -174,8 +172,8 @@ struct IssuesLoader: View {
 			filter[IssueType.NAME.rawValue] = type.rawValue
 		}
 		
-		if (confidential != .all) {
-			filter[IssueConfidential.NAME.rawValue] = confidential.rawValue
+		if (confidential) {
+			filter["confidential"] = "true"
 		}
 		
 		if (dueDate != .all) {
