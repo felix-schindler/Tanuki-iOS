@@ -14,6 +14,8 @@
 		DC0EC642279E1733006A7C75 /* TreeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EC640279E1733006A7C75 /* TreeLoader.swift */; };
 		DC10C39A2731537D00CAE425 /* CommitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC10C3992731537D00CAE425 /* CommitsView.swift */; };
 		DC10C39C27315D6400CAE425 /* BranchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC10C39B27315D6400CAE425 /* BranchesView.swift */; };
+		DC1F1BDF29CCC93A00AF7573 /* NewLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1F1BDE29CCC93A00AF7573 /* NewLabelView.swift */; };
+		DC1F1BE229CCCFA600AF7573 /* NVMColor in Frameworks */ = {isa = PBXBuildFile; productRef = DC1F1BE129CCCFA600AF7573 /* NVMColor */; };
 		DC2A243A29C8FC0600A9FED7 /* MergeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2A243929C8FC0600A9FED7 /* MergeFilter.swift */; };
 		DC2B2FFD29C06609009ADC0D /* ContributionChart in Frameworks */ = {isa = PBXBuildFile; productRef = DC2B2FFC29C06609009ADC0D /* ContributionChart */; };
 		DC2B2FFF29C0679B009ADC0D /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B2FFE29C0679B009ADC0D /* ProjectView.swift */; };
@@ -73,6 +75,7 @@
 		DC0EC640279E1733006A7C75 /* TreeLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeLoader.swift; sourceTree = "<group>"; };
 		DC10C3992731537D00CAE425 /* CommitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitsView.swift; sourceTree = "<group>"; };
 		DC10C39B27315D6400CAE425 /* BranchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchesView.swift; sourceTree = "<group>"; };
+		DC1F1BDE29CCC93A00AF7573 /* NewLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLabelView.swift; sourceTree = "<group>"; };
 		DC2A243929C8FC0600A9FED7 /* MergeFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeFilter.swift; sourceTree = "<group>"; };
 		DC2B2FFE29C0679B009ADC0D /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		DC2B300029C09625009ADC0D /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
@@ -128,6 +131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC1F1BE229CCCFA600AF7573 /* NVMColor in Frameworks */,
 				DCFCB06E29B7C3D800F18CDC /* MarkdownUI in Frameworks */,
 				DC2B2FFD29C06609009ADC0D /* ContributionChart in Frameworks */,
 				DC8FE05629C65F0F001C5D82 /* SwiftHttp in Frameworks */,
@@ -279,6 +283,7 @@
 				DC7C83DA29B8F32900B3BE41 /* NewNoteView.swift */,
 				DC7A85BF2731AB4E0000CF4D /* SettingsView.swift */,
 				DC2B300029C09625009ADC0D /* InfoView.swift */,
+				DC1F1BDE29CCC93A00AF7573 /* NewLabelView.swift */,
 			);
 			path = Popups;
 			sourceTree = "<group>";
@@ -331,6 +336,7 @@
 				DCFCB06D29B7C3D800F18CDC /* MarkdownUI */,
 				DC2B2FFC29C06609009ADC0D /* ContributionChart */,
 				DC8FE05529C65F0F001C5D82 /* SwiftHttp */,
+				DC1F1BE129CCCFA600AF7573 /* NVMColor */,
 			);
 			productName = GitLab;
 			productReference = DC5EB8EF272D924D0015BF0D /* GitLab.app */;
@@ -364,6 +370,7 @@
 				DCFCB06C29B7C3D800F18CDC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				DC2B2FFB29C06609009ADC0D /* XCRemoteSwiftPackageReference "SwiftUI-ContributionChart" */,
 				DC8FE05429C65F0F001C5D82 /* XCRemoteSwiftPackageReference "swift-http" */,
+				DC1F1BE029CCCFA600AF7573 /* XCRemoteSwiftPackageReference "NVMColor_swift" */,
 			);
 			productRefGroup = DC5EB8F0272D924D0015BF0D /* Products */;
 			projectDirPath = "";
@@ -403,6 +410,7 @@
 				DC10C39A2731537D00CAE425 /* CommitsView.swift in Sources */,
 				DC6F1D6429C8456200E0401C /* SingleUserView.swift in Sources */,
 				DC06BE63273F1D3C0049599E /* Errors.swift in Sources */,
+				DC1F1BDF29CCC93A00AF7573 /* NewLabelView.swift in Sources */,
 				DC2B2FFF29C0679B009ADC0D /* ProjectView.swift in Sources */,
 				DC5EB914272DBDA20015BF0D /* MergeListView.swift in Sources */,
 				DCAAC172279ED8B600EC685F /* GroupListView.swift in Sources */,
@@ -587,7 +595,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.13;
+				MARKETING_VERSION = 1.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -622,7 +630,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.13;
+				MARKETING_VERSION = 1.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -658,6 +666,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		DC1F1BE029CCCFA600AF7573 /* XCRemoteSwiftPackageReference "NVMColor_swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NVMNovem/NVMColor_swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.3;
+			};
+		};
 		DC2B2FFB29C06609009ADC0D /* XCRemoteSwiftPackageReference "SwiftUI-ContributionChart" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/felix-schindler/SwiftUI-ContributionChart";
@@ -685,6 +701,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DC1F1BE129CCCFA600AF7573 /* NVMColor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC1F1BE029CCCFA600AF7573 /* XCRemoteSwiftPackageReference "NVMColor_swift" */;
+			productName = NVMColor;
+		};
 		DC2B2FFC29C06609009ADC0D /* ContributionChart */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DC2B2FFB29C06609009ADC0D /* XCRemoteSwiftPackageReference "SwiftUI-ContributionChart" */;
