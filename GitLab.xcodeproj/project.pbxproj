@@ -228,7 +228,7 @@
 				DC4F9559272EB6DC00354E1D /* main */,
 				DC5EB908272D93B30015BF0D /* single */,
 				DC4F9555272EB4DD00354E1D /* list */,
-				DC90CA5A272E759100B758E7 /* Popups */,
+				DC90CA5A272E759100B758E7 /* popups */,
 				DCF14E3E29C720E800D1F43B /* AsyncButton.swift */,
 			);
 			path = views;
@@ -275,7 +275,7 @@
 			path = core;
 			sourceTree = "<group>";
 		};
-		DC90CA5A272E759100B758E7 /* Popups */ = {
+		DC90CA5A272E759100B758E7 /* popups */ = {
 			isa = PBXGroup;
 			children = (
 				DC10C3992731537D00CAE425 /* CommitsView.swift */,
@@ -287,7 +287,7 @@
 				DC2B300029C09625009ADC0D /* InfoView.swift */,
 				DC1F1BDE29CCC93A00AF7573 /* NewLabelView.swift */,
 			);
-			path = Popups;
+			path = popups;
 			sourceTree = "<group>";
 		};
 		DCC6DD2629C8D4D600945D8C /* user */ = {
