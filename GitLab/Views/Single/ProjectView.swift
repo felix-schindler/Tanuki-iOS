@@ -201,6 +201,13 @@ struct ProjectView: View {
 						}
 					}.foregroundColor(.primary)
 					
+					NavigationLink(destination: MilestoneLoader(id: project.id)) {
+						HStack {
+							Image(systemName: "signpost.right.and.left")
+							Text("Milestones")
+						}
+					}.foregroundColor(.primary)
+					
 					NavigationLink(destination: ProjectLabelsLoader(id: project.id)) {
 						HStack {
 							Image(systemName: "tag.circle")
