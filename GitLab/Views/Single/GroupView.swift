@@ -56,11 +56,9 @@ struct GroupView: View {
 			ProjectListView(projects: group.projects, updateFunction: { return group.projects })
 			Spacer()
 		}.refreshable(action: {
-			Task.init {
-				let temp = await updateFunction()
-				if (temp != nil) {
-					group = temp!
-				}
+			let temp = await updateFunction()
+			if (temp != nil) {
+				group = temp!
 			}
 		}).navigationTitle(group.name)
 			.navigationBarTitleDisplayMode(.inline)

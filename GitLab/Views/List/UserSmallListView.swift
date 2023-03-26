@@ -38,11 +38,9 @@ struct UserSmallListView: View {
 				}
 			}
 		}.refreshable {
-			Task.init {
-				let temp = await updateFunction()
-				if (temp != nil) {
-					users = temp!
-				}
+			let temp = await updateFunction()
+			if (temp != nil) {
+				users = temp!
 			}
 		}.navigationTitle("Users")
 	}

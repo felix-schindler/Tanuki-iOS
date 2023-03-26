@@ -25,16 +25,20 @@ struct MilestoneLoader: View {
 	var body: some View {
 		List {
 			if (milestones != nil) {
-				ForEach(milestones!, id: \.id) { milestone in
-					NavigationLink(destination: MilestoneView(milestone: milestone)) {
-						VStack(alignment: .leading) {
-							Text(milestone.title.emojized())
-								.fontWeight(.medium)
-							if (milestone.description != "") {
-								Markdown(milestone.description.emojized())
-									.markdownTextStyle(textStyle: {
-										ForegroundColor(.secondary)
-									})
+				if (milestones!.isEmpty) {
+					Text("There are no milestones")
+				} else {
+					ForEach(milestones!, id: \.id) { milestone in
+						NavigationLink(destination: MilestoneView(milestone: milestone)) {
+							VStack(alignment: .leading) {
+								Text(milestone.title.emojized())
+									.fontWeight(.medium)
+								if (milestone.description != "") {
+									Markdown(milestone.description.emojized())
+										.markdownTextStyle(textStyle: {
+											ForegroundColor(.secondary)
+										})
+								}
 							}
 						}
 					}
