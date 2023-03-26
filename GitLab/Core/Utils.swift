@@ -39,7 +39,7 @@ extension StringProtocol {
 
 
 extension Date {
-	static func formToString(_ date: String) -> String {
+	static func fromToString(_ date: String) -> String {
 		let inFormat = DateFormatter()
 		inFormat.dateFormat = "yyyy-MM-dd"
 		let outFormat = DateFormatter()

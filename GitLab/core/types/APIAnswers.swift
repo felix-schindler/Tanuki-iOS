@@ -118,6 +118,9 @@ struct Milestone: Codable {
 	let iid: Int
 	let title: String
 	let description: String
+	let state: String
+	let dueDate: String?
+	let webUrl: String
 }
 
 struct Reference: Codable {
