@@ -70,7 +70,9 @@ struct MergeView: View {
 					HStack {
 						Image(systemName: "tag.circle")
 						ScrollView(.horizontal) {
-							LabelListView(labels: mergeRequest.labels!)
+							HStack {
+								LabelListView(labels: mergeRequest.labels!)
+							}
 						}
 					}
 				}
@@ -95,13 +97,11 @@ struct MergeView: View {
 						.font(.footnote)
 						.padding(.horizontal, 6)
 						.padding(.vertical, 4)
-						.background(mergeRequest.state == "opened" ? .green : .blue)
+						.background((mergeRequest.state == "merged") ? .blue : (mergeRequest.state == "closed") ? .red : .green)
 						.foregroundColor(.white)
 						.cornerRadius(10)
-					Button(action: {
-						URL(string: mergeRequest.webUrl)!.share()
-					}) {
-						Image(systemName: "square.and.arrow.up")
+					AsyncButton(systemImage: "square.and.arrow.up") {
+						await URL(string: mergeRequest.webUrl)!.share()
 					}
 				}
 			}.sheet(isPresented: $showNewNote) {

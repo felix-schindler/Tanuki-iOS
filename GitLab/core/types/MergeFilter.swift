@@ -17,6 +17,7 @@ enum MergeOrder: String {
 enum MergeState: String {
 	case NAME  = "state"
 	case opened = "opened",
+			 closed = "closed",
 			 locked = "locked",
 			 merged = "merged",
 			 all

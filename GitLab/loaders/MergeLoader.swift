@@ -46,6 +46,7 @@ struct MergeLoader: View {
 							Section {
 								Picker("State", selection: $state) {
 									Text("Open").tag(MergeState.opened)
+									Text("Closed").tag(MergeState.closed)
 									Text("Merged").tag(MergeState.merged)
 									Text("Locked").tag(MergeState.locked)
 									Text("All").tag(MergeState.all)

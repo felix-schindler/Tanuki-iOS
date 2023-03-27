@@ -21,8 +21,17 @@ struct MergeListView: View {
 				ForEach(mergeRequests, id: \.id) { mr in
 					NavigationLink(destination: MergeView(mergeRequest: mr)) {
 						HStack {
-							Image(systemName: "exclamationmark.circle")
-								.foregroundColor(.blue)
+							if (mr.state == "merged") {
+								Image(systemName: "exclamationmark.circle")
+									.foregroundColor(.blue)
+							} else if (mr.state == "closed") {
+								Image(systemName: "exclamationmark.circle")
+									.foregroundColor(.red)
+							} else {
+								// "opened" ?? and maybe "locked" ??
+								Image(systemName: "exclamationmark.circle")
+									.foregroundColor(.green)
+							}
 							VStack(alignment: .leading) {
 								if (showRef || UIDevice.current.userInterfaceIdiom == .pad) {
 									Text(mr.references.full)
