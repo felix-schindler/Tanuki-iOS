@@ -46,7 +46,7 @@ struct IssuesLoader: View {
 				IssueListView(issues: issues!, updateFunction: getIssues, showRef: (id == nil))
 					.searchable(text: $search)
 					.onSubmit(of: .search) {
-						Task.init {
+						Task {
 							issues = nil
 							issues = await getIssues()
 							loadFailed = (issues == nil)
@@ -126,14 +126,12 @@ struct IssuesLoader: View {
 								}
 							}
 							
-							AsyncButton(action: {
+							AsyncButton("Apply") {
 								issues = nil
 								issues = await getIssues()
 								loadFailed = (issues == nil)
 								showFilter = false
-							}, label: {
-								Text("Apply")
-							})
+							}
 						}
 					}
 			} else {
@@ -146,7 +144,7 @@ struct IssuesLoader: View {
 				}
 			}
 		}.onAppear {
-			Task.init {
+			Task {
 				issues = await getIssues()
 				loadFailed = (issues == nil)
 			}

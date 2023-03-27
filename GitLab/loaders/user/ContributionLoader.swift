@@ -38,7 +38,7 @@ struct ContributionLoader: View {
 				}
 			}
 		}.onAppear {
-			Task.init {
+			Task {
 				await getContributions()
 			}
 		}

@@ -26,20 +26,23 @@ struct NewNoteView: View {
 					TextEditor(text: $content)
 						.shadow(radius: 1)
 				}
-			}
-			.alert(isPresented: $isError, content: {
+			}.alert(isPresented: $isError, content: {
 				Alert(title: Text("Error"), message: Text("Failed to create note"), dismissButton: .default(Text("OK")))
-			}).navigationBarTitle("New note")
-				.navigationBarItems(leading: Button("Cancel", role: .cancel, action: {
-					self.presentationMode.wrappedValue.dismiss()
-				}).foregroundColor(.red), trailing: Button("Save", action: {
-					Task.init {
+			}).toolbar {
+				ToolbarItem(placement: .navigationBarLeading) {
+					Button("Cancel", role: .cancel) {
+						self.presentationMode.wrappedValue.dismiss()
+					}.foregroundColor(.red)
+				}
+				ToolbarItem(placement: .navigationBarTrailing) {
+					AsyncButton("Save") {
 						isError = await !saveNewNote()
 						if (!isError) {
 							self.presentationMode.wrappedValue.dismiss()
 						}
 					}
-				}))
+				}
+			}.navigationBarTitle("New note")
 		}
 	}
 	

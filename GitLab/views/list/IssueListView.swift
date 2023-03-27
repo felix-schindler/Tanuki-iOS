@@ -79,26 +79,18 @@ struct IssueListView: View {
 							}
 						}
 					}.swipeActions {
-						AsyncButton(action: {
+						AsyncButton(systemImage: (issue.state == "opened" ? "minus.circle" : "circle.circle")) {
 							// TODO: Remove issue from list when (filter.state != .all)
 							let removedIssue = await IssueModel.changeState(issue.iid, projectId: issue.projectId, state: issue.state)
 							stateError = (removedIssue == nil)
-						}, label: {
-							if (issue.state == "opened") {
-								Label("Close issue", systemImage: "minus.circle")
-							} else {
-								Label("Reopen issue", systemImage: "circle.circle")
-							}
-						}).alert(isPresented: $stateError, content: {
+						}.alert(isPresented: $stateError, content: {
 							Alert(title: Text("Error"), message: Text("Failed to change the state of the issue"), dismissButton: .default(Text("OK")))
 						}).tint(.blue)
-						Button(role: .destructive,
-									 action: {
-							Task.init {
-								// TODO: Remove issue from list
-								deleteError = await IssueModel.deleteIssue(issue.iid, projectId: issue.projectId)
-							}
-						}, label: {
+						
+						AsyncButton(action: {
+							// TODO: Remove issue from list
+							deleteError = await IssueModel.deleteIssue(issue.iid, projectId: issue.projectId)
+						}, role: .destructive, label: {
 							Label("Delete issue", systemImage: "trash")
 						}).alert(isPresented: $deleteError, content: {
 							Alert(title: Text("Error"), message: Text("Failed delete issue"), dismissButton: .default(Text("OK")))

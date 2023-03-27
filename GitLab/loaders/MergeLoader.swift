@@ -29,7 +29,7 @@ struct MergeLoader: View {
 				MergeListView(mergeRequests: mergeRequests!, updateFunction: getMRs, showRef: id == nil)
 					.searchable(text: $search)
 					.onSubmit(of: .search) {
-						Task.init {
+						Task {
 							mergeRequests = nil
 							mergeRequests = await getMRs()
 							loadFailed = (mergeRequests == nil)
@@ -63,14 +63,12 @@ struct MergeLoader: View {
 								}
 							}
 							
-							AsyncButton(action: {
+							AsyncButton("Apply") {
 								mergeRequests = nil
 								mergeRequests = await getMRs()
 								loadFailed = (mergeRequests == nil)
 								showFilter = false
-							}, label: {
-								Text("Apply")
-							})
+							}
 						}
 					}
 			} else {
@@ -85,7 +83,7 @@ struct MergeLoader: View {
 				}
 			}
 		}.onAppear {
-			Task.init {
+			Task {
 				mergeRequests = await getMRs()
 				loadFailed = (mergeRequests == nil)
 			}

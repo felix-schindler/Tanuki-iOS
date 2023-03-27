@@ -30,7 +30,7 @@ struct ProjectLabelsLoader: View {
 			labels = await getLabels()
 			loadFailed = (labels == nil)
 		}.onAppear {
-			Task.init {
+			Task {
 				labels = await getLabels()
 				loadFailed = (labels == nil)
 			}

@@ -27,7 +27,7 @@ struct MemberGroupsLoader: View {
 				}
 			}
 		}.onAppear {
-			Task.init {
+			Task {
 				groups = await getGroups()
 				loadFailed = (groups == nil)
 			}

@@ -26,7 +26,7 @@ struct ProjectLanguagesLoader: View {
 				Spacer()
 			}
 		}.onAppear {
-			Task.init {
+			Task {
 				languages = await getLanguages()
 				loadFailed = (languages == nil)
 			}

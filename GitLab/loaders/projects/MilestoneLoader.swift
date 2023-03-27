@@ -92,19 +92,17 @@ struct MilestoneLoader: View {
 						}
 					}
 					
-					AsyncButton(action: {
+					AsyncButton("Apply") {
 						milestones = nil
 						let temp = await getMilestones()
 						if (temp != nil) {
 							milestones = temp
 						}
 						showFilter = false
-					}, label: {
-						Text("Apply")
-					})
+					}
 				}
 			}.onAppear {
-				Task.init {
+				Task {
 					milestones = await getMilestones()
 					loadFailed = (milestones == nil)
 				}

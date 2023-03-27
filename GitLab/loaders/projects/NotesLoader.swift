@@ -33,7 +33,7 @@ struct NotesLoader: View {
 				}
 			}
 		}.onAppear {
-			Task.init {
+			Task {
 				await getNotes()
 			}
 		}

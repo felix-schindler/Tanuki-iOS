@@ -44,7 +44,7 @@ struct EventsView: View {
 			}.navigationBarTitle("Events")
 				.navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
 				.onAppear {
-					Task.init {
+					Task {
 						await getEvents()
 					}
 				}

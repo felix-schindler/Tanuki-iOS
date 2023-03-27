@@ -83,12 +83,11 @@ struct ProjectView: View {
 				
 				ScrollView(.horizontal) {
 					HStack {
-						Button(action: {
-							Task.init { await toggleStar() }
-						}) {
-							Image(systemName: "star")
-							Text("\(project.starCount) stars")
-						}.buttonStyle(.bordered)
+						AsyncButton(action: {
+							await toggleStar()
+						}, label: {
+							Label("\(project.starCount) stars", systemImage: "star")
+						}).buttonStyle(.bordered)
 							.foregroundColor(.primary)
 						if let url = URL(string: "https://\(API.domain)/\(project.pathWithNamespace)/-/forks/new") {    // If valid link, show fork link
 							if (project.forksCount != nil) {

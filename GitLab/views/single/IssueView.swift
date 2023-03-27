@@ -133,16 +133,12 @@ struct IssueView: View {
 				})
 				
 				let name: String = (issue.state == "opened" ? "Close issue" : "Reopen issue")
-				Button(name) {
-					Task.init {
-						await changeState()
-					}
+				AsyncButton(name) {
+					await changeState()
 				}
 				
-				Button("Delete issue", role: .destructive) {
-					Task.init {
-						await deleteIssue()
-					}
+				AsyncButton("Delete issue", role: .destructive) {
+					await deleteIssue()
 				}
 			}
 		}.navigationBarTitleDisplayMode(.inline)

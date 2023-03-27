@@ -84,18 +84,16 @@ struct ProjectsLoader: View {
 								}
 							}
 							
-							AsyncButton(action: {
+							AsyncButton("Apply") {
 								projects = nil
 								projects = await getProjects()
 								loadFailed = (projects == nil)
 								showFilter = false
-							}, label: {
-								Text("Apply")
-							})
+							}
 						}
 					}.searchable(text: $search)
 					.onSubmit(of: .search) {
-						Task.init {
+						Task {
 							projects = nil
 							projects = await getProjects()
 							loadFailed = (projects == nil)
@@ -109,7 +107,7 @@ struct ProjectsLoader: View {
 				Spacer()
 			}
 		}.onAppear {
-			Task.init {
+			Task {
 				projects = await getProjects()
 				loadFailed = (projects == nil)
 			}

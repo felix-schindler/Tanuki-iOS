@@ -26,7 +26,7 @@ struct ProjectMemberLoader: View {
 				Spacer()
 			}
 		}.onAppear {
-			Task.init {
+			Task {
 				members = await getMembers()
 				loadFailed = (members == nil)
 			}

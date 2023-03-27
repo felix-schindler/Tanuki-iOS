@@ -42,7 +42,7 @@ struct PipelineLoader: View {
 				}
 			}
 		}.onAppear {
-			Task.init {
+			Task {
 				pipelines = await getPipeline()
 				loadFailed = (pipelines == nil)
 			}

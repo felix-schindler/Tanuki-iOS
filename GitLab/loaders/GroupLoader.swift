@@ -25,7 +25,7 @@ struct GroupLoader: View {
 				Spacer()
 			}
 		}.onAppear {
-			Task.init {
+			Task {
 				group = await getGroup()
 				loadFailed = (group == nil)
 			}

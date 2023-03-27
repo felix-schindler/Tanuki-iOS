@@ -35,7 +35,7 @@ struct UserLoader: View {
 				Spacer()
 			}
 		}.onAppear() {
-			Task.init {
+			Task {
 				await loadUserAndStatus()
 			}
 		}

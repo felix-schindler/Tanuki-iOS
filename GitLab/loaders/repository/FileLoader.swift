@@ -46,7 +46,7 @@ struct FileLoader: View {
 				}
 			}
 		}.onAppear {
-			Task.init {
+			Task {
 				await getFile()
 			}
 		}

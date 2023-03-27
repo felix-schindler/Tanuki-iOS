@@ -58,7 +58,7 @@ struct BranchesView: View {
 					.navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
 			}
 		}.onAppear {
-			Task.init {
+			Task {
 				await getBranches()
 			}
 		}

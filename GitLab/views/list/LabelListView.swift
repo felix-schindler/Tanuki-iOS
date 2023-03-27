@@ -30,16 +30,14 @@ struct LabelListView: View {
 						.foregroundColor(.secondary)
 				}
 			}.swipeActions(edge: .trailing) {
-				Button(role: .destructive, action: {
+				AsyncButton(action: {
 					if (projectId != nil) {
-						Task.init {
-							let code = await API.delete(endpoint: "projects/\(projectId!)/labels/\(label.id)")
-							deletionError = (code.rawValue < 200 || code.rawValue >= 300)
-						}
+						let code = await API.delete(endpoint: "projects/\(projectId!)/labels/\(label.id)")
+						deletionError = (code.rawValue < 200 || code.rawValue >= 300)
 					} else {
 						deletionError = true
 					}
-				}, label: {
+				}, role: .destructive, label: {
 					Label("Delete", systemImage: "trash")
 				}).alert(isPresented: $deletionError, content: {
 					Alert(title: Text("Error"), message: Text("Failed to delete label"), dismissButton: .default(Text("OK")))

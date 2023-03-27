@@ -76,7 +76,7 @@ struct HomeView: View {
 				await getStarredProjects()
 			}
 			.onAppear {
-				Task.init {
+				Task {
 					await getStarredProjects()
 				}
 			}.toolbar {

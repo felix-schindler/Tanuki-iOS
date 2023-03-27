@@ -35,7 +35,7 @@ struct CommitsView: View {
 									}
 								}.pickerStyle(.menu)
 									.onChange(of: refName) { _ in
-										Task.init { await getCommits() }
+										Task { await getCommits() }
 									}
 							} else {
 								Picker("", selection: $refName) {
@@ -81,7 +81,7 @@ struct CommitsView: View {
 					.navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
 			}
 		}.onAppear {
-			Task.init {
+			Task {
 				await getCommits()
 				await getBranches()
 				loadFailed = (commits == nil) || (branches == nil)

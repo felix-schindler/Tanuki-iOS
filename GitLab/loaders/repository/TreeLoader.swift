@@ -31,7 +31,7 @@ struct TreeLoader: View {
 									}
 								}.pickerStyle(.menu)
 									.onChange(of: refName) { _ in
-										Task.init {
+										Task {
 											await getTree()
 										}
 									}
@@ -69,13 +69,13 @@ struct TreeLoader: View {
 					}
 				}
 			}
-		}.onAppear(perform: {
-			Task.init {
+		}.onAppear {
+			Task {
 				await getTree()
 				await getBranches()
 				loadFailed = (tree == nil) || (branches == nil)
 			}
-		}).navigationTitle(filePath ?? "Files")
+		}.navigationTitle(filePath ?? "Files")
 	}
 	
 	private func getTree() async -> Void {
