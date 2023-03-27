@@ -64,10 +64,8 @@ struct GroupView: View {
 			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
 				ToolbarItemGroup(placement: .navigationBarTrailing) {
-					Button(action: {
-						URL(string: group.webUrl)!.share()
-					}) {
-						Image(systemName: "square.and.arrow.up")
+					AsyncButton(systemImage: "square.and.arrow.up") {
+						await URL(string: group.webUrl)!.share()
 					}
 				}
 			}

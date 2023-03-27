@@ -176,10 +176,8 @@ struct SingleUserView: View {
 		}.navigationTitle(user.name != "" ? user.name : user.username)
 			.toolbar {
 				ToolbarItemGroup(placement: .navigationBarTrailing) {
-					Button(action: {
-						URL(string: user.webUrl)!.share()
-					}) {
-						Image(systemName: "square.and.arrow.up")
+					AsyncButton(systemImage: "square.and.arrow.up") {
+						await URL(string: user.webUrl)!.share()
 					}
 				}
 			}

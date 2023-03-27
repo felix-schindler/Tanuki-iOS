@@ -59,11 +59,9 @@ struct MilestoneLoader: View {
 								}
 							}
 						}.swipeActions {
-							Button(action: {
-								URL(string: milestone.webUrl)!.share()
-							}, label: {
-								Label("Share", systemImage: "square.and.arrow.up")
-							})
+							AsyncButton(systemImage: "square.and.arrow.up") {
+								await URL(string: milestone.webUrl)!.share()
+							}
 						}
 					}
 				}

@@ -95,11 +95,9 @@ struct IssueListView: View {
 						}).alert(isPresented: $deleteError, content: {
 							Alert(title: Text("Error"), message: Text("Failed delete issue"), dismissButton: .default(Text("OK")))
 						})
-						Button(action: {
-							URL(string: issue.webUrl)!.share()
-						}, label: {
-							Label("Share", systemImage: "square.and.arrow.up")
-						})
+						AsyncButton(systemImage: "square.and.arrow.up") {
+							await URL(string: issue.webUrl)!.share()
+						}
 					}
 				}
 			}

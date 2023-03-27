@@ -77,11 +77,11 @@ extension Date {
 
 
 extension URL {
-	func share() {
-		let activityVC = UIActivityViewController(activityItems: [self], applicationActivities: nil)
+	func share() async -> Void {
+		let activityVC = await UIActivityViewController(activityItems: [self], applicationActivities: nil)
 		
-		let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-		windowScene?.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+		let windowScene = await UIApplication.shared.connectedScenes.first as? UIWindowScene
+		await windowScene?.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
 	}
 }
 

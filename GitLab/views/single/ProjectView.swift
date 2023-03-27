@@ -233,10 +233,8 @@ struct ProjectView: View {
 		}.navigationTitle(project.name)
 			.toolbar {
 				ToolbarItemGroup(placement: .navigationBarTrailing) {
-					Button(action: {
-						URL(string: project.webUrl)!.share()
-					}) {
-						Image(systemName: "square.and.arrow.up")
+					AsyncButton(systemImage: "square.and.arrow.up") {
+						await URL(string: project.webUrl)!.share()
 					}
 					if (project.issuesEnabled) {
 						Button(action: {showNewIssue = true}) {

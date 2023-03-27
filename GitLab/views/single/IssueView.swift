@@ -151,10 +151,8 @@ struct IssueView: View {
 						.background(issue.state == "opened" ? .green : .blue)
 						.foregroundColor(.white)
 						.cornerRadius(10)
-					Button(action: {
-						URL(string: issue.webUrl)!.share()
-					}) {
-						Image(systemName: "square.and.arrow.up")
+					AsyncButton(systemImage: "square.and.arrow.up") {
+						await URL(string: issue.webUrl)!.share()
 					}
 					Button(action: {
 						showNewIssue = true
