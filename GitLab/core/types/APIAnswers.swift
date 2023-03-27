@@ -119,6 +119,7 @@ struct Milestone: Codable {
 	let title: String
 	let description: String
 	let state: String
+	let startDate: String?
 	let dueDate: String?
 	let webUrl: String
 }
