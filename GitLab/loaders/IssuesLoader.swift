@@ -26,14 +26,16 @@ struct IssuesLoader: View {
 	@State var confidential: Bool = false
 	@State var dueDate: IssueDue = .all
 	@State var scope: IssueScope = .all
-	
+
+	/// Title of a milestone
+	@State var milestone: String?
+
 	// @State var assignees
 	// @State var author
 	// @State var createdAfter
 	// @State var createdBefore
 	// @State var iids
 	// @State var labels
-	// @State var milestone
 	// @State var not
 	// @State var updatedAfter
 	// @State var updatedBefore
@@ -185,6 +187,10 @@ struct IssuesLoader: View {
 		var endpoint = "issues"
 		if (id != nil) {
 			endpoint = "projects/\(id!)/issues"
+		}
+		
+		if (milestone != nil) {
+			filter["milestone"] = milestone
 		}
 		
 		return await API.get(type: [Issue].self, endpoint: endpoint, query: filter)

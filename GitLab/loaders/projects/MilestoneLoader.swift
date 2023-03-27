@@ -29,7 +29,7 @@ struct MilestoneLoader: View {
 					Text("There are no milestones")
 				} else {
 					ForEach(milestones!, id: \.id) { milestone in
-						NavigationLink(destination: MilestoneView(milestone: milestone)) {
+						NavigationLink(destination: IssuesLoader(id: id, state: (milestone.state == "active" ? IssueState.opened : IssueState.all), milestone: milestone.title)) {
 							VStack(alignment: .leading) {
 								Text(milestone.title.emojized())
 									.fontWeight(.medium)
@@ -39,7 +39,31 @@ struct MilestoneLoader: View {
 											ForegroundColor(.secondary)
 										})
 								}
+								
+								let showStartDate = (milestone.startDate != nil)
+								let showDueDate = (milestone.dueDate != nil)
+								
+								if (showStartDate || showDueDate) {
+									HStack {
+										Image(systemName: "calendar.badge.clock")
+										if (showStartDate) {
+											Text(Date.fromToString(milestone.startDate!))
+										}
+										if (showStartDate && showDueDate) {
+											Text("-")
+										}
+										if (showDueDate) {
+											Text(Date.fromToString(milestone.dueDate!))
+										}
+									}
+								}
 							}
+						}.swipeActions {
+							Button(action: {
+								URL(string: milestone.webUrl)!.share()
+							}, label: {
+								Label("Share", systemImage: "square.and.arrow.up")
+							})
 						}
 					}
 				}
