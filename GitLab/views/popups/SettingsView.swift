@@ -21,61 +21,56 @@ struct SettingsView: View {
 	var body: some View {
 		NavigationView {
 			VStack {
-				Spacer()
 				Label("GitLab URL", systemImage: "link")
 					.font(.headline)
 				TextField("https://gitlab.com", text: $url)
-					.padding()
+					.textFieldStyle(.roundedBorder)
 					.textContentType(.URL)
 					.keyboardType(.URL)
-					.background(Color(.systemGray5))
-					.cornerRadius(10)
 				Label("Personal Access Token", systemImage: "key")
 					.font(.headline)
 					.padding(.top)
 				TextField("glpat-4Rzq-VKwapmWqj4MfBsi", text: $token)
-					.padding()
+					.textFieldStyle(.roundedBorder)
 					.disableAutocorrection(true)
-					.background(Color(.systemGray5))
-					.cornerRadius(10)
-				VStack(alignment: .leading) {
-					HStack {
-						Image(systemName: "checkmark.square")
-						Text("api")
-					}
-					HStack {
-						Image(systemName: "checkmark.square")
-						Text("read_user")
-					}
-					HStack {
-						Image(systemName: "checkmark.square")
-						Text("read_api")
-					}
-					HStack {
-						Image(systemName: "checkmark.square")
-						Text("read_repository")
+				VStack {
+					Text("Requirements")
+						.fontWeight(.medium)
+					
+					VStack(alignment: .leading) {
+						HStack(spacing: 2) {
+							Image(systemName: "checkmark.square")
+							Text("api")
+						}
+						HStack(spacing: 2) {
+							Image(systemName: "checkmark.square")
+							Text("read_user")
+						}
+						HStack(spacing: 2) {
+							Image(systemName: "checkmark.square")
+							Text("read_api")
+						}
+						HStack(spacing: 2) {
+							Image(systemName: "checkmark.square")
+							Text("read_repository")
+						}
 					}
 					Text("The required API version is v4")
 				}.padding()
+					.font(.footnote)
 					.foregroundColor(.secondary)
-				Spacer()
-				Button(action: {
-					Task {
-						configError = await !validGitConfig()
-						if (!configError) {
-							self.presentationMode.wrappedValue.dismiss()
-						}
+				
+				AsyncButton("Save configuration") {
+					configError = await !validGitConfig()
+					if (!configError) {
+						self.presentationMode.wrappedValue.dismiss()
 					}
-				}, label: {
-					Text("Save configuration")
-						.fontWeight(.bold)
-						.frame(maxWidth: .infinity)
-				}).alert(isPresented: $configError, content: {
-					Alert(title: Text("Error"), message: Text("Invalid configuration, please check the entered url and token"), dismissButton: .default(Text("OK")))
-				}).tint(.accentColor)
-					.buttonStyle(.borderedProminent)
-					.buttonBorderShape(.roundedRectangle)
+				}.tint(.accentColor)
+					.buttonStyle(.bordered)
 					.controlSize(.large)
+					.alert(isPresented: $configError) {
+						Alert(title: Text("Error"), message: Text("Invalid configuration, please check the entered url and token"), dismissButton: .default(Text("OK")))
+					}
 			}.padding()
 				.navigationBarTitle("Settings")
 				.navigationBarItems(trailing: Button("Cancel", role: .cancel, action: { self.presentationMode.wrappedValue.dismiss() }).foregroundColor(.red))
