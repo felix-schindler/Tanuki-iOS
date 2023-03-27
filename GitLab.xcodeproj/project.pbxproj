@@ -52,7 +52,6 @@
 		DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA5D272E763F00B758E7 /* EventsView.swift */; };
 		DC90CA63272E878900B758E7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA62272E878900B758E7 /* Utils.swift */; };
 		DC92BD2F29D09B35008E8581 /* MilestoneLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC92BD2E29D09B35008E8581 /* MilestoneLoader.swift */; };
-		DC92BD3329D0C062008E8581 /* MilestoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC92BD3229D0C062008E8581 /* MilestoneView.swift */; };
 		DC92BD3529D0C68C008E8581 /* MilestoneFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC92BD3429D0C68C008E8581 /* MilestoneFilter.swift */; };
 		DCAAC170279ED63800EC685F /* MemberGroupsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */; };
 		DCAAC172279ED8B600EC685F /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC171279ED8B600EC685F /* GroupListView.swift */; };
@@ -115,7 +114,6 @@
 		DC90CA5D272E763F00B758E7 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
 		DC90CA62272E878900B758E7 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DC92BD2E29D09B35008E8581 /* MilestoneLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneLoader.swift; sourceTree = "<group>"; };
-		DC92BD3229D0C062008E8581 /* MilestoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneView.swift; sourceTree = "<group>"; };
 		DC92BD3429D0C68C008E8581 /* MilestoneFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneFilter.swift; sourceTree = "<group>"; };
 		DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberGroupsLoader.swift; sourceTree = "<group>"; };
 		DCAAC171279ED8B600EC685F /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
@@ -264,7 +262,6 @@
 				DC7C83D629B8E80400B3BE41 /* GroupView.swift */,
 				DC6F1D6329C8456200E0401C /* SingleUserView.swift */,
 				DC0EC639279E16E6006A7C75 /* FileView.swift */,
-				DC92BD3229D0C062008E8581 /* MilestoneView.swift */,
 			);
 			path = single;
 			sourceTree = "<group>";
@@ -441,7 +438,6 @@
 				DC7C83DB29B8F32900B3BE41 /* NewNoteView.swift in Sources */,
 				DC6F1D6229C840C900E0401C /* UserLoader.swift in Sources */,
 				DC56FDE229B888EA005841B3 /* ContributionLoader.swift in Sources */,
-				DC92BD3329D0C062008E8581 /* MilestoneView.swift in Sources */,
 				DC7C83D729B8E80400B3BE41 /* GroupView.swift in Sources */,
 				DC0897FD2730516600B8ACDA /* NoteListView.swift in Sources */,
 				DC2B300129C09625009ADC0D /* InfoView.swift in Sources */,
