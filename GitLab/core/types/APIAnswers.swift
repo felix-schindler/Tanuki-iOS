@@ -195,6 +195,7 @@ struct Group: Codable {
 	let visibility: String
 	var avatarUrl: String? = nil
 	let projects: [Project]
+	let createdAt: Date
 }
 
 struct SmallGroup: Codable {

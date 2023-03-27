@@ -33,24 +33,26 @@ struct GroupView: View {
 							}
 						}.frame(width: 50, height: 50, alignment: .leading)
 					}
-					VStack(alignment: .leading) {
-						HStack(spacing: 5) {
-							if (group.visibility == "private") {
-								Image(systemName: "lock")
-							} else if (group.visibility == "internal") {
-								Image(systemName: "shield.lefthalf.filled")
-							} else if (group.visibility == "public") {
-								Image(systemName: "globe")
-							}
-							Text(group.name)
+					HStack(spacing: 5) {
+						if (group.visibility == "private") {
+							Image(systemName: "lock")
+						} else if (group.visibility == "internal") {
+							Image(systemName: "shield.lefthalf.filled")
+						} else if (group.visibility == "public") {
+							Image(systemName: "globe")
 						}
-						Text("ID: " + String(group.id))
-							.font(.caption)
-							.foregroundColor(.secondary)
-							.padding(.bottom, 0.5)
+						Text(group.name)
 					}
-				}.frame(maxWidth: .infinity, alignment: .leading)
+					Spacer()
+					VStack(alignment: .trailing) {
+						Text("ID: \(String(group.id))")
+							.textSelection(.enabled)
+						Text(group.createdAt.toDateString())
+					}.font(.footnote)
+						.foregroundColor(.secondary)
+				}
 				Markdown(group.description.emojized())
+					.frame(maxWidth: .infinity, alignment: .leading)
 			}.padding()
 			// FIXME: This should actually load the groups projects
 			ProjectListView(projects: group.projects, updateFunction: { return group.projects })
@@ -74,6 +76,6 @@ struct GroupView: View {
 
 struct GroupView_Previews: PreviewProvider {
 	static var previews: some View {
-		GroupView(group: Group(id: 59430464, webUrl: "https://gitlab.com/groups/mc-webshop", name: "mc-webshop", description: "Collection of repositories for the Minecraft Webshop Plugin", visibility: "public", avatarUrl: "https://gitlab.com/uploads/-/system/group/avatar/59430464/server-icon.png", projects: []), updateFunction: { nil })
+		GroupView(group: Group(id: 59430464, webUrl: "https://gitlab.com/groups/mc-webshop", name: "mc-webshop", description: "Collection of repositories for the Minecraft Webshop Plugin", visibility: "public", avatarUrl: "https://gitlab.com/uploads/-/system/group/avatar/59430464/server-icon.png", projects: [], createdAt: Date()), updateFunction: { nil })
 	}
 }

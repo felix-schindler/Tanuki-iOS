@@ -42,7 +42,7 @@ struct SingleUserView: View {
 					}
 				}
 				Spacer()
-				VStack {
+				VStack(alignment: .trailing) {
 					Text("ID: \(String(user.id))")
 						.textSelection(.enabled)
 					Text(user.createdAt.toDateString())
