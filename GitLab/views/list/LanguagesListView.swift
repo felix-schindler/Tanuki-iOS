@@ -27,6 +27,9 @@ struct LanguagesListView: View {
 
 struct LanguagesListView_Previews: PreviewProvider {
 	static var previews: some View {
-		LanguagesListView(languages: [:])
+		LanguagesListView(languages: [
+			"Swift": 50.0,
+			"Dart": 50.0
+		])
 	}
 }
