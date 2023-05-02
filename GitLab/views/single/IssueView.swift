@@ -87,7 +87,7 @@ struct IssueView: View {
 					if (showAssignees) {
 						HStack {
 							Image(systemName: "person.circle")
-							ScrollView(.horizontal) {
+							VStack(alignment: .leading) {
 								ForEach(issue.assignees!, id: \.id) { assignee in
 									Text(assignee.name)
 								}
