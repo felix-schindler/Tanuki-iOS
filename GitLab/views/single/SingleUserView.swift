@@ -170,9 +170,9 @@ struct SingleUserView: View {
 				Text("\(user.followers) followers · \(user.following) following")
 			}
 			
-			Section("Contributions") {
+			/* Section("Contributions") {
 				ContributionLoader(username: user.username)
-			}
+			} */
 		}.navigationTitle(user.name != "" ? user.name : user.username)
 			.toolbar {
 				ToolbarItemGroup(placement: .navigationBarTrailing) {
