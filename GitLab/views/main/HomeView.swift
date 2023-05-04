@@ -10,8 +10,9 @@ import SwiftUI
 struct HomeView: View {
 	@State var starredProjects: [Project]? = nil
 	
-	@State var showNewIssue: Bool = false
-	@State var showEvents: Bool = false
+	@State var showNewIssue = false
+	@State var showEvents = false
+	@State var showNewProject = false
 	
 	var body: some View {
 		NavigationView {
@@ -72,6 +73,9 @@ struct HomeView: View {
 					}
 				}
 			}
+			.headerProminence(.increased)
+			.listStyle(.sidebar)
+			.navigationBarTitle("Home")
 			.refreshable {
 				await getStarredProjects()
 			}
@@ -80,16 +84,17 @@ struct HomeView: View {
 					await getStarredProjects()
 				}
 			}.toolbar {
-				ToolbarItemGroup(placement: .navigationBarTrailing) {
-					Button (action: {showEvents = true}) {
-						Image(systemName: "bell.circle")
-					}
+				Button (action: {showEvents = true}) {
+					Image(systemName: "bell.circle")
+				}
+				Button (action: {showNewProject = true}) {
+					Image(systemName: "plus.circle")
 				}
 			}.sheet(isPresented: $showEvents) {
 				EventsView()
-			}.headerProminence(.increased)
-				.listStyle(.sidebar)
-				.navigationBarTitle("Home")
+			}.sheet(isPresented: $showNewProject) {
+				NewProject()
+			}
 		}
 	}
 	
