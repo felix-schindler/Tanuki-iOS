@@ -26,6 +26,8 @@
 		DC4F9568272EBA3F00354E1D /* NotesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9567272EBA3F00354E1D /* NotesLoader.swift */; };
 		DC4F956A272EC3B100354E1D /* APIAnswers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9569272EC3B100354E1D /* APIAnswers.swift */; };
 		DC4F956E272ECD0100354E1D /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F956D272ECD0100354E1D /* ExploreView.swift */; };
+		DC569B3A2A045604005B99B3 /* NewProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC569B392A045604005B99B3 /* NewProject.swift */; };
+		DC569B3C2A0460F9005B99B3 /* NewMilestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC569B3B2A0460F9005B99B3 /* NewMilestone.swift */; };
 		DC56FDE229B888EA005841B3 /* ContributionLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC56FDE129B888EA005841B3 /* ContributionLoader.swift */; };
 		DC5EB8F3272D924D0015BF0D /* GitLabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB8F2272D924D0015BF0D /* GitLabApp.swift */; };
 		DC5EB8F7272D924F0015BF0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC5EB8F6272D924F0015BF0D /* Assets.xcassets */; };
@@ -88,6 +90,8 @@
 		DC4F9567272EBA3F00354E1D /* NotesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesLoader.swift; sourceTree = "<group>"; };
 		DC4F9569272EC3B100354E1D /* APIAnswers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAnswers.swift; sourceTree = "<group>"; };
 		DC4F956D272ECD0100354E1D /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
+		DC569B392A045604005B99B3 /* NewProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProject.swift; sourceTree = "<group>"; };
+		DC569B3B2A0460F9005B99B3 /* NewMilestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMilestone.swift; sourceTree = "<group>"; };
 		DC56FDE129B888EA005841B3 /* ContributionLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributionLoader.swift; sourceTree = "<group>"; };
 		DC5EB8EF272D924D0015BF0D /* GitLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC5EB8F2272D924D0015BF0D /* GitLabApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLabApp.swift; sourceTree = "<group>"; };
@@ -197,6 +201,15 @@
 			path = main;
 			sourceTree = "<group>";
 		};
+		DC569B382A0455F8005B99B3 /* new */ = {
+			isa = PBXGroup;
+			children = (
+				DC569B392A045604005B99B3 /* NewProject.swift */,
+				DC569B3B2A0460F9005B99B3 /* NewMilestone.swift */,
+			);
+			path = new;
+			sourceTree = "<group>";
+		};
 		DC5EB8E6272D924D0015BF0D = {
 			isa = PBXGroup;
 			children = (
@@ -283,6 +296,7 @@
 		DC90CA5A272E759100B758E7 /* popups */ = {
 			isa = PBXGroup;
 			children = (
+				DC569B382A0455F8005B99B3 /* new */,
 				DC10C3992731537D00CAE425 /* CommitsView.swift */,
 				DC10C39B27315D6400CAE425 /* BranchesView.swift */,
 				DC90CA5D272E763F00B758E7 /* EventsView.swift */,
@@ -449,6 +463,7 @@
 				DC5EB90C272D955E0015BF0D /* API.swift in Sources */,
 				DCD3165029C793E600AF7A3E /* ProjectLabelsLoader.swift in Sources */,
 				DCD3165229C7993800AF7A3E /* ProjectLanguagesLoader.swift in Sources */,
+				DC569B3A2A045604005B99B3 /* NewProject.swift in Sources */,
 				DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */,
 				DC5EB910272DA2450015BF0D /* IssueView.swift in Sources */,
 				DC5EB916272DD1310015BF0D /* ProjectsLoader.swift in Sources */,
@@ -458,6 +473,7 @@
 				DCD3165429C799A700AF7A3E /* LanguagesListView.swift in Sources */,
 				DCF14E3F29C720E800D1F43B /* AsyncButton.swift in Sources */,
 				DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */,
+				DC569B3C2A0460F9005B99B3 /* NewMilestone.swift in Sources */,
 				DC4F956A272EC3B100354E1D /* APIAnswers.swift in Sources */,
 				DC4F9554272EB4AF00354E1D /* IssuesLoader.swift in Sources */,
 			);
