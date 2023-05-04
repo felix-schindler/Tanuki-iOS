@@ -132,20 +132,24 @@ struct ProjectView: View {
 			}
 			
 			Section("Project") {
-				HStack {
-					Image(systemName: "text.line.first.and.arrowtriangle.forward")
-						.foregroundColor(.purple)
-					Button(action: {showCommits = true}) {
-						Text("Commits")
-					}.foregroundColor(.primary)
+				if (project.defaultBranch != nil) {
+					HStack {
+						Image(systemName: "text.line.first.and.arrowtriangle.forward")
+							.foregroundColor(.purple)
+						Button(action: {showCommits = true}) {
+							Text("Commits")
+						}.foregroundColor(.primary)
+					}
 				}
-				
-				HStack {
-					Image(systemName: "square.on.square.intersection.dashed")
-						.foregroundColor(.orange)
-					Button(action: {showBranches = true}) {
-						Text("Branches")
-					}.foregroundColor(.primary)
+
+				if (project.defaultBranch != nil) {
+					HStack {
+						Image(systemName: "square.on.square.intersection.dashed")
+							.foregroundColor(.orange)
+						Button(action: {showBranches = true}) {
+							Text("Branches")
+						}.foregroundColor(.primary)
+					}
 				}
 				
 				if (project.issuesEnabled) {
@@ -171,14 +175,16 @@ struct ProjectView: View {
 					}.foregroundColor(.primary)
 				}
 				
-				NavigationLink(destination: TreeLoader(id: project.id, refName: project.defaultBranch ?? "")) {
-					HStack {
-						Image(systemName: "chevron.left.forwardslash.chevron.right")
-							.foregroundColor(.pink)
-						Text("Files")
-							.frame(maxWidth: .infinity, alignment: .leading)
-					}
-				}.foregroundColor(.primary)
+				if (project.defaultBranch != nil) {
+					NavigationLink(destination: TreeLoader(id: project.id, refName: project.defaultBranch ?? "")) {
+						HStack {
+							Image(systemName: "chevron.left.forwardslash.chevron.right")
+								.foregroundColor(.pink)
+							Text("Files")
+								.frame(maxWidth: .infinity, alignment: .leading)
+						}
+					}.foregroundColor(.primary)
+				}
 				
 				NavigationLink(destination: PipelineLoader(id: project.id, onlyStatus: false)) {
 					HStack {
