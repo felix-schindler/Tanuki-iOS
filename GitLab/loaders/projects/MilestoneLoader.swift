@@ -22,6 +22,8 @@ struct MilestoneLoader: View {
 	@State var showFilter: Bool = false
 	@State var state: MilestoneState = .active
 	
+	@State var showNewMilestone = false
+	
 	var body: some View {
 		List {
 			if (milestones != nil) {
@@ -75,7 +77,12 @@ struct MilestoneLoader: View {
 			loadFailed = (milestones == nil)
 		}.searchable(text: $search)
 			.onSubmit(of: .search) {
-				
+				Task {
+					let temp = await getMilestones()
+					if (temp != nil) {
+						milestones = temp!
+					}
+				}
 			}.toolbar {
 				Button(action: { showFilter = true }) {
 					Image(systemName: "line.3.horizontal.decrease.circle")
@@ -99,6 +106,8 @@ struct MilestoneLoader: View {
 						showFilter = false
 					}
 				}
+			}.sheet(isPresented: $showNewMilestone) {
+				NewMilestone(id: id)
 			}.onAppear {
 				Task {
 					milestones = await getMilestones()
@@ -124,6 +133,8 @@ struct MilestoneLoader: View {
 
 struct MilestoneLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		MilestoneLoader(id: 33025310)
+		NavigationView {
+			MilestoneLoader(id: 33025310)
+		}
 	}
 }
