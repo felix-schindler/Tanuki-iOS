@@ -15,7 +15,7 @@
       "location" : "https://github.com/felix-schindler/swift-http",
       "state" : {
         "branch" : "main",
-        "revision" : "f1b988f8e168e034cdcb8271bc962f6fd0836260"
+        "revision" : "9dae2d3023398691e81788caf14862fa6cfd273a"
       }
     },
     {
@@ -23,17 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gonzalezreal/swift-markdown-ui/",
       "state" : {
-        "revision" : "4392c3cefd08db10f13ffb019d7c7a4a622824f5",
-        "version" : "2.0.2"
-      }
-    },
-    {
-      "identity" : "swiftui-contributionchart",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/felix-schindler/SwiftUI-ContributionChart",
-      "state" : {
-        "branch" : "main",
-        "revision" : "1e0a68e6103b5a911c3a8d26bb978a5d39ebc7a6"
+        "revision" : "12b351a75201a8124c2f2e1f9fc6ef5cd812c0b9",
+        "version" : "2.1.0"
       }
     }
   ],

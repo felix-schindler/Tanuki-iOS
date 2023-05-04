@@ -59,8 +59,7 @@ class API {
 		var httpUrl = HttpUrl(
 			host: domain,
 			resource: resource,
-			query: query,
-			trailingSlashEnabled: false
+			query: query
 		)
 
 		if (useBase) {
@@ -125,8 +124,7 @@ class API {
 				url: HttpUrl(
 					host: domain,
 					path: [base, endpoint],
-					query: query,
-					trailingSlashEnabled: false
+					query: query
 				)
 			).statusCode
 		} catch {

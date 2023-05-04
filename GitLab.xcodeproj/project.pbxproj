@@ -17,7 +17,6 @@
 		DC1F1BDF29CCC93A00AF7573 /* NewLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1F1BDE29CCC93A00AF7573 /* NewLabelView.swift */; };
 		DC1F1BE229CCCFA600AF7573 /* NVMColor in Frameworks */ = {isa = PBXBuildFile; productRef = DC1F1BE129CCCFA600AF7573 /* NVMColor */; };
 		DC2A243A29C8FC0600A9FED7 /* MergeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2A243929C8FC0600A9FED7 /* MergeFilter.swift */; };
-		DC2B2FFD29C06609009ADC0D /* ContributionChart in Frameworks */ = {isa = PBXBuildFile; productRef = DC2B2FFC29C06609009ADC0D /* ContributionChart */; };
 		DC2B2FFF29C0679B009ADC0D /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B2FFE29C0679B009ADC0D /* ProjectView.swift */; };
 		DC2B300129C09625009ADC0D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B300029C09625009ADC0D /* InfoView.swift */; };
 		DC4F9554272EB4AF00354E1D /* IssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9553272EB4AF00354E1D /* IssuesLoader.swift */; };
@@ -28,7 +27,6 @@
 		DC4F956E272ECD0100354E1D /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F956D272ECD0100354E1D /* ExploreView.swift */; };
 		DC569B3A2A045604005B99B3 /* NewProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC569B392A045604005B99B3 /* NewProject.swift */; };
 		DC569B3C2A0460F9005B99B3 /* NewMilestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC569B3B2A0460F9005B99B3 /* NewMilestone.swift */; };
-		DC56FDE229B888EA005841B3 /* ContributionLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC56FDE129B888EA005841B3 /* ContributionLoader.swift */; };
 		DC5EB8F3272D924D0015BF0D /* GitLabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB8F2272D924D0015BF0D /* GitLabApp.swift */; };
 		DC5EB8F7272D924F0015BF0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC5EB8F6272D924F0015BF0D /* Assets.xcassets */; };
 		DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB900272D934E0015BF0D /* HomeView.swift */; };
@@ -92,7 +90,6 @@
 		DC4F956D272ECD0100354E1D /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		DC569B392A045604005B99B3 /* NewProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProject.swift; sourceTree = "<group>"; };
 		DC569B3B2A0460F9005B99B3 /* NewMilestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMilestone.swift; sourceTree = "<group>"; };
-		DC56FDE129B888EA005841B3 /* ContributionLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributionLoader.swift; sourceTree = "<group>"; };
 		DC5EB8EF272D924D0015BF0D /* GitLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC5EB8F2272D924D0015BF0D /* GitLabApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLabApp.swift; sourceTree = "<group>"; };
 		DC5EB8F6272D924F0015BF0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -142,7 +139,6 @@
 			files = (
 				DC1F1BE229CCCFA600AF7573 /* NVMColor in Frameworks */,
 				DCFCB06E29B7C3D800F18CDC /* MarkdownUI in Frameworks */,
-				DC2B2FFD29C06609009ADC0D /* ContributionChart in Frameworks */,
 				DC8FE05629C65F0F001C5D82 /* SwiftHttp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -258,7 +254,7 @@
 				DC4F9553272EB4AF00354E1D /* IssuesLoader.swift */,
 				DC4F955D272EB8A700354E1D /* MergeLoader.swift */,
 				DC4F9556272EB59200354E1D /* projects */,
-				DCC6DD2629C8D4D600945D8C /* user */,
+				DC6F1D6129C840C900E0401C /* UserLoader.swift */,
 				DC7C83D829B8E8A700B3BE41 /* GroupLoader.swift */,
 				DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */,
 			);
@@ -309,15 +305,6 @@
 			path = popups;
 			sourceTree = "<group>";
 		};
-		DCC6DD2629C8D4D600945D8C /* user */ = {
-			isa = PBXGroup;
-			children = (
-				DC6F1D6129C840C900E0401C /* UserLoader.swift */,
-				DC56FDE129B888EA005841B3 /* ContributionLoader.swift */,
-			);
-			path = user;
-			sourceTree = "<group>";
-		};
 		DCDCACC529CC52E40011230D /* models */ = {
 			isa = PBXGroup;
 			children = (
@@ -356,7 +343,6 @@
 			name = GitLab;
 			packageProductDependencies = (
 				DCFCB06D29B7C3D800F18CDC /* MarkdownUI */,
-				DC2B2FFC29C06609009ADC0D /* ContributionChart */,
 				DC8FE05529C65F0F001C5D82 /* SwiftHttp */,
 				DC1F1BE129CCCFA600AF7573 /* NVMColor */,
 			);
@@ -390,7 +376,6 @@
 			mainGroup = DC5EB8E6272D924D0015BF0D;
 			packageReferences = (
 				DCFCB06C29B7C3D800F18CDC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
-				DC2B2FFB29C06609009ADC0D /* XCRemoteSwiftPackageReference "SwiftUI-ContributionChart" */,
 				DC8FE05429C65F0F001C5D82 /* XCRemoteSwiftPackageReference "swift-http" */,
 				DC1F1BE029CCCFA600AF7573 /* XCRemoteSwiftPackageReference "NVMColor_swift" */,
 			);
@@ -451,7 +436,6 @@
 				DC7A85C02731AB4E0000CF4D /* SettingsView.swift in Sources */,
 				DC7C83DB29B8F32900B3BE41 /* NewNoteView.swift in Sources */,
 				DC6F1D6229C840C900E0401C /* UserLoader.swift in Sources */,
-				DC56FDE229B888EA005841B3 /* ContributionLoader.swift in Sources */,
 				DC7C83D729B8E80400B3BE41 /* GroupView.swift in Sources */,
 				DC0897FD2730516600B8ACDA /* NoteListView.swift in Sources */,
 				DC2B300129C09625009ADC0D /* InfoView.swift in Sources */,
@@ -700,14 +684,6 @@
 				minimumVersion = 1.2.3;
 			};
 		};
-		DC2B2FFB29C06609009ADC0D /* XCRemoteSwiftPackageReference "SwiftUI-ContributionChart" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/felix-schindler/SwiftUI-ContributionChart";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		DC8FE05429C65F0F001C5D82 /* XCRemoteSwiftPackageReference "swift-http" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/felix-schindler/swift-http";
@@ -721,7 +697,7 @@
 			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui/";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.2;
+				minimumVersion = 2.1.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -731,11 +707,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DC1F1BE029CCCFA600AF7573 /* XCRemoteSwiftPackageReference "NVMColor_swift" */;
 			productName = NVMColor;
-		};
-		DC2B2FFC29C06609009ADC0D /* ContributionChart */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DC2B2FFB29C06609009ADC0D /* XCRemoteSwiftPackageReference "SwiftUI-ContributionChart" */;
-			productName = ContributionChart;
 		};
 		DC8FE05529C65F0F001C5D82 /* SwiftHttp */ = {
 			isa = XCSwiftPackageProductDependency;
