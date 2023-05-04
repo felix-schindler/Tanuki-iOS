@@ -10,7 +10,7 @@ import MarkdownUI
 
 struct MergeView: View {
 	@State var mergeRequest: MergeRequest
-
+	
 	@State var showNewNote = false
 	
 	var body: some View {
@@ -19,7 +19,7 @@ struct MergeView: View {
 				Text(mergeRequest.title.emojized())
 					.font(.title)
 					.fontWeight(.semibold)
-
+				
 				if (mergeRequest.description != "") {
 					Markdown(mergeRequest.description.emojized())
 				}
@@ -92,17 +92,15 @@ struct MergeView: View {
 			}
 		}.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
-				ToolbarItemGroup(placement: .navigationBarTrailing) {
-					Text(mergeRequest.state.firstCapitalized)
-						.font(.footnote)
-						.padding(.horizontal, 6)
-						.padding(.vertical, 4)
-						.background((mergeRequest.state == "merged") ? .blue : (mergeRequest.state == "closed") ? .red : .green)
-						.foregroundColor(.white)
-						.cornerRadius(10)
-					AsyncButton(systemImage: "square.and.arrow.up") {
-						await URL(string: mergeRequest.webUrl)!.share()
-					}
+				Text(mergeRequest.state.firstCapitalized)
+					.font(.footnote)
+					.padding(.horizontal, 6)
+					.padding(.vertical, 4)
+					.background((mergeRequest.state == "merged") ? .blue : (mergeRequest.state == "closed") ? .red : .green)
+					.foregroundColor(.white)
+					.cornerRadius(10)
+				AsyncButton(systemImage: "square.and.arrow.up") {
+					await URL(string: mergeRequest.webUrl)!.share()
 				}
 			}.sheet(isPresented: $showNewNote) {
 				NewNoteView(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge)

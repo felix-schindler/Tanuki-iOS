@@ -26,10 +26,10 @@ struct IssuesLoader: View {
 	@State var confidential: Bool = false
 	@State var dueDate: IssueDue = .all
 	@State var scope: IssueScope = .all
-
+	
 	/// Title of a milestone
 	@State var milestone: String?
-
+	
 	// @State var assignees
 	// @State var author
 	// @State var createdAfter
@@ -53,14 +53,12 @@ struct IssuesLoader: View {
 						}
 					}
 					.toolbar {
-						ToolbarItemGroup(placement: .navigationBarTrailing) {
-							Button(action: {showFilter = true}) {
-								Image(systemName: "line.3.horizontal.decrease.circle")
-							}
-							if (id != nil) {
-								Button(action: {showNewIssue = true}) {
-									Image(systemName: "plus.circle")
-								}
+						Button(action: {showFilter = true}) {
+							Image(systemName: "line.3.horizontal.decrease.circle")
+						}
+						if (id != nil) {
+							Button(action: {showNewIssue = true}) {
+								Image(systemName: "plus.circle")
 							}
 						}
 					}.sheet(isPresented: $showNewIssue) {

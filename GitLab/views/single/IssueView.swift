@@ -143,22 +143,20 @@ struct IssueView: View {
 			}
 		}.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
-				ToolbarItemGroup(placement: .navigationBarTrailing) {
-					Text(issue.state.firstCapitalized)
-						.font(.footnote)
-						.padding(.horizontal, 6)
-						.padding(.vertical, 4)
-						.background(issue.state == "opened" ? .green : .blue)
-						.foregroundColor(.white)
-						.cornerRadius(10)
-					AsyncButton(systemImage: "square.and.arrow.up") {
-						await URL(string: issue.webUrl)!.share()
-					}
-					Button(action: {
-						showNewIssue = true
-					}) {
-						Image(systemName: "plus.circle")
-					}
+				Text(issue.state.firstCapitalized)
+					.font(.footnote)
+					.padding(.horizontal, 6)
+					.padding(.vertical, 4)
+					.background(issue.state == "opened" ? .green : .blue)
+					.foregroundColor(.white)
+					.cornerRadius(10)
+				AsyncButton(systemImage: "square.and.arrow.up") {
+					await URL(string: issue.webUrl)!.share()
+				}
+				Button(action: {
+					showNewIssue = true
+				}) {
+					Image(systemName: "plus.circle")
 				}
 			}.sheet(isPresented: $showNewIssue) {
 				NewIssueView(id: issue.projectId)

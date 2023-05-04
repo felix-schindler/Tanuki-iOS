@@ -27,16 +27,14 @@ struct ProjectsLoader: View {
 	@State var sort: ProjectSort = .desc
 	
 	@State var visibility: ProjectVisibility = .all
-
+	
 	var body: some View {
 		VStack {
 			if (projects != nil) {
 				ProjectListView(projects: projects!, updateFunction: getProjects)
 					.toolbar {
-						ToolbarItemGroup(placement: .navigationBarTrailing) {
-							Button(action: {showFilter = true}) {
-								Image(systemName: "line.3.horizontal.decrease.circle")
-							}
+						Button(action: {showFilter = true}) {
+							Image(systemName: "line.3.horizontal.decrease.circle")
 						}
 					}.sheet(isPresented: $showFilter) {
 						List {
@@ -133,7 +131,7 @@ struct ProjectsLoader: View {
 		if (visibility != .all) {
 			filters[ProjectVisibility.NAME.rawValue] = visibility.rawValue
 		}
-
+		
 		return await API.get(type: [Project].self, endpoint: "projects", query: filters)
 	}
 }

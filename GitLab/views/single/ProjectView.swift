@@ -126,7 +126,9 @@ struct ProjectView: View {
 					}
 				}
 				
-				ProjectLanguagesLoader(id: project.id)
+				if (project.defaultBranch != nil) {
+					ProjectLanguagesLoader(id: project.id)
+				}
 			}
 			
 			Section("Project") {
@@ -229,14 +231,12 @@ struct ProjectView: View {
 			}
 		}.navigationTitle(project.name)
 			.toolbar {
-				ToolbarItemGroup(placement: .navigationBarTrailing) {
-					AsyncButton(systemImage: "square.and.arrow.up") {
-						await URL(string: project.webUrl)!.share()
-					}
-					if (project.issuesEnabled) {
-						Button(action: {showNewIssue = true}) {
-							Image(systemName: "plus.circle")
-						}
+				AsyncButton(systemImage: "square.and.arrow.up") {
+					await URL(string: project.webUrl)!.share()
+				}
+				if (project.issuesEnabled) {
+					Button(action: {showNewIssue = true}) {
+						Image(systemName: "plus.circle")
 					}
 				}
 			}.sheet(isPresented: $showNewIssue) {

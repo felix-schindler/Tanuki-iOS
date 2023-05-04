@@ -171,14 +171,12 @@ struct SingleUserView: View {
 			}
 			
 			/* Section("Contributions") {
-				ContributionLoader(username: user.username)
-			} */
+			 ContributionLoader(username: user.username)
+			 } */
 		}.navigationTitle(user.name != "" ? user.name : user.username)
 			.toolbar {
-				ToolbarItemGroup(placement: .navigationBarTrailing) {
-					AsyncButton(systemImage: "square.and.arrow.up") {
-						await URL(string: user.webUrl)!.share()
-					}
+				AsyncButton(systemImage: "square.and.arrow.up") {
+					await URL(string: user.webUrl)!.share()
 				}
 			}
 	}

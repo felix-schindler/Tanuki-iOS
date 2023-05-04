@@ -36,10 +36,8 @@ struct MergeLoader: View {
 						}
 					}
 					.toolbar {
-						ToolbarItemGroup(placement: .navigationBarTrailing) {
-							Button(action: {showFilter = true}) {
-								Image(systemName: "line.3.horizontal.decrease.circle")
-							}
+						Button(action: {showFilter = true}) {
+							Image(systemName: "line.3.horizontal.decrease.circle")
 						}
 					}.sheet(isPresented: $showFilter) {
 						List {
@@ -101,7 +99,7 @@ struct MergeLoader: View {
 		filter[MergeOrder.NAME.rawValue] = orderBy.rawValue
 		filter[IssueSort.NAME.rawValue] = sort.rawValue
 		filter[MergeState.NAME.rawValue] = state.rawValue
-
+		
 		var endpoint = "merge_requests"
 		if (id != nil) {
 			endpoint = "projects/\(id!)/merge_requests"

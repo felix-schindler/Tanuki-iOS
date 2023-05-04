@@ -35,10 +35,8 @@ struct ProjectLabelsLoader: View {
 				loadFailed = (labels == nil)
 			}
 		}.toolbar {
-			ToolbarItemGroup(placement: .navigationBarTrailing) {
-				Button (action: { showNewLabel = true }) {
-					Image(systemName: "plus.circle")
-				}
+			Button (action: { showNewLabel = true }) {
+				Image(systemName: "plus.circle")
 			}
 		}.sheet(isPresented: $showNewLabel) {
 			NewLabelView(id: id)
