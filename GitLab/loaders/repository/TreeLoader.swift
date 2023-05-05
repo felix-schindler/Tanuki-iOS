@@ -18,54 +18,46 @@ struct TreeLoader: View {
 	@State var filePath: String? = nil
 	
 	var body: some View {
-		VStack {
+		List {
 			if (tree != nil) {
-				List {
-					if (branches != nil && filePath == nil) {
-						Section {
-							HStack {
-								Text("Branch: ")
-								Picker("", selection: $refName) {
-									ForEach(branches!, id: \.name) { branch in
-										Text(branch.name).tag(branch.name)
+				if (branches != nil && filePath == nil) {
+					Section {
+						HStack {
+							Text("Branch: ")
+							Picker("", selection: $refName) {
+								ForEach(branches!, id: \.name) { branch in
+									Text(branch.name).tag(branch.name)
+								}
+							}.pickerStyle(.menu)
+								.onChange(of: refName) { _ in
+									Task {
+										await getTree()
 									}
-								}.pickerStyle(.menu)
-									.onChange(of: refName) { _ in
-										Task {
-											await getTree()
-										}
-									}
-							}
+								}
 						}
 					}
-					if (tree!.isEmpty) {
-						Text("There are no files yet. You'll see them after you pushed them to branch \(refName)")
-					} else {
-						Section("Files") {
-							ForEach(tree!, id: \.id) { file in
-								if (file.type == "tree") {
-									// TODO: NavigationView
-									NavigationLink(destination: TreeLoader(id: id, refName: refName, filePath: file.path)) {
-										HStack {
-											Image(systemName: "folder")
-											Text(file.path)
-										}
+				}
+				if (tree!.isEmpty) {
+					Text("There are no files yet. You'll see them after you pushed them to branch \(refName)")
+				} else {
+					Section("Files") {
+						ForEach(tree!, id: \.id) { file in
+							if (file.type == "tree") {
+								NavigationLink(destination: TreeLoader(id: id, refName: refName, filePath: file.path)) {
+									HStack {
+										Image(systemName: "folder")
+										Text(file.name)
 									}
-								} else {
-									NavigationLink(destination: FileLoader(id: id, filePath: file.path, refName: refName)) {
-										HStack {
-											Image(systemName: "doc.text")
-											Text(file.path)
-										}
+								}
+							} else {
+								NavigationLink(destination: FileLoader(id: id, filePath: file.path, refName: refName)) {
+									HStack {
+										Image(systemName: "doc.text")
+										Text(file.name)
 									}
 								}
 							}
 						}
-					}
-				}.refreshable {
-					await getTree()
-					if (filePath == nil) {
-						await getBranches()
 					}
 				}
 			}
@@ -74,6 +66,11 @@ struct TreeLoader: View {
 				await getTree()
 				await getBranches()
 				loadFailed = (tree == nil) || (branches == nil)
+			}
+		}.refreshable {
+			await getTree()
+			if (filePath == nil) {
+				await getBranches()
 			}
 		}.navigationTitle(filePath ?? "Files")
 	}
@@ -89,6 +86,6 @@ struct TreeLoader: View {
 
 struct TreeLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		TreeLoader(id: 0, refName: "")
+		TreeLoader(id: 33025310, refName: "main")
 	}
 }
