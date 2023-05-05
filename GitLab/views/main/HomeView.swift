@@ -19,34 +19,54 @@ struct HomeView: View {
 			List {
 				Section("Your work") {
 					NavigationLink(destination: IssuesLoader(scope: .createdByMe)) {
-						HStack {
-							Image(systemName: "smallcircle.circle")
-								.foregroundColor(.green)
-							Text("Issues")
-						}
+						Label(
+							title: {
+								Text("Issues")
+							},
+							icon: {
+								Image(systemName: "smallcircle.circle")
+									.foregroundColor(.green)
+							}
+						)
 					}
+
 					NavigationLink(destination: MergeLoader()) {
-						HStack {
-							Image(systemName: "arrow.triangle.pull")
-								.foregroundColor(.blue)
-							Text("Merge Requests")
-						}
+						Label(
+							title: {
+								Text("Merge Requests")
+							},
+							icon: {
+								Image(systemName: "arrow.triangle.pull")
+									.foregroundColor(.blue)
+							}
+						)
 					}
+
 					NavigationLink(destination: ProjectsLoader(membership: true, orderBy: .updatedAt)) {
-						HStack {
-							Image(systemName: "appclip")
-								.foregroundColor(.gray)
-							Text("Projects")
-						}
+						Label(
+							title: {
+								Text("Projects")
+							},
+							icon: {
+								Image(systemName: "appclip")
+									.foregroundColor(.gray)
+							}
+						)
 					}
+					
 					NavigationLink(destination: MemberGroupsLoader()) {
-						HStack {
-							Image(systemName: "person.3")
-								.foregroundColor(.red)
-							Text("Groups")
-						}
+						Label(
+							title: {
+								Text("Groups")
+							},
+							icon: {
+								Image(systemName: "person.3")
+									.foregroundColor(.red)
+							}
+						)
 					}
 				}
+
 				Section("Starred projects") {
 					if (starredProjects != nil) {
 						if (starredProjects!.isEmpty) {
