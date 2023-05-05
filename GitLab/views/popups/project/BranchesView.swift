@@ -17,12 +17,12 @@ struct BranchesView: View {
 	@State var loadFailed: Bool = false
 	
 	var body: some View {
-		NavigationView {
+		List {
 			if (branches != nil) {
 				if (branches!.isEmpty) {
 					Text("You'll see your branches after you pushed them")
 				} else {
-					List(branches!, id: \.name) { branch in
+					ForEach(branches!, id: \.name) { branch in
 						HStack {
 							VStack(alignment: .leading) {
 								HStack {
@@ -32,36 +32,36 @@ struct BranchesView: View {
 									Text(branch.name.emojized())
 										.font(.headline)
 								}
-								Text(branch.commit.shortId + " · " + branch.commit.title.emojized())
-									.font(.caption)
-									.foregroundColor(.secondary)
+
+								VStack(alignment: .leading) {
+									HStack {
+										Text(branch.commit.shortId)
+											.font(.system(.footnote, design: .monospaced))
+										Text(branch.commit.authoredDate.toString())
+									}
+									Text(branch.commit.title.emojized())
+								}.font(.footnote)
 							}
 							Spacer()
 							PipelineLoader(id: id, branch: branch.name)
 						}
-					}.refreshable {
-						await getBranches()
-					}.navigationBarTitle("Branches")
-						.navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
+					}
 				}
 			} else {
-				VStack {
-					Spacer()
-					if (loadFailed) {
-						Text("Failed to load, please check your internet connection and your token")
-							.foregroundColor(.red)
-					} else {
-						ProgressView("Loading")
-					}
-					Spacer()
-				}.navigationBarTitle("Branches")
-					.navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
+				if (loadFailed) {
+					Text("Failed to load, please check your internet connection and your token")
+						.foregroundColor(.red)
+				} else {
+					ProgressView()
+				}
 			}
 		}.onAppear {
 			Task {
 				await getBranches()
 			}
-		}
+		}.refreshable {
+			await getBranches()
+		}.navigationBarTitle("Branches")
 	}
 	
 	private func getBranches() async -> Void {
@@ -72,6 +72,6 @@ struct BranchesView: View {
 
 struct BranchesView_Previews: PreviewProvider {
 	static var previews: some View {
-		BranchesView(id: Int())
+		BranchesView(id: 33025310)
 	}
 }

@@ -66,6 +66,7 @@
 		DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEE699127312F8A00AE666C /* EmojiCodes.swift */; };
 		DCF14E3D29C71B8800D1F43B /* IssueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */; };
 		DCF14E3F29C720E800D1F43B /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF14E3E29C720E800D1F43B /* AsyncButton.swift */; };
+		DCF27D192A04D4CF00C18EE5 /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF27D182A04D4CF00C18EE5 /* TagsView.swift */; };
 		DCFCB06E29B7C3D800F18CDC /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = DCFCB06D29B7C3D800F18CDC /* MarkdownUI */; };
 /* End PBXBuildFile section */
 
@@ -130,6 +131,7 @@
 		DCEE699127312F8A00AE666C /* EmojiCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCodes.swift; sourceTree = "<group>"; };
 		DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilter.swift; sourceTree = "<group>"; };
 		DCF14E3E29C720E800D1F43B /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
+		DCF27D182A04D4CF00C18EE5 /* TagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -292,11 +294,9 @@
 		DC90CA5A272E759100B758E7 /* popups */ = {
 			isa = PBXGroup;
 			children = (
+				DCF27D172A04D47400C18EE5 /* project */,
 				DC569B382A0455F8005B99B3 /* new */,
-				DC10C3992731537D00CAE425 /* CommitsView.swift */,
-				DC10C39B27315D6400CAE425 /* BranchesView.swift */,
 				DC90CA5D272E763F00B758E7 /* EventsView.swift */,
-				DC90CA5B272E762200B758E7 /* NewIssueView.swift */,
 				DC7C83DA29B8F32900B3BE41 /* NewNoteView.swift */,
 				DC7A85BF2731AB4E0000CF4D /* SettingsView.swift */,
 				DC2B300029C09625009ADC0D /* InfoView.swift */,
@@ -323,6 +323,17 @@
 				DC92BD3429D0C68C008E8581 /* MilestoneFilter.swift */,
 			);
 			path = types;
+			sourceTree = "<group>";
+		};
+		DCF27D172A04D47400C18EE5 /* project */ = {
+			isa = PBXGroup;
+			children = (
+				DC10C3992731537D00CAE425 /* CommitsView.swift */,
+				DC10C39B27315D6400CAE425 /* BranchesView.swift */,
+				DCF27D182A04D4CF00C18EE5 /* TagsView.swift */,
+				DC90CA5B272E762200B758E7 /* NewIssueView.swift */,
+			);
+			path = project;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -436,6 +447,7 @@
 				DC7A85C02731AB4E0000CF4D /* SettingsView.swift in Sources */,
 				DC7C83DB29B8F32900B3BE41 /* NewNoteView.swift in Sources */,
 				DC6F1D6229C840C900E0401C /* UserLoader.swift in Sources */,
+				DCF27D192A04D4CF00C18EE5 /* TagsView.swift in Sources */,
 				DC7C83D729B8E80400B3BE41 /* GroupView.swift in Sources */,
 				DC0897FD2730516600B8ACDA /* NoteListView.swift in Sources */,
 				DC2B300129C09625009ADC0D /* InfoView.swift in Sources */,

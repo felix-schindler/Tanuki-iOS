@@ -238,6 +238,14 @@ struct Branch: Codable {
 	let canPush: Bool
 }
 
+struct Tag: Codable {
+	let name: String
+	let message: String	// Empty string if not set
+	let target: String
+	let commit: Commit
+	let protected: Bool
+}
+
 struct Pipeline: Codable {
 	let id: Int
 	let ref: String
