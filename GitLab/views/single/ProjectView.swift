@@ -21,8 +21,8 @@ struct ProjectView: View {
 		List {
 			Section("Info") {
 				HStack {
-					if (project.avatarUrl != nil) {
-						AsyncImage(url: URL(string: project.avatarUrl!)) { phase in
+					if let avatarUrl = ProjectListView.getAvatarUrl(project.avatarUrl ?? project.namespace.avatarUrl) {
+						AsyncImage(url: avatarUrl) { phase in
 							switch phase {
 							case .empty:
 								ProgressView()
@@ -30,12 +30,13 @@ struct ProjectView: View {
 								image
 									.resizable()
 									.scaledToFit()
-									.frame(width: 50, height: 50)
 									.cornerRadius(10)
 							default:
-								EmptyView()
+								Image(systemName: "exclamationmark.icloud")
+									.resizable()
+									.scaledToFit()
 							}
-						}
+						}.frame(width: 50, height: 50, alignment: .leading)
 					}
 					
 					if (project.description != nil && project.description != "") {
@@ -63,6 +64,7 @@ struct ProjectView: View {
 				HStack {
 					Image(systemName: "number.circle")
 					Text(String(project.id))
+						.textSelection(.enabled)
 					Spacer()
 					if (project.owner != nil) {
 						Image(systemName: "person")
@@ -168,15 +170,6 @@ struct ProjectView: View {
 				if (project.defaultBranch != nil) {
 					DisclosureGroup(content: {
 						NavigationLink("Repository", destination: TreeLoader(id: project.id, refName: project.defaultBranch!))
-
-						NavigationLink(destination: PipelineLoader(id: project.id, onlyStatus: false)) {
-							Text("Pipelines")
-							Spacer()
-							if (project.defaultBranch != nil) {
-								PipelineLoader(id: project.id, branch: project.defaultBranch!)
-							}
-						}
-
 						NavigationLink("Branches", destination: BranchesView(id: project.id))
 						NavigationLink("Commits", destination: CommitsView(id: project.id, refName: project.defaultBranch!))
 						NavigationLink("Tags", destination: TagsView(id: project.id))
@@ -185,6 +178,22 @@ struct ProjectView: View {
 							.foregroundColor(.primary)
 					})
 				}
+				
+				DisclosureGroup(content: {
+					NavigationLink("Pipelines", destination: PipelineLoader(id: project.id, onlyStatus: false))
+					NavigationLink("Releases", destination: ReleaseView(id: project.id))
+				}, label: {
+					Label(title: {
+						Text("Build")
+						if (project.defaultBranch != nil) {
+							Spacer()
+							PipelineLoader(id: project.id, branch: project.defaultBranch!)
+						}
+					}, icon: {
+						Image(systemName: "flag")
+					})
+					.foregroundColor(.primary)
+				})
 			}
 			
 			if (project.readmeUrl != nil) {
@@ -240,6 +249,6 @@ struct ProjectView: View {
 
 struct ProjectView_Previews_Previews: PreviewProvider {
 	static var previews: some View {
-		ProjectView(project: Project(id: 33025310, description: "The native SwiftUI GitLab client for iOS and iPadOS.", name: "Tanuki for GitLab", nameWithNamespace: "Felix / Tanuki for GitLab", pathWithNamespace: "felix-schindler/gitlab-ios", defaultBranch: "main", tagList: ["Tanuki", "iOS", "iPadOS", "SwiftUI", "GitLab", "App", "Client"], webUrl: "https://gitlab.com/felix-schindler/gitlab-ios", readmeUrl: "https://gitlab.com/felix-schindler/gitlab-ios/-/blob/main/README.md", avatarUrl: "https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png", forksCount: 0, starCount: 1, namespace: Namespace(name: "Felix", path: "felix-schindler"), visibility: "public", owner: UserSmall(id: 9005085, name: "Felix", username: "felix-schindler", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png"), issuesEnabled: true, mergeRequestsEnabled: true, permissions: Permissions(projectAccess: Access(accessLevel: 50, notificationLevel: 3))))
+		ProjectView(project: Project(id: 33025310, description: "The native SwiftUI GitLab client for iOS and iPadOS.", name: "Tanuki for GitLab", nameWithNamespace: "Felix / Tanuki for GitLab", pathWithNamespace: "felix-schindler/gitlab-ios", defaultBranch: "main", tagList: ["Tanuki", "iOS", "iPadOS", "SwiftUI", "GitLab", "App", "Client"], webUrl: "https://gitlab.com/felix-schindler/gitlab-ios", readmeUrl: "https://gitlab.com/felix-schindler/gitlab-ios/-/blob/main/README.md", avatarUrl: "https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png", forksCount: 0, starCount: 1, namespace: Namespace(name: "Felix", path: "felix-schindler", avatarUrl: ""), visibility: "public", owner: UserSmall(id: 9005085, name: "Felix", username: "felix-schindler", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png"), issuesEnabled: true, openIssuesCount: 12, mergeRequestsEnabled: true, permissions: Permissions(projectAccess: Access(accessLevel: 50, notificationLevel: 3))))
 	}
 }

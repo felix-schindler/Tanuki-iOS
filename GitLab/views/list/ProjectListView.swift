@@ -20,8 +20,8 @@ struct ProjectListView: View {
 				ForEach(projects, id: \.id) { project in
 					NavigationLink(destination: ProjectView(project: project)) {
 						HStack {
-							if (project.avatarUrl != nil || project.namespace.avatarUrl != nil) {
-								AsyncImage(url: URL(string: project.avatarUrl ?? API.domain + project.namespace.avatarUrl!)) { phase in
+							if let avatarUrl = ProjectListView.getAvatarUrl(project.avatarUrl ?? project.namespace.avatarUrl) {
+								AsyncImage(url: avatarUrl) { phase in
 									switch phase {
 									case .empty:
 										ProgressView()
@@ -108,6 +108,18 @@ struct ProjectListView: View {
 				projects = temp!
 			}
 		}
+	}
+	
+	public static func getAvatarUrl(_ urlStr: String?) -> URL? {
+		if var urlStr: String = urlStr {
+			if (!urlStr.contains("://")) {
+				urlStr = "https://" + API.domain + urlStr
+			}
+
+			return URL(string: urlStr)
+		}
+		
+		return nil
 	}
 	
 	func accessRole(code: Int) -> String {

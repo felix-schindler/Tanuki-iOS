@@ -67,6 +67,7 @@
 		DCF14E3D29C71B8800D1F43B /* IssueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */; };
 		DCF14E3F29C720E800D1F43B /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF14E3E29C720E800D1F43B /* AsyncButton.swift */; };
 		DCF27D192A04D4CF00C18EE5 /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF27D182A04D4CF00C18EE5 /* TagsView.swift */; };
+		DCF27D1B2A04FAA900C18EE5 /* ReleaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF27D1A2A04FAA900C18EE5 /* ReleaseView.swift */; };
 		DCFCB06E29B7C3D800F18CDC /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = DCFCB06D29B7C3D800F18CDC /* MarkdownUI */; };
 /* End PBXBuildFile section */
 
@@ -132,6 +133,7 @@
 		DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilter.swift; sourceTree = "<group>"; };
 		DCF14E3E29C720E800D1F43B /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
 		DCF27D182A04D4CF00C18EE5 /* TagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
+		DCF27D1A2A04FAA900C18EE5 /* ReleaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -331,6 +333,7 @@
 				DC10C3992731537D00CAE425 /* CommitsView.swift */,
 				DC10C39B27315D6400CAE425 /* BranchesView.swift */,
 				DCF27D182A04D4CF00C18EE5 /* TagsView.swift */,
+				DCF27D1A2A04FAA900C18EE5 /* ReleaseView.swift */,
 				DC90CA5B272E762200B758E7 /* NewIssueView.swift */,
 			);
 			path = project;
@@ -457,6 +460,7 @@
 				DC4F956E272ECD0100354E1D /* ExploreView.swift in Sources */,
 				DC2A243A29C8FC0600A9FED7 /* MergeFilter.swift in Sources */,
 				DC5EB90C272D955E0015BF0D /* API.swift in Sources */,
+				DCF27D1B2A04FAA900C18EE5 /* ReleaseView.swift in Sources */,
 				DCD3165029C793E600AF7A3E /* ProjectLabelsLoader.swift in Sources */,
 				DCD3165229C7993800AF7A3E /* ProjectLanguagesLoader.swift in Sources */,
 				DC569B3A2A045604005B99B3 /* NewProject.swift in Sources */,
