@@ -29,12 +29,15 @@ struct NoteListView: View {
 								.resizable()
 								.scaledToFit()
 						}
-					}.frame(width: 50, height: 50)
+					}.frame(width: 25, height: 25)
+						.cornerRadius(25)
 					VStack(alignment: .leading) {
 						Text(note.createdAt.toString())
 							.font(.footnote)
 							.foregroundColor(.secondary)
 						Text(note.author.name)
+							.font(.callout)
+							.fontWeight(.medium)
 						Markdown(note.body.emojized())
 					}
 				}.frame(maxWidth: .infinity, alignment: .leading)

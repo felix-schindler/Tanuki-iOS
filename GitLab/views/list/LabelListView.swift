@@ -24,10 +24,9 @@ struct LabelListView: View {
 					.background(Color.init(hex: label.color))
 					.foregroundColor(Color.init(hex: label.textColor))
 					.cornerRadius(25)
-				if (showDescription && label.description != nil && label.description != "") {
-					Text(label.description!)
-						.font(.callout)
-						.foregroundColor(.secondary)
+				if (showDescription && !(label.description?.isEmpty ?? true)) {
+					Text(label.description!.emojized())
+						.font(.footnote)
 				}
 			}.swipeActions(edge: .trailing) {
 				AsyncButton(action: {

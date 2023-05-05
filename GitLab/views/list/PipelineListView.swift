@@ -16,9 +16,9 @@ struct PipelineListView: View {
 			HStack {
 				VStack(alignment: .leading) {
 					Text(pipeline.ref)
-					Text("\(pipeline.source) · \(pipeline.createdAt.toString())")
+						.fontWeight(.medium)
+					Text("\(pipeline.source) · \(pipeline.createdAt.toShortString())")
 						.font(.footnote)
-						.foregroundColor(.secondary)
 				}
 				Spacer()
 				HStack {

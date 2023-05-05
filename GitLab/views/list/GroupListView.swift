@@ -36,9 +36,10 @@ struct GroupListView: View {
 									}
 								}.frame(width: 50, height: 50, alignment: .leading)
 							}
-							VStack {
+							VStack(alignment: .leading) {
 								HStack {
 									Text(group.name)
+										.fontWeight(.medium)
 									if (group.visibility == "private") {
 										Image(systemName: "lock")
 									} else if (group.visibility == "internal") {
@@ -46,12 +47,10 @@ struct GroupListView: View {
 									} else if (group.visibility == "public") {
 										Image(systemName: "globe")
 									}
-								}.frame(maxWidth: .infinity, alignment: .leading)
-								if (group.description != nil && group.description! != "") {
+								}
+								if (!(group.description?.isEmpty ?? true)) {
 									Text(group.description!.emojized())
 										.font(.footnote)
-										.foregroundColor(.secondary)
-										.frame(maxWidth: .infinity, alignment: .leading)
 								}
 							}
 						}
