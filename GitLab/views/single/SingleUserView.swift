@@ -167,7 +167,7 @@ struct SingleUserView: View {
 			
 			HStack {
 				Image(systemName: "person.2")
-				Text("\(user.followers) followers · \(user.following) following")
+				Text("\(user.followers ?? 0) followers · \(user.following ?? 0) following")
 			}
 			
 			/* Section("Contributions") {

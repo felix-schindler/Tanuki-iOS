@@ -50,10 +50,10 @@ struct User: Codable {
 	let jobTitle: String
 	let pronouns: String?
 	let workInformation: String?
-	let followers: Int
-	let following: Int
+	let followers: Int?
+	let following: Int?
 	let localTime: String?
-	let isFollowed: Bool
+	let isFollowed: Bool?
 }
 
 struct UserSmall: Codable {
