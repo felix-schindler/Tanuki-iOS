@@ -14,6 +14,9 @@ enum ActiveSheet {
 }
 
 struct IssueView: View {
+	@Environment(\.presentationMode)
+	var presentationMode: Binding<PresentationMode>
+	
 	/// Issue that's being displayed
 	@State var issue: Issue
 	
@@ -162,12 +165,19 @@ struct IssueView: View {
 				NewIssueView(id: issue.projectId)
 			}.sheet(isPresented: $showNewNote) {
 				NewNoteView(id: issue.projectId, iid: issue.iid, type: discussionType.Issue)
-			}.alert(isPresented: $stateError, content: {
-				Alert(title: Text("Error"), message: Text("Failed to change issue state"), dismissButton: .default(Text("OK")))
-			}).alert(isPresented: $deletion, content: {
-				Alert(title: Text("Deletion"), message: Text("Issue has been deleted"), dismissButton: .default(Text("OK")))
-			}).alert(isPresented: $deletionError, content: {
-				Alert(title: Text("Error"), message: Text("Failed to delete issue"), dismissButton: .default(Text("OK")))
+			}.alert("Failed to change issue state", isPresented: $stateError, actions: {
+				Button("OK") {
+					stateError = false
+				}
+			}).alert("Issue has been deleted", isPresented: $deletion, actions: {
+				Button("OK") {
+					deletion = false
+					self.presentationMode.wrappedValue.dismiss()
+				}
+			}).alert("Failed to delete issue", isPresented: $deletionError, actions: {
+				Button("OK") {
+					deletionError = false
+				}
 			})
 	}
 	
