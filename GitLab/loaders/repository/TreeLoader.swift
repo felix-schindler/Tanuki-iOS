@@ -50,7 +50,7 @@ struct TreeLoader: View {
 									}
 								}
 							} else {
-								NavigationLink(destination: FileLoader(id: id, filePath: file.path, refName: refName)) {
+								NavigationLink(destination: FileLoader(id: id, showNotFound: true, filePath: file.path, refName: refName)) {
 									HStack {
 										Image(systemName: "doc.text")
 										Text(file.name)

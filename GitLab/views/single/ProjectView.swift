@@ -200,7 +200,7 @@ struct ProjectView: View {
 				let readmePath = project.readmeUrl!.split(separator: "/").last
 				if (readmePath != nil) {
 					Section("README") {
-						FileLoader(id: project.id, filePath: String(readmePath!), refName: project.defaultBranch ?? "", inline: true)
+						FileLoader(id: project.id, inline: true, filePath: String(readmePath!), refName: project.defaultBranch ?? "")
 							.padding(.top, 7.5)
 					}
 				}

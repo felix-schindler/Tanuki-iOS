@@ -9,15 +9,19 @@ import SwiftUI
 import MarkdownUI
 
 struct FileLoader: View {
+	/// Project ID
+	@State var id: Int
+	/// Whether to show loading / error
+	@State var showNotFound: Bool = false
+	/// Whether the file is shown inline (true) or full screen (false)
+	@State var inline: Bool = false
+	/// Path / Name
+	@State var filePath: String
+	/// Branch name
+	@State var refName: String
+
 	@State var content: String? = nil
 	@State var loadFailed: Bool = false
-	@State var showNotFound: Bool = false
-	
-	@State var id: Int
-	@State var filePath: String
-	@State var refName: String
-	
-	@State var inline: Bool = false
 	
 	var body: some View {
 		VStack {
@@ -55,7 +59,6 @@ struct FileLoader: View {
 
 struct FileLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		// FileLoader(id: 33025310, filePath: "README.md", refName: "main", inline: false)
-		FileLoader(id: 33025310, filePath: "GitLab/GitLabApp.swift", refName: "main", inline: false)
+		FileLoader(id: 33025310, inline: false, filePath: "GitLab/GitLabApp.swift", refName: "main")
 	}
 }
