@@ -47,11 +47,41 @@ class API {
 		return try await client.dataTask(req)
 	}
 	
+	public static func raw(
+		method: HttpMethod,
+		endpoint: String,
+		resource: String? = nil,
+		suffix: String? = nil,
+		query: Dictionary<String, String> = [:],
+		body: Dictionary<String, String> = [:]
+	) async -> String? {
+		let httpUrl = HttpUrl(
+			host: domain,
+			path: [base, endpoint],
+			resource: resource,
+			suffix: suffix,
+			query: query
+		)
+
+		do {
+			let res = try await API.raw(
+				method: method,
+				url: httpUrl,
+				body: body
+			)
+			
+			return res.utf8String
+		} catch {
+			return nil
+		}
+	}
+	
 	public static func req<T: Codable>(
 		type: T.Type,
 		method: HttpMethod,
 		endpoint: String,
 		resource: String? = nil,
+		suffix: String? = nil,
 		query: Dictionary<String, String> = [:],
 		body: Dictionary<String, String> = [:],
 		useBase: Bool = true
@@ -59,6 +89,7 @@ class API {
 		var httpUrl = HttpUrl(
 			host: domain,
 			resource: resource,
+			suffix: suffix,
 			query: query
 		)
 

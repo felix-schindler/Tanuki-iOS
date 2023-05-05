@@ -9,7 +9,7 @@ import SwiftUI
 import MarkdownUI
 
 struct FileLoader: View {
-	@State var file: File? = nil
+	@State var content: String? = nil
 	@State var loadFailed: Bool = false
 	@State var showNotFound: Bool = false
 	
@@ -21,27 +21,22 @@ struct FileLoader: View {
 	
 	var body: some View {
 		VStack {
-			if (file != nil) {
-				let content: String? = file!.content.fromBase64()?.emojized()
-				if (content != nil) {
-					if (inline) {
-						FileView(fileName: file!.filePath, content: content!)
-					} else {
-						FileView(fileName: file!.filePath, content: content!)
-							.padding()
-							.navigationTitle(file!.filePath)
-					}
+			if (content != nil) {
+				if (inline) {
+					FileView(fileName: filePath, content: content!)
+				} else {
+					FileView(fileName: filePath, content: content!)
+						.padding(.horizontal)
+						.navigationTitle(filePath)
 				}
-			} else {
-				if (showNotFound) {
-					if (loadFailed) {
-						Text("Failed to load, please check your internet connection and your token")
-					} else {
-						VStack {
-							Spacer()
-							ProgressView("Loading")
-							Spacer()
-						}
+			} else if (showNotFound) {
+				if (loadFailed) {
+					Text("Failed to load, please check your internet connection and your token")
+				} else {
+					VStack {
+						Spacer()
+						ProgressView("Loading")
+						Spacer()
 					}
 				}
 			}
@@ -53,13 +48,14 @@ struct FileLoader: View {
 	}
 	
 	private func getFile() async -> Void {
-		file = await API.req(type: File.self, method: .get, endpoint: "projects/\(id)/repository/files", resource: filePath, query: ["ref": refName])
-		loadFailed = (file == nil)
+		content = await API.raw(method: .get, endpoint: "projects/\(id)/repository/files", resource: filePath, suffix: "/raw", query: ["ref": refName])
+		loadFailed = (content == nil)
 	}
 }
 
 struct FileLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		FileLoader(id: 33025310, filePath: "README.md", refName: "main", inline: false)
+		// FileLoader(id: 33025310, filePath: "README.md", refName: "main", inline: false)
+		FileLoader(id: 33025310, filePath: "GitLab/GitLabApp.swift", refName: "main", inline: false)
 	}
 }
