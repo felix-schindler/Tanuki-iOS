@@ -132,98 +132,59 @@ struct ProjectView: View {
 			}
 			
 			Section("Project") {
-				if (project.defaultBranch != nil) {
-					HStack {
-						Image(systemName: "text.line.first.and.arrowtriangle.forward")
-							.foregroundColor(.purple)
-						Button(action: {showCommits = true}) {
-							Text("Commits")
-						}.foregroundColor(.primary)
-					}
-				}
-
-				if (project.defaultBranch != nil) {
-					HStack {
-						Image(systemName: "square.on.square.intersection.dashed")
-							.foregroundColor(.orange)
-						Button(action: {showBranches = true}) {
-							Text("Branches")
-						}.foregroundColor(.primary)
-					}
-				}
-				
 				if (project.issuesEnabled) {
 					NavigationLink(destination: IssuesLoader(id: project.id)) {
-						HStack {
-							Image(systemName: "smallcircle.circle")
-								.foregroundColor(.green)
+						Label(title: {
 							Text("Issues")
 							Spacer()
 							Text(String(project.openIssuesCount!))
-						}
+						}, icon: {
+							Image(systemName: "smallcircle.circle")
+								.foregroundColor(.green)
+						})
 					}.foregroundColor(.primary)
 				}
 				
 				if (project.mergeRequestsEnabled) {
 					NavigationLink(destination: MergeLoader(id: project.id)) {
-						HStack {
+						Label(title: {
+							Text("Merge Requests")
+						}, icon: {
 							Image(systemName: "arrow.triangle.pull")
 								.foregroundColor(.blue)
-							Text("Merge Requests")
-								.frame(maxWidth: .infinity, alignment: .leading)
-						}
+						})
 					}.foregroundColor(.primary)
 				}
-				
-				if (project.defaultBranch != nil) {
-					NavigationLink(destination: TreeLoader(id: project.id, refName: project.defaultBranch ?? "")) {
-						HStack {
-							Image(systemName: "chevron.left.forwardslash.chevron.right")
-								.foregroundColor(.pink)
-							Text("Files")
-								.frame(maxWidth: .infinity, alignment: .leading)
-						}
-					}.foregroundColor(.primary)
-				}
-				
-				NavigationLink(destination: PipelineLoader(id: project.id, onlyStatus: false)) {
-					HStack {
-						Text("🚀")
-						Text("Pipelines")
-						Spacer()
-						if (project.defaultBranch != nil) {
-							PipelineLoader(id: project.id, branch: project.defaultBranch!)
-						}
-					}
-				}.foregroundColor(.primary)
 				
 				DisclosureGroup(content: {
-					NavigationLink(destination: ProjectMemberLoader(id: project.id)) {
-						HStack {
-							Image(systemName: "person.2")
-							Text("Members")
-						}
-					}.foregroundColor(.primary)
-					
-					NavigationLink(destination: MilestoneLoader(id: project.id)) {
-						HStack {
-							Image(systemName: "signpost.right.and.left")
-							Text("Milestones")
-						}
-					}.foregroundColor(.primary)
-					
-					NavigationLink(destination: ProjectLabelsLoader(id: project.id)) {
-						HStack {
-							Image(systemName: "tag.circle")
-							Text("Labels")
-						}
-					}.foregroundColor(.primary)
+					NavigationLink("Members", destination: ProjectMemberLoader(id: project.id))
+					NavigationLink("Labels", destination: ProjectLabelsLoader(id: project.id))
+					NavigationLink("Milestones", destination: MilestoneLoader(id: project.id))
 				}, label: {
-					HStack {
-						Image(systemName: "ellipsis.circle")
-						Text("More")
-					}
+					Label("Manage", systemImage: "person.2")
+						.foregroundColor(.primary)
 				})
+				
+				if (project.defaultBranch != nil) {
+					DisclosureGroup(content: {
+						NavigationLink("Repository", destination: TreeLoader(id: project.id, refName: project.defaultBranch!))
+
+						NavigationLink(destination: PipelineLoader(id: project.id, onlyStatus: false)) {
+							Text("Pipelines")
+							Spacer()
+							if (project.defaultBranch != nil) {
+								PipelineLoader(id: project.id, branch: project.defaultBranch!)
+							}
+						}
+
+						NavigationLink("Branches", destination: BranchesView(id: project.id))
+						NavigationLink("Commits", destination: CommitsView(id: project.id, refName: project.defaultBranch!))
+						NavigationLink("Tags", destination: TagsView(id: project.id))
+					}, label: {
+						Label("Code", systemImage: "chevron.left.forwardslash.chevron.right")
+							.foregroundColor(.primary)
+					})
+				}
 			}
 			
 			if (project.readmeUrl != nil) {
@@ -247,10 +208,6 @@ struct ProjectView: View {
 				}
 			}.sheet(isPresented: $showNewIssue) {
 				NewIssueView(id: project.id)
-			}.sheet(isPresented: $showCommits) {
-				CommitsView(id: project.id, refName: project.defaultBranch ?? "")
-			}.sheet(isPresented: $showBranches) {
-				BranchesView(id: project.id)
 			}
 	}
 	
