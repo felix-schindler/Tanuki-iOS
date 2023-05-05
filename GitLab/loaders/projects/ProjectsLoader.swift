@@ -32,6 +32,14 @@ struct ProjectsLoader: View {
 		VStack {
 			if (projects != nil) {
 				ProjectListView(projects: projects!, updateFunction: getProjects)
+					.searchable(text: $search)
+					.onSubmit(of: .search) {
+						Task {
+							projects = nil
+							projects = await getProjects()
+							loadFailed = (projects == nil)
+						}
+					}
 					.toolbar {
 						Button(action: {showFilter = true}) {
 							Image(systemName: "line.3.horizontal.decrease.circle")
@@ -88,13 +96,6 @@ struct ProjectsLoader: View {
 								loadFailed = (projects == nil)
 								showFilter = false
 							}
-						}
-					}.searchable(text: $search)
-					.onSubmit(of: .search) {
-						Task {
-							projects = nil
-							projects = await getProjects()
-							loadFailed = (projects == nil)
 						}
 					}
 			} else if (loadFailed) {
