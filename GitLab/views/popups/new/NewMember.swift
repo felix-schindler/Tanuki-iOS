@@ -1,0 +1,94 @@
+//
+//  NewMember.swift
+//  GitLab
+//
+//  Created by Felix Schindler on 05.05.23.
+//
+
+import SwiftUI
+
+struct NewMember: View {
+	@Environment(\.presentationMode)
+	var presentationMode: Binding<PresentationMode>
+
+	/// Project ID
+	@State var id: Int
+	
+	@State var username = ""
+	@State var accessLevel: ProjectRole = .guest
+	@State var setExpDate = false
+	@State var expDate = Calendar.current.date(byAdding: .month, value: 1, to: Date())!
+	
+	@State var showError = false
+	
+	var body: some View {
+		NavigationView {
+			Form {
+				Section {
+					TextField("Username", text: $username)
+						.autocorrectionDisabled(true)
+					Picker("Role", selection: $accessLevel) {
+						Text("Guest").tag(ProjectRole.guest)
+						Text("Reporter").tag(ProjectRole.reporter)
+						Text("Developer").tag(ProjectRole.developer)
+						Text("Maintainer").tag(ProjectRole.maintainer)
+						Text("Owner").tag(ProjectRole.owner)
+					}
+				}
+				
+				Section("Access expiration date (optional)") {
+					Toggle("Set expiration", isOn: $setExpDate)
+					if (setExpDate) {
+						DatePicker("Due Date", selection: $expDate)
+					}
+				}
+
+				Section("Actions") {
+					AsyncButton("Add Member") {
+						await addMember()
+					}
+					Button("Cancel", role: .destructive) {
+						self.dismiss()
+					}
+				}
+			}.alert("Failed to add member", isPresented: $showError, actions: {
+				Button("OK") {
+					showError = false
+				}
+			}).navigationTitle("New Member")
+		}
+	}
+		
+	/// - returns Whether the user was added or not
+	func addMember() async -> Void {
+		if let user = (await API.get(type: [UserSmall].self, endpoint: "users", query: ["username": username]))?[0] {
+			var memberDict = [
+				"user_id": String(user.id),
+				"access_level": String(accessLevel.rawValue)
+			]
+			
+			if (setExpDate) {
+				let inputFormatter = DateFormatter()
+				inputFormatter.dateFormat = "yyyy-MM-dd"
+				memberDict["expires_at"] = inputFormatter.string(from: expDate)
+			}
+
+			if let _ = await API.req(type: UserSmall.self, method: .post, endpoint: "projects/\(id)/members", body: memberDict) {
+				self.dismiss()
+				return
+			}
+		}
+		
+		showError = true
+	}
+	
+	func dismiss() -> Void {
+		self.presentationMode.wrappedValue.dismiss()
+	}
+}
+
+struct NewMember_Previews: PreviewProvider {
+	static var previews: some View {
+		NewMember(id: 33025310)
+	}
+}

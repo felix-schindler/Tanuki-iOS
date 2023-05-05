@@ -13,24 +13,35 @@ struct ProjectMemberLoader: View {
 
 	@State var members: [UserSmall]? = nil
 	@State var loadFailed: Bool = false
+	
+	@State var showNewMember = false
 
 	var body: some View {
-		VStack {
+		List {
 			if (members != nil) {
-				UserSmallListView(users: members!, updateFunction: getMembers)
+				UserSmallListView(users: members!)
 			} else if (loadFailed) {
 				Text("Failed to load, please check your internet connection and your token")
 			} else {
-				Spacer()
-				ProgressView("Loading")
-				Spacer()
+				ProgressView()
 			}
 		}.onAppear {
 			Task {
 				members = await getMembers()
 				loadFailed = (members == nil)
 			}
-		}
+		}.refreshable {
+			let temp = await getMembers()
+			if (temp != nil) {
+				members = temp!
+			}
+		}.toolbar {
+			Button (action: { showNewMember = true }) {
+				Image(systemName: "plus.circle")
+			}
+		}.sheet(isPresented: $showNewMember) {
+			NewMember(id: id)
+		}.navigationTitle("Members")
 	}
 	
 	private func getMembers() async -> [UserSmall]? {

@@ -31,3 +31,12 @@ enum ProjectVisibility: String {
 			 `private` = "private",
 			 all
 }
+
+enum ProjectRole: Int {
+	case minimal = 5,
+			 guest = 10,
+			 reporter = 20,
+			 developer = 30,
+			 maintainer = 40,
+			 owner = 50
+}

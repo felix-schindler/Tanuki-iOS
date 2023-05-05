@@ -53,6 +53,7 @@
 		DC90CA63272E878900B758E7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA62272E878900B758E7 /* Utils.swift */; };
 		DC92BD2F29D09B35008E8581 /* MilestoneLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC92BD2E29D09B35008E8581 /* MilestoneLoader.swift */; };
 		DC92BD3529D0C68C008E8581 /* MilestoneFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC92BD3429D0C68C008E8581 /* MilestoneFilter.swift */; };
+		DCA61D012A0524C8005FCAA9 /* NewMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA61D002A0524C8005FCAA9 /* NewMember.swift */; };
 		DCAAC170279ED63800EC685F /* MemberGroupsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */; };
 		DCAAC172279ED8B600EC685F /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC171279ED8B600EC685F /* GroupListView.swift */; };
 		DCC6DD2829C8E32500945D8C /* ProjectFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC6DD2729C8E32500945D8C /* ProjectFilter.swift */; };
@@ -118,6 +119,7 @@
 		DC90CA62272E878900B758E7 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DC92BD2E29D09B35008E8581 /* MilestoneLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneLoader.swift; sourceTree = "<group>"; };
 		DC92BD3429D0C68C008E8581 /* MilestoneFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneFilter.swift; sourceTree = "<group>"; };
+		DCA61D002A0524C8005FCAA9 /* NewMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMember.swift; sourceTree = "<group>"; };
 		DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberGroupsLoader.swift; sourceTree = "<group>"; };
 		DCAAC171279ED8B600EC685F /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
 		DCC6DD2729C8E32500945D8C /* ProjectFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFilter.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				DC569B392A045604005B99B3 /* NewProject.swift */,
+				DCA61D002A0524C8005FCAA9 /* NewMember.swift */,
 				DC569B3B2A0460F9005B99B3 /* NewMilestone.swift */,
 			);
 			path = new;
@@ -450,6 +453,7 @@
 				DC7A85C02731AB4E0000CF4D /* SettingsView.swift in Sources */,
 				DC7C83DB29B8F32900B3BE41 /* NewNoteView.swift in Sources */,
 				DC6F1D6229C840C900E0401C /* UserLoader.swift in Sources */,
+				DCA61D012A0524C8005FCAA9 /* NewMember.swift in Sources */,
 				DCF27D192A04D4CF00C18EE5 /* TagsView.swift in Sources */,
 				DC7C83D729B8E80400B3BE41 /* GroupView.swift in Sources */,
 				DC0897FD2730516600B8ACDA /* NoteListView.swift in Sources */,
@@ -621,7 +625,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -656,7 +660,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
