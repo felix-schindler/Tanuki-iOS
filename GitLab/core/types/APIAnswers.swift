@@ -9,24 +9,24 @@ import Foundation
 
 struct Project: Codable {
 	let id: Int
-	var description: String? = nil
+	let description: String?
 	let name: String
 	let nameWithNamespace: String
 	let pathWithNamespace: String
-	var defaultBranch: String? = nil     // Not all projects have a repository. Maybe they are just issue trackers, wikis, ...
-	var tagList = [String]()
+	let defaultBranch: String?     // Not all projects have a repository. Maybe they are just issue trackers, wikis, ...
+	let tagList: [String]
 	let webUrl: String
-	var readmeUrl: String? = nil
+	let readmeUrl: String?
 	let avatarUrl: String?
-	var forksCount: Int? = nil           // Not all projects have a repository. Maybe they are just issue trackers, wikis, ...
+	let forksCount: Int?           // Not all projects have a repository. Maybe they are just issue trackers, wikis, ...
 	var starCount: Int
 	let namespace: Namespace
 	let visibility: String
-	var owner: UserSmall? = nil
+	let owner: UserSmall?
 	let issuesEnabled: Bool
-	var openIssuesCount: Int? = 0
+	let openIssuesCount: Int?
 	let mergeRequestsEnabled: Bool
-	var permissions: Permissions? = nil
+	let permissions: Permissions?
 }
 
 struct User: Codable {
@@ -71,11 +71,11 @@ struct UserStatus: Codable {
 struct Namespace: Codable {
 	let name: String
 	let path: String
-	var avatarUrl: String? = nil
+	let avatarUrl: String?
 }
 
 struct Permissions: Codable {
-	var projectAccess: Access? = nil
+	let projectAccess: Access?
 }
 
 struct Access: Codable {
@@ -99,7 +99,7 @@ struct Issue: Codable {
 	let userNotesCount: Int
 	let upvotes: Int
 	let downvotes: Int
-	var dueDate: String? = nil
+	let dueDate: String?
 	let confidential: Bool
 	let webUrl: String
 	let references: Reference
@@ -167,17 +167,17 @@ struct Event: Codable {
 	let id: Int
 	let actionName: String
 	let targetIid: Int?
-	var targetType: String? = ""
-	var targetTitle: String? = ""
+	let targetType: String?
+	let targetTitle: String?
 	let createdAt: Date
-	var pushData: PushData? = nil
+	let pushData: PushData?
 	let author: UserSmall
 }
 
 struct PushData: Codable {
 	let refType: String
 	let ref: String
-	var commitTitle: String? = nil
+	let commitTitle: String?
 }
 
 struct Note: Codable {
@@ -193,7 +193,7 @@ struct Group: Codable {
 	let name: String
 	let description: String
 	let visibility: String
-	var avatarUrl: String? = nil
+	let avatarUrl: String?
 	let projects: [Project]
 	let createdAt: Date
 }
@@ -201,9 +201,9 @@ struct Group: Codable {
 struct SmallGroup: Codable {
 	let id: Int
 	let name: String
-	var description: String? = nil
+	let description: String?
 	let visibility: String
-	var avatarUrl: String? = nil
+	let avatarUrl: String?
 }
 
 struct File: Codable {
@@ -244,6 +244,25 @@ struct Tag: Codable {
 	let target: String
 	let commit: Commit
 	let protected: Bool
+}
+
+struct Release: Codable {
+	let name: String
+	let tagName: String
+	let description: String	// Empty string if not set
+	let releasedAt: Date
+	let commit: Commit
+	let assets: Assets?
+}
+
+struct Assets: Codable {
+	let count: Int
+	let sources: [Source]
+}
+
+struct Source: Codable {
+	let format: String
+	let url: String
 }
 
 struct Pipeline: Codable {
