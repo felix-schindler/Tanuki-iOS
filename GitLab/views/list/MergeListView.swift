@@ -45,24 +45,26 @@ struct MergeListView: View {
 								VStack(alignment: .leading, spacing: 2) {
 									Text(mr.title.emojized())
 										.fontWeight(.medium)
-									HStack {
-										HStack(spacing: 2) {
-											Image(systemName: "text.bubble")
-											Text(String(mr.userNotesCount))
-										}
-										HStack(spacing: 2) {
-											Image(systemName: "hand.thumbsup")
-											Text(String(mr.upvotes))
-										}
-										HStack(spacing: 2) {
-											Image(systemName: "clock")
-											Text(mr.createdAt.toDateString(.short))
-										}
-										HStack(spacing: 2) {
-											Image(systemName: "person")
-											Text(mr.author.name)
-										}
-									}.font(.footnote)
+									ScrollView(.horizontal) {
+										HStack {
+											HStack(spacing: 2) {
+												Image(systemName: "text.bubble")
+												Text(String(mr.userNotesCount))
+											}
+											HStack(spacing: 2) {
+												Image(systemName: "hand.thumbsup")
+												Text(String(mr.upvotes))
+											}
+											HStack(spacing: 2) {
+												Image(systemName: "clock")
+												Text(mr.createdAt.toDateString(.short))
+											}
+											HStack(spacing: 2) {
+												Image(systemName: "person")
+												Text(mr.author.name)
+											}
+										}.font(.footnote)
+									}
 								}
 							}
 						}

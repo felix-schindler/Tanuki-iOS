@@ -56,24 +56,26 @@ struct IssueListView: View {
 									VStack(alignment: .leading, spacing: 2) {
 										Text(issue.title.emojized())
 											.fontWeight(.medium)
-										HStack {
-											HStack(spacing: 2) {
-												Image(systemName: "text.bubble")
-												Text(String(issue.userNotesCount))
-											}
-											HStack(spacing: 2) {
-												Image(systemName: "hand.thumbsup")
-												Text(String(issue.upvotes))
-											}
-											HStack(spacing: 2) {
-												Image(systemName: "clock")
-												Text(issue.createdAt.toDateString(.short))
-											}
-											HStack(spacing: 2) {
-												Image(systemName: "person")
-												Text(issue.author.name)
-											}
-										}.font(.footnote)
+										ScrollView(.horizontal) {
+											HStack {
+												HStack(spacing: 2) {
+													Image(systemName: "text.bubble")
+													Text(String(issue.userNotesCount))
+												}
+												HStack(spacing: 2) {
+													Image(systemName: "hand.thumbsup")
+													Text(String(issue.upvotes))
+												}
+												HStack(spacing: 2) {
+													Image(systemName: "clock")
+													Text(issue.createdAt.toDateString(.short))
+												}
+												HStack(spacing: 2) {
+													Image(systemName: "person")
+													Text(issue.author.name)
+												}
+											}.font(.footnote)
+										}
 									}
 								}
 							}
@@ -92,8 +94,10 @@ struct IssueListView: View {
 							deleteError = await IssueModel.deleteIssue(issue.iid, projectId: issue.projectId)
 						}, role: .destructive, label: {
 							Label("Delete issue", systemImage: "trash")
-						}).alert(isPresented: $deleteError, content: {
-							Alert(title: Text("Error"), message: Text("Failed delete issue"), dismissButton: .default(Text("OK")))
+						}).alert("Failed delete issue", isPresented: $deleteError, actions: {
+							Button("OK") {
+								deleteError = false
+							}
 						})
 						AsyncButton(systemImage: "square.and.arrow.up") {
 							await URL(string: issue.webUrl)!.share()
