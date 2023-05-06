@@ -125,7 +125,6 @@ struct IssueView: View {
 				}
 			}
 			
-			
 			Section("Notes") {
 				NotesLoader(id: issue.projectId, iid: issue.iid, type: discussionType.Issue)
 			}

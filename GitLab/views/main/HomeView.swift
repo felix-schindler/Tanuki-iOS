@@ -29,7 +29,7 @@ struct HomeView: View {
 							}
 						)
 					}
-
+					
 					NavigationLink(destination: MergeLoader()) {
 						Label(
 							title: {
@@ -41,7 +41,7 @@ struct HomeView: View {
 							}
 						)
 					}
-
+					
 					NavigationLink(destination: ProjectsLoader(membership: true, orderBy: .updatedAt)) {
 						Label(
 							title: {
@@ -66,7 +66,7 @@ struct HomeView: View {
 						)
 					}
 				}
-
+				
 				Section("Starred projects") {
 					if (starredProjects != nil) {
 						if (starredProjects!.isEmpty) {
@@ -75,6 +75,19 @@ struct HomeView: View {
 							ForEach(starredProjects!, id: \.id) { project in
 								NavigationLink(destination: ProjectView(project: project)) {
 									HStack {
+										if let avatarUrl = ProjectListView.getAvatarUrl(project.avatarUrl ?? project.namespace.avatarUrl) {
+											AsyncImage(url: avatarUrl) { phase in
+												switch phase {
+												case .success(let image):
+													image
+														.resizable()
+														.scaledToFit()
+														.cornerRadius(5)
+												default:
+													EmptyView()
+												}
+											}.frame(width: 25, height: 25, alignment: .leading)
+										}
 										Text(project.nameWithNamespace)
 											.frame(maxWidth: .infinity, alignment: .leading)
 										if (project.visibility == "private") {
