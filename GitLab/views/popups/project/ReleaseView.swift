@@ -30,7 +30,22 @@ struct ReleaseView: View {
 									}
 								})
 							}
-							
+
+							HStack {
+								HStack(spacing: 2) {
+									Image(systemName: "tag")
+									Text(release.tagName)
+								}
+								Spacer()
+								HStack(spacing: 2) {
+									Image(systemName: "text.line.first.and.arrowtriangle.forward")
+									Text(release.commit.shortId)
+										.font(.system(.body, design: .monospaced))
+								}
+							}
+
+							Text("Released on \(release.releasedAt.toString()) by \(release.author.name)")
+
 							if (!release.description.isEmpty) {
 								Markdown(release.description)
 							}

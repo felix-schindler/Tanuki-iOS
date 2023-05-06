@@ -251,6 +251,7 @@ struct Release: Codable {
 	let tagName: String
 	let description: String	// Empty string if not set
 	let releasedAt: Date
+	let author: UserSmall
 	let commit: Commit
 	let assets: Assets?
 }
