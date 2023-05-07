@@ -32,87 +32,85 @@ struct ProjectsLoader: View {
 		List {
 			if (projects != nil) {
 				ProjectListView(projects: projects!)
-					.searchable(text: $search)
-					.onSubmit(of: .search) {
-						Task {
-							projects = nil
-							projects = await getProjects()
-							loadFailed = (projects == nil)
-						}
-					}
-					.toolbar {
-						Button(action: {showFilter = true}) {
-							Image(systemName: "line.3.horizontal.decrease.circle")
-						}
-					}.sheet(isPresented: $showFilter) {
-						List {
-							Section {
-								Toggle(isOn: $membership) {
-									Text("Member")
-								}
-								Toggle(isOn: $owned) {
-									Text("Owner")
-								}
-								Toggle(isOn: $starred) {
-									Text("Starred")
-								}
-								Toggle(isOn: $imported) {
-									Text("Imported")
-								}
-								Toggle(isOn: $archived) {
-									Text("Archived")
-								}
-							}
-							
-							Section {
-								Picker("Order by", selection: $orderBy) {
-									Text("ID").tag(ProjectOrder.id)
-									Text("Name").tag(ProjectOrder.name)
-									Text("Path").tag(ProjectOrder.path)
-									Text("Created at").tag(ProjectOrder.createdAt)
-									Text("Updated at").tag(ProjectOrder.updatedAt)
-									Text("Last activity at").tag(ProjectOrder.lastActivityAt)
-									Text("Similarity").tag(ProjectOrder.similarity)
-								}
-								
-								Picker("Sort", selection: $sort) {
-									Text("Ascending").tag(ProjectSort.asc)
-									Text("Descending").tag(ProjectSort.desc)
-								}
-							}
-							
-							Section {
-								Picker("Visibility", selection: $visibility) {
-									Text("All").tag(ProjectVisibility.all)
-									Text("Public").tag(ProjectVisibility.public)
-									Text("Internal").tag(ProjectVisibility.internal)
-									Text("Private").tag(ProjectVisibility.private)
-								}
-							}
-							
-							AsyncButton("Apply") {
-								projects = nil
-								projects = await getProjects()
-								loadFailed = (projects == nil)
-								showFilter = false
-							}
-						}
-					}
 			} else if (loadFailed) {
 				Text("Failed to load, please check your internet connection and your token")
 			} else {
 				ProgressView()
 			}
+		}.toolbar {
+			Button(action: {showFilter = true}) {
+				Image(systemName: "line.3.horizontal.decrease.circle")
+			}
 		}.refreshable {
 			if let temp = await getProjects() {
 				projects = temp
 			}
-		}.onAppear {
-			Task {
-				projects = await getProjects()
-				loadFailed = (projects == nil)
-			}
-		}.navigationTitle("Projects")
+		}.searchable(text: $search)
+			.onSubmit(of: .search) {
+				Task {
+					projects = nil
+					projects = await getProjects()
+					loadFailed = (projects == nil)
+				}
+			}.onAppear {
+				Task {
+					projects = await getProjects()
+					loadFailed = (projects == nil)
+				}
+			}.sheet(isPresented: $showFilter) {
+				List {
+					Section {
+						Toggle(isOn: $membership) {
+							Text("Member")
+						}
+						Toggle(isOn: $owned) {
+							Text("Owner")
+						}
+						Toggle(isOn: $starred) {
+							Text("Starred")
+						}
+						Toggle(isOn: $imported) {
+							Text("Imported")
+						}
+						Toggle(isOn: $archived) {
+							Text("Archived")
+						}
+					}
+					
+					Section {
+						Picker("Order by", selection: $orderBy) {
+							Text("ID").tag(ProjectOrder.id)
+							Text("Name").tag(ProjectOrder.name)
+							Text("Path").tag(ProjectOrder.path)
+							Text("Created at").tag(ProjectOrder.createdAt)
+							Text("Updated at").tag(ProjectOrder.updatedAt)
+							Text("Last activity at").tag(ProjectOrder.lastActivityAt)
+							Text("Similarity").tag(ProjectOrder.similarity)
+						}
+						
+						Picker("Sort", selection: $sort) {
+							Text("Ascending").tag(ProjectSort.asc)
+							Text("Descending").tag(ProjectSort.desc)
+						}
+					}
+					
+					Section {
+						Picker("Visibility", selection: $visibility) {
+							Text("All").tag(ProjectVisibility.all)
+							Text("Public").tag(ProjectVisibility.public)
+							Text("Internal").tag(ProjectVisibility.internal)
+							Text("Private").tag(ProjectVisibility.private)
+						}
+					}
+					
+					AsyncButton("Apply") {
+						projects = nil
+						projects = await getProjects()
+						loadFailed = (projects == nil)
+						showFilter = false
+					}
+				}
+			}.navigationTitle("Projects")
 	}
 	
 	private func getProjects() async -> [Project]? {
