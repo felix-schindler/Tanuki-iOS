@@ -10,102 +10,94 @@ import MarkdownUI
 
 struct ProjectListView: View {
 	@State var projects: [Project]
-	@State var updateFunction: () async -> [Project]?
 	
 	var body: some View {
-		List {
-			if (projects.isEmpty) {
-				Text("There are no projects")
-			} else {
-				ForEach(projects, id: \.id) { project in
-					NavigationLink(destination: ProjectView(project: project)) {
-						HStack {
-							if let avatarUrl = ProjectListView.getAvatarUrl(project.avatarUrl ?? project.namespace.avatarUrl) {
-								AsyncImage(url: avatarUrl) { phase in
-									switch phase {
-									case .empty:
-										ProgressView()
-									case .success(let image):
-										image
-											.resizable()
-											.scaledToFit()
-											.cornerRadius(10)
-									default:
-										Image(systemName: "exclamationmark.icloud")
-											.resizable()
-											.scaledToFit()
-									}
-								}.frame(width: 50, height: 50, alignment: .leading)
+		if (projects.isEmpty) {
+			Text("There are no projects")
+		} else {
+			ForEach(projects, id: \.id) { project in
+				NavigationLink(destination: ProjectView(project: project)) {
+					HStack {
+						if let avatarUrl = ProjectListView.getAvatarUrl(project.avatarUrl ?? project.namespace.avatarUrl) {
+							AsyncImage(url: avatarUrl) { phase in
+								switch phase {
+								case .empty:
+									ProgressView()
+								case .success(let image):
+									image
+										.resizable()
+										.scaledToFit()
+										.cornerRadius(10)
+								default:
+									Image(systemName: "exclamationmark.icloud")
+										.resizable()
+										.scaledToFit()
+								}
+							}.frame(width: 50, height: 50, alignment: .leading)
+						}
+						VStack(alignment: .leading, spacing: 2) {
+							HStack(spacing: 2) {
+								if (project.visibility == "private") {
+									Image(systemName: "lock")
+								} else if (project.visibility == "internal") {
+									Image(systemName: "shield.lefthalf.filled")
+								} else if (project.visibility == "public") {
+									Image(systemName: "globe")
+								}
+								Text(project.nameWithNamespace)
+									.fontWeight(.medium)
+								if (project.permissions?.projectAccess != nil) {
+									Spacer()
+									Text(accessRole(code: project.permissions!.projectAccess!.accessLevel))
+										.font(.caption)
+										.padding(.horizontal, 6)
+										.padding(.vertical, 4)
+										.background(Color(.systemGray3))
+										.cornerRadius(10)
+								}
+							}
+							if (project.description != nil && project.description != "") {
+								Markdown(project.description!.emojized())
 							}
 							VStack(alignment: .leading, spacing: 2) {
-								HStack(spacing: 2) {
-									if (project.visibility == "private") {
-										Image(systemName: "lock")
-									} else if (project.visibility == "internal") {
-										Image(systemName: "shield.lefthalf.filled")
-									} else if (project.visibility == "public") {
-										Image(systemName: "globe")
+								HStack {
+									HStack(spacing: 2) {
+										Image(systemName: "star")
+										Text(String(project.starCount))
 									}
-									Text(project.nameWithNamespace)
-										.fontWeight(.medium)
-									if (project.permissions?.projectAccess != nil) {
-										Spacer()
-										Text(accessRole(code: project.permissions!.projectAccess!.accessLevel))
-											.font(.caption)
-											.padding(.horizontal, 6)
-											.padding(.vertical, 4)
-											.background(Color(.systemGray3))
-											.cornerRadius(10)
-									}
-								}
-								if (project.description != nil && project.description != "") {
-									Markdown(project.description!.emojized())
-								}
-								VStack(alignment: .leading, spacing: 2) {
-									HStack {
+									
+									if (project.forksCount != nil) {
 										HStack(spacing: 2) {
-											Image(systemName: "star")
-											Text(String(project.starCount))
-										}
-										
-										if (project.forksCount != nil) {
-											HStack(spacing: 2) {
-												Image(systemName: "arrow.branch")
-												Text(String(project.forksCount!))
-											}
-										}
-										
-										if (project.issuesEnabled && project.openIssuesCount != nil) {
-											HStack(spacing: 2) {
-												Image(systemName: "smallcircle.circle")
-												Text(String(project.openIssuesCount!))
-											}
-										}
-									}.font(.caption)
-										.foregroundColor(.secondary)
-									if (!project.tagList.isEmpty) {
-										ScrollView(.horizontal) {
-											HStack {
-												ForEach(project.tagList, id: \.hashValue) { tag in
-													Text(tag)
-														.padding(.horizontal, 6)
-														.padding(.vertical, 4)
-														.background(Color(.systemGray3))
-														.cornerRadius(10)
-												}
-											}.font(.caption)
+											Image(systemName: "arrow.branch")
+											Text(String(project.forksCount!))
 										}
 									}
-								}.padding(.top, 2)
-							}
+									
+									if (project.issuesEnabled && project.openIssuesCount != nil) {
+										HStack(spacing: 2) {
+											Image(systemName: "smallcircle.circle")
+											Text(String(project.openIssuesCount!))
+										}
+									}
+								}.font(.caption)
+									.foregroundColor(.secondary)
+								if (!project.tagList.isEmpty) {
+									ScrollView(.horizontal) {
+										HStack {
+											ForEach(project.tagList, id: \.hashValue) { tag in
+												Text(tag)
+													.padding(.horizontal, 6)
+													.padding(.vertical, 4)
+													.background(Color(.systemGray3))
+													.cornerRadius(10)
+											}
+										}.font(.caption)
+									}
+								}
+							}.padding(.top, 2)
 						}
 					}
 				}
-			}
-		}.refreshable {
-			let temp = await updateFunction()
-			if (temp != nil) {
-				projects = temp!
 			}
 		}
 	}
@@ -115,7 +107,7 @@ struct ProjectListView: View {
 			if (!urlStr.contains("://")) {
 				urlStr = "https://" + API.domain + urlStr
 			}
-
+			
 			return URL(string: urlStr)
 		}
 		
@@ -146,6 +138,8 @@ struct ProjectListView: View {
 
 struct ProjectListView_Previews: PreviewProvider {
 	static var previews: some View {
-		ProjectListView(projects: [], updateFunction: { nil })
+		List {
+			ProjectListView(projects: [])
+		}
 	}
 }

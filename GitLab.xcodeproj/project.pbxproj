@@ -58,9 +58,9 @@
 		DCAAC172279ED8B600EC685F /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC171279ED8B600EC685F /* GroupListView.swift */; };
 		DCC6DD2829C8E32500945D8C /* ProjectFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC6DD2729C8E32500945D8C /* ProjectFilter.swift */; };
 		DCCC715F273602750091C216 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC715E273602750091C216 /* LabelListView.swift */; };
-		DCD3164A29C77D8900AF7A3E /* ProjectMemberLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164929C77D8900AF7A3E /* ProjectMemberLoader.swift */; };
+		DCD3164A29C77D8900AF7A3E /* MemberLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164929C77D8900AF7A3E /* MemberLoader.swift */; };
 		DCD3164C29C77E3600AF7A3E /* UserSmallListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164B29C77E3600AF7A3E /* UserSmallListView.swift */; };
-		DCD3165029C793E600AF7A3E /* ProjectLabelsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164F29C793E600AF7A3E /* ProjectLabelsLoader.swift */; };
+		DCD3165029C793E600AF7A3E /* LabelsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164F29C793E600AF7A3E /* LabelsLoader.swift */; };
 		DCD3165229C7993800AF7A3E /* ProjectLanguagesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3165129C7993800AF7A3E /* ProjectLanguagesLoader.swift */; };
 		DCD3165429C799A700AF7A3E /* LanguagesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3165329C799A700AF7A3E /* LanguagesListView.swift */; };
 		DCDCACC729CC54600011230D /* IssueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDCACC629CC54600011230D /* IssueModel.swift */; };
@@ -125,9 +125,9 @@
 		DCC6DD2729C8E32500945D8C /* ProjectFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFilter.swift; sourceTree = "<group>"; };
 		DCCC715D2735E9910091C216 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DCCC715E273602750091C216 /* LabelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelListView.swift; sourceTree = "<group>"; };
-		DCD3164929C77D8900AF7A3E /* ProjectMemberLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMemberLoader.swift; sourceTree = "<group>"; };
+		DCD3164929C77D8900AF7A3E /* MemberLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberLoader.swift; sourceTree = "<group>"; };
 		DCD3164B29C77E3600AF7A3E /* UserSmallListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSmallListView.swift; sourceTree = "<group>"; };
-		DCD3164F29C793E600AF7A3E /* ProjectLabelsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLabelsLoader.swift; sourceTree = "<group>"; };
+		DCD3164F29C793E600AF7A3E /* LabelsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelsLoader.swift; sourceTree = "<group>"; };
 		DCD3165129C7993800AF7A3E /* ProjectLanguagesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLanguagesLoader.swift; sourceTree = "<group>"; };
 		DCD3165329C799A700AF7A3E /* LanguagesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagesListView.swift; sourceTree = "<group>"; };
 		DCDCACC629CC54600011230D /* IssueModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueModel.swift; sourceTree = "<group>"; };
@@ -185,8 +185,7 @@
 				DC5EB915272DD1310015BF0D /* ProjectsLoader.swift */,
 				DCD3165129C7993800AF7A3E /* ProjectLanguagesLoader.swift */,
 				DC6F1D6529C85CA000E0401C /* PipelineLoader.swift */,
-				DCD3164F29C793E600AF7A3E /* ProjectLabelsLoader.swift */,
-				DCD3164929C77D8900AF7A3E /* ProjectMemberLoader.swift */,
+				DCD3164F29C793E600AF7A3E /* LabelsLoader.swift */,
 				DC4F9567272EBA3F00354E1D /* NotesLoader.swift */,
 				DC92BD2E29D09B35008E8581 /* MilestoneLoader.swift */,
 			);
@@ -260,6 +259,7 @@
 			children = (
 				DC4F9553272EB4AF00354E1D /* IssuesLoader.swift */,
 				DC4F955D272EB8A700354E1D /* MergeLoader.swift */,
+				DCD3164929C77D8900AF7A3E /* MemberLoader.swift */,
 				DC4F9556272EB59200354E1D /* projects */,
 				DC6F1D6129C840C900E0401C /* UserLoader.swift */,
 				DC7C83D829B8E8A700B3BE41 /* GroupLoader.swift */,
@@ -431,7 +431,7 @@
 				DC4F9568272EBA3F00354E1D /* NotesLoader.swift in Sources */,
 				DC4F9562272EB92200354E1D /* MergeView.swift in Sources */,
 				DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */,
-				DCD3164A29C77D8900AF7A3E /* ProjectMemberLoader.swift in Sources */,
+				DCD3164A29C77D8900AF7A3E /* MemberLoader.swift in Sources */,
 				DC10C39A2731537D00CAE425 /* CommitsView.swift in Sources */,
 				DC6F1D6429C8456200E0401C /* SingleUserView.swift in Sources */,
 				DC06BE63273F1D3C0049599E /* Errors.swift in Sources */,
@@ -465,7 +465,7 @@
 				DC2A243A29C8FC0600A9FED7 /* MergeFilter.swift in Sources */,
 				DC5EB90C272D955E0015BF0D /* API.swift in Sources */,
 				DCF27D1B2A04FAA900C18EE5 /* ReleaseView.swift in Sources */,
-				DCD3165029C793E600AF7A3E /* ProjectLabelsLoader.swift in Sources */,
+				DCD3165029C793E600AF7A3E /* LabelsLoader.swift in Sources */,
 				DCD3165229C7993800AF7A3E /* ProjectLanguagesLoader.swift in Sources */,
 				DC569B3A2A045604005B99B3 /* NewProject.swift in Sources */,
 				DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */,
@@ -625,7 +625,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.5;
+				MARKETING_VERSION = 1.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -660,7 +660,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.5;
+				MARKETING_VERSION = 1.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

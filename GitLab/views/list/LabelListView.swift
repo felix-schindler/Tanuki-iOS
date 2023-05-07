@@ -10,12 +10,16 @@ import SwiftUI
 struct LabelListView: View {
 	@State var labels: [APILabel]
 	@State var showDescription = false
+	@State var showEmpty = false
 	
 	/// Project ID (needed for deletion)
 	@State var projectId: Int?
 	@State var deletionError = false
 	
 	var body: some View {
+		if (showEmpty && labels.isEmpty) {
+			Text("There are no labels")
+		}
 		ForEach(labels, id: \.id) { label in
 			VStack(alignment: .leading) {
 				Text(label.name.emojized())

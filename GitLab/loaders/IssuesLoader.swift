@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct IssuesLoader: View {
-	@State var id: Int? = nil
+	/// Project ID
+	@State var id: Int = 0
+	/// Group ID
+	@State var groupId: Int = 0
+	
 	@State var showNewIssue: Bool = false
 	@State var showFilter: Bool = false
 	
@@ -43,7 +47,7 @@ struct IssuesLoader: View {
 	var body: some View {
 		VStack {
 			if (issues != nil) {
-				IssueListView(issues: issues!, updateFunction: getIssues, showRef: (id == nil))
+				IssueListView(issues: issues!, updateFunction: getIssues, showRef: (id == 0))
 					.searchable(text: $search)
 					.onSubmit(of: .search) {
 						Task {
@@ -56,13 +60,13 @@ struct IssuesLoader: View {
 						Button(action: {showFilter = true}) {
 							Image(systemName: "line.3.horizontal.decrease.circle")
 						}
-						if (id != nil) {
+						if (id != 0) {
 							Button(action: {showNewIssue = true}) {
 								Image(systemName: "plus.circle")
 							}
 						}
 					}.sheet(isPresented: $showNewIssue) {
-						NewIssueView(id: id!)
+						NewIssueView(id: id)
 					}.sheet(isPresented: $showFilter) {
 						List {
 							Section {
@@ -181,8 +185,11 @@ struct IssuesLoader: View {
 		filter[IssueScope.NAME.rawValue] = scope.rawValue
 		
 		var endpoint = "issues"
-		if (id != nil) {
-			endpoint = "projects/\(id!)/issues"
+		if (id != 0) {
+			endpoint = "projects/\(id)/issues"
+		}
+		if (groupId != 0) {
+			endpoint = "groups/\(groupId)/issues"
 		}
 		
 		if (milestone != nil) {
@@ -195,6 +202,6 @@ struct IssuesLoader: View {
 
 struct IssuesLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		IssuesLoader(id: nil)
+		IssuesLoader(id: 0)
 	}
 }

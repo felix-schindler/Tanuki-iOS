@@ -13,7 +13,9 @@ struct NewMember: View {
 
 	/// Project ID
 	@State var id: Int
-	
+	/// Group ID
+	@State var groupId: Int
+
 	@State var username = ""
 	@State var accessLevel: ProjectRole = .guest
 	@State var setExpDate = false
@@ -73,7 +75,8 @@ struct NewMember: View {
 				memberDict["expires_at"] = inputFormatter.string(from: expDate)
 			}
 
-			if let _ = await API.req(type: UserSmall.self, method: .post, endpoint: "projects/\(id)/members", body: memberDict) {
+			let endpoint: String = (id != 0 ? "projects/\(id)/members" : "groups/\(groupId)/members")
+			if let _ = await API.req(type: UserSmall.self, method: .post, endpoint: endpoint, body: memberDict) {
 				self.dismiss()
 				return
 			}
@@ -89,6 +92,6 @@ struct NewMember: View {
 
 struct NewMember_Previews: PreviewProvider {
 	static var previews: some View {
-		NewMember(id: 33025310)
+		NewMember(id: 33025310, groupId: 0)
 	}
 }

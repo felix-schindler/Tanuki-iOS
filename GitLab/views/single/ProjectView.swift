@@ -19,7 +19,7 @@ struct ProjectView: View {
 	
 	var body: some View {
 		List {
-			Section("Info") {
+			Section {
 				HStack {
 					if let avatarUrl = ProjectListView.getAvatarUrl(project.avatarUrl ?? project.namespace.avatarUrl) {
 						AsyncImage(url: avatarUrl) { phase in
@@ -133,7 +133,7 @@ struct ProjectView: View {
 				}
 			}
 			
-			Section("Project") {
+			Section {
 				if (project.issuesEnabled) {
 					NavigationLink(destination: IssuesLoader(id: project.id)) {
 						Label(title: {
@@ -159,8 +159,8 @@ struct ProjectView: View {
 				}
 				
 				DisclosureGroup(content: {
-					NavigationLink("Members", destination: ProjectMemberLoader(id: project.id))
-					NavigationLink("Labels", destination: ProjectLabelsLoader(id: project.id))
+					NavigationLink("Members", destination: MemberLoader(id: project.id))
+					NavigationLink("Labels", destination: LabelsLoader(id: project.id))
 					NavigationLink("Milestones", destination: MilestoneLoader(id: project.id))
 				}, label: {
 					Label("Manage", systemImage: "person.2")
@@ -196,13 +196,10 @@ struct ProjectView: View {
 				})
 			}
 			
-			if (project.readmeUrl != nil) {
-				let readmePath = project.readmeUrl!.split(separator: "/").last
-				if (readmePath != nil) {
-					Section("README") {
-						FileLoader(id: project.id, inline: true, filePath: String(readmePath!), refName: project.defaultBranch ?? "")
-							.padding(.top, 7.5)
-					}
+			if let readmePath = project.readmeUrl?.split(separator: "/").last {
+				Section(readmePath) {
+					FileLoader(id: project.id, inline: true, filePath: String(readmePath), refName: project.defaultBranch ?? "")
+						.padding(.top, 7.5)
 				}
 			}
 		}.navigationTitle(project.name)

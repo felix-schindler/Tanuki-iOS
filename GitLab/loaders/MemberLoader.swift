@@ -7,15 +7,26 @@
 
 import SwiftUI
 
-struct ProjectMemberLoader: View {
+struct MemberLoader: View {
 	/// Project ID
 	@State var id: Int
+	/// Group ID
+	@State var groupId: Int
 
 	@State var members: [UserSmall]? = nil
 	@State var loadFailed: Bool = false
 	
 	@State var showNewMember = false
 
+	init(id: Int = 0, groupId: Int = 0) {
+		if (id == 0 && groupId == 0) {
+			fatalError("Either project or group id need to be set!")
+		}
+		
+		self.id = id
+		self.groupId = groupId
+	}
+	
 	var body: some View {
 		List {
 			if (members != nil) {
@@ -40,17 +51,18 @@ struct ProjectMemberLoader: View {
 				Image(systemName: "plus.circle")
 			}
 		}.sheet(isPresented: $showNewMember) {
-			NewMember(id: id)
+			NewMember(id: id, groupId: groupId)
 		}.navigationTitle("Members")
 	}
 	
 	private func getMembers() async -> [UserSmall]? {
-		return await API.get(type: [UserSmall].self, endpoint: "projects/\(id)/members")
+		let endpoint = (id != 0 ? "projects/\(id)/members" : "groups/\(groupId)/members")
+		return await API.get(type: [UserSmall].self, endpoint: endpoint)
 	}
 }
 
-struct ProjectMemberLoader_Previews: PreviewProvider {
+struct MemberLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		ProjectMemberLoader(id: 33025310)
+		MemberLoader(id: 33025310)
 	}
 }

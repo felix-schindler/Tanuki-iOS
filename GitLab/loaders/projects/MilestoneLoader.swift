@@ -11,6 +11,8 @@ import MarkdownUI
 struct MilestoneLoader: View {
 	/// Project ID
 	@State var id: Int
+	/// Group ID
+	@State var groupId: Int
 	
 	@State var milestones: [Milestone]?
 	@State var loadFailed: Bool = false
@@ -23,6 +25,15 @@ struct MilestoneLoader: View {
 	@State var state: MilestoneState = .active
 	
 	@State var showNewMilestone = false
+	
+	init(id: Int = 0, groupId: Int = 0) {
+		if (id == 0 && groupId == 0) {
+			fatalError("Either project or group id has to be set!")
+		}
+		
+		self.id = id
+		self.groupId = groupId
+	}
 	
 	var body: some View {
 		List {
@@ -87,6 +98,9 @@ struct MilestoneLoader: View {
 				Button(action: { showFilter = true }) {
 					Image(systemName: "line.3.horizontal.decrease.circle")
 				}
+				Button(action: { showNewMilestone = true }) {
+					Image(systemName: "plus.circle")
+				}
 			}.sheet(isPresented: $showFilter) {
 				List {
 					Section {
@@ -107,7 +121,7 @@ struct MilestoneLoader: View {
 					}
 				}
 			}.sheet(isPresented: $showNewMilestone) {
-				NewMilestone(id: id)
+				NewMilestone(id: id, groupId: groupId)
 			}.onAppear {
 				Task {
 					milestones = await getMilestones()
@@ -117,6 +131,7 @@ struct MilestoneLoader: View {
 	}
 	
 	private func getMilestones() async -> [Milestone]? {
+		let endpoint: String = (id != 0 ? "projects/\(id)/milestones" : "groups/\(groupId)/milestones")
 		var filter: Dictionary<String, String> = [:]
 		
 		if (!search.isEmpty) {
@@ -127,7 +142,7 @@ struct MilestoneLoader: View {
 			filter[MilestoneState.NAME.rawValue] = state.rawValue
 		}
 		
-		return await API.get(type: [Milestone].self, endpoint: "projects/\(id)/milestones", query: filter)
+		return await API.get(type: [Milestone].self, endpoint: endpoint, query: filter)
 	}
 }
 

@@ -13,7 +13,7 @@ struct GroupView: View {
 	@State var updateFunction: () async -> Group?
 	
 	var body: some View {
-		VStack(alignment: .leading) {
+		List {
 			VStack {
 				HStack {
 					if (group.avatarUrl != nil) {
@@ -53,22 +53,52 @@ struct GroupView: View {
 				}
 				Markdown(group.description.emojized())
 					.frame(maxWidth: .infinity, alignment: .leading)
-			}.padding()
-			// FIXME: This should actually load the groups projects
-			ProjectListView(projects: group.projects, updateFunction: { return group.projects })
-			Spacer()
-		}.refreshable(action: {
+			}
+			
+			Section {
+				NavigationLink(destination: IssuesLoader(groupId: group.id)) {
+					Label(title: {
+						Text("Issues")
+					}, icon: {
+						Image(systemName: "smallcircle.circle")
+							.foregroundColor(.green)
+					})
+				}.foregroundColor(.primary)
+				
+				NavigationLink(destination: MergeLoader(groupId: group.id)) {
+					Label(title: {
+						Text("Merge Requests")
+					}, icon: {
+						Image(systemName: "arrow.triangle.pull")
+							.foregroundColor(.blue)
+					})
+				}.foregroundColor(.primary)
+				
+				DisclosureGroup(content: {
+					NavigationLink("Members", destination: MemberLoader(groupId: group.id))
+					NavigationLink("Labels", destination: LabelsLoader(groupId: group.id, showEmpty: true))
+					NavigationLink("Milestones", destination: MilestoneLoader(groupId: group.id))
+				}, label: {
+					Label("Manage", systemImage: "person.2")
+						.foregroundColor(.primary)
+				})
+			}
+			
+			Section("Projects") {
+				ProjectListView(projects: group.projects)
+			}
+		}.refreshable {
 			let temp = await updateFunction()
 			if (temp != nil) {
 				group = temp!
 			}
-		}).navigationTitle(group.name)
-			.navigationBarTitleDisplayMode(.inline)
-			.toolbar {
-				AsyncButton(systemImage: "square.and.arrow.up") {
-					await URL(string: group.webUrl)!.share()
-				}
+		}.toolbar {
+			AsyncButton(systemImage: "square.and.arrow.up") {
+				await URL(string: group.webUrl)!.share()
 			}
+		}.navigationTitle(group.name)
+			.navigationBarTitleDisplayMode(.inline)
+		
 	}
 }
 

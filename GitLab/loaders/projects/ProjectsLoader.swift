@@ -29,9 +29,9 @@ struct ProjectsLoader: View {
 	@State var visibility: ProjectVisibility = .all
 	
 	var body: some View {
-		VStack {
+		List {
 			if (projects != nil) {
-				ProjectListView(projects: projects!, updateFunction: getProjects)
+				ProjectListView(projects: projects!)
 					.searchable(text: $search)
 					.onSubmit(of: .search) {
 						Task {
@@ -101,9 +101,11 @@ struct ProjectsLoader: View {
 			} else if (loadFailed) {
 				Text("Failed to load, please check your internet connection and your token")
 			} else {
-				Spacer()
-				ProgressView("Loading")
-				Spacer()
+				ProgressView()
+			}
+		}.refreshable {
+			if let temp = await getProjects() {
+				projects = temp
 			}
 		}.onAppear {
 			Task {

@@ -37,9 +37,7 @@ struct GroupListView: View {
 								}.frame(width: 50, height: 50, alignment: .leading)
 							}
 							VStack(alignment: .leading) {
-								HStack {
-									Text(group.name)
-										.fontWeight(.medium)
+								HStack(spacing: 2) {
 									if (group.visibility == "private") {
 										Image(systemName: "lock")
 									} else if (group.visibility == "internal") {
@@ -47,6 +45,8 @@ struct GroupListView: View {
 									} else if (group.visibility == "public") {
 										Image(systemName: "globe")
 									}
+									Text(group.name)
+										.fontWeight(.medium)
 								}
 								if (!(group.description?.isEmpty ?? true)) {
 									Text(group.description!.emojized())

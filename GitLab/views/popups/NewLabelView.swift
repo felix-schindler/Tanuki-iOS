@@ -14,6 +14,8 @@ struct NewLabelView: View {
 	
 	/// Project ID
 	@State var id: Int
+	/// Group ID
+	@State var groupId: Int
 	
 	@State var title: String = ""
 	@State var description: String = ""
@@ -73,7 +75,7 @@ struct NewLabelView: View {
 		let newLabel = await API.req(
 			type: APILabel.self,
 			method: .post,
-			endpoint: "projects/\(id)/labels",
+			endpoint: (id != 0 ? "projects/\(id)/labels" : "groups/\(id)/labels"),
 			query: query
 		)
 		return newLabel != nil
@@ -82,6 +84,6 @@ struct NewLabelView: View {
 
 struct NewLabelView_Previews: PreviewProvider {
 	static var previews: some View {
-		NewLabelView(id: 33025310)
+		NewLabelView(id: 33025310, groupId: 0)
 	}
 }

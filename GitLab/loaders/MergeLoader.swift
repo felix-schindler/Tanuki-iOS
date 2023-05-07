@@ -9,7 +9,9 @@ import SwiftUI
 
 struct MergeLoader: View {
 	/// Project ID
-	@State var id: Int? = nil
+	@State var id = 0
+	/// Group ID
+	@State var groupId = 0
 	
 	@State var mergeRequests: [MergeRequest]? = nil
 	@State var loadFailed: Bool = false
@@ -26,7 +28,7 @@ struct MergeLoader: View {
 	var body: some View {
 		VStack {
 			if (mergeRequests != nil) {
-				MergeListView(mergeRequests: mergeRequests!, updateFunction: getMRs, showRef: id == nil)
+				MergeListView(mergeRequests: mergeRequests!, updateFunction: getMRs, showRef: id == 0)
 					.searchable(text: $search)
 					.onSubmit(of: .search) {
 						Task {
@@ -101,8 +103,13 @@ struct MergeLoader: View {
 		filter[MergeState.NAME.rawValue] = state.rawValue
 		
 		var endpoint = "merge_requests"
-		if (id != nil) {
-			endpoint = "projects/\(id!)/merge_requests"
+		
+		if (id != 0) {
+			endpoint = "projects/\(id)/merge_requests"
+		}
+		
+		if (groupId != 0) {
+			endpoint = "groups/\(groupId)/merge_requests"
 		}
 		
 		return await API.get(type: [MergeRequest].self, endpoint: endpoint, query: filter)
@@ -111,6 +118,6 @@ struct MergeLoader: View {
 
 struct MergeLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		MergeLoader(id: nil)
+		MergeLoader(id: 0)
 	}
 }

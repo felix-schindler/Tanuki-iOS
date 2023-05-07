@@ -7,19 +7,32 @@
 
 import SwiftUI
 
-struct ProjectLabelsLoader: View {
+struct LabelsLoader: View {
 	/// Project ID
 	@State var id: Int
+	/// Group ID
+	@State var groupId: Int
 	
 	@State var labels: [APILabel]? = nil
 	@State var loadFailed: Bool = false
 	
 	@State var showNewLabel: Bool = false
+	@State var showEmpty: Bool
+	
+	init(id: Int = 0, groupId: Int = 0, showEmpty: Bool = false) {
+		if (id == 0 && groupId == 0) {
+			fatalError("Either project or group id has to be set!")
+		}
+		
+		self.id = id
+		self.groupId = groupId
+		self.showEmpty = showEmpty
+	}
 	
 	var body: some View {
 		List {
 			if (labels != nil) {
-				LabelListView(labels: labels!, showDescription: true, projectId: id)
+				LabelListView(labels: labels!, showDescription: true, showEmpty: showEmpty, projectId: id)
 			} else if (loadFailed) {
 				Text("Failed to load, please check your internet connection and your token")
 			} else {
@@ -39,17 +52,18 @@ struct ProjectLabelsLoader: View {
 				Image(systemName: "plus.circle")
 			}
 		}.sheet(isPresented: $showNewLabel) {
-			NewLabelView(id: id)
+			NewLabelView(id: id, groupId: groupId)
 		}.navigationTitle("Labels")
 	}
 	
 	private func getLabels() async -> [APILabel]? {
-		return await API.get(type: [APILabel].self, endpoint: "projects/\(id)/labels")
+		let endpoint: String = (id != 0 ? "projects/\(id)/labels" : "groups/\(groupId)/labels")
+		return await API.get(type: [APILabel].self, endpoint: endpoint)
 	}
 }
 
-struct ProjectLabelsLoader_Previews: PreviewProvider {
+struct LabelsLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		ProjectLabelsLoader(id: 33025310)
+		LabelsLoader(id: 33025310)
 	}
 }

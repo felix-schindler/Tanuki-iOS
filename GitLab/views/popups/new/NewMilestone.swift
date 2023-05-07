@@ -13,6 +13,8 @@ struct NewMilestone: View {
 	
 	/// Project ID
 	@State var id: Int
+	/// Group ID
+	@State var groupId: Int
 	
 	@State var title = ""
 	@State var desc = ""
@@ -80,7 +82,7 @@ struct NewMilestone: View {
 		let temp = await API.req(
 			type: Milestone.self,
 			method: .post,
-			endpoint: "projects/\(id)/milestones",
+			endpoint: (id != 0 ? "projects/\(id)/milestones" : "groups/\(groupId)/milestones"),
 			body: milestoneDic
 		)
 
@@ -94,6 +96,6 @@ struct NewMilestone: View {
 
 struct NewMilestone_Previews: PreviewProvider {
 	static var previews: some View {
-		NewMilestone(id: 33025310)
+		NewMilestone(id: 33025310, groupId: 0)
 	}
 }
