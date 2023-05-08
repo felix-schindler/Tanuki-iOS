@@ -43,31 +43,40 @@ struct MilestoneLoader: View {
 				} else {
 					ForEach(milestones!, id: \.id) { milestone in
 						NavigationLink(destination: IssuesLoader(id: id, state: (milestone.state == "active" ? IssueState.opened : IssueState.all), milestone: milestone.title)) {
-							VStack(alignment: .leading) {
-								Text(milestone.title.emojized())
-									.fontWeight(.medium)
-								if (milestone.description != "") {
-									Markdown(milestone.description.emojized())
-										.markdownTextStyle(textStyle: {
-											ForegroundColor(.secondary)
-										})
+							HStack {
+								if (milestone.state == "closed") {
+									Image(systemName: "flag.circle")
+										.foregroundColor(.red)
+								} else if (milestone.expired) {
+									Image(systemName: "flag.circle")
+										.foregroundColor(.orange)
+								} else {
+									Image(systemName: "flag.circle")
+										.foregroundColor(.green)
 								}
-								
-								let showStartDate = (milestone.startDate != nil)
-								let showDueDate = (milestone.dueDate != nil)
-								
-								if (showStartDate || showDueDate) {
-									HStack {
-										Image(systemName: "calendar.badge.clock")
-										if (showStartDate) {
-											Text(Date.fromToString(milestone.startDate!))
-										}
-										if (showStartDate && showDueDate) {
-											Text("-")
-										}
-										if (showDueDate) {
-											Text(Date.fromToString(milestone.dueDate!))
-										}
+								VStack(alignment: .leading) {
+									Text(milestone.title.emojized())
+										.fontWeight(.medium)
+									if (milestone.description != "") {
+										Markdown(milestone.description.emojized())
+									}
+									
+									let showStartDate = (milestone.startDate != nil)
+									let showDueDate = (milestone.dueDate != nil)
+									
+									if (showStartDate || showDueDate) {
+										HStack {
+											Image(systemName: "calendar.badge.clock")
+											if (showStartDate) {
+												Text(Date.fromToString(milestone.startDate!))
+											}
+											if (showStartDate && showDueDate) {
+												Text("-")
+											}
+											if (showDueDate) {
+												Text(Date.fromToString(milestone.dueDate!))
+											}
+										}.font(.footnote)
 									}
 								}
 							}

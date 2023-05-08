@@ -121,6 +121,7 @@ struct Milestone: Codable {
 	let state: String
 	let startDate: String?
 	let dueDate: String?
+	let expired: Bool
 	let webUrl: String
 }
 
