@@ -88,9 +88,8 @@ struct GroupView: View {
 				ProjectListView(projects: group.projects)
 			}
 		}.refreshable {
-			let temp = await updateFunction()
-			if (temp != nil) {
-				group = temp!
+			if let temp = await updateFunction() {
+				group = temp
 			}
 		}.toolbar {
 			AsyncButton(systemImage: "square.and.arrow.up") {

@@ -42,9 +42,8 @@ struct MemberLoader: View {
 				loadFailed = (members == nil)
 			}
 		}.refreshable {
-			let temp = await getMembers()
-			if (temp != nil) {
-				members = temp!
+			if let temp = await getMembers() {
+				members = temp
 			}
 		}.toolbar {
 			Button (action: { showNewMember = true }) {

@@ -89,9 +89,8 @@ struct MilestoneLoader: View {
 		}.searchable(text: $search)
 			.onSubmit(of: .search) {
 				Task {
-					let temp = await getMilestones()
-					if (temp != nil) {
-						milestones = temp!
+					if let temp = await getMilestones() {
+						milestones = temp
 					}
 				}
 			}.toolbar {
@@ -113,8 +112,7 @@ struct MilestoneLoader: View {
 					
 					AsyncButton("Apply") {
 						milestones = nil
-						let temp = await getMilestones()
-						if (temp != nil) {
+						if let temp = await getMilestones() {
 							milestones = temp
 						}
 						showFilter = false

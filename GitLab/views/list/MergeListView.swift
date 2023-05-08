@@ -72,11 +72,10 @@ struct MergeListView: View {
 				}
 			}
 		}.refreshable {
-			let temp = await updateFunction()
-			 if (temp != nil) {
-				 mergeRequests = temp!
-			 }
-		 }
+			if let temp = await updateFunction() {
+				mergeRequests = temp
+			}
+		}
 	}
 }
 

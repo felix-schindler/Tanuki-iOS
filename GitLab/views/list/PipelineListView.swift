@@ -29,9 +29,8 @@ struct PipelineListView: View {
 				}
 			}
 		}.refreshable {
-			let temp = await updateFunction()
-			if (temp != nil) {
-				pipelines = temp!
+			if let temp = await updateFunction() {
+				pipelines = temp
 			}
 		}.navigationTitle("Pipelines")
 	}

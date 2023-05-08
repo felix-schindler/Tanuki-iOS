@@ -106,9 +106,8 @@ struct IssueListView: View {
 				}
 			}
 		}.refreshable {
-			let temp = await updateFunction()
-			if (temp != nil) {
-				issues = temp!
+			if let temp = await updateFunction() {
+				issues = temp
 			}
 		}
 	}
