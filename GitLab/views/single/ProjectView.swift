@@ -159,6 +159,7 @@ struct ProjectView: View {
 				}
 				
 				DisclosureGroup(content: {
+					NavigationLink("Activity", destination: EventsView(projectId: project.id))
 					NavigationLink("Members", destination: MemberLoader(id: project.id))
 					NavigationLink("Labels", destination: LabelsLoader(id: project.id))
 					NavigationLink("Milestones", destination: MilestoneLoader(id: project.id))
