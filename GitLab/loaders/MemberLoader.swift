@@ -47,7 +47,7 @@ struct MemberLoader: View {
 			}
 		}.toolbar {
 			Button (action: { showNewMember = true }) {
-				Image(systemName: "plus.circle")
+				Image(systemName: "person.badge.plus")
 			}
 		}.sheet(isPresented: $showNewMember) {
 			NewMember(id: id, groupId: groupId)

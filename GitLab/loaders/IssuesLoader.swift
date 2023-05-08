@@ -118,14 +118,12 @@ struct IssuesLoader: View {
 							Section {
 								Picker("Type", selection: $type) {
 									Text("All").tag(IssueType.all)
-									Text("Issue").tag(IssueType.issue)
-									Text("Incident").tag(IssueType.incident)
-									Text("Test case").tag(IssueType.testCase)
+									Label("Issue", systemImage: "smallcircle.circle").tag(IssueType.issue)
+									Label("Incident", systemImage: "exclamationmark.circle").tag(IssueType.incident)
+									Label("Test case", systemImage: "testtube.2").tag(IssueType.testCase)
 								}
 								
-								Toggle(isOn: $confidential) {
-									Text("Confidential")
-								}
+								Toggle("Confidential", isOn: $confidential)
 							}
 							
 							AsyncButton("Apply") {
