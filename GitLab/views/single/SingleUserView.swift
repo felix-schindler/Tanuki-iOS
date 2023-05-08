@@ -27,7 +27,7 @@ struct SingleUserView: View {
 						if (user.name != "") {
 							Text(user.name)
 						}
-						if (user.pronouns != nil && user.pronouns! != "") {
+						if (!(user.pronouns?.isEmpty ?? true)) {
 							Text(user.pronouns!)
 								.foregroundColor(.secondary)
 								.font(.callout)
@@ -50,7 +50,6 @@ struct SingleUserView: View {
 					.foregroundColor(.secondary)
 			}
 			
-			
 			let showEmoji = (status.emoji != nil && status.emoji! != "")
 			let showMessage = (status.message != nil && status.message != "")
 			if (showEmoji || showMessage) {
@@ -64,76 +63,42 @@ struct SingleUserView: View {
 				}
 			}
 			
-			if (user.bio != "") {
+			if (!user.bio.isEmpty) {
 				Text(user.bio.emojized())
 			}
 			
-			
-			let showLocation = (user.location != nil && user.location! != "")
-			let showTime = (user.localTime != nil && user.localTime! != "")
-			
-			if (showLocation || showTime) {
-				HStack {
-					if (showLocation) {
-						HStack {
-							Image(systemName: "mappin.and.ellipse")
-							Text(user.location!)
-								.textSelection(.enabled)
-						}
-					}
-					if (showLocation && showTime) {
-						Text("·")
-					}
-					if (showTime) {
-						HStack {
-							Image(systemName: "clock")
-							Text(user.localTime!)
-						}
-					}
-				}
+			if (!(user.location?.isEmpty ?? true)) {
+				Label(user.location!, systemImage: "mappin.and.ellipse")
+					.foregroundColor(.primary)
 			}
 			
-			
-			let showWorkInfo = (user.workInformation != nil && user.workInformation != "")
-			let showJob = user.jobTitle != ""
-			let showOrg = user.organization != ""
-			
-			if (showWorkInfo || showJob || showOrg) {
-				HStack {
-					Image(systemName: "briefcase")
-					if (showWorkInfo) {
-						Text(user.workInformation!)
-					} else {
-						if (showJob) {
-							Text(user.jobTitle)
-						}
-						if (showOrg) {
-							Text(user.organization)
-						}
-					}
-				}
+			if (!(user.localTime?.isEmpty ?? true)) {
+				Label(user.localTime!, systemImage: "clock")
+					.foregroundColor(.primary)
 			}
 			
-			if (user.publicEmail != nil && user.publicEmail! != "") {
-				HStack {
-					Image(systemName: "envelope")
-					Text(user.publicEmail!)
-						.textSelection(.enabled)
-				}
+			let workStr = user.workInformation ?? "\(user.jobTitle) \(user.organization)".trim()
+			if (!workStr.isEmpty) {
+				Label(workStr, systemImage: "briefcase")
+					.foregroundColor(.primary)
 			}
 			
-			if (user.websiteUrl != "") {
-				HStack {
-					Image(systemName: "paperclip")
-					Link(user.websiteUrl, destination: URL(string: user.websiteUrl)!)
-				}
+			if (!(user.publicEmail?.isEmpty ?? true)) {
+				Label(user.publicEmail!, systemImage: "envelope")
+					.textSelection(.enabled)
 			}
 			
+			if (!user.websiteUrl.isEmpty) {
+				Link(destination: URL(string: user.websiteUrl)!, label: {
+					Label(user.websiteUrl, systemImage: "paperclip")
+						.foregroundColor(.primary)
+				})
+			}
 			
-			let showSkype = (user.skype != "")
-			let showIn = (user.linkedin != "")
-			let showTwitter = (user.twitter != "")
-			let showDiscord = (user.discord != "")
+			let showSkype =		!user.skype.isEmpty
+			let showIn =			!user.linkedin.isEmpty
+			let showTwitter =	!user.twitter.isEmpty
+			let showDiscord =	!user.discord.isEmpty
 			
 			if (showSkype || showIn || showTwitter || showDiscord) {
 				HStack {
@@ -141,23 +106,18 @@ struct SingleUserView: View {
 					ScrollView(.horizontal) {
 						HStack {
 							if (showSkype) {
-								Text("Skype: \(user.skype)")
-									.textSelection(.enabled)
+								Link(user.skype, destination: URL(string: "skype:\(user.skype)")!)
 							}
 							if (showIn) {
 								Text("linkedIn: \(user.linkedin)")
 									.textSelection(.enabled)
 							}
 							if (showTwitter) {
-								HStack(spacing: 2) {
-									Image(systemName: "bird")
-										.foregroundColor(.cyan)
-									Text(user.twitter)
-										.textSelection(.enabled)
-								}
+								Label(user.twitter, systemImage: "bird")
+									.textSelection(.enabled)
 							}
 							if (showDiscord) {
-								Text("Discord: \(user.discord)")
+								Text("👾 \(user.discord)")
 									.textSelection(.enabled)
 							}
 						}
@@ -165,30 +125,25 @@ struct SingleUserView: View {
 				}
 			}
 			
-			HStack {
-				Image(systemName: "person.2")
-				Text("\(user.followers ?? 0) followers · \(user.following ?? 0) following")
-			}
+			Label("\(user.followers ?? 0) followers · \(user.following ?? 0) following", systemImage: "person.2")
+				.foregroundColor(.primary)
 			
 			Section {
 				NavigationLink("Activity", destination: EventsView(userId: user.id))
 				NavigationLink("Projects", destination: ProjectsLoader(userId: user.id))
 			}
-			
-			/* Section("Contributions") {
-			 ContributionLoader(username: user.username)
-			 } */
-		}.navigationTitle(user.name != "" ? user.name : user.username)
-			.toolbar {
-				AsyncButton(systemImage: "square.and.arrow.up") {
-					await URL(string: user.webUrl)!.share()
-				}
+		}.toolbar {
+			AsyncButton(systemImage: "square.and.arrow.up") {
+				await URL(string: user.webUrl)!.share()
 			}
+		}.navigationTitle(user.name.isEmpty ? user.username : user.name)
 	}
 }
 
 struct SingleUserView_Previews: PreviewProvider {
 	static var previews: some View {
-		SingleUserView(user: User(id: 9005085, username: "felix-schindler", name: "Felix", state: "active", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png", webUrl: "https://gitlab.com/felix-schindler", createdAt: Date(), bio: "Studying computer science as a German-Chinese double degree", bot: true, location: "Stuttgart, Germany", publicEmail: "", skype: "", linkedin: "", twitter: "", discord: "", websiteUrl: "https://schindlerfelix.de", organization: "WUD", jobTitle: "Software Developer", pronouns: "he/him", workInformation: "Software Developer at WUD", followers: 0, following: 0, localTime: "8:51 AM", isFollowed: false), status: UserStatus(emoji: nil, message: "This is a status."))
+		NavigationView {
+			SingleUserView(user: User(id: 9005085, username: "felix-schindler", name: "Felix", state: "active", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png", webUrl: "https://gitlab.com/felix-schindler", createdAt: Date(), bio: "Studying computer science as a German-Chinese double degree", bot: true, location: "Stuttgart, Germany", publicEmail: "", skype: "", linkedin: "", twitter: "", discord: "", websiteUrl: "https://schindlerfelix.de", organization: "WUD", jobTitle: "Software Developer", pronouns: "he/him", workInformation: "Software Developer at WUD", followers: 0, following: 0, localTime: "8:51 AM", isFollowed: false), status: UserStatus(emoji: "+1", message: "This is a status."))
+		}
 	}
 }
