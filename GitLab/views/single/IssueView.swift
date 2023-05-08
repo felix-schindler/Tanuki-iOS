@@ -38,11 +38,6 @@ struct IssueView: View {
 					.font(.title)
 					.fontWeight(.semibold)
 				
-				if (issue.description != "") {              // Description is "" and NOT nil when not set
-					Markdown(issue.description.emojized())
-						.frame(maxWidth: .infinity, alignment: .leading)
-				}
-				
 				HStack {
 					HStack {
 						Image(systemName: "number.circle")
@@ -59,6 +54,11 @@ struct IssueView: View {
 						Image(systemName: "clock")
 						Text(issue.createdAt.toShortString())
 					}
+				}
+				
+				if (issue.description != "") {              // Description is "" and NOT nil when not set
+					Markdown(issue.description.emojized())
+						.frame(maxWidth: .infinity, alignment: .leading)
 				}
 				
 				HStack {

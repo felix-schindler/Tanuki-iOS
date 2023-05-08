@@ -54,7 +54,7 @@ struct HomeView: View {
 						)
 					}
 					
-					NavigationLink(destination: MemberGroupsLoader()) {
+					NavigationLink(destination: GroupsLoader()) {
 						Label(
 							title: {
 								Text("Groups")

@@ -68,7 +68,7 @@ struct IssuesLoader: View {
 					}.sheet(isPresented: $showNewIssue) {
 						NewIssueView(id: id)
 					}.sheet(isPresented: $showFilter) {
-						List {
+						Form {
 							Section {
 								Picker("State", selection: $state) {
 									Text("Open").tag(IssueState.opened)

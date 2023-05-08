@@ -54,7 +54,7 @@
 		DC92BD2F29D09B35008E8581 /* MilestoneLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC92BD2E29D09B35008E8581 /* MilestoneLoader.swift */; };
 		DC92BD3529D0C68C008E8581 /* MilestoneFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC92BD3429D0C68C008E8581 /* MilestoneFilter.swift */; };
 		DCA61D012A0524C8005FCAA9 /* NewMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA61D002A0524C8005FCAA9 /* NewMember.swift */; };
-		DCAAC170279ED63800EC685F /* MemberGroupsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */; };
+		DCAAC170279ED63800EC685F /* GroupsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC16F279ED63800EC685F /* GroupsLoader.swift */; };
 		DCAAC172279ED8B600EC685F /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC171279ED8B600EC685F /* GroupListView.swift */; };
 		DCC6DD2829C8E32500945D8C /* ProjectFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC6DD2729C8E32500945D8C /* ProjectFilter.swift */; };
 		DCCC715F273602750091C216 /* LabelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCC715E273602750091C216 /* LabelListView.swift */; };
@@ -120,7 +120,7 @@
 		DC92BD2E29D09B35008E8581 /* MilestoneLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneLoader.swift; sourceTree = "<group>"; };
 		DC92BD3429D0C68C008E8581 /* MilestoneFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneFilter.swift; sourceTree = "<group>"; };
 		DCA61D002A0524C8005FCAA9 /* NewMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMember.swift; sourceTree = "<group>"; };
-		DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberGroupsLoader.swift; sourceTree = "<group>"; };
+		DCAAC16F279ED63800EC685F /* GroupsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsLoader.swift; sourceTree = "<group>"; };
 		DCAAC171279ED8B600EC685F /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
 		DCC6DD2729C8E32500945D8C /* ProjectFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFilter.swift; sourceTree = "<group>"; };
 		DCCC715D2735E9910091C216 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -263,7 +263,7 @@
 				DC4F9556272EB59200354E1D /* projects */,
 				DC6F1D6129C840C900E0401C /* UserLoader.swift */,
 				DC7C83D829B8E8A700B3BE41 /* GroupLoader.swift */,
-				DCAAC16F279ED63800EC685F /* MemberGroupsLoader.swift */,
+				DCAAC16F279ED63800EC685F /* GroupsLoader.swift */,
 			);
 			path = loaders;
 			sourceTree = "<group>";
@@ -422,7 +422,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCD3164C29C77E3600AF7A3E /* UserSmallListView.swift in Sources */,
-				DCAAC170279ED63800EC685F /* MemberGroupsLoader.swift in Sources */,
+				DCAAC170279ED63800EC685F /* GroupsLoader.swift in Sources */,
 				DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */,
 				DCDCACC729CC54600011230D /* IssueModel.swift in Sources */,
 				DC0EC641279E1733006A7C75 /* FileLoader.swift in Sources */,
