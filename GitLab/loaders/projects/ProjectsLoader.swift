@@ -28,6 +28,8 @@ struct ProjectsLoader: View {
 	
 	@State var visibility: ProjectVisibility = .all
 	
+	@State var userId = 0
+	
 	var body: some View {
 		List {
 			if (projects != nil) {
@@ -133,7 +135,11 @@ struct ProjectsLoader: View {
 			filters[ProjectVisibility.NAME.rawValue] = visibility.rawValue
 		}
 		
-		return await API.get(type: [Project].self, endpoint: "projects", query: filters)
+		var endpoint = "projects"
+		if (userId != 0) {
+			endpoint = "users/\(userId)/projects"
+		}
+		return await API.get(type: [Project].self, endpoint: endpoint, query: filters)
 	}
 }
 

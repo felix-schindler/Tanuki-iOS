@@ -170,6 +170,11 @@ struct SingleUserView: View {
 				Text("\(user.followers ?? 0) followers · \(user.following ?? 0) following")
 			}
 			
+			Section {
+				NavigationLink("Activity", destination: EventsView(userId: user.id))
+				NavigationLink("Projects", destination: ProjectsLoader(userId: user.id))
+			}
+			
 			/* Section("Contributions") {
 			 ContributionLoader(username: user.username)
 			 } */

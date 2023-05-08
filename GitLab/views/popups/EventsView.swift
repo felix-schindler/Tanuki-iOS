@@ -14,41 +14,42 @@ struct EventsView: View {
 	@State var events: [Event]? = nil
 	@State var loadFailed: Bool = false
 	
+	@State var projectId = 0
+	@State var userId = 0
+	
 	var body: some View {
-		NavigationView {
-			VStack {
-				if (events != nil) {
-					if (events!.isEmpty) {
-						Text("There are no events")
-					} else {
-						List(events!, id: \.id) { event in
-							VStack(alignment: .leading) {
-								Text(getStupidText(event: event))
-								Text(event.createdAt.toString())
-									.font(.callout)
-									.foregroundColor(.secondary)
-							}
-						}.refreshable {
-							await getEvents()
-						}
-					}
+		VStack {
+			if (events != nil) {
+				if (events!.isEmpty) {
+					Text("There are no events")
 				} else {
-					Spacer()
-					if (loadFailed) {
-						Text("Failed to load, please check your internet connection and your token")
-					} else {
-						ProgressView("Loading")
-					}
-					Spacer()
-				}
-			}.navigationBarTitle("Events")
-				.navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
-				.onAppear {
-					Task {
+					List(events!, id: \.id) { event in
+						VStack(alignment: .leading) {
+							Text(getStupidText(event: event))
+							Text(event.createdAt.toString())
+								.font(.callout)
+								.foregroundColor(.secondary)
+						}
+					}.refreshable {
 						await getEvents()
 					}
 				}
-		}
+			} else {
+				Spacer()
+				if (loadFailed) {
+					Text("Failed to load, please check your internet connection and your token")
+				} else {
+					ProgressView("Loading")
+				}
+				Spacer()
+			}
+		}.navigationBarTitle("Events")
+			.navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
+			.onAppear {
+				Task {
+					await getEvents()
+				}
+			}
 	}
 	
 	private func getStupidText(event: Event) -> String {
@@ -70,7 +71,17 @@ struct EventsView: View {
 	}
 	
 	private func getEvents() async -> Void {
-		events = await API.get(type: [Event].self, endpoint: "events")
+		var endpoint: String
+		
+		if (projectId != 0) {
+			endpoint = "projects/\(projectId)/events"
+		} else if (userId != 0) {
+			endpoint = "users/\(userId)/events"
+		} else {
+			endpoint = "events"
+		}
+		
+		events = await API.get(type: [Event].self, endpoint: endpoint)
 		loadFailed = (events == nil)
 	}
 }

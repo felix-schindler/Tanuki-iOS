@@ -124,7 +124,9 @@ struct HomeView: View {
 					Image(systemName: "plus.circle")
 				}
 			}.sheet(isPresented: $showEvents) {
-				EventsView()
+				NavigationView {
+					EventsView()
+				}
 			}.sheet(isPresented: $showNewProject) {
 				NewProject()
 			}
