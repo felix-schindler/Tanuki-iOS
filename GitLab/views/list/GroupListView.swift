@@ -12,57 +12,50 @@ struct GroupListView: View {
 	@State var updateFunction: () async -> [SmallGroup]?
 	
 	var body: some View {
-		List {
-			if (groups.isEmpty) {
-				Text("There are no groups")
-			} else {
-				ForEach(groups, id: \.id) { group in
-					NavigationLink(destination: GroupLoader(id: group.id)) {
-						HStack {
-							if (group.avatarUrl != nil) {
-								AsyncImage(url: URL(string: group.avatarUrl!)) { phase in
-									switch phase {
-									case .empty:
-										ProgressView()
-									case .success(let image):
-										image
-											.resizable()
-											.scaledToFit()
-											.cornerRadius(10)
-									default:
-										Image(systemName: "exclamationmark.icloud")
-											.resizable()
-											.scaledToFit()
-									}
-								}.frame(width: 50, height: 50, alignment: .leading)
+		if (groups.isEmpty) {
+			Text("There are no groups")
+		} else {
+			ForEach(groups, id: \.id) { group in
+				NavigationLink(destination: GroupLoader(id: group.id)) {
+					HStack {
+						if (group.avatarUrl != nil) {
+							AsyncImage(url: URL(string: group.avatarUrl!)) { phase in
+								switch phase {
+								case .empty:
+									ProgressView()
+								case .success(let image):
+									image
+										.resizable()
+										.scaledToFit()
+										.cornerRadius(10)
+								default:
+									Image(systemName: "exclamationmark.icloud")
+										.resizable()
+										.scaledToFit()
+								}
+							}.frame(width: 50, height: 50, alignment: .leading)
+						}
+						VStack(alignment: .leading) {
+							HStack(spacing: 2) {
+								if (group.visibility == "private") {
+									Image(systemName: "lock")
+								} else if (group.visibility == "internal") {
+									Image(systemName: "shield.lefthalf.filled")
+								} else if (group.visibility == "public") {
+									Image(systemName: "globe")
+								}
+								Text(group.name)
+									.fontWeight(.medium)
 							}
-							VStack(alignment: .leading) {
-								HStack(spacing: 2) {
-									if (group.visibility == "private") {
-										Image(systemName: "lock")
-									} else if (group.visibility == "internal") {
-										Image(systemName: "shield.lefthalf.filled")
-									} else if (group.visibility == "public") {
-										Image(systemName: "globe")
-									}
-									Text(group.name)
-										.fontWeight(.medium)
-								}
-								if (!(group.description?.isEmpty ?? true)) {
-									Text(group.description!.emojized())
-										.font(.footnote)
-								}
+							if (!(group.description?.isEmpty ?? true)) {
+								Text(group.description!.emojized())
+									.font(.footnote)
 							}
 						}
 					}
 				}
 			}
-		}.refreshable {
-			let temp = await updateFunction()
-			 if (temp != nil) {
-				 groups = temp!
-			 }
-		 }
+		}
 	}
 }
 

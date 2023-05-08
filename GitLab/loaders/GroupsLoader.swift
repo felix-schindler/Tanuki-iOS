@@ -20,7 +20,7 @@ struct GroupsLoader: View {
 	@State var loadFailed: Bool = false
 	
 	@State var showFilter = false
-
+	
 	@State var search = ""
 	@State var sort: IssueSort = .asc
 	@State var orderBy: GroupOrder = .name
@@ -28,70 +28,70 @@ struct GroupsLoader: View {
 	@State var allAvailable = false
 	
 	var body: some View {
-		VStack {
+		List {
 			if (groups != nil) {
 				GroupListView(groups: groups!, updateFunction: getGroups)
-					.searchable(text: $search)
-					.onSubmit(of: .search) {
-						Task {
-							groups = nil
-							groups = await getGroups()
-							loadFailed = (groups == nil)
-						}
-					}
 			} else {
 				if (loadFailed) {
 					Text("Failed to load, please check your internet connection and your token")
 				} else {
-					VStack {
-						Spacer()
-						ProgressView("Loading")
-						Spacer()
-					}
+					ProgressView()
 				}
 			}
-		}.onAppear {
-			Task {
-				groups = await getGroups()
-				loadFailed = (groups == nil)
+		}.refreshable {
+			if let temp = await getGroups() {
+				groups = temp
 			}
-		}.toolbar {
-			Button(action: { showFilter = true }, label: {
-				Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
-			})
-		}.sheet(isPresented: $showFilter) {
-			Form {
-				Section {
-					if (!allAvailable) {
-						Toggle("Owned", isOn: $owned)
-					}
-					if (!owned) {
-						Toggle("All available", isOn: $allAvailable)
-					}
-				}
-				
-				Section {
-					Picker("Order by", selection: $orderBy) {
-						Text("Name").tag(GroupOrder.name)
-						Text("Path").tag(GroupOrder.path)
-						Text("ID").tag(GroupOrder.id)
-						Text("Similarity").tag(GroupOrder.similarity)
-					}
-					
-					Picker("Sort", selection: $sort) {
-						Text("Ascending").tag(ProjectSort.asc)
-						Text("Descending").tag(ProjectSort.desc)
-					}
-				}
-				
-				AsyncButton("Apply", action: {
+		}					.searchable(text: $search)
+			.onSubmit(of: .search) {
+				Task {
 					groups = nil
 					groups = await getGroups()
 					loadFailed = (groups == nil)
-					showFilter = false
-				})
+				}
 			}
-		}.navigationTitle("Groups")
+			.onAppear {
+				Task {
+					groups = await getGroups()
+					loadFailed = (groups == nil)
+				}
+			}.toolbar {
+				Button(action: { showFilter = true }, label: {
+					Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
+				})
+			}.sheet(isPresented: $showFilter) {
+				Form {
+					Section {
+						if (!allAvailable) {
+							Toggle("Owned", isOn: $owned)
+						}
+						if (!owned) {
+							Toggle("All available", isOn: $allAvailable)
+						}
+					}
+					
+					Section {
+						Picker("Order by", selection: $orderBy) {
+							Text("Name").tag(GroupOrder.name)
+							Text("Path").tag(GroupOrder.path)
+							Text("ID").tag(GroupOrder.id)
+							Text("Similarity").tag(GroupOrder.similarity)
+						}
+						
+						Picker("Sort", selection: $sort) {
+							Text("Ascending").tag(ProjectSort.asc)
+							Text("Descending").tag(ProjectSort.desc)
+						}
+					}
+					
+					AsyncButton("Apply", action: {
+						groups = nil
+						groups = await getGroups()
+						loadFailed = (groups == nil)
+						showFilter = false
+					})
+				}
+			}.navigationTitle("Groups")
 	}
 	
 	private func getGroups() async -> [SmallGroup]? {
@@ -116,7 +116,7 @@ struct GroupsLoader: View {
 		if (allAvailable != false) {
 			query["all_available"] = String(allAvailable)
 		}
-
+		
 		return await API.get(type: [SmallGroup].self, endpoint: "groups", query: query)
 	}
 }
