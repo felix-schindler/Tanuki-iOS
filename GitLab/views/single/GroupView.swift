@@ -33,7 +33,7 @@ struct GroupView: View {
 							}
 						}.frame(width: 50, height: 50, alignment: .leading)
 					}
-					HStack(spacing: 5) {
+					HStack(spacing: 2) {
 						if (group.visibility == "private") {
 							Image(systemName: "lock")
 						} else if (group.visibility == "internal") {

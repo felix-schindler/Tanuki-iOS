@@ -69,6 +69,7 @@ struct UserStatus: Codable {
 }
 
 struct Namespace: Codable {
+	let id: Int
 	let name: String
 	let path: String
 	let avatarUrl: String?
