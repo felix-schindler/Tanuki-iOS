@@ -25,7 +25,7 @@ struct PipelineListView: View {
 					Text(pipeline.status.firstCapitalized)
 						.foregroundColor(.secondary)
 						.font(.caption)
-					PipelineStatusView(pipeline: pipeline)
+                    PipelineStatusView(status: pipeline.status)
 				}
 			}
 		}.refreshable {

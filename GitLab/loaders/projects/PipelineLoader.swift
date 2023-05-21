@@ -31,7 +31,7 @@ struct PipelineLoader: View {
 					if (pipelines!.isEmpty) {
 						EmptyView()
 					} else {
-						PipelineStatusView(pipeline: pipelines![0])
+                        PipelineStatusView(status: pipelines![0].status)
 					}
 				} else {
 					if (pipelines!.isEmpty) {
