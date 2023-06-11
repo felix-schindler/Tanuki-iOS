@@ -17,7 +17,7 @@ struct PipelineListView: View {
 				VStack(alignment: .leading) {
 					Text(pipeline.ref)
 						.fontWeight(.medium)
-					Text("\(pipeline.source) · \(pipeline.createdAt.toShortString())")
+					Text("\(pipeline.source) · \(pipeline.createdAt.toString(.short))")
 						.font(.footnote)
 				}
 				Spacer()

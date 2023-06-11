@@ -37,7 +37,7 @@ struct MergeView: View {
 					Spacer()
 					HStack(spacing: 2) {
 						Image(systemName: "clock")
-						Text(mergeRequest.createdAt.toShortString())
+						Text(mergeRequest.createdAt.toString(.short))
 					}
 				}
 				

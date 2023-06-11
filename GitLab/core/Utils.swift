@@ -62,10 +62,6 @@ extension Date {
 		return dateFormat.string(from: self)
 	}
 	
-	func toShortString() -> String {
-		return self.toString(.short)
-	}
-	
 	func toDateString(_ style: DateFormatter.Style = .medium) -> String {
 		let dateFormat = DateFormatter()
 		dateFormat.dateStyle = style

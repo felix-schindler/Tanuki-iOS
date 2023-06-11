@@ -52,7 +52,7 @@ struct IssueView: View {
 					Spacer()
 					HStack {
 						Image(systemName: "clock")
-						Text(issue.createdAt.toShortString())
+						Text(issue.createdAt.toString(.short))
 					}
 				}
 				
