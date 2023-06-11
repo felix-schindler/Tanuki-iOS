@@ -19,9 +19,9 @@ struct MemberLoader: View {
 	@State var showNewMember = false
 
 	init(id: Int = 0, groupId: Int = 0) {
-		if (id == 0 && groupId == 0) {
+		/* if (id == 0 && groupId == 0) {
 			fatalError("Either project or group id need to be set!")
-		}
+		} */
 		
 		self.id = id
 		self.groupId = groupId
@@ -55,7 +55,16 @@ struct MemberLoader: View {
 	}
 	
 	private func getMembers() async -> [UserSmall]? {
-		let endpoint = (id != 0 ? "projects/\(id)/members" : "groups/\(groupId)/members")
+		var endpoint = ""
+		if (id != 0) {
+			endpoint = "projects/\(id)/members"
+		} else if (groupId != 0) {
+			endpoint = "groups/\(groupId)/members"
+		} else {
+			// TODO: Remove debug message after testing
+			print("[DEBUG] Loading all users")
+			endpoint = "users"
+		}
 		return await API.get(type: [UserSmall].self, endpoint: endpoint)
 	}
 }
