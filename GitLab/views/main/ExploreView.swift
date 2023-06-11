@@ -10,7 +10,34 @@ import SwiftUI
 struct ExploreView: View {
 	var body: some View {
 		NavigationView {
-			ProjectsLoader()
+			List {
+				NavigationLink(destination: ProjectsLoader()) {
+					Label(
+						title: {
+							Text("Projects")
+						},
+						icon: {
+							Image(systemName: "appclip")
+								.foregroundColor(.gray)
+						}
+					)
+				}
+				
+				NavigationLink(destination: GroupsLoader(allAvailable: true)) {
+					Label(
+						title: {
+							Text("Groups")
+						},
+						icon: {
+							Image(systemName: "person.3")
+								.foregroundColor(.red)
+						}
+					)
+				}
+				NavigationLink(destination: MemberLoader()) {
+					Label("Users", systemImage: "person.2")
+				}
+			}.navigationTitle("Explore")
 		}.navigationViewStyle(StackNavigationViewStyle())
 	}
 }
