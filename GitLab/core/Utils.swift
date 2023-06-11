@@ -55,22 +55,26 @@ extension Date {
 		return dateFormat.string(from: self)
 	}
 	
+	func toString(_ style: DateFormatter.Style) -> String {
+		let dateFormat = DateFormatter()
+		dateFormat.dateStyle = style
+		dateFormat.timeStyle = style
+		return dateFormat.string(from: self)
+	}
+	
+	func toShortString() -> String {
+		return self.toString(.short)
+	}
+
 	func toDateString(_ style: DateFormatter.Style = .medium) -> String {
 		let dateFormat = DateFormatter()
 		dateFormat.dateStyle = style
 		return dateFormat.string(from: self)
 	}
 	
-	func toTimeString() -> String {
+	func toTimeString(_ style: DateFormatter.Style = .short) -> String {
 		let dateFormat = DateFormatter()
-		dateFormat.timeStyle = .short
-		return dateFormat.string(from: self)
-	}
-	
-	func toShortString() -> String {
-		let dateFormat = DateFormatter()
-		dateFormat.dateStyle = .short
-		dateFormat.timeStyle = .short
+		dateFormat.timeStyle = style
 		return dateFormat.string(from: self)
 	}
 }
