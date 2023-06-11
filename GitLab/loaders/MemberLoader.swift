@@ -47,7 +47,7 @@ struct MemberLoader: View {
 			}
 		}.sheet(isPresented: $showNewMember) {
 			NewMember(id: id, groupId: groupId)
-		}.navigationTitle("Members")
+		}.navigationTitle((id == 0 && groupId == 0) ? "Users" : "Members")
 	}
 	
 	private func getMembers() async -> [UserSmall]? {
