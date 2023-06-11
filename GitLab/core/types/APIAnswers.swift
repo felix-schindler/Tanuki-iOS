@@ -276,6 +276,26 @@ struct Pipeline: Codable {
 	let createdAt: Date
 }
 
+struct Snippet: Codable {
+	let id: Int
+	let title: String
+	let description: String?
+	let visibility: String
+	let author: UserSmall
+	let createdAt: Date
+	let updatedAt: Date
+	let projectId: Int?
+	let webUrl: String
+	let rawUrl: String
+	let fileName: String
+	let files: [SmallFile]
+}
+
+struct SmallFile: Codable {
+	let path: String
+	let rawUrl: String
+}
+
 struct ToggleStar: Codable {
 	let starCount: Int
 }
