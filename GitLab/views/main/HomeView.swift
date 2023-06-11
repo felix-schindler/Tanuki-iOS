@@ -75,7 +75,7 @@ struct HomeView: View {
 							ForEach(starredProjects!, id: \.id) { project in
 								NavigationLink(destination: ProjectView(project: project)) {
 									HStack {
-										if let avatarUrl = ProjectListView.getAvatarUrl(project.avatarUrl ?? project.namespace.avatarUrl) {
+										if let avatarUrl = URL.fromAvatar(project.avatarUrl ?? project.namespace.avatarUrl) {
 											AvatarImage(url: avatarUrl, radius: 5, width: 25, height: 25)
 										}
 										Text(project.nameWithNamespace)

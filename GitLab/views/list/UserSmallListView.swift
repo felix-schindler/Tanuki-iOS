@@ -17,7 +17,9 @@ struct UserSmallListView: View {
 			ForEach(users, id: \.id) { user in
 				NavigationLink(destination: UserLoader(id: user.id)) {
 					HStack {
-						AvatarImage(url: URL(string: user.avatarUrl))
+						if let avatarUrl = URL.fromAvatar(user.avatarUrl) {
+							AvatarImage(url: avatarUrl)
+						}
 						VStack(alignment: .leading) {
 							Text(user.name)
 							Text("@\(user.username)")

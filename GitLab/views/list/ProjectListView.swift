@@ -19,7 +19,7 @@ struct ProjectListView: View {
 				let project = projects[index]
 				NavigationLink(destination: ProjectView(project: project)) {
 					HStack {
-						if let avatarUrl = ProjectListView.getAvatarUrl(project.avatarUrl ?? project.namespace.avatarUrl) {
+						if let avatarUrl = URL.fromAvatar(project.avatarUrl ?? project.namespace.avatarUrl) {
 							AvatarImage(url: avatarUrl)
 						}
 						VStack(alignment: .leading, spacing: 2) {
@@ -87,18 +87,6 @@ struct ProjectListView: View {
 				}
 			}
 		}
-	}
-	
-	public static func getAvatarUrl(_ urlStr: String?) -> URL? {
-		if var urlStr: String = urlStr {
-			if (!urlStr.contains("://")) {
-				urlStr = "https://" + API.domain + urlStr
-			}
-			
-			return URL(string: urlStr)
-		}
-		
-		return nil
 	}
 	
 	func accessRole(code: Int) -> String {

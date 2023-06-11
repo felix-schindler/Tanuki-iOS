@@ -15,7 +15,9 @@ struct NoteListView: View {
 		if (!notes.isEmpty) {
 			ForEach(notes, id: \.id) { note in
 				HStack(alignment: .top) {
-					AvatarImage(url: URL(string: note.author.avatarUrl), radius: 25, width: 25, height: 25)
+					if let avatarUrl = URL.fromAvatar(note.author.avatarUrl) {
+						AvatarImage(url: avatarUrl, radius: 25, width: 25, height: 25)
+					}
 					VStack(alignment: .leading) {
 						Text(note.author.name)
 							.font(.callout)

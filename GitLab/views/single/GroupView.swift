@@ -16,8 +16,8 @@ struct GroupView: View {
 		List {
 			VStack {
 				HStack {
-					if (group.avatarUrl != nil) {
-						AvatarImage(url: URL(string: group.avatarUrl!))
+					if let avatarUrl = URL.fromAvatar(group.avatarUrl) {
+						AvatarImage(url: avatarUrl)
 					}
 					HStack(spacing: 2) {
 						if (group.visibility == "private") {

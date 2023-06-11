@@ -15,7 +15,9 @@ struct SingleUserView: View {
 		List {
 			Section {
 				HStack {
-					AvatarImage(url: URL(string: user.avatarUrl))
+					if let avatarUrl = URL.fromAvatar(user.avatarUrl) {
+						AvatarImage(url: avatarUrl)
+					}
 					VStack(alignment: .leading) {
 						HStack {
 							if (!user.name.isEmpty) {

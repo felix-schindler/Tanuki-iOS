@@ -18,8 +18,8 @@ struct GroupListView: View {
 			ForEach(groups, id: \.id) { group in
 				NavigationLink(destination: GroupLoader(id: group.id)) {
 					HStack {
-						if (group.avatarUrl != nil) {
-							AvatarImage(url: URL(string: group.avatarUrl!))
+						if let avatarUrl = URL.fromAvatar(group.avatarUrl) {
+							AvatarImage(url: avatarUrl)
 						}
 						VStack(alignment: .leading) {
 							HStack(spacing: 2) {

@@ -14,7 +14,7 @@ struct AvatarImage: View {
 	let width: CGFloat
 	let height: CGFloat
 	
-	init(url: URL?, radius: CGFloat = 10, width: CGFloat = 50, height: CGFloat = 50) {
+	init(url: URL, radius: CGFloat = 10, width: CGFloat = 50, height: CGFloat = 50) {
 		self.url = url
 		self.radius = radius
 		self.width = width
