@@ -23,6 +23,18 @@ struct ExploreView: View {
 					)
 				}
 				
+				NavigationLink(destination: SnippetsLoader(public: true)) {
+					Label(
+						title: {
+							Text("Snippets")
+						},
+						icon: {
+							Image(systemName: "scissors")
+								.foregroundStyle(.purple)
+						}
+					)
+				}
+				
 				NavigationLink(destination: GroupsLoader(allAvailable: true)) {
 					Label(
 						title: {
@@ -34,13 +46,30 @@ struct ExploreView: View {
 						}
 					)
 				}
-
+				
 				NavigationLink(destination: MemberLoader()) {
-					Label("Users", systemImage: "person.2")
+					Label(
+						title: {
+							Text("Users")
+						},
+						icon: {
+							Image(systemName: "person.2")
+								.foregroundStyle(.mint)
+						}
+					)
 				}
-
-				Label("Topics", systemImage: "tag")
-				Label("Snippets", systemImage: "scissors")
+				
+				/* NavigationLink(destination: SnippetsLoader(public: true)) {
+					Label(
+						title: {
+							Text("Topics")
+						},
+						icon: {
+							Image(systemName: "tag")
+								.foregroundStyle(.indigo)
+						}
+					)
+				} */
 			}.navigationTitle("Explore")
 		}.navigationViewStyle(StackNavigationViewStyle())
 	}
