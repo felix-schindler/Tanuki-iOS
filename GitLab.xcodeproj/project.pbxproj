@@ -20,6 +20,7 @@
 		DC2A243A29C8FC0600A9FED7 /* MergeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2A243929C8FC0600A9FED7 /* MergeFilter.swift */; };
 		DC2B2FFF29C0679B009ADC0D /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B2FFE29C0679B009ADC0D /* ProjectView.swift */; };
 		DC2B300129C09625009ADC0D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B300029C09625009ADC0D /* InfoView.swift */; };
+		DC4E1CA02A35AA7D00AEB422 /* SnippetsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4E1C9F2A35AA7D00AEB422 /* SnippetsLoader.swift */; };
 		DC4F9554272EB4AF00354E1D /* IssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9553272EB4AF00354E1D /* IssuesLoader.swift */; };
 		DC4F955E272EB8A700354E1D /* MergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F955D272EB8A700354E1D /* MergeLoader.swift */; };
 		DC4F9562272EB92200354E1D /* MergeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9561272EB92200354E1D /* MergeView.swift */; };
@@ -87,6 +88,7 @@
 		DC2A243929C8FC0600A9FED7 /* MergeFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeFilter.swift; sourceTree = "<group>"; };
 		DC2B2FFE29C0679B009ADC0D /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		DC2B300029C09625009ADC0D /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		DC4E1C9F2A35AA7D00AEB422 /* SnippetsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetsLoader.swift; sourceTree = "<group>"; };
 		DC4F9553272EB4AF00354E1D /* IssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuesLoader.swift; sourceTree = "<group>"; };
 		DC4F955D272EB8A700354E1D /* MergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeLoader.swift; sourceTree = "<group>"; };
 		DC4F9561272EB92200354E1D /* MergeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeView.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				DC6F1D6129C840C900E0401C /* UserLoader.swift */,
 				DC7C83D829B8E8A700B3BE41 /* GroupLoader.swift */,
 				DCAAC16F279ED63800EC685F /* GroupsLoader.swift */,
+				DC4E1C9F2A35AA7D00AEB422 /* SnippetsLoader.swift */,
 			);
 			path = loaders;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				DC90CA5C272E762200B758E7 /* NewIssueView.swift in Sources */,
 				DC7A85BE27319D290000CF4D /* PipelineListView.swift in Sources */,
 				DCCC715F273602750091C216 /* LabelListView.swift in Sources */,
+				DC4E1CA02A35AA7D00AEB422 /* SnippetsLoader.swift in Sources */,
 				DC4F955E272EB8A700354E1D /* MergeLoader.swift in Sources */,
 				DC6F1D6629C85CA000E0401C /* PipelineLoader.swift in Sources */,
 				DC90CA63272E878900B758E7 /* Utils.swift in Sources */,
@@ -633,7 +637,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.8;
+				MARKETING_VERSION = 1.1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -668,7 +672,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.8;
+				MARKETING_VERSION = 1.1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

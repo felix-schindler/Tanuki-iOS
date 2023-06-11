@@ -54,6 +54,18 @@ struct HomeView: View {
 						)
 					}
 					
+					NavigationLink(destination: SnippetsLoader()) {
+						Label(
+							title: {
+								Text("Snippets")
+							},
+							icon: {
+								Image(systemName: "scissors")
+									.foregroundStyle(.purple)
+							}
+						)
+					}
+					
 					NavigationLink(destination: GroupsLoader()) {
 						Label(
 							title: {
