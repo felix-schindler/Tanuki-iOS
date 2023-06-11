@@ -24,7 +24,6 @@ struct NewNoteView: View {
 			List {
 				Section("Content") {
 					TextEditor(text: $content)
-						.shadow(radius: 1)
 				}
 			}.alert(isPresented: $isError, content: {
 				Alert(title: Text("Error"), message: Text("Failed to create note"), dismissButton: .default(Text("OK")))

@@ -25,7 +25,6 @@ struct NewIssueView: View {
 				}
 				Section("Description - NOT NEEDED") {
 					TextEditor(text: $description)
-						.shadow(radius: 1)
 				}
 			}.alert(isPresented: $isError, content: {
 				Alert(title: Text("Error"), message: Text("Failed to create issue"), dismissButton: .default(Text("OK")))
