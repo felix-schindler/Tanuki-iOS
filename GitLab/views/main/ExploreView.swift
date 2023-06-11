@@ -34,9 +34,13 @@ struct ExploreView: View {
 						}
 					)
 				}
+
 				NavigationLink(destination: MemberLoader()) {
 					Label("Users", systemImage: "person.2")
 				}
+
+				Label("Topics", systemImage: "tag")
+				Label("Snippets", systemImage: "scissors")
 			}.navigationTitle("Explore")
 		}.navigationViewStyle(StackNavigationViewStyle())
 	}
