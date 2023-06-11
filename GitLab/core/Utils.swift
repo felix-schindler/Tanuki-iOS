@@ -65,7 +65,7 @@ extension Date {
 	func toShortString() -> String {
 		return self.toString(.short)
 	}
-
+	
 	func toDateString(_ style: DateFormatter.Style = .medium) -> String {
 		let dateFormat = DateFormatter()
 		dateFormat.dateStyle = style
@@ -81,11 +81,23 @@ extension Date {
 
 
 extension URL {
-	func share() async -> Void {
+	public func share() async -> Void {
 		let activityVC = await UIActivityViewController(activityItems: [self], applicationActivities: nil)
 		
 		let windowScene = await UIApplication.shared.connectedScenes.first as? UIWindowScene
 		await windowScene?.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
+	}
+	
+	public static func fromAvatar(_ avatarUrl: String?) -> URL? {
+		if var urlStr = avatarUrl {
+			if (!urlStr.contains("://")) {
+				urlStr = "https://" + API.domain + urlStr
+			}
+			
+			return URL(string: urlStr)
+		}
+		
+		return nil
 	}
 }
 
