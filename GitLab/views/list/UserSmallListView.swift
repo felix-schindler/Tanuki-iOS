@@ -17,14 +17,7 @@ struct UserSmallListView: View {
 			ForEach(users, id: \.id) { user in
 				NavigationLink(destination: UserLoader(id: user.id)) {
 					HStack {
-						AsyncImage(url: URL(string: user.avatarUrl)) { image in
-							image
-								.resizable()
-								.scaledToFit()
-								.cornerRadius(10)
-						} placeholder: {
-							ProgressView()
-						}.frame(width: 50, height: 50)
+						AvatarImage(url: URL(string: user.avatarUrl))
 						VStack(alignment: .leading) {
 							Text(user.name)
 							Text("@\(user.username)")

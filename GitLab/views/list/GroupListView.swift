@@ -19,21 +19,7 @@ struct GroupListView: View {
 				NavigationLink(destination: GroupLoader(id: group.id)) {
 					HStack {
 						if (group.avatarUrl != nil) {
-							AsyncImage(url: URL(string: group.avatarUrl!)) { phase in
-								switch phase {
-								case .empty:
-									ProgressView()
-								case .success(let image):
-									image
-										.resizable()
-										.scaledToFit()
-										.cornerRadius(10)
-								default:
-									Image(systemName: "exclamationmark.icloud")
-										.resizable()
-										.scaledToFit()
-								}
-							}.frame(width: 50, height: 50, alignment: .leading)
+							AvatarImage(url: URL(string: group.avatarUrl!))
 						}
 						VStack(alignment: .leading) {
 							HStack(spacing: 2) {

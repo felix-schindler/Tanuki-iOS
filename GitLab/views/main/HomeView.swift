@@ -76,17 +76,7 @@ struct HomeView: View {
 								NavigationLink(destination: ProjectView(project: project)) {
 									HStack {
 										if let avatarUrl = ProjectListView.getAvatarUrl(project.avatarUrl ?? project.namespace.avatarUrl) {
-											AsyncImage(url: avatarUrl) { phase in
-												switch phase {
-												case .success(let image):
-													image
-														.resizable()
-														.scaledToFit()
-														.cornerRadius(5)
-												default:
-													EmptyView()
-												}
-											}.frame(width: 25, height: 25, alignment: .leading)
+											AvatarImage(url: avatarUrl, radius: 5, width: 25, height: 25)
 										}
 										Text(project.nameWithNamespace)
 											.frame(maxWidth: .infinity, alignment: .leading)
@@ -130,6 +120,7 @@ struct HomeView: View {
 			}.sheet(isPresented: $showNewProject) {
 				NewProject()
 			}
+			// TODO: If iPad -> Show another view / show in fullscreen
 		}
 	}
 	

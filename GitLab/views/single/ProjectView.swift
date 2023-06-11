@@ -22,21 +22,7 @@ struct ProjectView: View {
 			Section {
 				HStack {
 					if let avatarUrl = ProjectListView.getAvatarUrl(project.avatarUrl ?? project.namespace.avatarUrl) {
-						AsyncImage(url: avatarUrl) { phase in
-							switch phase {
-							case .empty:
-								ProgressView()
-							case .success(let image):
-								image
-									.resizable()
-									.scaledToFit()
-									.cornerRadius(10)
-							default:
-								Image(systemName: "exclamationmark.icloud")
-									.resizable()
-									.scaledToFit()
-							}
-						}.frame(width: 50, height: 50, alignment: .leading)
+						AvatarImage(url: avatarUrl)
 					}
 					
 					if (project.description != nil && project.description != "") {

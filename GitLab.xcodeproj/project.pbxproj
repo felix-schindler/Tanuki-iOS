@@ -12,6 +12,7 @@
 		DC0EC63A279E16E6006A7C75 /* FileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EC639279E16E6006A7C75 /* FileView.swift */; };
 		DC0EC641279E1733006A7C75 /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EC63F279E1733006A7C75 /* FileLoader.swift */; };
 		DC0EC642279E1733006A7C75 /* TreeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EC640279E1733006A7C75 /* TreeLoader.swift */; };
+		DC0F593E2A346C3A00A24088 /* AvatarImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0F593D2A346C3A00A24088 /* AvatarImage.swift */; };
 		DC10C39A2731537D00CAE425 /* CommitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC10C3992731537D00CAE425 /* CommitsView.swift */; };
 		DC10C39C27315D6400CAE425 /* BranchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC10C39B27315D6400CAE425 /* BranchesView.swift */; };
 		DC1F1BDF29CCC93A00AF7573 /* NewLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1F1BDE29CCC93A00AF7573 /* NewLabelView.swift */; };
@@ -79,6 +80,7 @@
 		DC0EC639279E16E6006A7C75 /* FileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileView.swift; sourceTree = "<group>"; };
 		DC0EC63F279E1733006A7C75 /* FileLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
 		DC0EC640279E1733006A7C75 /* TreeLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeLoader.swift; sourceTree = "<group>"; };
+		DC0F593D2A346C3A00A24088 /* AvatarImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImage.swift; sourceTree = "<group>"; };
 		DC10C3992731537D00CAE425 /* CommitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitsView.swift; sourceTree = "<group>"; };
 		DC10C39B27315D6400CAE425 /* BranchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchesView.swift; sourceTree = "<group>"; };
 		DC1F1BDE29CCC93A00AF7573 /* NewLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLabelView.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				DC4F9555272EB4DD00354E1D /* list */,
 				DC90CA5A272E759100B758E7 /* popups */,
 				DCF14E3E29C720E800D1F43B /* AsyncButton.swift */,
+				DC0F593D2A346C3A00A24088 /* AvatarImage.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 				DCF27D1B2A04FAA900C18EE5 /* ReleaseView.swift in Sources */,
 				DCD3165029C793E600AF7A3E /* LabelsLoader.swift in Sources */,
 				DCD3165229C7993800AF7A3E /* ProjectLanguagesLoader.swift in Sources */,
+				DC0F593E2A346C3A00A24088 /* AvatarImage.swift in Sources */,
 				DC569B3A2A045604005B99B3 /* NewProject.swift in Sources */,
 				DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */,
 				DC5EB910272DA2450015BF0D /* IssueView.swift in Sources */,

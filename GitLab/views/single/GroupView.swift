@@ -17,21 +17,7 @@ struct GroupView: View {
 			VStack {
 				HStack {
 					if (group.avatarUrl != nil) {
-						AsyncImage(url: URL(string: group.avatarUrl!)) { phase in
-							switch phase {
-							case .empty:
-								ProgressView()
-							case .success(let image):
-								image
-									.resizable()
-									.scaledToFit()
-									.cornerRadius(10)
-							default:
-								Image(systemName: "exclamationmark.icloud")
-									.resizable()
-									.scaledToFit()
-							}
-						}.frame(width: 50, height: 50, alignment: .leading)
+						AvatarImage(url: URL(string: group.avatarUrl!))
 					}
 					HStack(spacing: 2) {
 						if (group.visibility == "private") {

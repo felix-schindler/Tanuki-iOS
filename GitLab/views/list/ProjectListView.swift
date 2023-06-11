@@ -15,25 +15,12 @@ struct ProjectListView: View {
 		if (projects.isEmpty) {
 			Text("There are no projects")
 		} else {
-			ForEach(projects, id: \.id) { project in
+			ForEach(projects.indices, id: \.self) { index in
+				let project = projects[index]
 				NavigationLink(destination: ProjectView(project: project)) {
 					HStack {
 						if let avatarUrl = ProjectListView.getAvatarUrl(project.avatarUrl ?? project.namespace.avatarUrl) {
-							AsyncImage(url: avatarUrl) { phase in
-								switch phase {
-								case .empty:
-									ProgressView()
-								case .success(let image):
-									image
-										.resizable()
-										.scaledToFit()
-										.cornerRadius(10)
-								default:
-									Image(systemName: "exclamationmark.icloud")
-										.resizable()
-										.scaledToFit()
-								}
-							}.frame(width: 50, height: 50, alignment: .leading)
+							AvatarImage(url: avatarUrl)
 						}
 						VStack(alignment: .leading, spacing: 2) {
 							HStack(spacing: 2) {

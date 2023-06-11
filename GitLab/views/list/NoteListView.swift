@@ -15,29 +15,14 @@ struct NoteListView: View {
 		if (!notes.isEmpty) {
 			ForEach(notes, id: \.id) { note in
 				HStack(alignment: .top) {
-					AsyncImage(url: URL(string: note.author.avatarUrl)) { phase in
-						switch phase {
-						case .empty:
-							ProgressView()
-						case .success(let image):
-							image
-								.resizable()
-								.scaledToFit()
-								.cornerRadius(10)
-						default:
-							Image(systemName: "exclamationmark.icloud")
-								.resizable()
-								.scaledToFit()
-						}
-					}.frame(width: 25, height: 25)
-						.cornerRadius(25)
+					AvatarImage(url: URL(string: note.author.avatarUrl), radius: 25, width: 25, height: 25)
 					VStack(alignment: .leading) {
-						Text(note.createdAt.toString())
-							.font(.footnote)
-							.foregroundColor(.secondary)
 						Text(note.author.name)
 							.font(.callout)
 							.fontWeight(.medium)
+						Text(note.createdAt.toString())
+							.font(.footnote)
+							.foregroundColor(.secondary)
 						Markdown(note.body.emojized())
 					}
 				}.frame(maxWidth: .infinity, alignment: .leading)
