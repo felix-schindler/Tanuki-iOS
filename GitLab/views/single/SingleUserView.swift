@@ -13,120 +13,115 @@ struct SingleUserView: View {
 	
 	var body: some View {
 		List {
-			HStack {
-				AsyncImage(url: URL(string: user.avatarUrl)) { image in
-					image
-						.resizable()
-						.scaledToFit()
-						.cornerRadius(10)
-				} placeholder: {
-					ProgressView()
-				}.frame(width: 50, height: 50)
-				VStack(alignment: .leading) {
-					HStack {
-						if (user.name != "") {
-							Text(user.name)
-						}
-						if (!(user.pronouns?.isEmpty ?? true)) {
-							Text(user.pronouns!)
-								.foregroundColor(.secondary)
-								.font(.callout)
-						}
-					}
-					HStack(spacing: 2) {
-						if (user.bot) {
-							Text("🤖")
-						}
-						Text("@\(user.username)")
-							.foregroundColor(.secondary)
-					}
-				}
-				Spacer()
-				VStack(alignment: .trailing) {
-					Text("ID: \(String(user.id))")
-						.textSelection(.enabled)
-					Text(user.createdAt.toDateString())
-				}.font(.footnote)
-					.foregroundColor(.secondary)
-			}
-			
-			let showEmoji = (status.emoji != nil && status.emoji! != "")
-			let showMessage = (status.message != nil && status.message != "")
-			if (showEmoji || showMessage) {
-				HStack(spacing: 2) {
-					if (showEmoji) {
-						Text(":\(status.emoji!):".emojized())
-					}
-					if (showMessage) {
-						Text(status.message!)
-					}
-				}
-			}
-			
-			if (!user.bio.isEmpty) {
-				Text(user.bio.emojized())
-			}
-			
-			if (!(user.location?.isEmpty ?? true)) {
-				Label(user.location!, systemImage: "mappin.and.ellipse")
-					.foregroundColor(.primary)
-			}
-			
-			if (!(user.localTime?.isEmpty ?? true)) {
-				Label(user.localTime!, systemImage: "clock")
-					.foregroundColor(.primary)
-			}
-			
-			let workStr = user.workInformation ?? "\(user.jobTitle) \(user.organization)".trim()
-			if (!workStr.isEmpty) {
-				Label(workStr, systemImage: "briefcase")
-					.foregroundColor(.primary)
-			}
-			
-			if (!(user.publicEmail?.isEmpty ?? true)) {
-				Label(user.publicEmail!, systemImage: "envelope")
-					.textSelection(.enabled)
-			}
-			
-			if (!user.websiteUrl.isEmpty) {
-				Link(destination: URL(string: user.websiteUrl)!, label: {
-					Label(user.websiteUrl, systemImage: "paperclip")
-						.foregroundColor(.primary)
-				})
-			}
-			
-			let showSkype =		!user.skype.isEmpty
-			let showIn =			!user.linkedin.isEmpty
-			let showTwitter =	!user.twitter.isEmpty
-			let showDiscord =	!user.discord.isEmpty
-			
-			if (showSkype || showIn || showTwitter || showDiscord) {
+			Section {
 				HStack {
-					Image(systemName: "person.line.dotted.person")
-					ScrollView(.horizontal) {
+					AvatarImage(url: URL(string: user.avatarUrl))
+					VStack(alignment: .leading) {
 						HStack {
-							if (showSkype) {
-								Link(user.skype, destination: URL(string: "skype:\(user.skype)")!)
+							if (!user.name.isEmpty) {
+								Text(user.name)
 							}
-							if (showIn) {
-								Text("linkedIn: \(user.linkedin)")
-									.textSelection(.enabled)
+							if (!(user.pronouns?.isEmpty ?? true)) {
+								Text(user.pronouns!)
+									.foregroundColor(.secondary)
+									.font(.callout)
 							}
-							if (showTwitter) {
-								Label(user.twitter, systemImage: "bird")
-									.textSelection(.enabled)
+						}
+						HStack(spacing: 2) {
+							if (user.bot) {
+								Text("🤖")
 							}
-							if (showDiscord) {
-								Text("👾 \(user.discord)")
-									.textSelection(.enabled)
+							Text("@\(user.username)")
+								.foregroundColor(.secondary)
+						}
+					}
+					Spacer()
+					VStack(alignment: .trailing) {
+						Text("ID: \(String(user.id))")
+							.textSelection(.enabled)
+						Text(user.createdAt.toDateString())
+					}.font(.footnote)
+						.foregroundColor(.secondary)
+				}
+				
+				let showEmoji = (status.emoji != nil && status.emoji! != "")
+				let showMessage = (status.message != nil && status.message != "")
+				if (showEmoji || showMessage) {
+					HStack(spacing: 2) {
+						if (showEmoji) {
+							Text(":\(status.emoji!):".emojized())
+						}
+						if (showMessage) {
+							Text(status.message!)
+						}
+					}
+				}
+				
+				if (!user.bio.isEmpty) {
+					Text(user.bio.emojized())
+				}
+				
+				if (!(user.location?.isEmpty ?? true)) {
+					Label(user.location!, systemImage: "mappin.and.ellipse")
+						.foregroundColor(.primary)
+				}
+				
+				if (!(user.localTime?.isEmpty ?? true)) {
+					Label(user.localTime!, systemImage: "clock")
+						.foregroundColor(.primary)
+				}
+				
+				let workStr = user.workInformation ?? "\(user.jobTitle) \(user.organization)".trim()
+				if (!workStr.isEmpty) {
+					Label(workStr, systemImage: "briefcase")
+						.foregroundColor(.primary)
+				}
+				
+				if (!(user.publicEmail?.isEmpty ?? true)) {
+					Label(user.publicEmail!, systemImage: "envelope")
+						.textSelection(.enabled)
+				}
+				
+				if (!user.websiteUrl.isEmpty) {
+					Link(destination: URL(string: user.websiteUrl)!, label: {
+						Label(user.websiteUrl, systemImage: "paperclip")
+							.foregroundColor(.primary)
+					})
+				}
+				
+				let showSkype =		!user.skype.isEmpty
+				let showIn =			!user.linkedin.isEmpty
+				let showTwitter =	!user.twitter.isEmpty
+				let showDiscord =	!user.discord.isEmpty
+				
+				if (showSkype || showIn || showTwitter || showDiscord) {
+					HStack {
+						Image(systemName: "person.line.dotted.person")
+						ScrollView(.horizontal) {
+							HStack {
+								if (showSkype) {
+									Link(user.skype, destination: URL(string: "skype:\(user.skype)")!)
+								}
+								if (showIn) {
+									Text("linkedIn: \(user.linkedin)")
+										.textSelection(.enabled)
+								}
+								if (showTwitter) {
+									Label(user.twitter, systemImage: "bird")
+										.textSelection(.enabled)
+								}
+								if (showDiscord) {
+									Text("👾 \(user.discord)")
+										.textSelection(.enabled)
+								}
 							}
 						}
 					}
 				}
+				
+				Label("\(user.followers ?? 0) followers · \(user.following ?? 0) following", systemImage: "person.2")
+					.foregroundColor(.primary)
 			}
-			
-			Label("\(user.followers ?? 0) followers · \(user.following ?? 0) following", systemImage: "person.2")
-				.foregroundColor(.primary)
 			
 			Section {
 				NavigationLink("Activity", destination: EventsView(userId: user.id))
