@@ -36,7 +36,7 @@ struct User: Codable {
 	let state: String
 	let avatarUrl: String
 	let webUrl: String
-	let createdAt: Date
+	let createdAt: Date?
 	let bio: String
 	let bot: Bool
 	let location: String?

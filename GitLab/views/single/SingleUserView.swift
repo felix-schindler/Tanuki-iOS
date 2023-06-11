@@ -41,7 +41,9 @@ struct SingleUserView: View {
 					VStack(alignment: .trailing) {
 						Text("ID: \(String(user.id))")
 							.textSelection(.enabled)
-						Text(user.createdAt.toDateString())
+						if let createdAt = user.createdAt {
+							Text(createdAt.toDateString())
+						}
 					}.font(.footnote)
 						.foregroundStyle(.secondary)
 				}
