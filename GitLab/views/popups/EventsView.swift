@@ -28,7 +28,7 @@ struct EventsView: View {
 							Text(getStupidText(event: event))
 							Text(event.createdAt.toString())
 								.font(.callout)
-								.foregroundColor(.secondary)
+								.foregroundStyle(.secondary)
 						}
 					}.refreshable {
 						await getEvents()

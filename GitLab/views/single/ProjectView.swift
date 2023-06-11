@@ -77,7 +77,7 @@ struct ProjectView: View {
 						}, label: {
 							Label("\(project.starCount) stars", systemImage: "star")
 						}).buttonStyle(.bordered)
-							.foregroundColor(.primary)
+							.foregroundStyle(.primary)
 						if let url = URL(string: "https://\(API.domain)/\(project.pathWithNamespace)/-/forks/new") {    // If valid link, show fork link
 							if (project.forksCount != nil) {
 								Link(destination: url) {
@@ -85,7 +85,7 @@ struct ProjectView: View {
 									Text("\(project.forksCount!) forks")
 								}
 								.buttonStyle(.bordered)
-								.foregroundColor(.primary)
+								.foregroundStyle(.primary)
 							}
 						}
 						if (project.permissions?.projectAccess?.notificationLevel != nil) {
@@ -110,7 +110,7 @@ struct ProjectView: View {
 							} label: {
 								Label(notificationLevel(project.permissions!.projectAccess!.notificationLevel).firstCapitalized, systemImage: "bell.circle")
 							}.buttonStyle(.bordered)
-								.foregroundColor(.primary)
+								.foregroundStyle(.primary)
 						}
 					}
 				}
@@ -129,9 +129,9 @@ struct ProjectView: View {
 							Text(String(project.openIssuesCount!))
 						}, icon: {
 							Image(systemName: "smallcircle.circle")
-								.foregroundColor(.green)
+								.foregroundStyle(.green)
 						})
-					}.foregroundColor(.primary)
+					}.foregroundStyle(.primary)
 				}
 				
 				if (project.mergeRequestsEnabled) {
@@ -140,9 +140,9 @@ struct ProjectView: View {
 							Text("Merge Requests")
 						}, icon: {
 							Image(systemName: "arrow.triangle.pull")
-								.foregroundColor(.blue)
+								.foregroundStyle(.blue)
 						})
-					}.foregroundColor(.primary)
+					}.foregroundStyle(.primary)
 				}
 				
 				DisclosureGroup(content: {
@@ -152,7 +152,7 @@ struct ProjectView: View {
 					NavigationLink("Milestones", destination: MilestoneLoader(id: project.id))
 				}, label: {
 					Label("Manage", systemImage: "person.2")
-						.foregroundColor(.primary)
+						.foregroundStyle(.primary)
 				})
 				
 				if (project.defaultBranch != nil) {
@@ -163,7 +163,7 @@ struct ProjectView: View {
 						NavigationLink("Tags", destination: TagsView(id: project.id))
 					}, label: {
 						Label("Code", systemImage: "chevron.left.forwardslash.chevron.right")
-							.foregroundColor(.primary)
+							.foregroundStyle(.primary)
 					})
 				}
 				
@@ -180,7 +180,7 @@ struct ProjectView: View {
 					}, icon: {
 						Image(systemName: "flag")
 					})
-					.foregroundColor(.primary)
+					.foregroundStyle(.primary)
 				})
 			}
 			

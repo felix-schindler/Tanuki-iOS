@@ -64,7 +64,7 @@ struct CommitsView: View {
 			} else {
 				if (loadFailed) {
 					Text("Failed to load, please check your internet connection and your token")
-						.foregroundColor(.red)
+						.foregroundStyle(.red)
 				} else {
 					ProgressView()
 				}

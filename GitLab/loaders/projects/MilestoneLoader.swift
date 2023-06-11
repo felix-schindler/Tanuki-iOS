@@ -46,13 +46,13 @@ struct MilestoneLoader: View {
 							HStack {
 								if (milestone.state == "closed") {
 									Image(systemName: "flag.circle")
-										.foregroundColor(.red)
+										.foregroundStyle(.red)
 								} else if (milestone.expired) {
 									Image(systemName: "flag.circle")
-										.foregroundColor(.orange)
+										.foregroundStyle(.orange)
 								} else {
 									Image(systemName: "flag.circle")
-										.foregroundColor(.green)
+										.foregroundStyle(.green)
 								}
 								VStack(alignment: .leading) {
 									Text(milestone.title.emojized())

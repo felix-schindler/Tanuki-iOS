@@ -24,7 +24,7 @@ struct NoteListView: View {
 							.fontWeight(.medium)
 						Text(note.createdAt.toString())
 							.font(.footnote)
-							.foregroundColor(.secondary)
+							.foregroundStyle(.secondary)
 						Markdown(note.body.emojized())
 					}
 				}.frame(maxWidth: .infinity, alignment: .leading)

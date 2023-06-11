@@ -42,7 +42,7 @@ struct NewLabelView: View {
 				ToolbarItem(placement: .navigationBarLeading) {
 					Button("Cancel", role: .cancel) {
 						self.presentationMode.wrappedValue.dismiss()
-					}.foregroundColor(.red)
+					}.foregroundStyle(.red)
 				}
 				ToolbarItem(placement: .navigationBarTrailing) {
 					AsyncButton("Save") {

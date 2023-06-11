@@ -26,7 +26,7 @@ struct LabelListView: View {
 					.padding(.horizontal, 8)
 					.padding(.vertical, 3)
 					.background(Color.init(hex: label.color))
-					.foregroundColor(Color.init(hex: label.textColor))
+					.foregroundStyle(Color.init(hex: label.textColor)!)
 					.cornerRadius(25)
 				if (showDescription && !(label.description?.isEmpty ?? true)) {
 					Text(label.description!.emojized())

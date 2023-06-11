@@ -28,30 +28,30 @@ struct IssueListView: View {
 								VStack(spacing: 3) {
 									if (issue.type == "INCIDENT") {
 										Image(systemName: "exclamationmark.circle")
-											.foregroundColor(.red)
+											.foregroundStyle(.red)
 									} else {
 										if (issue.state == "opened") {
 											Image(systemName: "smallcircle.circle")
-												.foregroundColor(.green)
+												.foregroundStyle(.green)
 										} else {
 											Image(systemName: "minus.circle")
-												.foregroundColor(.blue)
+												.foregroundStyle(.blue)
 										}
 									}
 									if (issue.confidential) {
 										Image(systemName: "lock")
-											.foregroundColor(.orange)
+											.foregroundStyle(.orange)
 									}
 								}
 								VStack(alignment: .leading) {
 									if (showRef || UIDevice.current.userInterfaceIdiom == .pad) {
 										Text(issue.references.full)
 											.font(.caption)
-											.foregroundColor(.secondary)
+											.foregroundStyle(.secondary)
 									} else {
 										Text(issue.references.short)
 											.font(.caption)
-											.foregroundColor(.secondary)
+											.foregroundStyle(.secondary)
 									}
 									VStack(alignment: .leading, spacing: 2) {
 										Text(issue.title.emojized())

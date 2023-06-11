@@ -23,24 +23,24 @@ struct MergeListView: View {
 						HStack {
 							if (mr.state == "merged") {
 								Image(systemName: "arrow.triangle.pull")
-									.foregroundColor(.blue)
+									.foregroundStyle(.blue)
 							} else if (mr.state == "closed") {
 								Image(systemName: "arrow.triangle.pull")
-									.foregroundColor(.red)
+									.foregroundStyle(.red)
 							} else {
 								// "opened" ?? and maybe "locked" ??
 								Image(systemName: "arrow.triangle.pull")
-									.foregroundColor(.green)
+									.foregroundStyle(.green)
 							}
 							VStack(alignment: .leading) {
 								if (showRef || UIDevice.current.userInterfaceIdiom == .pad) {
 									Text(mr.references.full)
 										.font(.caption)
-										.foregroundColor(.secondary)
+										.foregroundStyle(.secondary)
 								} else {
 									Text(mr.references.short)
 										.font(.caption)
-										.foregroundColor(.secondary)
+										.foregroundStyle(.secondary)
 								}
 								VStack(alignment: .leading, spacing: 2) {
 									Text(mr.title.emojized())

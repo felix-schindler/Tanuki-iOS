@@ -25,7 +25,7 @@ struct HomeView: View {
 							},
 							icon: {
 								Image(systemName: "smallcircle.circle")
-									.foregroundColor(.green)
+									.foregroundStyle(.green)
 							}
 						)
 					}
@@ -37,7 +37,7 @@ struct HomeView: View {
 							},
 							icon: {
 								Image(systemName: "arrow.triangle.pull")
-									.foregroundColor(.blue)
+									.foregroundStyle(.blue)
 							}
 						)
 					}
@@ -49,7 +49,7 @@ struct HomeView: View {
 							},
 							icon: {
 								Image(systemName: "appclip")
-									.foregroundColor(.gray)
+									.foregroundStyle(.gray)
 							}
 						)
 					}
@@ -61,7 +61,7 @@ struct HomeView: View {
 							},
 							icon: {
 								Image(systemName: "person.3")
-									.foregroundColor(.red)
+									.foregroundStyle(.red)
 							}
 						)
 					}

@@ -73,7 +73,7 @@ struct IssueView: View {
 					if (issue.confidential) {
 						HStack(spacing: 2) {
 							Image(systemName: "lock")
-								.foregroundColor(.orange)
+								.foregroundStyle(.orange)
 							Text("Confidential")
 						}
 					}
@@ -150,7 +150,7 @@ struct IssueView: View {
 					.padding(.horizontal, 6)
 					.padding(.vertical, 4)
 					.background(issue.state == "opened" ? .green : .blue)
-					.foregroundColor(.white)
+					.foregroundStyle(.white)
 					.cornerRadius(10)
 				AsyncButton(systemImage: "square.and.arrow.up") {
 					await URL(string: issue.webUrl)!.share()

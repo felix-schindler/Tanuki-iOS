@@ -24,7 +24,7 @@ struct UserSmallListView: View {
 							Text(user.name)
 							Text("@\(user.username)")
 								.font(.callout)
-								.foregroundColor(.secondary)
+								.foregroundStyle(.secondary)
 						}
 					}
 				}

@@ -25,7 +25,7 @@ struct SingleUserView: View {
 							}
 							if (!(user.pronouns?.isEmpty ?? true)) {
 								Text(user.pronouns!)
-									.foregroundColor(.secondary)
+									.foregroundStyle(.secondary)
 									.font(.callout)
 							}
 						}
@@ -34,7 +34,7 @@ struct SingleUserView: View {
 								Text("🤖")
 							}
 							Text("@\(user.username)")
-								.foregroundColor(.secondary)
+								.foregroundStyle(.secondary)
 						}
 					}
 					Spacer()
@@ -43,7 +43,7 @@ struct SingleUserView: View {
 							.textSelection(.enabled)
 						Text(user.createdAt.toDateString())
 					}.font(.footnote)
-						.foregroundColor(.secondary)
+						.foregroundStyle(.secondary)
 				}
 				
 				let showEmoji = (status.emoji != nil && status.emoji! != "")
@@ -65,18 +65,18 @@ struct SingleUserView: View {
 				
 				if (!(user.location?.isEmpty ?? true)) {
 					Label(user.location!, systemImage: "mappin.and.ellipse")
-						.foregroundColor(.primary)
+						.foregroundStyle(.primary)
 				}
 				
 				if (!(user.localTime?.isEmpty ?? true)) {
 					Label(user.localTime!, systemImage: "clock")
-						.foregroundColor(.primary)
+						.foregroundStyle(.primary)
 				}
 				
 				let workStr = user.workInformation ?? "\(user.jobTitle) \(user.organization)".trim()
 				if (!workStr.isEmpty) {
 					Label(workStr, systemImage: "briefcase")
-						.foregroundColor(.primary)
+						.foregroundStyle(.primary)
 				}
 				
 				if (!(user.publicEmail?.isEmpty ?? true)) {
@@ -87,7 +87,7 @@ struct SingleUserView: View {
 				if (!user.websiteUrl.isEmpty) {
 					Link(destination: URL(string: user.websiteUrl)!, label: {
 						Label(user.websiteUrl, systemImage: "paperclip")
-							.foregroundColor(.primary)
+							.foregroundStyle(.primary)
 					})
 				}
 				
@@ -122,7 +122,7 @@ struct SingleUserView: View {
 				}
 				
 				Label("\(user.followers ?? 0) followers · \(user.following ?? 0) following", systemImage: "person.2")
-					.foregroundColor(.primary)
+					.foregroundStyle(.primary)
 			}
 			
 			Section {

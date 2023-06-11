@@ -18,7 +18,7 @@ struct ExploreView: View {
 						},
 						icon: {
 							Image(systemName: "appclip")
-								.foregroundColor(.gray)
+								.foregroundStyle(.gray)
 						}
 					)
 				}
@@ -30,7 +30,7 @@ struct ExploreView: View {
 						},
 						icon: {
 							Image(systemName: "person.3")
-								.foregroundColor(.red)
+								.foregroundStyle(.red)
 						}
 					)
 				}

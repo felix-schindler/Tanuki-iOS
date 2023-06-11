@@ -13,19 +13,19 @@ struct PipelineStatusView: View {
 	var body: some View {
 		if (status == "success") {
 			Image(systemName: "checkmark.circle")
-				.foregroundColor(.green)
+				.foregroundStyle(.green)
 		} else if (status == "failed") {
 			Image(systemName: "minus.circle")
-				.foregroundColor(.red)
+				.foregroundStyle(.red)
 		} else if (status == "canceled") {
 			Image(systemName: "slash.circle")
-				.foregroundColor(.gray)
+				.foregroundStyle(.gray)
 		} else if (status == "skipped") {
             Image(systemName: "chevron.right.circle")
-                .foregroundColor(.gray)
+                .foregroundStyle(.gray)
         } else {
 			Image(systemName: "arrow.2.circlepath.circle")
-				.foregroundColor(.orange)
+				.foregroundStyle(.orange)
 		}
 	}
 }

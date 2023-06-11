@@ -23,7 +23,7 @@ struct PipelineListView: View {
 				Spacer()
 				HStack {
 					Text(pipeline.status.firstCapitalized)
-						.foregroundColor(.secondary)
+						.foregroundStyle(.secondary)
 						.font(.caption)
                     PipelineStatusView(status: pipeline.status)
 				}

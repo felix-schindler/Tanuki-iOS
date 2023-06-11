@@ -35,7 +35,7 @@ struct GroupView: View {
 							.textSelection(.enabled)
 						Text(group.createdAt.toDateString())
 					}.font(.footnote)
-						.foregroundColor(.secondary)
+						.foregroundStyle(.secondary)
 				}
 				Markdown(group.description.emojized())
 					.frame(maxWidth: .infinity, alignment: .leading)
@@ -47,18 +47,18 @@ struct GroupView: View {
 						Text("Issues")
 					}, icon: {
 						Image(systemName: "smallcircle.circle")
-							.foregroundColor(.green)
+							.foregroundStyle(.green)
 					})
-				}.foregroundColor(.primary)
+				}.foregroundStyle(.primary)
 				
 				NavigationLink(destination: MergeLoader(groupId: group.id)) {
 					Label(title: {
 						Text("Merge Requests")
 					}, icon: {
 						Image(systemName: "arrow.triangle.pull")
-							.foregroundColor(.blue)
+							.foregroundStyle(.blue)
 					})
-				}.foregroundColor(.primary)
+				}.foregroundStyle(.primary)
 				
 				DisclosureGroup(content: {
 					NavigationLink("Members", destination: MemberLoader(groupId: group.id))
@@ -66,7 +66,7 @@ struct GroupView: View {
 					NavigationLink("Milestones", destination: MilestoneLoader(groupId: group.id))
 				}, label: {
 					Label("Manage", systemImage: "person.2")
-						.foregroundColor(.primary)
+						.foregroundStyle(.primary)
 				})
 			}
 			

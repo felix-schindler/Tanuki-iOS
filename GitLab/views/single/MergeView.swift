@@ -97,7 +97,7 @@ struct MergeView: View {
 					.padding(.horizontal, 6)
 					.padding(.vertical, 4)
 					.background((mergeRequest.state == "merged") ? .blue : (mergeRequest.state == "closed") ? .red : .green)
-					.foregroundColor(.white)
+					.foregroundStyle(.white)
 					.cornerRadius(10)
 				AsyncButton(systemImage: "square.and.arrow.up") {
 					await URL(string: mergeRequest.webUrl)!.share()

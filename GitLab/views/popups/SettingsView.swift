@@ -58,7 +58,7 @@ struct SettingsView: View {
 					Text("The required API version is v4")
 				}.padding()
 					.font(.footnote)
-					.foregroundColor(.secondary)
+					.foregroundStyle(.secondary)
 				
 				AsyncButton("Save configuration") {
 					configError = await !validGitConfig()
@@ -73,7 +73,7 @@ struct SettingsView: View {
 					}
 			}.padding()
 				.navigationBarTitle("Settings")
-				.navigationBarItems(trailing: Button("Cancel", role: .cancel, action: { self.presentationMode.wrappedValue.dismiss() }).foregroundColor(.red))
+				.navigationBarItems(trailing: Button("Cancel", role: .cancel, action: { self.presentationMode.wrappedValue.dismiss() }).foregroundStyle(.red))
 		}.navigationViewStyle(StackNavigationViewStyle())
 	}
 	

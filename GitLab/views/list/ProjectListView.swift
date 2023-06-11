@@ -67,7 +67,7 @@ struct ProjectListView: View {
 										}
 									}
 								}.font(.caption)
-									.foregroundColor(.secondary)
+									.foregroundStyle(.secondary)
 								if (!project.tagList.isEmpty) {
 									ScrollView(.horizontal) {
 										HStack {

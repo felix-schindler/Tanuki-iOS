@@ -33,7 +33,7 @@ struct NewIssueView: View {
 					ToolbarItem(placement: .navigationBarLeading) {
 						Button("Cancel", role: .cancel, action: {
 							self.presentationMode.wrappedValue.dismiss()
-						}).foregroundColor(.red)
+						}).foregroundStyle(.red)
 					}
 					ToolbarItem(placement: .navigationBarTrailing) {
 						AsyncButton("Save") {
