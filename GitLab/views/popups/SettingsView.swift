@@ -60,21 +60,34 @@ struct SettingsView: View {
 					.font(.footnote)
 					.foregroundStyle(.secondary)
 				
-				AsyncButton("Save configuration") {
+				AsyncButton(action: {
 					configError = await !validGitConfig()
 					if (!configError) {
 						self.presentationMode.wrappedValue.dismiss()
 					}
-				}.tint(.accentColor)
+				}, label: {
+					Label("Save configuration", systemImage: "checkmark.circle")
+				}).tint(.accentColor)
 					.buttonStyle(.bordered)
 					.controlSize(.large)
-					.alert(isPresented: $configError) {
-						Alert(title: Text("Error"), message: Text("Invalid configuration, please check the entered url and token"), dismissButton: .default(Text("OK")))
+			}.toolbar {
+				AsyncButton(action: {
+					if (API.domain.isEmpty || API.token.isEmpty) {
+						configError = true
+					} else {
+						self.presentationMode.wrappedValue.dismiss()
 					}
-			}.padding()
-				.navigationBarTitle("Settings")
-				.navigationBarItems(trailing: Button("Cancel", role: .cancel, action: { self.presentationMode.wrappedValue.dismiss() }).foregroundStyle(.red))
-		}.navigationViewStyle(StackNavigationViewStyle())
+				}, role: .cancel, label: {
+					Label("Cancel", systemImage: "xmark.app.fill")
+						.labelStyle(.titleAndIcon)
+						.foregroundStyle(.red)
+				})
+			}.alert(isPresented: $configError) {
+				Alert(title: Text("Error"), message: Text("Invalid configuration, please check the entered url and token"), dismissButton: .default(Text("OK")))
+			}
+			.padding()
+			.navigationBarTitle("Settings")
+		}
 	}
 	
 	private func validGitConfig() async -> Bool {
