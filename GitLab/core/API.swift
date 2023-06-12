@@ -22,7 +22,7 @@ class API {
 	@AppStorage("token")
 	public static var token: String = ""
 	
-	private static let client: HttpClient = UrlSessionHttpClient()
+	private static let client: HttpClient = UrlSessionHttpClient(session: .shared, logLevel: .critical)
 	private static let decoder = JSONDecoder()
 	
 	private static func raw(

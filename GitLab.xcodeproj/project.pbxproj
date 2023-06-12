@@ -637,7 +637,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.11;
+				MARKETING_VERSION = 1.1.12;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -672,7 +672,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.11;
+				MARKETING_VERSION = 1.1.12;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -721,7 +721,7 @@
 			repositoryURL = "https://github.com/felix-schindler/swift-http";
 			requirement = {
 				kind = revision;
-				revision = 4dd8afe9eb880af27aac35d2e91e8eb0a2b5ed52;
+				revision = d02883d829291a470cc72154eadbcb209866e41d;
 			};
 		};
 		DCFCB06C29B7C3D800F18CDC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {

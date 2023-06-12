@@ -14,7 +14,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/felix-schindler/swift-http",
       "state" : {
-        "revision" : "4dd8afe9eb880af27aac35d2e91e8eb0a2b5ed52"
+        "revision" : "d02883d829291a470cc72154eadbcb209866e41d"
       }
     },
     {
