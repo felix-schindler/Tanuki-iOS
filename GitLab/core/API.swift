@@ -22,7 +22,7 @@ class API {
 	@AppStorage("token")
 	public static var token: String = ""
 	
-	private static let client: HttpClient = UrlSessionHttpClient(log: false)
+	private static let client: HttpClient = UrlSessionHttpClient()
 	private static let decoder = JSONDecoder()
 	
 	private static func raw(
@@ -62,7 +62,7 @@ class API {
 			suffix: suffix,
 			query: query
 		)
-
+		
 		do {
 			let res = try await API.raw(
 				method: method,
@@ -92,7 +92,7 @@ class API {
 			suffix: suffix,
 			query: query
 		)
-
+		
 		if (useBase) {
 			httpUrl = httpUrl.path([base, endpoint])
 		} else {
@@ -107,7 +107,19 @@ class API {
 			)
 			
 			decoder.keyDecodingStrategy = .convertFromSnakeCase
-			decoder.dateDecodingStrategy = .custom(iso8601Decoder())    // FIXME: this may introduce data
+			
+			decoder.dateDecodingStrategy = .custom({ decoder -> Date in
+				let formatter = ISO8601DateFormatter()
+				formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+				
+				let dateStr = try decoder.singleValueContainer().decode(String.self)
+				
+				if let date = formatter.date(from: dateStr) {
+					return date
+				}
+				
+				throw DateError.invalidDate
+			})
 			
 			// print("\(res.statusCode): \(res.utf8String ?? "")")
 			return try decoder.decode(T.self, from: res.data)
