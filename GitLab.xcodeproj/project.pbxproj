@@ -720,8 +720,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/felix-schindler/swift-http";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = revision;
+				revision = 4dd8afe9eb880af27aac35d2e91e8eb0a2b5ed52;
 			};
 		};
 		DCFCB06C29B7C3D800F18CDC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {

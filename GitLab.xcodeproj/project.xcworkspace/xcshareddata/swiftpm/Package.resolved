@@ -14,8 +14,16 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/felix-schindler/swift-http",
       "state" : {
-        "branch" : "main",
-        "revision" : "51de03482d3c3251d3ed2102e119950ea23f09a8"
+        "revision" : "4dd8afe9eb880af27aac35d2e91e8eb0a2b5ed52"
+      }
+    },
+    {
+      "identity" : "swift-log",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-log",
+      "state" : {
+        "revision" : "32e8d724467f8fe623624570367e3d50c5638e46",
+        "version" : "1.5.2"
       }
     },
     {
