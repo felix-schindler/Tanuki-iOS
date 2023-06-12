@@ -42,9 +42,11 @@ struct MemberLoader: View {
 				members = temp
 			}
 		}.toolbar {
-			Button (action: { showNewMember = true }) {
-				Image(systemName: "person.badge.plus")
-			}
+            if (id != 0 || groupId != 0) {
+                Button (action: { showNewMember = true }) {
+                    Image(systemName: "person.badge.plus")
+                }
+            }
 		}.sheet(isPresented: $showNewMember) {
 			NewMember(id: id, groupId: groupId)
 		}.navigationTitle((id == 0 && groupId == 0) ? "Users" : "Members")
