@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MarkdownUI
 
 struct SnippetsLoader: View {
 	@State private var snippets: [Snippet]? = nil
@@ -22,17 +23,18 @@ struct SnippetsLoader: View {
 					ForEach(snippets, id: \.id) { snippet in
 						HStack {
 							if let avatarUrl = URL.fromAvatar(snippet.author.avatarUrl) {
-								AvatarImage(url: avatarUrl, radius: 7.5, width: 30, height: 30)
+								AvatarImage(url: avatarUrl, size: .medium)
 							}
 							VStack(alignment: .leading) {
-								Text(snippet.title)
+								Text(snippet.title.emojized())
 									.fontWeight(.medium)
+								
 								HStack {
 									HStack(spacing: 2) {
 										Image(systemName: "person")
 										Text(snippet.author.name)
 									}
-
+									
 									HStack(spacing: 2) {
 										Image(systemName: "clock")
 										Text(snippet.createdAt.toDateString())
@@ -62,7 +64,7 @@ struct SnippetsLoader: View {
 		if (self.public) {
 			endpoint.append("/public")
 		}
-
+		
 		snippets = await API.get(type: [Snippet].self, endpoint: endpoint)
 		if (snippets == nil) {
 			loadFailed = true

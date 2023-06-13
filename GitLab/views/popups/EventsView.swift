@@ -25,10 +25,10 @@ struct EventsView: View {
 				} else {
 					List(events!, id: \.id) { event in
 						VStack(alignment: .leading) {
-							Text(getStupidText(event: event))
 							Text(event.createdAt.toString())
-								.font(.callout)
+								.font(.footnote)
 								.foregroundStyle(.secondary)
+							Text(getStupidText(event: event))
 						}
 					}.refreshable {
 						await getEvents()

@@ -27,6 +27,27 @@ struct Project: Codable {
 	let openIssuesCount: Int?
 	let mergeRequestsEnabled: Bool
 	let permissions: Permissions?
+	
+	public static func accessRole(_ accessLevel: Int) -> String {
+		switch accessLevel {
+		case 0:
+			return "No access"
+		case 5:
+			return "Minimal access"
+		case 10:
+			return "Guest"
+		case 20:
+			return "Reporter"
+		case 30:
+			return "Developer"
+		case 40:
+			return "Maintainer"
+		case 50:
+			return "Owner"
+		default:
+			return ""
+		}
+	}
 }
 
 struct User: Codable {

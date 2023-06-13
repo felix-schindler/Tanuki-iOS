@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MarkdownUI
 
 struct GroupListView: View {
 	@State var groups: [SmallGroup]
@@ -34,8 +35,8 @@ struct GroupListView: View {
 									.fontWeight(.medium)
 							}
 							if (!(group.description?.isEmpty ?? true)) {
-								Text(group.description!.emojized())
-									.font(.footnote)
+								Markdown(group.description!.emojized())
+									.markdownTheme(.small)
 							}
 						}
 					}

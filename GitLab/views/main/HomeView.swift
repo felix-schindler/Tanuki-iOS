@@ -85,22 +85,7 @@ struct HomeView: View {
 							Text("You have no starred projects")
 						} else {
 							ForEach(starredProjects!, id: \.id) { project in
-								NavigationLink(destination: ProjectView(project: project)) {
-									HStack {
-										if let avatarUrl = URL.fromAvatar(project.avatarUrl ?? project.namespace.avatarUrl) {
-											AvatarImage(url: avatarUrl, radius: 5, width: 25, height: 25)
-										}
-										Text(project.nameWithNamespace)
-											.frame(maxWidth: .infinity, alignment: .leading)
-										if (project.visibility == "private") {
-											Image(systemName: "lock")
-										} else if (project.visibility == "internal") {
-											Image(systemName: "shield.lefthalf.filled")
-										} else if (project.visibility == "public") {
-											Image(systemName: "globe")
-										}
-									}
-								}
+								TinyProjectView(project: project)
 							}
 						}
 					} else {

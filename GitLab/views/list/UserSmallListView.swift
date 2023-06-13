@@ -18,7 +18,7 @@ struct UserSmallListView: View {
 				NavigationLink(destination: UserLoader(id: user.id)) {
 					HStack {
 						if let avatarUrl = URL.fromAvatar(user.avatarUrl) {
-							AvatarImage(url: avatarUrl)
+							AvatarImage(url: avatarUrl, size: .medium)
 						}
 						VStack(alignment: .leading) {
 							Text(user.name)

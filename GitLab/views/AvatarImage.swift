@@ -7,9 +7,15 @@
 
 import SwiftUI
 
+enum AvatarSize {
+	case small,
+			 medium,
+			 big
+}
+
 struct AvatarImage: View {
 	let url: URL?
-
+	
 	let radius: CGFloat
 	let width: CGFloat
 	let height: CGFloat
@@ -19,6 +25,24 @@ struct AvatarImage: View {
 		self.radius = radius
 		self.width = width
 		self.height = height
+	}
+	
+	init(url: URL, size: AvatarSize) {
+		self.url = url
+		
+		if (size == .small) {
+			radius = 5
+			width = 25
+			height = 25
+		} else if (size == .medium) {
+			radius = 7.5
+			width = 37.5
+			height = 37.5
+		} else {
+			radius = 10
+			width = 50
+			height = 50
+		}
 	}
 	
 	var body: some View {

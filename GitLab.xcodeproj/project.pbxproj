@@ -39,6 +39,8 @@
 		DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB911272DB9D00015BF0D /* ProjectListView.swift */; };
 		DC5EB914272DBDA20015BF0D /* MergeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB913272DBDA20015BF0D /* MergeListView.swift */; };
 		DC5EB916272DD1310015BF0D /* ProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB915272DD1310015BF0D /* ProjectsLoader.swift */; };
+		DC6024662A38A4E400744AFE /* TinyProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6024652A38A4E400744AFE /* TinyProjectView.swift */; };
+		DC6024682A38A4EB00744AFE /* SmallProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6024672A38A4EB00744AFE /* SmallProjectView.swift */; };
 		DC6F1D6229C840C900E0401C /* UserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F1D6129C840C900E0401C /* UserLoader.swift */; };
 		DC6F1D6429C8456200E0401C /* SingleUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F1D6329C8456200E0401C /* SingleUserView.swift */; };
 		DC6F1D6629C85CA000E0401C /* PipelineLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F1D6529C85CA000E0401C /* PipelineLoader.swift */; };
@@ -108,6 +110,8 @@
 		DC5EB911272DB9D00015BF0D /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		DC5EB913272DBDA20015BF0D /* MergeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeListView.swift; sourceTree = "<group>"; };
 		DC5EB915272DD1310015BF0D /* ProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsLoader.swift; sourceTree = "<group>"; };
+		DC6024652A38A4E400744AFE /* TinyProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinyProjectView.swift; sourceTree = "<group>"; };
+		DC6024672A38A4EB00744AFE /* SmallProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallProjectView.swift; sourceTree = "<group>"; };
 		DC6F1D6129C840C900E0401C /* UserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoader.swift; sourceTree = "<group>"; };
 		DC6F1D6329C8456200E0401C /* SingleUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleUserView.swift; sourceTree = "<group>"; };
 		DC6F1D6529C85CA000E0401C /* PipelineLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PipelineLoader.swift; path = GitLab/loaders/projects/PipelineLoader.swift; sourceTree = SOURCE_ROOT; };
@@ -249,6 +253,7 @@
 		DC5EB902272D93700015BF0D /* views */ = {
 			isa = PBXGroup;
 			children = (
+				DC6024642A38A4CF00744AFE /* components */,
 				DC4F9559272EB6DC00354E1D /* main */,
 				DC5EB908272D93B30015BF0D /* single */,
 				DC4F9555272EB4DD00354E1D /* list */,
@@ -300,6 +305,15 @@
 				DC90CA62272E878900B758E7 /* Utils.swift */,
 			);
 			path = core;
+			sourceTree = "<group>";
+		};
+		DC6024642A38A4CF00744AFE /* components */ = {
+			isa = PBXGroup;
+			children = (
+				DC6024652A38A4E400744AFE /* TinyProjectView.swift */,
+				DC6024672A38A4EB00744AFE /* SmallProjectView.swift */,
+			);
+			path = components;
 			sourceTree = "<group>";
 		};
 		DC90CA5A272E759100B758E7 /* popups */ = {
@@ -483,8 +497,10 @@
 				DC0EC642279E1733006A7C75 /* TreeLoader.swift in Sources */,
 				DC8FE05329C6499A001C5D82 /* Store.swift in Sources */,
 				DCD3165429C799A700AF7A3E /* LanguagesListView.swift in Sources */,
+				DC6024662A38A4E400744AFE /* TinyProjectView.swift in Sources */,
 				DCF14E3F29C720E800D1F43B /* AsyncButton.swift in Sources */,
 				DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */,
+				DC6024682A38A4EB00744AFE /* SmallProjectView.swift in Sources */,
 				DC569B3C2A0460F9005B99B3 /* NewMilestone.swift in Sources */,
 				DC4F956A272EC3B100354E1D /* APIAnswers.swift in Sources */,
 				DC4F9554272EB4AF00354E1D /* IssuesLoader.swift in Sources */,

@@ -7,6 +7,18 @@
 
 import Foundation
 import SwiftUI
+import MarkdownUI
+
+
+extension Theme {
+	public static let small = Theme.gitHub
+		.text {
+			FontSize(14)
+		}
+		.code {
+			FontSize(.em(0.8))
+		}
+}
 
 
 extension String {
