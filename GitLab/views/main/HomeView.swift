@@ -112,7 +112,7 @@ struct HomeView: View {
 				}
 			}.sheet(isPresented: $showEvents) {
 				NavigationView {
-					EventsView()
+					EventsView(showClose: true)
 				}
 			}.sheet(isPresented: $showNewProject) {
 				NewProject()

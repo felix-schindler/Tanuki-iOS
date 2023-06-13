@@ -12,18 +12,20 @@ struct EventsView: View {
 	var presentationMode: Binding<PresentationMode>
 	
 	@State var events: [Event]? = nil
-	@State var loadFailed: Bool = false
+	@State var loadFailed = false
 	
 	@State var projectId = 0
 	@State var userId = 0
 	
+	@State var showClose = false
+	
 	var body: some View {
-		VStack {
+		List {
 			if (events != nil) {
 				if (events!.isEmpty) {
 					Text("There are no events")
 				} else {
-					List(events!, id: \.id) { event in
+					ForEach(events!, id: \.id) { event in
 						VStack(alignment: .leading) {
 							Text(event.createdAt.toString())
 								.font(.footnote)
@@ -34,22 +36,20 @@ struct EventsView: View {
 						await getEvents()
 					}
 				}
+			} else if (loadFailed) {
+				Text("Failed to load, please check your internet connection and your token")
 			} else {
-				Spacer()
-				if (loadFailed) {
-					Text("Failed to load, please check your internet connection and your token")
-				} else {
-					ProgressView("Loading")
-				}
-				Spacer()
+				ProgressView()
+			}
+		}.toolbar {
+			if (showClose) {
+				Button("Close", action: { self.presentationMode.wrappedValue.dismiss() })
+			}
+		}.onAppear {
+			Task {
+				await getEvents()
 			}
 		}.navigationBarTitle("Events")
-			.navigationBarItems(trailing: Button("Close", action: {self.presentationMode.wrappedValue.dismiss()}))
-			.onAppear {
-				Task {
-					await getEvents()
-				}
-			}
 	}
 	
 	private func getStupidText(event: Event) -> String {
