@@ -19,13 +19,7 @@ struct SmallProjectView: View {
 				}
 				VStack(alignment: .leading, spacing: 2) {
 					HStack(spacing: 2) {
-						if (project.visibility == "private") {
-							Image(systemName: "lock")
-						} else if (project.visibility == "internal") {
-							Image(systemName: "shield.lefthalf.filled")
-						} else if (project.visibility == "public") {
-							Image(systemName: "globe")
-						}
+						VisibilityIcon(project.visibility)
 						Text(project.nameWithNamespace)
 							.fontWeight(.medium)
 						if let accessLevel = project.permissions?.projectAccess?.accessLevel {

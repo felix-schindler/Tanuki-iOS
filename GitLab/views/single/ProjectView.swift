@@ -60,13 +60,7 @@ struct ProjectView: View {
 						NavigationLink(project.namespace.name, destination: GroupLoader(id: project.namespace.id))
 					}
 					Spacer()
-					if (project.visibility == "private") {
-						Image(systemName: "lock")
-					} else if (project.visibility == "internal") {
-						Image(systemName: "shield.lefthalf.filled")
-					} else if (project.visibility == "public") {
-						Image(systemName: "globe")
-					}
+					VisibilityIcon(project.visibility)
 					Text(project.visibility.firstCapitalized)
 				}
 				
@@ -186,7 +180,7 @@ struct ProjectView: View {
 			
 			if let readmePath = project.readmeUrl?.split(separator: "/").last {
 				Section(readmePath) {
-					FileLoader(id: project.id, inline: true, filePath: String(readmePath), refName: project.defaultBranch ?? "")
+					FileLoader(id: project.id, filePath: String(readmePath), refName: project.defaultBranch ?? "", inline: true)
 						.padding(.top, 7.5)
 				}
 			}

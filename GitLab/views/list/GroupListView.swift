@@ -17,30 +17,7 @@ struct GroupListView: View {
 			Text("There are no groups")
 		} else {
 			ForEach(groups, id: \.id) { group in
-				NavigationLink(destination: GroupLoader(id: group.id)) {
-					HStack {
-						if let avatarUrl = URL.fromAvatar(group.avatarUrl) {
-							AvatarImage(url: avatarUrl)
-						}
-						VStack(alignment: .leading) {
-							HStack(spacing: 2) {
-								if (group.visibility == "private") {
-									Image(systemName: "lock")
-								} else if (group.visibility == "internal") {
-									Image(systemName: "shield.lefthalf.filled")
-								} else if (group.visibility == "public") {
-									Image(systemName: "globe")
-								}
-								Text(group.name)
-									.fontWeight(.medium)
-							}
-							if (!(group.description?.isEmpty ?? true)) {
-								Markdown(group.description!.emojized())
-									.markdownTheme(.small)
-							}
-						}
-					}
-				}
+				SmallGroupView(group: group)
 			}
 		}
 	}

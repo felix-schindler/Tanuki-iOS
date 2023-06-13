@@ -18,13 +18,7 @@ struct TinyProjectView: View {
 				}
 				Text(project.nameWithNamespace)
 				Spacer()
-				if (project.visibility == "private") {
-					Image(systemName: "lock")
-				} else if (project.visibility == "internal") {
-					Image(systemName: "shield.lefthalf.filled")
-				} else if (project.visibility == "public") {
-					Image(systemName: "globe")
-				}
+				VisibilityIcon(project.visibility)
 			}
 		}
 	}

@@ -20,13 +20,7 @@ struct GroupView: View {
 						AvatarImage(url: avatarUrl)
 					}
 					HStack(spacing: 2) {
-						if (group.visibility == "private") {
-							Image(systemName: "lock")
-						} else if (group.visibility == "internal") {
-							Image(systemName: "shield.lefthalf.filled")
-						} else if (group.visibility == "public") {
-							Image(systemName: "globe")
-						}
+						VisibilityIcon(group.visibility)
 						Text(group.name)
 					}
 					Spacer()
