@@ -10,57 +10,60 @@ import SwiftHttp
 import MarkdownUI
 
 struct FileLoader: View {
-	/// Mark: - Load config
-	let url: HttpUrl
-	let fileName: String
 	
-	/// Mark: - View config
+	// MARK: - Load config
+	let url: HttpUrl
+	let filePath: String
+	
+	// MARK: - View config
 	/// Whether the file is shown inline (true) or full screen (false)
-	@State var inline: Bool = false
+	let inline: Bool
 	/// Whether to show loading / error
-	@State var showNotFound: Bool = false
+	let showNotFound: Bool
+	
+	// MARK: - Load state
+	/// File content (loaded from API)
+	@State var content: String? = nil
+	@State var loadFailed: Bool = false
 	
 	public init(id: Int, filePath: String, refName: String, inline: Bool = false, showNotFound: Bool = false) {
 		self.url = HttpUrl(
 			host: API.domain,
 			path: [
+				"api",
+				"v4",
 				"projects",
 				String(id),
 				"repository",
 				"files"
 			],
 			resource: filePath,
-			suffix: "/raw"
+			suffix: "/raw",
+			query: ["ref": refName]
 		)
 		
-		self.fileName = filePath
+		self.filePath = filePath
 		self.inline = inline
 		self.showNotFound = showNotFound
 	}
 	
-	public init(rawUrl: String, inline: Bool = true, showNotFound: Bool = false) {
+	public init(rawUrl: String, filePath: String, inline: Bool = true, showNotFound: Bool = true) {
 		self.url = HttpUrl(string: rawUrl)!
-
-		self.fileName = self.url.url.pathComponents[self.url.url.pathComponents.endIndex - 1]
+		
+		self.filePath = filePath
 		self.inline = inline
 		self.showNotFound = showNotFound
 	}
-	
-	/// Mark: - Load state
-	/// File content (loaded from API)
-	@State var content: String? = nil
-	@State var loadFailed: Bool = false
-	
 	
 	var body: some View {
 		VStack {
 			if (content != nil) {
 				if (inline) {
-					FileView(fileName: fileName, content: content!)
+					FileView(fileName: filePath, content: content!)
 				} else {
-					FileView(fileName: fileName, content: content!)
+					FileView(fileName: filePath, content: content!)
 						.padding(.horizontal)
-						.navigationTitle(fileName)
+						.navigationTitle(filePath)
 				}
 			} else if (showNotFound) {
 				if (loadFailed) {

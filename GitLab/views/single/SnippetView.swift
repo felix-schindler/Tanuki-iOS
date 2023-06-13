@@ -13,34 +13,40 @@ struct SnippetView: View {
 	
 	var body: some View {
 		List {
-			VStack(alignment: .leading) {
-				HStack {
-					HStack(spacing: 2) {
-						Image(systemName: "number.circle")
-						Text(String(snippet.id))
-							.textSelection(.enabled)
-					}
-					HStack(spacing: 2) {
-						Image(systemName: "person")
-						NavigationLink(snippet.author.name, destination: UserLoader(id: snippet.author.id))
-					}
-					HStack(spacing: 2) {
-						VisibilityIcon(snippet.visibility)
-						Text(snippet.visibility.firstCapitalized)
-					}
+			HStack {
+				HStack(spacing: 2) {
+					Image(systemName: "number.circle")
+					Text(String(snippet.id))
+						.textSelection(.enabled)
 				}
-				
-				Text(snippet.createdAt.toString())
-					.font(.footnote)
+				Spacer()
+				HStack(spacing: 2) {
+					VisibilityIcon(snippet.visibility)
+					Text(snippet.visibility.firstCapitalized)
+				}
+				Spacer()
+				HStack(spacing: 2) {
+					Image(systemName: "clock")
+					Text(snippet.createdAt.toDateString(.short))
+				}
 			}
 			
-			if (!(snippet.description?.isEmpty ?? false)) {
-				Markdown(snippet.description!)
-					.markdownTheme(.gitHub)
+			HStack(spacing: 2) {
+				Image(systemName: "person")
+				NavigationLink(snippet.author.name, destination: UserLoader(id: snippet.author.id))
+			}
+			
+			if let description = snippet.description {
+				if (!description.isEmpty) {
+					Markdown(description)
+						.markdownTheme(.gitHub)
+				}
 			}
 			
 			ForEach(snippet.files, id: \.rawUrl) { file in
-				FileLoader(rawUrl: snippet.rawUrl, inline: true)
+				Section(file.path) {
+					FileLoader(rawUrl: snippet.rawUrl, filePath: file.path, inline: true)
+				}
 			}
 		}.toolbar {
 			AsyncButton(systemImage: "square.and.arrow.up") {
