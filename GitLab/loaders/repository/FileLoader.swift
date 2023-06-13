@@ -69,11 +69,7 @@ struct FileLoader: View {
 				if (loadFailed) {
 					Text("Failed to load, please check your internet connection and your token")
 				} else {
-					VStack {
-						Spacer()
-						ProgressView("Loading")
-						Spacer()
-					}
+					ProgressView("Loading")
 				}
 			}
 		}.onAppear {

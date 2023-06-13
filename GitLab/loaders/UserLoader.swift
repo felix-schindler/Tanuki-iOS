@@ -19,26 +19,26 @@ struct UserLoader: View {
 	@State var loadFailed = false
 	
 	var body: some View {
-		VStack {
+		List {
 			if (user != nil && status != nil) {
 				SingleUserView(user: user!, status: status!)
-					.refreshable {
-						await loadUserAndStatus()
-					}
+					.navigationTitle(user!.name.isEmpty ? user!.username : user!.name)
+			} else if (loadFailed) {
+				Text("Failed to load, please check your internet connection and your token")
 			} else {
-				Spacer()
-				if (loadFailed) {
-					Text("Failed to load, please check your internet connection and your token")
-				} else {
-					ProgressView()
-				}
-				Spacer()
+				ProgressView()
 			}
 		}.onAppear() {
 			Task {
 				await loadUserAndStatus()
 			}
-		}
+		}.refreshable {
+			await loadUserAndStatus()
+		}.toolbar {
+			AsyncButton(systemImage: "square.and.arrow.up") {
+				await URL(string: user!.webUrl)!.share()
+			}
+		}.navigationTitle("User")
 	}
 	
 	private func loadUserAndStatus() async -> Void {

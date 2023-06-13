@@ -77,7 +77,6 @@ struct GroupView: View {
 			}
 		}.navigationTitle(group.name)
 			.navigationBarTitleDisplayMode(.inline)
-		
 	}
 }
 

@@ -12,130 +12,124 @@ struct SingleUserView: View {
 	@State var status: UserStatus
 	
 	var body: some View {
-		List {
-			Section {
-				HStack {
-					if let avatarUrl = URL.fromAvatar(user.avatarUrl) {
-						AvatarImage(url: avatarUrl)
-					}
-					VStack(alignment: .leading) {
-						HStack {
-							if (!user.name.isEmpty) {
-								Text(user.name)
-							}
-							if (!(user.pronouns?.isEmpty ?? true)) {
-								Text(user.pronouns!)
-									.foregroundStyle(.secondary)
-									.font(.callout)
-							}
-						}
-						HStack(spacing: 2) {
-							if (user.bot) {
-								Text("🤖")
-							}
-							Text("@\(user.username)")
-								.foregroundStyle(.secondary)
-						}
-					}
-					Spacer()
-					VStack(alignment: .trailing) {
-						Text("ID: \(String(user.id))")
-							.textSelection(.enabled)
-						if let createdAt = user.createdAt {
-							Text(createdAt.toDateString())
-						}
-					}.font(.footnote)
-						.foregroundStyle(.secondary)
+		Section {
+			HStack {
+				if let avatarUrl = URL.fromAvatar(user.avatarUrl) {
+					AvatarImage(url: avatarUrl)
 				}
-				
-				let showEmoji = (status.emoji != nil && status.emoji! != "")
-				let showMessage = (status.message != nil && status.message != "")
-				if (showEmoji || showMessage) {
-					HStack(spacing: 2) {
-						if (showEmoji) {
-							Text(":\(status.emoji!):".emojized())
-						}
-						if (showMessage) {
-							Text(status.message!)
-						}
-					}
-				}
-				
-				if (!user.bio.isEmpty) {
-					Text(user.bio.emojized())
-				}
-				
-				if (!(user.location?.isEmpty ?? true)) {
-					Label(user.location!, systemImage: "mappin.and.ellipse")
-						.foregroundStyle(.primary)
-				}
-				
-				if (!(user.localTime?.isEmpty ?? true)) {
-					Label(user.localTime!, systemImage: "clock")
-						.foregroundStyle(.primary)
-				}
-				
-				let workStr = user.workInformation ?? "\(user.jobTitle) \(user.organization)".trim()
-				if (!workStr.isEmpty) {
-					Label(workStr, systemImage: "briefcase")
-						.foregroundStyle(.primary)
-				}
-				
-				if (!(user.publicEmail?.isEmpty ?? true)) {
-					Label(user.publicEmail!, systemImage: "envelope")
-						.textSelection(.enabled)
-				}
-				
-				if (!user.websiteUrl.isEmpty) {
-					Link(destination: URL(string: user.websiteUrl)!, label: {
-						Label(user.websiteUrl, systemImage: "paperclip")
-							.foregroundStyle(.primary)
-					})
-				}
-				
-				let showSkype =		!user.skype.isEmpty
-				let showIn =			!user.linkedin.isEmpty
-				let showTwitter =	!user.twitter.isEmpty
-				let showDiscord =	!user.discord.isEmpty
-				
-				if (showSkype || showIn || showTwitter || showDiscord) {
+				VStack(alignment: .leading) {
 					HStack {
-						Image(systemName: "person.line.dotted.person")
-						ScrollView(.horizontal) {
-							HStack {
-								if (showSkype) {
-									Link(user.skype, destination: URL(string: "skype:\(user.skype)")!)
-								}
-								if (showIn) {
-									Text("linkedIn: \(user.linkedin)")
-										.textSelection(.enabled)
-								}
-								if (showTwitter) {
-									Label(user.twitter, systemImage: "bird")
-										.textSelection(.enabled)
-								}
-								if (showDiscord) {
-									Text("👾 \(user.discord)")
-										.textSelection(.enabled)
-								}
-							}
+						if (!user.name.isEmpty) {
+							Text(user.name)
+						}
+						if (!(user.pronouns?.isEmpty ?? true)) {
+							Text(user.pronouns!)
+								.foregroundStyle(.secondary)
+								.font(.callout)
 						}
 					}
+					HStack(spacing: 2) {
+						if (user.bot) {
+							Text("🤖")
+						}
+						Text("@\(user.username)")
+							.foregroundStyle(.secondary)
+					}
 				}
-				
-				Label("\(user.followers ?? 0) followers · \(user.following ?? 0) following", systemImage: "person.2")
+				Spacer()
+				VStack(alignment: .trailing) {
+					Text("ID: \(String(user.id))")
+						.textSelection(.enabled)
+					if let createdAt = user.createdAt {
+						Text(createdAt.toDateString())
+					}
+				}.font(.footnote)
+					.foregroundStyle(.secondary)
+			}
+			
+			let showEmoji = (status.emoji != nil && status.emoji! != "")
+			let showMessage = (status.message != nil && status.message != "")
+			if (showEmoji || showMessage) {
+				HStack(spacing: 2) {
+					if (showEmoji) {
+						Text(":\(status.emoji!):".emojized())
+					}
+					if (showMessage) {
+						Text(status.message!)
+					}
+				}
+			}
+			
+			if (!user.bio.isEmpty) {
+				Text(user.bio.emojized())
+			}
+			
+			if (!(user.location?.isEmpty ?? true)) {
+				Label(user.location!, systemImage: "mappin.and.ellipse")
 					.foregroundStyle(.primary)
 			}
 			
-			Section {
-				NavigationLink("Activity", destination: EventsView(userId: user.id))
-				NavigationLink("Projects", destination: ProjectsLoader(userId: user.id))
+			if (!(user.localTime?.isEmpty ?? true)) {
+				Label(user.localTime!, systemImage: "clock")
+					.foregroundStyle(.primary)
 			}
-		}.toolbar {
-			AsyncButton(systemImage: "square.and.arrow.up") {
-				await URL(string: user.webUrl)!.share()
+			
+			let workStr = user.workInformation ?? "\(user.jobTitle) \(user.organization)".trim()
+			if (!workStr.isEmpty) {
+				Label(workStr, systemImage: "briefcase")
+					.foregroundStyle(.primary)
 			}
-		}.navigationTitle(user.name.isEmpty ? user.username : user.name)
+			
+			if (!(user.publicEmail?.isEmpty ?? true)) {
+				Label(user.publicEmail!, systemImage: "envelope")
+					.textSelection(.enabled)
+			}
+			
+			if (!user.websiteUrl.isEmpty) {
+				Link(destination: URL(string: user.websiteUrl)!, label: {
+					Label(user.websiteUrl, systemImage: "paperclip")
+						.foregroundStyle(.primary)
+				})
+			}
+			
+			let showSkype =		!user.skype.isEmpty
+			let showIn =			!user.linkedin.isEmpty
+			let showTwitter =	!user.twitter.isEmpty
+			let showDiscord =	!user.discord.isEmpty
+			
+			if (showSkype || showIn || showTwitter || showDiscord) {
+				HStack {
+					Image(systemName: "person.line.dotted.person")
+					ScrollView(.horizontal) {
+						HStack {
+							if (showSkype) {
+								Link(user.skype, destination: URL(string: "skype:\(user.skype)")!)
+							}
+							if (showIn) {
+								Text("linkedIn: \(user.linkedin)")
+									.textSelection(.enabled)
+							}
+							if (showTwitter) {
+								Label(user.twitter, systemImage: "bird")
+									.textSelection(.enabled)
+							}
+							if (showDiscord) {
+								Text("👾 \(user.discord)")
+									.textSelection(.enabled)
+							}
+						}
+					}
+				}
+			}
+			
+			Label("\(user.followers ?? 0) followers · \(user.following ?? 0) following", systemImage: "person.2")
+				.foregroundStyle(.primary)
+		}
+		
+		Section {
+			NavigationLink("Activity", destination: EventsView(userId: user.id))
+			NavigationLink("Projects", destination: ProjectsLoader(userId: user.id))
+		}
 	}
 }
 
