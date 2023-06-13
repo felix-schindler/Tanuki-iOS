@@ -42,50 +42,7 @@ struct MilestoneLoader: View {
 					Text("There are no milestones")
 				} else {
 					ForEach(milestones!, id: \.id) { milestone in
-						NavigationLink(destination: IssuesLoader(id: id, state: (milestone.state == "active" ? IssueState.opened : IssueState.all), milestone: milestone.title)) {
-							HStack {
-								if (milestone.state == "closed") {
-									Image(systemName: "flag.circle")
-										.foregroundStyle(.red)
-								} else if (milestone.expired) {
-									Image(systemName: "flag.circle")
-										.foregroundStyle(.orange)
-								} else {
-									Image(systemName: "flag.circle")
-										.foregroundStyle(.green)
-								}
-								VStack(alignment: .leading) {
-									Text(milestone.title.emojized())
-										.fontWeight(.medium)
-									if (milestone.description != "") {
-										Markdown(milestone.description.emojized())
-											.markdownTheme(.small)
-									}
-									
-									let showStartDate = (milestone.startDate != nil)
-									let showDueDate = (milestone.dueDate != nil)
-									
-									if (showStartDate || showDueDate) {
-										HStack {
-											Image(systemName: "calendar.badge.clock")
-											if (showStartDate) {
-												Text(Date.fromToString(milestone.startDate!))
-											}
-											if (showStartDate && showDueDate) {
-												Text("-")
-											}
-											if (showDueDate) {
-												Text(Date.fromToString(milestone.dueDate!))
-											}
-										}.font(.footnote)
-									}
-								}
-							}
-						}.swipeActions {
-							AsyncButton(systemImage: "square.and.arrow.up") {
-								await URL(string: milestone.webUrl)!.share()
-							}
-						}
+						MilestoneView(id: id, milestone: milestone)
 					}
 				}
 			} else if (loadFailed) {
@@ -99,9 +56,8 @@ struct MilestoneLoader: View {
 		}.searchable(text: $search)
 			.onSubmit(of: .search) {
 				Task {
-					if let temp = await getMilestones() {
-						milestones = temp
-					}
+					milestones = await getMilestones()
+					loadFailed = (milestones == nil)
 				}
 			}.toolbar {
 				Button(action: { showFilter = true }) {
