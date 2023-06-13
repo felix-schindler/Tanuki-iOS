@@ -17,34 +17,35 @@ struct LabelListView: View {
 	@State var deletionError = false
 	
 	var body: some View {
-		if (showEmpty && labels.isEmpty) {
+		if (labels.isEmpty && showEmpty) {
 			Text("There are no labels")
-		}
-		ForEach(labels, id: \.id) { label in
-			VStack(alignment: .leading) {
-				Text(label.name.emojized())
-					.padding(.horizontal, 8)
-					.padding(.vertical, 3)
-					.background(Color.init(hex: label.color))
-					.foregroundStyle(Color.init(hex: label.textColor)!)
-					.cornerRadius(25)
-				if (showDescription && !(label.description?.isEmpty ?? true)) {
-					Text(label.description!.emojized())
-						.font(.footnote)
-				}
-			}.swipeActions(edge: .trailing) {
-				AsyncButton(action: {
-					if (projectId != nil) {
-						let code = await API.delete(endpoint: "projects/\(projectId!)/labels/\(label.id)")
-						deletionError = (code.rawValue < 200 || code.rawValue >= 300)
-					} else {
-						deletionError = true
+		} else {
+			ForEach(labels, id: \.id) { label in
+				VStack(alignment: .leading) {
+					Text(label.name.emojized())
+						.padding(.horizontal, 8)
+						.padding(.vertical, 3)
+						.background(Color.init(hex: label.color))
+						.foregroundStyle(Color.init(hex: label.textColor)!)
+						.cornerRadius(25)
+					if (showDescription && !(label.description?.isEmpty ?? true)) {
+						Text(label.description!.emojized())
+							.font(.footnote)
 					}
-				}, role: .destructive, label: {
-					Label("Delete", systemImage: "trash")
-				}).alert(isPresented: $deletionError, content: {
-					Alert(title: Text("Error"), message: Text("Failed to delete label"), dismissButton: .default(Text("OK")))
-				})
+				}.swipeActions {
+					AsyncButton(action: {
+						if (projectId != nil) {
+							let code = await API.delete(endpoint: "projects/\(projectId!)/labels/\(label.id)")
+							deletionError = (code.rawValue < 200 || code.rawValue >= 300)
+						} else {
+							deletionError = true
+						}
+					}, role: .destructive, label: {
+						Label("Delete", systemImage: "trash")
+					}).alert(isPresented: $deletionError, content: {
+						Alert(title: Text("Error"), message: Text("Failed to delete label"), dismissButton: .default(Text("OK")))
+					})
+				}
 			}
 		}
 	}
