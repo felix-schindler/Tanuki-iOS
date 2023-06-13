@@ -21,25 +21,27 @@ struct SnippetsLoader: View {
 					Text("There are no snippets")
 				} else {
 					ForEach(snippets, id: \.id) { snippet in
-						HStack {
-							if let avatarUrl = URL.fromAvatar(snippet.author.avatarUrl) {
-								AvatarImage(url: avatarUrl, size: .medium)
-							}
-							VStack(alignment: .leading) {
-								Text(snippet.title.emojized())
-									.fontWeight(.medium)
-								
-								HStack {
-									HStack(spacing: 2) {
-										Image(systemName: "person")
-										Text(snippet.author.name)
-									}
+						NavigationLink(destination: SnippetView(snippet: snippet)) {
+							HStack {
+								if let avatarUrl = URL.fromAvatar(snippet.author.avatarUrl) {
+									AvatarImage(url: avatarUrl, size: .medium)
+								}
+								VStack(alignment: .leading) {
+									Text(snippet.title.emojized())
+										.fontWeight(.medium)
 									
-									HStack(spacing: 2) {
-										Image(systemName: "clock")
-										Text(snippet.createdAt.toDateString())
-									}
-								}.font(.footnote)
+									HStack {
+										HStack(spacing: 2) {
+											Image(systemName: "person")
+											Text(snippet.author.name)
+										}
+										
+										HStack(spacing: 2) {
+											Image(systemName: "clock")
+											Text(snippet.createdAt.toDateString())
+										}
+									}.font(.footnote)
+								}
 							}
 						}
 					}

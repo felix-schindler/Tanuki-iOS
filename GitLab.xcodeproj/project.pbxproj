@@ -43,6 +43,7 @@
 		DC5EB916272DD1310015BF0D /* ProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB915272DD1310015BF0D /* ProjectsLoader.swift */; };
 		DC6024662A38A4E400744AFE /* TinyProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6024652A38A4E400744AFE /* TinyProjectView.swift */; };
 		DC6024682A38A4EB00744AFE /* SmallProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6024672A38A4EB00744AFE /* SmallProjectView.swift */; };
+		DC61BD922A38E7840019E8EA /* SnippetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC61BD912A38E7840019E8EA /* SnippetView.swift */; };
 		DC6F1D6229C840C900E0401C /* UserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F1D6129C840C900E0401C /* UserLoader.swift */; };
 		DC6F1D6429C8456200E0401C /* SingleUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F1D6329C8456200E0401C /* SingleUserView.swift */; };
 		DC6F1D6629C85CA000E0401C /* PipelineLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6F1D6529C85CA000E0401C /* PipelineLoader.swift */; };
@@ -116,6 +117,7 @@
 		DC5EB915272DD1310015BF0D /* ProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsLoader.swift; sourceTree = "<group>"; };
 		DC6024652A38A4E400744AFE /* TinyProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinyProjectView.swift; sourceTree = "<group>"; };
 		DC6024672A38A4EB00744AFE /* SmallProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallProjectView.swift; sourceTree = "<group>"; };
+		DC61BD912A38E7840019E8EA /* SnippetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnippetView.swift; path = GitLab/views/single/SnippetView.swift; sourceTree = SOURCE_ROOT; };
 		DC6F1D6129C840C900E0401C /* UserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoader.swift; sourceTree = "<group>"; };
 		DC6F1D6329C8456200E0401C /* SingleUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleUserView.swift; sourceTree = "<group>"; };
 		DC6F1D6529C85CA000E0401C /* PipelineLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PipelineLoader.swift; path = GitLab/loaders/projects/PipelineLoader.swift; sourceTree = SOURCE_ROOT; };
@@ -294,6 +296,7 @@
 				DC7C83D629B8E80400B3BE41 /* GroupView.swift */,
 				DC6F1D6329C8456200E0401C /* SingleUserView.swift */,
 				DC0EC639279E16E6006A7C75 /* FileView.swift */,
+				DC61BD912A38E7840019E8EA /* SnippetView.swift */,
 			);
 			path = single;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				DC0F593E2A346C3A00A24088 /* AvatarImage.swift in Sources */,
 				DC569B3A2A045604005B99B3 /* NewProject.swift in Sources */,
 				DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */,
+				DC61BD922A38E7840019E8EA /* SnippetView.swift in Sources */,
 				DC5EB910272DA2450015BF0D /* IssueView.swift in Sources */,
 				DC5EB916272DD1310015BF0D /* ProjectsLoader.swift in Sources */,
 				DC5EB906272D938E0015BF0D /* AccountView.swift in Sources */,
