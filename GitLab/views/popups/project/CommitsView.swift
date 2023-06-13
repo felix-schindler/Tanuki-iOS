@@ -12,9 +12,13 @@ struct CommitsView: View {
 	@Environment(\.presentationMode)
 	var presentationMode: Binding<PresentationMode>
 	
-	@State var id: Int
+	// MARK: - Load config
+	/// Project ID
+	var id: Int
+	/// Branch name
 	@State var refName: String
 	
+	// MARK: - Load data
 	@State var branches: [Branch]? = nil
 	@State var commits: [Commit]? = nil
 	@State var loadFailed: Bool = false
@@ -46,9 +50,25 @@ struct CommitsView: View {
 						ForEach(commits!, id: \.id) { commit in
 							HStack {
 								VStack(alignment: .leading) {
-									Text(commit.title.emojized())
-										.fontWeight(.medium)
-
+									DisclosureGroup(content: {
+										VStack {
+											Markdown(commit.message.emojized())
+												.markdownTheme(.small)
+											
+											Text(commit.id)
+												.textSelection(.enabled)
+												.font(.system(.caption, design: .monospaced))
+											
+											HStack(spacing: 2) {
+												Image(systemName: "envelope")
+												Text(commit.authorEmail)
+											}
+										}
+									}, label: {
+										Text(commit.title.emojized())
+											.fontWeight(.medium)
+									})
+									
 									HStack {
 										Text(commit.authorName)
 										Text(commit.authoredDate.toString())
@@ -56,7 +76,12 @@ struct CommitsView: View {
 								}
 								Spacer()
 								Text(commit.shortId)
+									.textSelection(.enabled)
 									.font(.system(.caption, design: .monospaced))
+							}.swipeActions {
+								AsyncButton(systemImage: "square.and.arrow.up") {
+									await URL(string: commit.webUrl)!.share()
+								}
 							}
 						}
 					}
@@ -96,9 +121,9 @@ struct CommitsView_Previews: PreviewProvider {
 	static var previews: some View {
 		NavigationView {
 			CommitsView(id: 33025310, refName: "main", branches: [
-				Branch(name: "main", commit: Commit(id: "00761f920931144587a5b213976e41243e6ae746", shortId: "shortId", title: "Update CommitsView.swift", message: "Update CommitsView.swift", authorName: "Felix", authorEmail: "felix-schindler@outlook.com", authoredDate: Date()), merged: false, protected: false, developersCanPush: true, developersCanMerge: true, canPush: true)
+				Branch(name: "main", commit: Commit(id: "00761f920931144587a5b213976e41243e6ae746", shortId: "shortId", title: "Update CommitsView.swift", message: "Update CommitsView.swift", authorName: "Felix", authorEmail: "felix-schindler@outlook.com", authoredDate: Date(), webUrl: "https://gitlab.com/felix-schindler/gitlab-ios/-/commit/45b3c9c9de808f1cad4c5d6a0073a633aeda2de7"), merged: false, protected: false, developersCanPush: true, developersCanMerge: true, canPush: true)
 			], commits: [
-				Commit(id: "00761f920931144587a5b213976e41243e6ae746", shortId: "shortId", title: "Update CommitsView.swift", message: "Update CommitsView.swift", authorName: "Felix", authorEmail: "felix-schindler@outlook.com", authoredDate: Date())
+				Commit(id: "00761f920931144587a5b213976e41243e6ae746", shortId: "shortId", title: "Update CommitsView.swift", message: "Update CommitsView.swift", authorName: "Felix", authorEmail: "felix-schindler@outlook.com", authoredDate: Date(), webUrl: "https://gitlab.com/felix-schindler/gitlab-ios/-/commit/45b3c9c9de808f1cad4c5d6a0073a633aeda2de7")
 			])
 		}
 	}

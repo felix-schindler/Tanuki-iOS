@@ -59,6 +59,7 @@ struct MilestoneLoader: View {
 										.fontWeight(.medium)
 									if (milestone.description != "") {
 										Markdown(milestone.description.emojized())
+											.markdownTheme(.small)
 									}
 									
 									let showStartDate = (milestone.startDate != nil)
