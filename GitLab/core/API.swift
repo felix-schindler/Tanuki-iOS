@@ -25,7 +25,8 @@ class API {
 	private static let client: HttpClient = UrlSessionHttpClient(session: .shared, logLevel: .critical)
 	private static let decoder = JSONDecoder()
 	
-	private static func raw(
+	/// This is only `public` because it's used by the File loader
+	public static func raw(
 		method: HttpMethod,
 		url: HttpUrl,
 		body: Dictionary<String, String> = [:]
@@ -45,35 +46,6 @@ class API {
 		
 		print(method, url.url.absoluteString)
 		return try await client.dataTask(req)
-	}
-	
-	public static func raw(
-		method: HttpMethod,
-		endpoint: String,
-		resource: String? = nil,
-		suffix: String? = nil,
-		query: Dictionary<String, String> = [:],
-		body: Dictionary<String, String> = [:]
-	) async -> String? {
-		let httpUrl = HttpUrl(
-			host: domain,
-			path: [base, endpoint],
-			resource: resource,
-			suffix: suffix,
-			query: query
-		)
-		
-		do {
-			let res = try await API.raw(
-				method: method,
-				url: httpUrl,
-				body: body
-			)
-			
-			return res.utf8String
-		} catch {
-			return nil
-		}
 	}
 	
 	public static func req<T: Codable>(
