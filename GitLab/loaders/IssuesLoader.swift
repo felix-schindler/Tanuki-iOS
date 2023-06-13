@@ -64,6 +64,8 @@ struct IssuesLoader: View {
 		}.refreshable {
 			if let temp = await getIssues() {
 				issues = temp
+			} else {
+				loadFailed = true
 			}
 		}.onAppear {
 			Task {

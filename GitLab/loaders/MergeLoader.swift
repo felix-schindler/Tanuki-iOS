@@ -26,69 +26,76 @@ struct MergeLoader: View {
 	@State var state: MergeState = .opened
 	
 	var body: some View {
-		VStack {
+		List {
 			if (mergeRequests != nil) {
-				MergeListView(mergeRequests: mergeRequests!, updateFunction: getMRs, showRef: id == 0)
-					.searchable(text: $search)
-					.onSubmit(of: .search) {
-						Task {
-							mergeRequests = nil
-							mergeRequests = await getMRs()
-							loadFailed = (mergeRequests == nil)
-						}
+				if (mergeRequests!.isEmpty) {
+					Text("You're all caught up, there are no merge requests! 🥳")
+				} else {
+					ForEach(mergeRequests!, id: \.id) { mr in
+						SmallMergeView(mr: mr, showRef: (id == 0))
 					}
-					.toolbar {
-						Button(action: {showFilter = true}) {
-							Image(systemName: "line.3.horizontal.decrease.circle")
-						}
-					}.sheet(isPresented: $showFilter) {
-						List {
-							Section {
-								Picker("State", selection: $state) {
-									Text("Open").tag(MergeState.opened)
-									Text("Closed").tag(MergeState.closed)
-									Text("Merged").tag(MergeState.merged)
-									Text("Locked").tag(MergeState.locked)
-									Text("All").tag(MergeState.all)
-								}
-								
-								Picker("Sort", selection: $sort) {
-									Text("Ascending").tag(IssueSort.asc)
-									Text("Descending").tag(IssueSort.desc)
-								}
-								
-								Picker("Order by", selection: $orderBy) {
-									Text("Title").tag(MergeOrder.title)
-									Text("Created at").tag(MergeOrder.createdAt)
-									Text("Updated at").tag(MergeOrder.updatedAt)
-								}
-							}
-							
-							AsyncButton("Apply") {
-								mergeRequests = nil
-								mergeRequests = await getMRs()
-								loadFailed = (mergeRequests == nil)
-								showFilter = false
-							}
-						}
-					}
+				}
 			} else {
 				if (loadFailed) {
 					Text("Failed to load, please check your internet connection and your token")
 				} else {
-					VStack {
-						Spacer()
-						ProgressView("Loading")
-						Spacer()
-					}
+					ProgressView()
 				}
+			}
+		}.refreshable {
+			if let temp = await getMRs() {
+				mergeRequests = temp
+			} else {
+				loadFailed = true
 			}
 		}.onAppear {
 			Task {
 				mergeRequests = await getMRs()
 				loadFailed = (mergeRequests == nil)
 			}
-		}.navigationTitle("Merge requests")
+		}.searchable(text: $search)
+			.onSubmit(of: .search) {
+				Task {
+					mergeRequests = nil
+					mergeRequests = await getMRs()
+					loadFailed = (mergeRequests == nil)
+				}
+			}
+			.toolbar {
+				Button(action: {showFilter = true}) {
+					Image(systemName: "line.3.horizontal.decrease.circle")
+				}
+			}.sheet(isPresented: $showFilter) {
+				List {
+					Section {
+						Picker("State", selection: $state) {
+							Text("Open").tag(MergeState.opened)
+							Text("Closed").tag(MergeState.closed)
+							Text("Merged").tag(MergeState.merged)
+							Text("Locked").tag(MergeState.locked)
+							Text("All").tag(MergeState.all)
+						}
+						
+						Picker("Sort", selection: $sort) {
+							Text("Ascending").tag(IssueSort.asc)
+							Text("Descending").tag(IssueSort.desc)
+						}
+						
+						Picker("Order by", selection: $orderBy) {
+							Text("Title").tag(MergeOrder.title)
+							Text("Created at").tag(MergeOrder.createdAt)
+							Text("Updated at").tag(MergeOrder.updatedAt)
+						}
+					}
+					
+					AsyncButton("Apply") {
+						mergeRequests = nil
+						mergeRequests = await getMRs()
+						loadFailed = (mergeRequests == nil)
+						showFilter = false
+					}
+				}
+			}.navigationTitle("Merge requests")
 	}
 	
 	private func getMRs() async -> [MergeRequest]? {
