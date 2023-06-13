@@ -56,7 +56,9 @@ struct AvatarImage: View {
 					.scaledToFit()
 					.cornerRadius(radius)
 			default:
-				EmptyView()
+				Image(systemName: "photo")
+					.resizable()
+					.scaledToFit()
 			}
 		}.frame(width: width, height: height, alignment: .leading)
 	}
