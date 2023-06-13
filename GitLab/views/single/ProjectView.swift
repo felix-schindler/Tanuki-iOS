@@ -116,7 +116,9 @@ struct ProjectView: View {
 				}
 				
 				if (project.defaultBranch != nil) {
-					ProjectLanguagesLoader(id: project.id)
+					DisclosureGroup("Languages") {
+						ProjectLanguagesLoader(id: project.id)
+					}
 				}
 			}
 			
