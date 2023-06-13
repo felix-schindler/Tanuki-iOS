@@ -85,9 +85,7 @@ struct MergeView: View {
 			}
 			
 			Section("Notes") {
-				Button("Add new note") {
-					showNewNote = true
-				}
+				Button("Add new note") { showNewNote = true }
 				NotesLoader(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge)
 			}
 		}.navigationBarTitleDisplayMode(.inline)

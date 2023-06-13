@@ -126,14 +126,11 @@ struct IssueView: View {
 			}
 			
 			Section("Notes") {
+				Button("Add new note", action: { showNewNote = true })
 				NotesLoader(id: issue.projectId, iid: issue.iid, type: discussionType.Issue)
 			}
 			
 			Section("Actions") {
-				Button("Add new note", action: {
-					showNewNote = true
-				})
-				
 				let name: String = (issue.state == "opened" ? "Close issue" : "Reopen issue")
 				AsyncButton(name) {
 					await changeState()
