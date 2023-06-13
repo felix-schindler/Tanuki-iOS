@@ -18,6 +18,7 @@
 		DC10C39A2731537D00CAE425 /* CommitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC10C3992731537D00CAE425 /* CommitsView.swift */; };
 		DC10C39C27315D6400CAE425 /* BranchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC10C39B27315D6400CAE425 /* BranchesView.swift */; };
 		DC115A5B2A38F5770034CC00 /* MilestoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC115A5A2A38F5770034CC00 /* MilestoneView.swift */; };
+		DC115A5D2A38FF2D0034CC00 /* SmallIIssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC115A5C2A38FF2D0034CC00 /* SmallIIssueView.swift */; };
 		DC1F1BDF29CCC93A00AF7573 /* NewLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1F1BDE29CCC93A00AF7573 /* NewLabelView.swift */; };
 		DC1F1BE229CCCFA600AF7573 /* NVMColor in Frameworks */ = {isa = PBXBuildFile; productRef = DC1F1BE129CCCFA600AF7573 /* NVMColor */; };
 		DC2A243A29C8FC0600A9FED7 /* MergeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2A243929C8FC0600A9FED7 /* MergeFilter.swift */; };
@@ -37,7 +38,6 @@
 		DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB900272D934E0015BF0D /* HomeView.swift */; };
 		DC5EB906272D938E0015BF0D /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB905272D938E0015BF0D /* AccountView.swift */; };
 		DC5EB90C272D955E0015BF0D /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB90B272D955E0015BF0D /* API.swift */; };
-		DC5EB90E272D9C710015BF0D /* IssueListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB90D272D9C710015BF0D /* IssueListView.swift */; };
 		DC5EB910272DA2450015BF0D /* IssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB90F272DA2450015BF0D /* IssueView.swift */; };
 		DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB911272DB9D00015BF0D /* ProjectListView.swift */; };
 		DC5EB914272DBDA20015BF0D /* MergeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5EB913272DBDA20015BF0D /* MergeListView.swift */; };
@@ -93,6 +93,7 @@
 		DC10C3992731537D00CAE425 /* CommitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitsView.swift; sourceTree = "<group>"; };
 		DC10C39B27315D6400CAE425 /* BranchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchesView.swift; sourceTree = "<group>"; };
 		DC115A5A2A38F5770034CC00 /* MilestoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestoneView.swift; sourceTree = "<group>"; };
+		DC115A5C2A38FF2D0034CC00 /* SmallIIssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallIIssueView.swift; sourceTree = "<group>"; };
 		DC1F1BDE29CCC93A00AF7573 /* NewLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLabelView.swift; sourceTree = "<group>"; };
 		DC2A243929C8FC0600A9FED7 /* MergeFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeFilter.swift; sourceTree = "<group>"; };
 		DC2B2FFE29C0679B009ADC0D /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
@@ -112,7 +113,6 @@
 		DC5EB900272D934E0015BF0D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DC5EB905272D938E0015BF0D /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		DC5EB90B272D955E0015BF0D /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		DC5EB90D272D9C710015BF0D /* IssueListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueListView.swift; sourceTree = "<group>"; };
 		DC5EB90F272DA2450015BF0D /* IssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueView.swift; sourceTree = "<group>"; };
 		DC5EB911272DB9D00015BF0D /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
 		DC5EB913272DBDA20015BF0D /* MergeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeListView.swift; sourceTree = "<group>"; };
@@ -183,7 +183,6 @@
 			children = (
 				DC5EB911272DB9D00015BF0D /* ProjectListView.swift */,
 				DCD3165329C799A700AF7A3E /* LanguageChartView.swift */,
-				DC5EB90D272D9C710015BF0D /* IssueListView.swift */,
 				DC5EB913272DBDA20015BF0D /* MergeListView.swift */,
 				DCCC715E273602750091C216 /* LabelListView.swift */,
 				DC7A85BD27319D290000CF4D /* PipelineListView.swift */,
@@ -324,6 +323,7 @@
 				DC6024672A38A4EB00744AFE /* SmallProjectView.swift */,
 				DC0BD8652A38DD9D0034097F /* SmallGroupView.swift */,
 				DC115A5A2A38F5770034CC00 /* MilestoneView.swift */,
+				DC115A5C2A38FF2D0034CC00 /* SmallIIssueView.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -475,7 +475,6 @@
 				DC7A85BC27319D1A0000CF4D /* PipelineStatusView.swift in Sources */,
 				DC10C39C27315D6400CAE425 /* BranchesView.swift in Sources */,
 				DC92BD2F29D09B35008E8581 /* MilestoneLoader.swift in Sources */,
-				DC5EB90E272D9C710015BF0D /* IssueListView.swift in Sources */,
 				DCF14E3D29C71B8800D1F43B /* IssueFilter.swift in Sources */,
 				DC90CA5C272E762200B758E7 /* NewIssueView.swift in Sources */,
 				DC7A85BE27319D290000CF4D /* PipelineListView.swift in Sources */,
@@ -503,6 +502,7 @@
 				DCD3165029C793E600AF7A3E /* LabelsLoader.swift in Sources */,
 				DCD3165229C7993800AF7A3E /* ProjectLanguagesLoader.swift in Sources */,
 				DC0F593E2A346C3A00A24088 /* AvatarImage.swift in Sources */,
+				DC115A5D2A38FF2D0034CC00 /* SmallIIssueView.swift in Sources */,
 				DC569B3A2A045604005B99B3 /* NewProject.swift in Sources */,
 				DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */,
 				DC61BD922A38E7840019E8EA /* SnippetView.swift in Sources */,
