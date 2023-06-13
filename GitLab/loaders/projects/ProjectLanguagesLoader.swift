@@ -17,7 +17,7 @@ struct ProjectLanguagesLoader: View {
 	var body: some View {
 		VStack {
 			if (languages != nil) {
-				LanguagesListView(languages: languages!)
+				LanguageChartView(languages: languages!)
 			} else if (loadFailed) {
 				Text("Failed to load, please check your internet connection and your token")
 			} else {

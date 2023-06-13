@@ -32,26 +32,35 @@ struct ProjectView: View {
 					}
 				}
 				
-				if (!project.tagList.isEmpty) {
-					ScrollView(.horizontal) {
-						HStack {
-							ForEach(project.tagList, id: \.hashValue) { tag in
-								Text(tag)
-									.font(.caption)
-									.padding(.horizontal, 6)
-									.padding(.vertical, 4)
-									.background(Color(.systemGray3))
-									.cornerRadius(10)
+				HStack {
+					HStack(spacing: 2) {
+						Image(systemName: "number.circle")
+						Text(String(project.id))
+							.textSelection(.enabled)
+					}
+					HStack(spacing: 2) {
+						VisibilityIcon(project.visibility)
+						Text(project.visibility.firstCapitalized)
+					}
+					if (!project.tagList.isEmpty) {
+						ScrollView(.horizontal) {
+							HStack(spacing: 2) {
+								Image(systemName: "tag")
+								ForEach(project.tagList, id: \.hashValue) { tag in
+									Text(tag)
+										.font(.footnote)
+										.padding(.horizontal, 4)
+										.padding(.vertical, 2)
+										.foregroundStyle(.primary)
+										.background(Color(.systemGray5))
+										.cornerRadius(7.5)
+								}
 							}
 						}
 					}
 				}
 				
 				HStack {
-					Image(systemName: "number.circle")
-					Text(String(project.id))
-						.textSelection(.enabled)
-					Spacer()
 					if (project.owner != nil) {
 						Image(systemName: "person")
 						NavigationLink(project.namespace.name, destination: UserLoader(id: project.owner!.id))
@@ -59,9 +68,6 @@ struct ProjectView: View {
 						Image(systemName: "person.3")
 						NavigationLink(project.namespace.name, destination: GroupLoader(id: project.namespace.id))
 					}
-					Spacer()
-					VisibilityIcon(project.visibility)
-					Text(project.visibility.firstCapitalized)
 				}
 				
 				ScrollView(.horizontal) {

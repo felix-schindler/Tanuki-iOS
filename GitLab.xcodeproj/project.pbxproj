@@ -70,7 +70,7 @@
 		DCD3164C29C77E3600AF7A3E /* UserSmallListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164B29C77E3600AF7A3E /* UserSmallListView.swift */; };
 		DCD3165029C793E600AF7A3E /* LabelsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3164F29C793E600AF7A3E /* LabelsLoader.swift */; };
 		DCD3165229C7993800AF7A3E /* ProjectLanguagesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3165129C7993800AF7A3E /* ProjectLanguagesLoader.swift */; };
-		DCD3165429C799A700AF7A3E /* LanguagesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3165329C799A700AF7A3E /* LanguagesListView.swift */; };
+		DCD3165429C799A700AF7A3E /* LanguageChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3165329C799A700AF7A3E /* LanguageChartView.swift */; };
 		DCDCACC729CC54600011230D /* IssueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDCACC629CC54600011230D /* IssueModel.swift */; };
 		DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEE699127312F8A00AE666C /* EmojiCodes.swift */; };
 		DCF14E3D29C71B8800D1F43B /* IssueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */; };
@@ -145,7 +145,7 @@
 		DCD3164B29C77E3600AF7A3E /* UserSmallListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSmallListView.swift; sourceTree = "<group>"; };
 		DCD3164F29C793E600AF7A3E /* LabelsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelsLoader.swift; sourceTree = "<group>"; };
 		DCD3165129C7993800AF7A3E /* ProjectLanguagesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLanguagesLoader.swift; sourceTree = "<group>"; };
-		DCD3165329C799A700AF7A3E /* LanguagesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagesListView.swift; sourceTree = "<group>"; };
+		DCD3165329C799A700AF7A3E /* LanguageChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageChartView.swift; sourceTree = "<group>"; };
 		DCDCACC629CC54600011230D /* IssueModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueModel.swift; sourceTree = "<group>"; };
 		DCEE699127312F8A00AE666C /* EmojiCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCodes.swift; sourceTree = "<group>"; };
 		DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilter.swift; sourceTree = "<group>"; };
@@ -182,7 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				DC5EB911272DB9D00015BF0D /* ProjectListView.swift */,
-				DCD3165329C799A700AF7A3E /* LanguagesListView.swift */,
+				DCD3165329C799A700AF7A3E /* LanguageChartView.swift */,
 				DC5EB90D272D9C710015BF0D /* IssueListView.swift */,
 				DC5EB913272DBDA20015BF0D /* MergeListView.swift */,
 				DCCC715E273602750091C216 /* LabelListView.swift */,
@@ -511,7 +511,7 @@
 				DC5EB906272D938E0015BF0D /* AccountView.swift in Sources */,
 				DC0EC642279E1733006A7C75 /* TreeLoader.swift in Sources */,
 				DC8FE05329C6499A001C5D82 /* Store.swift in Sources */,
-				DCD3165429C799A700AF7A3E /* LanguagesListView.swift in Sources */,
+				DCD3165429C799A700AF7A3E /* LanguageChartView.swift in Sources */,
 				DC6024662A38A4E400744AFE /* TinyProjectView.swift in Sources */,
 				DCF14E3F29C720E800D1F43B /* AsyncButton.swift in Sources */,
 				DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */,
