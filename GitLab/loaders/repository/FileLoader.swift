@@ -6,32 +6,61 @@
 //
 
 import SwiftUI
+import SwiftHttp
 import MarkdownUI
 
 struct FileLoader: View {
-	/// Project ID
-	@State var id: Int
-	/// Whether to show loading / error
-	@State var showNotFound: Bool = false
+	/// Mark: - Load config
+	let url: HttpUrl
+	let fileName: String
+	
+	/// Mark: - View config
 	/// Whether the file is shown inline (true) or full screen (false)
 	@State var inline: Bool = false
-	/// Path / Name
-	@State var filePath: String
-	/// Branch name
-	@State var refName: String
+	/// Whether to show loading / error
+	@State var showNotFound: Bool = false
+	
+	public init(id: Int, filePath: String, refName: String, inline: Bool = false, showNotFound: Bool = false) {
+		self.url = HttpUrl(
+			host: API.domain,
+			path: [
+				"projects",
+				String(id),
+				"repository",
+				"files"
+			],
+			resource: filePath,
+			suffix: "/raw"
+		)
+		
+		self.fileName = filePath
+		self.inline = inline
+		self.showNotFound = showNotFound
+	}
+	
+	public init(rawUrl: String, inline: Bool = true, showNotFound: Bool = false) {
+		self.url = HttpUrl(string: rawUrl)!
 
+		self.fileName = self.url.url.pathComponents[self.url.url.pathComponents.endIndex - 1]
+		self.inline = inline
+		self.showNotFound = showNotFound
+	}
+	
+	/// Mark: - Load state
+	/// File content (loaded from API)
 	@State var content: String? = nil
 	@State var loadFailed: Bool = false
+	
 	
 	var body: some View {
 		VStack {
 			if (content != nil) {
 				if (inline) {
-					FileView(fileName: filePath, content: content!)
+					FileView(fileName: fileName, content: content!)
 				} else {
-					FileView(fileName: filePath, content: content!)
+					FileView(fileName: fileName, content: content!)
 						.padding(.horizontal)
-						.navigationTitle(filePath)
+						.navigationTitle(fileName)
 				}
 			} else if (showNotFound) {
 				if (loadFailed) {
@@ -52,13 +81,19 @@ struct FileLoader: View {
 	}
 	
 	private func getFile() async -> Void {
-		content = await API.raw(method: .get, endpoint: "projects/\(id)/repository/files", resource: filePath, suffix: "/raw", query: ["ref": refName])
+		do {
+			let res = try await API.raw(method: .get, url: self.url)
+			content = res.utf8String
+		} catch {
+			loadFailed = true
+		}
+		
 		loadFailed = (content == nil)
 	}
 }
 
 struct FileLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		FileLoader(id: 33025310, inline: false, filePath: "GitLab/GitLabApp.swift", refName: "main")
+		FileLoader(id: 33025310, filePath: "GitLab/GitLabApp.swift", refName: "main", inline: false)
 	}
 }
