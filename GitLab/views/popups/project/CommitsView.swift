@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import MarkdownUI
 
 struct CommitsView: View {
 	@Environment(\.presentationMode)
@@ -50,29 +49,17 @@ struct CommitsView: View {
 						ForEach(commits!, id: \.id) { commit in
 							HStack {
 								VStack(alignment: .leading) {
-									DisclosureGroup(content: {
-										VStack {
-											Markdown(commit.message.emojized())
-												.markdownTheme(.small)
-											
-											Text(commit.id)
-												.textSelection(.enabled)
-												.font(.system(.caption, design: .monospaced))
-											
-											HStack(spacing: 2) {
-												Image(systemName: "envelope")
-												Text(commit.authorEmail)
-											}
-										}
-									}, label: {
-										Text(commit.title.emojized())
-											.fontWeight(.medium)
-									})
+									Text(commit.title.emojized())
+										.fontWeight(.medium)
 									
-									HStack {
-										Text(commit.authorName)
-										Text(commit.authoredDate.toString())
-									}.font(.footnote)
+									VStack(alignment: .leading) {
+										HStack {
+											Text(commit.authorName)
+											Text(commit.authoredDate.toString())
+										}.font(.footnote)
+										Text(commit.authorEmail)
+											.font(.caption)
+									}
 								}
 								Spacer()
 								Text(commit.shortId)
