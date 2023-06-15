@@ -8,25 +8,31 @@
 import SwiftUI
 
 private struct IconView: View {
-	@State var type: String
-	@State var state: String
+	var icon: String
+	let color: Color
 	
 	public init(_ type: String, _ state: String) {
-		self.type = type
-		self.state = state
+		if (type == "INCIDENT") {
+			self.icon = "exclamationmark.circle"
+			self.color = .red
+		} else {
+			if (state == "opened") {
+				self.icon = "smallcircle.circle"
+				self.color = .green
+			} else {
+				self.icon = "minus.circle"
+				self.color = .blue
+			}
+			
+			if (type == "TEST_CASE") {
+				self.icon = "testtube.2"
+			}
+		}
 	}
 	
 	var body: some View {
-		if (type == "INCIDENT") {
-			Image(systemName: "exclamationmark.circle")
-				.foregroundStyle(.red)
-		} else if (state == "opened") {
-			Image(systemName: "smallcircle.circle")
-				.foregroundStyle(.green)
-		} else {
-			Image(systemName: "minus.circle")
-				.foregroundStyle(.blue)
-		}
+		Image(systemName: icon)
+			.foregroundStyle(color)
 	}
 }
 
