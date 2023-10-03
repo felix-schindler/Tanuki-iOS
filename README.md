@@ -20,3 +20,15 @@ I'm just a student who started working on this out of boredom.
 - [Xcode](https://developer.apple.com/xcode/)
 - [Swift](https://www.swift.org/)
 - [SwiftUI](https://developer.apple.com/xcode/swiftui/)
+
+## Tokei
+
+===============================================================================
+ Language            Files        Lines         Code     Comments       Blanks
+===============================================================================
+ JSON                    4           41           41            0            0
+ Markdown                1           22            0           14            8
+ Swift                  67         7971         6847          503          621
+===============================================================================
+ Total                  72         8034         6888          517          629
+===============================================================================
