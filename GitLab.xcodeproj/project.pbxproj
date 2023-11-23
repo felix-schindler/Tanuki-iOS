@@ -129,6 +129,7 @@
 		DC7C83D629B8E80400B3BE41 /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
 		DC7C83D829B8E8A700B3BE41 /* GroupLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupLoader.swift; sourceTree = "<group>"; };
 		DC7C83DA29B8F32900B3BE41 /* NewNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteView.swift; sourceTree = "<group>"; };
+		DC877C582AB99C7400B187B4 /* GitLab.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GitLab.entitlements; sourceTree = "<group>"; };
 		DC8FE05229C6499A001C5D82 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		DC90CA5B272E762200B758E7 /* NewIssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIssueView.swift; sourceTree = "<group>"; };
 		DC90CA5D272E763F00B758E7 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
@@ -245,6 +246,7 @@
 		DC5EB8F1272D924D0015BF0D /* GitLab */ = {
 			isa = PBXGroup;
 			children = (
+				DC877C582AB99C7400B187B4 /* GitLab.entitlements */,
 				DC08382029CF04C6009BA826 /* Info.plist */,
 				DC5EB8F6272D924F0015BF0D /* Assets.xcassets */,
 				DC5EB8F2272D924D0015BF0D /* GitLabApp.swift */,
@@ -651,6 +653,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GitLab/GitLab.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GitLab/Preview Content\"";
@@ -672,7 +675,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -685,6 +688,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GitLab/GitLab.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GitLab/Preview Content\"";
@@ -706,7 +710,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -743,7 +747,7 @@
 			repositoryURL = "https://github.com/NVMNovem/NVMColor_swift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.3;
+				minimumVersion = 1.2.5;
 			};
 		};
 		DC8FE05429C65F0F001C5D82 /* XCRemoteSwiftPackageReference "swift-http" */ = {
@@ -759,7 +763,7 @@
 			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui/";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.1.0;
+				minimumVersion = 2.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
