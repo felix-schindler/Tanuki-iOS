@@ -93,7 +93,11 @@ struct SettingsView: View {
 	private func validGitConfig() async -> Bool {
 		var host = url
 		
-		if (host.contains("://")) {
+		// If the entered URL contains
+		// anything else other than the
+		// host (e.g. protocol or path)
+		// then strip it
+		if (host.contains("/")) {
 			let tempUrl = URL(string: url)
 			if (tempUrl != nil && tempUrl!.host != nil) {
 				host = tempUrl!.host!
@@ -112,6 +116,7 @@ struct SettingsView: View {
 			print(user!.name + " logged in")
 			return true
 		} else {
+			print("Failed to login, resetting url and token")
 			API.base = oldUrl
 			API.token = oldToken
 			return false

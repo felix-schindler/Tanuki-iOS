@@ -9,6 +9,9 @@ import SwiftUI
 import MarkdownUI
 
 struct InfoView: View {
+	@Environment(\.presentationMode)
+	var presentationMode: Binding<PresentationMode>
+
 	var body: some View {
 		VStack {
 			Spacer()
@@ -25,6 +28,11 @@ struct InfoView: View {
 	 """
 			}.font(.body)
 				.padding()
+			Spacer()
+			Spacer()
+			Button("Close") {
+				self.presentationMode.wrappedValue.dismiss()
+			}.buttonStyle(.bordered)
 			Spacer()
 		}.onDisappear() {
 			Store.showInfo = false
