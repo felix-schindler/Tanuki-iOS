@@ -105,11 +105,13 @@ struct HomeView: View {
 				}
 			}.toolbar {
 				Button (action: {showEvents = true}) {
-					Image(systemName: "bell.circle")
-				}
+					Image(systemName: "bell")
+				}.buttonStyle(.bordered)
+				 .clipShape(Circle())
 				Button (action: {showNewProject = true}) {
-					Image(systemName: "plus.circle")
-				}
+					Image(systemName: "plus")
+				}.buttonStyle(.bordered)
+				 .clipShape(Circle())
 			}.sheet(isPresented: $showEvents) {
 				NavigationView {
 					EventsView(showClose: true)
