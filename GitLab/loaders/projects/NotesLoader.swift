@@ -27,7 +27,7 @@ struct NotesLoader: View {
 				NoteListView(notes: notes!)
 			} else {
 				if (loadFailed) {
-					Text("Failed to load, please check your internet connection and your token")
+					Text(Messages.failedToLoad)
 				} else {
 					ProgressView()
 				}

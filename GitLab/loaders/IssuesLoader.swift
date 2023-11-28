@@ -24,7 +24,7 @@ struct IssuesLoader: View {
 	
 	// Filters
 	@State var state: IssueState = .opened
-	@State var sort: IssueSort = .desc
+	@State var sort: ProjectSort = .desc
 	@State var orderBy: IssueOrder = .createdAt
 	@State var type: IssueType = .all
 	@State var confidential: Bool = false
@@ -56,7 +56,7 @@ struct IssuesLoader: View {
 				}
 			} else {
 				if (loadFailed) {
-					Text("Failed to load, please check your internet connection and your token")
+					Text(Messages.failedToLoad)
 				} else {
 					ProgressView()
 				}
@@ -101,8 +101,8 @@ struct IssuesLoader: View {
 						}
 						
 						Picker("Sort", selection: $sort) {
-							Text("Ascending").tag(IssueSort.asc)
-							Text("Descending").tag(IssueSort.desc)
+							Text("Ascending").tag(ProjectSort.asc)
+							Text("Descending").tag(ProjectSort.desc)
 						}
 						
 						Picker("Order by", selection: $orderBy) {
@@ -174,7 +174,7 @@ struct IssuesLoader: View {
 			filter[IssueState.NAME.rawValue] = state.rawValue
 		}
 		
-		filter[IssueSort.NAME.rawValue] = sort.rawValue
+		filter[ProjectSort.NAME.rawValue] = sort.rawValue
 		filter[IssueOrder.NAME.rawValue] = orderBy.rawValue
 		
 		if (type != .all) {

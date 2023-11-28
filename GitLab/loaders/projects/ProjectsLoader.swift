@@ -35,7 +35,7 @@ struct ProjectsLoader: View {
 			if (projects != nil) {
 				ProjectListView(projects: projects!)
 			} else if (loadFailed) {
-				Text("Failed to load, please check your internet connection and your token")
+				Text(Messages.failedToLoad)
 			} else {
 				ProgressView()
 			}

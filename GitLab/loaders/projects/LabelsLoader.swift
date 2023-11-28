@@ -34,12 +34,11 @@ struct LabelsLoader: View {
 			if (labels != nil) {
 				LabelListView(labels: labels!, showDescription: true, showEmpty: showEmpty, projectId: id)
 			} else if (loadFailed) {
-				Text("Failed to load, please check your internet connection and your token")
+				Text(Messages.failedToLoad)
 			} else {
 				ProgressView()
 			}
 		}.refreshable {
-			labels = nil
 			labels = await getLabels()
 			loadFailed = (labels == nil)
 		}.onAppear {

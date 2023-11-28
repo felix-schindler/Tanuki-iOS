@@ -46,13 +46,18 @@ struct MilestoneLoader: View {
 					}
 				}
 			} else if (loadFailed) {
-				Text("Failed to load, please check your internet connection and your token")
+				Text(Messages.failedToLoad)
 			} else {
 				ProgressView()
 			}
 		}.refreshable {
 			milestones = await getMilestones()
 			loadFailed = (milestones == nil)
+		}.onAppear {
+			Task {
+				milestones = await getMilestones()
+				loadFailed = (milestones == nil)
+			}
 		}.searchable(text: $search)
 			.onSubmit(of: .search) {
 				Task {
@@ -86,11 +91,6 @@ struct MilestoneLoader: View {
 				}
 			}.sheet(isPresented: $showNewMilestone) {
 				NewMilestone(id: id, groupId: groupId)
-			}.onAppear {
-				Task {
-					milestones = await getMilestones()
-					loadFailed = (milestones == nil)
-				}
 			}.navigationTitle("Milestones")
 	}
 	

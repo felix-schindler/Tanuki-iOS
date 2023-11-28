@@ -47,7 +47,7 @@ struct SnippetsLoader: View {
 					}
 				}
 			} else if (self.loadFailed) {
-				Label("Failed to load, please check your internet connection and your token", systemImage: "exclamationmark.octagon.fill")
+				Label(Messages.failedToLoad, systemImage: "exclamationmark.octagon.fill")
 					.foregroundStyle(.red)
 			} else {
 				ProgressView()

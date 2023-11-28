@@ -28,7 +28,7 @@ struct MemberLoader: View {
 			if (members != nil) {
 				UserSmallListView(users: members!)
 			} else if (loadFailed) {
-				Text("Failed to load, please check your internet connection and your token")
+				Text(Messages.failedToLoad)
 			} else {
 				ProgressView()
 			}

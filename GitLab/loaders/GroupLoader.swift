@@ -18,7 +18,7 @@ struct GroupLoader: View {
 			if (group != nil) {
 				GroupView(group: group!, updateFunction: getGroup)
 			} else if (loadFailed) {
-				Text("Failed to load, please check your internet connection and your token")
+				Text(Messages.failedToLoad)
 			} else {
 				Spacer()
 				ProgressView("Loading")

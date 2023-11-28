@@ -14,12 +14,6 @@ enum IssueState: String {
 			 all
 }
 
-enum IssueSort: String {
-	case NAME = "sort"
-	case asc = "asc",
-			 desc = "desc"
-}
-
 enum IssueOrder: String {
 	case NAME = "order_by"
 	case createdAt = "created_at",

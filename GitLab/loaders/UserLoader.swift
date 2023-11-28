@@ -24,7 +24,7 @@ struct UserLoader: View {
 				SingleUserView(user: user!, status: status!)
 					.navigationTitle(user!.name.isEmpty ? user!.username : user!.name)
 			} else if (loadFailed) {
-				Text("Failed to load, please check your internet connection and your token")
+				Text(Messages.failedToLoad)
 			} else {
 				ProgressView()
 			}

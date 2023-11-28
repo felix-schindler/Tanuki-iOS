@@ -19,7 +19,7 @@ struct ProjectLanguagesLoader: View {
 			if (languages != nil) {
 				LanguageChartView(languages: languages!)
 			} else if (loadFailed) {
-				Text("Failed to load, please check your internet connection and your token")
+				Text(Messages.failedToLoad)
 			} else {
 				Spacer()
 				ProgressView()

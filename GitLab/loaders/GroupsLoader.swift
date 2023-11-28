@@ -22,7 +22,7 @@ struct GroupsLoader: View {
 	@State var showFilter = false
 	
 	@State var search = ""
-	@State var sort: IssueSort = .asc
+	@State var sort: ProjectSort = .asc
 	@State var orderBy: GroupOrder = .name
 	@State var owned = false
 	@State var allAvailable = false
@@ -33,24 +33,21 @@ struct GroupsLoader: View {
 				GroupListView(groups: groups!, updateFunction: getGroups)
 			} else {
 				if (loadFailed) {
-					Text("Failed to load, please check your internet connection and your token")
+					Text(Messages.failedToLoad)
 				} else {
 					ProgressView()
 				}
 			}
 		}.refreshable {
-			if let temp = await getGroups() {
-				groups = temp
-			}
-		}					.searchable(text: $search)
+			groups = await getGroups()
+			loadFailed = (groups == nil)
+		}	.searchable(text: $search)
 			.onSubmit(of: .search) {
 				Task {
-					groups = nil
 					groups = await getGroups()
 					loadFailed = (groups == nil)
 				}
-			}
-			.onAppear {
+			}.onAppear {
 				Task {
 					groups = await getGroups()
 					loadFailed = (groups == nil)
@@ -85,7 +82,6 @@ struct GroupsLoader: View {
 					}
 					
 					AsyncButton("Apply", action: {
-						groups = nil
 						groups = await getGroups()
 						loadFailed = (groups == nil)
 						showFilter = false

@@ -67,7 +67,7 @@ struct FileLoader: View {
 				}
 			} else if (showNotFound) {
 				if (loadFailed) {
-					Text("Failed to load, please check your internet connection and your token")
+					Text(Messages.failedToLoad)
 				} else {
 					ProgressView("Loading")
 				}

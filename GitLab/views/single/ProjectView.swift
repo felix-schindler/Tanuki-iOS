@@ -192,19 +192,18 @@ struct ProjectView: View {
 						.padding(.top, 7.5)
 				}
 			}
-		}.navigationTitle(project.name)
-			.toolbar {
-				AsyncButton(systemImage: "square.and.arrow.up") {
-					await URL(string: project.webUrl)!.share()
-				}
-				if (project.issuesEnabled) {
-					Button(action: {showNewIssue = true}) {
-						Image(systemName: "plus.circle")
-					}
-				}
-			}.sheet(isPresented: $showNewIssue) {
-				NewIssueView(id: project.id)
+		}.toolbar {
+			AsyncButton(systemImage: "square.and.arrow.up") {
+				await URL(string: project.webUrl)!.share()
 			}
+			if (project.issuesEnabled) {
+				Button(action: {showNewIssue = true}) {
+					Image(systemName: "plus.circle")
+				}
+			}
+		}.sheet(isPresented: $showNewIssue) {
+			NewIssueView(id: project.id)
+		}.navigationTitle(project.name)
 	}
 	
 	private func notificationLevel(_ id: Int) -> String {

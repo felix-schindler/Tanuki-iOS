@@ -22,7 +22,7 @@ struct MergeLoader: View {
 	
 	// Filters
 	@State var orderBy: MergeOrder = .createdAt
-	@State var sort: IssueSort = .desc
+	@State var sort: ProjectSort = .desc
 	@State var state: MergeState = .opened
 	
 	var body: some View {
@@ -37,7 +37,7 @@ struct MergeLoader: View {
 				}
 			} else {
 				if (loadFailed) {
-					Text("Failed to load, please check your internet connection and your token")
+					Text(Messages.failedToLoad)
 				} else {
 					ProgressView()
 				}
@@ -77,8 +77,8 @@ struct MergeLoader: View {
 						}
 						
 						Picker("Sort", selection: $sort) {
-							Text("Ascending").tag(IssueSort.asc)
-							Text("Descending").tag(IssueSort.desc)
+							Text("Ascending").tag(ProjectSort.asc)
+							Text("Descending").tag(ProjectSort.desc)
 						}
 						
 						Picker("Order by", selection: $orderBy) {
@@ -106,7 +106,7 @@ struct MergeLoader: View {
 		}
 		
 		filter[MergeOrder.NAME.rawValue] = orderBy.rawValue
-		filter[IssueSort.NAME.rawValue] = sort.rawValue
+		filter[ProjectSort.NAME.rawValue] = sort.rawValue
 		filter[MergeState.NAME.rawValue] = state.rawValue
 		
 		var endpoint = "merge_requests"
