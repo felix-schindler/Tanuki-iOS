@@ -58,13 +58,12 @@ struct FileLoader: View {
 	var body: some View {
 		VStack {
 			if (content != nil) {
-				if (inline) {
-					FileView(fileName: filePath, content: content!)
-				} else {
-					FileView(fileName: filePath, content: content!)
-						.padding(.horizontal)
-						.navigationTitle(filePath)
-				}
+				FileView(filePath: filePath, content: content!)
+					.if(!inline) { view in
+						view
+							.padding(.horizontal)
+							.navigationTitle(filePath)
+					}
 			} else if (showNotFound) {
 				if (loadFailed) {
 					Text(Messages.failedToLoad)
