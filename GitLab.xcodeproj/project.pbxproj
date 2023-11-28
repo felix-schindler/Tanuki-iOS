@@ -72,6 +72,8 @@
 		DCD3165229C7993800AF7A3E /* ProjectLanguagesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3165129C7993800AF7A3E /* ProjectLanguagesLoader.swift */; };
 		DCD3165429C799A700AF7A3E /* LanguageChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD3165329C799A700AF7A3E /* LanguageChartView.swift */; };
 		DCDCACC729CC54600011230D /* IssueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDCACC629CC54600011230D /* IssueModel.swift */; };
+		DCDD1E0F2B15FFBF00D0B6B9 /* Splash in Frameworks */ = {isa = PBXBuildFile; productRef = DCDD1E0E2B15FFBF00D0B6B9 /* Splash */; };
+		DCDD1E112B16025C00D0B6B9 /* CodeHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD1E102B16025C00D0B6B9 /* CodeHighlight.swift */; };
 		DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEE699127312F8A00AE666C /* EmojiCodes.swift */; };
 		DCF14E3D29C71B8800D1F43B /* IssueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */; };
 		DCF14E3F29C720E800D1F43B /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF14E3E29C720E800D1F43B /* AsyncButton.swift */; };
@@ -148,6 +150,7 @@
 		DCD3165129C7993800AF7A3E /* ProjectLanguagesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLanguagesLoader.swift; sourceTree = "<group>"; };
 		DCD3165329C799A700AF7A3E /* LanguageChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageChartView.swift; sourceTree = "<group>"; };
 		DCDCACC629CC54600011230D /* IssueModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueModel.swift; sourceTree = "<group>"; };
+		DCDD1E102B16025C00D0B6B9 /* CodeHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeHighlight.swift; sourceTree = "<group>"; };
 		DCEE699127312F8A00AE666C /* EmojiCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCodes.swift; sourceTree = "<group>"; };
 		DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilter.swift; sourceTree = "<group>"; };
 		DCF14E3E29C720E800D1F43B /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
@@ -161,6 +164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC1F1BE229CCCFA600AF7573 /* NVMColor in Frameworks */,
+				DCDD1E0F2B15FFBF00D0B6B9 /* Splash in Frameworks */,
 				DCFCB06E29B7C3D800F18CDC /* MarkdownUI in Frameworks */,
 				DC01EDFD2B14E1F500EC0624 /* SwiftHttp in Frameworks */,
 			);
@@ -312,6 +316,7 @@
 				DC06BE62273F1D3C0049599E /* Errors.swift */,
 				DC8FE05229C6499A001C5D82 /* Store.swift */,
 				DC90CA62272E878900B758E7 /* Utils.swift */,
+				DCDD1E102B16025C00D0B6B9 /* CodeHighlight.swift */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -396,6 +401,7 @@
 				DCFCB06D29B7C3D800F18CDC /* MarkdownUI */,
 				DC1F1BE129CCCFA600AF7573 /* NVMColor */,
 				DC01EDFC2B14E1F500EC0624 /* SwiftHttp */,
+				DCDD1E0E2B15FFBF00D0B6B9 /* Splash */,
 			);
 			productName = GitLab;
 			productReference = DC5EB8EF272D924D0015BF0D /* GitLab.app */;
@@ -429,6 +435,7 @@
 				DCFCB06C29B7C3D800F18CDC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				DC1F1BE029CCCFA600AF7573 /* XCRemoteSwiftPackageReference "NVMColor_swift" */,
 				DC01EDFB2B14E1F500EC0624 /* XCRemoteSwiftPackageReference "swift-http" */,
+				DCDD1E0D2B15FFBF00D0B6B9 /* XCRemoteSwiftPackageReference "Splash" */,
 			);
 			productRefGroup = DC5EB8F0272D924D0015BF0D /* Products */;
 			projectDirPath = "";
@@ -520,6 +527,7 @@
 				DC6024682A38A4EB00744AFE /* SmallProjectView.swift in Sources */,
 				DC569B3C2A0460F9005B99B3 /* NewMilestone.swift in Sources */,
 				DC4F956A272EC3B100354E1D /* APIAnswers.swift in Sources */,
+				DCDD1E112B16025C00D0B6B9 /* CodeHighlight.swift in Sources */,
 				DC115A5B2A38F5770034CC00 /* MilestoneView.swift in Sources */,
 				DC4F9554272EB4AF00354E1D /* IssuesLoader.swift in Sources */,
 			);
@@ -758,6 +766,14 @@
 				minimumVersion = 1.2.5;
 			};
 		};
+		DCDD1E0D2B15FFBF00D0B6B9 /* XCRemoteSwiftPackageReference "Splash" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JohnSundell/Splash";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.16.0;
+			};
+		};
 		DCFCB06C29B7C3D800F18CDC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui/";
@@ -778,6 +794,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DC1F1BE029CCCFA600AF7573 /* XCRemoteSwiftPackageReference "NVMColor_swift" */;
 			productName = NVMColor;
+		};
+		DCDD1E0E2B15FFBF00D0B6B9 /* Splash */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DCDD1E0D2B15FFBF00D0B6B9 /* XCRemoteSwiftPackageReference "Splash" */;
+			productName = Splash;
 		};
 		DCFCB06D29B7C3D800F18CDC /* MarkdownUI */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -7,18 +7,19 @@
 
 import SwiftUI
 import MarkdownUI
+import Splash
 
 struct FileView: View {
-	@State var content: String
-	
+	@Environment(\.colorScheme) private var colorScheme
+	private var content: String
+
 	init(filePath: String, content: String) {
 		let url = URL(fileURLWithPath: filePath)
 		let fileType = url.pathExtension
 		
-		if (fileType == "md") {
-			self.content = content
-		} else {
-			self.content = "```" + fileType + "\n" + content + "\n```"
+		self.content = content
+		if (fileType != "md") {
+			self.content = "```\(fileType)\n\(self.content)\n```"
 		}
 	}
 	
@@ -26,11 +27,21 @@ struct FileView: View {
 		VStack {
 			ScrollView {
 				Markdown(content)
-					.markdownTheme(.gitHub)
+					.markdownCodeSyntaxHighlighter(.splash(theme: self.theme))
 					.textSelection(.enabled)
 					.frame(maxWidth: .infinity, alignment: .leading)
 			}
 			Spacer()
+		}
+	}
+	
+	private var theme: Splash.Theme {
+		// NOTE: We are ignoring the Splash theme font
+		switch self.colorScheme {
+		case .dark:
+			return .wwdc17(withFont: .init(size: 16))
+		default:
+			return .presentation(withFont: .init(size: 16))
 		}
 	}
 }
