@@ -17,9 +17,10 @@ struct FileView: View {
 		let url = URL(fileURLWithPath: filePath)
 		let fileType = url.pathExtension
 		
-		self.content = content
 		if (fileType != "md") {
-			self.content = "```\(fileType)\n\(self.content)\n```"
+			self.content = "```\(fileType)\n\(content)\n```"
+		} else {
+			self.content = content
 		}
 	}
 	
