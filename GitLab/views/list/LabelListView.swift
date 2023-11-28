@@ -17,7 +17,7 @@ struct LabelListView: View {
 	@State var deletionError = false
 	
 	var body: some View {
-		if (labels.isEmpty && showEmpty) {
+		if (showEmpty && labels.isEmpty) {
 			Text("There are no labels")
 		} else {
 			ForEach(labels, id: \.id) { label in
@@ -32,19 +32,21 @@ struct LabelListView: View {
 						Text(label.description!.emojized())
 							.font(.footnote)
 					}
-				}.swipeActions {
-					AsyncButton(action: {
-						if (projectId != nil) {
-							let code = await API.delete(endpoint: "projects/\(projectId!)/labels/\(label.id)")
-							deletionError = (code.rawValue < 200 || code.rawValue >= 300)
-						} else {
-							deletionError = true
-						}
-					}, role: .destructive, label: {
-						Label("Delete", systemImage: "trash")
-					}).alert(isPresented: $deletionError, content: {
-						Alert(title: Text("Error"), message: Text("Failed to delete label"), dismissButton: .default(Text("OK")))
-					})
+				}.if(showDescription) { view in
+					view.swipeActions {
+						AsyncButton(action: {
+							if (projectId != nil) {
+								let code = await API.delete(endpoint: "projects/\(projectId!)/labels/\(label.id)")
+								deletionError = (code.rawValue < 200 || code.rawValue >= 300)
+							} else {
+								deletionError = true
+							}
+						}, role: .destructive, label: {
+							Label("Delete", systemImage: "trash")
+						}).alert(isPresented: $deletionError, content: {
+							Alert(title: Text("Error"), message: Text("Failed to delete label"), dismissButton: .default(Text("OK")))
+						})
+					}
 				}
 			}
 		}
