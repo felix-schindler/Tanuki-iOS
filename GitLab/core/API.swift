@@ -43,7 +43,6 @@ class API {
 															.contentType: "application/json"
 														 ],
 														 body: reqBody)
-		
 		print(method, url.url.absoluteString)
 		return try await client.dataTask(req)
 	}

@@ -37,8 +37,7 @@ struct AsyncButton<Label: View>: View {
 					}
 				}
 			}
-		)
-		.disabled(isPerformingTask)
+		).disabled(isPerformingTask)
 	}
 }
 
