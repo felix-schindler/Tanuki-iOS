@@ -11,11 +11,11 @@ import MarkdownUI
 struct InfoView: View {
 	@Environment(\.presentationMode)
 	var presentationMode: Binding<PresentationMode>
-
+	
 	var body: some View {
-		VStack {
-			Spacer()
-			Markdown {
+		NavigationView {
+			VStack {
+				Markdown {
 	 """
 	 ## Tanuki for GitLab
 	 
@@ -26,16 +26,19 @@ struct InfoView: View {
 	 or
 	 [send an email](mailto:contact-project+felix-schindler-gitlab-ios-33025310-issue-@incoming.gitlab.com).
 	 """
-			}.font(.body)
-				.padding()
-			Spacer()
-			Spacer()
-			Button("Close") {
-				self.presentationMode.wrappedValue.dismiss()
-			}.buttonStyle(.bordered)
-			Spacer()
-		}.onDisappear() {
-			Store.showInfo = false
+				}.font(.body)
+					.padding()
+			}.onDisappear() {
+				Store.showInfo = false
+			}.toolbar {
+				Button(role: .cancel, action: {
+					self.presentationMode.wrappedValue.dismiss()
+				}, label: {
+					Label("Close", systemImage: "xmark.app.fill")
+						.labelStyle(.titleAndIcon)
+						.foregroundStyle(.red)
+				})
+			}
 		}
 	}
 }
