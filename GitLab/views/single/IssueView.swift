@@ -18,7 +18,7 @@ struct IssueView: View {
 	var presentationMode: Binding<PresentationMode>
 	
 	/// Issue that's being displayed
-	@State var issue: Issue
+	private var issue: Issue
 	
 	/// Controls whether to show "new" sheets
 	@State var showNewIssue = false
@@ -30,6 +30,10 @@ struct IssueView: View {
 	/// Controlls the alert after issue was deleted
 	@State var deletion = false
 	@State var deletionError = false
+
+	public init(issue: Issue) {
+		self.issue = issue
+	}
 	
 	var body: some View {
 		List {
@@ -178,9 +182,8 @@ struct IssueView: View {
 	}
 	
 	private func changeState() async -> Void {
-		let res = await IssueModel.changeState(issue.iid, projectId: issue.projectId, state: issue.state)
-		if (res != nil) {
-			issue = res!
+		if let res = await IssueModel.changeState(issue.iid, projectId: issue.projectId, state: issue.state) {
+			issue = res
 		} else {
 			stateError = true
 		}

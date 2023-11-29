@@ -62,11 +62,8 @@ struct IssuesLoader: View {
 				}
 			}
 		}.refreshable {
-			if let temp = await getIssues() {
-				issues = temp
-			} else {
-				loadFailed = true
-			}
+			issues = await getIssues()
+			loadFailed = (issues == nil)
 		}.onAppear {
 			Task {
 				issues = await getIssues()
@@ -75,12 +72,10 @@ struct IssuesLoader: View {
 		}.searchable(text: $search)
 			.onSubmit(of: .search) {
 				Task {
-					issues = nil
 					issues = await getIssues()
 					loadFailed = (issues == nil)
 				}
-			}
-			.toolbar {
+			}.toolbar {
 				Button(action: {showFilter = true}) {
 					Image(systemName: "line.3.horizontal.decrease.circle")
 				}

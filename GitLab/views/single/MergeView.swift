@@ -9,9 +9,12 @@ import SwiftUI
 import MarkdownUI
 
 struct MergeView: View {
-	@State var mergeRequest: MergeRequest
-	
-	@State var showNewNote = false
+	private var mergeRequest: MergeRequest
+	@State var newNoteContent = false
+
+	public init(mergeRequest: MergeRequest) {
+		self.mergeRequest = mergeRequest
+	}
 	
 	var body: some View {
 		List {
@@ -85,24 +88,60 @@ struct MergeView: View {
 			}
 			
 			Section("Notes") {
-				Button("Add new note") { showNewNote = true }
+				HStack {
+					TextField("New note", text: $address, axis: .vertical)
+						.textFieldStyle(.roundedBorder)
+						.padding()
+					AsyncButton(systemImage: "check") {
+						await addNote()
+					}
+				}
 				NotesLoader(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge)
 			}
-		}.navigationBarTitleDisplayMode(.inline)
-			.toolbar {
-				Text(mergeRequest.state.firstCapitalized)
-					.font(.footnote)
-					.padding(.horizontal, 6)
-					.padding(.vertical, 4)
-					.background((mergeRequest.state == "merged") ? .blue : (mergeRequest.state == "closed") ? .red : .green)
-					.foregroundStyle(.white)
-					.cornerRadius(10)
-				AsyncButton(systemImage: "square.and.arrow.up") {
-					await URL(string: mergeRequest.webUrl)!.share()
+
+			Section("Actions") {
+				let name: String = (mergeRequest.state == "opened" ? "Close MR" : "Reopen MR")
+				AsyncButton(name) {
+					await changeState()
 				}
-			}.sheet(isPresented: $showNewNote) {
-				NewNoteView(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge)
+				
+				AsyncButton("Delete MR", role: .destructive) {
+					await deleteMR()
+				}
 			}
+		}.toolbar {
+			Text(mergeRequest.state.firstCapitalized)
+				.font(.footnote)
+				.padding(.horizontal, 6)
+				.padding(.vertical, 4)
+				.background((mergeRequest.state == "merged") ? .blue : (mergeRequest.state == "closed") ? .red : .green)
+				.foregroundStyle(.white)
+				.cornerRadius(10)
+			AsyncButton(systemImage: "square.and.arrow.up") {
+				await URL(string: mergeRequest.webUrl)!.share()
+			}
+		}.navigationBarTitleDisplayMode(.inline)
+	}
+
+
+	// TODO: Import MergeModel file into project
+	private func changeState() async -> Void {
+		if let res = await MergeModel.changeState(mergeRequest.iid, projectId: mergeRequest.projectId, state: mergeRequest.state) {
+			mergeRequest = res
+		} else {
+			stateError = true
+		}
+	}
+	
+	private func deleteMR() async -> Void {
+		deletion = await MergeModel.deleteMR(issue.iid, projectId: issue.projectId)
+		deletionError = !deletion
+	}
+	
+	private func saveNewNote() async -> Bool {
+		// TODO: Check what the API returns here
+		let newIssue = await API.req(type: Note.self, method: .post, endpoint: "projects/\(issue.id)/issues/\(issue.iid)/notes", query: ["body": content])
+		return newIssue != nil
 	}
 }
 
