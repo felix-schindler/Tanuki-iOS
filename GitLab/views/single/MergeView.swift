@@ -142,14 +142,25 @@ struct MergeView: View {
 			AsyncButton(systemImage: "square.and.arrow.up") {
 				await URL(string: mergeRequest.webUrl)!.share()
 			}
-		}.sheet() {
+		}.sheet(isPresented: $showMergeOptions) {
 			Form {
-				// @State var merge_commit_message: String			// Custom merge commit message.
-				// @State var merge_when_pipeline_succeeds: Bool	// If true, the merge request is merged when the pipeline succeeds.
-				// @State var sha: String							// If present, then this SHA must match the HEAD of the source branch, otherwise the merge fails.
-				// @State var should_remove_source_branch: Bool	// If true, removes the source branch.
-				// @State var squash_commit_message: String		// Custom squash commit message.
-				// @State var squash: Bool							// If true, the commits are squashed into a single commit on merge.
+				Section("Settings") {
+					TextField("Custom merge commit message", text: $sha)
+
+					// If true, the merge request is merged when the pipeline succeeds.
+					Toggle("Only merge when the pipeline succeeds", isOn: $merge_when_pipeline_succeeds)
+
+					// SHA must match the HEAD of the source branch, otherwise the merge fails
+					TextField("SHA", text: $sha)
+
+					Toggle("Should remove source branch", isOn: $should_remove_source_branch)
+
+					Toggle("Squash commits", isOn: $squash)
+					if (squash) {
+						TextField("Custom squash commit message", text: $squash_commit_message)
+					}
+				}
+
 				AsyncButton("Confirm Merge") {
 					await merge()
 				}.controlSize(.large)
