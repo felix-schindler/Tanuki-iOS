@@ -99,7 +99,8 @@ struct MergeLoader: View {
 	}
 	
 	private func getMRs() async -> [MergeRequest]? {
-		var filter = ["with_labels_details": "true"]
+		// var filter = ["with_labels_details": "true"]
+		var filter: Dictionary<String, String> = [:]
 		
 		if (search != "") {
 			filter["search"] = search

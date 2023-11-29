@@ -173,7 +173,7 @@ struct MergeRequest: Codable {
 	let author: UserSmall
 	let assignees: [UserSmall]?
 	let reviewers: [UserSmall]?
-	let labels: [APILabel]?
+	let labels: [String]?
 	let draft: Bool
 	let workInProgress: Bool
 	let milestone: Milestone?
