@@ -32,8 +32,6 @@ struct EventsView: View {
 								.foregroundStyle(.secondary)
 							Text(getStupidText(event: event))
 						}
-					}.refreshable {
-						await getEvents()
 					}
 				}
 			} else if (loadFailed) {
@@ -49,6 +47,8 @@ struct EventsView: View {
 			Task {
 				await getEvents()
 			}
+		}.refreshable {
+			await getEvents()
 		}.navigationBarTitle("Events")
 	}
 	
