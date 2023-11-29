@@ -74,6 +74,7 @@
 		DCDCACC729CC54600011230D /* IssueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDCACC629CC54600011230D /* IssueModel.swift */; };
 		DCDD1E0F2B15FFBF00D0B6B9 /* Splash in Frameworks */ = {isa = PBXBuildFile; productRef = DCDD1E0E2B15FFBF00D0B6B9 /* Splash */; };
 		DCDD1E112B16025C00D0B6B9 /* CodeHighlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDD1E102B16025C00D0B6B9 /* CodeHighlight.swift */; };
+		DCDFEBE62B17459500E30561 /* MergeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCDFEBE52B17459500E30561 /* MergeModel.swift */; };
 		DCEE699227312F8A00AE666C /* EmojiCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEE699127312F8A00AE666C /* EmojiCodes.swift */; };
 		DCF14E3D29C71B8800D1F43B /* IssueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */; };
 		DCF14E3F29C720E800D1F43B /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF14E3E29C720E800D1F43B /* AsyncButton.swift */; };
@@ -151,6 +152,7 @@
 		DCD3165329C799A700AF7A3E /* LanguageChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageChartView.swift; sourceTree = "<group>"; };
 		DCDCACC629CC54600011230D /* IssueModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueModel.swift; sourceTree = "<group>"; };
 		DCDD1E102B16025C00D0B6B9 /* CodeHighlight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeHighlight.swift; sourceTree = "<group>"; };
+		DCDFEBE52B17459500E30561 /* MergeModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MergeModel.swift; sourceTree = "<group>"; };
 		DCEE699127312F8A00AE666C /* EmojiCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCodes.swift; sourceTree = "<group>"; };
 		DCF14E3C29C71B8800D1F43B /* IssueFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilter.swift; sourceTree = "<group>"; };
 		DCF14E3E29C720E800D1F43B /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
@@ -352,6 +354,7 @@
 		DCDCACC529CC52E40011230D /* models */ = {
 			isa = PBXGroup;
 			children = (
+				DCDFEBE52B17459500E30561 /* MergeModel.swift */,
 				DCDCACC629CC54600011230D /* IssueModel.swift */,
 			);
 			path = models;
@@ -465,6 +468,7 @@
 				DCD3164C29C77E3600AF7A3E /* UserSmallListView.swift in Sources */,
 				DC0BD8662A38DD9D0034097F /* SmallGroupView.swift in Sources */,
 				DCAAC170279ED63800EC685F /* GroupsLoader.swift in Sources */,
+				DCDFEBE62B17459500E30561 /* MergeModel.swift in Sources */,
 				DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */,
 				DCDCACC729CC54600011230D /* IssueModel.swift in Sources */,
 				DC0EC641279E1733006A7C75 /* FileLoader.swift in Sources */,

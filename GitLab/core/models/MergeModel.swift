@@ -10,7 +10,7 @@ import Foundation
 class MergeModel {
 	public static func changeState(_ iid: Int, projectId: Int, state: String) async -> MergeRequest? {
 		let stateChange = (state == "opened" ? "close" : "reopen")
-		return await API.req(type: Issue.self, method: .put, endpoint: "projects/\(projectId)/merge_requests/\(iid)", query: ["state_event": stateChange])
+		return await API.req(type: MergeRequest.self, method: .put, endpoint: "projects/\(projectId)/merge_requests/\(iid)", query: ["state_event": stateChange])
 	}
 	
 	public static func deleteMR(_ iid: Int, projectId: Int) async -> Bool {

@@ -15,7 +15,16 @@ struct MilestoneView: View {
 	var body: some View {
 		NavigationLink(destination: IssuesLoader(id: id, state: (milestone.state == "active" ? IssueState.opened : IssueState.all), milestone: milestone.title)) {
 			HStack {
-				MilestoneIcon(state: milestone.state)
+				if (milestone.state == "closed") {
+					Image(systemName: "flag.circle")
+						.foregroundStyle(.red)
+				} else if (milestone.expired) {
+					Image(systemName: "flag.circle")
+						.foregroundStyle(.orange)
+				} else {
+					Image(systemName: "flag.circle")
+						.foregroundStyle(.green)
+				}
 				VStack(alignment: .leading) {
 					Text(milestone.title.emojized())
 						.fontWeight(.medium)
@@ -49,27 +58,6 @@ struct MilestoneView: View {
 			}
 		}
 		
-	}
-}
-
-struct MilestoneIcon: View {
-	private var state: String
-
-	public init(_ state: String) {
-		self.state = state
-	}
-
-	var body: some View {
-		if (milestone.state == "closed") {
-			Image(systemName: "flag.circle")
-				.foregroundStyle(.red)
-		} else if (milestone.expired) {
-			Image(systemName: "flag.circle")
-				.foregroundStyle(.orange)
-		} else {
-			Image(systemName: "flag.circle")
-				.foregroundStyle(.green)
-		}
 	}
 }
 

@@ -10,17 +10,17 @@ import MarkdownUI
 
 struct MergeView: View {
 	private var mergeRequest: MergeRequest
-	@State var newNoteContent = false
-
+	@State var newNoteContent = ""
+	
 	//Mark: - Merge options
 	@State var showMergeOptions: Bool = false
-	@State var merge_commit_message: String			// Custom merge commit message.
-	@State var merge_when_pipeline_succeeds: Bool	// If true, the merge request is merged when the pipeline succeeds.
-	@State var sha: String							// If present, then this SHA must match the HEAD of the source branch, otherwise the merge fails.
-	@State var should_remove_source_branch: Bool	// If true, removes the source branch.
-	@State var squash_commit_message: String		// Custom squash commit message.
-	@State var squash: Bool							// If true, the commits are squashed into a single commit on merge.
-
+	@State var merge_commit_message: String = ""					// Custom merge commit message.
+	@State var merge_when_pipeline_succeeds: Bool = false	// If true, the merge request is merged when the pipeline succeeds.
+	@State var sha: String = ""														// If present, then this SHA must match the HEAD of the source branch, otherwise the merge fails.
+	@State var should_remove_source_branch: Bool = false	// If true, removes the source branch.
+	@State var squash_commit_message: String = ""					// Custom squash commit message.
+	@State var squash: Bool = false												// If true, the commits are squashed into a single commit on merge.
+	
 	public init(mergeRequest: MergeRequest) {
 		self.mergeRequest = mergeRequest
 	}
@@ -95,7 +95,7 @@ struct MergeView: View {
 					}
 				}
 			}
-
+			
 			DisclosureGroup(content: {
 				NavigationLink("Commits", destination: NotesLoader(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge))
 				NavigationLink("Changes", destination: NotesLoader(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge))
@@ -104,17 +104,17 @@ struct MergeView: View {
 				Label("Manage", systemImage: "person.2")
 					.foregroundStyle(.primary)
 			})
-
+			
 			Section("Actions") {
 				Button("Merge this request") {
 					showMergeOptions = true
 				}
-
+				
 				let name: String = (mergeRequest.state == "opened" ? "Close MR" : "Reopen MR")
 				AsyncButton(name) {
 					await changeState()
 				}
-
+				
 				AsyncButton("Delete MR", role: .destructive) {
 					await deleteMR()
 				}
@@ -122,11 +122,11 @@ struct MergeView: View {
 			
 			Section("Notes") {
 				HStack {
-					TextField("New note", text: $address, axis: .vertical)
+					TextField("New note", text: $newNoteContent/* iOS 16: , axis: .vertical */)
 						.textFieldStyle(.roundedBorder)
 						.padding()
 					AsyncButton(systemImage: "check") {
-						await addNote()
+						await saveNewNote()
 					}
 				}
 				NotesLoader(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge)
@@ -146,21 +146,21 @@ struct MergeView: View {
 			Form {
 				Section("Settings") {
 					TextField("Custom merge commit message", text: $sha)
-
+					
 					// If true, the merge request is merged when the pipeline succeeds.
 					Toggle("Only merge when the pipeline succeeds", isOn: $merge_when_pipeline_succeeds)
-
+					
 					// SHA must match the HEAD of the source branch, otherwise the merge fails
 					TextField("SHA", text: $sha)
-
+					
 					Toggle("Should remove source branch", isOn: $should_remove_source_branch)
-
+					
 					Toggle("Squash commits", isOn: $squash)
 					if (squash) {
 						TextField("Custom squash commit message", text: $squash_commit_message)
 					}
 				}
-
+				
 				AsyncButton("Confirm Merge") {
 					await merge()
 				}.controlSize(.large)
@@ -169,31 +169,27 @@ struct MergeView: View {
 			}
 		}.navigationBarTitleDisplayMode(.inline)
 	}
-
-
+	
+	
 	// TODO: Import MergeModel file into project
 	private func changeState() async -> Void {
-		if let res = await MergeModel.changeState(mergeRequest.iid, projectId: mergeRequest.projectId, state: mergeRequest.state) {
-			mergeRequest = res
-		} else {
-			stateError = true
-		}
+		// TODO: Do sth with the res; Handle errors
+		_ = await MergeModel.changeState(mergeRequest.iid, projectId: mergeRequest.projectId, state: mergeRequest.state)
 	}
 	
 	private func deleteMR() async -> Void {
-		deletion = await MergeModel.deleteMR(issue.iid, projectId: issue.projectId)
-		deletionError = !deletion
+		// TODO: Do sth with the res; Handle errors
+		_ = await MergeModel.deleteMR(mergeRequest.iid, projectId: mergeRequest.projectId)
 	}
 	
-	private func saveNewNote() async -> Bool {
-		// TODO: Check what the API returns here
-		let newIssue = await API.req(type: Note.self, method: .post, endpoint: "projects/\(mergeRequest.projectId)/merge_requests/\(mergeRequest.iid)/notes", query: ["body": content])
-		return newIssue != nil
+	private func saveNewNote() async -> Void {
+		// TODO: Do sth with the res; Handle errors
+		_ = await API.req(type: Note.self, method: .post, endpoint: "projects/\(mergeRequest.projectId)/merge_requests/\(mergeRequest.iid)/notes", query: ["body": newNoteContent])
 	}
-
+	
 	private func merge() async -> Void {
-		// TODO: Add all options to the request
-		let merge = await API.req(type: MergeRequest.self, method: .put, endpoint: "projects/\(mergeRequest.projectId)/merge_requests/\(mergeRequest.iid)/merge")
+		// TODO: Do sth with the res; Handle errors
+		_ = await API.req(type: MergeRequest.self, method: .put, endpoint: "projects/\(mergeRequest.projectId)/merge_requests/\(mergeRequest.iid)/merge")
 	}
 }
 

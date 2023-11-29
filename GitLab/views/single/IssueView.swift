@@ -18,7 +18,7 @@ struct IssueView: View {
 	var presentationMode: Binding<PresentationMode>
 	
 	/// Issue that's being displayed
-	private var issue: Issue
+	@State var issue: Issue
 	
 	/// Controls whether to show "new" sheets
 	@State var showNewIssue = false
@@ -30,10 +30,6 @@ struct IssueView: View {
 	/// Controlls the alert after issue was deleted
 	@State var deletion = false
 	@State var deletionError = false
-
-	public init(issue: Issue) {
-		self.issue = issue
-	}
 	
 	var body: some View {
 		List {
