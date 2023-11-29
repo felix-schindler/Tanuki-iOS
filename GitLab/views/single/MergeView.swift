@@ -12,6 +12,15 @@ struct MergeView: View {
 	private var mergeRequest: MergeRequest
 	@State var newNoteContent = false
 
+	//Mark: - Merge options
+	@State var showMergeOptions: Bool = false
+	@State var merge_commit_message: String			// Custom merge commit message.
+	@State var merge_when_pipeline_succeeds: Bool	// If true, the merge request is merged when the pipeline succeeds.
+	@State var sha: String							// If present, then this SHA must match the HEAD of the source branch, otherwise the merge fails.
+	@State var should_remove_source_branch: Bool	// If true, removes the source branch.
+	@State var squash_commit_message: String		// Custom squash commit message.
+	@State var squash: Bool							// If true, the commits are squashed into a single commit on merge.
+
 	public init(mergeRequest: MergeRequest) {
 		self.mergeRequest = mergeRequest
 	}
@@ -86,6 +95,30 @@ struct MergeView: View {
 					}
 				}
 			}
+
+			DisclosureGroup(content: {
+				NavigationLink("Commits", destination: NotesLoader(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge))
+				NavigationLink("Changes", destination: NotesLoader(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge))
+				NavigationLink("Diffs", destination: NotesLoader(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge))
+			}, label: {
+				Label("Manage", systemImage: "person.2")
+					.foregroundStyle(.primary)
+			})
+
+			Section("Actions") {
+				Button("Merge this request") {
+					showMergeOptions = true
+				}
+
+				let name: String = (mergeRequest.state == "opened" ? "Close MR" : "Reopen MR")
+				AsyncButton(name) {
+					await changeState()
+				}
+
+				AsyncButton("Delete MR", role: .destructive) {
+					await deleteMR()
+				}
+			}
 			
 			Section("Notes") {
 				HStack {
@@ -98,17 +131,6 @@ struct MergeView: View {
 				}
 				NotesLoader(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge)
 			}
-
-			Section("Actions") {
-				let name: String = (mergeRequest.state == "opened" ? "Close MR" : "Reopen MR")
-				AsyncButton(name) {
-					await changeState()
-				}
-				
-				AsyncButton("Delete MR", role: .destructive) {
-					await deleteMR()
-				}
-			}
 		}.toolbar {
 			Text(mergeRequest.state.firstCapitalized)
 				.font(.footnote)
@@ -119,6 +141,20 @@ struct MergeView: View {
 				.cornerRadius(10)
 			AsyncButton(systemImage: "square.and.arrow.up") {
 				await URL(string: mergeRequest.webUrl)!.share()
+			}
+		}.sheet() {
+			Form {
+				// @State var merge_commit_message: String			// Custom merge commit message.
+				// @State var merge_when_pipeline_succeeds: Bool	// If true, the merge request is merged when the pipeline succeeds.
+				// @State var sha: String							// If present, then this SHA must match the HEAD of the source branch, otherwise the merge fails.
+				// @State var should_remove_source_branch: Bool	// If true, removes the source branch.
+				// @State var squash_commit_message: String		// Custom squash commit message.
+				// @State var squash: Bool							// If true, the commits are squashed into a single commit on merge.
+				AsyncButton("Confirm Merge") {
+					await merge()
+				}.controlSize(.large)
+					.tint(.green)
+					.buttonStyle(.bordered)
 			}
 		}.navigationBarTitleDisplayMode(.inline)
 	}
@@ -140,8 +176,13 @@ struct MergeView: View {
 	
 	private func saveNewNote() async -> Bool {
 		// TODO: Check what the API returns here
-		let newIssue = await API.req(type: Note.self, method: .post, endpoint: "projects/\(issue.id)/issues/\(issue.iid)/notes", query: ["body": content])
+		let newIssue = await API.req(type: Note.self, method: .post, endpoint: "projects/\(mergeRequest.projectId)/merge_requests/\(mergeRequest.iid)/notes", query: ["body": content])
 		return newIssue != nil
+	}
+
+	private func merge() async -> Void {
+		// TODO: Add all options to the request
+		let merge = await API.req(type: MergeRequest.self, method: .put, endpoint: "projects/\(mergeRequest.projectId)/merge_requests/\(mergeRequest.iid)/merge")
 	}
 }
 
