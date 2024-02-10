@@ -192,7 +192,7 @@ struct MergeView: View {
 	private func saveNewNote() async -> Void {
 		// TODO: Do sth with the res; Handle errors
 		if (!newNoteContent.trim().isEmpty) {
-			if let res = await API.req(type: Note.self, method: .post, endpoint: "projects/\(mergeRequest.projectId)/merge_requests/\(mergeRequest.iid)/notes", query: ["body": newNoteContent]) {
+			if let _ = await API.req(type: Note.self, method: .post, endpoint: "projects/\(mergeRequest.projectId)/merge_requests/\(mergeRequest.iid)/notes", query: ["body": newNoteContent]) {
 				newNoteContent = ""
 			} else {
 				// TODO: Maybe show another toast?
