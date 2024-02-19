@@ -135,7 +135,7 @@ struct SingleUserView: View {
 
 struct SingleUserView_Previews: PreviewProvider {
 	static var previews: some View {
-		NavigationView {
+		NavigationStack {
 			SingleUserView(user: User(id: 9005085, username: "felix-schindler", name: "Felix", state: "active", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png", webUrl: "https://gitlab.com/felix-schindler", createdAt: Date(), bio: "Studying computer science as a German-Chinese double degree", bot: true, location: "Stuttgart, Germany", publicEmail: "", skype: "", linkedin: "", twitter: "", discord: "", websiteUrl: "https://schindlerfelix.de", organization: "WUD", jobTitle: "Software Developer", pronouns: "he/him", workInformation: "Software Developer at WUD", followers: 0, following: 0, localTime: "8:51 AM", isFollowed: false), status: UserStatus(emoji: "+1", message: "This is a status."))
 		}
 	}

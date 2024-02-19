@@ -58,7 +58,7 @@ struct SnippetView: View {
 
 struct SnippetView_Previews: PreviewProvider {
 	static var previews: some View {
-		NavigationView {
+		NavigationStack {
 			SnippetView(snippet: Snippet(
 				id: 1,
 				title: "Some title :smile:",

@@ -26,7 +26,7 @@ struct NewMilestone: View {
 	@State var showError = false
 	
 	var body: some View {
-		NavigationView {
+		NavigationStack {
 			Form {
 				TextField("Title", text: $title)
 				

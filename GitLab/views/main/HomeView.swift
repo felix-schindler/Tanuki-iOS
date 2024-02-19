@@ -15,7 +15,7 @@ struct HomeView: View {
 	@State var showNewProject = false
 	
 	var body: some View {
-		NavigationView {
+		NavigationStack {
 			List {
 				Section("Your work") {
 					NavigationLink(destination: IssuesLoader(scope: .createdByMe)) {
@@ -111,7 +111,7 @@ struct HomeView: View {
 					Image(systemName: "plus.circle")
 				}
 			}.sheet(isPresented: $showEvents) {
-				NavigationView {
+				NavigationStack {
 					EventsView(showClose: true)
 				}
 			}.sheet(isPresented: $showNewProject) {

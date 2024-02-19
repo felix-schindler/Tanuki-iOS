@@ -19,7 +19,7 @@ struct SettingsView: View {
 	@State var configError: Bool = false
 	
 	var body: some View {
-		NavigationView {
+		NavigationStack {
 			VStack {
 				Label("GitLab URL", systemImage: "link")
 					.font(.headline)

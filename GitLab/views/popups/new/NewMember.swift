@@ -24,7 +24,7 @@ struct NewMember: View {
 	@State var showError = false
 	
 	var body: some View {
-		NavigationView {
+		NavigationStack {
 			Form {
 				Section {
 					TextField("Username", text: $username)

@@ -15,7 +15,7 @@ struct AccountView: View {
 	@State var showSettings: Bool = false
 	
 	var body: some View {
-		NavigationView {
+		NavigationStack {
 			UserLoader(loadSelf: true)
 				.toolbar {
 					Button (action: {showInfo = true}) {

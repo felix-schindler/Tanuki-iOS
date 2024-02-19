@@ -20,7 +20,7 @@ struct NewNoteView: View {
 	@State var type: discussionType // Whether it's an issue, commit or merge request
 	
 	var body: some View {
-		NavigationView {
+		NavigationStack {
 			List {
 				Section("Content") {
 					TextEditor(text: $content)

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ExploreView: View {
 	var body: some View {
-		NavigationView {
+		NavigationStack {
 			List {
 				NavigationLink(destination: ProjectsLoader()) {
 					Label(

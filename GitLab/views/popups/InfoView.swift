@@ -13,7 +13,7 @@ struct InfoView: View {
 	var presentationMode: Binding<PresentationMode>
 	
 	var body: some View {
-		NavigationView {
+		NavigationStack {
 			VStack {
 				Markdown {
 """

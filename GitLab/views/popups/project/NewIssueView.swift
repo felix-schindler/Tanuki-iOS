@@ -18,7 +18,7 @@ struct NewIssueView: View {
 	@State var isError: Bool = false
 	
 	var body: some View {
-		NavigationView {
+		NavigationStack {
 			List {
 				Section("Title") {
 					TextField("🚀 To the moon", text: $title)

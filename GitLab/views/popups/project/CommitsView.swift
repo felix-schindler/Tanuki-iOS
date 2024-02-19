@@ -106,7 +106,7 @@ struct CommitsView: View {
 
 struct CommitsView_Previews: PreviewProvider {
 	static var previews: some View {
-		NavigationView {
+		NavigationStack {
 			CommitsView(id: 33025310, refName: "main", branches: [
 				Branch(name: "main", commit: Commit(id: "00761f920931144587a5b213976e41243e6ae746", shortId: "shortId", title: "Update CommitsView.swift", message: "Update CommitsView.swift", authorName: "Felix", authorEmail: "felix-schindler@outlook.com", authoredDate: Date(), webUrl: "https://gitlab.com/felix-schindler/gitlab-ios/-/commit/45b3c9c9de808f1cad4c5d6a0073a633aeda2de7"), merged: false, protected: false, developersCanPush: true, developersCanMerge: true, canPush: true)
 			], commits: [

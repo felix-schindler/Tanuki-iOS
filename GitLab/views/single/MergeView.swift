@@ -222,7 +222,7 @@ struct MergeView: View {
 
 struct MergeView_Previews: PreviewProvider {
 	static var previews: some View {
-		NavigationView {
+		NavigationStack {
 			MergeView(mergeRequest: MergeRequest(
 				id: 199059114,
 				iid: 9414,

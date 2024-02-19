@@ -112,7 +112,7 @@ struct MilestoneLoader: View {
 
 struct MilestoneLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		NavigationView {
+		NavigationStack {
 			MilestoneLoader(id: 33025310)
 		}
 	}
