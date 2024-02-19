@@ -87,7 +87,7 @@ struct MergeView: View {
 									Text(label.emojized())
 										.padding(.horizontal, 8)
 										.padding(.vertical, 3)
-										.background(.secondary)
+										.background(Color(.systemGray5))
 										.cornerRadius(25)
 								}
 							}
