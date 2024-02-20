@@ -84,11 +84,7 @@ struct MergeView: View {
 						ScrollView(.horizontal) {
 							HStack {
 								ForEach(mergeRequest.labels!, id: \.self) { label in
-									Text(label.emojized())
-										.padding(.horizontal, 8)
-										.padding(.vertical, 3)
-										.background(Color(.systemGray5))
-										.cornerRadius(25)
+									PillView(label.emojized())
 								}
 							}
 						}
@@ -137,13 +133,11 @@ struct MergeView: View {
 				NotesLoader(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge)
 			}
 		}.toolbar {
-			Text(mergeRequest.state.firstCapitalized)
-				.font(.footnote)
-				.padding(.horizontal, 6)
-				.padding(.vertical, 4)
-				.background((mergeRequest.state == "merged") ? .blue : (mergeRequest.state == "closed") ? .red : .green)
-				.foregroundStyle(.white)
-				.cornerRadius(10)
+			PillView(
+				mergeRequest.state.firstCapitalized,
+				bgColor: (mergeRequest.state == "merged") ? .blue : (mergeRequest.state == "closed") ? .red : .green,
+				fgColor: .white
+			).font(.footnote)
 			AsyncButton(systemImage: "square.and.arrow.up") {
 				await URL(string: mergeRequest.webUrl)!.share()
 			}

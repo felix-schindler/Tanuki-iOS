@@ -24,12 +24,8 @@ struct SmallProjectView: View {
 							.fontWeight(.medium)
 						if let accessLevel = project.permissions?.projectAccess?.accessLevel {
 							Spacer()
-							Text(Project.accessRole(accessLevel))
+							PillView(Project.accessRole(accessLevel))
 								.font(.caption)
-								.padding(.horizontal, 6)
-								.padding(.vertical, 4)
-								.background(Color(.systemGray3))
-								.cornerRadius(10)
 						}
 					}
 					if (!(project.description?.isEmpty ?? true)) {
@@ -62,12 +58,7 @@ struct SmallProjectView: View {
 								HStack(spacing: 2) {
 									Image(systemName: "tag")
 									ForEach(project.tagList, id: \.hashValue) { tag in
-										Text(tag)
-											.padding(.horizontal, 4)
-											.padding(.vertical, 2)
-											.foregroundStyle(.primary)
-											.background(Color(.systemGray5))
-											.cornerRadius(7.5)
+										PillView(tag)
 									}
 								}.font(.caption2)
 							}

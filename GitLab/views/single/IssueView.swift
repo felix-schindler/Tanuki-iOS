@@ -142,13 +142,11 @@ struct IssueView: View {
 			}
 		}.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
-				Text(issue.state.firstCapitalized)
-					.font(.footnote)
-					.padding(.horizontal, 6)
-					.padding(.vertical, 4)
-					.background(issue.state == "opened" ? .green : .blue)
-					.foregroundStyle(.white)
-					.cornerRadius(10)
+				PillView(
+					issue.state.firstCapitalized,
+					bgColor: issue.state == "opened" ? .green : .blue,
+					fgColor: .white
+				).font(.footnote)
 				AsyncButton(systemImage: "square.and.arrow.up") {
 					await URL(string: issue.webUrl)!.share()
 				}

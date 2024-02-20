@@ -22,12 +22,7 @@ struct LabelListView: View {
 		} else {
 			ForEach(labels, id: \.id) { label in
 				VStack(alignment: .leading) {
-					Text(label.name.emojized())
-						.padding(.horizontal, 8)
-						.padding(.vertical, 3)
-						.background(Color.init(hex: label.color))
-						.foregroundStyle(Color.init(hex: label.textColor)!)
-						.cornerRadius(25)
+					PillView(label.name.emojized(), bgColor: Color(hex: label.color), fgColor: Color(hex: label.textColor))
 					if (showDescription && !(label.description?.isEmpty ?? true)) {
 						Text(label.description!.emojized())
 							.font(.footnote)
@@ -55,10 +50,18 @@ struct LabelListView: View {
 
 struct LabelListView_Previews: PreviewProvider {
 	static var previews: some View {
-		LabelListView(labels: [
-			APILabel(id: 1, name: "enhancement", description: "Something describing it", color: "#5cb85c", textColor: "#FFFFFF"),
-			APILabel(id: 2, name: "bug", description: "", color: "#d9534f", textColor: "#FFFFFF"),
-			APILabel(id: 3, name: "documentation", description: "", color: "#f0ad4e", textColor: "#FFFFFF")
-		], showDescription: true)
+		List {
+			HStack {
+				LabelListView(labels: [
+					APILabel(id: 2, name: "bug", description: "", color: "#d9534f", textColor: "#FFFFFF"),
+					APILabel(id: 3, name: "documentation", description: "", color: "#0000FF", textColor: "#FFFFFF")
+				], showDescription: false)
+			}
+			LabelListView(labels: [
+				APILabel(id: 1, name: ":rocket: enhancement", description: "Something describing it", color: "#5cb85c", textColor: "#FFFFFF"),
+				APILabel(id: 2, name: "bug", description: "", color: "#d9534f", textColor: "#FFFFFF"),
+				APILabel(id: 3, name: "documentation", description: "", color: "#f0ad4e", textColor: "#FFFFFF")
+			], showDescription: true)
+		}
 	}
 }

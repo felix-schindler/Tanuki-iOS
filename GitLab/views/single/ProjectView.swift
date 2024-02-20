@@ -47,13 +47,8 @@ struct ProjectView: View {
 							HStack(spacing: 2) {
 								Image(systemName: "tag")
 								ForEach(project.tagList, id: \.hashValue) { tag in
-									Text(tag)
+									PillView(tag)
 										.font(.footnote)
-										.padding(.horizontal, 4)
-										.padding(.vertical, 2)
-										.foregroundStyle(.primary)
-										.background(Color(.systemGray5))
-										.cornerRadius(7.5)
 								}
 							}
 						}
