@@ -180,6 +180,11 @@ struct ReleaseView: View {
 			body: body
 		) {
 			releases?.append(res)
+			
+			showNewRelease = false
+			tagName = ""
+			releaseName = ""
+			description = ""
 		} else {
 			newReleaseError = true
 		}
