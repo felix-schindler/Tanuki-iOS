@@ -18,33 +18,35 @@ struct NewIssueView: View {
 	@State var isError: Bool = false
 	
 	var body: some View {
-		NavigationStack {
-			List {
-				Section("Title") {
-					TextField("🚀 To the moon", text: $title)
-				}
-				Section("Description - NOT NEEDED") {
-					TextEditor(text: $description)
-				}
-			}.alert(isPresented: $isError, content: {
-				Alert(title: Text("Error"), message: Text("Failed to create issue"), dismissButton: .default(Text("OK")))
-			}).navigationBarTitle("New issue")
-				.toolbar {
-					ToolbarItem(placement: .navigationBarLeading) {
-						Button("Cancel", role: .cancel, action: {
-							self.presentationMode.wrappedValue.dismiss()
-						}).foregroundStyle(.red)
+		VStack {
+			Form {
+				Section {
+					TextField("Title", text: $title)
+					TextField(
+						"Description (Markdown supported)",
+						text: $description,
+						axis: .vertical
+					).frame(minHeight: 150, alignment: .top)
+				}.presentationDetents([.large, .fraction(0.45)])
+			}
+			
+			HStack {
+				Button("Cancel", role: .cancel) {
+					self.presentationMode.wrappedValue.dismiss()
+				}.tint(.red)
+					.buttonStyle(.bordered)
+				AsyncButton("Create issue") {
+					isError = await !saveNewIssue()
+					if (!isError) {
+						self.presentationMode.wrappedValue.dismiss()
 					}
-					ToolbarItem(placement: .navigationBarTrailing) {
-						AsyncButton("Save") {
-							isError = await !saveNewIssue()
-							if (!isError) {
-								self.presentationMode.wrappedValue.dismiss()
-							}
-						}
-					}
-				}
-		}
+				}.tint(.green)
+					.controlSize(.large)
+					.buttonStyle(.borderedProminent)
+			}
+		}.alert(isPresented: $isError, content: {
+			Alert(title: Text("Error"), message: Text("Failed to create issue"), dismissButton: .default(Text("OK")))
+		})
 	}
 	
 	private func saveNewIssue() async -> Bool {
@@ -55,6 +57,11 @@ struct NewIssueView: View {
 
 struct NewIssueView_Previews: PreviewProvider {
 	static var previews: some View {
-		NewIssueView(id: Int())
+		@State var presented = true
+		
+		NavigationStack {
+		}.sheet(isPresented: $presented) {
+			NewIssueView(id: Int())
+		}
 	}
 }
