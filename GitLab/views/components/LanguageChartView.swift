@@ -14,17 +14,22 @@ struct LanguageChartView: View {
 	var body: some View {
 		Chart {
 			ForEach(languages.sorted(by: >), id: \.key) { key, value in
-				BarMark(x: .value("Language", key), y: .value("Percent", value))
+				BarMark(
+					x: .value("Percent", value)
+				).foregroundStyle(by: .value("Language", key))
 			}
-		}
+		}.frame(height: 100)
 	}
 }
 
 struct LanguageChartView_Previews: PreviewProvider {
 	static var previews: some View {
-		LanguageChartView(languages: [
-			"Swift": 50.0,
-			"Dart": 50.0
-		])
+		NavigationStack {
+			LanguageChartView(languages: [
+				"Swift": 50.0,
+				"Dart": 30.0,
+				"HTML": 20.0
+			]).padding()
+		}
 	}
 }
