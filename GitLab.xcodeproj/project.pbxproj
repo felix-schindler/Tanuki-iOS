@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DC01EDFD2B14E1F500EC0624 /* SwiftHttp in Frameworks */ = {isa = PBXBuildFile; productRef = DC01EDFC2B14E1F500EC0624 /* SwiftHttp */; };
 		DC06BE63273F1D3C0049599E /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC06BE62273F1D3C0049599E /* Errors.swift */; };
 		DC0897FD2730516600B8ACDA /* NoteListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0897FC2730516600B8ACDA /* NoteListView.swift */; };
 		DC0BD8642A38DD910034097F /* VisibilityIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0BD8632A38DD910034097F /* VisibilityIcon.swift */; };
@@ -21,6 +20,7 @@
 		DC115A5B2A38F5770034CC00 /* MilestoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC115A5A2A38F5770034CC00 /* MilestoneView.swift */; };
 		DC115A5D2A38FF2D0034CC00 /* SmallIIssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC115A5C2A38FF2D0034CC00 /* SmallIIssueView.swift */; };
 		DC115A5F2A3903D00034CC00 /* SmallMergeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC115A5E2A3903D00034CC00 /* SmallMergeView.swift */; };
+		DC146E5D2B8530D200217A18 /* SwiftHttp in Frameworks */ = {isa = PBXBuildFile; productRef = DC146E5C2B8530D200217A18 /* SwiftHttp */; };
 		DC1F1BDF29CCC93A00AF7573 /* NewLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1F1BDE29CCC93A00AF7573 /* NewLabelView.swift */; };
 		DC1F1BE229CCCFA600AF7573 /* NVMColor in Frameworks */ = {isa = PBXBuildFile; productRef = DC1F1BE129CCCFA600AF7573 /* NVMColor */; };
 		DC2A243A29C8FC0600A9FED7 /* MergeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2A243929C8FC0600A9FED7 /* MergeFilter.swift */; };
@@ -169,8 +169,8 @@
 			files = (
 				DC1F1BE229CCCFA600AF7573 /* NVMColor in Frameworks */,
 				DCDD1E0F2B15FFBF00D0B6B9 /* Splash in Frameworks */,
+				DC146E5D2B8530D200217A18 /* SwiftHttp in Frameworks */,
 				DCFCB06E29B7C3D800F18CDC /* MarkdownUI in Frameworks */,
-				DC01EDFD2B14E1F500EC0624 /* SwiftHttp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,8 +406,8 @@
 			packageProductDependencies = (
 				DCFCB06D29B7C3D800F18CDC /* MarkdownUI */,
 				DC1F1BE129CCCFA600AF7573 /* NVMColor */,
-				DC01EDFC2B14E1F500EC0624 /* SwiftHttp */,
 				DCDD1E0E2B15FFBF00D0B6B9 /* Splash */,
+				DC146E5C2B8530D200217A18 /* SwiftHttp */,
 			);
 			productName = GitLab;
 			productReference = DC5EB8EF272D924D0015BF0D /* GitLab.app */;
@@ -440,8 +440,8 @@
 			packageReferences = (
 				DCFCB06C29B7C3D800F18CDC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				DC1F1BE029CCCFA600AF7573 /* XCRemoteSwiftPackageReference "NVMColor_swift" */,
-				DC01EDFB2B14E1F500EC0624 /* XCRemoteSwiftPackageReference "swift-http" */,
 				DCDD1E0D2B15FFBF00D0B6B9 /* XCRemoteSwiftPackageReference "Splash" */,
+				DC146E5B2B8530D200217A18 /* XCRemoteSwiftPackageReference "swift-http" */,
 			);
 			productRefGroup = DC5EB8F0272D924D0015BF0D /* Products */;
 			projectDirPath = "";
@@ -758,12 +758,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		DC01EDFB2B14E1F500EC0624 /* XCRemoteSwiftPackageReference "swift-http" */ = {
+		DC146E5B2B8530D200217A18 /* XCRemoteSwiftPackageReference "swift-http" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://gitlab.com/felix-schindler/swift-http";
+			repositoryURL = "https://github.com/felix-schindler/swift-http/";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = revision;
+				revision = 6b76b2d73dbba2f631f6abc8b6d72fb585bbbb53;
 			};
 		};
 		DC1F1BE029CCCFA600AF7573 /* XCRemoteSwiftPackageReference "NVMColor_swift" */ = {
@@ -787,15 +787,15 @@
 			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui/";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.0;
+				minimumVersion = 2.3.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		DC01EDFC2B14E1F500EC0624 /* SwiftHttp */ = {
+		DC146E5C2B8530D200217A18 /* SwiftHttp */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DC01EDFB2B14E1F500EC0624 /* XCRemoteSwiftPackageReference "swift-http" */;
+			package = DC146E5B2B8530D200217A18 /* XCRemoteSwiftPackageReference "swift-http" */;
 			productName = SwiftHttp;
 		};
 		DC1F1BE129CCCFA600AF7573 /* NVMColor */ = {
