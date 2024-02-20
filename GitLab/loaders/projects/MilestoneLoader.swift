@@ -65,11 +65,11 @@ struct MilestoneLoader: View {
 					loadFailed = (milestones == nil)
 				}
 			}.toolbar {
-				Button(action: { showFilter = true }) {
-					Image(systemName: "line.3.horizontal.decrease.circle")
+				RoundIconButton("Show Filters", icon: "line.3.horizontal.decrease") {
+					showFilter = true
 				}
-				Button(action: { showNewMilestone = true }) {
-					Image(systemName: "plus.circle")
+				RoundIconButton("New Milestone", icon: "plus") {
+					showNewMilestone = true
 				}
 			}.sheet(isPresented: $showFilter) {
 				List {

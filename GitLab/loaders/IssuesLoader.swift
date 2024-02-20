@@ -76,12 +76,12 @@ struct IssuesLoader: View {
 					loadFailed = (issues == nil)
 				}
 			}.toolbar {
-				Button(action: {showFilter = true}) {
-					Image(systemName: "line.3.horizontal.decrease.circle")
+				RoundIconButton("Filters", icon: "line.3.horizontal.decrease") {
+					showFilter = true
 				}
 				if (id != 0) {
-					Button(action: {showNewIssue = true}) {
-						Image(systemName: "plus.circle")
+					RoundIconButton("New Issue", icon: "plus") {
+						showNewIssue = true
 					}
 				}
 			}.sheet(isPresented: $showNewIssue) {
@@ -204,6 +204,8 @@ struct IssuesLoader: View {
 
 struct IssuesLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		IssuesLoader(id: 0)
+		NavigationStack {
+			IssuesLoader(id: 33025310)
+		}
 	}
 }

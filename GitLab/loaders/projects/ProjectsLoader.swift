@@ -40,8 +40,8 @@ struct ProjectsLoader: View {
 				ProgressView()
 			}
 		}.toolbar {
-			Button(action: {showFilter = true}) {
-				Image(systemName: "line.3.horizontal.decrease.circle")
+			RoundIconButton("Show Filters", icon: "line.3.horizontal.decrease") {
+				showFilter = true
 			}
 		}.refreshable {
 			if let temp = await getProjects() {

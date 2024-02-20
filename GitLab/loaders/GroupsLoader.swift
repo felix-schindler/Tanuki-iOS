@@ -53,9 +53,9 @@ struct GroupsLoader: View {
 					loadFailed = (groups == nil)
 				}
 			}.toolbar {
-				Button(action: { showFilter = true }, label: {
-					Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
-				})
+				RoundIconButton("Show Filters", icon: "line.3.horizontal.decrease") {
+					showFilter = true
+				}
 			}.sheet(isPresented: $showFilter) {
 				Form {
 					Section {
@@ -117,8 +117,8 @@ struct GroupsLoader: View {
 	}
 }
 
-struct MemberGroupsLoader_Previews: PreviewProvider {
-	static var previews: some View {
+#Preview {
+	NavigationStack {
 		GroupsLoader()
 	}
 }

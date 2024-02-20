@@ -104,11 +104,11 @@ struct HomeView: View {
 					await getStarredProjects()
 				}
 			}.toolbar {
-				Button (action: {showEvents = true}) {
-					Image(systemName: "bell.circle")
+				RoundIconButton("Events", icon: "bell") {
+					showEvents = true
 				}
-				Button (action: {showNewProject = true}) {
-					Image(systemName: "plus.circle")
+				RoundIconButton("New Project", icon: "plus") {
+					showNewProject = true
 				}
 			}.sheet(isPresented: $showEvents) {
 				NavigationStack {

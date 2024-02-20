@@ -62,8 +62,8 @@ struct MergeLoader: View {
 				}
 			}
 			.toolbar {
-				Button(action: {showFilter = true}) {
-					Image(systemName: "line.3.horizontal.decrease.circle")
+				RoundIconButton("Show Filters", icon: "line.3.horizontal.decrease") {
+					showFilter = true
 				}
 			}.sheet(isPresented: $showFilter) {
 				List {
@@ -126,6 +126,8 @@ struct MergeLoader: View {
 
 struct MergeLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		MergeLoader(id: 0)
+		NavigationStack {
+			MergeLoader(id: 33025310)
+		}
 	}
 }

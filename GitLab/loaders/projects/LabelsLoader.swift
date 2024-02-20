@@ -47,8 +47,8 @@ struct LabelsLoader: View {
 				loadFailed = (labels == nil)
 			}
 		}.toolbar {
-			Button (action: { showNewLabel = true }) {
-				Image(systemName: "plus.circle")
+			RoundIconButton("New Label", icon: "plus") {
+				showNewLabel = true
 			}
 		}.sheet(isPresented: $showNewLabel) {
 			NewLabelView(id: id, groupId: groupId)
@@ -63,6 +63,8 @@ struct LabelsLoader: View {
 
 struct LabelsLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		LabelsLoader(id: 33025310)
+		NavigationStack {
+			LabelsLoader(id: 33025310)
+		}
 	}
 }

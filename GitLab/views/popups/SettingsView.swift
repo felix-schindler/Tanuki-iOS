@@ -67,21 +67,17 @@ struct SettingsView: View {
 					}
 				}, label: {
 					Label("Save configuration", systemImage: "checkmark.circle")
-				}).tint(.accentColor)
+				}).tint(.green)
 					.buttonStyle(.bordered)
 					.controlSize(.large)
 			}.toolbar {
-				AsyncButton(action: {
+				RoundIconButton("Cancel", icon: "xmark", role: .cancel) {
 					if (API.domain.isEmpty || API.token.isEmpty) {
 						configError = true
 					} else {
 						self.presentationMode.wrappedValue.dismiss()
 					}
-				}, role: .cancel, label: {
-					Label("Cancel", systemImage: "xmark.app.fill")
-						.labelStyle(.titleAndIcon)
-						.foregroundStyle(.red)
-				})
+				}.tint(.red)
 			}.alert(isPresented: $configError) {
 				Alert(title: Text("Error"), message: Text("Invalid configuration, please check the entered url and token"), dismissButton: .default(Text("OK")))
 			}
@@ -126,6 +122,10 @@ struct SettingsView: View {
 
 struct SettingsView_Previews: PreviewProvider {
 	static var previews: some View {
-		SettingsView()
+		@State var presented = true
+		NavigationStack {
+		}.sheet(isPresented: $presented) {
+			SettingsView()
+		}
 	}
 }

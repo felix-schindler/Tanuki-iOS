@@ -43,9 +43,9 @@ struct MemberLoader: View {
 			}
 		}.toolbar {
             if (id != 0 || groupId != 0) {
-                Button (action: { showNewMember = true }) {
-                    Image(systemName: "person.badge.plus")
-                }
+				RoundIconButton("New Member", icon: "person.badge.plus") {
+					showNewMember = true
+				}
             }
 		}.sheet(isPresented: $showNewMember) {
 			NewMember(id: id, groupId: groupId)
@@ -65,8 +65,8 @@ struct MemberLoader: View {
 	}
 }
 
-struct MemberLoader_Previews: PreviewProvider {
-	static var previews: some View {
-		MemberLoader()
+#Preview {
+	NavigationStack {
+		MemberLoader(id: 33025310)
 	}
 }

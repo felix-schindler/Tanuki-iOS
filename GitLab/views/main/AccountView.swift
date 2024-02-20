@@ -18,11 +18,11 @@ struct AccountView: View {
 		NavigationStack {
 			UserLoader(loadSelf: true)
 				.toolbar {
-					Button (action: {showInfo = true}) {
-						Image(systemName: "info.circle")
+					RoundIconButton("Show Info", icon: "info") {
+						showInfo = true
 					}
-					Button (action: {showSettings = true}) {
-						Image(systemName: "gearshape")
+					RoundIconButton("Show Settings", icon: "gearshape") {
+						showSettings = true
 					}
 				}.sheet(isPresented: $showSettings) {
 					SettingsView()
