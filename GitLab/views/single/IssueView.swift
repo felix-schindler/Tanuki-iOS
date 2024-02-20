@@ -22,7 +22,10 @@ struct IssueView: View {
 	
 	/// Controls whether to show "new" sheets
 	@State var showNewIssue = false
-	@State var showNewNote = false
+	
+	/// New Note things
+	@State var newNoteContent = ""
+	@State var newNoteError = false
 	
 	/// Controlls the alert after an error occured while changing state
 	@State var stateError = false
@@ -125,52 +128,68 @@ struct IssueView: View {
 				}
 			}
 			
-			Section("Notes") {
-				Button("Add new note", action: { showNewNote = true })
-				NotesLoader(id: issue.projectId, iid: issue.iid, type: discussionType.Issue)
-			}
-			
 			Section("Actions") {
 				let name: String = (issue.state == "opened" ? "Close issue" : "Reopen issue")
-				AsyncButton(name) {
-					await changeState()
-				}
+				let icon: String = (issue.state == "opened" ? "minus.circle" : "smallcircle.circle")
 				
-				AsyncButton("Delete issue", role: .destructive) {
+				AsyncButton(action: {
+					await changeState()
+				}) {
+					Label(name, systemImage: icon)
+				}.foregroundStyle(
+					(issue.state == "opened" ? .blue : .green)
+				)
+				
+				AsyncButton(action: {
 					await deleteIssue()
-				}
+				}, role: .destructive) {
+					Label("Delete issue", systemImage: "trash")
+				}.foregroundStyle(.red)
 			}
-		}.navigationBarTitleDisplayMode(.inline)
-			.toolbar {
-				PillView(
-					issue.state.firstCapitalized,
-					bgColor: issue.state == "opened" ? .green : .blue,
-					fgColor: .white
-				).font(.footnote)
-				AsyncButton(systemImage: "square.and.arrow.up") {
-					await URL(string: issue.webUrl)!.share()
+			
+			Section("Notes") {
+				HStack {
+					TextField(
+						"New note",
+						text: $newNoteContent,
+						axis: .vertical
+					)
+					AsyncButton(systemImage: "arrow.up") {
+						await saveNewNote()
+					}.buttonStyle(.bordered)
+						.clipShape(Circle())
 				}
-				RoundIconButton("New Issue", icon: "plus") {
-					showNewIssue = true
-				}
-			}.sheet(isPresented: $showNewIssue) {
-				NewIssueView(id: issue.projectId)
-			}.sheet(isPresented: $showNewNote) {
-				NewNoteView(id: issue.projectId, iid: issue.iid, type: discussionType.Issue)
-			}.alert("Failed to change issue state", isPresented: $stateError, actions: {
-				Button("OK") {
-					stateError = false
-				}
-			}).alert("Issue has been deleted", isPresented: $deletion, actions: {
-				Button("OK") {
-					deletion = false
-					self.presentationMode.wrappedValue.dismiss()
-				}
-			}).alert("Failed to delete issue", isPresented: $deletionError, actions: {
-				Button("OK") {
-					deletionError = false
-				}
-			})
+				NotesLoader(id: issue.projectId, iid: issue.iid, type: discussionType.Issue)
+			}
+		}.toolbar {
+			PillView(
+				issue.state.firstCapitalized,
+				bgColor: issue.state == "opened" ? .green : .blue,
+				fgColor: .white
+			).font(.footnote)
+			AsyncButton(systemImage: "square.and.arrow.up") {
+				await URL(string: issue.webUrl)!.share()
+			}
+			RoundIconButton("New Issue", icon: "plus") {
+				showNewIssue = true
+			}
+		}.sheet(isPresented: $showNewIssue) {
+			NewIssueView(id: issue.projectId)
+		}.alert("Failed to change issue state", isPresented: $stateError, actions: {
+			Button("OK") {
+				stateError = false
+			}
+		}).alert("Issue has been deleted", isPresented: $deletion, actions: {
+			Button("OK") {
+				deletion = false
+				self.presentationMode.wrappedValue.dismiss()
+			}
+		}).alert("Failed to delete issue", isPresented: $deletionError, actions: {
+			Button("OK") {
+				deletionError = false
+			}
+		}).navigationBarTitleDisplayMode(.inline)
+			.scrollDismissesKeyboard(.interactively)
 	}
 	
 	private func changeState() async -> Void {
@@ -184,6 +203,19 @@ struct IssueView: View {
 	private func deleteIssue() async -> Void {
 		deletion = await IssueModel.deleteIssue(issue.iid, projectId: issue.projectId)
 		deletionError = !deletion
+	}
+	
+	private func saveNewNote() async -> Void {
+		// TODO: Do sth with the res; Handle errors
+		if (!newNoteContent.trim().isEmpty) {
+			if let _ = await API.req(type: Note.self, method: .post, endpoint: "projects/\(issue.projectId)/issues/\(issue.iid)/notes", query: ["body": newNoteContent]) {
+				newNoteContent = ""
+			} else {
+				// TODO: Maybe show another toast?
+			}
+		} else {
+			// TODO: Maybe show toast?
+		}
 	}
 }
 

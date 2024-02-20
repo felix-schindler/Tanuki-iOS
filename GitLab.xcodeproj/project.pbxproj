@@ -56,7 +56,6 @@
 		DC7A85C02731AB4E0000CF4D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A85BF2731AB4E0000CF4D /* SettingsView.swift */; };
 		DC7C83D729B8E80400B3BE41 /* GroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7C83D629B8E80400B3BE41 /* GroupView.swift */; };
 		DC7C83D929B8E8A700B3BE41 /* GroupLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7C83D829B8E8A700B3BE41 /* GroupLoader.swift */; };
-		DC7C83DB29B8F32900B3BE41 /* NewNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7C83DA29B8F32900B3BE41 /* NewNoteView.swift */; };
 		DC8FE05329C6499A001C5D82 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8FE05229C6499A001C5D82 /* Store.swift */; };
 		DC90CA5C272E762200B758E7 /* NewIssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA5B272E762200B758E7 /* NewIssueView.swift */; };
 		DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC90CA5D272E763F00B758E7 /* EventsView.swift */; };
@@ -135,7 +134,6 @@
 		DC7A85BF2731AB4E0000CF4D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DC7C83D629B8E80400B3BE41 /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
 		DC7C83D829B8E8A700B3BE41 /* GroupLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupLoader.swift; sourceTree = "<group>"; };
-		DC7C83DA29B8F32900B3BE41 /* NewNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteView.swift; sourceTree = "<group>"; };
 		DC877C582AB99C7400B187B4 /* GitLab.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GitLab.entitlements; sourceTree = "<group>"; };
 		DC8FE05229C6499A001C5D82 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		DC90CA5B272E762200B758E7 /* NewIssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIssueView.swift; sourceTree = "<group>"; };
@@ -349,7 +347,6 @@
 				DCF27D172A04D47400C18EE5 /* project */,
 				DC569B382A0455F8005B99B3 /* new */,
 				DC90CA5D272E763F00B758E7 /* EventsView.swift */,
-				DC7C83DA29B8F32900B3BE41 /* NewNoteView.swift */,
 				DC7A85BF2731AB4E0000CF4D /* SettingsView.swift */,
 				DC2B300029C09625009ADC0D /* InfoView.swift */,
 				DC1F1BDE29CCC93A00AF7573 /* NewLabelView.swift */,
@@ -505,7 +502,6 @@
 				DC6F1D6629C85CA000E0401C /* PipelineLoader.swift in Sources */,
 				DC90CA63272E878900B758E7 /* Utils.swift in Sources */,
 				DC7A85C02731AB4E0000CF4D /* SettingsView.swift in Sources */,
-				DC7C83DB29B8F32900B3BE41 /* NewNoteView.swift in Sources */,
 				DC0BD8642A38DD910034097F /* VisibilityIcon.swift in Sources */,
 				DC6F1D6229C840C900E0401C /* UserLoader.swift in Sources */,
 				DCA61D012A0524C8005FCAA9 /* NewMember.swift in Sources */,
@@ -691,7 +687,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.2;
+				MARKETING_VERSION = 1.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -726,7 +722,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.2;
+				MARKETING_VERSION = 1.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
