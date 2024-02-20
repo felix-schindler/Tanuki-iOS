@@ -41,20 +41,27 @@ struct NewMember: View {
 					if (setExpDate) {
 						DatePicker("Due Date", selection: $expDate)
 					}
-				}.presentationDetents([.large, .medium, .fraction(0.45)])
+				}.presentationDetents([.large, .fraction(0.5)])
 			}
 			
-			HStack {
-				Button("Cancel", role: .cancel) {
-					self.dismiss()
-				}.buttonStyle(.bordered)
-					.tint(.red)
-				AsyncButton("Add Member") {
+			VStack {
+				AsyncButton(action: {
 					await addMember()
-				}.buttonStyle(.borderedProminent)
-					.controlSize(.large)
-					.tint(.green)
-			}
+				}, label: {
+					Text("Add Member")
+						.frame(maxWidth: .infinity)
+				}).tint(.green)
+					.buttonStyle(.bordered)
+				
+				Button(role: .cancel,
+					   action: {
+					self.dismiss()
+				}, label: {
+					Text("Cancel")
+						.frame(maxWidth: .infinity)
+				}).foregroundStyle(.secondary)
+					.buttonStyle(.bordered)
+			}.padding(.horizontal)
 		}.alert("Failed to add member", isPresented: $showError, actions: {
 			Button("OK") {
 				showError = false

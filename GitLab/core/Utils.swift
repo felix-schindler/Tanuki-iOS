@@ -61,6 +61,10 @@ extension String {
 	func emojized() -> String {
 		return emojizedStringWithString(text: self)
 	}
+	
+	var isNotEmpty: Bool {
+		return !self.isEmpty
+	}
 }
 
 extension StringProtocol {

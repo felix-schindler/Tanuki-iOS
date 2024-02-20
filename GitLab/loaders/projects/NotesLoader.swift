@@ -40,13 +40,15 @@ struct NotesLoader: View {
 	}
 	
 	private func getNotes() async -> Void {
-		notes = await API.get(type: [Note].self, endpoint: "projects/\(id)/\(type.rawValue)/\(iid)/notes", query: ["sort": "asc", "order_by": "updated_at"])
+		notes = await API.get(
+			type: [Note].self,
+			endpoint: "projects/\(id)/\(type.rawValue)/\(iid)/notes", 
+			query: ["sort": "asc", "order_by": "updated_at"]
+		)
 		loadFailed = (notes == nil)
 	}
 }
 
-struct NotesLoader_Previews: PreviewProvider {
-	static var previews: some View {
-		NotesLoader(id: 33025310, iid: 26, type: discussionType.Issue)
-	}
+#Preview {
+	NotesLoader(id: 33025310, iid: 26, type: discussionType.Issue)
 }

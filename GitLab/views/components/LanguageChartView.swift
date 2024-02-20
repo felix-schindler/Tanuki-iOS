@@ -24,14 +24,12 @@ struct LanguageChartView: View {
 	}
 }
 
-struct LanguageChartView_Previews: PreviewProvider {
-	static var previews: some View {
-		NavigationStack {
-			LanguageChartView(languages: [
-				"Swift": 50.0,
-				"Dart": 30.0,
-				"HTML": 20.0
-			]).padding()
-		}
+#Preview {
+	NavigationStack {
+		LanguageChartView(languages: [
+			"Swift": 50.0,
+			"Dart": 30.0,
+			"HTML": 20.0
+		]).padding()
 	}
 }

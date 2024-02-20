@@ -27,23 +27,30 @@ struct NewIssueView: View {
 						text: $description,
 						axis: .vertical
 					).frame(minHeight: 150, alignment: .top)
-				}.presentationDetents([.large, .fraction(0.45)])
+				}.presentationDetents([.large, .fraction(0.5)])
 			}
 			
-			HStack {
-				Button("Cancel", role: .cancel) {
-					self.presentationMode.wrappedValue.dismiss()
-				}.tint(.red)
-					.buttonStyle(.bordered)
-				AsyncButton("Create issue") {
+			VStack {
+				AsyncButton(action: {
 					isError = await !saveNewIssue()
 					if (!isError) {
 						self.presentationMode.wrappedValue.dismiss()
 					}
-				}.tint(.green)
-					.controlSize(.large)
-					.buttonStyle(.borderedProminent)
-			}
+				}, label: {
+					Text("Create Issue")
+						.frame(maxWidth: .infinity)
+				}).tint(.green)
+					.buttonStyle(.bordered)
+				
+				Button(role: .cancel,
+					   action: {
+					self.presentationMode.wrappedValue.dismiss()
+				}, label: {
+					Text("Cancel")
+						.frame(maxWidth: .infinity)
+				}).foregroundStyle(.secondary)
+					.buttonStyle(.bordered)
+			}.padding(.horizontal)
 		}.alert(isPresented: $isError, content: {
 			Alert(title: Text("Error"), message: Text("Failed to create issue"), dismissButton: .default(Text("OK")))
 		})
