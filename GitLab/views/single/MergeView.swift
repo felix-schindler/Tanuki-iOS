@@ -108,28 +108,44 @@ struct MergeView: View {
 			})
 			
 			Section("Actions") {
-				Button("Merge this request") {
-					showMergeOptions = true
+				if (mergeRequest.state != "merged" &&
+					mergeRequest.state != "closed") {
+					Button("Merge this request", systemImage: "arrow.triangle.pull") {
+						showMergeOptions = true
+					}
 				}
 				
-				let name: String = (mergeRequest.state == "opened" ? "Close MR" : "Reopen MR")
-				AsyncButton(name) {
-					await changeState()
+				if (mergeRequest.state == "opened" || mergeRequest.state == "closed") {
+					let name: String = (mergeRequest.state == "opened" ? "Close MR" : "Reopen MR")
+					let icon: String = (mergeRequest.state == "opened" ? "minus.circle" : "arrow.triangle.pull")
+					AsyncButton(action: {
+						await changeState()
+					}) {
+						Label(name, systemImage: icon)
+					}.foregroundStyle(
+						(mergeRequest.state == "opened" ? .blue : .green)
+					)
 				}
 				
-				AsyncButton("Delete MR", role: .destructive) {
+				AsyncButton(action: {
 					await deleteMR()
-				}
+				}, role: .destructive) {
+					Label("Delete MR", systemImage: "trash")
+				}.foregroundStyle(.red)
 			}
 			
 			Section("Notes") {
 				HStack {
-					TextField("New note", text: $newNoteContent, axis: .vertical)
+					TextField(
+						"New note",
+						text: $newNoteContent,
+						axis: .vertical
+					)
 					AsyncButton(systemImage: "arrow.up") {
 						await saveNewNote()
 					}.buttonStyle(.bordered)
 						.clipShape(Circle())
-				}.scrollDismissesKeyboard(.immediately)
+				}
 				NotesLoader(id: mergeRequest.projectId, iid: mergeRequest.iid, type: discussionType.Merge)
 			}
 		}.toolbar {
@@ -181,6 +197,7 @@ struct MergeView: View {
 				}
 			}
 		}.navigationBarTitleDisplayMode(.inline)
+		.scrollDismissesKeyboard(.interactively)
 	}
 	
 	
