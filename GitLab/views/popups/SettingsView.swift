@@ -77,7 +77,7 @@ struct SettingsView: View {
 					} else {
 						self.presentationMode.wrappedValue.dismiss()
 					}
-				}.tint(.red)
+				}.tint(.secondary)
 			}.alert(isPresented: $configError) {
 				Alert(title: Text("Error"), message: Text("Invalid configuration, please check the entered url and token"), dismissButton: .default(Text("OK")))
 			}

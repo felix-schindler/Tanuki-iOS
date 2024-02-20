@@ -33,7 +33,7 @@ or
 			}.toolbar {
 				RoundIconButton("Close", icon: "xmark") {
 					self.presentationMode.wrappedValue.dismiss()
-				}.tint(.red)
+				}.tint(.secondary)
 			}
 		}
 	}

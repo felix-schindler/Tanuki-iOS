@@ -96,7 +96,11 @@ struct CommitsView: View {
 	}
 	
 	private func getCommits() async -> Void {
-		commits = await API.get(type: [Commit].self, endpoint: "projects/\(id)/repository/commits", query: ["ref_name": refName])
+		commits = await API.get(
+			type: [Commit].self,
+			endpoint: "projects/\(id)/repository/commits",
+			query: ["ref_name": refName]
+		)
 	}
 	
 	private func getBranches() async -> Void {

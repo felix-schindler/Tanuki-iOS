@@ -43,7 +43,7 @@ struct EventsView: View {
 			if (showClose) {
 				RoundIconButton("Close", icon: "xmark") {
 					self.presentationMode.wrappedValue.dismiss()
-				}.tint(.red)
+				}.tint(.secondary)
 			}
 		}.onAppear {
 			Task {
