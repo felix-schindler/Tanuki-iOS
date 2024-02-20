@@ -31,12 +31,9 @@ or
 			}.onDisappear() {
 				Store.showInfo = false
 			}.toolbar {
-				Button(role: .cancel, action: {
+				RoundIconButton("Close", icon: "xmark") {
 					self.presentationMode.wrappedValue.dismiss()
-				}, label: {
-					Label("Close", systemImage: "xmark.app.fill")
-						.labelStyle(.titleAndIcon)
-				}).tint(.red)
+				}.tint(.red)
 			}
 		}
 	}

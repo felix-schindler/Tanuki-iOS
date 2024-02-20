@@ -35,6 +35,7 @@ struct RoundIconButton: View {
 
 #Preview {
 	VStack {
+		RoundIconButton("Up", icon: "arrow.up", action: {})
 		RoundIconButton("Filters", icon: "line.3.horizontal.decrease", action: {})
 		RoundIconButton("Add", icon: "plus") {
 		}

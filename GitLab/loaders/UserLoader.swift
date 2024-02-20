@@ -50,6 +50,8 @@ struct UserLoader: View {
 
 struct UserLoader_Previews: PreviewProvider {
 	static var previews: some View {
-		UserLoader()
+		NavigationStack {
+			UserLoader(id: 9005085)
+		}
 	}
 }
