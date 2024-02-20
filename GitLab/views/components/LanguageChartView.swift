@@ -18,7 +18,9 @@ struct LanguageChartView: View {
 					x: .value("Percent", value)
 				).foregroundStyle(by: .value("Language", key))
 			}
-		}.frame(height: 100)
+		}
+		.chartXAxis(.hidden)
+		.frame(height: 50)
 	}
 }
 

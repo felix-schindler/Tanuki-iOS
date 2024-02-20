@@ -84,12 +84,7 @@ struct ProjectView: View {
 							}
 						}
 						if (project.permissions?.projectAccess?.notificationLevel != nil) {
-							/* There's a bug (explained here: https://gist.github.com/atrinh0/3df23140ba39df05692befb7153c8285)
-							 * where the icon of a label in a Picker is not displayed. You still have to give the Picker a Label.
-							 * Therefore we have to use a Picker inside a Menu. The menu label is displayed correctly.
-							 * When this is fixed (which I don't think will happen) we can delete the Menu alltogether.
-							 */
-							Menu {
+							Menu(content: {
 								Picker(selection: .constant(project.permissions!.projectAccess!.notificationLevel),
 											 content: {
 									Text(notificationLevel(0).firstCapitalized).tag(0)
@@ -102,18 +97,18 @@ struct ProjectView: View {
 									Label("Notifications", systemImage: "bell.circle")
 										.labelStyle(.iconOnly)
 								})
-							} label: {
+							}, label: {
 								Label(notificationLevel(project.permissions!.projectAccess!.notificationLevel).firstCapitalized, systemImage: "bell.circle")
-							}.buttonStyle(.bordered)
-								.foregroundStyle(.primary)
+							})
+							.id(UUID())
+							.buttonStyle(.bordered)
+							.foregroundStyle(.primary)
 						}
 					}
 				}
 				
 				if (project.defaultBranch != nil) {
-					DisclosureGroup("Languages") {
-						ProjectLanguagesLoader(id: project.id)
-					}
+					ProjectLanguagesLoader(id: project.id)
 				}
 			}
 			
