@@ -15,11 +15,11 @@ struct NewProject: View {
 	@State var visibility = ProjectVisibility.private
 	@State var readme = false
 	@State var defaultBranch = "main"
-
+	
 	@State var showError = false
-
+	
 	var body: some View {
-		NavigationStack {
+		VStack {
 			Form {
 				Section {
 					VStack(alignment: .leading) {
@@ -28,6 +28,7 @@ struct NewProject: View {
 							.foregroundStyle(.secondary)
 							.font(.footnote)
 					}
+					
 					Picker("Visibility Level", selection: $visibility) {
 						Label("Private", systemImage: "lock")
 							.tag(ProjectVisibility.private)
@@ -36,29 +37,39 @@ struct NewProject: View {
 						Label("Internal", systemImage: "shield.lefthalf.filled")
 							.tag(ProjectVisibility.internal)
 					}
-				}
-				
-				Section("Configuration") {
+					
 					Toggle("Initialize with README", isOn: $readme)
 					if (readme) {
-						TextField("Default branch", text: $defaultBranch)
-							.disableAutocorrection(true)
+						VStack(alignment: .leading) {
+							TextField("Default branch", text: $defaultBranch)
+								.disableAutocorrection(true)
+							Text("Default branch")
+								.foregroundStyle(.secondary)
+								.font(.footnote)
+						}
 					}
+				}.presentationDetents([.large, .medium])
+			}
+			
+			HStack {
+				Button("Cancel", role: .cancel) {
+					self.presentationMode.wrappedValue.dismiss()
 				}
+				.tint(.red)
+				.buttonStyle(.bordered)
 				
-				Section("Actions") {
-					AsyncButton("Create project") {
-						await createProject()
-					}
-					Button("Cancel", role: .destructive, action: dismiss)
+				AsyncButton("Create project") {
+					await createProject()
 				}
-			}.navigationTitle("New Project")
-				.alert("Failed to create project", isPresented: $showError, actions: {
-					Button("OK") {
-						showError = false
-					}
-				})
-		}
+				.controlSize(.large)
+				.tint(.green)
+				.buttonStyle(.borderedProminent)
+			}
+		}.alert("Failed to create project", isPresented: $showError, actions: {
+			Button("OK") {
+				showError = false
+			}
+		})
 	}
 	
 	func dismiss() -> Void {
@@ -82,7 +93,7 @@ struct NewProject: View {
 			endpoint: "projects",
 			body: projectDict
 		)
-
+		
 		if (temp == nil) {
 			showError = true
 		} else {
@@ -93,6 +104,11 @@ struct NewProject: View {
 
 struct NewProject_Previews: PreviewProvider {
 	static var previews: some View {
-		NewProject()
+		@State var presented = true
+		
+		NavigationStack {
+		}.sheet(isPresented: $presented) {
+			NewProject()
+		}
 	}
 }
