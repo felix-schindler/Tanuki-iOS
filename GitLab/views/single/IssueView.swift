@@ -150,10 +150,8 @@ struct IssueView: View {
 				AsyncButton(systemImage: "square.and.arrow.up") {
 					await URL(string: issue.webUrl)!.share()
 				}
-				Button(action: {
+				RoundIconButton("New Issue", icon: "plus") {
 					showNewIssue = true
-				}) {
-					Image(systemName: "plus.circle")
 				}
 			}.sheet(isPresented: $showNewIssue) {
 				NewIssueView(id: issue.projectId)

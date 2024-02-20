@@ -41,7 +41,9 @@ struct EventsView: View {
 			}
 		}.toolbar {
 			if (showClose) {
-				Button("Close", action: { self.presentationMode.wrappedValue.dismiss() })
+				RoundIconButton("Close", icon: "xmark") {
+					self.presentationMode.wrappedValue.dismiss()
+				}.tint(.red)
 			}
 		}.onAppear {
 			Task {
@@ -83,5 +85,11 @@ struct EventsView: View {
 		
 		events = await API.get(type: [Event].self, endpoint: endpoint)
 		loadFailed = (events == nil)
+	}
+}
+
+#Preview {
+	NavigationStack {
+		EventsView(events: nil, showClose: true)
 	}
 }
