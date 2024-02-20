@@ -27,6 +27,8 @@
 		DC2B2FFF29C0679B009ADC0D /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B2FFE29C0679B009ADC0D /* ProjectView.swift */; };
 		DC2B300129C09625009ADC0D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B300029C09625009ADC0D /* InfoView.swift */; };
 		DC4E1CA02A35AA7D00AEB422 /* SnippetsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4E1C9F2A35AA7D00AEB422 /* SnippetsLoader.swift */; };
+		DC4F29B02B8441D70085E92C /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F29AF2B8441D70085E92C /* PillView.swift */; };
+		DC4F29B22B8443160085E92C /* RoundIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F29B12B8443160085E92C /* RoundIconButton.swift */; };
 		DC4F9554272EB4AF00354E1D /* IssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9553272EB4AF00354E1D /* IssuesLoader.swift */; };
 		DC4F955E272EB8A700354E1D /* MergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F955D272EB8A700354E1D /* MergeLoader.swift */; };
 		DC4F9562272EB92200354E1D /* MergeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9561272EB92200354E1D /* MergeView.swift */; };
@@ -103,6 +105,8 @@
 		DC2B2FFE29C0679B009ADC0D /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		DC2B300029C09625009ADC0D /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		DC4E1C9F2A35AA7D00AEB422 /* SnippetsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetsLoader.swift; sourceTree = "<group>"; };
+		DC4F29AF2B8441D70085E92C /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
+		DC4F29B12B8443160085E92C /* RoundIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundIconButton.swift; sourceTree = "<group>"; };
 		DC4F9553272EB4AF00354E1D /* IssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuesLoader.swift; sourceTree = "<group>"; };
 		DC4F955D272EB8A700354E1D /* MergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeLoader.swift; sourceTree = "<group>"; };
 		DC4F9561272EB92200354E1D /* MergeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeView.swift; sourceTree = "<group>"; };
@@ -271,9 +275,6 @@
 				DC5EB908272D93B30015BF0D /* single */,
 				DC4F9555272EB4DD00354E1D /* list */,
 				DC90CA5A272E759100B758E7 /* popups */,
-				DCF14E3E29C720E800D1F43B /* AsyncButton.swift */,
-				DC0F593D2A346C3A00A24088 /* AvatarImage.swift */,
-				DC0BD8632A38DD910034097F /* VisibilityIcon.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -326,6 +327,11 @@
 		DC6024642A38A4CF00744AFE /* components */ = {
 			isa = PBXGroup;
 			children = (
+				DC0F593D2A346C3A00A24088 /* AvatarImage.swift */,
+				DC0BD8632A38DD910034097F /* VisibilityIcon.swift */,
+				DCF14E3E29C720E800D1F43B /* AsyncButton.swift */,
+				DC4F29AF2B8441D70085E92C /* PillView.swift */,
+				DC4F29B12B8443160085E92C /* RoundIconButton.swift */,
 				DC6024652A38A4E400744AFE /* TinyProjectView.swift */,
 				DC6024672A38A4EB00744AFE /* SmallProjectView.swift */,
 				DC0BD8652A38DD9D0034097F /* SmallGroupView.swift */,
@@ -469,6 +475,7 @@
 				DC0BD8662A38DD9D0034097F /* SmallGroupView.swift in Sources */,
 				DCAAC170279ED63800EC685F /* GroupsLoader.swift in Sources */,
 				DCDFEBE62B17459500E30561 /* MergeModel.swift in Sources */,
+				DC4F29B22B8443160085E92C /* RoundIconButton.swift in Sources */,
 				DC90CA5E272E763F00B758E7 /* EventsView.swift in Sources */,
 				DCDCACC729CC54600011230D /* IssueModel.swift in Sources */,
 				DC0EC641279E1733006A7C75 /* FileLoader.swift in Sources */,
@@ -476,6 +483,7 @@
 				DC115A5F2A3903D00034CC00 /* SmallMergeView.swift in Sources */,
 				DC92BD3529D0C68C008E8581 /* MilestoneFilter.swift in Sources */,
 				DC4F9568272EBA3F00354E1D /* NotesLoader.swift in Sources */,
+				DC4F29B02B8441D70085E92C /* PillView.swift in Sources */,
 				DC4F9562272EB92200354E1D /* MergeView.swift in Sources */,
 				DC5EB901272D934E0015BF0D /* HomeView.swift in Sources */,
 				DCD3164A29C77D8900AF7A3E /* MemberLoader.swift in Sources */,
