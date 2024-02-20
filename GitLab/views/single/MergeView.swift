@@ -156,7 +156,7 @@ struct MergeView: View {
 		}.sheet(isPresented: $showMergeOptions) {
 			VStack {
 				Form {
-					Section("Merge Settings - All options are optional") {
+					Section("Merge Settings - All fields are optional") {
 						TextField("Custom merge commit message", text: $mergeCommitMessage)
 						
 						// If true, the merge request is merged when the pipeline succeeds.

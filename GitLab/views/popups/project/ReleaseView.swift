@@ -19,6 +19,7 @@ struct ReleaseView: View {
 	@State private var showNewRelease = false
 	@State private var newReleaseError = false
 	
+	@State private var tags: [Tag]? = nil
 	@State private var tagName = ""
 	@State private var releaseName = ""
 	@State private var description = ""
@@ -38,7 +39,7 @@ struct ReleaseView: View {
 									}
 								})
 							}
-
+							
 							HStack {
 								HStack(spacing: 2) {
 									Image(systemName: "tag")
@@ -51,9 +52,9 @@ struct ReleaseView: View {
 										.font(.system(.body, design: .monospaced))
 								}
 							}
-
+							
 							Text("Released on \(release.releasedAt.toString()) by \(release.author.name)")
-
+							
 							if (!release.description.isEmpty) {
 								Markdown(release.description)
 							}
@@ -71,9 +72,11 @@ struct ReleaseView: View {
 		}.onAppear {
 			Task {
 				await getReleases()
+				await getTags()
 			}
 		}.refreshable {
 			await getReleases()
+			await getTags()
 		}.toolbar {
 			RoundIconButton("New Release", icon: "plus") {
 				showNewRelease = true
@@ -81,12 +84,21 @@ struct ReleaseView: View {
 		}.sheet(isPresented: $showNewRelease) {
 			VStack {
 				Form {
-					Section {
-						VStack(alignment: .leading) {
-							TextField("Tag name", text: $tagName)
-							Text("This is the only required field")
-								.font(.footnote)
-								.foregroundStyle(.secondary)
+					Section("Release settings - All fields are optional") {
+						if (tags != nil && !tags!.isEmpty) {
+							Picker("Tag", selection: $tagName, content: {
+								ForEach(tags!, id: \.name) { tag in
+									Text(tag.name)
+										.tag(tag.name)
+								}
+							})
+						} else {
+							VStack(alignment: .leading) {
+								TextField("Tag name", text: $tagName)
+								Text("This is the only required field")
+									.font(.footnote)
+									.foregroundStyle(.secondary)
+							}
 						}
 						TextField("Name", text: $releaseName)
 						TextField(
@@ -95,7 +107,7 @@ struct ReleaseView: View {
 							axis: .vertical
 						).frame(minHeight: 65, alignment: .top)
 					}.presentationDetents([.large, .medium])
-				}
+				}.headerProminence(.standard)
 				
 				VStack {
 					AsyncButton(action: {
@@ -118,15 +130,29 @@ struct ReleaseView: View {
 						.buttonStyle(.bordered)
 						.controlSize(.large)
 				}.padding()
-			}.alert("Failed to create new Release", isPresented: $newReleaseError, actions: {})
+			}.alert(
+				"Failed to create new Release",
+				isPresented: $newReleaseError,
+				actions: {}
+			)
 		}.navigationBarTitle("Releases")
 			.headerProminence(.increased)
 			.listStyle(.sidebar)
 	}
 	
 	private func getReleases() async -> Void {
-		releases = await API.get(type: [Release].self, endpoint: "projects/\(id)/releases")
+		releases = await API.get(
+			type: [Release].self,
+			endpoint: "projects/\(id)/releases"
+		)
 		loadFailed = releases == nil
+	}
+	
+	private func getTags() async -> Void {
+		tags = await API.get(
+			type: [Tag].self,
+			endpoint: "/projects/\(id)/repository/tags"
+		)
 	}
 	
 	private func createNewRelease() async -> Void {

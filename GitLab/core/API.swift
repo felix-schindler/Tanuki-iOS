@@ -37,12 +37,14 @@ class API {
 		}
 		
 		let req = HttpRawRequest(url: url,
-														 method: method,
-														 headers: [
-															.authorization: "Bearer \(token)",
-															.contentType: "application/json"
-														 ],
-														 body: reqBody)
+								 method: method,
+								 headers: [
+									.authorization: "Bearer \(token)",
+									.contentType: "application/json"
+								 ],
+								 body: reqBody
+		)
+		
 		print(method, url.url.absoluteString)
 		return try await client.dataTask(req)
 	}
@@ -57,18 +59,13 @@ class API {
 		body: Dictionary<String, String> = [:],
 		useBase: Bool = true
 	) async -> T? {
-		var httpUrl = HttpUrl(
+		let httpUrl = HttpUrl(
 			host: domain,
+			path: useBase ? [base, endpoint] : [endpoint],
 			resource: resource,
 			suffix: suffix,
 			query: query
 		)
-		
-		if (useBase) {
-			httpUrl = httpUrl.path([base, endpoint])
-		} else {
-			httpUrl = httpUrl.path([endpoint])
-		}
 		
 		do {
 			let res = try await API.raw(

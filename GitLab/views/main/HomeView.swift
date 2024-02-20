@@ -122,12 +122,14 @@ struct HomeView: View {
 	}
 	
 	private func getStarredProjects() async -> Void {
-		starredProjects = await API.get(type: [Project].self, endpoint: "projects", query: ["starred": "true"])
+		starredProjects = await API.get(
+			type: [Project].self,
+			endpoint: "projects",
+			query: ["starred": "true"]
+		)
 	}
 }
 
-struct HomeView_Previews: PreviewProvider {
-	static var previews: some View {
-		HomeView()
-	}
+#Preview {
+	HomeView()
 }
