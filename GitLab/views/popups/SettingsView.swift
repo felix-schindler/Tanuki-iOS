@@ -21,6 +21,7 @@ struct SettingsView: View {
 	var body: some View {
 		NavigationStack {
 			VStack {
+				Spacer()
 				Label("GitLab URL", systemImage: "link")
 					.font(.headline)
 				TextField("https://gitlab.com", text: $url)
@@ -59,7 +60,7 @@ struct SettingsView: View {
 				}.padding()
 					.font(.footnote)
 					.foregroundStyle(.secondary)
-				
+				Spacer()
 				AsyncButton(action: {
 					configError = await !validGitConfig()
 					if (!configError) {
@@ -67,6 +68,7 @@ struct SettingsView: View {
 					}
 				}, label: {
 					Label("Save configuration", systemImage: "checkmark.circle")
+						.frame(maxWidth: .infinity)
 				}).tint(.green)
 					.buttonStyle(.bordered)
 					.controlSize(.large)

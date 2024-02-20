@@ -48,23 +48,29 @@ struct NewProject: View {
 								.font(.footnote)
 						}
 					}
-				}.presentationDetents([.large, .medium])
+				}.presentationDetents([.large, .fraction(0.6)])
 			}
 			
-			HStack {
-				Button("Cancel", role: .cancel) {
-					self.presentationMode.wrappedValue.dismiss()
-				}
-				.tint(.red)
-				.buttonStyle(.bordered)
-				
-				AsyncButton("Create project") {
+			VStack {
+				AsyncButton(action: {
 					await createProject()
-				}
-				.controlSize(.large)
-				.tint(.green)
-				.buttonStyle(.borderedProminent)
-			}
+				}, label: {
+					Text("Create Project")
+						.frame(maxWidth: .infinity)
+				}).tint(.green)
+					.buttonStyle(.bordered)
+					.controlSize(.large)
+
+				Button(role: .cancel,
+					   action: {
+					self.presentationMode.wrappedValue.dismiss()
+				}, label: {
+					Text("Cancel")
+						.frame(maxWidth: .infinity)
+				}).foregroundStyle(.secondary)
+					.buttonStyle(.bordered)
+					.controlSize(.large)
+			}.padding()
 		}.alert("Failed to create project", isPresented: $showError, actions: {
 			Button("OK") {
 				showError = false

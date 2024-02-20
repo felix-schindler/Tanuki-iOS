@@ -26,8 +26,8 @@ struct NewIssueView: View {
 						"Description (Markdown supported)",
 						text: $description,
 						axis: .vertical
-					).frame(minHeight: 150, alignment: .top)
-				}.presentationDetents([.large, .fraction(0.5)])
+					).frame(minHeight: 65, alignment: .top)
+				}.presentationDetents([.large, .medium])
 			}
 			
 			VStack {
@@ -41,7 +41,8 @@ struct NewIssueView: View {
 						.frame(maxWidth: .infinity)
 				}).tint(.green)
 					.buttonStyle(.bordered)
-				
+					.controlSize(.large)
+
 				Button(role: .cancel,
 					   action: {
 					self.presentationMode.wrappedValue.dismiss()
@@ -50,7 +51,8 @@ struct NewIssueView: View {
 						.frame(maxWidth: .infinity)
 				}).foregroundStyle(.secondary)
 					.buttonStyle(.bordered)
-			}.padding(.horizontal)
+					.controlSize(.large)
+			}.padding()
 		}.alert(isPresented: $isError, content: {
 			Alert(title: Text("Error"), message: Text("Failed to create issue"), dismissButton: .default(Text("OK")))
 		})

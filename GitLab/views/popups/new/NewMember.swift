@@ -41,7 +41,7 @@ struct NewMember: View {
 					if (setExpDate) {
 						DatePicker("Due Date", selection: $expDate)
 					}
-				}.presentationDetents([.large, .fraction(0.5)])
+				}.presentationDetents([.large, .medium])
 			}
 			
 			VStack {
@@ -52,6 +52,7 @@ struct NewMember: View {
 						.frame(maxWidth: .infinity)
 				}).tint(.green)
 					.buttonStyle(.bordered)
+					.controlSize(.large)
 				
 				Button(role: .cancel,
 					   action: {
@@ -61,7 +62,8 @@ struct NewMember: View {
 						.frame(maxWidth: .infinity)
 				}).foregroundStyle(.secondary)
 					.buttonStyle(.bordered)
-			}.padding(.horizontal)
+					.controlSize(.large)
+			}.padding()
 		}.alert("Failed to add member", isPresented: $showError, actions: {
 			Button("OK") {
 				showError = false

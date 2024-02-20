@@ -171,7 +171,7 @@ struct MergeView: View {
 						if (squash) {
 							TextField("Custom squash commit message", text: $squashCommitMessage)
 						}
-					}.presentationDetents([.large, .medium])
+					}.presentationDetents([.large, .fraction(0.65)])
 				}
 				
 				VStack {
@@ -182,7 +182,8 @@ struct MergeView: View {
 							.frame(maxWidth: .infinity)
 					}).tint(.green)
 						.buttonStyle(.bordered)
-					
+						.controlSize(.large)
+
 					Button(role: .cancel,
 						   action: {
 						showMergeOptions = false
@@ -192,7 +193,8 @@ struct MergeView: View {
 					}
 					).foregroundStyle(.secondary)
 						.buttonStyle(.bordered)
-				}.padding(.horizontal)
+						.controlSize(.large)
+				}.padding()
 			}
 		}.navigationBarTitleDisplayMode(.inline)
 			.scrollDismissesKeyboard(.interactively)
