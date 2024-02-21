@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct GitLabApp: App {
-	@State var showChangeConf: Bool = API.domain.isEmpty || API.token.isEmpty
+	@State var showChangeConf = API.domain.isEmpty || API.token.isEmpty
 	
 	var body: some Scene {
 		WindowGroup {

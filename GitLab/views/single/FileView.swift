@@ -12,7 +12,7 @@ import Splash
 struct FileView: View {
 	@Environment(\.colorScheme) private var colorScheme
 	private var content: String
-
+	
 	init(filePath: String, content: String) {
 		let url = URL(fileURLWithPath: filePath)
 		let fileType = url.pathExtension
@@ -47,8 +47,9 @@ struct FileView: View {
 	}
 }
 
-struct FileView_Previews: PreviewProvider {
-	static var previews: some View {
-		FileView(filePath: ".editorconfig", content: "root = true\n\n[*]\nend_of_line = lf\ninsert_final_newline = true")
-	}
+#Preview {
+	FileView(
+		filePath: ".editorconfig",
+		content: "root = true\n\n[*]\nend_of_line = lf\ninsert_final_newline = true"
+	)
 }

@@ -56,33 +56,31 @@ struct SnippetView: View {
 	}
 }
 
-struct SnippetView_Previews: PreviewProvider {
-	static var previews: some View {
-		NavigationStack {
-			SnippetView(snippet: Snippet(
+#Preview {
+	NavigationStack {
+		SnippetView(snippet: Snippet(
+			id: 1,
+			title: "Some title :smile:",
+			description: nil,
+			visibility: "public",
+			author: UserSmall(
 				id: 1,
-				title: "Some title :smile:",
-				description: nil,
-				visibility: "public",
-				author: UserSmall(
-					id: 1,
-					name: "Some name",
-					username: "some_username",
-					avatarUrl: "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
-				),
-				createdAt: Date(),
-				updatedAt: Date(),
-				projectId: nil,
-				webUrl: "https://gitlab.com/snippets/1",
-				rawUrl: "https://gitlab.com/snippets/1/raw",
-				fileName: "some_file_name",
-				files: [
-					SmallFile(
-						path: "some_file_name",
-						rawUrl: "https://gitlab.com/snippets/1/raw"
-					)
-				]
-			))
-		}
+				name: "Some name",
+				username: "some_username",
+				avatarUrl: "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
+			),
+			createdAt: Date(),
+			updatedAt: Date(),
+			projectId: nil,
+			webUrl: "https://gitlab.com/snippets/1",
+			rawUrl: "https://gitlab.com/snippets/1/raw",
+			fileName: "some_file_name",
+			files: [
+				SmallFile(
+					path: "some_file_name",
+					rawUrl: "https://gitlab.com/snippets/1/raw"
+				)
+			]
+		))
 	}
 }

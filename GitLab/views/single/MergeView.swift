@@ -9,11 +9,15 @@ import SwiftUI
 import MarkdownUI
 
 struct MergeView: View {
-	@State var mergeRequest: MergeRequest
+	@State public var mergeRequest: MergeRequest
+	
+	// MARK: - New note
 	@State private var newNoteContent = ""
 	
-	//Mark: - Merge options
-	@State private var showMergeOptions: Bool = false
+	// MARK: - Merge options
+	@State private var showMergeOptions = false
+	@State private var showMergeError = false
+	
 	@State private var mergeCommitMessage: String = ""					// Custom merge commit message.
 	@State private var mergeWhenPipelineSucceeds: Bool = false	// If true, the merge request is merged when the pipeline succeeds.
 	@State private var sha: String = ""														// If present, then this SHA must match the HEAD of the source branch, otherwise the merge fails.
@@ -183,7 +187,7 @@ struct MergeView: View {
 					}).tint(.green)
 						.buttonStyle(.bordered)
 						.controlSize(.large)
-
+					
 					Button(role: .cancel,
 						   action: {
 						showMergeOptions = false
@@ -195,7 +199,15 @@ struct MergeView: View {
 						.buttonStyle(.bordered)
 						.controlSize(.large)
 				}.padding()
-			}
+			}.alert(
+				"Failed to merge this request",
+				isPresented: $showMergeError,
+				actions: {
+					Button("OK") {
+						showMergeError = false
+					}
+				}
+			)
 		}.navigationBarTitleDisplayMode(.inline)
 			.scrollDismissesKeyboard(.interactively)
 	}
@@ -261,7 +273,9 @@ struct MergeView: View {
 			]
 		) {
 			mergeRequest = res
+			showMergeOptions = false
 		} else {
+			showMergeError = true
 		}
 	}
 }

@@ -133,7 +133,11 @@ struct ReleaseView: View {
 			}.alert(
 				"Failed to create new Release",
 				isPresented: $newReleaseError,
-				actions: {}
+				actions: {
+					Button("OK") {
+						newReleaseError = false
+					}
+				}
 			)
 		}.navigationBarTitle("Releases")
 			.headerProminence(.increased)

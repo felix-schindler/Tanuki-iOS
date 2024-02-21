@@ -12,21 +12,27 @@ import MarkdownUI
 struct FileLoader: View {
 	
 	// MARK: - Load config
-	let url: HttpUrl
-	let filePath: String
+	public let url: HttpUrl
+	public let filePath: String
 	
 	// MARK: - View config
 	/// Whether the file is shown inline (true) or full screen (false)
-	let inline: Bool
+	public let inline: Bool
 	/// Whether to show loading / error
-	let showNotFound: Bool
+	public let showNotFound: Bool
 	
 	// MARK: - Load state
 	/// File content (loaded from API)
-	@State var content: String? = nil
-	@State var loadFailed: Bool = false
+	@State private var content: String? = nil
+	@State private var loadFailed = false
 	
-	public init(id: Int, filePath: String, refName: String, inline: Bool = false, showNotFound: Bool = false) {
+	public init(
+		id: Int,
+		filePath: String,
+		refName: String,
+		inline: Bool = false,
+		showNotFound: Bool = false
+	) {
 		self.url = HttpUrl(
 			host: API.domain,
 			path: [
@@ -47,7 +53,12 @@ struct FileLoader: View {
 		self.showNotFound = showNotFound
 	}
 	
-	public init(rawUrl: String, filePath: String, inline: Bool = true, showNotFound: Bool = true) {
+	public init(
+		rawUrl: String,
+		filePath: String,
+		inline: Bool = true,
+		showNotFound: Bool = true
+	) {
 		self.url = HttpUrl(string: rawUrl)!
 		
 		self.filePath = filePath
@@ -90,8 +101,13 @@ struct FileLoader: View {
 	}
 }
 
-struct FileLoader_Previews: PreviewProvider {
-	static var previews: some View {
-		FileLoader(id: 33025310, filePath: "GitLab/GitLabApp.swift", refName: "main", inline: false)
+#Preview {
+	NavigationStack {
+		FileLoader(
+			id: 33025310,
+			filePath: "GitLab/GitLabApp.swift",
+			refName: "main",
+			inline: false
+		)
 	}
 }
