@@ -13,14 +13,14 @@ struct IssuesLoader: View {
 	/// Group ID
 	@State var groupId: Int = 0
 	
-	@State var showNewIssue: Bool = false
-	@State var showFilter: Bool = false
+	@State var showNewIssue = false
+	@State var showFilter = true
 	
 	@State var issues: [Issue]? = nil
-	@State var loadFailed: Bool = false
+	@State var loadFailed = false
 	
 	// Search
-	@State var search: String = ""
+	@State var search = ""
 	
 	// Filters
 	@State var state: IssueState = .opened
@@ -87,71 +87,93 @@ struct IssuesLoader: View {
 			}.sheet(isPresented: $showNewIssue) {
 				NewIssueView(id: id)
 			}.sheet(isPresented: $showFilter) {
-				Form {
-					Section {
-						Picker("State", selection: $state) {
-							Text("Open").tag(IssueState.opened)
-							Text("Closed").tag(IssueState.closed)
-							Text("All").tag(IssueState.all)
+				VStack {
+					Form {
+						Section {
+							Picker("State", selection: $state) {
+								Label("Open", systemImage: "smallcircle.circle")
+									.tag(IssueState.opened)
+								Label("Closed", systemImage: "minus.circle")
+									.tag(IssueState.closed)
+								Text("All").tag(IssueState.all)
+							}
+							
+							Picker("Sort", selection: $sort) {
+								Label("Ascending", systemImage: "line.3.horizontal.decrease")
+									.tag(ProjectSort.asc)
+								Label("Descending", systemImage: "line.3.horizontal.decrease")
+									.tag(ProjectSort.desc)
+							}
+							
+							Picker("Order by", selection: $orderBy) {
+								Text("Created at").tag(IssueOrder.createdAt)
+								Text("Due date").tag(IssueOrder.dueDate)
+								Text("Label priority").tag(IssueOrder.labelPriority)
+								Text("Milestone due").tag(IssueOrder.milestoneDue)
+								Text("Popularity").tag(IssueOrder.popularity)
+								Text("Priority").tag(IssueOrder.priority)
+								Text("Relative position").tag(IssueOrder.relativePosition)
+								Text("Title").tag(IssueOrder.title)
+								Text("Updated at").tag(IssueOrder.updatedAt)
+								Text("Weight").tag(IssueOrder.weight)
+							}
 						}
 						
-						Picker("Sort", selection: $sort) {
-							Text("Ascending").tag(ProjectSort.asc)
-							Text("Descending").tag(ProjectSort.desc)
+						Section {
+							Picker("Due", selection: $dueDate) {
+								Text("All").tag(IssueDue.all)
+								Text("No due date").tag(IssueDue.noDueDate)
+								Text("Any").tag(IssueDue.any)
+								Text("Today").tag(IssueDue.today)
+								Text("Tomorrow").tag(IssueDue.tomorrow)
+								Text("Overdue").tag(IssueDue.overdue)
+								Text("Week").tag(IssueDue.week)
+								Text("Month").tag(IssueDue.month)
+								Text("Next month and previous two weeks").tag(IssueDue.nextMonthAndPreviousTwoWeeks)
+							}
+							
+							Picker("Scope", selection: $scope) {
+								Text("All").tag(IssueScope.all)
+								Text("Created by me").tag(IssueScope.createdByMe)
+								Text("Assigned to me").tag(IssueScope.assignedToMe)
+							}
 						}
 						
-						Picker("Order by", selection: $orderBy) {
-							Text("Created at").tag(IssueOrder.createdAt)
-							Text("Due date").tag(IssueOrder.dueDate)
-							Text("Label priority").tag(IssueOrder.labelPriority)
-							Text("Milestone due").tag(IssueOrder.milestoneDue)
-							Text("Popularity").tag(IssueOrder.popularity)
-							Text("Priority").tag(IssueOrder.priority)
-							Text("Relative position").tag(IssueOrder.relativePosition)
-							Text("Title").tag(IssueOrder.title)
-							Text("Updated at").tag(IssueOrder.updatedAt)
-							Text("Weight").tag(IssueOrder.weight)
+						Section {
+							Picker("Type", selection: $type) {
+								Text("All").tag(IssueType.all)
+								Label("Issue", systemImage: "smallcircle.circle").tag(IssueType.issue)
+								Label("Incident", systemImage: "exclamationmark.circle").tag(IssueType.incident)
+								Label("Test case", systemImage: "testtube.2").tag(IssueType.testCase)
+							}
+							
+							Toggle("Confidential", isOn: $confidential)
 						}
 					}
 					
-					Section {
-						Picker("Due", selection: $dueDate) {
-							Text("All").tag(IssueDue.all)
-							Text("No due date").tag(IssueDue.noDueDate)
-							Text("Any").tag(IssueDue.any)
-							Text("Today").tag(IssueDue.today)
-							Text("Tomorrow").tag(IssueDue.tomorrow)
-							Text("Overdue").tag(IssueDue.overdue)
-							Text("Week").tag(IssueDue.week)
-							Text("Month").tag(IssueDue.month)
-							Text("Next month and previous two weeks").tag(IssueDue.nextMonthAndPreviousTwoWeeks)
-						}
+					VStack {
+						AsyncButton(action: {
+							issues = nil
+							issues = await getIssues()
+							loadFailed = (issues == nil)
+							showFilter = false
+						}, label: {
+							Text("Apply")
+								.frame(maxWidth: .infinity)
+						}).controlSize(.large)
+							.buttonStyle(.bordered)
 						
-						Picker("Scope", selection: $scope) {
-							Text("All").tag(IssueScope.all)
-							Text("Created by me").tag(IssueScope.createdByMe)
-							Text("Assigned to me").tag(IssueScope.assignedToMe)
-						}
-					}
-					
-					Section {
-						Picker("Type", selection: $type) {
-							Text("All").tag(IssueType.all)
-							Label("Issue", systemImage: "smallcircle.circle").tag(IssueType.issue)
-							Label("Incident", systemImage: "exclamationmark.circle").tag(IssueType.incident)
-							Label("Test case", systemImage: "testtube.2").tag(IssueType.testCase)
-						}
-						
-						Toggle("Confidential", isOn: $confidential)
-					}
-					
-					AsyncButton("Apply") {
-						issues = nil
-						issues = await getIssues()
-						loadFailed = (issues == nil)
-						showFilter = false
-					}
-				}
+						Button(role: .cancel,
+							   action: {
+							showFilter = false
+						}, label: {
+							Text("Cancel")
+								.frame(maxWidth: .infinity)
+						}).foregroundStyle(.secondary)
+							.buttonStyle(.bordered)
+							.controlSize(.large)
+					}.padding()
+				}.presentationDetents([.large, .fraction(0.8)])
 			}.navigationTitle("Issues")
 	}
 	
