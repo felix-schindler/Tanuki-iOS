@@ -66,34 +66,62 @@ struct MergeLoader: View {
 					showFilter = true
 				}
 			}.sheet(isPresented: $showFilter) {
-				List {
-					Section {
-						Picker("State", selection: $state) {
-							Text("Open").tag(MergeState.opened)
-							Text("Closed").tag(MergeState.closed)
-							Text("Merged").tag(MergeState.merged)
-							Text("Locked").tag(MergeState.locked)
-							Text("All").tag(MergeState.all)
-						}
-						
-						Picker("Sort", selection: $sort) {
-							Text("Ascending").tag(ProjectSort.asc)
-							Text("Descending").tag(ProjectSort.desc)
-						}
-						
-						Picker("Order by", selection: $orderBy) {
-							Text("Title").tag(MergeOrder.title)
-							Text("Created at").tag(MergeOrder.createdAt)
-							Text("Updated at").tag(MergeOrder.updatedAt)
-						}
+				VStack {
+					Form {
+						Section {
+							Picker("State", selection: $state) {
+								Label("Open", systemImage: "arrow.triangle.pull")
+									.tag(MergeState.opened)
+								Label("Closed", systemImage: "minus.circle")
+									.tag(MergeState.closed)
+								Label("Merged", systemImage: "arrow.triangle.merge")
+									.tag(MergeState.merged)
+								Label("Locked", systemImage: "lock")
+									.tag(MergeState.locked)
+								Label("All", systemImage: "")
+									.tag(MergeState.all)
+							}
+							
+							Picker("Sort", selection: $sort) {
+								Label("Ascending", systemImage: "increase.indent")
+									.tag(ProjectSort.asc)
+								Label("Descending", systemImage: "decrease.indent")
+									.tag(ProjectSort.desc)
+							}
+							
+							Picker("Order by", selection: $orderBy) {
+								Label("Title", systemImage: "number")
+									.tag(MergeOrder.title)
+								Label("Created at", systemImage: "doc.badge.plus")
+									.tag(MergeOrder.createdAt)
+								Label("Updated at", systemImage: "doc.badge.clock")
+									.tag(MergeOrder.updatedAt)
+							}
+						}.presentationDetents([.large, .medium])
 					}
 					
-					AsyncButton("Apply") {
-						mergeRequests = nil
-						mergeRequests = await getMRs()
-						loadFailed = (mergeRequests == nil)
-						showFilter = false
-					}
+					VStack {
+						AsyncButton(action: {
+							mergeRequests = nil
+							mergeRequests = await getMRs()
+							loadFailed = (mergeRequests == nil)
+							showFilter = false
+						}, label: {
+							Text("Apply")
+								.frame(maxWidth: .infinity)
+						}).controlSize(.large)
+							.buttonStyle(.bordered)
+						
+						Button(role: .cancel,
+							   action: {
+							showFilter = false
+						}, label: {
+							Text("Cancel")
+								.frame(maxWidth: .infinity)
+						}).foregroundStyle(.secondary)
+							.buttonStyle(.bordered)
+							.controlSize(.large)
+					}.padding()
 				}
 			}.navigationTitle("Merge requests")
 	}

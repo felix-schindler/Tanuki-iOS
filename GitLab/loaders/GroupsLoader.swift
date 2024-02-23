@@ -57,35 +57,55 @@ struct GroupsLoader: View {
 					showFilter = true
 				}
 			}.sheet(isPresented: $showFilter) {
-				Form {
-					Section {
-						if (!allAvailable) {
-							Toggle("Owned", isOn: $owned)
-						}
-						if (!owned) {
-							Toggle("All available", isOn: $allAvailable)
-						}
-					}
-					
-					Section {
-						Picker("Order by", selection: $orderBy) {
-							Text("Name").tag(GroupOrder.name)
-							Text("Path").tag(GroupOrder.path)
-							Text("ID").tag(GroupOrder.id)
-							Text("Similarity").tag(GroupOrder.similarity)
-						}
+				VStack {
+					Form {
+						Section {
+							if (!allAvailable) {
+								Toggle("Owned", isOn: $owned)
+							}
+							if (!owned) {
+								Toggle("All available", isOn: $allAvailable)
+							}
+						}.presentationDetents([.large, .medium])
 						
-						Picker("Sort", selection: $sort) {
-							Text("Ascending").tag(ProjectSort.asc)
-							Text("Descending").tag(ProjectSort.desc)
-						}
+						Section {
+							Picker("Order by", selection: $orderBy) {
+								Text("Name").tag(GroupOrder.name)
+								Text("Path").tag(GroupOrder.path)
+								Text("ID").tag(GroupOrder.id)
+								Text("Similarity").tag(GroupOrder.similarity)
+							}
+							
+							Picker("Sort", selection: $sort) {
+								Label("Ascending", systemImage: "increase.indent")
+									.tag(ProjectSort.asc)
+								Label("Descending", systemImage: "decrease.indent")
+									.tag(ProjectSort.desc)
+							}
+						}.presentationDetents([.large, .medium])
 					}
 					
-					AsyncButton("Apply", action: {
-						groups = await getGroups()
-						loadFailed = (groups == nil)
-						showFilter = false
-					})
+					VStack {
+						AsyncButton(action: {
+							groups = await getGroups()
+							loadFailed = (groups == nil)
+							showFilter = false
+						}, label: {
+							Text("Apply")
+								.frame(maxWidth: .infinity)
+						}).controlSize(.large)
+							.buttonStyle(.bordered)
+						
+						Button(role: .cancel,
+							   action: {
+							showFilter = false
+						}, label: {
+							Text("Cancel")
+								.frame(maxWidth: .infinity)
+						}).foregroundStyle(.secondary)
+							.buttonStyle(.bordered)
+							.controlSize(.large)
+					}.padding()
 				}
 			}.navigationTitle("Groups")
 	}

@@ -20,7 +20,7 @@ struct LanguageChartView: View {
 			}
 		}
 		.chartXAxis(.hidden)
-		.frame(height: 50)
+		.frame(height: 30)
 	}
 }
 

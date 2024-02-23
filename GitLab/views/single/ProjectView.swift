@@ -38,11 +38,13 @@ struct ProjectView: View {
 						Text(String(project.id))
 							.textSelection(.enabled)
 					}
+					Spacer()
 					HStack(spacing: 2) {
 						VisibilityIcon(project.visibility)
 						Text(project.visibility.firstCapitalized)
 					}
 					if (!project.tagList.isEmpty) {
+						Spacer()
 						ScrollView(.horizontal) {
 							HStack(spacing: 2) {
 								Image(systemName: "tag")
@@ -71,16 +73,13 @@ struct ProjectView: View {
 							await toggleStar()
 						}, label: {
 							Label("\(project.starCount) stars", systemImage: "star")
-						}).buttonStyle(.bordered)
-							.foregroundStyle(.primary)
+						})
 						if let url = URL(string: "https://\(API.domain)/\(project.pathWithNamespace)/-/forks/new") {    // If valid link, show fork link
 							if (project.forksCount != nil) {
 								Link(destination: url) {
 									Image(systemName: "arrow.branch")
 									Text("\(project.forksCount!) forks")
 								}
-								.buttonStyle(.bordered)
-								.foregroundStyle(.primary)
 							}
 						}
 						if (project.permissions?.projectAccess?.notificationLevel != nil) {
@@ -101,11 +100,11 @@ struct ProjectView: View {
 								Label(notificationLevel(project.permissions!.projectAccess!.notificationLevel).firstCapitalized, systemImage: "bell.circle")
 							})
 							.id(UUID())
-							.buttonStyle(.bordered)
-							.foregroundStyle(.primary)
 						}
 					}
-				}
+				}.buttonStyle(.bordered)
+					.foregroundStyle(.primary)
+					.controlSize(.mini)
 				
 				if (project.defaultBranch != nil) {
 					ProjectLanguagesLoader(id: project.id)
