@@ -60,57 +60,81 @@ struct ProjectsLoader: View {
 					loadFailed = (projects == nil)
 				}
 			}.sheet(isPresented: $showFilter) {
-				List {
-					Section {
-						Toggle(isOn: $membership) {
-							Text("Member")
-						}
-						Toggle(isOn: $owned) {
-							Text("Owner")
-						}
-						Toggle(isOn: $starred) {
-							Text("Starred")
-						}
-						Toggle(isOn: $imported) {
-							Text("Imported")
-						}
-						Toggle(isOn: $archived) {
-							Text("Archived")
-						}
-					}
-					
-					Section {
-						Picker("Order by", selection: $orderBy) {
-							Text("ID").tag(ProjectOrder.id)
-							Text("Name").tag(ProjectOrder.name)
-							Text("Path").tag(ProjectOrder.path)
-							Text("Created at").tag(ProjectOrder.createdAt)
-							Text("Updated at").tag(ProjectOrder.updatedAt)
-							Text("Last activity at").tag(ProjectOrder.lastActivityAt)
-							Text("Similarity").tag(ProjectOrder.similarity)
+				VStack {
+					Form {
+						Section {
+							Toggle(isOn: $membership) {
+								Text("Member")
+							}
+							Toggle(isOn: $owned) {
+								Text("Owner")
+							}
+							Toggle(isOn: $starred) {
+								Text("Starred")
+							}
+							Toggle(isOn: $imported) {
+								Text("Imported")
+							}
+							Toggle(isOn: $archived) {
+								Text("Archived")
+							}
 						}
 						
-						Picker("Sort", selection: $sort) {
-							Text("Ascending").tag(ProjectSort.asc)
-							Text("Descending").tag(ProjectSort.desc)
+						Section {
+							Picker("Order by", selection: $orderBy) {
+								Text("ID").tag(ProjectOrder.id)
+								Text("Name").tag(ProjectOrder.name)
+								Text("Path").tag(ProjectOrder.path)
+								Text("Created at").tag(ProjectOrder.createdAt)
+								Text("Updated at").tag(ProjectOrder.updatedAt)
+								Text("Last activity at").tag(ProjectOrder.lastActivityAt)
+								Text("Similarity").tag(ProjectOrder.similarity)
+							}
+							
+							Picker("Sort", selection: $sort) {
+								Label("Ascending", systemImage: "increase.indent")
+									.tag(ProjectSort.asc)
+								Label("Descending", systemImage: "decrease.indent")
+									.tag(ProjectSort.desc)
+							}
+						}
+						
+						Section {
+							Picker("Visibility", selection: $visibility) {
+								Text("All")
+									.tag(ProjectVisibility.all)
+								Label("Public", systemImage: "globe")
+									.tag(ProjectVisibility.public)
+								Label("Internal", systemImage: "shield.lefthalf.filled")
+									.tag(ProjectVisibility.internal)
+								Label("Private", systemImage: "lock")
+									.tag(ProjectVisibility.private)
+							}
 						}
 					}
 					
-					Section {
-						Picker("Visibility", selection: $visibility) {
-							Text("All").tag(ProjectVisibility.all)
-							Text("Public").tag(ProjectVisibility.public)
-							Text("Internal").tag(ProjectVisibility.internal)
-							Text("Private").tag(ProjectVisibility.private)
-						}
-					}
-					
-					AsyncButton("Apply") {
-						projects = nil
-						projects = await getProjects()
-						loadFailed = (projects == nil)
-						showFilter = false
-					}
+					VStack {
+						AsyncButton(action: {
+							projects = nil
+							projects = await getProjects()
+							loadFailed = (projects == nil)
+							showFilter = false
+						}, label: {
+							Text("Apply")
+								.frame(maxWidth: .infinity)
+						}).controlSize(.large)
+							.buttonStyle(.bordered)
+						
+						Button(role: .cancel,
+							   action: {
+							showFilter = false
+						}, label: {
+							Text("Cancel")
+								.frame(maxWidth: .infinity)
+						}).foregroundStyle(.secondary)
+							.buttonStyle(.bordered)
+							.controlSize(.large)
+					}.padding()
 				}
 			}.navigationTitle("Projects")
 	}
@@ -143,8 +167,8 @@ struct ProjectsLoader: View {
 	}
 }
 
-struct ProjectsLoader_Previews: PreviewProvider {
-	static var previews: some View {
+#Preview {
+	NavigationStack {
 		ProjectsLoader()
 	}
 }

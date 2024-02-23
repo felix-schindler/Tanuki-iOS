@@ -14,7 +14,7 @@ struct IssuesLoader: View {
 	@State var groupId: Int = 0
 	
 	@State var showNewIssue = false
-	@State var showFilter = true
+	@State var showFilter = false
 	
 	@State var issues: [Issue]? = nil
 	@State var loadFailed = false
@@ -99,23 +99,33 @@ struct IssuesLoader: View {
 							}
 							
 							Picker("Sort", selection: $sort) {
-								Label("Ascending", systemImage: "line.3.horizontal.decrease")
+								Label("Ascending", systemImage: "increase.indent")
 									.tag(ProjectSort.asc)
-								Label("Descending", systemImage: "line.3.horizontal.decrease")
+								Label("Descending", systemImage: "decrease.indent")
 									.tag(ProjectSort.desc)
 							}
 							
 							Picker("Order by", selection: $orderBy) {
-								Text("Created at").tag(IssueOrder.createdAt)
-								Text("Due date").tag(IssueOrder.dueDate)
-								Text("Label priority").tag(IssueOrder.labelPriority)
-								Text("Milestone due").tag(IssueOrder.milestoneDue)
-								Text("Popularity").tag(IssueOrder.popularity)
-								Text("Priority").tag(IssueOrder.priority)
-								Text("Relative position").tag(IssueOrder.relativePosition)
-								Text("Title").tag(IssueOrder.title)
-								Text("Updated at").tag(IssueOrder.updatedAt)
-								Text("Weight").tag(IssueOrder.weight)
+								Label("Created at", systemImage: "doc.badge.plus")
+									.tag(IssueOrder.createdAt)
+								Label("Due date", systemImage: "calendar")
+									.tag(IssueOrder.dueDate)
+								Label("Label priority", systemImage: "tag")
+									.tag(IssueOrder.labelPriority)
+								Label("Milestone due", systemImage: "calendar.badge.clock")
+									.tag(IssueOrder.milestoneDue)
+								Label("Popularity", systemImage: "hand.thumbsup")
+									.tag(IssueOrder.popularity)
+								Label("Priority", systemImage: "exclamationmark")
+									.tag(IssueOrder.priority)
+								Label("Relative position", systemImage: "list.number")
+									.tag(IssueOrder.relativePosition)
+								Label("Title", systemImage: "number")
+									.tag(IssueOrder.title)
+								Label("Updated at", systemImage: "doc.badge.clock")
+									.tag(IssueOrder.updatedAt)
+								Label("Weight", systemImage: "lineweight")
+									.tag(IssueOrder.weight)
 							}
 						}
 						
@@ -134,8 +144,10 @@ struct IssuesLoader: View {
 							
 							Picker("Scope", selection: $scope) {
 								Text("All").tag(IssueScope.all)
-								Text("Created by me").tag(IssueScope.createdByMe)
-								Text("Assigned to me").tag(IssueScope.assignedToMe)
+								Label("Created by me", systemImage: "person.badge.plus")
+									.tag(IssueScope.createdByMe)
+								Label("Assigned to me", systemImage: "person")
+									.tag(IssueScope.assignedToMe)
 							}
 						}
 						
@@ -173,7 +185,7 @@ struct IssuesLoader: View {
 							.buttonStyle(.bordered)
 							.controlSize(.large)
 					}.padding()
-				}.presentationDetents([.large, .fraction(0.8)])
+				}
 			}.navigationTitle("Issues")
 	}
 	

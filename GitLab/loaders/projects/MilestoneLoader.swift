@@ -72,22 +72,40 @@ struct MilestoneLoader: View {
 					showNewMilestone = true
 				}
 			}.sheet(isPresented: $showFilter) {
-				List {
-					Section {
-						Picker("State", selection: $state) {
-							Text("Active").tag(MilestoneState.active)
-							Text("Closed").tag(MilestoneState.closed)
-							Text("All").tag(MilestoneState.all)
-						}
+				VStack {
+					Form {
+						Section {
+							Picker("State", selection: $state) {
+								Text("Active").tag(MilestoneState.active)
+								Text("Closed").tag(MilestoneState.closed)
+								Text("All").tag(MilestoneState.all)
+							}
+						}.presentationDetents([.fraction(0.375)])
 					}
 					
-					AsyncButton("Apply") {
-						milestones = nil
-						if let temp = await getMilestones() {
-							milestones = temp
-						}
-						showFilter = false
-					}
+					VStack {
+						AsyncButton(action: {
+							milestones = nil
+							if let temp = await getMilestones() {
+								milestones = temp
+							}
+							showFilter = false
+						}, label: {
+							Text("Apply")
+								.frame(maxWidth: .infinity)
+						}).controlSize(.large)
+							.buttonStyle(.bordered)
+						
+						Button(role: .cancel,
+							   action: {
+							showFilter = false
+						}, label: {
+							Text("Cancel")
+								.frame(maxWidth: .infinity)
+						}).foregroundStyle(.secondary)
+							.buttonStyle(.bordered)
+							.controlSize(.large)
+					}.padding()
 				}
 			}.sheet(isPresented: $showNewMilestone) {
 				NewMilestone(id: id, groupId: groupId)
