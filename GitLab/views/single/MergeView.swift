@@ -268,9 +268,7 @@ struct MergeView: View {
 			type: MergeRequest.self,
 			method: .put,
 			endpoint: "projects/\(mergeRequest.projectId)/merge_requests/\(mergeRequest.iid)/merge",
-			body: [
-				"": ""
-			]
+			body: body
 		) {
 			mergeRequest = res
 			showMergeOptions = false
