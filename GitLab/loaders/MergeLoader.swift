@@ -109,7 +109,8 @@ struct MergeLoader: View {
 						}, label: {
 							Text("Apply")
 								.frame(maxWidth: .infinity)
-						}).controlSize(.large)
+						}).tint(.accentColor)
+							.controlSize(.large)
 							.buttonStyle(.bordered)
 						
 						Button(role: .cancel,
