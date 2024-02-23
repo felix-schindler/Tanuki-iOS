@@ -13,45 +13,38 @@ import SwiftHttp
 struct ProjectView: View {
 	@State var project: Project
 	
-	@State var showNewIssue: Bool = false
-	@State var showCommits: Bool = false
-	@State var showBranches: Bool = false
+	@State var showNewIssue = false
+	@State var showCommits = false
+	@State var showBranches = false
 	
 	var body: some View {
 		List {
-			Section {
+			VStack {
 				HStack {
 					if let avatarUrl = URL.fromAvatar(project.avatarUrl ?? project.namespace.avatarUrl) {
 						AvatarImage(url: avatarUrl)
 					}
-					
-					if (project.description != nil && project.description != "") {
-						Markdown(project.description!.emojized())
-							.frame(maxWidth: .infinity, alignment: .leading)
-							.padding(.bottom, 0.5)
-					}
+					Spacer()
+					Text(project.name)
+						.font(.title)
+						.fontWeight(.bold)
+					Spacer()
+					VisibilityIcon(project.visibility)
 				}
 				
-				HStack {
-					HStack(spacing: 2) {
-						Image(systemName: "number.circle")
-						Text(String(project.id))
-							.textSelection(.enabled)
-					}
-					Spacer()
-					HStack(spacing: 2) {
-						VisibilityIcon(project.visibility)
-						Text(project.visibility.firstCapitalized)
-					}
-					if (!project.tagList.isEmpty) {
-						Spacer()
-						ScrollView(.horizontal) {
-							HStack(spacing: 2) {
-								Image(systemName: "tag")
-								ForEach(project.tagList, id: \.hashValue) { tag in
-									PillView(tag)
-										.font(.footnote)
-								}
+				if (project.description != nil && project.description != "") {
+					Markdown(project.description!.emojized())
+						.frame(maxWidth: .infinity, alignment: .leading)
+						.padding(.bottom, 0.5)
+				}
+				
+				if (!project.tagList.isEmpty) {
+					ScrollView(.horizontal) {
+						HStack(spacing: 2) {
+							Image(systemName: "tag")
+							ForEach(project.tagList, id: \.hashValue) { tag in
+								PillView(tag)
+									.font(.footnote)
 							}
 						}
 					}
@@ -193,6 +186,7 @@ struct ProjectView: View {
 		}.sheet(isPresented: $showNewIssue) {
 			NewIssueView(id: project.id)
 		}.navigationTitle(project.name)
+			.navigationBarTitleDisplayMode(.inline)
 	}
 	
 	private func notificationLevel(_ id: Int) -> String {
@@ -224,6 +218,6 @@ struct ProjectView: View {
 
 #Preview {
 	NavigationStack {
-		ProjectView(project: Project(id: 33025310, description: "The native SwiftUI GitLab client for iOS and iPadOS.", name: "Tanuki for GitLab", nameWithNamespace: "Felix / Tanuki for GitLab", pathWithNamespace: "felix-schindler/gitlab-ios", defaultBranch: "main", tagList: ["Tanuki", "iOS", "iPadOS", "SwiftUI", "GitLab", "App", "Client"], webUrl: "https://gitlab.com/felix-schindler/gitlab-ios", readmeUrl: "https://gitlab.com/felix-schindler/gitlab-ios/-/blob/main/README.md", avatarUrl: "https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png", forksCount: 0, starCount: 1, namespace: Namespace(id: 0, name: "Felix", path: "felix-schindler", avatarUrl: ""), visibility: "public", owner: UserSmall(id: 9005085, name: "Felix", username: "felix-schindler", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png"), issuesEnabled: true, openIssuesCount: 12, mergeRequestsEnabled: true, permissions: Permissions(projectAccess: Access(accessLevel: 50, notificationLevel: 3))))
+		ProjectView(project: Project(id: 33025310, description: "The native SwiftUI GitLab client for iOS and iPadOS.", name: "Tanuki for GitLab", nameWithNamespace: "Felix / Tanuki for GitLab", pathWithNamespace: "felix-schindler/gitlab-ios", defaultBranch: "main", tagList: ["Tanuki", "iOS", "iPadOS", "SwiftUI", "GitLab", "App", "Client"], webUrl: "https://gitlab.com/felix-schindler/gitlab-ios", readmeUrl: "https://gitlab.com/felix-schindler/gitlab-ios/-/blob/main/README.md", avatarUrl: "https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png", forksCount: 0, starCount: 1, namespace: Namespace(id: 0, name: "Felix", path: "felix-schindler", avatarUrl: ""), visibility: "public", owner: UserSmall(id: 9005085, name: "Felix", username: "felix-schindler", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png"), issuesEnabled: true, openIssuesCount: 12, mergeRequestsEnabled: true, permissions: Permissions(projectAccess: Access(accessLevel: 50, notificationLevel: 1))))
 	}
 }
