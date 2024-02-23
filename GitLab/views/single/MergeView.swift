@@ -110,7 +110,7 @@ struct MergeView: View {
 			Section("Actions") {
 				if (mergeRequest.state != "merged" &&
 					mergeRequest.state != "closed") {
-					Button("Merge this requqest", systemImage: "arrow.triangle.pull") {
+					Button("Merge this request", systemImage: "arrow.triangle.pull") {
 						showMergeOptions = true
 					}
 				}
