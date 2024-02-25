@@ -29,6 +29,7 @@
 		DC4E1CA02A35AA7D00AEB422 /* SnippetsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4E1C9F2A35AA7D00AEB422 /* SnippetsLoader.swift */; };
 		DC4F29B02B8441D70085E92C /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F29AF2B8441D70085E92C /* PillView.swift */; };
 		DC4F29B22B8443160085E92C /* RoundIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F29B12B8443160085E92C /* RoundIconButton.swift */; };
+		DC4F52862B8B271200CA16CF /* SignatureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F52852B8B271200CA16CF /* SignatureLoader.swift */; };
 		DC4F9554272EB4AF00354E1D /* IssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9553272EB4AF00354E1D /* IssuesLoader.swift */; };
 		DC4F955E272EB8A700354E1D /* MergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F955D272EB8A700354E1D /* MergeLoader.swift */; };
 		DC4F9562272EB92200354E1D /* MergeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4F9561272EB92200354E1D /* MergeView.swift */; };
@@ -106,6 +107,7 @@
 		DC4E1C9F2A35AA7D00AEB422 /* SnippetsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetsLoader.swift; sourceTree = "<group>"; };
 		DC4F29AF2B8441D70085E92C /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
 		DC4F29B12B8443160085E92C /* RoundIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundIconButton.swift; sourceTree = "<group>"; };
+		DC4F52852B8B271200CA16CF /* SignatureLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignatureLoader.swift; sourceTree = "<group>"; };
 		DC4F9553272EB4AF00354E1D /* IssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuesLoader.swift; sourceTree = "<group>"; };
 		DC4F955D272EB8A700354E1D /* MergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeLoader.swift; sourceTree = "<group>"; };
 		DC4F9561272EB92200354E1D /* MergeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeView.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			children = (
 				DC0EC63F279E1733006A7C75 /* FileLoader.swift */,
 				DC0EC640279E1733006A7C75 /* TreeLoader.swift */,
+				DC4F52852B8B271200CA16CF /* SignatureLoader.swift */,
 			);
 			name = repository;
 			path = ../repository;
@@ -522,6 +525,7 @@
 				DC115A5D2A38FF2D0034CC00 /* SmallIIssueView.swift in Sources */,
 				DC569B3A2A045604005B99B3 /* NewProject.swift in Sources */,
 				DC5EB912272DB9D00015BF0D /* ProjectListView.swift in Sources */,
+				DC4F52862B8B271200CA16CF /* SignatureLoader.swift in Sources */,
 				DC61BD922A38E7840019E8EA /* SnippetView.swift in Sources */,
 				DC5EB910272DA2450015BF0D /* IssueView.swift in Sources */,
 				DC5EB916272DD1310015BF0D /* ProjectsLoader.swift in Sources */,
@@ -597,7 +601,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -654,7 +658,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

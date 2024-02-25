@@ -247,9 +247,13 @@ struct Commit: Codable {
 	let title: String
 	let message: String
 	let authorName: String
-	let authorEmail: String
 	let authoredDate: Date
 	let webUrl: String
+}
+
+struct CommitSignature: Codable {
+	let signatureType: String
+	let verificationStatus: String
 }
 
 struct Branch: Codable {
