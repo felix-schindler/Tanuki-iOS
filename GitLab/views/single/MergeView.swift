@@ -153,7 +153,7 @@ struct MergeView: View {
 				mergeRequest.state.firstCapitalized,
 				bgColor: (mergeRequest.state == "merged") ? .blue : (mergeRequest.state == "closed") ? .red : .green,
 				fgColor: .white
-			).font(.footnote)
+			)
 			AsyncButton(systemImage: "square.and.arrow.up") {
 				await URL(string: mergeRequest.webUrl)!.share()
 			}

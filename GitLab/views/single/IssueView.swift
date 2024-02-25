@@ -166,7 +166,7 @@ struct IssueView: View {
 				issue.state.firstCapitalized,
 				bgColor: issue.state == "opened" ? .green : .blue,
 				fgColor: .white
-			).font(.footnote)
+			)
 			AsyncButton(systemImage: "square.and.arrow.up") {
 				await URL(string: issue.webUrl)!.share()
 			}
