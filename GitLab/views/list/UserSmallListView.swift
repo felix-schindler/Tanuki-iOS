@@ -33,8 +33,8 @@ struct UserSmallListView: View {
 	}
 }
 
-struct UserSmallListView_Previews: PreviewProvider {
-	static var previews: some View {
+#Preview {
+	List {
 		UserSmallListView(users: [
 			UserSmall(id: 9005085, name: "Felix", username: "felix-schindler", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png"),
 			UserSmall(id: 9005085, name: "Felix", username: "felix-schindler", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png"),
