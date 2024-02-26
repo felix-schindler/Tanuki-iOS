@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CachedAsyncImage
 
 enum AvatarSize {
 	case small,
@@ -46,7 +47,7 @@ struct AvatarImage: View {
 	}
 	
 	var body: some View {
-		AsyncImage(url: url) { phase in
+		CachedAsyncImage(url: url) { phase in
 			switch phase {
 			case .empty:
 				ProgressView()

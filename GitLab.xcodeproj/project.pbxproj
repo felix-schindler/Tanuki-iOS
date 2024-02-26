@@ -10,6 +10,7 @@
 		DC06BE63273F1D3C0049599E /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC06BE62273F1D3C0049599E /* Errors.swift */; };
 		DC0897FD2730516600B8ACDA /* NoteListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0897FC2730516600B8ACDA /* NoteListView.swift */; };
 		DC0A6A372B8CDD4100C53D56 /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0A6A362B8CDD4100C53D56 /* ShareButton.swift */; };
+		DC0A6A582B8D161600C53D56 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = DC0A6A572B8D161600C53D56 /* CachedAsyncImage */; };
 		DC0BD8642A38DD910034097F /* VisibilityIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0BD8632A38DD910034097F /* VisibilityIcon.swift */; };
 		DC0BD8662A38DD9D0034097F /* SmallGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0BD8652A38DD9D0034097F /* SmallGroupView.swift */; };
 		DC0EC63A279E16E6006A7C75 /* FileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0EC639279E16E6006A7C75 /* FileView.swift */; };
@@ -172,6 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC1F1BE229CCCFA600AF7573 /* NVMColor in Frameworks */,
+				DC0A6A582B8D161600C53D56 /* CachedAsyncImage in Frameworks */,
 				DCDD1E0F2B15FFBF00D0B6B9 /* Splash in Frameworks */,
 				DC146E5D2B8530D200217A18 /* SwiftHttp in Frameworks */,
 				DCFCB06E29B7C3D800F18CDC /* MarkdownUI in Frameworks */,
@@ -414,6 +416,7 @@
 				DC1F1BE129CCCFA600AF7573 /* NVMColor */,
 				DCDD1E0E2B15FFBF00D0B6B9 /* Splash */,
 				DC146E5C2B8530D200217A18 /* SwiftHttp */,
+				DC0A6A572B8D161600C53D56 /* CachedAsyncImage */,
 			);
 			productName = GitLab;
 			productReference = DC5EB8EF272D924D0015BF0D /* GitLab.app */;
@@ -448,6 +451,7 @@
 				DC1F1BE029CCCFA600AF7573 /* XCRemoteSwiftPackageReference "NVMColor_swift" */,
 				DCDD1E0D2B15FFBF00D0B6B9 /* XCRemoteSwiftPackageReference "Splash" */,
 				DC146E5B2B8530D200217A18 /* XCRemoteSwiftPackageReference "swift-http" */,
+				DC0A6A562B8D161600C53D56 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			productRefGroup = DC5EB8F0272D924D0015BF0D /* Products */;
 			projectDirPath = "";
@@ -695,7 +699,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.11;
+				MARKETING_VERSION = 1.2.12;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -730,7 +734,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.11;
+				MARKETING_VERSION = 1.2.12;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -766,6 +770,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		DC0A6A562B8D161600C53D56 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.1;
+			};
+		};
 		DC146E5B2B8530D200217A18 /* XCRemoteSwiftPackageReference "swift-http" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/felix-schindler/swift-http/";
@@ -801,6 +813,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DC0A6A572B8D161600C53D56 /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC0A6A562B8D161600C53D56 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
+		};
 		DC146E5C2B8530D200217A18 /* SwiftHttp */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DC146E5B2B8530D200217A18 /* XCRemoteSwiftPackageReference "swift-http" */;
