@@ -175,9 +175,7 @@ struct ProjectView: View {
 				}
 			}
 		}.toolbar {
-			AsyncButton(systemImage: "square.and.arrow.up") {
-				await URL(string: project.webUrl)!.share()
-			}
+			ShareButton(URL(string: project.webUrl)!)
 			if (project.issuesEnabled) {
 				RoundIconButton("New Issue", icon: "plus") {
 					showNewIssue = true
@@ -185,7 +183,7 @@ struct ProjectView: View {
 			}
 		}.sheet(isPresented: $showNewIssue) {
 			NewIssueView(id: project.id)
-		}.navigationTitle(project.name)
+		}.navigationTitle(project.pathWithNamespace)
 			.navigationBarTitleDisplayMode(.inline)
 	}
 	
