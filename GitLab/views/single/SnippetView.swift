@@ -49,9 +49,7 @@ struct SnippetView: View {
 				}
 			}
 		}.toolbar {
-			AsyncButton(systemImage: "square.and.arrow.up") {
-				await URL(string: snippet.webUrl)!.share()
-			}
+			ShareButton(URL(string: snippet.webUrl)!)
 		}.navigationTitle(snippet.title.emojized())
 	}
 }

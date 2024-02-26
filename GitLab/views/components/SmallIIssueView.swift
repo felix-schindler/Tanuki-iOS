@@ -119,9 +119,7 @@ struct SmallIIssueView: View {
 					deleteError = false
 				}
 			})
-			AsyncButton(systemImage: "square.and.arrow.up") {
-				await URL(string: issue.webUrl)!.share()
-			}
+			ShareButton(URL(string: issue.webUrl)!)
 		}
 	}
 }

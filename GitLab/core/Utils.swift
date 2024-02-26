@@ -114,13 +114,6 @@ extension Date {
 
 
 extension URL {
-	public func share() async -> Void {
-		let activityVC = await UIActivityViewController(activityItems: [self], applicationActivities: nil)
-		
-		let windowScene = await UIApplication.shared.connectedScenes.first as? UIWindowScene
-		await windowScene?.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
-	}
-	
 	public static func fromAvatar(_ avatarUrl: String?) -> URL? {
 		if var urlStr = avatarUrl {
 			if (!urlStr.contains("://")) {

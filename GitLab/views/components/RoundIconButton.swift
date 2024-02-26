@@ -41,6 +41,8 @@ struct RoundIconButton: View {
 		}
 		RoundIconButton("Events", icon: "bell", action: {})
 		RoundIconButton("Cancel", icon: "xmark", action: {})
+			.tint(.secondary)
+		RoundIconButton("Cancel", icon: "xmark", action: {})
 			.tint(.red)
 	}
 }

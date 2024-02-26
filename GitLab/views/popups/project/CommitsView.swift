@@ -66,9 +66,7 @@ struct CommitsView: View {
 										.font(.system(.caption, design: .monospaced))
 								}
 							}.swipeActions {
-								AsyncButton(systemImage: "square.and.arrow.up") {
-									await URL(string: commit.webUrl)!.share()
-								}.tint(.blue)
+								ShareButton(URL(string: commit.webUrl)!)
 							}
 						}
 					}

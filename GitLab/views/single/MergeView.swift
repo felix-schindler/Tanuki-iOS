@@ -154,9 +154,7 @@ struct MergeView: View {
 				bgColor: (mergeRequest.state == "merged") ? .blue : (mergeRequest.state == "closed") ? .red : .green,
 				fgColor: .white
 			)
-			AsyncButton(systemImage: "square.and.arrow.up") {
-				await URL(string: mergeRequest.webUrl)!.share()
-			}
+			ShareButton(URL(string: mergeRequest.webUrl)!)
 		}.sheet(isPresented: $showMergeOptions) {
 			VStack {
 				Form {

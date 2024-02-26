@@ -167,9 +167,7 @@ struct IssueView: View {
 				bgColor: issue.state == "opened" ? .green : .blue,
 				fgColor: .white
 			)
-			AsyncButton(systemImage: "square.and.arrow.up") {
-				await URL(string: issue.webUrl)!.share()
-			}
+			ShareButton(URL(string: issue.webUrl)!)
 			RoundIconButton("New Issue", icon: "plus") {
 				showNewIssue = true
 			}

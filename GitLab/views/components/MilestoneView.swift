@@ -52,18 +52,16 @@ struct MilestoneView: View {
 					}
 				}
 			}.swipeActions {
-				AsyncButton(systemImage: "square.and.arrow.up") {
-					await URL(string: milestone.webUrl)!.share()
-				}
+				ShareButton(URL(string: milestone.webUrl)!)
 			}
 		}
 		
 	}
 }
 
-struct MilestoneView_Previews: PreviewProvider {
-	static var previews: some View {
-		NavigationStack {
+#Preview {
+	NavigationStack {
+		List {
 			MilestoneView(id: 0, milestone: Milestone(id: 3034284, iid: 1, title: "1.0.0", description: "", state: "closed", startDate: nil, dueDate: "2023-06-13", expired: false, webUrl: "https://gitlab.com/felix-schindler/gitlab-ios/-/milestones/3"))
 		}
 	}

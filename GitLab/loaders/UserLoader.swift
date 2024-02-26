@@ -35,9 +35,7 @@ struct UserLoader: View {
 		}.refreshable {
 			await loadUserAndStatus()
 		}.toolbar {
-			AsyncButton(systemImage: "square.and.arrow.up") {
-				await URL(string: user!.webUrl)!.share()
-			}
+			ShareButton(URL(string: user!.webUrl)!)
 		}.navigationTitle("User")
 	}
 	

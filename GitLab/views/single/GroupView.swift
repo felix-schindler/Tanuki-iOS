@@ -72,9 +72,7 @@ struct GroupView: View {
 				group = temp
 			}
 		}.toolbar {
-			AsyncButton(systemImage: "square.and.arrow.up") {
-				await URL(string: group.webUrl)!.share()
-			}
+			ShareButton(URL(string: group.webUrl)!)
 		}.navigationTitle(group.name)
 			.navigationBarTitleDisplayMode(.inline)
 	}
