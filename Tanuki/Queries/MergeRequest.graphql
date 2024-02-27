@@ -1,0 +1,62 @@
+query MergeRequest($fullPath: ID!, $iid: String!) {
+  project(fullPath: $fullPath) {
+		avatarUrl
+	
+    mergeRequest(iid: $iid) {
+      iid
+      title
+      description
+      reference(full: true)
+      state
+      sourceBranch
+      targetBranch
+      sourceProject {
+        fullPath
+      }
+      upvotes
+      downvotes
+      author {
+        avatarUrl
+        name
+        username
+      }
+      userPermissions {
+        canMerge
+        createNote
+      }
+      createdAt
+      webUrl
+      
+      mergeStatusEnum
+      detailedMergeStatus
+      reviewers {
+        nodes {
+          avatarUrl
+          username
+        }
+      }
+      
+      notes {
+        nodes {
+          id
+          author {
+            avatarUrl
+            username
+          }
+          maxAccessLevelOfAuthor
+          createdAt
+          
+          body
+          system
+          internal
+          resolved
+          updatedAt
+          systemNoteIconName
+          systemNoteMetadata {
+            id
+          }
+        }
+      }
+    }
+  }
+}
