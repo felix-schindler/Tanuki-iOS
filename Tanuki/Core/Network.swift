@@ -20,6 +20,10 @@ class API {
 	public static var token: String = "glpat-YXDgEER3pP5esynN4sHa"
 	
 	public static var url: URL {
+		return URL(string: "https://\(self.domain)")!
+	}
+	
+	public static var graphUrl: URL {
 		return URL(string: "https://\(self.domain)/api/graphql")!
 	}
 }
@@ -32,7 +36,7 @@ class Network {
 		let cache = InMemoryNormalizedCache()
 		let store = ApolloStore(cache: cache)
 		let provider = NetworkInterceptorProvider(client: client, store: store)
-		let url = API.url
+		let url = API.graphUrl
 		let transport = RequestChainNetworkTransport(interceptorProvider: provider, endpointURL: url)
 		
 		return ApolloClient(networkTransport: transport, store: store)
