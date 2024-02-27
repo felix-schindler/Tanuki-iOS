@@ -7,7 +7,7 @@ public class MergeRequestQuery: GraphQLQuery {
   public static let operationName: String = "MergeRequest"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query MergeRequest($fullPath: ID!, $iid: String!) { project(fullPath: $fullPath) { __typename avatarUrl mergeRequest(iid: $iid) { __typename iid title description reference(full: true) state sourceBranch targetBranch sourceProject { __typename fullPath } upvotes downvotes author { __typename avatarUrl name username } userPermissions { __typename canMerge createNote } createdAt webUrl mergeStatusEnum detailedMergeStatus reviewers { __typename nodes { __typename avatarUrl username } } notes { __typename nodes { __typename id author { __typename avatarUrl username } maxAccessLevelOfAuthor createdAt body system internal resolved updatedAt systemNoteIconName systemNoteMetadata { __typename id } } } } } }"#
+      #"query MergeRequest($fullPath: ID!, $iid: String!) { project(fullPath: $fullPath) { __typename avatarUrl mergeRequest(iid: $iid) { __typename iid title description reference(full: true) state sourceBranch targetBranch sourceProject { __typename fullPath } diffStatsSummary { __typename additions deletions fileCount } upvotes downvotes userNotesCount author { __typename avatarUrl name username } userPermissions { __typename canApprove canMerge updateMergeRequest createNote } createdAt webUrl approved mergeStatusEnum conflicts detailedMergeStatus assignees { __typename nodes { __typename avatarUrl username } } reviewers { __typename nodes { __typename avatarUrl username } } labels { __typename nodes { __typename title color textColor } } milestone { __typename iid title } humanTimeEstimate humanTotalTimeSpent notes { __typename nodes { __typename id author { __typename avatarUrl username } maxAccessLevelOfAuthor createdAt body system internal resolved updatedAt systemNoteIconName systemNoteMetadata { __typename id } } } } } }"#
     ))
 
   public var fullPath: ID
@@ -75,15 +75,24 @@ public class MergeRequestQuery: GraphQLQuery {
           .field("sourceBranch", String.self),
           .field("targetBranch", String.self),
           .field("sourceProject", SourceProject?.self),
+          .field("diffStatsSummary", DiffStatsSummary?.self),
           .field("upvotes", Int.self),
           .field("downvotes", Int.self),
+          .field("userNotesCount", Int?.self),
           .field("author", Author?.self),
           .field("userPermissions", UserPermissions.self),
           .field("createdAt", GitLabAPI.Time.self),
           .field("webUrl", String?.self),
+          .field("approved", Bool.self),
           .field("mergeStatusEnum", GraphQLEnum<GitLabAPI.MergeStatus>?.self),
+          .field("conflicts", Bool.self),
           .field("detailedMergeStatus", GraphQLEnum<GitLabAPI.DetailedMergeStatus>?.self),
+          .field("assignees", Assignees?.self),
           .field("reviewers", Reviewers?.self),
+          .field("labels", Labels?.self),
+          .field("milestone", Milestone?.self),
+          .field("humanTimeEstimate", String?.self),
+          .field("humanTotalTimeSpent", String?.self),
           .field("notes", Notes.self),
         ] }
 
@@ -103,10 +112,14 @@ public class MergeRequestQuery: GraphQLQuery {
         public var targetBranch: String { __data["targetBranch"] }
         /// Source project of the merge request.
         public var sourceProject: SourceProject? { __data["sourceProject"] }
+        /// Summary of which files were changed in this merge request.
+        public var diffStatsSummary: DiffStatsSummary? { __data["diffStatsSummary"] }
         /// Number of upvotes for the merge request.
         public var upvotes: Int { __data["upvotes"] }
         /// Number of downvotes for the merge request.
         public var downvotes: Int { __data["downvotes"] }
+        /// User notes count of the merge request.
+        public var userNotesCount: Int? { __data["userNotesCount"] }
         /// User who created this merge request.
         public var author: Author? { __data["author"] }
         /// Permissions for the current user on the resource
@@ -115,12 +128,26 @@ public class MergeRequestQuery: GraphQLQuery {
         public var createdAt: GitLabAPI.Time { __data["createdAt"] }
         /// Web URL of the merge request.
         public var webUrl: String? { __data["webUrl"] }
+        /// Indicates if the merge request has all the required approvals.
+        public var approved: Bool { __data["approved"] }
         /// Merge status of the merge request.
         public var mergeStatusEnum: GraphQLEnum<GitLabAPI.MergeStatus>? { __data["mergeStatusEnum"] }
+        /// Indicates if the merge request has conflicts.
+        public var conflicts: Bool { __data["conflicts"] }
         /// Detailed merge status of the merge request.
         public var detailedMergeStatus: GraphQLEnum<GitLabAPI.DetailedMergeStatus>? { __data["detailedMergeStatus"] }
+        /// Assignees of the merge request.
+        public var assignees: Assignees? { __data["assignees"] }
         /// Users from whom a review has been requested.
         public var reviewers: Reviewers? { __data["reviewers"] }
+        /// Labels of the merge request.
+        public var labels: Labels? { __data["labels"] }
+        /// Milestone of the merge request.
+        public var milestone: Milestone? { __data["milestone"] }
+        /// Human-readable time estimate of the merge request.
+        public var humanTimeEstimate: String? { __data["humanTimeEstimate"] }
+        /// Human-readable total time reported as spent on the merge request.
+        public var humanTotalTimeSpent: String? { __data["humanTotalTimeSpent"] }
         /// All notes on this noteable.
         public var notes: Notes { __data["notes"] }
 
@@ -139,6 +166,29 @@ public class MergeRequestQuery: GraphQLQuery {
 
           /// Full path of the project.
           public var fullPath: GitLabAPI.ID { __data["fullPath"] }
+        }
+
+        /// Project.MergeRequest.DiffStatsSummary
+        ///
+        /// Parent Type: `DiffStatsSummary`
+        public struct DiffStatsSummary: GitLabAPI.SelectionSet {
+          public let __data: DataDict
+          public init(_dataDict: DataDict) { __data = _dataDict }
+
+          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.DiffStatsSummary }
+          public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("additions", Int.self),
+            .field("deletions", Int.self),
+            .field("fileCount", Int.self),
+          ] }
+
+          /// Number of lines added.
+          public var additions: Int { __data["additions"] }
+          /// Number of lines deleted.
+          public var deletions: Int { __data["deletions"] }
+          /// Number of files changed.
+          public var fileCount: Int { __data["fileCount"] }
         }
 
         /// Project.MergeRequest.Author
@@ -174,14 +224,57 @@ public class MergeRequestQuery: GraphQLQuery {
           public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestPermissions }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
+            .field("canApprove", Bool.self),
             .field("canMerge", Bool.self),
+            .field("updateMergeRequest", Bool.self),
             .field("createNote", Bool.self),
           ] }
 
+          /// If `true`, the user can perform `can_approve` on this resource
+          public var canApprove: Bool { __data["canApprove"] }
           /// If `true`, the user can perform `can_merge` on this resource
           public var canMerge: Bool { __data["canMerge"] }
+          /// If `true`, the user can perform `update_merge_request` on this resource
+          public var updateMergeRequest: Bool { __data["updateMergeRequest"] }
           /// If `true`, the user can perform `create_note` on this resource
           public var createNote: Bool { __data["createNote"] }
+        }
+
+        /// Project.MergeRequest.Assignees
+        ///
+        /// Parent Type: `MergeRequestAssigneeConnection`
+        public struct Assignees: GitLabAPI.SelectionSet {
+          public let __data: DataDict
+          public init(_dataDict: DataDict) { __data = _dataDict }
+
+          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAssigneeConnection }
+          public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("nodes", [Node?]?.self),
+          ] }
+
+          /// A list of nodes.
+          public var nodes: [Node?]? { __data["nodes"] }
+
+          /// Project.MergeRequest.Assignees.Node
+          ///
+          /// Parent Type: `MergeRequestAssignee`
+          public struct Node: GitLabAPI.SelectionSet {
+            public let __data: DataDict
+            public init(_dataDict: DataDict) { __data = _dataDict }
+
+            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAssignee }
+            public static var __selections: [ApolloAPI.Selection] { [
+              .field("__typename", String.self),
+              .field("avatarUrl", String?.self),
+              .field("username", String.self),
+            ] }
+
+            /// URL of the user's avatar.
+            public var avatarUrl: String? { __data["avatarUrl"] }
+            /// Username of the user. Unique within this instance of GitLab.
+            public var username: String { __data["username"] }
+          }
         }
 
         /// Project.MergeRequest.Reviewers
@@ -219,6 +312,66 @@ public class MergeRequestQuery: GraphQLQuery {
             /// Username of the user. Unique within this instance of GitLab.
             public var username: String { __data["username"] }
           }
+        }
+
+        /// Project.MergeRequest.Labels
+        ///
+        /// Parent Type: `LabelConnection`
+        public struct Labels: GitLabAPI.SelectionSet {
+          public let __data: DataDict
+          public init(_dataDict: DataDict) { __data = _dataDict }
+
+          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.LabelConnection }
+          public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("nodes", [Node?]?.self),
+          ] }
+
+          /// A list of nodes.
+          public var nodes: [Node?]? { __data["nodes"] }
+
+          /// Project.MergeRequest.Labels.Node
+          ///
+          /// Parent Type: `Label`
+          public struct Node: GitLabAPI.SelectionSet {
+            public let __data: DataDict
+            public init(_dataDict: DataDict) { __data = _dataDict }
+
+            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Label }
+            public static var __selections: [ApolloAPI.Selection] { [
+              .field("__typename", String.self),
+              .field("title", String.self),
+              .field("color", String.self),
+              .field("textColor", String.self),
+            ] }
+
+            /// Content of the label.
+            public var title: String { __data["title"] }
+            /// Background color of the label.
+            public var color: String { __data["color"] }
+            /// Text color of the label.
+            public var textColor: String { __data["textColor"] }
+          }
+        }
+
+        /// Project.MergeRequest.Milestone
+        ///
+        /// Parent Type: `Milestone`
+        public struct Milestone: GitLabAPI.SelectionSet {
+          public let __data: DataDict
+          public init(_dataDict: DataDict) { __data = _dataDict }
+
+          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Milestone }
+          public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("iid", GitLabAPI.ID.self),
+            .field("title", String.self),
+          ] }
+
+          /// Internal ID of the milestone.
+          public var iid: GitLabAPI.ID { __data["iid"] }
+          /// Title of the milestone.
+          public var title: String { __data["title"] }
         }
 
         /// Project.MergeRequest.Notes

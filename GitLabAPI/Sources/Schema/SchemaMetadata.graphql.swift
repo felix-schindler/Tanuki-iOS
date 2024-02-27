@@ -60,6 +60,7 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "WorkItemWidgetTestReports": return GitLabAPI.Objects.WorkItemWidgetTestReports
     case "WorkItemWidgetTimeTracking": return GitLabAPI.Objects.WorkItemWidgetTimeTracking
     case "WorkItemWidgetWeight": return GitLabAPI.Objects.WorkItemWidgetWeight
+    case "DiffStatsSummary": return GitLabAPI.Objects.DiffStatsSummary
     case "MergeRequestAuthor": return GitLabAPI.Objects.MergeRequestAuthor
     case "AddOnUser": return GitLabAPI.Objects.AddOnUser
     case "AutocompletedUser": return GitLabAPI.Objects.AutocompletedUser
@@ -69,7 +70,12 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "MergeRequestReviewer": return GitLabAPI.Objects.MergeRequestReviewer
     case "UserCore": return GitLabAPI.Objects.UserCore
     case "MergeRequestPermissions": return GitLabAPI.Objects.MergeRequestPermissions
+    case "MergeRequestAssigneeConnection": return GitLabAPI.Objects.MergeRequestAssigneeConnection
     case "MergeRequestReviewerConnection": return GitLabAPI.Objects.MergeRequestReviewerConnection
+    case "LabelConnection": return GitLabAPI.Objects.LabelConnection
+    case "Label": return GitLabAPI.Objects.Label
+    case "Milestone": return GitLabAPI.Objects.Milestone
+    case "Iteration": return GitLabAPI.Objects.Iteration
     case "NoteConnection": return GitLabAPI.Objects.NoteConnection
     case "Note": return GitLabAPI.Objects.Note
     case "Discussion": return GitLabAPI.Objects.Discussion

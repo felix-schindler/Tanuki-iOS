@@ -13,28 +13,62 @@ query MergeRequest($fullPath: ID!, $iid: String!) {
       sourceProject {
         fullPath
       }
+      diffStatsSummary {
+        additions
+        deletions
+        fileCount
+      }
       upvotes
       downvotes
+      userNotesCount
       author {
         avatarUrl
         name
         username
       }
       userPermissions {
+        canApprove
         canMerge
+        updateMergeRequest
         createNote
       }
       createdAt
       webUrl
       
+      approved
       mergeStatusEnum
+      conflicts
       detailedMergeStatus
+      
+      assignees {
+        nodes {
+          avatarUrl
+          username
+        }
+      }
+      
       reviewers {
         nodes {
           avatarUrl
           username
         }
       }
+      
+      labels {
+        nodes {
+          title
+          color
+          textColor
+        }
+      }
+      
+      milestone {
+        iid
+        title
+      }
+      
+      humanTimeEstimate
+      humanTotalTimeSpent
       
       notes {
         nodes {

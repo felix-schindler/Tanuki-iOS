@@ -12,10 +12,10 @@ struct IssueStateIcon: View {
 	private let state: GraphQLEnum<GitLabAPI.IssueState>
 	private let icon: String
 	private let color: SwiftUI.Color
-
+	
 	init(_ state: GraphQLEnum<GitLabAPI.IssueState>) {
 		self.state = state
-
+		
 		switch state {
 		case .opened:
 			icon = "smallcircle.circle"
@@ -31,12 +31,12 @@ struct IssueStateIcon: View {
 			color = Color.primary
 		}
 	}
-
+	
 	public var body: some View {
 		Label(self.state.rawValue, systemImage: self.icon)
 			.foregroundStyle(self.color)
 			.labelStyle(.iconOnly)
-    }
+	}
 }
 
 struct MergeStateHelper {
@@ -54,7 +54,7 @@ struct MergeStateHelper {
 			return Color.primary
 		}
 	}
-
+	
 	public static func getIconByState(_ state: GraphQLEnum<GitLabAPI.MergeRequestState>) -> String {
 		switch state {
 		case .opened:
@@ -75,50 +75,18 @@ struct MergeStateIcon: View {
 	private let state: GraphQLEnum<GitLabAPI.MergeRequestState>
 	private let icon: String
 	private let color: SwiftUI.Color
-
+	
 	init(_ state: GraphQLEnum<GitLabAPI.MergeRequestState>) {
 		self.state = state
 		self.icon = MergeStateHelper.getIconByState(state)
 		self.color = MergeStateHelper.getColorByState(state)
 	}
-
+	
 	public var body: some View {
 		Label(self.state.rawValue, systemImage: self.icon)
 			.foregroundStyle(self.color)
 			.labelStyle(.iconOnly)
 	}
-}
-
-struct MergeStatusHelper {
-	public static func getColorByStatus(_ status: GraphQLEnum<GitLabAPI.MergeStatus>) -> SwiftUI.Color {
-	    switch status {
-        case .canBeMerged:
-            return Color.green
-        case .cannotBeMerged:
-            return Color.red
-		case .checking:
-			return Color.orange
-        case .unchecked, .cannotBeMergedRecheck:
-            return Color.secondary
-        default:
-            return Color.primary
-        }
-	}
-	
-	public static func getIconByStatus(_ status: GraphQLEnum<GitLabAPI.MergeStatus>) -> String {
-        switch status {
-        case .canBeMerged:
-            return "checkmark"
-        case .cannotBeMerged:
-            return "xmark"
-		case .checking:
-			return "arrow.2.circlepath"
-        case .unchecked, .cannotBeMergedRecheck:
-            return "questionmark"
-        default:
-            return "questionmark"
-        }
-    }
 }
 
 struct MergeStatus: View {
@@ -128,13 +96,94 @@ struct MergeStatus: View {
 	
 	init(_ status: GraphQLEnum<GitLabAPI.MergeStatus>) {
 		self.status = status
-		self.icon = MergeStatusHelper.getIconByStatus(status)
-		self.color = MergeStatusHelper.getColorByStatus(status)
+		
+		switch status {
+		case .canBeMerged:
+			self.icon = "checkmark"
+			self.color = Color.green
+		case .cannotBeMerged:
+			self.icon = "xmark"
+			self.color = Color.red
+		case .checking:
+			self.icon = "arrow.2.circlepath"
+			self.color = Color.orange
+		case .unchecked, .cannotBeMergedRecheck:
+			self.icon = "questionmark"
+			self.color = Color.secondary
+		default:
+			self.icon = "questionmark"
+			self.color = Color.primary
+		}
 	}
 	
 	public var body: some View {
-		Label(self.status.rawValue, systemImage: self.icon)
-			.foregroundStyle(self.color)
+		Label(
+			self.status.rawValue
+				.split(separator: "_")
+				.joined(separator: " ")
+				.lowercased()
+				.firstCapitalized,
+			systemImage: self.icon
+		).foregroundStyle(self.color)
+	}
+}
+
+struct DetailedMergeStatusView: View {
+	private var detailedStatus: GraphQLEnum<GitLabAPI.DetailedMergeStatus>
+	private var msg: String
+	
+	init(_ detailedStatus: GraphQLEnum<GitLabAPI.DetailedMergeStatus>) {
+		self.detailedStatus = detailedStatus
+		
+		msg = switch detailedStatus {
+		case .unchecked:
+			"Merge status has not been checked."
+		case .checking:
+			"Currently checking for mergeability."
+		case .mergeable:
+			"Branch can be merged."
+		case .brokenStatus:
+			"Can not merge the source into the target branch, potential conflict."
+		case .commitsStatus:
+			"Source branch exists and contains commits."
+		case .ciMustPass:
+			"Pipeline must succeed before merging."
+		case .ciStillRunning:
+			"Pipeline is still running."
+		case .discussionsNotResolved:
+			"Discussions must be resolved before merging."
+		case .draftStatus:
+			"Merge request must not be draft before merging."
+		case .notOpen:
+			"Merge request must be open before merging."
+		case .notApproved:
+			"Merge request must be approved before merging."
+		case .blockedStatus:
+			"Merge request dependencies must be merged."
+		case .policiesDenied:
+			"There are denied policies for the merge request."
+		case .externalStatusChecks:
+			"Status checks must pass."
+		case .preparing:
+			"Merge request diff is being created."
+		case .jiraAssociation:
+			"Either the title or description must reference a Jira issue."
+		case .conflict:
+			"There are conflicts between the source and target branches."
+		case .needRebase:
+			"Merge request needs to be rebased."
+		default:
+			"Unknown error"
+		}
+	}
+	
+	var body: some View {
+		Label(title: {
+			Text(msg)
+		}, icon: {
+			Image(systemName: "minus.circle.fill")
+				.foregroundStyle(.red)
+		})
 	}
 }
 

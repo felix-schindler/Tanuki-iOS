@@ -70,8 +70,9 @@ struct PipelineStatus: View {
 				}
 				Text("The current Pipeline status is \"\(state.rawValue)\"")
 				Spacer()
-			}.padding()
-				.presentationDetents([.fraction(0.2)])
+			}
+			.padding()
+			.presentationDetents([.fraction(0.2)])
 		}
 	}
 }
