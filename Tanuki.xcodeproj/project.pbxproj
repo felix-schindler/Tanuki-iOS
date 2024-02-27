@@ -30,6 +30,9 @@
 		DC27050D2B8BC351003DAA84 /* StarredProjects.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC27050C2B8BC351003DAA84 /* StarredProjects.graphql */; };
 		DC2705112B8BC507003DAA84 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2705102B8BC507003DAA84 /* Network.swift */; };
 		DC2705192B8BC68E003DAA84 /* GitLabAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC2705182B8BC68E003DAA84 /* GitLabAPI */; };
+		DC386A952B8D5FB2002E5F6D /* MergeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC386A942B8D5FB2002E5F6D /* MergeRequest.swift */; };
+		DC386A972B8D615D002E5F6D /* MergeRequest.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC386A962B8D615D002E5F6D /* MergeRequest.graphql */; };
+		DC386A9A2B8D86C4002E5F6D /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC386A992B8D86C4002E5F6D /* NoteView.swift */; };
 		DC3A24492B8C361D00DB0E3F /* Project.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC3A24482B8C361D00DB0E3F /* Project.graphql */; };
 		DC3A244D2B8C37BF00DB0E3F /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3A244C2B8C37BF00DB0E3F /* Project.swift */; };
 		DC3A244F2B8C3B8100DB0E3F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3A244E2B8C3B8100DB0E3F /* Utils.swift */; };
@@ -59,6 +62,9 @@
 		DC2705002B8BC0FB003DAA84 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DC27050C2B8BC351003DAA84 /* StarredProjects.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = StarredProjects.graphql; sourceTree = "<group>"; };
 		DC2705102B8BC507003DAA84 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		DC386A942B8D5FB2002E5F6D /* MergeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeRequest.swift; sourceTree = "<group>"; };
+		DC386A962B8D615D002E5F6D /* MergeRequest.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MergeRequest.graphql; sourceTree = "<group>"; };
+		DC386A992B8D86C4002E5F6D /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		DC3A24482B8C361D00DB0E3F /* Project.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Project.graphql; sourceTree = "<group>"; };
 		DC3A244C2B8C37BF00DB0E3F /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		DC3A244E2B8C3B8100DB0E3F /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -120,14 +126,10 @@
 				DC0A6A422B8D093F00C53D56 /* Entities */,
 				DC3A24572B8C4C5D00DB0E3F /* Projects */,
 				DC3A24582B8C4C7C00DB0E3F /* Components */,
+				DC386A982B8D6162002E5F6D /* Queries */,
 				DC2704FC2B8BC0FB003DAA84 /* Assets.xcassets */,
 				DC2704FE2B8BC0FB003DAA84 /* Tanuki.entitlements */,
 				DC2704FF2B8BC0FB003DAA84 /* Preview Content */,
-				DC27050C2B8BC351003DAA84 /* StarredProjects.graphql */,
-				DC3A24482B8C361D00DB0E3F /* Project.graphql */,
-				DC0FF5B72B8CAD45002B4FAE /* Issues.graphql */,
-				DC0A6A3C2B8CF7D300C53D56 /* MergeRequests.graphql */,
-				DC0A6A4B2B8D0B1800C53D56 /* Namespace.graphql */,
 			);
 			path = Tanuki;
 			sourceTree = "<group>";
@@ -147,13 +149,35 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		DC386A932B8D5FA4002E5F6D /* MRs */ = {
+			isa = PBXGroup;
+			children = (
+				DC0FF5B52B8C7AFB002B4FAE /* MergeRequests.swift */,
+				DC386A942B8D5FB2002E5F6D /* MergeRequest.swift */,
+			);
+			path = MRs;
+			sourceTree = "<group>";
+		};
+		DC386A982B8D6162002E5F6D /* Queries */ = {
+			isa = PBXGroup;
+			children = (
+				DC27050C2B8BC351003DAA84 /* StarredProjects.graphql */,
+				DC3A24482B8C361D00DB0E3F /* Project.graphql */,
+				DC0FF5B72B8CAD45002B4FAE /* Issues.graphql */,
+				DC0A6A3C2B8CF7D300C53D56 /* MergeRequests.graphql */,
+				DC386A962B8D615D002E5F6D /* MergeRequest.graphql */,
+				DC0A6A4B2B8D0B1800C53D56 /* Namespace.graphql */,
+			);
+			path = Queries;
+			sourceTree = "<group>";
+		};
 		DC3A24572B8C4C5D00DB0E3F /* Projects */ = {
 			isa = PBXGroup;
 			children = (
+				DC386A932B8D5FA4002E5F6D /* MRs */,
 				DC2704FA2B8BC0F9003DAA84 /* StarredProjects.swift */,
 				DC3A244C2B8C37BF00DB0E3F /* Project.swift */,
 				DC0FF5B32B8C7892002B4FAE /* Issues.swift */,
-				DC0FF5B52B8C7AFB002B4FAE /* MergeRequests.swift */,
 				DC0A6A3E2B8D02A600C53D56 /* NewIssue.swift */,
 			);
 			path = Projects;
@@ -168,6 +192,7 @@
 				DC0A6A382B8CE4FF00C53D56 /* PipelineStatus.swift */,
 				DC0A6A402B8D03EC00C53D56 /* StateIcons.swift */,
 				DC0A6A492B8D0ABE00C53D56 /* VisibilityIcon.swift */,
+				DC386A992B8D86C4002E5F6D /* NoteView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -259,6 +284,7 @@
 			files = (
 				DC2705012B8BC0FB003DAA84 /* Preview Assets.xcassets in Resources */,
 				DC27050D2B8BC351003DAA84 /* StarredProjects.graphql in Resources */,
+				DC386A972B8D615D002E5F6D /* MergeRequest.graphql in Resources */,
 				DC2704FD2B8BC0FB003DAA84 /* Assets.xcassets in Resources */,
 				DC0A6A4C2B8D0B1800C53D56 /* Namespace.graphql in Resources */,
 				DC0FF5B82B8CAD45002B4FAE /* Issues.graphql in Resources */,
@@ -280,11 +306,13 @@
 				DC2704FB2B8BC0F9003DAA84 /* StarredProjects.swift in Sources */,
 				DC2704F92B8BC0F9003DAA84 /* TanukiApp.swift in Sources */,
 				DC2705112B8BC507003DAA84 /* Network.swift in Sources */,
+				DC386A952B8D5FB2002E5F6D /* MergeRequest.swift in Sources */,
 				DC3A24562B8C4C2200DB0E3F /* Pill.swift in Sources */,
 				DC0A6A3F2B8D02A600C53D56 /* NewIssue.swift in Sources */,
 				DC3A245E2B8C557E00DB0E3F /* RoundIconButton.swift in Sources */,
 				DC0A6A3B2B8CF05200C53D56 /* Namespace.swift in Sources */,
 				DC0FF5B62B8C7AFB002B4FAE /* MergeRequests.swift in Sources */,
+				DC386A9A2B8D86C4002E5F6D /* NoteView.swift in Sources */,
 				DC3A24512B8C3E1A00DB0E3F /* AvatarImage.swift in Sources */,
 				DC3A244D2B8C37BF00DB0E3F /* Project.swift in Sources */,
 				DC0A6A412B8D03EC00C53D56 /* StateIcons.swift in Sources */,
@@ -422,6 +450,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Tanuki Lite";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -461,6 +490,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Tanuki Lite";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

@@ -9,9 +9,7 @@ import SwiftUI
 import GitLabAPI
 
 struct MergeRequests: View {
-	// MARK: - Things to load
-	@State
-	public var fullPath: String
+	private let fullPath: String
 	
 	@State
 	private var project: GitLabAPI.MergeRequestsQuery.Data.Project?
@@ -66,49 +64,61 @@ struct MergeRequests: View {
 					} else {
 						ForEach(project.mergeRequests!.nodes!, id: \.self?.iid) { mergeRequest in
 							if let mr = mergeRequest {
-								VStack(alignment: .leading) {
-									HStack(spacing: 5) {
-										MergeStateIcon(mr.state)
-										Text(mr.reference)
-											.foregroundStyle(.secondary)
-									}.font(.footnote)
-									Text(mr.title)
-									HStack(spacing: 10) {
-										HStack(spacing: 2) {
-											Image(systemName: "hand.thumbsup")
-											Text(String(mr.upvotes))
-										}
-										HStack(spacing: 2) {
-											Image(systemName: "hand.thumbsdown")
-											Text(String(mr.downvotes))
-										}
-										HStack(spacing: 2) {
-											Image(systemName: "note.text")
-											Text(String(mr.userNotesCount ?? 0))
-										}
-										Spacer()
-										HStack(spacing: 2) {
-											Image(systemName: "clock")
-											Text(Date.fromToString(mr.createdAt))
-										}
-										
-										if let author = mr.author {
-											HStack(spacing: 2) {
-												Image(systemName: "person")
-												Text(author.name)
+								NavigationLink(
+									destination: MergeRequest(
+										fullPath: fullPath,
+										iid: mr.iid
+									),
+									label: {
+										VStack(alignment: .leading) {
+											HStack(spacing: 5) {
+												MergeStateIcon(mr.state)
+												Text(mr.reference)
+													.foregroundStyle(.secondary)
+											}.font(.footnote)
+											Text(mr.title)
+											HStack(spacing: 10) {
+												HStack(spacing: 2) {
+													Image(systemName: "hand.thumbsup")
+													Text(String(mr.upvotes))
+												}
+												HStack(spacing: 2) {
+													Image(systemName: "hand.thumbsdown")
+													Text(String(mr.downvotes))
+												}
+												HStack(spacing: 2) {
+													Image(systemName: "note.text")
+													Text(String(mr.userNotesCount ?? 0))
+												}
+												Spacer()
+												ScrollView(.horizontal) {
+													HStack {
+														HStack(spacing: 2) {
+															Image(systemName: "clock")
+															Text(Date.fromToString(mr.createdAt))
+														}
+														
+														if let author = mr.author {
+															HStack(spacing: 2) {
+																Image(systemName: "person")
+																Text(author.name)
+															}
+														}
+													}
+												}
+											}.font(.footnote)
+										}.swipeActions {
+											Button("Close", systemImage: "minus.circle") {
+												// TODO: Add action
+											}.tint(.blue)
+											if let webUrl = URL(string: mr.webUrl ?? "") {
+												ShareLink(item: webUrl) {
+													Label("Share", systemImage: "square.and.arrow.up")
+												}
 											}
 										}
-									}.font(.footnote)
-								}.swipeActions {
-									Button("Close", systemImage: "minus.circle") {
-										// TODO: Add action
-									}.tint(.blue)
-									if let webUrl = URL(string: mr.webUrl ?? "") {
-										ShareLink(item: webUrl) {
-											Label("Share", systemImage: "square.and.arrow.up")
-										}
 									}
-								}
+								)
 							}
 						}
 					}
