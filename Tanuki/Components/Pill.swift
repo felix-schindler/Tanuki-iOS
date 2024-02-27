@@ -12,12 +12,14 @@ struct Pill: View {
 	private var icon: String?
 	private var fgColor: Color
 	private var bgColor: Color
+	private var cornerRadius: CGFloat
 	
-	init(_ label: String, icon: String? = nil, bgColor: Color? = nil, fgColor: Color? = nil) {
+	init(_ label: String, icon: String? = nil, bgColor: Color? = nil, fgColor: Color? = nil, cornerRadius: CGFloat = 25) {
 		self.label = label
 		self.icon = icon
 		self.fgColor = fgColor ?? .primary
 		self.bgColor = bgColor ?? Color(.systemGray5)
+		self.cornerRadius = cornerRadius
 	}
 	
 	var body: some View {
@@ -27,14 +29,14 @@ struct Pill: View {
 				.padding(.vertical, 3)
 				.background(bgColor)
 				.foregroundStyle(fgColor)
-				.cornerRadius(25)
+				.cornerRadius(cornerRadius)
 		} else {
 			Text(label)
 				.padding(.horizontal, 8)
 				.padding(.vertical, 3)
 				.background(bgColor)
 				.foregroundStyle(fgColor)
-				.cornerRadius(25)
+				.cornerRadius(cornerRadius)
 		}
 	}
 }
