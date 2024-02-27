@@ -28,28 +28,9 @@ class Network {
 	static let shared = Network()
 	
 	private(set) lazy var apollo: ApolloClient = {
-		var store: ApolloStore
-		
-		do {
-			let documentsPath = NSSearchPathForDirectoriesInDomains(
-				.documentDirectory,
-				.userDomainMask,
-				true
-			).first!
-			let documentsURL = URL(fileURLWithPath: documentsPath)
-			let sqliteFileURL = documentsURL.appendingPathComponent("tanuki_apollo_cache_db.sqlite")
-			
-			let sqliteCache = try SQLiteNormalizedCache(fileURL: sqliteFileURL)
-			store = ApolloStore(cache: sqliteCache)
-			
-			print("Using SQLite cache")
-		} catch {
-			print("SQLite cache init failed; Using in-memory cache")
-			let cache = InMemoryNormalizedCache()
-			store = ApolloStore(cache: cache)
-		}
-		
 		let client = URLSessionClient()
+		let cache = InMemoryNormalizedCache()
+		let store = ApolloStore(cache: cache)
 		let provider = NetworkInterceptorProvider(client: client, store: store)
 		let url = API.url
 		let transport = RequestChainNetworkTransport(interceptorProvider: provider, endpointURL: url)
