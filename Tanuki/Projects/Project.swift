@@ -301,7 +301,11 @@ struct Project: View {
 					}
 				}, label: {
 					Label("More", systemImage: "ellipsis")
+						.frame(width: 16, height: 16)
 				})
+				.menuStyle(.button)
+				.buttonStyle(.bordered)
+				.clipShape(Circle())
 				
 				if (project.userPermissions.createIssue) {
 					RoundIconButton("Create issue", icon: "plus") {
