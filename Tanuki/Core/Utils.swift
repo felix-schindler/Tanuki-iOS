@@ -17,6 +17,13 @@ extension String {
 	}
 }
 
+extension StringProtocol {
+	/// Calipalize only the first character of a string
+	var firstCapitalized: String {
+		prefix(1).capitalized + dropFirst()
+	}
+}
+
 extension URL {
 	public static func fromAvatar(_ avatarUrl: String?) -> URL? {
 		if var urlStr = avatarUrl {
@@ -32,10 +39,11 @@ extension URL {
 }
 
 extension Date {
-	static func fromToString(_ date: String, dateStyle: DateFormatter.Style = .medium) -> String {
+	static func fromToString(_ date: String, dateStyle: DateFormatter.Style = .medium, timeStyle: DateFormatter.Style = .none) -> String {
 		let inFormat = ISO8601DateFormatter()
 		let outFormat = DateFormatter()
 		outFormat.dateStyle = dateStyle
+		outFormat.timeStyle = timeStyle
 		return outFormat.string(from: inFormat.date(from: date)!)
 	}
 }
