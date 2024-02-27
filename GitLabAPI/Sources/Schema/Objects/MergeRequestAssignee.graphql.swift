@@ -1,0 +1,12 @@
+// @generated
+// This file was automatically generated and should not be edited.
+
+import ApolloAPI
+
+public extension Objects {
+  /// A user assigned to a merge request.
+  static let MergeRequestAssignee = ApolloAPI.Object(
+    typename: "MergeRequestAssignee",
+    implementedInterfaces: [Interfaces.User.self]
+  )
+}

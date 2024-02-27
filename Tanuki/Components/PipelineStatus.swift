@@ -1,0 +1,83 @@
+//
+//  PipelineStatus.swift
+//  Tanuki
+//
+//  Created by Felix Schindler on 26.02.24.
+//
+
+import SwiftUI
+import GitLabAPI
+
+struct PipelineStatus: View {
+	private var state: GraphQLEnum<GitLabAPI.PipelineStatusEnum>
+	private var icon: String
+	private var color: SwiftUI.Color = Color.primary
+
+	@State
+	private var showInfo = false
+	
+	init(_ state: GraphQLEnum<GitLabAPI.PipelineStatusEnum>) {
+		self.state = state
+		
+		switch (state) {
+		case .created:
+			self.icon = "plus.circle"
+			self.color = Color.orange
+		case .waitingForResource, .waitingForCallback:
+			self.icon = "pause.circle"
+			self.color = Color.orange
+		case .success:
+			self.icon = "checkmark.circle"
+			self.color = Color.green
+		case .failed:
+			self.icon = "minus.circle"
+			self.color = Color.red
+		case .canceled:
+			self.icon = "slash.circle"
+			self.color = Color.gray
+		case .skipped:
+			self.icon = "chevron.right.circle"
+			self.color = Color.gray
+		case .manual:
+			self.icon = "person.crop.circle"
+		case .scheduled:
+			self.icon = "hourglass.circle"
+		default:
+			self.icon = "arrow.2.circlepath.circle"
+			self.color = Color.orange
+		}
+	}
+	
+	var body: some View {
+		VStack {
+			RoundIconButton("Pipeline status", icon: icon) {
+				showInfo = true
+			}
+			.tint(self.color)
+			.controlSize(.mini)
+		}.sheet(isPresented: $showInfo) {
+			VStack(alignment: .leading) {
+				HStack {
+					Text("Pipeline status")
+						.font(.title)
+						.fontWeight(.bold)
+					Spacer()
+					CloseButton {
+						showInfo = false
+					}
+				}
+				Text("The current Pipeline status is \"\(state.rawValue)\"")
+				Spacer()
+			}.padding()
+				.presentationDetents([.fraction(0.2)])
+		}
+	}
+}
+
+#Preview {
+	VStack {
+		ForEach(GraphQLEnum<GitLabAPI.PipelineStatusEnum>.allCases, id: \.self) { state in
+			PipelineStatus(state)
+		}
+	}
+}

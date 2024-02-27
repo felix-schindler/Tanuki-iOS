@@ -1,0 +1,58 @@
+query Project($fullPath: ID!) {
+  project(fullPath: $fullPath) {
+    avatarUrl
+    name
+    visibility
+    description
+    topics
+    starCount
+    forksCount
+    issuesEnabled
+    openIssuesCount
+    mergeRequestsEnabled
+    jobsEnabled
+    requestAccessEnabled
+    openMergeRequestsCount
+    webUrl
+    httpUrlToRepo
+    sshUrlToRepo
+    createdAt
+    namespace {
+      name
+      fullPath
+    }
+    repository {
+      # Missing counts: Commits, Branches, Tags
+      rootRef
+      tree {
+        lastCommit {
+		  title
+		  shortId
+          authorName
+          authoredDate
+          
+          signature {
+            verificationStatus
+          }
+          
+          pipelines {
+            nodes {
+              status
+            }
+          }
+        }
+      }
+    }
+    languages {
+      name
+      share
+      color
+    }
+    userPermissions {
+      createIssue
+      pushCode
+      forkProject
+      requestAccess
+    }
+  }
+}

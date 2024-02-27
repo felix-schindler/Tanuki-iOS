@@ -1,0 +1,25 @@
+query Issues($fullPath: ID!) {
+  project(fullPath: $fullPath) {
+    issuesEnabled
+    userPermissions {
+      createIssue
+    }
+    
+    issues(state: opened) {
+      nodes {
+        iid
+        title
+        reference(full: true)
+        state
+        upvotes
+        downvotes
+        userNotesCount
+        author {
+          name
+        }
+        createdAt
+        webUrl
+      }
+    }
+  }
+}

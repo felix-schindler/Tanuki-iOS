@@ -1,0 +1,299 @@
+// @generated
+// This file was automatically generated and should not be edited.
+
+@_exported import ApolloAPI
+
+public class ProjectQuery: GraphQLQuery {
+  public static let operationName: String = "Project"
+  public static let operationDocument: ApolloAPI.OperationDocument = .init(
+    definition: .init(
+      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled requestAccessEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt namespace { __typename name fullPath } repository { __typename rootRef tree { __typename lastCommit { __typename title shortId authorName authoredDate signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue pushCode forkProject requestAccess } } }"#
+    ))
+
+  public var fullPath: ID
+
+  public init(fullPath: ID) {
+    self.fullPath = fullPath
+  }
+
+  public var __variables: Variables? { ["fullPath": fullPath] }
+
+  public struct Data: GitLabAPI.SelectionSet {
+    public let __data: DataDict
+    public init(_dataDict: DataDict) { __data = _dataDict }
+
+    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __selections: [ApolloAPI.Selection] { [
+      .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
+    ] }
+
+    /// Find a project.
+    public var project: Project? { __data["project"] }
+
+    /// Project
+    ///
+    /// Parent Type: `Project`
+    public struct Project: GitLabAPI.SelectionSet {
+      public let __data: DataDict
+      public init(_dataDict: DataDict) { __data = _dataDict }
+
+      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      public static var __selections: [ApolloAPI.Selection] { [
+        .field("__typename", String.self),
+        .field("avatarUrl", String?.self),
+        .field("name", String.self),
+        .field("visibility", String?.self),
+        .field("description", String?.self),
+        .field("topics", [String]?.self),
+        .field("starCount", Int.self),
+        .field("forksCount", Int.self),
+        .field("issuesEnabled", Bool?.self),
+        .field("openIssuesCount", Int?.self),
+        .field("mergeRequestsEnabled", Bool?.self),
+        .field("jobsEnabled", Bool?.self),
+        .field("requestAccessEnabled", Bool?.self),
+        .field("openMergeRequestsCount", Int?.self),
+        .field("webUrl", String?.self),
+        .field("httpUrlToRepo", String?.self),
+        .field("sshUrlToRepo", String?.self),
+        .field("createdAt", GitLabAPI.Time?.self),
+        .field("namespace", Namespace?.self),
+        .field("repository", Repository?.self),
+        .field("languages", [Language]?.self),
+        .field("userPermissions", UserPermissions.self),
+      ] }
+
+      /// URL to avatar image file of the project.
+      public var avatarUrl: String? { __data["avatarUrl"] }
+      /// Name of the project (without namespace).
+      public var name: String { __data["name"] }
+      /// Visibility of the project.
+      public var visibility: String? { __data["visibility"] }
+      /// Short description of the project.
+      public var description: String? { __data["description"] }
+      /// List of project topics.
+      public var topics: [String]? { __data["topics"] }
+      /// Number of times the project has been starred.
+      public var starCount: Int { __data["starCount"] }
+      /// Number of times the project has been forked.
+      public var forksCount: Int { __data["forksCount"] }
+      /// Indicates if Issues are enabled for the current user
+      public var issuesEnabled: Bool? { __data["issuesEnabled"] }
+      /// Number of open issues for the project.
+      public var openIssuesCount: Int? { __data["openIssuesCount"] }
+      /// Indicates if Merge Requests are enabled for the current user
+      public var mergeRequestsEnabled: Bool? { __data["mergeRequestsEnabled"] }
+      /// Indicates if CI/CD pipeline jobs are enabled for the current user.
+      public var jobsEnabled: Bool? { __data["jobsEnabled"] }
+      /// Indicates if users can request member access to the project.
+      public var requestAccessEnabled: Bool? { __data["requestAccessEnabled"] }
+      /// Number of open merge requests for the project.
+      public var openMergeRequestsCount: Int? { __data["openMergeRequestsCount"] }
+      /// Web URL of the project.
+      public var webUrl: String? { __data["webUrl"] }
+      /// URL to connect to the project via HTTPS.
+      public var httpUrlToRepo: String? { __data["httpUrlToRepo"] }
+      /// URL to connect to the project via SSH.
+      public var sshUrlToRepo: String? { __data["sshUrlToRepo"] }
+      /// Timestamp of the project creation.
+      public var createdAt: GitLabAPI.Time? { __data["createdAt"] }
+      /// Namespace of the project.
+      public var namespace: Namespace? { __data["namespace"] }
+      /// Git repository of the project.
+      public var repository: Repository? { __data["repository"] }
+      /// Programming languages used in the project.
+      public var languages: [Language]? { __data["languages"] }
+      /// Permissions for the current user on the resource
+      public var userPermissions: UserPermissions { __data["userPermissions"] }
+
+      /// Project.Namespace
+      ///
+      /// Parent Type: `Namespace`
+      public struct Namespace: GitLabAPI.SelectionSet {
+        public let __data: DataDict
+        public init(_dataDict: DataDict) { __data = _dataDict }
+
+        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Namespace }
+        public static var __selections: [ApolloAPI.Selection] { [
+          .field("__typename", String.self),
+          .field("name", String.self),
+          .field("fullPath", GitLabAPI.ID.self),
+        ] }
+
+        /// Name of the namespace.
+        public var name: String { __data["name"] }
+        /// Full path of the namespace.
+        public var fullPath: GitLabAPI.ID { __data["fullPath"] }
+      }
+
+      /// Project.Repository
+      ///
+      /// Parent Type: `Repository`
+      public struct Repository: GitLabAPI.SelectionSet {
+        public let __data: DataDict
+        public init(_dataDict: DataDict) { __data = _dataDict }
+
+        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Repository }
+        public static var __selections: [ApolloAPI.Selection] { [
+          .field("__typename", String.self),
+          .field("rootRef", String?.self),
+          .field("tree", Tree?.self),
+        ] }
+
+        /// Default branch of the repository.
+        public var rootRef: String? { __data["rootRef"] }
+        /// Tree of the repository.
+        public var tree: Tree? { __data["tree"] }
+
+        /// Project.Repository.Tree
+        ///
+        /// Parent Type: `Tree`
+        public struct Tree: GitLabAPI.SelectionSet {
+          public let __data: DataDict
+          public init(_dataDict: DataDict) { __data = _dataDict }
+
+          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Tree }
+          public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("lastCommit", LastCommit?.self),
+          ] }
+
+          /// Last commit for the tree.
+          public var lastCommit: LastCommit? { __data["lastCommit"] }
+
+          /// Project.Repository.Tree.LastCommit
+          ///
+          /// Parent Type: `Commit`
+          public struct LastCommit: GitLabAPI.SelectionSet {
+            public let __data: DataDict
+            public init(_dataDict: DataDict) { __data = _dataDict }
+
+            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
+            public static var __selections: [ApolloAPI.Selection] { [
+              .field("__typename", String.self),
+              .field("title", String?.self),
+              .field("shortId", String.self),
+              .field("authorName", String?.self),
+              .field("authoredDate", GitLabAPI.Time?.self),
+              .field("signature", Signature?.self),
+              .field("pipelines", Pipelines?.self),
+            ] }
+
+            /// Title of the commit message.
+            public var title: String? { __data["title"] }
+            /// Short SHA1 ID of the commit.
+            public var shortId: String { __data["shortId"] }
+            /// Commit authors name.
+            public var authorName: String? { __data["authorName"] }
+            /// Timestamp of when the commit was authored.
+            public var authoredDate: GitLabAPI.Time? { __data["authoredDate"] }
+            /// Signature of the commit.
+            public var signature: Signature? { __data["signature"] }
+            /// Pipelines of the commit ordered latest first.
+            public var pipelines: Pipelines? { __data["pipelines"] }
+
+            /// Project.Repository.Tree.LastCommit.Signature
+            ///
+            /// Parent Type: `CommitSignature`
+            public struct Signature: GitLabAPI.SelectionSet {
+              public let __data: DataDict
+              public init(_dataDict: DataDict) { __data = _dataDict }
+
+              public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Interfaces.CommitSignature }
+              public static var __selections: [ApolloAPI.Selection] { [
+                .field("__typename", String.self),
+                .field("verificationStatus", GraphQLEnum<GitLabAPI.VerificationStatus>?.self),
+              ] }
+
+              /// Indicates verification status of the associated key or certificate.
+              public var verificationStatus: GraphQLEnum<GitLabAPI.VerificationStatus>? { __data["verificationStatus"] }
+            }
+
+            /// Project.Repository.Tree.LastCommit.Pipelines
+            ///
+            /// Parent Type: `PipelineConnection`
+            public struct Pipelines: GitLabAPI.SelectionSet {
+              public let __data: DataDict
+              public init(_dataDict: DataDict) { __data = _dataDict }
+
+              public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.PipelineConnection }
+              public static var __selections: [ApolloAPI.Selection] { [
+                .field("__typename", String.self),
+                .field("nodes", [Node?]?.self),
+              ] }
+
+              /// A list of nodes.
+              public var nodes: [Node?]? { __data["nodes"] }
+
+              /// Project.Repository.Tree.LastCommit.Pipelines.Node
+              ///
+              /// Parent Type: `Pipeline`
+              public struct Node: GitLabAPI.SelectionSet {
+                public let __data: DataDict
+                public init(_dataDict: DataDict) { __data = _dataDict }
+
+                public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Pipeline }
+                public static var __selections: [ApolloAPI.Selection] { [
+                  .field("__typename", String.self),
+                  .field("status", GraphQLEnum<GitLabAPI.PipelineStatusEnum>.self),
+                ] }
+
+                /// Status of the pipeline (CREATED, WAITING_FOR_RESOURCE, PREPARING, WAITING_FOR_CALLBACK, PENDING, RUNNING, FAILED, SUCCESS, CANCELED, SKIPPED, MANUAL, SCHEDULED)
+                public var status: GraphQLEnum<GitLabAPI.PipelineStatusEnum> { __data["status"] }
+              }
+            }
+          }
+        }
+      }
+
+      /// Project.Language
+      ///
+      /// Parent Type: `RepositoryLanguage`
+      public struct Language: GitLabAPI.SelectionSet {
+        public let __data: DataDict
+        public init(_dataDict: DataDict) { __data = _dataDict }
+
+        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryLanguage }
+        public static var __selections: [ApolloAPI.Selection] { [
+          .field("__typename", String.self),
+          .field("name", String.self),
+          .field("share", Double?.self),
+          .field("color", GitLabAPI.Color?.self),
+        ] }
+
+        /// Name of the repository language.
+        public var name: String { __data["name"] }
+        /// Percentage of the repository's languages.
+        public var share: Double? { __data["share"] }
+        /// Color to visualize the repository language.
+        public var color: GitLabAPI.Color? { __data["color"] }
+      }
+
+      /// Project.UserPermissions
+      ///
+      /// Parent Type: `ProjectPermissions`
+      public struct UserPermissions: GitLabAPI.SelectionSet {
+        public let __data: DataDict
+        public init(_dataDict: DataDict) { __data = _dataDict }
+
+        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.ProjectPermissions }
+        public static var __selections: [ApolloAPI.Selection] { [
+          .field("__typename", String.self),
+          .field("createIssue", Bool.self),
+          .field("pushCode", Bool.self),
+          .field("forkProject", Bool.self),
+          .field("requestAccess", Bool.self),
+        ] }
+
+        /// If `true`, the user can perform `create_issue` on this resource
+        public var createIssue: Bool { __data["createIssue"] }
+        /// If `true`, the user can perform `push_code` on this resource
+        public var pushCode: Bool { __data["pushCode"] }
+        /// If `true`, the user can perform `fork_project` on this resource
+        public var forkProject: Bool { __data["forkProject"] }
+        /// If `true`, the user can perform `request_access` on this resource
+        public var requestAccess: Bool { __data["requestAccess"] }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+query StarredProjects {
+  currentUser {
+    starredProjects {
+      nodes {
+        avatarUrl
+        nameWithNamespace
+        visibility
+        fullPath
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+query Namespace($fullPath: ID!) {
+  namespace(fullPath: $fullPath) {
+    name
+    fullName
+    description
+    
+    projects {
+      nodes {
+        avatarUrl
+        nameWithNamespace
+        visibility
+        fullPath
+      }
+    }
+  }
+}
