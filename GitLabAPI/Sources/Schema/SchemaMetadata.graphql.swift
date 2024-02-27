@@ -84,6 +84,8 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "ProjectConnection": return GitLabAPI.Objects.ProjectConnection
     case "ProjectPermissions": return GitLabAPI.Objects.ProjectPermissions
     case "IssueConnection": return GitLabAPI.Objects.IssueConnection
+    case "IssuePermissions": return GitLabAPI.Objects.IssuePermissions
+    case "UserCoreConnection": return GitLabAPI.Objects.UserCoreConnection
     case "Repository": return GitLabAPI.Objects.Repository
     case "Tree": return GitLabAPI.Objects.Tree
     case "GpgSignature": return GitLabAPI.Objects.GpgSignature

@@ -8,6 +8,34 @@
 import SwiftUI
 import GitLabAPI
 
+struct IssueStateHelper {
+	public static func getColorByState(_ state: GraphQLEnum<GitLabAPI.IssueState>) -> SwiftUI.Color {
+		switch state {
+		case .opened:
+			Color.green
+		case .closed:
+			Color.blue
+		case .locked:
+			Color.secondary
+		default:
+			Color.primary
+		}
+	}
+	
+	public static func getIconByState(_ state: GraphQLEnum<GitLabAPI.IssueState>) -> String {
+		switch state {
+		case .opened:
+			"smallcircle.circle"
+		case .closed:
+			"minus.circle"
+		case .locked:
+			"lock.circle"
+		default:
+			"smallcircle.circle"
+		}
+	}
+}
+
 struct IssueStateIcon: View {
 	private let state: GraphQLEnum<GitLabAPI.IssueState>
 	private let icon: String

@@ -62,44 +62,46 @@ struct Issues: View {
 					} else {
 						ForEach(project.issues!.nodes!, id: \.self?.iid) { issue in
 							if (issue != nil) {
-								VStack(alignment: .leading) {
-									HStack(spacing: 5) {
-										IssueStateIcon(issue!.state)
-										Text(issue!.reference)
-											.foregroundStyle(.secondary)
-									}.font(.footnote)
-									Text(issue!.title)
-									HStack(spacing: 10) {
-										HStack(spacing: 2) {
-											Image(systemName: "hand.thumbsup")
-											Text(String(issue!.upvotes))
+								NavigationLink(destination: Issue(fullPath: self.fullPath, iid: issue!.iid), label: {
+									VStack(alignment: .leading) {
+										HStack(spacing: 5) {
+											IssueStateIcon(issue!.state)
+											Text(issue!.reference)
+												.foregroundStyle(.secondary)
+										}.font(.footnote)
+										Text(issue!.title)
+										HStack(spacing: 10) {
+											HStack(spacing: 2) {
+												Image(systemName: "hand.thumbsup")
+												Text(String(issue!.upvotes))
+											}
+											HStack(spacing: 2) {
+												Image(systemName: "hand.thumbsdown")
+												Text(String(issue!.downvotes))
+											}
+											HStack(spacing: 2) {
+												Image(systemName: "note.text")
+												Text(String(issue!.userNotesCount))
+											}
+											Spacer()
+											HStack(spacing: 2) {
+												Image(systemName: "clock")
+												Text(Date.fromToString(issue!.createdAt))
+											}
+											HStack(spacing: 2) {
+												Image(systemName: "person")
+												Text(issue!.author.name)
+											}
+										}.font(.footnote)
+									}.swipeActions {
+										Button("Close", systemImage: "minus.circle") {
+											// TODO: Add action
+										}.tint(.blue)
+										ShareLink(item: URL(string: issue!.webUrl)!) {
+											Label("Share", systemImage: "square.and.arrow.up")
 										}
-										HStack(spacing: 2) {
-											Image(systemName: "hand.thumbsdown")
-											Text(String(issue!.downvotes))
-										}
-										HStack(spacing: 2) {
-											Image(systemName: "note.text")
-											Text(String(issue!.userNotesCount))
-										}
-										Spacer()
-										HStack(spacing: 2) {
-											Image(systemName: "clock")
-											Text(Date.fromToString(issue!.createdAt))
-										}
-										HStack(spacing: 2) {
-											Image(systemName: "person")
-											Text(issue!.author.name)
-										}
-									}.font(.footnote)
-								}.swipeActions {
-									Button("Close", systemImage: "minus.circle") {
-										// TODO: Add action
-									}.tint(.blue)
-									ShareLink(item: URL(string: issue!.webUrl)!) {
-										Label("Share", systemImage: "square.and.arrow.up")
 									}
-								}
+								})
 							}
 						}
 					}

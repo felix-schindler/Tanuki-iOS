@@ -1,0 +1,81 @@
+query Issue($fullPath: ID!, $iid: String!) {
+  project(fullPath: $fullPath) {
+		avatarUrl
+	
+    issue(iid: $iid) {
+      iid
+      title
+      description
+      reference(full: true)
+      state
+      weight
+      dueDate
+      blockedByIssues {
+        nodes {
+          iid
+        }
+      }
+      createdAt
+      webUrl
+
+      upvotes
+      downvotes
+      userNotesCount
+      author {
+        avatarUrl
+        name
+        username
+      }
+
+      userPermissions {
+        updateIssue
+        createNote
+      }
+            
+      assignees {
+        nodes {
+          avatarUrl
+          username
+        }
+      }
+      
+      labels {
+        nodes {
+          title
+          color
+          textColor
+        }
+      }
+      
+      milestone {
+        iid
+        title
+      }
+      
+      humanTimeEstimate
+      humanTotalTimeSpent
+      
+      notes {
+        nodes {
+          id
+          author {
+            avatarUrl
+            username
+          }
+          maxAccessLevelOfAuthor
+          createdAt
+          
+          body
+          system
+          internal
+          resolved
+          updatedAt
+          systemNoteIconName
+          systemNoteMetadata {
+            id
+          }
+        }
+      }
+    }
+  }
+}

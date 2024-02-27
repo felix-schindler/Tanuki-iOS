@@ -26,7 +26,7 @@ struct Namespace: View {
 		Network.shared.apollo.fetch(query: NamespaceQuery(fullPath: self.fullPath)) { result in
 			switch result {
 			case .success(let graphQLResult):
-				print("Success! Setting issues...")
+				print("Success! Setting namespace...")
 				namespace = graphQLResult.data?.namespace
 			case .failure(let error):
 				print("Failure! Error: \(error)")

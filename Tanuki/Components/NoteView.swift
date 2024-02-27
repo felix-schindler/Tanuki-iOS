@@ -9,10 +9,49 @@ import SwiftUI
 import GitLabAPI
 import MarkdownUI
 
-struct NoteView: View {
-	private let note: MergeRequestQuery.Data.Project.MergeRequest.Notes.Node
+protocol NoteAuthor {
+	var avatarUrl: String? { get }
+	var username: String { get }
+}
+
+struct NoteAuthorStruct: NoteAuthor {
+	var avatarUrl: String?
+	var username: String
+}
+
+protocol Note {
+	var system: Bool { get }
+	var systemNoteIconName: String? { get }
+	var body: String { get }
+	var stupidAuthor: NoteAuthor? { get }
+	var createdAt: String { get }
+	var updatedAt: String { get }
+	var maxAccessLevelOfAuthor: String? { get }
+}
+
+extension IssueQuery.Data.Project.Issue.Notes.Node: Note {
+	var stupidAuthor: NoteAuthor? {
+		guard let authorData = author else { return nil }
+		return NoteAuthorStruct(avatarUrl: authorData.avatarUrl, username: authorData.username)
+	}
+}
+
+extension MergeRequestQuery.Data.Project.MergeRequest.Notes.Node: Note {
+	var stupidAuthor: NoteAuthor? {
+		guard let authorData = author else { return nil }
+		return NoteAuthorStruct(avatarUrl: authorData.avatarUrl, username: authorData.username)
+	}
+}
+
+extension IssueQuery.Data.Project.Issue.Notes.Node.Author: NoteAuthor {
+}
+extension MergeRequestQuery.Data.Project.MergeRequest.Notes.Node.Author: NoteAuthor {
+}
+
+struct NoteView<T: Note>: View {
+	private let note: T
 	
-	init(_ note: MergeRequestQuery.Data.Project.MergeRequest.Notes.Node) {
+	init(_ note: T) {
 		self.note = note
 	}
 	
@@ -32,6 +71,24 @@ struct NoteView: View {
 			"person.fill.xmark"
 		case "timer":
 			"hourglass"
+		case "label":
+			"tag"
+		case "link":
+			"link.badge.plus"
+		case "unlink":
+			"link"
+		case "arrow-right":
+			"arrow.right"
+		case "clock":
+			"clock"
+		case "duplicate":
+			"circlebadge.2"
+		case "issue-close":
+			"minus.circle"
+		case "issues":
+			"smallcircle.circle"
+		case "status-health":
+			"waveform.path.ecg"
 		default:
 			"questionmark"
 		}
@@ -41,8 +98,8 @@ struct NoteView: View {
 		if (note.system) {
 			Label(
 				title: {
-					let content = (note.author?.username != nil)
-					? "@\(note.author?.username ?? "") \(note.body)"
+					let content = (note.stupidAuthor?.username != nil)
+					? "@\(note.stupidAuthor?.username ?? "") \(note.body)"
 					: note.body
 					Markdown(content, baseURL: API.url)
 				},
@@ -50,7 +107,7 @@ struct NoteView: View {
 					Image(systemName: convertIconName(note.systemNoteIconName ?? ""))
 				}
 			).font(.footnote)
-		} else if let author = note.author {
+		} else if let author = note.stupidAuthor {
 			VStack(alignment: .leading) {
 				HStack {
 					if let url = URL.fromAvatar(author.avatarUrl) {
@@ -70,6 +127,8 @@ struct NoteView: View {
 				
 				Markdown(note.body, baseURL: API.url)
 			}.font(.footnote)
+		} else {
+			Markdown(note.body)
 		}
 	}
 }

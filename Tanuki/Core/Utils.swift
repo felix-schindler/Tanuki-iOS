@@ -8,9 +8,11 @@
 import Foundation
 import SwiftUI
 import NVMColor
+import GitLabAPI
 
 let LOAD_FAILED = "Failed to load\nPlease check token and internet connection, then try again"
 
+// MARK: - String helpers
 extension String {
 	var isNotEmpty: Bool {
 		return !self.isEmpty

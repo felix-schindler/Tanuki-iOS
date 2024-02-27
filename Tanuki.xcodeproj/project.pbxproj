@@ -21,8 +21,10 @@
 		DC0FF5B42B8C7892002B4FAE /* Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0FF5B32B8C7892002B4FAE /* Issues.swift */; };
 		DC0FF5B62B8C7AFB002B4FAE /* MergeRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0FF5B52B8C7AFB002B4FAE /* MergeRequests.swift */; };
 		DC0FF5B82B8CAD45002B4FAE /* Issues.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC0FF5B72B8CAD45002B4FAE /* Issues.graphql */; };
+		DC13E8A32B8DE32400994E8A /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC13E8A22B8DE32400994E8A /* Issue.swift */; };
+		DC13E8A52B8DE35C00994E8A /* Issue.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC13E8A42B8DE35C00994E8A /* Issue.graphql */; };
+		DC13E8A82B8E073300994E8A /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC13E8A72B8E073300994E8A /* Home.swift */; };
 		DC2704F92B8BC0F9003DAA84 /* TanukiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2704F82B8BC0F9003DAA84 /* TanukiApp.swift */; };
-		DC2704FB2B8BC0F9003DAA84 /* StarredProjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2704FA2B8BC0F9003DAA84 /* StarredProjects.swift */; };
 		DC2704FD2B8BC0FB003DAA84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC2704FC2B8BC0FB003DAA84 /* Assets.xcassets */; };
 		DC2705012B8BC0FB003DAA84 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC2705002B8BC0FB003DAA84 /* Preview Assets.xcassets */; };
 		DC2705092B8BC1B8003DAA84 /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = DC2705082B8BC1B8003DAA84 /* Apollo */; };
@@ -54,9 +56,11 @@
 		DC0FF5B32B8C7892002B4FAE /* Issues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issues.swift; sourceTree = "<group>"; };
 		DC0FF5B52B8C7AFB002B4FAE /* MergeRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeRequests.swift; sourceTree = "<group>"; };
 		DC0FF5B72B8CAD45002B4FAE /* Issues.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Issues.graphql; sourceTree = "<group>"; };
+		DC13E8A22B8DE32400994E8A /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
+		DC13E8A42B8DE35C00994E8A /* Issue.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Issue.graphql; sourceTree = "<group>"; };
+		DC13E8A72B8E073300994E8A /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		DC2704F52B8BC0F9003DAA84 /* Tanuki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tanuki.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC2704F82B8BC0F9003DAA84 /* TanukiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TanukiApp.swift; sourceTree = "<group>"; };
-		DC2704FA2B8BC0F9003DAA84 /* StarredProjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarredProjects.swift; sourceTree = "<group>"; };
 		DC2704FC2B8BC0FB003DAA84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC2704FE2B8BC0FB003DAA84 /* Tanuki.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tanuki.entitlements; sourceTree = "<group>"; };
 		DC2705002B8BC0FB003DAA84 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -101,6 +105,16 @@
 			path = Entities;
 			sourceTree = "<group>";
 		};
+		DC13E8A12B8DE31300994E8A /* Issues */ = {
+			isa = PBXGroup;
+			children = (
+				DC0FF5B32B8C7892002B4FAE /* Issues.swift */,
+				DC0A6A3E2B8D02A600C53D56 /* NewIssue.swift */,
+				DC13E8A22B8DE32400994E8A /* Issue.swift */,
+			);
+			path = Issues;
+			sourceTree = "<group>";
+		};
 		DC2704EC2B8BC0F9003DAA84 = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +137,7 @@
 			children = (
 				DC3A24592B8C4C8F00DB0E3F /* Core */,
 				DC2704F82B8BC0F9003DAA84 /* TanukiApp.swift */,
+				DC13E8A72B8E073300994E8A /* Home.swift */,
 				DC0A6A422B8D093F00C53D56 /* Entities */,
 				DC3A24572B8C4C5D00DB0E3F /* Projects */,
 				DC3A24582B8C4C7C00DB0E3F /* Components */,
@@ -167,6 +182,7 @@
 				DC0A6A3C2B8CF7D300C53D56 /* MergeRequests.graphql */,
 				DC386A962B8D615D002E5F6D /* MergeRequest.graphql */,
 				DC0A6A4B2B8D0B1800C53D56 /* Namespace.graphql */,
+				DC13E8A42B8DE35C00994E8A /* Issue.graphql */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -174,11 +190,9 @@
 		DC3A24572B8C4C5D00DB0E3F /* Projects */ = {
 			isa = PBXGroup;
 			children = (
+				DC13E8A12B8DE31300994E8A /* Issues */,
 				DC386A932B8D5FA4002E5F6D /* MRs */,
-				DC2704FA2B8BC0F9003DAA84 /* StarredProjects.swift */,
 				DC3A244C2B8C37BF00DB0E3F /* Project.swift */,
-				DC0FF5B32B8C7892002B4FAE /* Issues.swift */,
-				DC0A6A3E2B8D02A600C53D56 /* NewIssue.swift */,
 			);
 			path = Projects;
 			sourceTree = "<group>";
@@ -289,6 +303,7 @@
 				DC0A6A4C2B8D0B1800C53D56 /* Namespace.graphql in Resources */,
 				DC0FF5B82B8CAD45002B4FAE /* Issues.graphql in Resources */,
 				DC3A24492B8C361D00DB0E3F /* Project.graphql in Resources */,
+				DC13E8A52B8DE35C00994E8A /* Issue.graphql in Resources */,
 				DC0A6A3D2B8CF7D300C53D56 /* MergeRequests.graphql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,12 +318,12 @@
 				DC0A6A392B8CE4FF00C53D56 /* PipelineStatus.swift in Sources */,
 				DC3A244F2B8C3B8100DB0E3F /* Utils.swift in Sources */,
 				DC0A6A4A2B8D0ABE00C53D56 /* VisibilityIcon.swift in Sources */,
-				DC2704FB2B8BC0F9003DAA84 /* StarredProjects.swift in Sources */,
 				DC2704F92B8BC0F9003DAA84 /* TanukiApp.swift in Sources */,
 				DC2705112B8BC507003DAA84 /* Network.swift in Sources */,
 				DC386A952B8D5FB2002E5F6D /* MergeRequest.swift in Sources */,
 				DC3A24562B8C4C2200DB0E3F /* Pill.swift in Sources */,
 				DC0A6A3F2B8D02A600C53D56 /* NewIssue.swift in Sources */,
+				DC13E8A82B8E073300994E8A /* Home.swift in Sources */,
 				DC3A245E2B8C557E00DB0E3F /* RoundIconButton.swift in Sources */,
 				DC0A6A3B2B8CF05200C53D56 /* Namespace.swift in Sources */,
 				DC0FF5B62B8C7AFB002B4FAE /* MergeRequests.swift in Sources */,
@@ -317,6 +332,7 @@
 				DC3A244D2B8C37BF00DB0E3F /* Project.swift in Sources */,
 				DC0A6A412B8D03EC00C53D56 /* StateIcons.swift in Sources */,
 				DC0FF5B42B8C7892002B4FAE /* Issues.swift in Sources */,
+				DC13E8A32B8DE32400994E8A /* Issue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

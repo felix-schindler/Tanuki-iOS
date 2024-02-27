@@ -12,6 +12,9 @@ struct NewIssue: View {
 	public var showNewIssue: Bool
 	
 	@State
+	private var showError = false
+	
+	@State
 	private var title = ""
 	
 	@State
@@ -32,7 +35,7 @@ struct NewIssue: View {
 			VStack {
 				TextField("Title", text: $title)
 				TextField(
-					"Description",
+					"Description (Markdown supported)",
 					text: $description,
 					axis: .vertical
 				).lineLimit(5...10)
@@ -41,22 +44,27 @@ struct NewIssue: View {
 			Spacer()
 			
 			VStack {
-				Button(
-					role: .cancel,
-					action: {
-						showNewIssue = false
-					}, label: {
-						Label("Create issue", systemImage: "plus")
-							.frame(maxWidth: .infinity)
+				Button(action: {
+					if (title.isEmpty) {
+						showError = true
 					}
-				).tint(.green)
-					.controlSize(.large)
-					.buttonStyle(.bordered)
+					showNewIssue = false
+				}, label: {
+					Label("Create issue", systemImage: "plus")
+						.frame(maxWidth: .infinity)
+				})
+				.tint(.green)
+				.controlSize(.large)
+				.buttonStyle(.bordered)
 			}
-		}
+		}.alert("Failed to create new issue", isPresented: $showError, actions: {
+			Button("OK") {
+				showError = false
+			}
+		})
 		.padding()
 		.presentationDetents([.large, .medium])
-    }
+	}
 }
 
 #Preview {

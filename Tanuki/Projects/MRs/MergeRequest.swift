@@ -264,7 +264,7 @@ struct MergeRequest: View {
 							}
 						)
 						
-						DisclosureGroup(
+						/* DisclosureGroup(
 							content: {
 								Text("Commits")
 								Text("Changes")
@@ -273,7 +273,7 @@ struct MergeRequest: View {
 							label: {
 								Label("Manage", systemImage: "filemenu.and.selection")
 							}
-						)
+						) */
 						
 						if ((mr.labels?.nodes?.count ?? 0) > 0) {
 							Label(title: {
@@ -412,7 +412,7 @@ struct MergeRequest: View {
 				}.frame(maxWidth: .infinity, minHeight: 100)
 			} else {
 				VStack {
-					ProgressView("Loading merge requests")
+					ProgressView("Loading merge request")
 				}.frame(maxWidth: .infinity, minHeight: 100)
 			}
 		}.onAppear {
