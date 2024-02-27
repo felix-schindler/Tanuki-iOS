@@ -2,10 +2,6 @@ query MergeRequests($fullPath: ID!) {
   project(fullPath: $fullPath) {
     mergeRequestsEnabled
     
-    userPermissions {
-      createMergeRequestIn
-    }
-    
     mergeRequests(state: opened) {
       nodes {
         iid

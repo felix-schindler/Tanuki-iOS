@@ -127,8 +127,9 @@ struct Project: View {
 										Label(String(project.forksCount), systemImage: "tuningfork")
 									}
 								}
-							}.buttonStyle(.bordered)
-								.tint(.primary)
+							}
+							.tint(.primary)
+							.buttonStyle(.bordered)
 						}
 						
 						if (project.languages != nil && !project.languages!.isEmpty) {

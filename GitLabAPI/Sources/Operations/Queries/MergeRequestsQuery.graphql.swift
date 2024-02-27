@@ -7,7 +7,7 @@ public class MergeRequestsQuery: GraphQLQuery {
   public static let operationName: String = "MergeRequests"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query MergeRequests($fullPath: ID!) { project(fullPath: $fullPath) { __typename mergeRequestsEnabled userPermissions { __typename createMergeRequestIn } mergeRequests(state: opened) { __typename nodes { __typename iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename name } createdAt webUrl } } } }"#
+      #"query MergeRequests($fullPath: ID!) { project(fullPath: $fullPath) { __typename mergeRequestsEnabled mergeRequests(state: opened) { __typename nodes { __typename iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename name } createdAt webUrl } } } }"#
     ))
 
   public var fullPath: ID
@@ -41,33 +41,13 @@ public class MergeRequestsQuery: GraphQLQuery {
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("mergeRequestsEnabled", Bool?.self),
-        .field("userPermissions", UserPermissions.self),
         .field("mergeRequests", MergeRequests?.self, arguments: ["state": "opened"]),
       ] }
 
       /// Indicates if Merge Requests are enabled for the current user
       public var mergeRequestsEnabled: Bool? { __data["mergeRequestsEnabled"] }
-      /// Permissions for the current user on the resource
-      public var userPermissions: UserPermissions { __data["userPermissions"] }
       /// Merge requests of the project.
       public var mergeRequests: MergeRequests? { __data["mergeRequests"] }
-
-      /// Project.UserPermissions
-      ///
-      /// Parent Type: `ProjectPermissions`
-      public struct UserPermissions: GitLabAPI.SelectionSet {
-        public let __data: DataDict
-        public init(_dataDict: DataDict) { __data = _dataDict }
-
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.ProjectPermissions }
-        public static var __selections: [ApolloAPI.Selection] { [
-          .field("__typename", String.self),
-          .field("createMergeRequestIn", Bool.self),
-        ] }
-
-        /// If `true`, the user can perform `create_merge_request_in` on this resource
-        public var createMergeRequestIn: Bool { __data["createMergeRequestIn"] }
-      }
 
       /// Project.MergeRequests
       ///
