@@ -9,7 +9,8 @@ import SwiftUI
 import CachedAsyncImage
 
 enum AvatarSize {
-	case small,
+	case tiny,
+		 small,
 		 medium,
 		 big
 }
@@ -21,25 +22,30 @@ struct AvatarImage: View {
 	let width: CGFloat
 	let height: CGFloat
 	
-	init(url: URL, radius: CGFloat = 10, width: CGFloat = 50, height: CGFloat = 50) {
+	init(_ url: URL, radius: CGFloat = 10, width: CGFloat = 50, height: CGFloat = 50) {
 		self.url = url
 		self.radius = radius
 		self.width = width
 		self.height = height
 	}
 	
-	init(url: URL, size: AvatarSize) {
+	init(_ url: URL, size: AvatarSize) {
 		self.url = url
 		
-		if (size == .small) {
+		switch (size) {
+		case .tiny:
+			radius = 5
+			width = 17.5
+			height = 17.5
+		case .small:
 			radius = 5
 			width = 25
 			height = 25
-		} else if (size == .medium) {
+		case .medium:
 			radius = 7.5
 			width = 37.5
 			height = 37.5
-		} else {
+		default:
 			radius = 10
 			width = 50
 			height = 50
@@ -66,5 +72,12 @@ struct AvatarImage: View {
 }
 
 #Preview {
-	AvatarImage(url: URL(string: "https://schindlerfelix.de/favicon.ico")!)
+	VStack {
+		AvatarImage(URL(string: "https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png")!, size: .tiny)
+		AvatarImage(URL(string: "https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png")!, size: .small)
+		AvatarImage(URL(string: "https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png")!, size: .medium)
+		AvatarImage(URL(string: "https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png")!, size: .big)
+		AvatarImage(URL(string: "https://schindlerfelix.de/favicon.ico")!)
+		AvatarImage(URL(string: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png")!)
+	}
 }
