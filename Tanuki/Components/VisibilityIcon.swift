@@ -27,7 +27,7 @@ struct VisibilityIcon: View {
 		}
 	}
 	
-	var body: some View {
+	public var body: some View {
 		Image(systemName: systemName)
 	}
 }

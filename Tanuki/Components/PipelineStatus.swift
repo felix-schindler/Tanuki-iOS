@@ -9,9 +9,9 @@ import SwiftUI
 import GitLabAPI
 
 struct PipelineStatus: View {
-	private var state: GraphQLEnum<GitLabAPI.PipelineStatusEnum>
-	private var icon: String
-	private var color: SwiftUI.Color = Color.primary
+	private let state: GraphQLEnum<GitLabAPI.PipelineStatusEnum>
+	private let icon: String
+	private let color: SwiftUI.Color
 
 	@State
 	private var showInfo = false
@@ -40,15 +40,17 @@ struct PipelineStatus: View {
 			self.color = Color.gray
 		case .manual:
 			self.icon = "person.crop.circle"
+			self.color = Color.primary
 		case .scheduled:
 			self.icon = "hourglass.circle"
+			self.color = Color.primary
 		default:
 			self.icon = "arrow.2.circlepath.circle"
 			self.color = Color.orange
 		}
 	}
 	
-	var body: some View {
+	public var body: some View {
 		VStack {
 			RoundIconButton("Pipeline status", icon: icon) {
 				showInfo = true

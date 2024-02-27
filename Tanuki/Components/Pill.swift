@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct Pill: View {
-	private var label: String
-	private var icon: String?
-	private var fgColor: Color
-	private var bgColor: Color
-	private var cornerRadius: CGFloat
+	private let label: String
+	private let icon: String?
+	private let fgColor: Color
+	private let bgColor: Color
+	private let cornerRadius: CGFloat
 	
 	init(_ label: String, icon: String? = nil, bgColor: Color? = nil, fgColor: Color? = nil, cornerRadius: CGFloat = 25) {
 		self.label = label
@@ -22,7 +22,7 @@ struct Pill: View {
 		self.cornerRadius = cornerRadius
 	}
 	
-	var body: some View {
+	public var body: some View {
 		if let icon = icon {
 			Label(label, systemImage: icon)
 				.padding(.horizontal, 8)

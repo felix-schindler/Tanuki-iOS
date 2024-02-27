@@ -32,7 +32,7 @@ struct IssueStateIcon: View {
 		}
 	}
 
-    var body: some View {
+	public var body: some View {
 		Label(self.state.rawValue, systemImage: self.icon)
 			.foregroundStyle(self.color)
 			.labelStyle(.iconOnly)
@@ -82,7 +82,7 @@ struct MergeStateIcon: View {
 		self.color = MergeStateHelper.getColorByState(state)
 	}
 
-	var body: some View {
+	public var body: some View {
 		Label(self.state.rawValue, systemImage: self.icon)
 			.foregroundStyle(self.color)
 			.labelStyle(.iconOnly)
@@ -132,7 +132,7 @@ struct MergeStatus: View {
 		self.color = MergeStatusHelper.getColorByStatus(status)
 	}
 	
-	var body: some View {
+	public var body: some View {
 		Label(self.status.rawValue, systemImage: self.icon)
 			.foregroundStyle(self.color)
 	}

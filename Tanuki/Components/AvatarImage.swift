@@ -52,7 +52,7 @@ struct AvatarImage: View {
 		}
 	}
 	
-	var body: some View {
+	public var body: some View {
 		CachedAsyncImage(url: url) { phase in
 			switch phase {
 			case .empty:

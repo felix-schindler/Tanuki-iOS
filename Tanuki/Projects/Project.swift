@@ -14,7 +14,7 @@ import MarkdownUI
 import GitLabAPI
 
 struct Project: View {
-	private var fullPath: String
+	private let fullPath: String
 	
 	@State
 	private var project: GitLabAPI.ProjectQuery.Data.Project? = nil
@@ -62,7 +62,7 @@ struct Project: View {
 					VStack(alignment: .leading) {
 						HStack {
 							if let avatarUrl = URL.fromAvatar(project.avatarUrl) {
-								AvatarImage(url: avatarUrl, size: .medium)
+								AvatarImage(avatarUrl, size: .medium)
 							}
 							Spacer()
 							Text(project.name)
@@ -121,6 +121,7 @@ struct Project: View {
 								
 								Button(String(project.starCount), systemImage: "star") {
 								}
+								
 								if let projectUrl = URL(string: "\(project.webUrl ?? "")/-/forks/new") {
 									Link(destination: projectUrl) {
 										Label(String(project.forksCount), systemImage: "tuningfork")

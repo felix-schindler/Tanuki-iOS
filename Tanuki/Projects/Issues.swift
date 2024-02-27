@@ -11,7 +11,7 @@ import GitLabAPI
 struct Issues: View {
 	// MARK: - Things to load
 	/// Path of project to load issues from
-	private var fullPath: String
+	private let fullPath: String
 	
 	@State
 	private var project: GitLabAPI.IssuesQuery.Data.Project?

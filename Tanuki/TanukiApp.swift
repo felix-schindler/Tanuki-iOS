@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct TanukiApp: App {
-    var body: some Scene {
-        WindowGroup {
+	public var body: some Scene {
+		WindowGroup {
 			NavigationStack {
 				StarredProjects()
 			}
-        }
-    }
+		}
+	}
 }

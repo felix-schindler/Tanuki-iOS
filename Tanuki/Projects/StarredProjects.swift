@@ -41,7 +41,7 @@ struct StarredProjects: View {
 							NavigationLink(destination: Project(fullPath: project.fullPath), label: {
 								HStack {
 									if let url = URL.fromAvatar(project.avatarUrl) {
-										AvatarImage(url: url, size: .small)
+										AvatarImage(url, size: .small)
 									}
 									Text(project.nameWithNamespace)
 									Spacer()

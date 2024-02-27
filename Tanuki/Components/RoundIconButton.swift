@@ -14,7 +14,7 @@ struct CloseButton: View {
 		self.action = action
 	}
 	
-	var body: some View {
+	public var body: some View {
 		RoundIconButton("Close", icon: "xmark", action: action)
 			.fontWeight(.medium)
 			.tint(.secondary)
@@ -22,13 +22,13 @@ struct CloseButton: View {
 }
 
 struct ShareButton: View {
-	private var url: URL
+	private let url: URL
 	
 	init(_ url: URL) {
 		self.url = url
 	}
 	
-	var body: some View {
+	public var body: some View {
 		ShareLink(item: url) {
 			Label("Share", systemImage: "square.and.arrow.up")
 		}.labelStyle(.iconOnly)
@@ -36,9 +36,9 @@ struct ShareButton: View {
 }
 
 struct RoundIconButton: View {
-	private var label: String
-	private var iconName: String
-	private var action: () -> Void
+	private let label: String
+	private let iconName: String
+	private let action: () -> Void
 	
 	init(_ label: String, icon: String, role: ButtonRole? = nil, action: @escaping () -> Void) {
 		self.label = label
@@ -46,7 +46,7 @@ struct RoundIconButton: View {
 		self.action = action
 	}
 	
-	var body: some View {
+	public var body: some View {
 		Button(label, systemImage: iconName, action: action)
 			.buttonStyle(.bordered)
 			.clipShape(Circle())

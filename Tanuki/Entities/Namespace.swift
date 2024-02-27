@@ -10,7 +10,7 @@ import GitLabAPI
 import MarkdownUI
 
 struct Namespace: View {
-	private var fullPath: String
+	private let fullPath: String
 	
 	@State
 	private var namespace: GitLabAPI.NamespaceQuery.Data.Namespace? = nil
@@ -35,7 +35,7 @@ struct Namespace: View {
 		}
 	}
 	
-	var body: some View {
+	public var body: some View {
 		List {
 			if let namespace = self.namespace {
 				let showDetails = (
@@ -63,7 +63,7 @@ struct Namespace: View {
 								NavigationLink(destination: Project(fullPath: project.fullPath), label: {
 									HStack {
 										if let url = URL.fromAvatar(project.avatarUrl) {
-											AvatarImage(url: url, size: .small)
+											AvatarImage(url, size: .small)
 										}
 										Text(project.nameWithNamespace)
 										Spacer()

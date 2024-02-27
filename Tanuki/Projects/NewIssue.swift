@@ -17,7 +17,7 @@ struct NewIssue: View {
 	@State
 	private var description = ""
 	
-    var body: some View {
+	public var body: some View {
 		VStack(alignment: .leading) {
 			HStack {
 				Text("New issue")
