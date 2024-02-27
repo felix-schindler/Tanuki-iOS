@@ -26,6 +26,12 @@ struct NoteView: View {
 			"pencil"
 		case "commit":
 			"circle.and.line.horizontal"
+		case "check":
+			"person.fill.checkmark"
+		case "unapproval":
+			"person.fill.xmark"
+		case "timer":
+			"hourglass"
 		default:
 			"questionmark"
 		}
