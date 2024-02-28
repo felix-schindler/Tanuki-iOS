@@ -5,16 +5,16 @@
 //  Created by Felix Schindler on 29.02.24.
 //
 
-import SwiftUI
 import GitLabAPI
+import SwiftUI
 
 struct UserSnippetsLoader: View {
 	@State
 	private var snippets: [UserSnippetsQuery.Data.CurrentUser.Snippets.Node?]?
-	
+
 	@State
 	private var loadFailed = false
-	
+
 	private func loadSnippets() {
 		Network.shared.apollo.fetch(query: UserSnippetsQuery()) { result in
 			switch result {
@@ -27,7 +27,7 @@ struct UserSnippetsLoader: View {
 			}
 		}
 	}
-	
+
 	var body: some View {
 		List {
 			if let snippets = self.snippets {
@@ -37,31 +37,39 @@ struct UserSnippetsLoader: View {
 					ForEach(snippets, id: \.self?.id) { maybeSnippet in
 						if let snippet = maybeSnippet {
 							NavigationLink(
-								destination: SnippetLoader(id: snippet.id), label: {
+								destination: SnippetLoader(id: snippet.id),
+								label: {
 									HStack {
-										if let url = URL.fromAvatar(snippet.author?.avatarUrl) {
+										if let url = URL.fromAvatar(
+											snippet.author?.avatarUrl)
+										{
 											AvatarImage(url, size: .medium)
 										}
-										
+
 										VStack(alignment: .leading) {
 											Text(snippet.title.emojized())
-											
+
 											HStack {
 												if let author = snippet.author {
 													HStack(spacing: 2) {
-														Image(systemName: "person")
+														Image(
+															systemName: "person"
+														)
 														Text(author.name)
 													}
 												}
-												
+
 												HStack(spacing: 2) {
 													Image(systemName: "clock")
-													Text(Date.fromToString(snippet.createdAt))
+													Text(
+														Date.fromToString(
+															snippet.createdAt))
 												}
 											}.font(.footnote)
 										}
 									}.swipeActions {
-										if let url = URL(string: snippet.webUrl) {
+										if let url = URL(string: snippet.webUrl)
+										{
 											ShareButton(url)
 										}
 									}

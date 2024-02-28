@@ -5,8 +5,8 @@
 //  Created by Felix Schindler on 26.02.24.
 //
 
-import SwiftUI
 import GitLabAPI
+import SwiftUI
 
 struct PipelineStatus: View {
 	private let state: GraphQLEnum<GitLabAPI.PipelineStatusEnum>
@@ -15,11 +15,11 @@ struct PipelineStatus: View {
 
 	@State
 	private var showInfo = false
-	
+
 	init(_ state: GraphQLEnum<GitLabAPI.PipelineStatusEnum>) {
 		self.state = state
-		
-		switch (state) {
+
+		switch state {
 		case .created:
 			self.icon = "plus.circle"
 			self.color = Color.orange
@@ -49,7 +49,7 @@ struct PipelineStatus: View {
 			self.color = Color.orange
 		}
 	}
-	
+
 	public var body: some View {
 		VStack {
 			RoundIconButton("Pipeline status", icon: icon) {
@@ -80,7 +80,8 @@ struct PipelineStatus: View {
 
 #Preview {
 	VStack {
-		ForEach(GraphQLEnum<GitLabAPI.PipelineStatusEnum>.allCases, id: \.self) { state in
+		ForEach(GraphQLEnum<GitLabAPI.PipelineStatusEnum>.allCases, id: \.self)
+		{ state in
 			PipelineStatus(state)
 		}
 	}

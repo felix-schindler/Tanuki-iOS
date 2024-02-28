@@ -9,11 +9,11 @@ import SwiftUI
 
 struct CloseButton: View {
 	private var action: () -> Void
-	
+
 	init(_ action: @escaping () -> Void) {
 		self.action = action
 	}
-	
+
 	public var body: some View {
 		RoundIconButton("Close", icon: "xmark", action: action)
 			.fontWeight(.medium)
@@ -23,11 +23,11 @@ struct CloseButton: View {
 
 struct ShareButton: View {
 	private let url: URL
-	
+
 	init(_ url: URL) {
 		self.url = url
 	}
-	
+
 	public var body: some View {
 		ShareLink(item: url) {
 			Label("Share", systemImage: "square.and.arrow.up")
@@ -39,13 +39,16 @@ struct RoundIconButton: View {
 	private let label: String
 	private let iconName: String
 	private let action: () -> Void
-	
-	init(_ label: String, icon: String, role: ButtonRole? = nil, action: @escaping () -> Void) {
+
+	init(
+		_ label: String, icon: String, role: ButtonRole? = nil,
+		action: @escaping () -> Void
+	) {
 		self.label = label
 		self.iconName = icon
 		self.action = action
 	}
-	
+
 	public var body: some View {
 		Button(label, systemImage: iconName, action: action)
 			.frame(minWidth: 30, minHeight: 30)
@@ -60,11 +63,13 @@ struct RoundIconButton: View {
 		VStack {
 			ShareButton(URL(string: "https://schindlerfelix.de")!)
 			ShareButton(URL(string: "https://gitlab.com")!)
-			ShareButton(URL(string: "https://gitlab.com/felix-schindler/gitlab-ios")!)
+			ShareButton(
+				URL(string: "https://gitlab.com/felix-schindler/gitlab-ios")!)
 		}
 		VStack {
 			RoundIconButton("Up", icon: "arrow.up", action: {})
-			RoundIconButton("Filters", icon: "line.3.horizontal.decrease", action: {})
+			RoundIconButton(
+				"Filters", icon: "line.3.horizontal.decrease", action: {})
 			RoundIconButton("Add", icon: "plus") {
 			}
 			RoundIconButton("Events", icon: "bell", action: {})

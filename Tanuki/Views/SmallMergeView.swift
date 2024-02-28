@@ -5,19 +5,19 @@
 //  Created by Felix Schindler on 28.02.24.
 //
 
-import SwiftUI
 import GitLabAPI
+import SwiftUI
 
 struct SmallMergeView: View {
 	private let fullPath: String
 	private let mr: SmallMergeRequest
-	
+
 	init(_ fullPath: String, _ mr: SmallMergeRequest) {
 		self.fullPath = fullPath
 		self.mr = mr
 	}
-	
-    var body: some View {
+
+	var body: some View {
 		NavigationLink(
 			destination: MergeRequestLoader(
 				fullPath: fullPath,
@@ -51,7 +51,7 @@ struct SmallMergeView: View {
 									Image(systemName: "clock")
 									Text(Date.fromToString(mr.createdAt))
 								}
-								
+
 								if let author = mr._author {
 									HStack(spacing: 2) {
 										Image(systemName: "person")
@@ -73,5 +73,5 @@ struct SmallMergeView: View {
 				}
 			}
 		)
-    }
+	}
 }

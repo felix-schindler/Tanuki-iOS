@@ -5,34 +5,37 @@
 //  Created by Felix Schindler on 10.06.23.
 //
 
-import SwiftUI
 import CachedAsyncImage
+import SwiftUI
 
 enum AvatarSize {
 	case tiny,
-		 small,
-		 medium,
-		 big
+		small,
+		medium,
+		big
 }
 
 struct AvatarImage: View {
 	let url: URL?
-	
+
 	let radius: CGFloat
 	let width: CGFloat
 	let height: CGFloat
-	
-	init(_ url: URL, radius: CGFloat = 10, width: CGFloat = 50, height: CGFloat = 50) {
+
+	init(
+		_ url: URL, radius: CGFloat = 10, width: CGFloat = 50,
+		height: CGFloat = 50
+	) {
 		self.url = url
 		self.radius = radius
 		self.width = width
 		self.height = height
 	}
-	
+
 	init(_ url: URL, size: AvatarSize) {
 		self.url = url
-		
-		switch (size) {
+
+		switch size {
 		case .tiny:
 			radius = 5
 			width = 17.5
@@ -51,7 +54,7 @@ struct AvatarImage: View {
 			height = 50
 		}
 	}
-	
+
 	public var body: some View {
 		CachedAsyncImage(url: url) { phase in
 			switch phase {
@@ -73,11 +76,31 @@ struct AvatarImage: View {
 
 #Preview {
 	VStack {
-		AvatarImage(URL(string: "https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png")!, size: .tiny)
-		AvatarImage(URL(string: "https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png")!, size: .small)
-		AvatarImage(URL(string: "https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png")!, size: .medium)
-		AvatarImage(URL(string: "https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png")!, size: .big)
+		AvatarImage(
+			URL(
+				string:
+					"https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png"
+			)!, size: .tiny)
+		AvatarImage(
+			URL(
+				string:
+					"https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png"
+			)!, size: .small)
+		AvatarImage(
+			URL(
+				string:
+					"https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png"
+			)!, size: .medium)
+		AvatarImage(
+			URL(
+				string:
+					"https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png"
+			)!, size: .big)
 		AvatarImage(URL(string: "https://schindlerfelix.de/favicon.ico")!)
-		AvatarImage(URL(string: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png")!)
+		AvatarImage(
+			URL(
+				string:
+					"https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png"
+			)!)
 	}
 }

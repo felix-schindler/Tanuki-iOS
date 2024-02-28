@@ -5,33 +5,38 @@
 //  Created by Felix Schindler on 29.02.24.
 //
 
-import SwiftUI
 import GitLabAPI
+import SwiftUI
 
 struct UserProjectsLoader: View {
 	@State
-	private var memberShipNodes: [UserMembershipProjectsQuery.Data.CurrentUser.ProjectMemberships.Node?]? = nil
-	
+	private var memberShipNodes:
+		[UserMembershipProjectsQuery.Data.CurrentUser.ProjectMemberships.Node?]? =
+			nil
+
 	@State
 	private var loadFailed = false
-	
+
 	private func loadMembershipProjects() {
-		Network.shared.apollo.fetch(query: UserMembershipProjectsQuery()) { result in
+		Network.shared.apollo.fetch(query: UserMembershipProjectsQuery()) {
+			result in
 			switch result {
 			case .success(let graphQLResult):
 				print("Success! Setting projects...")
-				memberShipNodes = graphQLResult.data?.currentUser?.projectMemberships?.nodes ?? []
+				memberShipNodes =
+					graphQLResult.data?.currentUser?.projectMemberships?.nodes
+					?? []
 			case .failure(let error):
 				print("Failure! Error: \(error)")
 				loadFailed = true
 			}
 		}
 	}
-		
-    var body: some View {
+
+	var body: some View {
 		List {
 			if let memberShips = self.memberShipNodes {
-				if (memberShips.isEmpty) {
+				if memberShips.isEmpty {
 					Text("There are no projects")
 				} else {
 					ForEach(memberShips, id: \.?.hashValue) { memberShip in
@@ -59,7 +64,7 @@ struct UserProjectsLoader: View {
 		}.refreshable {
 			loadMembershipProjects()
 		}.navigationTitle("Projects")
-    }
+	}
 }
 
 #Preview {

@@ -5,50 +5,53 @@
 //  Created by Felix Schindler on 28.02.24.
 //
 
-import SwiftUI
 import GitLabAPI
-
+import SwiftUI
 
 enum UserMergeRequestType {
 	case assgined,
-		 authored,
-		 reviewRequested
+		authored,
+		reviewRequested
 }
 
 struct UserMergeLoader: View {
 	private var userRequestType: UserMergeRequestType
 	private var navTitle: String
-	
+
 	@State
 	private var mergeRequests: [UserSmallMergeRequest?]?
-	
+
 	@State
 	private var loadFailed: Bool
-	
+
 	init(_ userRequestType: UserMergeRequestType) {
 		self.userRequestType = userRequestType
 
-		self.navTitle = switch self.userRequestType {
-		case .assgined:
-			"Assigned MRs"
-		case .authored:
-			"Authored MRs"
-		case .reviewRequested:
-			"Review requests MRs"
-		}
-		
+		self.navTitle =
+			switch self.userRequestType {
+			case .assgined:
+				"Assigned MRs"
+			case .authored:
+				"Authored MRs"
+			case .reviewRequested:
+				"Review requests MRs"
+			}
+
 		self.mergeRequests = nil
 		self.loadFailed = false
 	}
-	
+
 	private func loadMergeRequests() {
 		switch self.userRequestType {
 		case .assgined:
-			Network.shared.apollo.fetch(query: UserAssignedMergeRequestsQuery()) { result in
+			Network.shared.apollo.fetch(query: UserAssignedMergeRequestsQuery())
+			{ result in
 				switch result {
 				case .success(let graphQLResult):
 					print("Success! Setting merge requests...")
-					mergeRequests = graphQLResult.data?.currentUser?.assignedMergeRequests?.nodes as? [UserSmallMergeRequest?]
+					mergeRequests =
+						graphQLResult.data?.currentUser?.assignedMergeRequests?
+						.nodes as? [UserSmallMergeRequest?]
 				case .failure(let error):
 					print("Failure! Error: \(error)")
 					loadFailed = true
@@ -56,11 +59,14 @@ struct UserMergeLoader: View {
 			}
 			break
 		case .authored:
-			Network.shared.apollo.fetch(query: UserAuthoredMergeRequestsQuery()) { result in
+			Network.shared.apollo.fetch(query: UserAuthoredMergeRequestsQuery())
+			{ result in
 				switch result {
 				case .success(let graphQLResult):
 					print("Success! Setting merge requests...")
-					mergeRequests = graphQLResult.data?.currentUser?.authoredMergeRequests?.nodes as? [UserSmallMergeRequest?]
+					mergeRequests =
+						graphQLResult.data?.currentUser?.authoredMergeRequests?
+						.nodes as? [UserSmallMergeRequest?]
 				case .failure(let error):
 					print("Failure! Error: \(error)")
 					loadFailed = true
@@ -68,11 +74,16 @@ struct UserMergeLoader: View {
 			}
 			break
 		case .reviewRequested:
-			Network.shared.apollo.fetch(query: UserReviewRequestedMergeRequestsQuery()) { result in
+			Network.shared.apollo.fetch(
+				query: UserReviewRequestedMergeRequestsQuery()
+			) { result in
 				switch result {
 				case .success(let graphQLResult):
 					print("Success! Setting merge requests...")
-					mergeRequests = graphQLResult.data?.currentUser?.reviewRequestedMergeRequests?.nodes as? [UserSmallMergeRequest?]
+					mergeRequests =
+						graphQLResult.data?.currentUser?
+						.reviewRequestedMergeRequests?.nodes
+						as? [UserSmallMergeRequest?]
 				case .failure(let error):
 					print("Failure! Error: \(error)")
 					loadFailed = true
@@ -81,11 +92,11 @@ struct UserMergeLoader: View {
 			break
 		}
 	}
-	
+
 	public var body: some View {
 		List {
-			if (mergeRequests != nil) {
-				if (mergeRequests!.isEmpty) {
+			if mergeRequests != nil {
+				if mergeRequests!.isEmpty {
 					VStack(alignment: .center) {
 						Image(systemName: "arrow.triangle.pull")
 							.resizable()
@@ -94,7 +105,8 @@ struct UserMergeLoader: View {
 						Text("There are no merge requests")
 					}.frame(maxWidth: .infinity, minHeight: 100)
 				} else {
-					ForEach(mergeRequests!, id: \.self?.reference) { maybeMerge in
+					ForEach(mergeRequests!, id: \.self?.reference) {
+						maybeMerge in
 						if let mr = maybeMerge {
 							SmallMergeView(mr._project.fullPath, mr)
 						}

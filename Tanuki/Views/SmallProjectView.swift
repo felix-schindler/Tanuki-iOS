@@ -16,23 +16,25 @@ protocol SmallProject {
 
 struct SmallProjectView: View {
 	private var project: SmallProject
-	
+
 	init(_ project: SmallProject) {
 		self.project = project
 	}
-	
+
 	var body: some View {
-		NavigationLink(destination: ProjectLoader(fullPath: project.fullPath), label: {
-			HStack {
-				if let url = URL.fromAvatar(project.avatarUrl) {
-					AvatarImage(url, size: .small)
+		NavigationLink(
+			destination: ProjectLoader(fullPath: project.fullPath),
+			label: {
+				HStack {
+					if let url = URL.fromAvatar(project.avatarUrl) {
+						AvatarImage(url, size: .small)
+					}
+					Text(project.nameWithNamespace)
+					Spacer()
+					if let visibility = project.visibility {
+						VisibilityIcon(visibility)
+					}
 				}
-				Text(project.nameWithNamespace)
-				Spacer()
-				if let visibility = project.visibility {
-					VisibilityIcon(visibility)
-				}
-			}
-		})
+			})
 	}
 }

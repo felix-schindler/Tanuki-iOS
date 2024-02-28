@@ -10,16 +10,16 @@ import SwiftUI
 struct CreateIssueView: View {
 	@Binding
 	public var showNewIssue: Bool
-	
+
 	@State
 	private var showError = false
-	
+
 	@State
 	private var title = ""
-	
+
 	@State
 	private var description = ""
-	
+
 	public var body: some View {
 		VStack(alignment: .leading) {
 			HStack {
@@ -31,7 +31,7 @@ struct CreateIssueView: View {
 					showNewIssue = false
 				}
 			}
-			
+
 			VStack {
 				TextField("Title", text: $title)
 				TextField(
@@ -40,31 +40,37 @@ struct CreateIssueView: View {
 					axis: .vertical
 				).lineLimit(5...10)
 			}.textFieldStyle(.roundedBorder)
-			
+
 			Spacer()
-			
+
 			VStack {
-				Button(action: {
-					if (title.isEmpty) {
-						Haptics.shared.notify(.error)
-						showError = true
-					} else {
-						Haptics.shared.notify(.success)
-						showNewIssue = false
+				Button(
+					action: {
+						if title.isEmpty {
+							Haptics.shared.notify(.error)
+							showError = true
+						} else {
+							Haptics.shared.notify(.success)
+							showNewIssue = false
+						}
+					},
+					label: {
+						Label("Create issue", systemImage: "plus")
+							.frame(maxWidth: .infinity)
 					}
-				}, label: {
-					Label("Create issue", systemImage: "plus")
-						.frame(maxWidth: .infinity)
-				})
+				)
 				.tint(.green)
 				.controlSize(.large)
 				.buttonStyle(.bordered)
 			}
-		}.alert("Failed to create new issue", isPresented: $showError, actions: {
-			Button("OK") {
-				showError = false
+		}.alert(
+			"Failed to create new issue", isPresented: $showError,
+			actions: {
+				Button("OK") {
+					showError = false
+				}
 			}
-		})
+		)
 		.padding()
 		.presentationDetents([.large, .medium])
 	}

@@ -11,12 +11,12 @@ struct VisibilityIcon: View {
 	private let visibility: String
 	private let systemName: String
 	private let showText: Bool
-	
+
 	public init(_ visibility: String, showText: Bool = false) {
 		self.visibility = visibility
 		self.showText = showText
-		
-		switch (visibility) {
+
+		switch visibility {
 		case "public":
 			systemName = "globe"
 			break
@@ -31,7 +31,7 @@ struct VisibilityIcon: View {
 			break
 		}
 	}
-	
+
 	public var body: some View {
 		if showText {
 			Label(self.visibility.firstCapitalized, systemImage: systemName)

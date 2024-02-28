@@ -5,17 +5,17 @@
 //  Created by Felix Schindler on 27.02.24.
 //
 
-import SwiftUI
 import GitLabAPI
 import MarkdownUI
+import SwiftUI
 
 struct NoteView: View {
 	private let note: Note
-	
+
 	init(_ note: Note) {
 		self.note = note
 	}
-	
+
 	private func convertIconName(_ iconName: String?) -> String {
 		switch iconName {
 		case "user":
@@ -54,17 +54,19 @@ struct NoteView: View {
 			"questionmark"
 		}
 	}
-	
+
 	public var body: some View {
 		if let author = note._author {
-			if (note.system) {
+			if note.system {
 				Label(
 					title: {
 						Markdown("@\(author.username) \(note.body)")
 							.markdownTheme(.gitHub)
 					},
 					icon: {
-						Image(systemName: convertIconName(note.systemNoteIconName))
+						Image(
+							systemName: convertIconName(note.systemNoteIconName)
+						)
 					}
 				).font(.footnote)
 			} else {
@@ -80,11 +82,14 @@ struct NoteView: View {
 						}
 						Spacer()
 						PillView(
-							Date.fromToString(note.createdAt, dateStyle: .short, timeStyle: .short),
-							icon: note.updatedAt != note.createdAt ? "pencil.and.scribble" : nil
+							Date.fromToString(
+								note.createdAt, dateStyle: .short,
+								timeStyle: .short),
+							icon: note.updatedAt != note.createdAt
+								? "pencil.and.scribble" : nil
 						).font(.caption2)
 					}.padding(.vertical, -5)
-					
+
 					Markdown(note.body, baseURL: API.url)
 						.markdownTheme(.gitHub)
 				}.font(.footnote)

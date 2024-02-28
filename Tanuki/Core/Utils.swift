@@ -6,32 +6,39 @@
 //
 
 import Foundation
-import SwiftUI
-import NVMColor
 import GitLabAPI
+import NVMColor
+import SwiftUI
 
-let LOAD_FAILED = "Failed to load\nPlease check token and internet connection, then try again"
+let LOAD_FAILED =
+	"Failed to load\nPlease check token and internet connection, then try again"
 
 class EmojiHelper {
 	public static func emojizedStringWithString(text: String) -> String {
 		var resultText = text
 		do {
-			let regex = try NSRegularExpression(pattern: "(:[a-z0-9-+_]+:)", options: .caseInsensitive)
+			let regex = try NSRegularExpression(
+				pattern: "(:[a-z0-9-+_]+:)", options: .caseInsensitive)
 			let matchingRange = NSMakeRange(0, resultText.count)
 			regex.enumerateMatches(
-				in: resultText, options: .reportCompletion, range: matchingRange,
+				in: resultText, options: .reportCompletion,
+				range: matchingRange,
 				using: {
 					(
-						result: NSTextCheckingResult!, flags: NSRegularExpression.MatchingFlags,
+						result: NSTextCheckingResult!,
+						flags: NSRegularExpression.MatchingFlags,
 						stop: UnsafeMutablePointer<ObjCBool>
 					) -> Void in
-					if (result != nil) && (result.resultType == .regularExpression) {
+					if (result != nil)
+						&& (result.resultType == .regularExpression)
+					{
 						let range = result.range
 						if range.location != NSNotFound {
 							let code = (text as NSString).substring(with: range)
 							let unicode = EmojiHelper.emojiAliases(key: code)
 							if !unicode.isEmpty {
-								resultText = resultText.replacingOccurrences(of: code, with: unicode)
+								resultText = resultText.replacingOccurrences(
+									of: code, with: unicode)
 							}
 						}
 					}
@@ -39,18 +46,21 @@ class EmojiHelper {
 		} catch {
 			print("RegExp error")
 		}
-		
+
 		return resultText
 	}
-	
+
 	public static func emojiAliases(key: String) -> String {
 		var value: String?
-		let regex = try! NSRegularExpression(pattern: "(:[a-z0-9-+_]+:)", options: .caseInsensitive)
-		
-		if regex.firstMatch(in: key, options: [], range: NSMakeRange(0, key.utf8.count)) != nil {
+		let regex = try! NSRegularExpression(
+			pattern: "(:[a-z0-9-+_]+:)", options: .caseInsensitive)
+
+		if regex.firstMatch(
+			in: key, options: [], range: NSMakeRange(0, key.utf8.count)) != nil
+		{
 			value = EMOJI_HASH[key]
 		}
-		
+
 		return value ?? key
 	}
 }
@@ -60,7 +70,7 @@ extension String {
 	var isNotEmpty: Bool {
 		return !self.isEmpty
 	}
-	
+
 	func emojized() -> String {
 		return EmojiHelper.emojizedStringWithString(text: self)
 	}
@@ -76,19 +86,22 @@ extension StringProtocol {
 extension URL {
 	public static func fromAvatar(_ avatarUrl: String?) -> URL? {
 		if var urlStr = avatarUrl {
-			if (!urlStr.contains("://")) {
+			if !urlStr.contains("://") {
 				urlStr = "https://" + API.domain + urlStr
 			}
-			
+
 			return URL(string: urlStr)
 		}
-		
+
 		return nil
 	}
 }
 
 extension Date {
-	static func fromToString(_ date: String, dateStyle: DateFormatter.Style = .medium, timeStyle: DateFormatter.Style = .none) -> String {
+	static func fromToString(
+		_ date: String, dateStyle: DateFormatter.Style = .medium,
+		timeStyle: DateFormatter.Style = .none
+	) -> String {
 		let inFormat = ISO8601DateFormatter()
 		let outFormat = DateFormatter()
 		outFormat.dateStyle = dateStyle

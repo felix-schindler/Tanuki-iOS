@@ -5,32 +5,34 @@
 //  Created by Felix Schindler on 27.02.24.
 //
 
-import SwiftUI
 import GitLabAPI
 import MarkdownUI
+import SwiftUI
 
 struct IssueLoader: View {
 	private let fullPath: String
 	private let iid: String
-	
+
 	@State
 	private var project: GitLabAPI.IssueQuery.Data.Project? = nil
-	
+
 	@State
 	private var loadFailed = false
-	
+
 	@State
 	private var newNoteContent = ""
-	
+
 	@State var newNoteError = false
-	
+
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
 		self.iid = iid
 	}
-	
+
 	private func loadIssue() {
-		Network.shared.apollo.fetch(query: IssueQuery(fullPath: self.fullPath, iid: self.iid)) { result in
+		Network.shared.apollo.fetch(
+			query: IssueQuery(fullPath: self.fullPath, iid: self.iid)
+		) { result in
 			switch result {
 			case .success(let graphQLResult):
 				print("Success! Setting issue...")
@@ -41,17 +43,17 @@ struct IssueLoader: View {
 			}
 		}
 	}
-	
-#if !os(macOS)
-	public var body: some View {
-		main.navigationBarTitleDisplayMode(.inline)
-	}
-#else
-	public var body: some View {
-		main
-	}
-#endif
-	
+
+	#if !os(macOS)
+		public var body: some View {
+			main.navigationBarTitleDisplayMode(.inline)
+		}
+	#else
+		public var body: some View {
+			main
+		}
+	#endif
+
 	var main: some View {
 		List {
 			if let project = self.project {
@@ -69,34 +71,41 @@ struct IssueLoader: View {
 							Text(Date.fromToString(issue.createdAt))
 						}.font(.footnote)
 							.padding(.bottom, 1)
-						
+
 						Text(issue.title.emojized())
 							.font(.title3)
 							.fontWeight(.medium)
 							.padding(.bottom, 1)
-						
+
 						ScrollView(.horizontal) {
 							HStack(spacing: 5) {
 								PillView(
 									issue.state.rawValue.firstCapitalized,
-									icon: IssueStateHelper.getIconByState(issue.state),
-									bgColor: IssueStateHelper.getColorByState(issue.state),
+									icon: IssueStateHelper.getIconByState(
+										issue.state),
+									bgColor: IssueStateHelper.getColorByState(
+										issue.state),
 									fgColor: .white,
 									cornerRadius: 5
 								)
 								NavigationLink(
-									destination: Namespace(fullPath: issue.author.username),
+									destination: Namespace(
+										fullPath: issue.author.username),
 									label: {
 										Label(
 											title: {
 												Text(
 													issue.author.name.isNotEmpty
-													? issue.author.name
-													: issue.author.username
+														? issue.author.name
+														: issue.author.username
 												)
-											}, icon: {
-												if let url = URL.fromAvatar(issue.author.avatarUrl) {
-													AvatarImage(url, size: .tiny)
+											},
+											icon: {
+												if let url = URL.fromAvatar(
+													issue.author.avatarUrl)
+												{
+													AvatarImage(
+														url, size: .tiny)
 												} else {
 													Image(systemName: "person")
 												}
@@ -113,7 +122,7 @@ struct IssueLoader: View {
 								.cornerRadius(5)
 							}
 						}.font(.footnote)
-						
+
 						ScrollView(.horizontal) {
 							HStack(spacing: 5) {
 								if let weight = issue.weight {
@@ -127,7 +136,7 @@ struct IssueLoader: View {
 									.monospaced()
 									.textSelection(.enabled)
 								}
-								
+
 								if let dueDate = issue.dueDate {
 									PillView(
 										Date.fromToString(dueDate),
@@ -139,21 +148,30 @@ struct IssueLoader: View {
 									.monospaced()
 									.textSelection(.enabled)
 								}
-								
-								if ((issue.blockedByIssues?.nodes?.count ?? 0) > 0) {
-									ForEach(issue.blockedByIssues!.nodes!, id: \.self?.iid) { maybeParent in
+
+								if (issue.blockedByIssues?.nodes?.count ?? 0)
+									> 0
+								{
+									ForEach(
+										issue.blockedByIssues!.nodes!,
+										id: \.self?.iid
+									) { maybeParent in
 										if let parent = maybeParent {
-											NavigationLink(destination: {
-												IssueLoader(fullPath: self.fullPath, iid: parent.iid)
-											}, label: {
-												PillView(
-													"#\(parent.iid)",
-													icon: "hand.raised",
-													bgColor: .orange,
-													fgColor: .white,
-													cornerRadius: 5
-												)
-											})
+											NavigationLink(
+												destination: {
+													IssueLoader(
+														fullPath: self.fullPath,
+														iid: parent.iid)
+												},
+												label: {
+													PillView(
+														"#\(parent.iid)",
+														icon: "hand.raised",
+														bgColor: .orange,
+														fgColor: .white,
+														cornerRadius: 5
+													)
+												})
 										}
 									}
 								}
@@ -161,49 +179,60 @@ struct IssueLoader: View {
 							.font(.footnote)
 							.monospacedDigit()
 						}
-						
-						if (issue.description?.isNotEmpty ?? false) {
+
+						if issue.description?.isNotEmpty ?? false {
 							Markdown(issue.description!.emojized())
 								.markdownTheme(.gitHub)
 						}
-						
+
 						HStack {
-							Button(action: {
-								// TODO: Toggle like
-							}, label: {
-								HStack(spacing: 5) {
-									Image(systemName: "hand.thumbsup")
-									Text(String(issue.upvotes))
-								}
-							})
-							Button(action: {
-								// TODO: Toggle like
-							}, label: {
-								HStack(spacing: 5) {
-									Image(systemName: "hand.thumbsdown")
-									Text(String(issue.downvotes))
-								}
-							})
+							Button(
+								action: {
+									// TODO: Toggle like
+								},
+								label: {
+									HStack(spacing: 5) {
+										Image(systemName: "hand.thumbsup")
+										Text(String(issue.upvotes))
+									}
+								})
+							Button(
+								action: {
+									// TODO: Toggle like
+								},
+								label: {
+									HStack(spacing: 5) {
+										Image(systemName: "hand.thumbsdown")
+										Text(String(issue.downvotes))
+									}
+								})
 						}
 						.controlSize(.small)
 						.buttonStyle(.bordered)
 						.font(.footnote)
 						.foregroundStyle(.primary)
 					}
-					
+
 					Section("Details") {
 						let assgineeCount = issue.assignees?.nodes?.count ?? 0
 						DisclosureGroup(
 							content: {
-								if (assgineeCount > 0) {
-									ForEach(issue.assignees!.nodes!, id: \.self) { maybeUser in
+								if assgineeCount > 0 {
+									ForEach(issue.assignees!.nodes!, id: \.self)
+									{ maybeUser in
 										if let user = maybeUser {
 											NavigationLink(
-												destination: Namespace(fullPath: user.username),
+												destination: Namespace(
+													fullPath: user.username),
 												label: {
 													HStack {
-														if let url = URL.fromAvatar(user.avatarUrl) {
-															AvatarImage(url, size: .small)
+														if let url =
+															URL.fromAvatar(
+																user.avatarUrl)
+														{
+															AvatarImage(
+																url,
+																size: .small)
 														}
 														Text(user.username)
 													}
@@ -216,65 +245,89 @@ struct IssueLoader: View {
 								}
 							},
 							label: {
-								Label(title: {
-									Text("Assignees")
-									Spacer()
-									Text(String(assgineeCount))
-								}, icon: {
-									Image(systemName: "person.crop.circle")
-								})
+								Label(
+									title: {
+										Text("Assignees")
+										Spacer()
+										Text(String(assgineeCount))
+									},
+									icon: {
+										Image(systemName: "person.crop.circle")
+									})
 							}
 						)
-						
-						if ((issue.labels?.nodes?.count ?? 0) > 0) {
-							Label(title: {
-								ScrollView(.horizontal) {
-									HStack {
-										ForEach(issue.labels!.nodes!, id: \.self) { maybeLabel in
-											if let label = maybeLabel {
-												PillView(
-													label.title.emojized(),
-													bgColor: Color(hex: label.color),
-													fgColor: Color(hex: label.textColor)
-												)
+
+						if (issue.labels?.nodes?.count ?? 0) > 0 {
+							Label(
+								title: {
+									ScrollView(.horizontal) {
+										HStack {
+											ForEach(
+												issue.labels!.nodes!, id: \.self
+											) { maybeLabel in
+												if let label = maybeLabel {
+													PillView(
+														label.title.emojized(),
+														bgColor: Color(
+															hex: label.color),
+														fgColor: Color(
+															hex: label.textColor
+														)
+													)
+												}
 											}
 										}
 									}
-								}
-							}, icon: {
-								Image(systemName: "tag")
-							})
+								},
+								icon: {
+									Image(systemName: "tag")
+								})
 						}
-						
+
 						if let milestone = issue.milestone {
-							Label(milestone.title.emojized(), systemImage: "signpost.right.and.left")
+							Label(
+								milestone.title.emojized(),
+								systemImage: "signpost.right.and.left")
 						}
-						
-						if (issue.humanTimeEstimate != nil || issue.humanTotalTimeSpent != nil) {
-							Label(title: {
-								HStack {
-									Text("Estimate: \(issue.humanTimeEstimate ?? "none")")
-									Spacer()
-									Text("Spent: \(issue.humanTotalTimeSpent ?? "none")")
-								}
-							}, icon: {
-								Image(systemName: "hourglass")
-							})
+
+						if issue.humanTimeEstimate != nil
+							|| issue.humanTotalTimeSpent != nil
+						{
+							Label(
+								title: {
+									HStack {
+										Text(
+											"Estimate: \(issue.humanTimeEstimate ?? "none")"
+										)
+										Spacer()
+										Text(
+											"Spent: \(issue.humanTotalTimeSpent ?? "none")"
+										)
+									}
+								},
+								icon: {
+									Image(systemName: "hourglass")
+								})
 						}
 					}
-					
-					if (issue.userPermissions.updateIssue) {
+
+					if issue.userPermissions.updateIssue {
 						Section("Actions") {
-							Button(action: {
-								// TODO: Implement
-							}, label: {
-								Label("Close MR", systemImage: "arrow.triangle.swap")
-							}).tint(.blue)
+							Button(
+								action: {
+									// TODO: Implement
+								},
+								label: {
+									Label(
+										"Close MR",
+										systemImage: "arrow.triangle.swap")
+								}
+							).tint(.blue)
 						}
 					}
-					
+
 					Section("Notes (\(issue.userNotesCount))") {
-						if (issue.userPermissions.createNote) {
+						if issue.userPermissions.createNote {
 							HStack {
 								TextField(
 									"New note",
@@ -290,16 +343,20 @@ struct IssueLoader: View {
 										Haptics.shared.notify(.success)
 										newNoteContent = ""
 									}
-								}.alert("Failed to create new note", isPresented: $newNoteError, actions: {
-									Button("OK") {
-										newNoteError = false
-									}
-								})
+								}.alert(
+									"Failed to create new note",
+									isPresented: $newNoteError,
+									actions: {
+										Button("OK") {
+											newNoteError = false
+										}
+									})
 							}
 						}
-						
-						if ((issue.notes.nodes?.count ?? 0) > 0) {
-							ForEach(issue.notes.nodes!, id: \.self?.id) { maybeNote in
+
+						if (issue.notes.nodes?.count ?? 0) > 0 {
+							ForEach(issue.notes.nodes!, id: \.self?.id) {
+								maybeNote in
 								if let note = maybeNote {
 									NoteView(note)
 								}
@@ -307,7 +364,7 @@ struct IssueLoader: View {
 						}
 					}
 				}
-			} else if (loadFailed) {
+			} else if loadFailed {
 				VStack {
 					Text(LOAD_FAILED)
 				}.frame(maxWidth: .infinity, minHeight: 100)

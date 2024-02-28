@@ -30,7 +30,9 @@ protocol SmallMergeRequest {
 	var webUrl: String? { get }
 }
 
-extension ProjectMergeRequestsQuery.Data.Project.MergeRequests.Node: SmallMergeRequest {
+extension ProjectMergeRequestsQuery.Data.Project.MergeRequests.Node:
+	SmallMergeRequest
+{
 	var _author: SmallAuthor? {
 		guard let authorData = author else { return nil }
 		return SmallAuthor(name: authorData.name)
@@ -41,17 +43,9 @@ protocol UserSmallMergeRequest: SmallMergeRequest {
 	var _project: ProjectPath { get }
 }
 
-extension UserAssignedMergeRequestsQuery.Data.CurrentUser.AssignedMergeRequests.Node: UserSmallMergeRequest {
-	var _project: ProjectPath {
-		return ProjectPath(fullPath: project.fullPath)
-	}
-	
-	var _author: SmallAuthor? {
-		guard let authorData = author else { return nil }
-		return SmallAuthor(name: authorData.name)
-	}
-}
-extension UserAuthoredMergeRequestsQuery.Data.CurrentUser.AuthoredMergeRequests.Node: UserSmallMergeRequest {
+extension UserAssignedMergeRequestsQuery.Data.CurrentUser.AssignedMergeRequests
+	.Node: UserSmallMergeRequest
+{
 	var _project: ProjectPath {
 		return ProjectPath(fullPath: project.fullPath)
 	}
@@ -61,7 +55,21 @@ extension UserAuthoredMergeRequestsQuery.Data.CurrentUser.AuthoredMergeRequests.
 		return SmallAuthor(name: authorData.name)
 	}
 }
-extension UserReviewRequestedMergeRequestsQuery.Data.CurrentUser.ReviewRequestedMergeRequests.Node: UserSmallMergeRequest {
+extension UserAuthoredMergeRequestsQuery.Data.CurrentUser.AuthoredMergeRequests
+	.Node: UserSmallMergeRequest
+{
+	var _project: ProjectPath {
+		return ProjectPath(fullPath: project.fullPath)
+	}
+
+	var _author: SmallAuthor? {
+		guard let authorData = author else { return nil }
+		return SmallAuthor(name: authorData.name)
+	}
+}
+extension UserReviewRequestedMergeRequestsQuery.Data.CurrentUser
+	.ReviewRequestedMergeRequests.Node: UserSmallMergeRequest
+{
 	var _project: ProjectPath {
 		return ProjectPath(fullPath: project.fullPath)
 	}
@@ -91,28 +99,34 @@ protocol Note {
 extension IssueQuery.Data.Project.Issue.Notes.Node: Note {
 	var _author: _Author? {
 		guard let authorData = author else { return nil }
-		return _Author(avatarUrl: authorData.avatarUrl, username: authorData.username)
+		return _Author(
+			avatarUrl: authorData.avatarUrl, username: authorData.username)
 	}
 }
 
 extension MergeRequestQuery.Data.Project.MergeRequest.Notes.Node: Note {
 	var _author: _Author? {
 		guard let authorData = author else { return nil }
-		return _Author(avatarUrl: authorData.avatarUrl, username: authorData.username)
+		return _Author(
+			avatarUrl: authorData.avatarUrl, username: authorData.username)
 	}
 }
 
 extension SnippetQuery.Data.Snippets.Node.Notes.Node: Note {
 	var _author: _Author? {
 		guard let authorData = author else { return nil }
-		return _Author(avatarUrl: authorData.avatarUrl, username: authorData.username)
+		return _Author(
+			avatarUrl: authorData.avatarUrl, username: authorData.username)
 	}
 }
 
-
 // MARK: - PROJECTS
-extension UserMembershipProjectsQuery.Data.CurrentUser.ProjectMemberships.Node.Project: SmallProject {
+extension UserMembershipProjectsQuery.Data.CurrentUser.ProjectMemberships.Node
+	.Project: SmallProject
+{
 }
 
-extension StarredProjectsQuery.Data.CurrentUser.StarredProjects.Node: SmallProject {
+extension StarredProjectsQuery.Data.CurrentUser.StarredProjects.Node:
+	SmallProject
+{
 }

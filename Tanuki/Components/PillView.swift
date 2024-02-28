@@ -13,15 +13,18 @@ struct PillView: View {
 	private let fgColor: Color
 	private let bgColor: Color
 	private let cornerRadius: CGFloat
-	
-	init(_ label: String, icon: String? = nil, bgColor: Color? = nil, fgColor: Color? = nil, cornerRadius: CGFloat = 25) {
+
+	init(
+		_ label: String, icon: String? = nil, bgColor: Color? = nil,
+		fgColor: Color? = nil, cornerRadius: CGFloat = 25
+	) {
 		self.label = label
 		self.icon = icon
 		self.fgColor = fgColor ?? .primary
 		self.bgColor = bgColor ?? Color(.systemGray5)
 		self.cornerRadius = cornerRadius
 	}
-	
+
 	public var body: some View {
 		if let icon = icon {
 			Label(label, systemImage: icon)
