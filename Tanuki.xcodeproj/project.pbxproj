@@ -27,6 +27,10 @@
 		DC217DCE2B8FB9F100F081BC /* UserSnippetsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC217DCD2B8FB9F100F081BC /* UserSnippetsLoader.swift */; };
 		DC217DD12B8FBA2200F081BC /* SnippetLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC217DD02B8FBA2200F081BC /* SnippetLoader.swift */; };
 		DC217DD32B8FCC8A00F081BC /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC217DD22B8FCC8A00F081BC /* Haptics.swift */; };
+		DC217DD82B8FD1A900F081BC /* Group.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC217DD72B8FD1A900F081BC /* Group.graphql */; };
+		DC217DDA2B8FD1CA00F081BC /* UserGroups.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC217DD92B8FD1CA00F081BC /* UserGroups.graphql */; };
+		DC217DDD2B8FD30700F081BC /* GroupLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC217DDC2B8FD30700F081BC /* GroupLoader.swift */; };
+		DC217DDF2B8FD34600F081BC /* UserGroupsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC217DDE2B8FD34600F081BC /* UserGroupsLoader.swift */; };
 		DC2704F92B8BC0F9003DAA84 /* TanukiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2704F82B8BC0F9003DAA84 /* TanukiApp.swift */; };
 		DC2704FD2B8BC0FB003DAA84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC2704FC2B8BC0FB003DAA84 /* Assets.xcassets */; };
 		DC2705012B8BC0FB003DAA84 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC2705002B8BC0FB003DAA84 /* Preview Assets.xcassets */; };
@@ -79,6 +83,10 @@
 		DC217DCD2B8FB9F100F081BC /* UserSnippetsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSnippetsLoader.swift; sourceTree = "<group>"; };
 		DC217DD02B8FBA2200F081BC /* SnippetLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetLoader.swift; sourceTree = "<group>"; };
 		DC217DD22B8FCC8A00F081BC /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		DC217DD72B8FD1A900F081BC /* Group.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Group.graphql; sourceTree = "<group>"; };
+		DC217DD92B8FD1CA00F081BC /* UserGroups.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserGroups.graphql; sourceTree = "<group>"; };
+		DC217DDC2B8FD30700F081BC /* GroupLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupLoader.swift; sourceTree = "<group>"; };
+		DC217DDE2B8FD34600F081BC /* UserGroupsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGroupsLoader.swift; sourceTree = "<group>"; };
 		DC2704F52B8BC0F9003DAA84 /* Tanuki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tanuki.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC2704F82B8BC0F9003DAA84 /* TanukiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TanukiApp.swift; sourceTree = "<group>"; };
 		DC2704FC2B8BC0FB003DAA84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -140,6 +148,24 @@
 			path = Snippets;
 			sourceTree = "<group>";
 		};
+		DC217DD62B8FD19500F081BC /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				DC217DD72B8FD1A900F081BC /* Group.graphql */,
+				DC217DD92B8FD1CA00F081BC /* UserGroups.graphql */,
+			);
+			path = Groups;
+			sourceTree = "<group>";
+		};
+		DC217DDB2B8FD2FB00F081BC /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				DC217DDC2B8FD30700F081BC /* GroupLoader.swift */,
+				DC217DDE2B8FD34600F081BC /* UserGroupsLoader.swift */,
+			);
+			path = Groups;
+			sourceTree = "<group>";
+		};
 		DC2704EC2B8BC0F9003DAA84 = {
 			isa = PBXGroup;
 			children = (
@@ -191,9 +217,10 @@
 		DC386A982B8D6162002E5F6D /* Queries */ = {
 			isa = PBXGroup;
 			children = (
-				DC6C5DA22B8F099500587850 /* Projects */,
 				DC6C5DA12B8F098E00587850 /* Merge Requests */,
 				DC6C5DAE2B8F1E1A00587850 /* Issues */,
+				DC6C5DA22B8F099500587850 /* Projects */,
+				DC217DD62B8FD19500F081BC /* Groups */,
 				DC6C5DBD2B8FB3B700587850 /* Snippets */,
 				DC0A6A4B2B8D0B1800C53D56 /* Namespace.graphql */,
 				DC6C5D9F2B8F096D00587850 /* AssignedMergeRequests.graphql */,
@@ -244,6 +271,7 @@
 				DC6C5DAF2B8F1EA400587850 /* Issues */,
 				DC6C5DA32B8F09C400587850 /* Merge Requests */,
 				DC217DCF2B8FBA1100F081BC /* Snippets */,
+				DC217DDB2B8FD2FB00F081BC /* Groups */,
 				DC0A6A3A2B8CF05200C53D56 /* Namespace.swift */,
 			);
 			path = Loaders;
@@ -400,6 +428,8 @@
 				DC27050D2B8BC351003DAA84 /* StarredProjects.graphql in Resources */,
 				DC6C5DA02B8F096D00587850 /* AssignedMergeRequests.graphql in Resources */,
 				DC6C5DA92B8F106B00587850 /* UserAuthoredMergeRequests.graphql in Resources */,
+				DC217DD82B8FD1A900F081BC /* Group.graphql in Resources */,
+				DC217DDA2B8FD1CA00F081BC /* UserGroups.graphql in Resources */,
 				DC386A972B8D615D002E5F6D /* MergeRequest.graphql in Resources */,
 				DC6C5DBC2B8FB34B00587850 /* UserSnippets.graphql in Resources */,
 				DC2704FD2B8BC0FB003DAA84 /* Assets.xcassets in Resources */,
@@ -435,6 +465,7 @@
 				DC6C5DB32B8F8BBF00587850 /* EmojiCodes.swift in Sources */,
 				DC0A6A3F2B8D02A600C53D56 /* CreateIssueView.swift in Sources */,
 				DC13E8A82B8E073300994E8A /* HomeView.swift in Sources */,
+				DC217DDF2B8FD34600F081BC /* UserGroupsLoader.swift in Sources */,
 				DC6C5DAD2B8F10D500587850 /* UserMergeLoader.swift in Sources */,
 				DC3A245E2B8C557E00DB0E3F /* RoundIconButton.swift in Sources */,
 				DC0A6A3B2B8CF05200C53D56 /* Namespace.swift in Sources */,
@@ -446,6 +477,7 @@
 				DC6C5DB62B8F90E400587850 /* UserProjectsLoader.swift in Sources */,
 				DC3A244D2B8C37BF00DB0E3F /* ProjectLoader.swift in Sources */,
 				DC217DD12B8FBA2200F081BC /* SnippetLoader.swift in Sources */,
+				DC217DDD2B8FD30700F081BC /* GroupLoader.swift in Sources */,
 				DC0A6A412B8D03EC00C53D56 /* StateIcons.swift in Sources */,
 				DC0FF5B42B8C7892002B4FAE /* ProjectIssuesLoader.swift in Sources */,
 				DC13E8A32B8DE32400994E8A /* IssueLoader.swift in Sources */,

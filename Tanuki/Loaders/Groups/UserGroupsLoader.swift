@@ -1,0 +1,103 @@
+//
+//  UserGroupsLoader.swift
+//  Tanuki
+//
+//  Created by Felix Schindler on 29.02.24.
+//
+
+import SwiftUI
+import GitLabAPI
+
+struct UserGroupsLoader: View {
+	@State
+	private var groups: [UserGroupsQuery.Data.CurrentUser.Groups.Node?]?
+	
+	@State
+	private var loadFailed = false
+	
+	private func loadGroups() {
+		Network.shared.apollo.fetch(query: UserGroupsQuery())
+		{ result in
+			switch result {
+			case .success(let graphQLResult):
+				print("Success! Setting merge requests...")
+				groups = graphQLResult.data?.currentUser?.groups?.nodes
+			case .failure(let error):
+				print("Failure! Error: \(error)")
+				loadFailed = true
+			}
+		}
+	}
+	
+	var body: some View {
+		List {
+			if let groups = self.groups {
+				if groups.isEmpty {
+					Text("There are no groups")
+				} else {
+					ForEach(groups, id: \.self?.fullPath) { maybeGroup in
+						if let group = maybeGroup {
+							NavigationLink(destination: GroupLoader(fullPath: group.fullPath), label: {
+								HStack {
+									if let url = URL.fromAvatar(group.avatarUrl ?? "") {
+										AvatarImage(url, size: .medium)
+									}
+									
+									VStack(alignment: .leading) {
+										HStack {
+											if let visibility = group.visibility {
+												VisibilityIcon(visibility)
+											}
+											Text(group.name.emojized())
+										}
+										
+										HStack(spacing: 10) {
+											HStack(spacing: 2) {
+												Image(systemName: "person.2")
+												Text(String(group.groupMembersCount))
+											}
+											
+											HStack(spacing: 2) {
+												Image(systemName: "app.gift.fill")
+												Text(String(group.projectsCount))
+											}
+										}.font(.footnote)
+									}
+									
+									if let accessLevel = group.maxAccessLevel.stringValue?.rawValue {
+										Spacer()
+										PillView(accessLevel.lowercased().firstCapitalized)
+											.font(.footnote)
+									}
+								}
+							})
+						}
+					}
+				}
+			} else {
+				VStack(alignment: .center) {
+					Image(systemName: "person.3")
+						.resizable()
+						.scaledToFit()
+						.foregroundStyle(.red)
+						.frame(width: 50, height: 50)
+					if loadFailed {
+						Text(LOAD_FAILED)
+					} else {
+						ProgressView("Loading groups")
+					}
+				}.frame(maxWidth: .infinity, minHeight: 100)
+			}
+		}.onAppear {
+			loadGroups()
+		}.refreshable {
+			loadGroups()
+		}.navigationTitle("Groups")
+	}
+}
+
+#Preview {
+	NavigationStack {
+		UserGroupsLoader()
+	}
+}

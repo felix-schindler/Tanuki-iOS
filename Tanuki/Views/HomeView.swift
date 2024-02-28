@@ -98,6 +98,20 @@ struct HomeView: View {
 							})
 					}
 				)
+				
+				NavigationLink(
+					destination: UserGroupsLoader(),
+					label: {
+						Label(
+							title: {
+								Text("Groups")
+							},
+							icon: {
+								Image(systemName: "person.3")
+									.foregroundStyle(.red)
+							})
+					}
+				)
 			}
 
 			Section("Starred projects") {

@@ -1,0 +1,44 @@
+query Group($fullPath: ID!) {
+  group(fullPath:$fullPath) {
+    id
+    
+    avatarUrl
+    name
+    fullName
+    fullPath
+    visibility
+    description
+    
+    # Link to boards
+    # Link to issues
+    # Link to custom emojis
+    # Link to epics
+    # Link to groups
+    descendantGroupsCount
+    # Link to members
+    groupMembersCount
+    # Link to labels
+    # Link to merge requests
+    # Link to milestones
+    # Link to projects
+    projectsCount
+    # Link to releases
+    # Link to runners
+    # Link to timelogs
+        
+    requestAccessEnabled
+    
+    maxAccessLevel {
+      stringValue
+    }
+    
+    userPermissions {
+      createProjects
+    }
+    
+    parent {
+      name
+      fullPath
+    }
+  }
+}
