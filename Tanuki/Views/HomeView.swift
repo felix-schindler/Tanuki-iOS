@@ -8,7 +8,7 @@
 import SwiftUI
 import GitLabAPI
 
-struct Home: View {
+struct HomeView: View {
 	@State
 	private var starredProjects: [GitLabAPI.StarredProjectsQuery.Data.CurrentUser.StarredProjects.Node?]? = nil
 	
@@ -42,10 +42,12 @@ struct Home: View {
 							.foregroundStyle(.green)
 					})
 				})
-				NavigationLink(destination: Issue(
-					fullPath: "gitlab-org/gitlab",
-					iid: "15603"
-				), label: {
+				
+				DisclosureGroup(content: {
+					NavigationLink("Assigned", destination: UserMergeLoader(.assgined))
+					NavigationLink("Authored", destination: UserMergeLoader(.authored))
+					NavigationLink("Review requested", destination: UserMergeLoader(.reviewRequested))
+				}, label: {
 					Label(title: {
 						Text("Merge Requests")
 					}, icon: {
@@ -64,18 +66,7 @@ struct Home: View {
 					} else {
 						ForEach(starredProjects!, id: \.self) { maybeProject in
 							if let project = maybeProject {
-								NavigationLink(destination: Project(fullPath: project.fullPath), label: {
-									HStack {
-										if let url = URL.fromAvatar(project.avatarUrl) {
-											AvatarImage(url, size: .small)
-										}
-										Text(project.nameWithNamespace)
-										Spacer()
-										if let visibility = project.visibility {
-											VisibilityIcon(visibility)
-										}
-									}
-								})
+								SmallProjectView(project)
 							}
 						}
 					}
@@ -101,5 +92,5 @@ struct Home: View {
 }
 
 #Preview {
-	Home()
+	HomeView()
 }

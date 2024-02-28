@@ -1,4 +1,4 @@
-query MergeRequests($fullPath: ID!) {
+query ProjectMergeRequests($fullPath: ID!) {
   project(fullPath: $fullPath) {
     mergeRequestsEnabled
     

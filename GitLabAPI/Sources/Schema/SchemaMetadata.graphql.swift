@@ -23,8 +23,12 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
   public static func objectType(forTypename typename: String) -> ApolloAPI.Object? {
     switch typename {
     case "Query": return GitLabAPI.Objects.Query
+    case "Namespace": return GitLabAPI.Objects.Namespace
+    case "ProjectConnection": return GitLabAPI.Objects.ProjectConnection
     case "Project": return GitLabAPI.Objects.Project
-    case "MergeRequest": return GitLabAPI.Objects.MergeRequest
+    case "ProjectPermissions": return GitLabAPI.Objects.ProjectPermissions
+    case "IssueConnection": return GitLabAPI.Objects.IssueConnection
+    case "Issue": return GitLabAPI.Objects.Issue
     case "BoardEpic": return GitLabAPI.Objects.BoardEpic
     case "Epic": return GitLabAPI.Objects.Epic
     case "AbuseReport": return GitLabAPI.Objects.AbuseReport
@@ -33,7 +37,7 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "Design": return GitLabAPI.Objects.Design
     case "DesignAtVersion": return GitLabAPI.Objects.DesignAtVersion
     case "EpicIssue": return GitLabAPI.Objects.EpicIssue
-    case "Issue": return GitLabAPI.Objects.Issue
+    case "MergeRequest": return GitLabAPI.Objects.MergeRequest
     case "WorkItem": return GitLabAPI.Objects.WorkItem
     case "Snippet": return GitLabAPI.Objects.Snippet
     case "Vulnerability": return GitLabAPI.Objects.Vulnerability
@@ -60,18 +64,17 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "WorkItemWidgetTestReports": return GitLabAPI.Objects.WorkItemWidgetTestReports
     case "WorkItemWidgetTimeTracking": return GitLabAPI.Objects.WorkItemWidgetTimeTracking
     case "WorkItemWidgetWeight": return GitLabAPI.Objects.WorkItemWidgetWeight
-    case "DiffStatsSummary": return GitLabAPI.Objects.DiffStatsSummary
-    case "MergeRequestAuthor": return GitLabAPI.Objects.MergeRequestAuthor
+    case "UserCore": return GitLabAPI.Objects.UserCore
     case "AddOnUser": return GitLabAPI.Objects.AddOnUser
     case "AutocompletedUser": return GitLabAPI.Objects.AutocompletedUser
     case "CurrentUser": return GitLabAPI.Objects.CurrentUser
     case "MergeRequestAssignee": return GitLabAPI.Objects.MergeRequestAssignee
+    case "MergeRequestAuthor": return GitLabAPI.Objects.MergeRequestAuthor
     case "MergeRequestParticipant": return GitLabAPI.Objects.MergeRequestParticipant
     case "MergeRequestReviewer": return GitLabAPI.Objects.MergeRequestReviewer
-    case "UserCore": return GitLabAPI.Objects.UserCore
-    case "MergeRequestPermissions": return GitLabAPI.Objects.MergeRequestPermissions
-    case "MergeRequestAssigneeConnection": return GitLabAPI.Objects.MergeRequestAssigneeConnection
-    case "MergeRequestReviewerConnection": return GitLabAPI.Objects.MergeRequestReviewerConnection
+    case "MergeRequestConnection": return GitLabAPI.Objects.MergeRequestConnection
+    case "IssuePermissions": return GitLabAPI.Objects.IssuePermissions
+    case "UserCoreConnection": return GitLabAPI.Objects.UserCoreConnection
     case "LabelConnection": return GitLabAPI.Objects.LabelConnection
     case "Label": return GitLabAPI.Objects.Label
     case "Milestone": return GitLabAPI.Objects.Milestone
@@ -80,12 +83,10 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "Note": return GitLabAPI.Objects.Note
     case "Discussion": return GitLabAPI.Objects.Discussion
     case "SystemNoteMetadata": return GitLabAPI.Objects.SystemNoteMetadata
-    case "Namespace": return GitLabAPI.Objects.Namespace
-    case "ProjectConnection": return GitLabAPI.Objects.ProjectConnection
-    case "ProjectPermissions": return GitLabAPI.Objects.ProjectPermissions
-    case "IssueConnection": return GitLabAPI.Objects.IssueConnection
-    case "IssuePermissions": return GitLabAPI.Objects.IssuePermissions
-    case "UserCoreConnection": return GitLabAPI.Objects.UserCoreConnection
+    case "DiffStatsSummary": return GitLabAPI.Objects.DiffStatsSummary
+    case "MergeRequestPermissions": return GitLabAPI.Objects.MergeRequestPermissions
+    case "MergeRequestAssigneeConnection": return GitLabAPI.Objects.MergeRequestAssigneeConnection
+    case "MergeRequestReviewerConnection": return GitLabAPI.Objects.MergeRequestReviewerConnection
     case "Repository": return GitLabAPI.Objects.Repository
     case "Tree": return GitLabAPI.Objects.Tree
     case "GpgSignature": return GitLabAPI.Objects.GpgSignature
@@ -94,7 +95,6 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "PipelineConnection": return GitLabAPI.Objects.PipelineConnection
     case "Pipeline": return GitLabAPI.Objects.Pipeline
     case "RepositoryLanguage": return GitLabAPI.Objects.RepositoryLanguage
-    case "MergeRequestConnection": return GitLabAPI.Objects.MergeRequestConnection
     default: return nil
     }
   }

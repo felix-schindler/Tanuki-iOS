@@ -124,7 +124,7 @@ struct Issues: View {
 				showNewIssue = true
 			}
 		}.sheet(isPresented: $showNewIssue) {
-			NewIssue(showNewIssue: $showNewIssue)
+			CreateIssueView(showNewIssue: $showNewIssue)
 		}.navigationTitle("Issues")
 	}
 }

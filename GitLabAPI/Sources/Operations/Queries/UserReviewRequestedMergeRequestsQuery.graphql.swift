@@ -3,20 +3,14 @@
 
 @_exported import ApolloAPI
 
-public class MergeRequestsQuery: GraphQLQuery {
-  public static let operationName: String = "MergeRequests"
+public class UserReviewRequestedMergeRequestsQuery: GraphQLQuery {
+  public static let operationName: String = "UserReviewRequestedMergeRequests"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query MergeRequests($fullPath: ID!) { project(fullPath: $fullPath) { __typename mergeRequestsEnabled mergeRequests(state: opened) { __typename nodes { __typename iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename name } createdAt webUrl } } } }"#
+      #"query UserReviewRequestedMergeRequests { currentUser { __typename reviewRequestedMergeRequests(state: opened) { __typename count nodes { __typename project { __typename fullPath } iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename name } createdAt webUrl } } } }"#
     ))
 
-  public var fullPath: ID
-
-  public init(fullPath: ID) {
-    self.fullPath = fullPath
-  }
-
-  public var __variables: Variables? { ["fullPath": fullPath] }
+  public init() {}
 
   public struct Data: GitLabAPI.SelectionSet {
     public let __data: DataDict
@@ -24,48 +18,48 @@ public class MergeRequestsQuery: GraphQLQuery {
 
     public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
-      .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
+      .field("currentUser", CurrentUser?.self),
     ] }
 
-    /// Find a project.
-    public var project: Project? { __data["project"] }
+    /// Get information about current user.
+    public var currentUser: CurrentUser? { __data["currentUser"] }
 
-    /// Project
+    /// CurrentUser
     ///
-    /// Parent Type: `Project`
-    public struct Project: GitLabAPI.SelectionSet {
+    /// Parent Type: `CurrentUser`
+    public struct CurrentUser: GitLabAPI.SelectionSet {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
-        .field("mergeRequestsEnabled", Bool?.self),
-        .field("mergeRequests", MergeRequests?.self, arguments: ["state": "opened"]),
+        .field("reviewRequestedMergeRequests", ReviewRequestedMergeRequests?.self, arguments: ["state": "opened"]),
       ] }
 
-      /// Indicates if Merge Requests are enabled for the current user
-      public var mergeRequestsEnabled: Bool? { __data["mergeRequestsEnabled"] }
-      /// Merge requests of the project.
-      public var mergeRequests: MergeRequests? { __data["mergeRequests"] }
+      /// Merge requests assigned to the user for review.
+      public var reviewRequestedMergeRequests: ReviewRequestedMergeRequests? { __data["reviewRequestedMergeRequests"] }
 
-      /// Project.MergeRequests
+      /// CurrentUser.ReviewRequestedMergeRequests
       ///
       /// Parent Type: `MergeRequestConnection`
-      public struct MergeRequests: GitLabAPI.SelectionSet {
+      public struct ReviewRequestedMergeRequests: GitLabAPI.SelectionSet {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
         public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestConnection }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
+          .field("count", Int.self),
           .field("nodes", [Node?]?.self),
         ] }
 
+        /// Total count of collection.
+        public var count: Int { __data["count"] }
         /// A list of nodes.
         public var nodes: [Node?]? { __data["nodes"] }
 
-        /// Project.MergeRequests.Node
+        /// CurrentUser.ReviewRequestedMergeRequests.Node
         ///
         /// Parent Type: `MergeRequest`
         public struct Node: GitLabAPI.SelectionSet {
@@ -75,6 +69,7 @@ public class MergeRequestsQuery: GraphQLQuery {
           public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
+            .field("project", Project.self),
             .field("iid", String.self),
             .field("title", String.self),
             .field("reference", String.self, arguments: ["full": true]),
@@ -87,6 +82,8 @@ public class MergeRequestsQuery: GraphQLQuery {
             .field("webUrl", String?.self),
           ] }
 
+          /// Alias for target_project.
+          public var project: Project { __data["project"] }
           /// Internal ID of the merge request.
           public var iid: String { __data["iid"] }
           /// Title of the merge request.
@@ -108,7 +105,24 @@ public class MergeRequestsQuery: GraphQLQuery {
           /// Web URL of the merge request.
           public var webUrl: String? { __data["webUrl"] }
 
-          /// Project.MergeRequests.Node.Author
+          /// CurrentUser.ReviewRequestedMergeRequests.Node.Project
+          ///
+          /// Parent Type: `Project`
+          public struct Project: GitLabAPI.SelectionSet {
+            public let __data: DataDict
+            public init(_dataDict: DataDict) { __data = _dataDict }
+
+            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+            public static var __selections: [ApolloAPI.Selection] { [
+              .field("__typename", String.self),
+              .field("fullPath", GitLabAPI.ID.self),
+            ] }
+
+            /// Full path of the project.
+            public var fullPath: GitLabAPI.ID { __data["fullPath"] }
+          }
+
+          /// CurrentUser.ReviewRequestedMergeRequests.Node.Author
           ///
           /// Parent Type: `MergeRequestAuthor`
           public struct Author: GitLabAPI.SelectionSet {

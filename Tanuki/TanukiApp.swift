@@ -12,7 +12,7 @@ struct TanukiApp: App {
 	public var body: some Scene {
 		WindowGroup {
 			NavigationStack {
-				Home()
+				HomeView()
 			}
 		}
 	}

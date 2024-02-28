@@ -219,7 +219,7 @@ struct Project: View {
 				
 				if (project == nil || (project!.mergeRequestsEnabled ?? false)) {
 					NavigationLink(
-						destination: MergeRequests(fullPath: self.fullPath),
+						destination: ProjectMergeLoader(fullPath: self.fullPath),
 						label: {
 							Label(title: {
 								Text("Merge Requests")
@@ -329,7 +329,7 @@ struct Project: View {
 			}.padding()
 				.presentationDetents([.fraction(0.2)])
 		}.sheet(isPresented: $showNewIssue) {
-			NewIssue(showNewIssue: $showNewIssue)
+			CreateIssueView(showNewIssue: $showNewIssue)
 		}.navigationTitle(self.fullPath)
 	}
 }

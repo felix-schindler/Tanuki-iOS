@@ -1,0 +1,23 @@
+query UserAssignedMergeRequests {
+  currentUser {
+    assignedMergeRequests(state: opened) {
+      nodes {
+        project {
+          fullPath
+        }
+        iid
+        title
+        reference(full: true)
+        state
+        upvotes
+        downvotes
+        userNotesCount
+        author {
+          name
+        }
+        createdAt
+        webUrl
+      }
+	}
+  }
+}

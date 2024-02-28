@@ -9,7 +9,7 @@ import SwiftUI
 import GitLabAPI
 import MarkdownUI
 
-struct MergeRequest: View {
+struct MergeRequestView: View {
 	private let fullPath: String
 	private let iid: String
 	
@@ -429,6 +429,6 @@ struct MergeRequest: View {
 
 #Preview {
 	NavigationStack {
-		MergeRequest(fullPath: "felix-schindler/gitlab-ios", iid: "1")
+		MergeRequestView(fullPath: "felix-schindler/gitlab-ios", iid: "1")
 	}
 }

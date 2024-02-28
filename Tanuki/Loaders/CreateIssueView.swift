@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NewIssue: View {
+struct CreateIssueView: View {
 	@Binding
 	public var showNewIssue: Bool
 	
@@ -70,6 +70,6 @@ struct NewIssue: View {
 #Preview {
 	NavigationStack {
 	}.sheet(isPresented: .constant(true)) {
-		NewIssue(showNewIssue: .constant(true))
+		CreateIssueView(showNewIssue: .constant(true))
 	}
 }
