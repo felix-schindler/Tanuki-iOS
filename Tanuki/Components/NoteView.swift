@@ -39,7 +39,7 @@ struct NoteView: View {
 		case "unlink":
 			"link"
 		case "arrow-right":
-			"arrow.right"
+			"arrowshape.turn.up.forward"
 		case "clock":
 			"clock"
 		case "duplicate":
@@ -73,7 +73,7 @@ struct NoteView: View {
 				VStack(alignment: .leading) {
 					HStack {
 						if let url = URL.fromAvatar(author.avatarUrl) {
-							AvatarImage(url, size: .small)
+							AvatarImage(url, size: .tiny)
 						}
 						Text(author.username)
 						if let accessLevel = note.maxAccessLevelOfAuthor {
