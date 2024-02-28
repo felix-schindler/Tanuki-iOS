@@ -60,7 +60,8 @@ struct NoteView: View {
 			if (note.system) {
 				Label(
 					title: {
-						Markdown("@\(author.username) \(note.body)", baseURL: API.url)
+						Markdown("@\(author.username) \(note.body)")
+							.markdownTheme(.gitHub)
 					},
 					icon: {
 						Image(systemName: convertIconName(note.systemNoteIconName))
@@ -74,23 +75,25 @@ struct NoteView: View {
 						}
 						Text(author.username)
 						if let accessLevel = note.maxAccessLevelOfAuthor {
-							Pill(accessLevel)
+							PillView(accessLevel)
 								.font(.caption2)
 						}
 						Spacer()
-						Pill(
+						PillView(
 							Date.fromToString(note.createdAt, dateStyle: .short, timeStyle: .short),
 							icon: note.updatedAt != note.createdAt ? "pencil.and.scribble" : nil
 						).font(.caption2)
 					}.padding(.vertical, -5)
 					
 					Markdown(note.body, baseURL: API.url)
+						.markdownTheme(.gitHub)
 				}.font(.footnote)
 			}
 		} else {
 			Label(
 				title: {
 					Markdown(note.body, baseURL: API.url)
+						.markdownTheme(.gitHub)
 				},
 				icon: {
 					Image(systemName: convertIconName(note.systemNoteIconName))

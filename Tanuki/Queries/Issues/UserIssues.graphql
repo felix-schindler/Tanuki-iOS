@@ -1,0 +1,27 @@
+query UserIssues($username: String!) {
+  currentUser {
+    projectMemberships {
+      nodes {
+        project {
+          fullPath
+          issues(state: opened, assigneeUsernames: [$username], authorUsername: $username) {
+            nodes {
+              iid
+              title
+              reference(full: true)
+              state
+              upvotes
+              downvotes
+              userNotesCount
+              author {
+                name
+              }
+              createdAt
+              webUrl
+            }
+          }
+        }
+      }
+    }
+  }
+}

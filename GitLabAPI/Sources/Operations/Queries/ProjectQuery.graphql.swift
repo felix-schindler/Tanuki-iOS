@@ -7,7 +7,7 @@ public class ProjectQuery: GraphQLQuery {
   public static let operationName: String = "Project"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled requestAccessEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt namespace { __typename name fullPath } repository { __typename rootRef tree { __typename lastCommit { __typename title shortId authorName authoredDate signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue pushCode forkProject requestAccess } } }"#
+      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled requestAccessEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt namespace { __typename name fullPath } repository { __typename rootRef blobs(paths: ["README", "README.txt", "README.md"]) { __typename nodes { __typename rawTextBlob } } tree { __typename lastCommit { __typename title shortId authorName authoredDate signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue pushCode forkProject requestAccess } } }"#
     ))
 
   public var fullPath: ID
@@ -137,13 +137,50 @@ public class ProjectQuery: GraphQLQuery {
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("rootRef", String?.self),
+          .field("blobs", Blobs?.self, arguments: ["paths": ["README", "README.txt", "README.md"]]),
           .field("tree", Tree?.self),
         ] }
 
         /// Default branch of the repository.
         public var rootRef: String? { __data["rootRef"] }
+        /// Blobs contained within the repository
+        public var blobs: Blobs? { __data["blobs"] }
         /// Tree of the repository.
         public var tree: Tree? { __data["tree"] }
+
+        /// Project.Repository.Blobs
+        ///
+        /// Parent Type: `RepositoryBlobConnection`
+        public struct Blobs: GitLabAPI.SelectionSet {
+          public let __data: DataDict
+          public init(_dataDict: DataDict) { __data = _dataDict }
+
+          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
+          public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("nodes", [Node?]?.self),
+          ] }
+
+          /// A list of nodes.
+          public var nodes: [Node?]? { __data["nodes"] }
+
+          /// Project.Repository.Blobs.Node
+          ///
+          /// Parent Type: `RepositoryBlob`
+          public struct Node: GitLabAPI.SelectionSet {
+            public let __data: DataDict
+            public init(_dataDict: DataDict) { __data = _dataDict }
+
+            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
+            public static var __selections: [ApolloAPI.Selection] { [
+              .field("__typename", String.self),
+              .field("rawTextBlob", String?.self),
+            ] }
+
+            /// Raw content of the blob, if the blob is text data.
+            public var rawTextBlob: String? { __data["rawTextBlob"] }
+          }
+        }
 
         /// Project.Repository.Tree
         ///

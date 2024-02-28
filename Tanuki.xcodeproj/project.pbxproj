@@ -18,12 +18,15 @@
 		DC0A6A502B8D12BE00C53D56 /* ApolloSQLite in Frameworks */ = {isa = PBXBuildFile; productRef = DC0A6A4F2B8D12BE00C53D56 /* ApolloSQLite */; };
 		DC0A6A522B8D12BE00C53D56 /* ApolloWebSocket in Frameworks */ = {isa = PBXBuildFile; productRef = DC0A6A512B8D12BE00C53D56 /* ApolloWebSocket */; };
 		DC0A6A552B8D148000C53D56 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = DC0A6A542B8D148000C53D56 /* CachedAsyncImage */; };
-		DC0FF5B42B8C7892002B4FAE /* Issues.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0FF5B32B8C7892002B4FAE /* Issues.swift */; };
+		DC0FF5B42B8C7892002B4FAE /* ProjectIssuesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0FF5B32B8C7892002B4FAE /* ProjectIssuesLoader.swift */; };
 		DC0FF5B62B8C7AFB002B4FAE /* ProjectMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0FF5B52B8C7AFB002B4FAE /* ProjectMergeLoader.swift */; };
-		DC0FF5B82B8CAD45002B4FAE /* Issues.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC0FF5B72B8CAD45002B4FAE /* Issues.graphql */; };
-		DC13E8A32B8DE32400994E8A /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC13E8A22B8DE32400994E8A /* Issue.swift */; };
+		DC0FF5B82B8CAD45002B4FAE /* PorjectIssues.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC0FF5B72B8CAD45002B4FAE /* PorjectIssues.graphql */; };
+		DC13E8A32B8DE32400994E8A /* IssueLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC13E8A22B8DE32400994E8A /* IssueLoader.swift */; };
 		DC13E8A52B8DE35C00994E8A /* Issue.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC13E8A42B8DE35C00994E8A /* Issue.graphql */; };
 		DC13E8A82B8E073300994E8A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC13E8A72B8E073300994E8A /* HomeView.swift */; };
+		DC217DCE2B8FB9F100F081BC /* UserSnippetsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC217DCD2B8FB9F100F081BC /* UserSnippetsLoader.swift */; };
+		DC217DD12B8FBA2200F081BC /* SnippetLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC217DD02B8FBA2200F081BC /* SnippetLoader.swift */; };
+		DC217DD32B8FCC8A00F081BC /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC217DD22B8FCC8A00F081BC /* Haptics.swift */; };
 		DC2704F92B8BC0F9003DAA84 /* TanukiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2704F82B8BC0F9003DAA84 /* TanukiApp.swift */; };
 		DC2704FD2B8BC0FB003DAA84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC2704FC2B8BC0FB003DAA84 /* Assets.xcassets */; };
 		DC2705012B8BC0FB003DAA84 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC2705002B8BC0FB003DAA84 /* Preview Assets.xcassets */; };
@@ -32,15 +35,15 @@
 		DC27050D2B8BC351003DAA84 /* StarredProjects.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC27050C2B8BC351003DAA84 /* StarredProjects.graphql */; };
 		DC2705112B8BC507003DAA84 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2705102B8BC507003DAA84 /* Network.swift */; };
 		DC2705192B8BC68E003DAA84 /* GitLabAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC2705182B8BC68E003DAA84 /* GitLabAPI */; };
-		DC386A952B8D5FB2002E5F6D /* MergeRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC386A942B8D5FB2002E5F6D /* MergeRequestView.swift */; };
+		DC386A952B8D5FB2002E5F6D /* MergeRequestLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC386A942B8D5FB2002E5F6D /* MergeRequestLoader.swift */; };
 		DC386A972B8D615D002E5F6D /* MergeRequest.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC386A962B8D615D002E5F6D /* MergeRequest.graphql */; };
 		DC386A9A2B8D86C4002E5F6D /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC386A992B8D86C4002E5F6D /* NoteView.swift */; };
 		DC3A24492B8C361D00DB0E3F /* Project.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC3A24482B8C361D00DB0E3F /* Project.graphql */; };
-		DC3A244D2B8C37BF00DB0E3F /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3A244C2B8C37BF00DB0E3F /* Project.swift */; };
+		DC3A244D2B8C37BF00DB0E3F /* ProjectLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3A244C2B8C37BF00DB0E3F /* ProjectLoader.swift */; };
 		DC3A244F2B8C3B8100DB0E3F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3A244E2B8C3B8100DB0E3F /* Utils.swift */; };
 		DC3A24512B8C3E1A00DB0E3F /* AvatarImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3A24502B8C3E1A00DB0E3F /* AvatarImage.swift */; };
 		DC3A24542B8C3F5800DB0E3F /* NVMColor in Frameworks */ = {isa = PBXBuildFile; productRef = DC3A24532B8C3F5800DB0E3F /* NVMColor */; };
-		DC3A24562B8C4C2200DB0E3F /* Pill.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3A24552B8C4C2200DB0E3F /* Pill.swift */; };
+		DC3A24562B8C4C2200DB0E3F /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3A24552B8C4C2200DB0E3F /* PillView.swift */; };
 		DC3A245C2B8C513C00DB0E3F /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = DC3A245B2B8C513C00DB0E3F /* MarkdownUI */; };
 		DC3A245E2B8C557E00DB0E3F /* RoundIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3A245D2B8C557E00DB0E3F /* RoundIconButton.swift */; };
 		DC6C5D982B8F085A00587850 /* SmallProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C5D972B8F085A00587850 /* SmallProjectView.swift */; };
@@ -51,6 +54,12 @@
 		DC6C5DA92B8F106B00587850 /* UserAuthoredMergeRequests.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DA82B8F106B00587850 /* UserAuthoredMergeRequests.graphql */; };
 		DC6C5DAB2B8F109600587850 /* UserReviewRequestedMergeRequests.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DAA2B8F109600587850 /* UserReviewRequestedMergeRequests.graphql */; };
 		DC6C5DAD2B8F10D500587850 /* UserMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C5DAC2B8F10D500587850 /* UserMergeLoader.swift */; };
+		DC6C5DB32B8F8BBF00587850 /* EmojiCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C5DB22B8F8BBF00587850 /* EmojiCodes.swift */; };
+		DC6C5DB62B8F90E400587850 /* UserProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C5DB52B8F90E400587850 /* UserProjectsLoader.swift */; };
+		DC6C5DB82B8F919100587850 /* UserMembershipProjects.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DB72B8F919100587850 /* UserMembershipProjects.graphql */; };
+		DC6C5DBA2B8FA10500587850 /* UserIssues.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DB92B8FA10500587850 /* UserIssues.graphql */; };
+		DC6C5DBC2B8FB34B00587850 /* UserSnippets.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DBB2B8FB34B00587850 /* UserSnippets.graphql */; };
+		DC6C5DBF2B8FB3CA00587850 /* Snippet.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DBE2B8FB3CA00587850 /* Snippet.graphql */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,12 +70,15 @@
 		DC0A6A402B8D03EC00C53D56 /* StateIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateIcons.swift; sourceTree = "<group>"; };
 		DC0A6A492B8D0ABE00C53D56 /* VisibilityIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibilityIcon.swift; sourceTree = "<group>"; };
 		DC0A6A4B2B8D0B1800C53D56 /* Namespace.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Namespace.graphql; sourceTree = "<group>"; };
-		DC0FF5B32B8C7892002B4FAE /* Issues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issues.swift; sourceTree = "<group>"; };
+		DC0FF5B32B8C7892002B4FAE /* ProjectIssuesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectIssuesLoader.swift; sourceTree = "<group>"; };
 		DC0FF5B52B8C7AFB002B4FAE /* ProjectMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMergeLoader.swift; sourceTree = "<group>"; };
-		DC0FF5B72B8CAD45002B4FAE /* Issues.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Issues.graphql; sourceTree = "<group>"; };
-		DC13E8A22B8DE32400994E8A /* Issue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
+		DC0FF5B72B8CAD45002B4FAE /* PorjectIssues.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = PorjectIssues.graphql; sourceTree = "<group>"; };
+		DC13E8A22B8DE32400994E8A /* IssueLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLoader.swift; sourceTree = "<group>"; };
 		DC13E8A42B8DE35C00994E8A /* Issue.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Issue.graphql; sourceTree = "<group>"; };
 		DC13E8A72B8E073300994E8A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		DC217DCD2B8FB9F100F081BC /* UserSnippetsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSnippetsLoader.swift; sourceTree = "<group>"; };
+		DC217DD02B8FBA2200F081BC /* SnippetLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetLoader.swift; sourceTree = "<group>"; };
+		DC217DD22B8FCC8A00F081BC /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		DC2704F52B8BC0F9003DAA84 /* Tanuki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tanuki.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC2704F82B8BC0F9003DAA84 /* TanukiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TanukiApp.swift; sourceTree = "<group>"; };
 		DC2704FC2B8BC0FB003DAA84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -74,14 +86,14 @@
 		DC2705002B8BC0FB003DAA84 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DC27050C2B8BC351003DAA84 /* StarredProjects.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = StarredProjects.graphql; sourceTree = "<group>"; };
 		DC2705102B8BC507003DAA84 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
-		DC386A942B8D5FB2002E5F6D /* MergeRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeRequestView.swift; sourceTree = "<group>"; };
+		DC386A942B8D5FB2002E5F6D /* MergeRequestLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeRequestLoader.swift; sourceTree = "<group>"; };
 		DC386A962B8D615D002E5F6D /* MergeRequest.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MergeRequest.graphql; sourceTree = "<group>"; };
 		DC386A992B8D86C4002E5F6D /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		DC3A24482B8C361D00DB0E3F /* Project.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Project.graphql; sourceTree = "<group>"; };
-		DC3A244C2B8C37BF00DB0E3F /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		DC3A244C2B8C37BF00DB0E3F /* ProjectLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLoader.swift; sourceTree = "<group>"; };
 		DC3A244E2B8C3B8100DB0E3F /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DC3A24502B8C3E1A00DB0E3F /* AvatarImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImage.swift; sourceTree = "<group>"; };
-		DC3A24552B8C4C2200DB0E3F /* Pill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pill.swift; sourceTree = "<group>"; };
+		DC3A24552B8C4C2200DB0E3F /* PillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillView.swift; sourceTree = "<group>"; };
 		DC3A245D2B8C557E00DB0E3F /* RoundIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundIconButton.swift; sourceTree = "<group>"; };
 		DC6C5D972B8F085A00587850 /* SmallProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallProjectView.swift; sourceTree = "<group>"; };
 		DC6C5D992B8F089D00587850 /* TypeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeHelper.swift; sourceTree = "<group>"; };
@@ -91,6 +103,12 @@
 		DC6C5DA82B8F106B00587850 /* UserAuthoredMergeRequests.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserAuthoredMergeRequests.graphql; sourceTree = "<group>"; };
 		DC6C5DAA2B8F109600587850 /* UserReviewRequestedMergeRequests.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserReviewRequestedMergeRequests.graphql; sourceTree = "<group>"; };
 		DC6C5DAC2B8F10D500587850 /* UserMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMergeLoader.swift; sourceTree = "<group>"; };
+		DC6C5DB22B8F8BBF00587850 /* EmojiCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCodes.swift; sourceTree = "<group>"; };
+		DC6C5DB52B8F90E400587850 /* UserProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProjectsLoader.swift; sourceTree = "<group>"; };
+		DC6C5DB72B8F919100587850 /* UserMembershipProjects.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserMembershipProjects.graphql; sourceTree = "<group>"; };
+		DC6C5DB92B8FA10500587850 /* UserIssues.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserIssues.graphql; sourceTree = "<group>"; };
+		DC6C5DBB2B8FB34B00587850 /* UserSnippets.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserSnippets.graphql; sourceTree = "<group>"; };
+		DC6C5DBE2B8FB3CA00587850 /* Snippet.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Snippet.graphql; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +131,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC217DCF2B8FBA1100F081BC /* Snippets */ = {
+			isa = PBXGroup;
+			children = (
+				DC217DD02B8FBA2200F081BC /* SnippetLoader.swift */,
+				DC217DCD2B8FB9F100F081BC /* UserSnippetsLoader.swift */,
+			);
+			path = Snippets;
+			sourceTree = "<group>";
+		};
 		DC2704EC2B8BC0F9003DAA84 = {
 			isa = PBXGroup;
 			children = (
@@ -166,9 +193,9 @@
 			children = (
 				DC6C5DA22B8F099500587850 /* Projects */,
 				DC6C5DA12B8F098E00587850 /* Merge Requests */,
-				DC0FF5B72B8CAD45002B4FAE /* Issues.graphql */,
+				DC6C5DAE2B8F1E1A00587850 /* Issues */,
+				DC6C5DBD2B8FB3B700587850 /* Snippets */,
 				DC0A6A4B2B8D0B1800C53D56 /* Namespace.graphql */,
-				DC13E8A42B8DE35C00994E8A /* Issue.graphql */,
 				DC6C5D9F2B8F096D00587850 /* AssignedMergeRequests.graphql */,
 			);
 			path = Queries;
@@ -178,7 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				DC3A24502B8C3E1A00DB0E3F /* AvatarImage.swift */,
-				DC3A24552B8C4C2200DB0E3F /* Pill.swift */,
+				DC3A24552B8C4C2200DB0E3F /* PillView.swift */,
 				DC3A245D2B8C557E00DB0E3F /* RoundIconButton.swift */,
 				DC0A6A382B8CE4FF00C53D56 /* PipelineStatus.swift */,
 				DC0A6A402B8D03EC00C53D56 /* StateIcons.swift */,
@@ -194,6 +221,8 @@
 				DC3A244E2B8C3B8100DB0E3F /* Utils.swift */,
 				DC2705102B8BC507003DAA84 /* Network.swift */,
 				DC6C5D992B8F089D00587850 /* TypeHelper.swift */,
+				DC6C5DB22B8F8BBF00587850 /* EmojiCodes.swift */,
+				DC217DD22B8FCC8A00F081BC /* Haptics.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -211,11 +240,10 @@
 		DC6C5D9D2B8F08F900587850 /* Loaders */ = {
 			isa = PBXGroup;
 			children = (
-				DC0FF5B32B8C7892002B4FAE /* Issues.swift */,
-				DC13E8A22B8DE32400994E8A /* Issue.swift */,
-				DC0A6A3E2B8D02A600C53D56 /* CreateIssueView.swift */,
-				DC3A244C2B8C37BF00DB0E3F /* Project.swift */,
+				DC6C5DB42B8F90C700587850 /* Projects */,
+				DC6C5DAF2B8F1EA400587850 /* Issues */,
 				DC6C5DA32B8F09C400587850 /* Merge Requests */,
+				DC217DCF2B8FBA1100F081BC /* Snippets */,
 				DC0A6A3A2B8CF05200C53D56 /* Namespace.swift */,
 			);
 			path = Loaders;
@@ -238,6 +266,7 @@
 			children = (
 				DC3A24482B8C361D00DB0E3F /* Project.graphql */,
 				DC27050C2B8BC351003DAA84 /* StarredProjects.graphql */,
+				DC6C5DB72B8F919100587850 /* UserMembershipProjects.graphql */,
 			);
 			path = Projects;
 			sourceTree = "<group>";
@@ -245,11 +274,49 @@
 		DC6C5DA32B8F09C400587850 /* Merge Requests */ = {
 			isa = PBXGroup;
 			children = (
-				DC386A942B8D5FB2002E5F6D /* MergeRequestView.swift */,
+				DC386A942B8D5FB2002E5F6D /* MergeRequestLoader.swift */,
 				DC0FF5B52B8C7AFB002B4FAE /* ProjectMergeLoader.swift */,
 				DC6C5DAC2B8F10D500587850 /* UserMergeLoader.swift */,
 			);
 			path = "Merge Requests";
+			sourceTree = "<group>";
+		};
+		DC6C5DAE2B8F1E1A00587850 /* Issues */ = {
+			isa = PBXGroup;
+			children = (
+				DC13E8A42B8DE35C00994E8A /* Issue.graphql */,
+				DC0FF5B72B8CAD45002B4FAE /* PorjectIssues.graphql */,
+				DC6C5DB92B8FA10500587850 /* UserIssues.graphql */,
+			);
+			path = Issues;
+			sourceTree = "<group>";
+		};
+		DC6C5DAF2B8F1EA400587850 /* Issues */ = {
+			isa = PBXGroup;
+			children = (
+				DC13E8A22B8DE32400994E8A /* IssueLoader.swift */,
+				DC0FF5B32B8C7892002B4FAE /* ProjectIssuesLoader.swift */,
+				DC0A6A3E2B8D02A600C53D56 /* CreateIssueView.swift */,
+			);
+			path = Issues;
+			sourceTree = "<group>";
+		};
+		DC6C5DB42B8F90C700587850 /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				DC3A244C2B8C37BF00DB0E3F /* ProjectLoader.swift */,
+				DC6C5DB52B8F90E400587850 /* UserProjectsLoader.swift */,
+			);
+			path = Projects;
+			sourceTree = "<group>";
+		};
+		DC6C5DBD2B8FB3B700587850 /* Snippets */ = {
+			isa = PBXGroup;
+			children = (
+				DC6C5DBE2B8FB3CA00587850 /* Snippet.graphql */,
+				DC6C5DBB2B8FB34B00587850 /* UserSnippets.graphql */,
+			);
+			path = Snippets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,10 +401,14 @@
 				DC6C5DA02B8F096D00587850 /* AssignedMergeRequests.graphql in Resources */,
 				DC6C5DA92B8F106B00587850 /* UserAuthoredMergeRequests.graphql in Resources */,
 				DC386A972B8D615D002E5F6D /* MergeRequest.graphql in Resources */,
+				DC6C5DBC2B8FB34B00587850 /* UserSnippets.graphql in Resources */,
 				DC2704FD2B8BC0FB003DAA84 /* Assets.xcassets in Resources */,
 				DC6C5DA72B8F0F8600587850 /* UserAssignedMergeRequests.graphql in Resources */,
+				DC6C5DBA2B8FA10500587850 /* UserIssues.graphql in Resources */,
 				DC0A6A4C2B8D0B1800C53D56 /* Namespace.graphql in Resources */,
-				DC0FF5B82B8CAD45002B4FAE /* Issues.graphql in Resources */,
+				DC0FF5B82B8CAD45002B4FAE /* PorjectIssues.graphql in Resources */,
+				DC6C5DBF2B8FB3CA00587850 /* Snippet.graphql in Resources */,
+				DC6C5DB82B8F919100587850 /* UserMembershipProjects.graphql in Resources */,
 				DC3A24492B8C361D00DB0E3F /* Project.graphql in Resources */,
 				DC13E8A52B8DE35C00994E8A /* Issue.graphql in Resources */,
 				DC0A6A3D2B8CF7D300C53D56 /* ProjectMergeRequests.graphql in Resources */,
@@ -352,13 +423,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC0A6A392B8CE4FF00C53D56 /* PipelineStatus.swift in Sources */,
+				DC217DCE2B8FB9F100F081BC /* UserSnippetsLoader.swift in Sources */,
 				DC3A244F2B8C3B8100DB0E3F /* Utils.swift in Sources */,
 				DC6C5DA52B8F0A3300587850 /* SmallMergeView.swift in Sources */,
 				DC0A6A4A2B8D0ABE00C53D56 /* VisibilityIcon.swift in Sources */,
 				DC2704F92B8BC0F9003DAA84 /* TanukiApp.swift in Sources */,
 				DC2705112B8BC507003DAA84 /* Network.swift in Sources */,
-				DC386A952B8D5FB2002E5F6D /* MergeRequestView.swift in Sources */,
-				DC3A24562B8C4C2200DB0E3F /* Pill.swift in Sources */,
+				DC386A952B8D5FB2002E5F6D /* MergeRequestLoader.swift in Sources */,
+				DC3A24562B8C4C2200DB0E3F /* PillView.swift in Sources */,
+				DC217DD32B8FCC8A00F081BC /* Haptics.swift in Sources */,
+				DC6C5DB32B8F8BBF00587850 /* EmojiCodes.swift in Sources */,
 				DC0A6A3F2B8D02A600C53D56 /* CreateIssueView.swift in Sources */,
 				DC13E8A82B8E073300994E8A /* HomeView.swift in Sources */,
 				DC6C5DAD2B8F10D500587850 /* UserMergeLoader.swift in Sources */,
@@ -369,10 +443,12 @@
 				DC6C5D9A2B8F089D00587850 /* TypeHelper.swift in Sources */,
 				DC6C5D982B8F085A00587850 /* SmallProjectView.swift in Sources */,
 				DC3A24512B8C3E1A00DB0E3F /* AvatarImage.swift in Sources */,
-				DC3A244D2B8C37BF00DB0E3F /* Project.swift in Sources */,
+				DC6C5DB62B8F90E400587850 /* UserProjectsLoader.swift in Sources */,
+				DC3A244D2B8C37BF00DB0E3F /* ProjectLoader.swift in Sources */,
+				DC217DD12B8FBA2200F081BC /* SnippetLoader.swift in Sources */,
 				DC0A6A412B8D03EC00C53D56 /* StateIcons.swift in Sources */,
-				DC0FF5B42B8C7892002B4FAE /* Issues.swift in Sources */,
-				DC13E8A32B8DE32400994E8A /* Issue.swift in Sources */,
+				DC0FF5B42B8C7892002B4FAE /* ProjectIssuesLoader.swift in Sources */,
+				DC13E8A32B8DE32400994E8A /* IssueLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,11 +601,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3";
 			};
 			name = Debug;
 		};
@@ -565,11 +642,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,3";
 			};
 			name = Release;
 		};

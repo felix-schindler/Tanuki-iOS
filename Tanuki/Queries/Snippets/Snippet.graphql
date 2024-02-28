@@ -1,0 +1,43 @@
+query Snippet($id: SnippetID!) {
+  snippets(ids: [$id]) {
+    nodes {
+      title
+      description
+      visibilityLevel
+      userPermissions {
+        createNote
+      }
+      author {
+        avatarUrl
+        username
+        name
+      }
+      blobs {
+        nodes {
+          size
+          name
+          rawPlainData
+        }
+      }
+      notes {
+        nodes {
+          id
+          author {
+            avatarUrl
+            username
+          }
+          maxAccessLevelOfAuthor
+          body
+          system
+          systemNoteIconName
+          createdAt
+          updatedAt
+        }
+      }
+      createdAt
+      sshUrlToRepo
+      httpUrlToRepo
+      webUrl
+    }
+  }
+}

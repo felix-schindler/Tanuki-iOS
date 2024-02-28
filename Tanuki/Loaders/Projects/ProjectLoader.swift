@@ -13,7 +13,7 @@ import MarkdownUI
 
 import GitLabAPI
 
-struct Project: View {
+struct ProjectLoader: View {
 	private let fullPath: String
 	
 	@State
@@ -75,7 +75,8 @@ struct Project: View {
 						}
 						
 						if let description = project.description {
-							Markdown(description)
+							Markdown(description.emojized())
+								.markdownTheme(.gitHub)
 						}
 						
 						HStack {
@@ -87,7 +88,7 @@ struct Project: View {
 									ScrollView(.horizontal) {
 										HStack {
 											ForEach(project.topics!, id: \.self) { topic in
-												Pill(topic)
+												PillView(topic)
 											}
 										}
 									}
@@ -185,6 +186,7 @@ struct Project: View {
 								
 								if (lastCommit.signature?.verificationStatus?.rawValue.starts(with: "VERIFIED") ?? false) {
 									RoundIconButton("Verified", icon: "checkmark.seal") {
+										Haptics.shared.play(.light)
 										showVerified = true
 									}.tint(.green)
 										.controlSize(.mini)
@@ -201,7 +203,7 @@ struct Project: View {
 			Section("Actions") {
 				if (project == nil || (project!.issuesEnabled ?? false)) {
 					NavigationLink(
-						destination: Issues(fullPath: self.fullPath),
+						destination: ProjectIssuesLoader(fullPath: self.fullPath),
 						label: {
 							Label(title: {
 								Text("Issues")
@@ -260,6 +262,13 @@ struct Project: View {
 					Label("Build", systemImage: "flag")
 				})
 			}.foregroundStyle(.primary)
+			
+			if let readmeContent = project?.repository?.blobs?.nodes?.first??.rawTextBlob {
+				Section("README") {
+					Markdown(readmeContent.emojized())
+						.markdownTheme(.gitHub)
+				}
+			}
 		}.onAppear {
 			loadProject()
 		}.refreshable {
@@ -310,6 +319,7 @@ struct Project: View {
 				if (project.userPermissions.createIssue) {
 					RoundIconButton("Create issue", icon: "plus") {
 						showNewIssue = true
+						Haptics.shared.play(.light)
 					}
 				}
 			}
@@ -336,6 +346,6 @@ struct Project: View {
 
 #Preview {
 	NavigationStack {
-		Project(fullPath: "felix-schindler/gitlab-ios")
+		ProjectLoader(fullPath: "felix-schindler/gitlab-ios")
 	}
 }

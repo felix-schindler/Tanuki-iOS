@@ -22,7 +22,7 @@ struct SmallProjectView: View {
 	}
 	
 	var body: some View {
-		NavigationLink(destination: Project(fullPath: project.fullPath), label: {
+		NavigationLink(destination: ProjectLoader(fullPath: project.fullPath), label: {
 			HStack {
 				if let url = URL.fromAvatar(project.avatarUrl) {
 					AvatarImage(url, size: .small)

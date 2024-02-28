@@ -46,9 +46,12 @@ struct CreateIssueView: View {
 			VStack {
 				Button(action: {
 					if (title.isEmpty) {
+						Haptics.shared.notify(.error)
 						showError = true
+					} else {
+						Haptics.shared.notify(.success)
+						showNewIssue = false
 					}
-					showNewIssue = false
 				}, label: {
 					Label("Create issue", systemImage: "plus")
 						.frame(maxWidth: .infinity)

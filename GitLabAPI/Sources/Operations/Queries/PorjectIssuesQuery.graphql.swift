@@ -3,11 +3,11 @@
 
 @_exported import ApolloAPI
 
-public class IssuesQuery: GraphQLQuery {
-  public static let operationName: String = "Issues"
+public class PorjectIssuesQuery: GraphQLQuery {
+  public static let operationName: String = "PorjectIssues"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Issues($fullPath: ID!) { project(fullPath: $fullPath) { __typename issuesEnabled userPermissions { __typename createIssue } issues(state: opened) { __typename nodes { __typename iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename name } createdAt webUrl } } } }"#
+      #"query PorjectIssues($fullPath: ID!) { project(fullPath: $fullPath) { __typename issuesEnabled userPermissions { __typename createIssue } issues(state: opened) { __typename nodes { __typename iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename name } createdAt webUrl } } } }"#
     ))
 
   public var fullPath: ID

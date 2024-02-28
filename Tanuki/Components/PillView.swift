@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Pill: View {
+struct PillView: View {
 	private let label: String
 	private let icon: String?
 	private let fgColor: Color
@@ -43,13 +43,13 @@ struct Pill: View {
 
 #Preview {
 	VStack {
-		Pill("Test")
-		Pill("Something")
-		Pill("Sth else")
-		Pill("abc", bgColor: .green, fgColor: .white)
-		Pill("abc", bgColor: .yellow, fgColor: .black)
-		Pill("abc", bgColor: .orange, fgColor: .black)
-		Pill("abc", bgColor: .blue, fgColor: .white)
-		Pill("abc", bgColor: .red, fgColor: .white)
+		PillView("Test")
+		PillView("Something")
+		PillView("Sth else")
+		PillView("abc", bgColor: .green, fgColor: .white)
+		PillView("abc", bgColor: .yellow, fgColor: .black)
+		PillView("abc", bgColor: .orange, fgColor: .black)
+		PillView("abc", bgColor: .blue, fgColor: .white)
+		PillView("abc", bgColor: .red, fgColor: .white)
 	}
 }

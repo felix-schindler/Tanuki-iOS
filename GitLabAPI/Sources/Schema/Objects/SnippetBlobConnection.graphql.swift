@@ -1,0 +1,12 @@
+// @generated
+// This file was automatically generated and should not be edited.
+
+import ApolloAPI
+
+public extension Objects {
+  /// The connection type for SnippetBlob.
+  static let SnippetBlobConnection = ApolloAPI.Object(
+    typename: "SnippetBlobConnection",
+    implementedInterfaces: []
+  )
+}

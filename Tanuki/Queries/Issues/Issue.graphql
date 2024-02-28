@@ -1,6 +1,6 @@
 query Issue($fullPath: ID!, $iid: String!) {
   project(fullPath: $fullPath) {
-		avatarUrl
+	avatarUrl
 	
     issue(iid: $iid) {
       iid
@@ -57,23 +57,17 @@ query Issue($fullPath: ID!, $iid: String!) {
       
       notes {
         nodes {
-          id
-          author {
+		  id
+		  author {
             avatarUrl
             username
           }
           maxAccessLevelOfAuthor
-          createdAt
-          
           body
           system
-          internal
-          resolved
-          updatedAt
           systemNoteIconName
-          systemNoteMetadata {
-            id
-          }
+          createdAt
+          updatedAt
         }
       }
     }

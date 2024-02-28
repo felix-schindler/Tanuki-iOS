@@ -1,0 +1,16 @@
+query UserSnippets {
+  currentUser {
+    snippets {
+      nodes {
+        id
+        title
+        author {
+          avatarUrl
+          name
+        }
+        createdAt
+        webUrl
+      }
+    }
+  }
+}

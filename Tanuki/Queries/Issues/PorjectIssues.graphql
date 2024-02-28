@@ -1,4 +1,4 @@
-query Issues($fullPath: ID!) {
+query PorjectIssues($fullPath: ID!) {
   project(fullPath: $fullPath) {
     issuesEnabled
     userPermissions {

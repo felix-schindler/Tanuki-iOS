@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct VisibilityIcon: View {
-	let systemName: String
+	private let visibility: String
+	private let systemName: String
+	private let showText: Bool
 	
-	public init(_ visibility: String) {
+	public init(_ visibility: String, showText: Bool = false) {
+		self.visibility = visibility
+		self.showText = showText
+		
 		switch (visibility) {
 		case "public":
 			systemName = "globe"
@@ -28,7 +33,13 @@ struct VisibilityIcon: View {
 	}
 	
 	public var body: some View {
-		Image(systemName: systemName)
+		if showText {
+			Label(self.visibility.firstCapitalized, systemImage: systemName)
+				.labelStyle(.titleAndIcon)
+		} else {
+			Label(self.visibility.firstCapitalized, systemImage: systemName)
+				.labelStyle(.iconOnly)
+		}
 	}
 }
 

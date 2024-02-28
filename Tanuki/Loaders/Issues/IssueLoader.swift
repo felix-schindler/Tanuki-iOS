@@ -9,7 +9,7 @@ import SwiftUI
 import GitLabAPI
 import MarkdownUI
 
-struct Issue: View {
+struct IssueLoader: View {
 	private let fullPath: String
 	private let iid: String
 	
@@ -21,6 +21,8 @@ struct Issue: View {
 	
 	@State
 	private var newNoteContent = ""
+	
+	@State var newNoteError = false
 	
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
@@ -68,14 +70,14 @@ struct Issue: View {
 						}.font(.footnote)
 							.padding(.bottom, 1)
 						
-						Text(issue.title)
+						Text(issue.title.emojized())
 							.font(.title3)
 							.fontWeight(.medium)
 							.padding(.bottom, 1)
 						
 						ScrollView(.horizontal) {
 							HStack(spacing: 5) {
-								Pill(
+								PillView(
 									issue.state.rawValue.firstCapitalized,
 									icon: IssueStateHelper.getIconByState(issue.state),
 									bgColor: IssueStateHelper.getColorByState(issue.state),
@@ -115,7 +117,7 @@ struct Issue: View {
 						ScrollView(.horizontal) {
 							HStack(spacing: 5) {
 								if let weight = issue.weight {
-									Pill(
+									PillView(
 										String(weight),
 										icon: "scalemass",
 										bgColor: .red,
@@ -127,7 +129,7 @@ struct Issue: View {
 								}
 								
 								if let dueDate = issue.dueDate {
-									Pill(
+									PillView(
 										Date.fromToString(dueDate),
 										icon: "alarm",
 										bgColor: .blue,
@@ -137,16 +139,18 @@ struct Issue: View {
 									.monospaced()
 									.textSelection(.enabled)
 								}
-
+								
 								if ((issue.blockedByIssues?.nodes?.count ?? 0) > 0) {
 									ForEach(issue.blockedByIssues!.nodes!, id: \.self?.iid) { maybeParent in
 										if let parent = maybeParent {
 											NavigationLink(destination: {
-												Issue(fullPath: self.fullPath, iid: parent.iid)
+												IssueLoader(fullPath: self.fullPath, iid: parent.iid)
 											}, label: {
-												Pill(
+												PillView(
 													"#\(parent.iid)",
 													icon: "hand.raised",
+													bgColor: .orange,
+													fgColor: .white,
 													cornerRadius: 5
 												)
 											})
@@ -159,7 +163,8 @@ struct Issue: View {
 						}
 						
 						if (issue.description?.isNotEmpty ?? false) {
-							Markdown(issue.description!)
+							Markdown(issue.description!.emojized())
+								.markdownTheme(.gitHub)
 						}
 						
 						HStack {
@@ -227,8 +232,8 @@ struct Issue: View {
 									HStack {
 										ForEach(issue.labels!.nodes!, id: \.self) { maybeLabel in
 											if let label = maybeLabel {
-												Pill(
-													label.title,
+												PillView(
+													label.title.emojized(),
 													bgColor: Color(hex: label.color),
 													fgColor: Color(hex: label.textColor)
 												)
@@ -242,7 +247,7 @@ struct Issue: View {
 						}
 						
 						if let milestone = issue.milestone {
-							Label(milestone.title, systemImage: "signpost.right.and.left")
+							Label(milestone.title.emojized(), systemImage: "signpost.right.and.left")
 						}
 						
 						if (issue.humanTimeEstimate != nil || issue.humanTotalTimeSpent != nil) {
@@ -278,8 +283,18 @@ struct Issue: View {
 								)
 								RoundIconButton("Comment", icon: "arrow.up") {
 									// TODO: Save note
-									newNoteContent = ""
-								}
+									if newNoteContent.isEmpty {
+										Haptics.shared.notify(.error)
+										newNoteError = true
+									} else {
+										Haptics.shared.notify(.success)
+										newNoteContent = ""
+									}
+								}.alert("Failed to create new note", isPresented: $newNoteError, actions: {
+									Button("OK") {
+										newNoteError = false
+									}
+								})
 							}
 						}
 						
@@ -315,6 +330,6 @@ struct Issue: View {
 
 #Preview {
 	NavigationStack {
-		Issue(fullPath: "felix-schindler/gitlab-ios", iid: "1")
+		IssueLoader(fullPath: "felix-schindler/gitlab-ios", iid: "1")
 	}
 }

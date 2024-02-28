@@ -102,7 +102,17 @@ extension MergeRequestQuery.Data.Project.MergeRequest.Notes.Node: Note {
 	}
 }
 
+extension SnippetQuery.Data.Snippets.Node.Notes.Node: Note {
+	var _author: _Author? {
+		guard let authorData = author else { return nil }
+		return _Author(avatarUrl: authorData.avatarUrl, username: authorData.username)
+	}
+}
+
 
 // MARK: - PROJECTS
+extension UserMembershipProjectsQuery.Data.CurrentUser.ProjectMemberships.Node.Project: SmallProject {
+}
+
 extension StarredProjectsQuery.Data.CurrentUser.StarredProjects.Node: SmallProject {
 }

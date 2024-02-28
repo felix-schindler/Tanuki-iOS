@@ -1,0 +1,14 @@
+query UserMembershipProjects {
+  currentUser {
+    projectMemberships {
+      nodes {
+        project {
+          avatarUrl
+          nameWithNamespace
+          visibility
+          fullPath
+        }
+      }
+    }
+  }
+}

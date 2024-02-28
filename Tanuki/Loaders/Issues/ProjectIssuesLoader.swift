@@ -8,13 +8,13 @@
 import SwiftUI
 import GitLabAPI
 
-struct Issues: View {
+struct ProjectIssuesLoader: View {
 	// MARK: - Things to load
 	/// Path of project to load issues from
 	private let fullPath: String
 	
 	@State
-	private var project: GitLabAPI.IssuesQuery.Data.Project?
+	private var project: GitLabAPI.PorjectIssuesQuery.Data.Project?
 	
 	@State
 	private var loadFailed = false
@@ -29,7 +29,7 @@ struct Issues: View {
 	}
 	
 	private func loadIssues() {
-		Network.shared.apollo.fetch(query: IssuesQuery(fullPath: self.fullPath)) { result in
+		Network.shared.apollo.fetch(query: PorjectIssuesQuery(fullPath: self.fullPath)) { result in
 			switch result {
 			case .success(let graphQLResult):
 				print("Success! Setting issues...")
@@ -62,14 +62,14 @@ struct Issues: View {
 					} else {
 						ForEach(project.issues!.nodes!, id: \.self?.iid) { issue in
 							if (issue != nil) {
-								NavigationLink(destination: Issue(fullPath: self.fullPath, iid: issue!.iid), label: {
+								NavigationLink(destination: IssueLoader(fullPath: self.fullPath, iid: issue!.iid), label: {
 									VStack(alignment: .leading) {
 										HStack(spacing: 5) {
 											IssueStateIcon(issue!.state)
 											Text(issue!.reference)
 												.foregroundStyle(.secondary)
 										}.font(.footnote)
-										Text(issue!.title)
+										Text(issue!.title.emojized())
 										HStack(spacing: 10) {
 											HStack(spacing: 2) {
 												Image(systemName: "hand.thumbsup")
@@ -121,6 +121,7 @@ struct Issues: View {
 			loadIssues()
 		}.toolbar {
 			RoundIconButton("New issue", icon: "plus") {
+				Haptics.shared.play(.light)
 				showNewIssue = true
 			}
 		}.sheet(isPresented: $showNewIssue) {
@@ -131,6 +132,6 @@ struct Issues: View {
 
 #Preview {
 	NavigationStack {
-		Issues(fullPath: "felix-schindler/gitlab-ios")
+		ProjectIssuesLoader(fullPath: "felix-schindler/gitlab-ios")
 	}
 }

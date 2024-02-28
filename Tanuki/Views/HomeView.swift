@@ -10,7 +10,7 @@ import GitLabAPI
 
 struct HomeView: View {
 	@State
-	private var starredProjects: [GitLabAPI.StarredProjectsQuery.Data.CurrentUser.StarredProjects.Node?]? = nil
+	private var starredProjects: [StarredProjectsQuery.Data.CurrentUser.StarredProjects.Node?]? = nil
 	
 	@State
 	private var loadFailed = false
@@ -31,7 +31,7 @@ struct HomeView: View {
 	public var body: some View {
 		List {
 			Section("Your work") {
-				NavigationLink(destination: Issue(
+				NavigationLink(destination: IssueLoader(
 					fullPath: "gitlab-org/gitlab",
 					iid: "15603"
 				), label: {
@@ -55,6 +55,30 @@ struct HomeView: View {
 							.foregroundStyle(.blue)
 					})
 				})
+				
+				NavigationLink(
+					destination: UserProjectsLoader(),
+					label: {
+						Label(title: {
+							Text("Projects")
+						}, icon: {
+							Image(systemName: "app.gift.fill")
+								.foregroundStyle(.gray)
+						})
+					}
+				)
+				
+				NavigationLink(
+					destination: UserSnippetsLoader(),
+					label: {
+						Label(title: {
+							Text("Snippets")
+						}, icon: {
+							Image(systemName: "scissors")
+								.foregroundStyle(.purple)
+						})
+					}
+				)
 			}
 
 			Section("Starred projects") {
@@ -92,5 +116,7 @@ struct HomeView: View {
 }
 
 #Preview {
-	HomeView()
+	NavigationStack {
+		HomeView()
+	}
 }

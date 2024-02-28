@@ -22,19 +22,21 @@ query Project($fullPath: ID!) {
       fullPath
     }
     repository {
-      # Missing counts: Commits, Branches, Tags
       rootRef
+      blobs(paths: ["README", "README.txt", "README.md"]) {
+        nodes {
+          rawTextBlob
+        }
+      }
       tree {
         lastCommit {
-		  title
-		  shortId
+          title
+          shortId
           authorName
           authoredDate
-          
           signature {
             verificationStatus
           }
-          
           pipelines {
             nodes {
               status

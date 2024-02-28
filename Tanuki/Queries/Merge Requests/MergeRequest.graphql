@@ -72,23 +72,17 @@ query MergeRequest($fullPath: ID!, $iid: String!) {
       
       notes {
         nodes {
-          id
+		  id
           author {
             avatarUrl
             username
           }
           maxAccessLevelOfAuthor
-          createdAt
-          
           body
           system
-          internal
-          resolved
-          updatedAt
           systemNoteIconName
-          systemNoteMetadata {
-            id
-          }
+          createdAt
+          updatedAt
         }
       }
     }

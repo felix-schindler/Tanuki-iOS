@@ -19,7 +19,7 @@ struct SmallMergeView: View {
 	
     var body: some View {
 		NavigationLink(
-			destination: MergeRequestView(
+			destination: MergeRequestLoader(
 				fullPath: fullPath,
 				iid: mr.iid
 			),
@@ -30,7 +30,7 @@ struct SmallMergeView: View {
 						Text(mr.reference)
 							.foregroundStyle(.secondary)
 					}.font(.footnote)
-					Text(mr.title)
+					Text(mr.title.emojized())
 					HStack(spacing: 10) {
 						HStack(spacing: 2) {
 							Image(systemName: "hand.thumbsup")

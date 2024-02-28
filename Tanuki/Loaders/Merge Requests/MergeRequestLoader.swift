@@ -9,7 +9,7 @@ import SwiftUI
 import GitLabAPI
 import MarkdownUI
 
-struct MergeRequestView: View {
+struct MergeRequestLoader: View {
 	private let fullPath: String
 	private let iid: String
 	
@@ -21,6 +21,9 @@ struct MergeRequestView: View {
 	
 	@State
 	private var newNoteContent = ""
+	
+	@State
+	private var newNoteError = false
 	
 	@State
 	private var showMergeStatus = false
@@ -71,21 +74,21 @@ struct MergeRequestView: View {
 						}.font(.footnote)
 							.padding(.bottom, 1)
 						
-						Text(mr.title)
+						Text(mr.title.emojized())
 							.font(.title3)
 							.fontWeight(.medium)
 							.padding(.bottom, 1)
 						
 						ScrollView(.horizontal) {
 							HStack(spacing: 5) {
-								Pill(
+								PillView(
 									mr.state.rawValue.firstCapitalized,
 									icon: MergeStateHelper.getIconByState(mr.state),
 									bgColor: MergeStateHelper.getColorByState(mr.state),
 									fgColor: .white,
 									cornerRadius: 5
 								)
-								Pill(
+								PillView(
 									mr.sourceProject?.fullPath == self.fullPath
 									? mr.sourceBranch
 									: "\(mr.sourceProject?.fullPath ?? "")/\(mr.sourceBranch)",
@@ -98,7 +101,7 @@ struct MergeRequestView: View {
 								
 								Image(systemName: "arrow.right")
 								
-								Pill(
+								PillView(
 									mr.targetBranch,
 									bgColor: .blue,
 									fgColor: .white,
@@ -145,17 +148,17 @@ struct MergeRequestView: View {
 									}
 									
 									if let diffStats = mr.diffStatsSummary {
-										Pill(
+										PillView(
 											"\(diffStats.fileCount) files",
 											icon: "doc.text",
 											cornerRadius: 5
 										)
-										Pill(
+										PillView(
 											"+\(diffStats.additions)",
 											fgColor: .green,
 											cornerRadius: 5
 										)
-										Pill(
+										PillView(
 											"-\(diffStats.deletions)",
 											fgColor: .red,
 											cornerRadius: 5
@@ -168,7 +171,8 @@ struct MergeRequestView: View {
 						}
 						
 						if (mr.description?.isNotEmpty ?? false) {
-							Markdown(mr.description!)
+							Markdown(mr.description!.emojized())
+								.markdownTheme(.gitHub)
 						}
 						
 						HStack {
@@ -265,15 +269,15 @@ struct MergeRequestView: View {
 						)
 						
 						/* DisclosureGroup(
-							content: {
-								Text("Commits")
-								Text("Changes")
-								Text("Diffs")
-							},
-							label: {
-								Label("Manage", systemImage: "filemenu.and.selection")
-							}
-						) */
+						 content: {
+						 Text("Commits")
+						 Text("Changes")
+						 Text("Diffs")
+						 },
+						 label: {
+						 Label("Manage", systemImage: "filemenu.and.selection")
+						 }
+						 ) */
 						
 						if ((mr.labels?.nodes?.count ?? 0) > 0) {
 							Label(title: {
@@ -281,7 +285,7 @@ struct MergeRequestView: View {
 									HStack {
 										ForEach(mr.labels!.nodes!, id: \.self) { maybeLabel in
 											if let label = maybeLabel {
-												Pill(
+												PillView(
 													label.title,
 													bgColor: Color(hex: label.color),
 													fgColor: Color(hex: label.textColor)
@@ -323,11 +327,11 @@ struct MergeRequestView: View {
 								if (mr.approved) {
 									Button("Revoke approval", systemImage: "person.fill.xmark") {
 										// TODO: Implement
-									}
+									}.tint(.red)
 								} else {
 									Button("Approve", systemImage: "person.fill.checkmark") {
 										// TODO: Implement
-									}
+									}.tint(.green)
 								}
 							}
 							
@@ -391,8 +395,18 @@ struct MergeRequestView: View {
 								)
 								RoundIconButton("Comment", icon: "arrow.up") {
 									// TODO: Save note
-									newNoteContent = ""
-								}
+									if newNoteContent.isEmpty {
+										Haptics.shared.notify(.error)
+										newNoteError = true
+									} else {
+										Haptics.shared.notify(.success)
+										newNoteContent = ""
+									}
+								}.alert("Failed to create new note", isPresented: $newNoteError, actions: {
+									Button("OK") {
+										newNoteError = false
+									}
+								})
 							}
 						}
 						
@@ -429,6 +443,6 @@ struct MergeRequestView: View {
 
 #Preview {
 	NavigationStack {
-		MergeRequestView(fullPath: "felix-schindler/gitlab-ios", iid: "1")
+		MergeRequestLoader(fullPath: "felix-schindler/gitlab-ios", iid: "1")
 	}
 }

@@ -7,7 +7,7 @@ public class IssueQuery: GraphQLQuery {
   public static let operationName: String = "Issue"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Issue($fullPath: ID!, $iid: String!) { project(fullPath: $fullPath) { __typename avatarUrl issue(iid: $iid) { __typename iid title description reference(full: true) state weight dueDate blockedByIssues { __typename nodes { __typename iid } } createdAt webUrl upvotes downvotes userNotesCount author { __typename avatarUrl name username } userPermissions { __typename updateIssue createNote } assignees { __typename nodes { __typename avatarUrl username } } labels { __typename nodes { __typename title color textColor } } milestone { __typename iid title } humanTimeEstimate humanTotalTimeSpent notes { __typename nodes { __typename id author { __typename avatarUrl username } maxAccessLevelOfAuthor createdAt body system internal resolved updatedAt systemNoteIconName systemNoteMetadata { __typename id } } } } } }"#
+      #"query Issue($fullPath: ID!, $iid: String!) { project(fullPath: $fullPath) { __typename avatarUrl issue(iid: $iid) { __typename iid title description reference(full: true) state weight dueDate blockedByIssues { __typename nodes { __typename iid } } createdAt webUrl upvotes downvotes userNotesCount author { __typename avatarUrl name username } userPermissions { __typename updateIssue createNote } assignees { __typename nodes { __typename avatarUrl username } } labels { __typename nodes { __typename title color textColor } } milestone { __typename iid title } humanTimeEstimate humanTotalTimeSpent notes { __typename nodes { __typename id author { __typename avatarUrl username } maxAccessLevelOfAuthor body system systemNoteIconName createdAt updatedAt } } } } }"#
     ))
 
   public var fullPath: ID
@@ -336,14 +336,11 @@ public class IssueQuery: GraphQLQuery {
               .field("id", GitLabAPI.NoteID.self),
               .field("author", Author?.self),
               .field("maxAccessLevelOfAuthor", String?.self),
-              .field("createdAt", GitLabAPI.Time.self),
               .field("body", String.self),
               .field("system", Bool.self),
-              .field("internal", Bool?.self),
-              .field("resolved", Bool.self),
-              .field("updatedAt", GitLabAPI.Time.self),
               .field("systemNoteIconName", String?.self),
-              .field("systemNoteMetadata", SystemNoteMetadata?.self),
+              .field("createdAt", GitLabAPI.Time.self),
+              .field("updatedAt", GitLabAPI.Time.self),
             ] }
 
             /// ID of the note.
@@ -352,22 +349,16 @@ public class IssueQuery: GraphQLQuery {
             public var author: Author? { __data["author"] }
             /// Max access level of the note author in the project.
             public var maxAccessLevelOfAuthor: String? { __data["maxAccessLevelOfAuthor"] }
-            /// Timestamp of the note creation.
-            public var createdAt: GitLabAPI.Time { __data["createdAt"] }
             /// Content of the note.
             public var body: String { __data["body"] }
             /// Indicates whether this note was created by the system or by a user.
             public var system: Bool { __data["system"] }
-            /// Indicates if this note is internal.
-            public var `internal`: Bool? { __data["internal"] }
-            /// Indicates if the object is resolved.
-            public var resolved: Bool { __data["resolved"] }
-            /// Timestamp of the note's last activity.
-            public var updatedAt: GitLabAPI.Time { __data["updatedAt"] }
             /// Name of the icon corresponding to a system note.
             public var systemNoteIconName: String? { __data["systemNoteIconName"] }
-            /// Metadata for the given note if it is a system note.
-            public var systemNoteMetadata: SystemNoteMetadata? { __data["systemNoteMetadata"] }
+            /// Timestamp of the note creation.
+            public var createdAt: GitLabAPI.Time { __data["createdAt"] }
+            /// Timestamp of the note's last activity.
+            public var updatedAt: GitLabAPI.Time { __data["updatedAt"] }
 
             /// Project.Issue.Notes.Node.Author
             ///
@@ -387,23 +378,6 @@ public class IssueQuery: GraphQLQuery {
               public var avatarUrl: String? { __data["avatarUrl"] }
               /// Username of the user. Unique within this instance of GitLab.
               public var username: String { __data["username"] }
-            }
-
-            /// Project.Issue.Notes.Node.SystemNoteMetadata
-            ///
-            /// Parent Type: `SystemNoteMetadata`
-            public struct SystemNoteMetadata: GitLabAPI.SelectionSet {
-              public let __data: DataDict
-              public init(_dataDict: DataDict) { __data = _dataDict }
-
-              public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.SystemNoteMetadata }
-              public static var __selections: [ApolloAPI.Selection] { [
-                .field("__typename", String.self),
-                .field("id", GitLabAPI.SystemNoteMetadataID.self),
-              ] }
-
-              /// Global ID of the specific system note metadata.
-              public var id: GitLabAPI.SystemNoteMetadataID { __data["id"] }
             }
           }
         }

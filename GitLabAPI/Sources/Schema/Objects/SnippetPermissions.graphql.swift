@@ -4,8 +4,8 @@
 import ApolloAPI
 
 public extension Objects {
-  static let SystemNoteMetadata = ApolloAPI.Object(
-    typename: "SystemNoteMetadata",
+  static let SnippetPermissions = ApolloAPI.Object(
+    typename: "SnippetPermissions",
     implementedInterfaces: []
   )
 }

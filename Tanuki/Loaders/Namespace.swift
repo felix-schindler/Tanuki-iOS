@@ -51,7 +51,8 @@ struct Namespace: View {
 								.fontWeight(.bold)
 						}
 						if let description = namespace.description {
-							Markdown(description)
+							Markdown(description.emojized())
+								.markdownTheme(.gitHub)
 						}
 					}.navigationTitle(namespace.fullName)
 				}
@@ -60,7 +61,7 @@ struct Namespace: View {
 					Section("Projects") {
 						ForEach(namespace.projects.nodes!, id: \.self) { maybeProject in
 							if let project = maybeProject {
-								NavigationLink(destination: Project(fullPath: project.fullPath), label: {
+								NavigationLink(destination: ProjectLoader(fullPath: project.fullPath), label: {
 									HStack {
 										if let url = URL.fromAvatar(project.avatarUrl) {
 											AvatarImage(url, size: .small)
