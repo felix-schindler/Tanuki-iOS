@@ -11,17 +11,17 @@ import SwiftUI
 
 struct NamespaceLoader: View {
 	private let fullPath: String
-	
+
 	@State
 	private var namespace: GitLabAPI.NamespaceQuery.Data.Namespace? = nil
-	
+
 	@State
 	private var loadFailed = false
-	
+
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
-	
+
 	private func loadNamespace() {
 		Network.shared.apollo.fetch(
 			query: NamespaceQuery(fullPath: self.fullPath)
@@ -36,14 +36,14 @@ struct NamespaceLoader: View {
 			}
 		}
 	}
-	
+
 	public var body: some View {
 		List {
 			if let namespace = self.namespace {
 				let showDetails =
-				(namespace.fullName != namespace.name
-				 || !(namespace.description?.isEmpty ?? true))
-				
+					(namespace.fullName != namespace.name
+						|| !(namespace.description?.isEmpty ?? true))
+
 				if showDetails {
 					VStack {
 						if namespace.fullName != namespace.name {
@@ -57,7 +57,7 @@ struct NamespaceLoader: View {
 						}
 					}.navigationTitle(namespace.fullName)
 				}
-				
+
 				if (namespace.projects.nodes?.count ?? 0) > 0 {
 					Section("Projects") {
 						ForEach(namespace.projects.nodes!, id: \.self) {

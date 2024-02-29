@@ -105,6 +105,7 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "GroupConnection": return GitLabAPI.Objects.GroupConnection
     case "AccessLevel": return GitLabAPI.Objects.AccessLevel
     case "GroupPermissions": return GitLabAPI.Objects.GroupPermissions
+    case "UserStatus": return GitLabAPI.Objects.UserStatus
     case "IssueConnection": return GitLabAPI.Objects.IssueConnection
     case "IssuePermissions": return GitLabAPI.Objects.IssuePermissions
     case "UserCoreConnection": return GitLabAPI.Objects.UserCoreConnection

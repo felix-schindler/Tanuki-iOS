@@ -107,7 +107,7 @@ struct HomeView: View {
 								Text("Groups")
 							},
 							icon: {
-								Image(systemName: "person.3")
+								Image(systemName: "scale.3d")
 									.foregroundStyle(.red)
 							})
 					}

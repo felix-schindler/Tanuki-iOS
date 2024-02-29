@@ -1,0 +1,32 @@
+query CurrentUser {
+  currentUser {
+    avatarUrl
+    name
+    username
+    
+    bot
+    pronouns
+    state
+    
+    status {
+      emoji
+      message
+    }
+
+    bio
+    location
+    jobTitle
+    organization
+    createdAt
+    
+    # Contact
+    discord
+    twitter
+    linkedin
+    publicEmail
+
+    groupCount
+	
+    webUrl
+  }
+}

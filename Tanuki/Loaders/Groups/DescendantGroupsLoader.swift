@@ -117,7 +117,7 @@ struct DescendantGroupsLoader: View {
 				}
 			} else {
 				VStack(alignment: .center) {
-					Image(systemName: "person.3")
+					Image(systemName: "scale.3d")
 						.resizable()
 						.scaledToFit()
 						.foregroundStyle(.red)

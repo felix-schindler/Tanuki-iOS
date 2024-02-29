@@ -133,3 +133,37 @@ extension StarredProjectsQuery.Data.CurrentUser.StarredProjects.Node:
 	SmallProject
 {
 }
+
+// MARK: - Users
+struct UserStatus {
+	let emoji: String?
+	let message: String?
+}
+
+protocol User {
+	var avatarUrl: String? { get }
+	var name: String { get }
+	var username: String { get }
+	var bot: Bool { get }
+	var pronouns: String? { get }
+	var state: GraphQLEnum<GitLabAPI.UserState> { get }
+	var _status: UserStatus? { get }
+	var bio: String? { get }
+	var location: String? { get }
+	var jobTitle: String? { get }
+	var organization: String? { get }
+	var discord: String? { get }
+	var twitter: String? { get }
+	var linkedin: String? { get }
+	var publicEmail: String? { get }
+	var groupCount: Int? { get }
+	var createdAt: String? { get }
+	var webUrl: String { get }
+}
+
+extension CurrentUserQuery.Data.CurrentUser: User {
+	var _status: UserStatus? {
+		guard let statusData = status else { return nil }
+		return UserStatus(emoji: statusData.emoji, message: statusData.message)
+	}
+}

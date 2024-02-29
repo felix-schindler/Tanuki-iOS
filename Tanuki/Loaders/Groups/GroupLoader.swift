@@ -120,7 +120,7 @@ struct GroupLoader: View {
 											String(group.descendantGroupsCount))
 									},
 									icon: {
-										Image(systemName: "person.3")
+										Image(systemName: "scale.3d")
 											.foregroundStyle(.red)
 									}
 								)
@@ -178,7 +178,7 @@ struct GroupLoader: View {
 				}.navigationTitle(group.path)
 			} else {
 				VStack(alignment: .center) {
-					Image(systemName: "person.3")
+					Image(systemName: "scale.3d")
 						.resizable()
 						.scaledToFit()
 						.foregroundStyle(.red)

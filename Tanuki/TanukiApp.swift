@@ -11,8 +11,17 @@ import SwiftUI
 struct TanukiApp: App {
 	public var body: some Scene {
 		WindowGroup {
-			NavigationStack {
-				HomeView()
+			TabView {
+				NavigationStack {
+					HomeView()
+				}.tabItem {
+					Label("Home", systemImage: "house")
+				}.tag(0)
+				NavigationStack {
+					CurrentUserLoader()
+				}.tabItem {
+					Label("Account", systemImage: "person")
+				}.tag(1)
 			}
 		}
 	}

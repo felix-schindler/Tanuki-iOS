@@ -11,23 +11,23 @@ import SwiftUI
 
 struct SnippetLoader: View {
 	private let id: String
-
+	
 	@State
 	private var snippet: SnippetQuery.Data.Snippets.Node?
-
+	
 	@State
 	private var loadFailed = false
-
+	
 	@State
 	private var newNoteContent = ""
-
+	
 	@State
 	private var newNoteError = false
-
+	
 	init(id: String) {
 		self.id = id
 	}
-
+	
 	private func loadSnippet() {
 		Network.shared.apollo.fetch(query: SnippetQuery(id: self.id)) {
 			result in
@@ -41,103 +41,103 @@ struct SnippetLoader: View {
 			}
 		}
 	}
-
-	#if !os(macOS)
-		public var body: some View {
-			main.navigationBarTitleDisplayMode(.inline)
-		}
-	#else
-		public var body: some View {
-			main
-		}
-	#endif
-
+	
+#if !os(macOS)
+	public var body: some View {
+		main.navigationBarTitleDisplayMode(.inline)
+	}
+#else
+	public var body: some View {
+		main
+	}
+#endif
+	
 	var main: some View {
 		List {
 			if let snippet = self.snippet {
 				VStack(alignment: .leading) {
 					HStack {
-						ScrollView(.horizontal) {
-							HStack(spacing: 5) {
-								if let author = snippet.author {
-									NavigationLink(
-										destination: NamespaceLoader(
-											fullPath: author.username),
-										label: {
-											Label(
-												title: {
-													Text(
-														author.name.isNotEmpty
-															? author.name
-															: author.username
+						Text(snippet.title.emojized())
+							.font(.title3)
+							.fontWeight(.medium)
+							.padding(.bottom, 1)
+						Spacer()
+						Text(Date.fromToString(snippet.createdAt))
+							.font(.footnote)
+					}
+
+					ScrollView(.horizontal) {
+						HStack {
+							if let author = snippet.author {
+								NavigationLink(
+									destination: NamespaceLoader(
+										fullPath: author.username),
+									label: {
+										Label(
+											title: {
+												Text(
+													author.name.isNotEmpty
+													? author.name
+													: author.username
+												)
+											},
+											icon: {
+												if let url = URL.fromAvatar(
+													author.avatarUrl)
+												{
+													AvatarImage(
+														url, size: .tiny)
+												} else {
+													Image(
+														systemName: "person"
 													)
-												},
-												icon: {
-													if let url = URL.fromAvatar(
-														author.avatarUrl)
-													{
-														AvatarImage(
-															url, size: .tiny)
-													} else {
-														Image(
-															systemName: "person"
-														)
-													}
 												}
-											)
-										}
-									)
-									.buttonStyle(.plain)
-									.tint(.primary)
-									.padding(.horizontal, 8)
-									.padding(.vertical, 3)
-									.background(Color(.systemGray5))
-									.foregroundStyle(.primary)
-									.cornerRadius(5)
-								}
-								VisibilityIcon(
-									snippet.visibilityLevel.rawValue,
-									showText: true
+											}
+										)
+									}
 								)
+								.buttonStyle(.plain)
+								.tint(.primary)
 								.padding(.horizontal, 8)
 								.padding(.vertical, 3)
 								.background(Color(.systemGray5))
 								.foregroundStyle(.primary)
 								.cornerRadius(5)
 							}
-						}
-
-						Spacer()
-						Text(Date.fromToString(snippet.createdAt))
-					}.font(.footnote)
-
-					Text(snippet.title.emojized())
-						.font(.title3)
-						.fontWeight(.medium)
-						.padding(.bottom, 1)
-
+							VisibilityIcon(
+								snippet.visibilityLevel.rawValue,
+								showText: true
+							)
+							.padding(.horizontal, 8)
+							.padding(.vertical, 3)
+							.background(Color(.systemGray5))
+							.foregroundStyle(.primary)
+							.cornerRadius(5)
+						}.font(.footnote)
+					}
+					
 					if let description = snippet.description {
 						Markdown(description.emojized())
 							.markdownTheme(.gitHub)
 					}
 				}
-
+				
 				if (snippet.blobs?.nodes?.count ?? 0) > 0 {
 					ForEach(snippet.blobs!.nodes!, id: \.self?.name) { file in
 						if file != nil && file!.rawPlainData != nil {
 							Section("\(file!.name ?? "File") (\(file!.size) B)")
 							{
 								Markdown(
-									"""
-									```txt
-									\(file!.rawPlainData!.trimmingCharacters(in: .whitespacesAndNewlines))
-									```
-									""")
+		 """
+		 ```txt
+		 \(file!.rawPlainData!.trimmingCharacters(in: .whitespacesAndNewlines))
+		 ```
+		 """)
 							}
 						}
 					}
 				}
-
+				
 				if let notes = snippet.notes.nodes {
 					Section("Notes") {
 						if snippet.userPermissions.createNote {
@@ -166,7 +166,7 @@ struct SnippetLoader: View {
 									})
 							}
 						}
-
+						
 						ForEach(notes, id: \.self?.id) { maybeNote in
 							if let note = maybeNote {
 								NoteView(note)
@@ -200,11 +200,11 @@ struct SnippetLoader: View {
 								ShareButton(url)
 							}
 						}
-
+						
 						let showCloneSection =
-							(snippet.httpUrlToRepo != nil
-								|| snippet.sshUrlToRepo != nil)
-
+						(snippet.httpUrlToRepo != nil
+						 || snippet.sshUrlToRepo != nil)
+						
 						if showCloneSection {
 							Section("Clone Code") {
 								if let httpUrl = snippet.httpUrlToRepo {
@@ -215,7 +215,7 @@ struct SnippetLoader: View {
 										UIPasteboard.general.string = httpUrl
 									}
 								}
-
+								
 								if let sshUrl = snippet.sshUrlToRepo {
 									Button(
 										"Copy SSH url",
@@ -236,7 +236,7 @@ struct SnippetLoader: View {
 				.buttonStyle(.bordered)
 				.clipShape(Circle())
 			}
-
+			
 			if let url = URL(string: snippet?.webUrl ?? "") {
 				ShareButton(url)
 			}
