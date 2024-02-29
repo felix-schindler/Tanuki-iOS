@@ -4,29 +4,17 @@ query Group($fullPath: ID!) {
     
     avatarUrl
     name
+    path
     fullName
-    fullPath
     visibility
     description
     
-    # Link to boards
-    # Link to issues
-    # Link to custom emojis
-    # Link to epics
-    # Link to groups
     descendantGroupsCount
-    # Link to members
     groupMembersCount
-    # Link to labels
-    # Link to merge requests
-    # Link to milestones
-    # Link to projects
     projectsCount
-    # Link to releases
-    # Link to runners
-    # Link to timelogs
-        
-    requestAccessEnabled
+	
+	requestAccessEnabled
+    webUrl
     
     maxAccessLevel {
       stringValue

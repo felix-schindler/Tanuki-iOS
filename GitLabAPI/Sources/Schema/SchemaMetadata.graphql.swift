@@ -34,20 +34,17 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "MergeRequestParticipant": return GitLabAPI.Objects.MergeRequestParticipant
     case "MergeRequestReviewer": return GitLabAPI.Objects.MergeRequestReviewer
     case "UserCore": return GitLabAPI.Objects.UserCore
-    case "MergeRequestConnection": return GitLabAPI.Objects.MergeRequestConnection
-    case "MergeRequest": return GitLabAPI.Objects.MergeRequest
-    case "BoardEpic": return GitLabAPI.Objects.BoardEpic
-    case "Epic": return GitLabAPI.Objects.Epic
+    case "SnippetConnection": return GitLabAPI.Objects.SnippetConnection
+    case "Snippet": return GitLabAPI.Objects.Snippet
     case "AbuseReport": return GitLabAPI.Objects.AbuseReport
     case "AlertManagementAlert": return GitLabAPI.Objects.AlertManagementAlert
-    case "Commit": return GitLabAPI.Objects.Commit
+    case "BoardEpic": return GitLabAPI.Objects.BoardEpic
     case "Design": return GitLabAPI.Objects.Design
     case "DesignAtVersion": return GitLabAPI.Objects.DesignAtVersion
+    case "Epic": return GitLabAPI.Objects.Epic
     case "EpicIssue": return GitLabAPI.Objects.EpicIssue
     case "Issue": return GitLabAPI.Objects.Issue
-    case "WorkItem": return GitLabAPI.Objects.WorkItem
-    case "Snippet": return GitLabAPI.Objects.Snippet
-    case "Vulnerability": return GitLabAPI.Objects.Vulnerability
+    case "MergeRequest": return GitLabAPI.Objects.MergeRequest
     case "WorkItemWidgetCurrentUserTodos": return GitLabAPI.Objects.WorkItemWidgetCurrentUserTodos
     case "WorkItemWidgetAssignees": return GitLabAPI.Objects.WorkItemWidgetAssignees
     case "WorkItemWidgetAwardEmoji": return GitLabAPI.Objects.WorkItemWidgetAwardEmoji
@@ -71,7 +68,9 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "WorkItemWidgetTestReports": return GitLabAPI.Objects.WorkItemWidgetTestReports
     case "WorkItemWidgetTimeTracking": return GitLabAPI.Objects.WorkItemWidgetTimeTracking
     case "WorkItemWidgetWeight": return GitLabAPI.Objects.WorkItemWidgetWeight
-    case "SnippetConnection": return GitLabAPI.Objects.SnippetConnection
+    case "Commit": return GitLabAPI.Objects.Commit
+    case "WorkItem": return GitLabAPI.Objects.WorkItem
+    case "Vulnerability": return GitLabAPI.Objects.Vulnerability
     case "SnippetPermissions": return GitLabAPI.Objects.SnippetPermissions
     case "SnippetBlobConnection": return GitLabAPI.Objects.SnippetBlobConnection
     case "SnippetBlob": return GitLabAPI.Objects.SnippetBlob
@@ -86,6 +85,7 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "Label": return GitLabAPI.Objects.Label
     case "Milestone": return GitLabAPI.Objects.Milestone
     case "Iteration": return GitLabAPI.Objects.Iteration
+    case "MergeRequestConnection": return GitLabAPI.Objects.MergeRequestConnection
     case "ProjectMemberConnection": return GitLabAPI.Objects.ProjectMemberConnection
     case "ProjectMember": return GitLabAPI.Objects.ProjectMember
     case "GroupMember": return GitLabAPI.Objects.GroupMember

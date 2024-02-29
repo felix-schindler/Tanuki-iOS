@@ -1,5 +1,5 @@
 //
-//  UserGroupsLoader.swift
+//  DescendantGroupsLoader.swift
 //  Tanuki
 //
 //  Created by Felix Schindler on 29.02.24.
@@ -8,19 +8,28 @@
 import GitLabAPI
 import SwiftUI
 
-struct UserGroupsLoader: View {
+struct DescendantGroupsLoader: View {
+	private var fullPath: String
+
 	@State
-	private var groups: [UserGroupsQuery.Data.CurrentUser.Groups.Node?]?
+	private var groups:
+		[DescendantGroupsQuery.Data.Group.DescendantGroups.Node?]?
 
 	@State
 	private var loadFailed = false
 
+	init(fullPath: String) {
+		self.fullPath = fullPath
+	}
+
 	private func loadGroups() {
-		Network.shared.apollo.fetch(query: UserGroupsQuery()) { result in
+		Network.shared.apollo.fetch(
+			query: DescendantGroupsQuery(fullPath: self.fullPath)
+		) { result in
 			switch result {
 			case .success(let graphQLResult):
-				print("Success! Setting merge groups...")
-				groups = graphQLResult.data?.currentUser?.groups?.nodes
+				print("Success! Setting groups...")
+				groups = graphQLResult.data?.group?.descendantGroups?.nodes
 			case .failure(let error):
 				print("Failure! Error: \(error)")
 				loadFailed = true
@@ -32,7 +41,7 @@ struct UserGroupsLoader: View {
 		List {
 			if let groups = self.groups {
 				if groups.isEmpty {
-					Text("There are no groups")
+					Text("There are no descendant groups of \(self.fullPath)")
 				} else {
 					ForEach(groups, id: \.self?.fullPath) { maybeGroup in
 						if let group = maybeGroup {
@@ -114,12 +123,12 @@ struct UserGroupsLoader: View {
 			loadGroups()
 		}.refreshable {
 			loadGroups()
-		}.navigationTitle("Groups")
+		}.navigationTitle("Descendant groups")
 	}
 }
 
 #Preview {
 	NavigationStack {
-		UserGroupsLoader()
+		DescendantGroupsLoader(fullPath: "gitlab-org")
 	}
 }

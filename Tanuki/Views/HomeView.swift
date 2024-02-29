@@ -98,7 +98,7 @@ struct HomeView: View {
 							})
 					}
 				)
-				
+
 				NavigationLink(
 					destination: UserGroupsLoader(),
 					label: {

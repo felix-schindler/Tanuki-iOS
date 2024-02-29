@@ -7,7 +7,7 @@ public class ProjectQuery: GraphQLQuery {
   public static let operationName: String = "Project"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled requestAccessEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt namespace { __typename name fullPath } repository { __typename rootRef blobs(paths: ["README", "README.txt", "README.md"]) { __typename nodes { __typename rawTextBlob } } tree { __typename lastCommit { __typename title shortId authorName authoredDate signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue pushCode forkProject requestAccess } } }"#
+      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt namespace { __typename name fullPath } repository { __typename rootRef blobs(paths: ["README", "README.txt", "README.md"]) { __typename nodes { __typename rawTextBlob } } tree { __typename lastCommit { __typename title shortId authorName authoredDate signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue pushCode forkProject requestAccess } } }"#
     ))
 
   public var fullPath: ID
@@ -51,7 +51,6 @@ public class ProjectQuery: GraphQLQuery {
         .field("openIssuesCount", Int?.self),
         .field("mergeRequestsEnabled", Bool?.self),
         .field("jobsEnabled", Bool?.self),
-        .field("requestAccessEnabled", Bool?.self),
         .field("openMergeRequestsCount", Int?.self),
         .field("webUrl", String?.self),
         .field("httpUrlToRepo", String?.self),
@@ -85,8 +84,6 @@ public class ProjectQuery: GraphQLQuery {
       public var mergeRequestsEnabled: Bool? { __data["mergeRequestsEnabled"] }
       /// Indicates if CI/CD pipeline jobs are enabled for the current user.
       public var jobsEnabled: Bool? { __data["jobsEnabled"] }
-      /// Indicates if users can request member access to the project.
-      public var requestAccessEnabled: Bool? { __data["requestAccessEnabled"] }
       /// Number of open merge requests for the project.
       public var openMergeRequestsCount: Int? { __data["openMergeRequestsCount"] }
       /// Web URL of the project.

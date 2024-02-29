@@ -1,0 +1,17 @@
+query DescendantGroups($fullPath: ID!) {
+  group(fullPath:$fullPath) {
+    descendantGroups {
+      nodes {
+        avatarUrl
+        name
+        fullPath
+        visibility
+        groupMembersCount
+        projectsCount
+        maxAccessLevel {
+          stringValue
+        }
+      }
+    }
+  }
+}
