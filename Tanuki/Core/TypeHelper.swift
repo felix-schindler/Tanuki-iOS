@@ -126,6 +126,9 @@ extension UserMembershipProjectsQuery.Data.CurrentUser.ProjectMemberships.Node
 {
 }
 
+extension GroupProjectsQuery.Data.Group.Projects.Node: SmallProject {
+}
+
 extension StarredProjectsQuery.Data.CurrentUser.StarredProjects.Node:
 	SmallProject
 {

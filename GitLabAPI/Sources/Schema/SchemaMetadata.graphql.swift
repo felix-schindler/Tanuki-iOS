@@ -86,6 +86,7 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "Milestone": return GitLabAPI.Objects.Milestone
     case "Iteration": return GitLabAPI.Objects.Iteration
     case "MergeRequestConnection": return GitLabAPI.Objects.MergeRequestConnection
+    case "Group": return GitLabAPI.Objects.Group
     case "ProjectMemberConnection": return GitLabAPI.Objects.ProjectMemberConnection
     case "ProjectMember": return GitLabAPI.Objects.ProjectMember
     case "GroupMember": return GitLabAPI.Objects.GroupMember
@@ -102,7 +103,6 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "RepositoryLanguage": return GitLabAPI.Objects.RepositoryLanguage
     case "ProjectPermissions": return GitLabAPI.Objects.ProjectPermissions
     case "GroupConnection": return GitLabAPI.Objects.GroupConnection
-    case "Group": return GitLabAPI.Objects.Group
     case "AccessLevel": return GitLabAPI.Objects.AccessLevel
     case "GroupPermissions": return GitLabAPI.Objects.GroupPermissions
     case "IssueConnection": return GitLabAPI.Objects.IssueConnection

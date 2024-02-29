@@ -89,7 +89,7 @@ struct IssueLoader: View {
 									cornerRadius: 5
 								)
 								NavigationLink(
-									destination: Namespace(
+									destination: NamespaceLoader(
 										fullPath: issue.author.username),
 									label: {
 										Label(
@@ -222,7 +222,7 @@ struct IssueLoader: View {
 									{ maybeUser in
 										if let user = maybeUser {
 											NavigationLink(
-												destination: Namespace(
+												destination: NamespaceLoader(
 													fullPath: user.username),
 												label: {
 													HStack {

@@ -116,7 +116,7 @@ struct ProjectLoader: View {
 								if let namespace = project.namespace {
 									// TODO: How do I know whether the namespace is a user or group
 									NavigationLink(
-										destination: Namespace(
+										destination: NamespaceLoader(
 											fullPath: namespace.fullPath),
 										label: {
 											Label(

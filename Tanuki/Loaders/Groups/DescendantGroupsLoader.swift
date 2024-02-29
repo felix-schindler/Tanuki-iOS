@@ -37,7 +37,17 @@ struct DescendantGroupsLoader: View {
 		}
 	}
 
-	var body: some View {
+	#if !os(macOS)
+		public var body: some View {
+			main.navigationBarTitleDisplayMode(.large)
+		}
+	#else
+		public var body: some View {
+			main
+		}
+	#endif
+
+	var main: some View {
 		List {
 			if let groups = self.groups {
 				if groups.isEmpty {

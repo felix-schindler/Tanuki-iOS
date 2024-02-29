@@ -61,7 +61,7 @@ struct SnippetLoader: View {
 							HStack(spacing: 5) {
 								if let author = snippet.author {
 									NavigationLink(
-										destination: Namespace(
+										destination: NamespaceLoader(
 											fullPath: author.username),
 										label: {
 											Label(

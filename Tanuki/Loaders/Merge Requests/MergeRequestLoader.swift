@@ -122,7 +122,7 @@ struct MergeRequestLoader: View {
 									if let author = mr.author {
 										ScrollView(.horizontal) {
 											NavigationLink(
-												destination: Namespace(
+												destination: NamespaceLoader(
 													fullPath: author.username),
 												label: {
 													Label(
@@ -231,7 +231,7 @@ struct MergeRequestLoader: View {
 										maybeUser in
 										if let user = maybeUser {
 											NavigationLink(
-												destination: Namespace(
+												destination: NamespaceLoader(
 													fullPath: user.username),
 												label: {
 													HStack {
@@ -274,7 +274,7 @@ struct MergeRequestLoader: View {
 										maybeUser in
 										if let user = maybeUser {
 											NavigationLink(
-												destination: Namespace(
+												destination: NamespaceLoader(
 													fullPath: user.username),
 												label: {
 													HStack {

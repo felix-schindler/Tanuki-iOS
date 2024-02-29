@@ -89,16 +89,23 @@ struct GroupLoader: View {
 
 				Section {
 					HStack {
-						Label(
-							title: {
-								Text("Projects")
-								Spacer()
-								Text(String(group.projectsCount))
-							},
-							icon: {
-								Image(systemName: "app.gift.fill")
-									.foregroundStyle(.gray)
-							})
+						NavigationLink(
+							destination: GroupProjectsLoader(
+								fullPath: self.fullPath),
+							label: {
+								Label(
+									title: {
+										Text("Projects")
+										Spacer()
+										Text(String(group.projectsCount))
+									},
+									icon: {
+										Image(systemName: "app.gift.fill")
+											.foregroundStyle(.gray)
+									}
+								)
+							}
+						)
 					}
 					HStack {
 						NavigationLink(
