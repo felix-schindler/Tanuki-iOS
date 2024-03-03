@@ -35,7 +35,9 @@ struct UserLoader: View {
 		}.refreshable {
 			await loadUserAndStatus()
 		}.toolbar {
-			ShareButton(URL(string: user!.webUrl)!)
+			if let url = URL(string: user?.webUrl ?? "") {
+				ShareButton(url)
+			}
 		}.navigationTitle("User")
 	}
 	
