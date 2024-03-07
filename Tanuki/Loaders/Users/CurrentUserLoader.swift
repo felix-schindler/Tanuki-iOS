@@ -15,6 +15,9 @@ struct CurrentUserLoader: View {
 	@State
 	private var loadFailed = false
 
+	@State
+	private var showSettings = false
+
 	private func loadUser() {
 		Network.shared.apollo.fetch(
 			query: CurrentUserQuery()
@@ -35,12 +38,18 @@ struct CurrentUserLoader: View {
 			if let user {
 				UserView(user)
 			} else {
-				if loadFailed {
-					Text(LOAD_FAILED)
-				} else {
-					ProgressView("Loading current user")
-						.frame(maxWidth: .infinity, alignment: .center)
-				}
+				VStack {
+					Image(systemName: "person")
+						.resizable()
+						.scaledToFit()
+						.foregroundStyle(Color.accentColor)
+						.frame(width: 50, height: 50)
+					if loadFailed {
+						Text(loadFailedMsg)
+					} else {
+						ProgressView("Loading current user...")
+					}
+				}.frame(maxWidth: .infinity, minHeight: 100)
 			}
 		}.onAppear {
 			loadUser()
@@ -50,6 +59,13 @@ struct CurrentUserLoader: View {
 			if let url = URL(string: user?.webUrl ?? "") {
 				ShareButton(url)
 			}
+
+			RoundIconButton("Show settings", icon: "gear") {
+				showSettings = true
+				Haptics.shared.play(.light)
+			}
+		}.sheet(isPresented: $showSettings) {
+			SettingsView()
 		}.navigationTitle("Account")
 	}
 }

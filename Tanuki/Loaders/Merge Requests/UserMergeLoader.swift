@@ -44,8 +44,7 @@ struct UserMergeLoader: View {
 	private func loadMergeRequests() {
 		switch self.userRequestType {
 		case .assgined:
-			Network.shared.apollo.fetch(query: UserAssignedMergeRequestsQuery())
-			{ result in
+			Network.shared.apollo.fetch(query: UserAssignedMergeRequestsQuery()) { result in
 				switch result {
 				case .success(let graphQLResult):
 					print("Success! Setting merge requests...")
@@ -59,8 +58,7 @@ struct UserMergeLoader: View {
 			}
 			break
 		case .authored:
-			Network.shared.apollo.fetch(query: UserAuthoredMergeRequestsQuery())
-			{ result in
+			Network.shared.apollo.fetch(query: UserAuthoredMergeRequestsQuery()) { result in
 				switch result {
 				case .success(let graphQLResult):
 					print("Success! Setting merge requests...")
@@ -97,7 +95,7 @@ struct UserMergeLoader: View {
 		List {
 			if mergeRequests != nil {
 				if mergeRequests!.isEmpty {
-					VStack(alignment: .center) {
+					VStack {
 						Image(systemName: "arrow.triangle.pull")
 							.resizable()
 							.scaledToFit()
@@ -113,13 +111,13 @@ struct UserMergeLoader: View {
 					}
 				}
 			} else {
-				VStack(alignment: .center) {
+				VStack {
 					Image(systemName: "arrow.triangle.pull")
 						.resizable()
 						.scaledToFit()
 						.frame(width: 50, height: 50)
 					if loadFailed {
-						Text(LOAD_FAILED)
+						Text(loadFailedMsg)
 					} else {
 						ProgressView("Loading merge requests")
 					}
@@ -130,5 +128,11 @@ struct UserMergeLoader: View {
 		}.refreshable {
 			loadMergeRequests()
 		}.navigationTitle(self.navTitle)
+	}
+}
+
+#Preview {
+	NavigationStack {
+		UserMergeLoader(.authored)
 	}
 }

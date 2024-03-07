@@ -7,7 +7,7 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
   public static let operationName: String = "UserAuthoredMergeRequests"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query UserAuthoredMergeRequests { currentUser { __typename authoredMergeRequests(state: opened) { __typename nodes { __typename project { __typename fullPath } iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename name } createdAt webUrl } } } }"#
+      #"query UserAuthoredMergeRequests { currentUser { __typename authoredMergeRequests(state: opened) { __typename nodes { __typename project { __typename fullPath } iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename avatarUrl name username } createdAt webUrl } } } }"#
     ))
 
   public init() {}
@@ -129,11 +129,17 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
             public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAuthor }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
+              .field("avatarUrl", String?.self),
               .field("name", String.self),
+              .field("username", String.self),
             ] }
 
+            /// URL of the user's avatar.
+            public var avatarUrl: String? { __data["avatarUrl"] }
             /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
             public var name: String { __data["name"] }
+            /// Username of the user. Unique within this instance of GitLab.
+            public var username: String { __data["username"] }
           }
         }
       }

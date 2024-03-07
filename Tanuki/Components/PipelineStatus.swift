@@ -60,15 +60,11 @@ struct PipelineStatus: View {
 			.controlSize(.mini)
 		}.sheet(isPresented: $showInfo) {
 			VStack(alignment: .leading) {
-				HStack {
-					Text("Pipeline status")
-						.font(.title)
-						.fontWeight(.bold)
-					Spacer()
-					CloseButton {
+				PopupHeader(
+					title: "Pipeline status",
+					onClose: {
 						showInfo = false
-					}
-				}
+					})
 				Text("The current Pipeline status is \"\(state.rawValue)\"")
 				Spacer()
 			}
@@ -80,8 +76,7 @@ struct PipelineStatus: View {
 
 #Preview {
 	VStack {
-		ForEach(GraphQLEnum<GitLabAPI.PipelineStatusEnum>.allCases, id: \.self)
-		{ state in
+		ForEach(GraphQLEnum<GitLabAPI.PipelineStatusEnum>.allCases, id: \.self) { state in
 			PipelineStatus(state)
 		}
 	}

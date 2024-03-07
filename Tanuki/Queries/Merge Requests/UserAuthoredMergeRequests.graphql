@@ -13,7 +13,9 @@ query UserAuthoredMergeRequests {
         downvotes
         userNotesCount
         author {
+          avatarUrl
           name
+          username
         }
         createdAt
         webUrl

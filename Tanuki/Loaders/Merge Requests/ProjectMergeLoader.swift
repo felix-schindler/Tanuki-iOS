@@ -63,8 +63,7 @@ struct ProjectMergeLoader: View {
 							Text("There are no merge requests")
 						}.frame(maxWidth: .infinity, minHeight: 100)
 					} else {
-						ForEach(project.mergeRequests!.nodes!, id: \.self?.iid)
-						{ mergeRequest in
+						ForEach(project.mergeRequests!.nodes!, id: \.self?.iid) { mergeRequest in
 							if let mr = mergeRequest {
 								SmallMergeView(self.fullPath, mr)
 							}
@@ -73,7 +72,7 @@ struct ProjectMergeLoader: View {
 				}
 			} else if loadFailed {
 				VStack {
-					Text(LOAD_FAILED)
+					Text(loadFailedMsg)
 				}.frame(maxWidth: .infinity, minHeight: 100)
 			} else {
 				VStack {

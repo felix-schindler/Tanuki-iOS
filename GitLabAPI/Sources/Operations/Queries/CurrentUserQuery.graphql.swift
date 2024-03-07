@@ -7,7 +7,7 @@ public class CurrentUserQuery: GraphQLQuery {
   public static let operationName: String = "CurrentUser"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query CurrentUser { currentUser { __typename avatarUrl name username bot pronouns state status { __typename emoji message } bio location jobTitle organization createdAt discord twitter linkedin publicEmail groupCount webUrl } }"#
+      #"query CurrentUser { currentUser { __typename id avatarUrl name username bot pronouns state status { __typename emoji message } bio location jobTitle organization createdAt discord twitter linkedin publicEmail groupCount webUrl } }"#
     ))
 
   public init() {}
@@ -34,6 +34,7 @@ public class CurrentUserQuery: GraphQLQuery {
       public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
+        .field("id", GitLabAPI.ID.self),
         .field("avatarUrl", String?.self),
         .field("name", String.self),
         .field("username", String.self),
@@ -54,6 +55,8 @@ public class CurrentUserQuery: GraphQLQuery {
         .field("webUrl", String.self),
       ] }
 
+      /// ID of the user.
+      public var id: GitLabAPI.ID { __data["id"] }
       /// URL of the user's avatar.
       public var avatarUrl: String? { __data["avatarUrl"] }
       /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.

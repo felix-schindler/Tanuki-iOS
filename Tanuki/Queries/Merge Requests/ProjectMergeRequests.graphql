@@ -12,7 +12,9 @@ query ProjectMergeRequests($fullPath: ID!) {
         downvotes
         userNotesCount
         author {
+          avatarUrl
           name
+		  username
         }
         createdAt
         webUrl

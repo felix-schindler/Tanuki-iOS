@@ -1,0 +1,23 @@
+query GroupMilestones($fullPath: ID!) {
+  group(fullPath: $fullPath) {
+    milestones(state: active, sort: CREATED_DESC) {
+      nodes {
+        iid
+        state
+        title
+        description
+        
+        expired
+        startDate
+        dueDate
+        
+        stats {
+          closedIssuesCount
+          totalIssuesCount
+        }
+        
+        webPath
+      }
+    }
+  }
+}

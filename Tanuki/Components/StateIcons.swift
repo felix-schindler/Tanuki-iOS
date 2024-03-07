@@ -38,34 +38,83 @@ struct IssueStateHelper {
 			"smallcircle.circle"
 		}
 	}
+
+	public static func getIconByState(
+		_ state: GraphQLEnum<GitLabAPI.EpicState>
+	) -> String {
+		switch state {
+		case .opened:
+			"smallcircle.circle"
+		case .closed:
+			"minus.circle"
+		default:
+			"smallcircle.circle"
+		}
+	}
+
+	public static func getColorByState(
+		_ state: GraphQLEnum<GitLabAPI.EpicState>
+	) -> SwiftUI.Color {
+		switch state {
+		case .opened:
+			Color.green
+		case .closed:
+			Color.blue
+		default:
+			Color.primary
+		}
+	}
 }
 
 struct IssueStateIcon: View {
-	private let state: GraphQLEnum<GitLabAPI.IssueState>
+	private let state: String
 	private let icon: String
 	private let color: SwiftUI.Color
 
 	init(_ state: GraphQLEnum<GitLabAPI.IssueState>) {
-		self.state = state
+		self.state = state.rawValue
 
 		switch state {
 		case .opened:
 			icon = "smallcircle.circle"
 			color = Color.green
+			break
 		case .closed:
 			icon = "minus.circle"
 			color = Color.blue
+			break
 		case .locked:
 			icon = "lock.circle"
 			color = Color.secondary
+			break
 		default:
 			icon = "smallcircle.circle"
 			color = Color.primary
+			break
+		}
+	}
+
+	init(_ state: GraphQLEnum<GitLabAPI.EpicState>) {
+		self.state = state.rawValue
+
+		switch state {
+		case .opened:
+			icon = "smallcircle.circle"
+			color = Color.green
+			break
+		case .closed:
+			icon = "minus.circle"
+			color = Color.blue
+			break
+		default:
+			icon = "smallcircle.circle"
+			color = Color.primary
+			break
 		}
 	}
 
 	public var body: some View {
-		Label(self.state.rawValue, systemImage: self.icon)
+		Label(self.state, systemImage: self.icon)
 			.foregroundStyle(self.color)
 			.labelStyle(.iconOnly)
 	}
@@ -227,24 +276,34 @@ struct DetailedMergeStatusView: View {
 }
 
 #Preview {
-	HStack {
+	ScrollView {
 		VStack {
-			ForEach(GraphQLEnum<GitLabAPI.IssueState>.allCases, id: \.self) {
-				state in
-				IssueStateIcon(state)
+			HStack {
+				VStack {
+					ForEach(GraphQLEnum<GitLabAPI.IssueState>.allCases, id: \.self) {
+						state in
+						IssueStateIcon(state)
+					}
+				}
+				VStack {
+					ForEach(
+						GraphQLEnum<GitLabAPI.MergeRequestState>.allCases, id: \.self
+					) { state in
+						MergeStateIcon(state)
+					}
+				}
+				VStack {
+					ForEach(GraphQLEnum<GitLabAPI.MergeStatus>.allCases, id: \.self) {
+						status in
+						MergeStatus(status)
+					}
+				}
 			}
-		}
-		VStack {
-			ForEach(
-				GraphQLEnum<GitLabAPI.MergeRequestState>.allCases, id: \.self
-			) { state in
-				MergeStateIcon(state)
-			}
-		}
-		VStack {
-			ForEach(GraphQLEnum<GitLabAPI.MergeStatus>.allCases, id: \.self) {
-				status in
-				MergeStatus(status)
+
+			VStack {
+				ForEach(GraphQLEnum<GitLabAPI.DetailedMergeStatus>.allCases, id: \.self) { status in
+					DetailedMergeStatusView(status)
+				}
 			}
 		}
 	}

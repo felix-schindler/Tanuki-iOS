@@ -1,0 +1,24 @@
+query ProjectMembers($fullPath: ID!) {
+  project(fullPath:$fullPath) {
+    projectMembers {
+      nodes {
+        id
+        createdBy {
+          avatarUrl
+          name
+          username
+        }
+        createdAt
+        expiresAt
+        accessLevel {
+          stringValue
+        }
+        user {
+          avatarUrl
+          name
+          username
+        }
+      }
+    }
+  }
+}

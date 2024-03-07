@@ -22,15 +22,11 @@ struct CreateIssueView: View {
 
 	public var body: some View {
 		VStack(alignment: .leading) {
-			HStack {
-				Text("New issue")
-					.font(.title)
-					.fontWeight(.bold)
-				Spacer()
-				CloseButton {
+			PopupHeader(
+				title: "New issue",
+				onClose: {
 					showNewIssue = false
-				}
-			}
+				})
 
 			VStack {
 				TextField("Title", text: $title)

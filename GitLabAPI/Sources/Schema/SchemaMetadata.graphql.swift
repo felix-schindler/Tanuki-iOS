@@ -23,21 +23,23 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
   public static func objectType(forTypename typename: String) -> ApolloAPI.Object? {
     switch typename {
     case "Query": return GitLabAPI.Objects.Query
-    case "Namespace": return GitLabAPI.Objects.Namespace
-    case "ProjectConnection": return GitLabAPI.Objects.ProjectConnection
+    case "Group": return GitLabAPI.Objects.Group
+    case "CustomEmojiConnection": return GitLabAPI.Objects.CustomEmojiConnection
+    case "CustomEmoji": return GitLabAPI.Objects.CustomEmoji
     case "Project": return GitLabAPI.Objects.Project
-    case "CurrentUser": return GitLabAPI.Objects.CurrentUser
+    case "PipelineConnection": return GitLabAPI.Objects.PipelineConnection
+    case "Pipeline": return GitLabAPI.Objects.Pipeline
+    case "UserCore": return GitLabAPI.Objects.UserCore
     case "AddOnUser": return GitLabAPI.Objects.AddOnUser
     case "AutocompletedUser": return GitLabAPI.Objects.AutocompletedUser
+    case "CurrentUser": return GitLabAPI.Objects.CurrentUser
     case "MergeRequestAssignee": return GitLabAPI.Objects.MergeRequestAssignee
     case "MergeRequestAuthor": return GitLabAPI.Objects.MergeRequestAuthor
     case "MergeRequestParticipant": return GitLabAPI.Objects.MergeRequestParticipant
     case "MergeRequestReviewer": return GitLabAPI.Objects.MergeRequestReviewer
-    case "UserCore": return GitLabAPI.Objects.UserCore
-    case "SnippetConnection": return GitLabAPI.Objects.SnippetConnection
-    case "Snippet": return GitLabAPI.Objects.Snippet
-    case "AbuseReport": return GitLabAPI.Objects.AbuseReport
+    case "Commit": return GitLabAPI.Objects.Commit
     case "AlertManagementAlert": return GitLabAPI.Objects.AlertManagementAlert
+    case "AbuseReport": return GitLabAPI.Objects.AbuseReport
     case "BoardEpic": return GitLabAPI.Objects.BoardEpic
     case "Design": return GitLabAPI.Objects.Design
     case "DesignAtVersion": return GitLabAPI.Objects.DesignAtVersion
@@ -68,9 +70,20 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "WorkItemWidgetTestReports": return GitLabAPI.Objects.WorkItemWidgetTestReports
     case "WorkItemWidgetTimeTracking": return GitLabAPI.Objects.WorkItemWidgetTimeTracking
     case "WorkItemWidgetWeight": return GitLabAPI.Objects.WorkItemWidgetWeight
-    case "Commit": return GitLabAPI.Objects.Commit
-    case "WorkItem": return GitLabAPI.Objects.WorkItem
+    case "Snippet": return GitLabAPI.Objects.Snippet
     case "Vulnerability": return GitLabAPI.Objects.Vulnerability
+    case "WorkItem": return GitLabAPI.Objects.WorkItem
+    case "ReleaseConnection": return GitLabAPI.Objects.ReleaseConnection
+    case "Release": return GitLabAPI.Objects.Release
+    case "MilestoneConnection": return GitLabAPI.Objects.MilestoneConnection
+    case "Milestone": return GitLabAPI.Objects.Milestone
+    case "Iteration": return GitLabAPI.Objects.Iteration
+    case "ReleaseAssets": return GitLabAPI.Objects.ReleaseAssets
+    case "ReleaseAssetLinkConnection": return GitLabAPI.Objects.ReleaseAssetLinkConnection
+    case "ReleaseAssetLink": return GitLabAPI.Objects.ReleaseAssetLink
+    case "ReleaseSourceConnection": return GitLabAPI.Objects.ReleaseSourceConnection
+    case "ReleaseSource": return GitLabAPI.Objects.ReleaseSource
+    case "SnippetConnection": return GitLabAPI.Objects.SnippetConnection
     case "SnippetPermissions": return GitLabAPI.Objects.SnippetPermissions
     case "SnippetBlobConnection": return GitLabAPI.Objects.SnippetBlobConnection
     case "SnippetBlob": return GitLabAPI.Objects.SnippetBlob
@@ -83,14 +96,13 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "MergeRequestReviewerConnection": return GitLabAPI.Objects.MergeRequestReviewerConnection
     case "LabelConnection": return GitLabAPI.Objects.LabelConnection
     case "Label": return GitLabAPI.Objects.Label
-    case "Milestone": return GitLabAPI.Objects.Milestone
-    case "Iteration": return GitLabAPI.Objects.Iteration
     case "MergeRequestConnection": return GitLabAPI.Objects.MergeRequestConnection
-    case "Group": return GitLabAPI.Objects.Group
+    case "ProjectConnection": return GitLabAPI.Objects.ProjectConnection
     case "ProjectMemberConnection": return GitLabAPI.Objects.ProjectMemberConnection
     case "ProjectMember": return GitLabAPI.Objects.ProjectMember
     case "GroupMember": return GitLabAPI.Objects.GroupMember
     case "PendingGroupMember": return GitLabAPI.Objects.PendingGroupMember
+    case "Namespace": return GitLabAPI.Objects.Namespace
     case "Repository": return GitLabAPI.Objects.Repository
     case "RepositoryBlobConnection": return GitLabAPI.Objects.RepositoryBlobConnection
     case "RepositoryBlob": return GitLabAPI.Objects.RepositoryBlob
@@ -98,17 +110,23 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "GpgSignature": return GitLabAPI.Objects.GpgSignature
     case "SshSignature": return GitLabAPI.Objects.SshSignature
     case "X509Signature": return GitLabAPI.Objects.X509Signature
-    case "PipelineConnection": return GitLabAPI.Objects.PipelineConnection
-    case "Pipeline": return GitLabAPI.Objects.Pipeline
     case "RepositoryLanguage": return GitLabAPI.Objects.RepositoryLanguage
     case "ProjectPermissions": return GitLabAPI.Objects.ProjectPermissions
     case "GroupConnection": return GitLabAPI.Objects.GroupConnection
     case "AccessLevel": return GitLabAPI.Objects.AccessLevel
     case "GroupPermissions": return GitLabAPI.Objects.GroupPermissions
     case "UserStatus": return GitLabAPI.Objects.UserStatus
+    case "GroupMemberConnection": return GitLabAPI.Objects.GroupMemberConnection
+    case "MemberInterfaceConnection": return GitLabAPI.Objects.MemberInterfaceConnection
+    case "MilestoneStats": return GitLabAPI.Objects.MilestoneStats
+    case "EpicConnection": return GitLabAPI.Objects.EpicConnection
+    case "EpicPermissions": return GitLabAPI.Objects.EpicPermissions
     case "IssueConnection": return GitLabAPI.Objects.IssueConnection
     case "IssuePermissions": return GitLabAPI.Objects.IssuePermissions
     case "UserCoreConnection": return GitLabAPI.Objects.UserCoreConnection
+    case "EpicIssueConnection": return GitLabAPI.Objects.EpicIssueConnection
+    case "TimelogConnection": return GitLabAPI.Objects.TimelogConnection
+    case "Timelog": return GitLabAPI.Objects.Timelog
     default: return nil
     }
   }

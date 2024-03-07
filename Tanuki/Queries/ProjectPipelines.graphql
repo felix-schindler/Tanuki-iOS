@@ -1,0 +1,23 @@
+query ProjectPipelines($fullPath: ID!) {
+  project(fullPath: $fullPath) {
+    pipelines {
+      nodes {
+        id
+        iid
+        user {
+          avatarUrl
+          name
+          username
+        }
+        ref
+        commit {
+          shortId
+        }
+        source
+        status
+        cancelable
+        createdAt
+      }
+    }
+  }
+}

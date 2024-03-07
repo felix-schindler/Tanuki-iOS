@@ -1,13 +1,12 @@
 query CurrentUser {
   currentUser {
+    id
     avatarUrl
     name
     username
-    
     bot
     pronouns
     state
-    
     status {
       emoji
       message

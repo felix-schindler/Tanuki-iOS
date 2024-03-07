@@ -7,7 +7,7 @@ public class ProjectQuery: GraphQLQuery {
   public static let operationName: String = "Project"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt namespace { __typename name fullPath } repository { __typename rootRef blobs(paths: ["README", "README.txt", "README.md"]) { __typename nodes { __typename rawTextBlob } } tree { __typename lastCommit { __typename title shortId authorName authoredDate signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue pushCode forkProject requestAccess } } }"#
+      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename id avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt namespace { __typename id name fullPath } repository { __typename rootRef blobs(paths: ["README", "README.txt", "README.md"]) { __typename nodes { __typename rawTextBlob } } tree { __typename lastCommit { __typename title shortId authorName authoredDate signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue pushCode forkProject requestAccess } } }"#
     ))
 
   public var fullPath: ID
@@ -40,6 +40,7 @@ public class ProjectQuery: GraphQLQuery {
       public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
+        .field("id", GitLabAPI.ID.self),
         .field("avatarUrl", String?.self),
         .field("name", String.self),
         .field("visibility", String?.self),
@@ -62,6 +63,8 @@ public class ProjectQuery: GraphQLQuery {
         .field("userPermissions", UserPermissions.self),
       ] }
 
+      /// ID of the project.
+      public var id: GitLabAPI.ID { __data["id"] }
       /// URL to avatar image file of the project.
       public var avatarUrl: String? { __data["avatarUrl"] }
       /// Name of the project (without namespace).
@@ -113,10 +116,13 @@ public class ProjectQuery: GraphQLQuery {
         public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Namespace }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
+          .field("id", GitLabAPI.ID.self),
           .field("name", String.self),
           .field("fullPath", GitLabAPI.ID.self),
         ] }
 
+        /// ID of the namespace.
+        public var id: GitLabAPI.ID { __data["id"] }
         /// Name of the namespace.
         public var name: String { __data["name"] }
         /// Full path of the namespace.

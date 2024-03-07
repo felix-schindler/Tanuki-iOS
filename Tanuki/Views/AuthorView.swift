@@ -1,0 +1,54 @@
+//
+//  TinyUserView.swift
+//  Tanuki
+//
+//  Created by Felix Schindler on 01.03.24.
+//
+
+import SwiftUI
+
+struct AuthorView: View {
+	private let author: MyAuthor
+	private let showUsername: Bool
+
+	init(_ author: MyAuthor, showUsername: Bool = false) {
+		self.author = author
+		self.showUsername = showUsername
+	}
+
+	var body: some View {
+		NavigationLink(
+			destination: UserLoader(username: author.username),
+			label: {
+				Label(
+					title: {
+						Text(
+							author.name.isEmpty || showUsername
+								? "@\(author.username)"
+								: author.name
+						)
+					},
+					icon: {
+						if let url = URL.fromAvatar(
+							author.avatarUrl)
+						{
+							AvatarImage(
+								url, size: .tiny)
+						} else {
+							Image(
+								systemName: "person"
+							)
+						}
+					}
+				)
+			}
+		)
+		.buttonStyle(.plain)
+		.tint(.primary)
+		.padding(.horizontal, 8)
+		.padding(.vertical, 3)
+		.background(Color(.systemGray5))
+		.foregroundStyle(.primary)
+		.cornerRadius(5)
+	}
+}

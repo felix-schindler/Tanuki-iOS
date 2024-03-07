@@ -10,14 +10,19 @@ import SwiftUI
 
 struct HomeView: View {
 	@State
+	private var showSettings = API.token == "" || API.host == ""
+
+	@State
 	private var starredProjects:
-		[StarredProjectsQuery.Data.CurrentUser.StarredProjects.Node?]? = nil
+		[CurrentUserStarredProjectsQuery.Data.CurrentUser.StarredProjects
+			.Node?]? = nil
 
 	@State
 	private var loadFailed = false
 
 	private func loadStarredProjects() {
-		Network.shared.apollo.fetch(query: StarredProjectsQuery()) { result in
+		Network.shared.apollo.fetch(query: CurrentUserStarredProjectsQuery()) {
+			result in
 			switch result {
 			case .success(let graphQLResult):
 				print("Success! Setting projects...")
@@ -35,10 +40,7 @@ struct HomeView: View {
 		List {
 			Section("Your work") {
 				NavigationLink(
-					destination: IssueLoader(
-						fullPath: "gitlab-org/gitlab",
-						iid: "15603"
-					),
+					destination: UserIssuesLoader(),
 					label: {
 						Label(
 							title: {
@@ -117,7 +119,7 @@ struct HomeView: View {
 			Section("Starred projects") {
 				if starredProjects != nil {
 					if starredProjects!.isEmpty {
-						VStack(alignment: .center) {
+						VStack {
 							Text("There are no starred projects")
 						}.frame(maxWidth: .infinity, minHeight: 100)
 					} else {
@@ -127,13 +129,13 @@ struct HomeView: View {
 							}
 						}
 					}
-				} else if loadFailed {
-					VStack(alignment: .center) {
-						Text(LOAD_FAILED)
-					}.frame(maxWidth: .infinity, minHeight: 100)
 				} else {
-					VStack(alignment: .center) {
-						ProgressView("Loading starred projects...")
+					VStack {
+						if loadFailed {
+							Text(loadFailedMsg)
+						} else {
+							ProgressView("Loading starred projects...")
+						}
 					}.frame(maxWidth: .infinity, minHeight: 100)
 				}
 			}
@@ -141,6 +143,8 @@ struct HomeView: View {
 			loadStarredProjects()
 		}.refreshable {
 			loadStarredProjects()
+		}.sheet(isPresented: $showSettings) {
+			SettingsView()
 		}
 		.listStyle(.sidebar)
 		.headerProminence(.increased)

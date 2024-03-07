@@ -1,0 +1,22 @@
+query GroupEpics($fullPath: ID!) {
+  group(fullPath: $fullPath) {
+    epics(state: opened) {
+      nodes {
+        iid
+        title
+        reference(full: true)
+        state
+        upvotes
+        downvotes
+        userNotesCount
+        author {
+          avatarUrl
+          name
+          username
+        }
+        createdAt
+        webUrl
+      }
+    }
+  }
+}

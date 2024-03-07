@@ -1,0 +1,26 @@
+query User($username: String!) {
+  user(username: $username) {
+    id
+    avatarUrl
+    name
+    username
+    bot
+    pronouns
+    state
+    status {
+      emoji
+      message
+    }
+    bio
+    location
+    jobTitle
+    organization
+    createdAt
+    discord
+    twitter
+    linkedin
+    publicEmail
+    groupCount
+    webUrl
+  }
+}

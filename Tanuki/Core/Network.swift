@@ -10,24 +10,6 @@ import ApolloAPI
 import ApolloSQLite
 import SwiftUI
 
-class API {
-	/// GitLab host
-	@AppStorage("domain")
-	public static var domain: String = "gitlab.com"
-
-	/// Bearer token - normally a personal access token
-	@AppStorage("token")
-	public static var token: String = "glpat-YXDgEER3pP5esynN4sHa"
-
-	public static var url: URL {
-		return URL(string: "https://\(self.domain)")!
-	}
-
-	public static var graphUrl: URL {
-		return URL(string: "https://\(self.domain)/api/graphql")!
-	}
-}
-
 class Network {
 	static let shared = Network()
 
@@ -54,7 +36,8 @@ class AuthorizationInterceptor: ApolloInterceptor {
 		completion: @escaping (Result<GraphQLResult<Operation.Data>, Error>) ->
 			Void
 	) where Operation: GraphQLOperation {
-		request.addHeader(name: "Authorization", value: "Bearer \(API.token)")
+		request.addHeader(
+			name: "Authorization", value: "Bearer \(API.token)")
 
 		chain.proceedAsync(
 			request: request,

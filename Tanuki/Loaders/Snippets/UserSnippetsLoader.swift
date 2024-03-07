@@ -9,21 +9,44 @@ import GitLabAPI
 import SwiftUI
 
 struct UserSnippetsLoader: View {
+	private let username: String?
+
 	@State
-	private var snippets: [UserSnippetsQuery.Data.CurrentUser.Snippets.Node?]?
+	private var snippets: [Snippet?]?
 
 	@State
 	private var loadFailed = false
 
+	init(username: String? = nil) {
+		self.username = username
+	}
+
 	private func loadSnippets() {
-		Network.shared.apollo.fetch(query: UserSnippetsQuery()) { result in
-			switch result {
-			case .success(let graphQLResult):
-				print("Success! Setting namespace...")
-				snippets = graphQLResult.data?.currentUser?.snippets?.nodes
-			case .failure(let error):
-				print("Failure! Error: \(error)")
-				loadFailed = true
+		if let user = username {
+			Network.shared.apollo.fetch(
+				query: UserSnippetsQuery(username: user)
+			) {
+				result in
+				switch result {
+				case .success(let graphQLResult):
+					print("Success! Setting snippets...")
+					snippets = graphQLResult.data?.user?.snippets?.nodes
+				case .failure(let error):
+					print("Failure! Error: \(error)")
+					loadFailed = true
+				}
+			}
+		} else {
+			Network.shared.apollo.fetch(query: CurrentUserSnippetsQuery()) {
+				result in
+				switch result {
+				case .success(let graphQLResult):
+					print("Success! Setting snippets...")
+					snippets = graphQLResult.data?.currentUser?.snippets?.nodes
+				case .failure(let error):
+					print("Failure! Error: \(error)")
+					loadFailed = true
+				}
 			}
 		}
 	}
@@ -40,36 +63,37 @@ struct UserSnippetsLoader: View {
 								destination: SnippetLoader(id: snippet.id),
 								label: {
 									HStack {
-										if let url = URL.fromAvatar(
-											snippet.author?.avatarUrl)
-										{
-											AvatarImage(url, size: .medium)
-										}
-
 										VStack(alignment: .leading) {
-											Text(snippet.title.emojized())
-
 											HStack {
-												if let author = snippet.author {
+												VisibilityIcon(
+													snippet
+														.visibilityLevel
+														.rawValue
+												)
+												Text(snippet.title.emojized())
+											}
+
+											ScrollView(.horizontal) {
+												HStack {
+													if let author = snippet
+														._author
+													{
+														AuthorView(author)
+													}
+
 													HStack(spacing: 2) {
 														Image(
-															systemName: "person"
-														)
-														Text(author.name)
+															systemName: "clock")
+														Text(
+															Date.fromToString(
+																snippet
+																	.createdAt))
 													}
-												}
-
-												HStack(spacing: 2) {
-													Image(systemName: "clock")
-													Text(
-														Date.fromToString(
-															snippet.createdAt))
-												}
-											}.font(.footnote)
+												}.font(.footnote)
+											}
 										}
 									}.swipeActions {
-										if let url = URL(string: snippet.webUrl)
-										{
+										if let url = URL(string: snippet.webUrl) {
 											ShareButton(url)
 										}
 									}
@@ -79,13 +103,13 @@ struct UserSnippetsLoader: View {
 					}
 				}
 			} else {
-				VStack(alignment: .center) {
+				VStack {
 					Image(systemName: "scissors")
 						.resizable()
 						.scaledToFit()
 						.frame(width: 50, height: 50)
 					if loadFailed {
-						Text(LOAD_FAILED)
+						Text(loadFailedMsg)
 					} else {
 						ProgressView("Loading snippets")
 					}
@@ -101,6 +125,6 @@ struct UserSnippetsLoader: View {
 
 #Preview {
 	NavigationStack {
-		UserSnippetsLoader()
+		UserSnippetsLoader(username: "felix-schindler")
 	}
 }

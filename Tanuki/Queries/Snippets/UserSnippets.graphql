@@ -1,12 +1,14 @@
-query UserSnippets {
-  currentUser {
+query UserSnippets($username: String!) {
+  user(username:$username) {
     snippets {
       nodes {
         id
         title
+        visibilityLevel
         author {
           avatarUrl
           name
+          username
         }
         createdAt
         webUrl

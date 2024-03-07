@@ -13,23 +13,23 @@ import SwiftUI
 
 struct ProjectLoader: View {
 	private let fullPath: String
-	
+
 	@State
-	private var project: GitLabAPI.ProjectQuery.Data.Project? = nil
-	
+	private var project: ProjectQuery.Data.Project? = nil
+
 	@State
 	private var loadFailed = false
-	
+
 	@State
 	private var showVerified = false
-	
+
 	@State
 	private var showNewIssue = false
-	
+
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
-	
+
 	private func loadProject() {
 		Network.shared.apollo.fetch(query: ProjectQuery(fullPath: fullPath)) {
 			result in
@@ -43,25 +43,24 @@ struct ProjectLoader: View {
 			}
 		}
 	}
-	
-#if !os(macOS)
-	public var body: some View {
-		main.navigationBarTitleDisplayMode(.inline)
-	}
-#else
-	public var body: some View {
-		main
-	}
-#endif
-	
+
+	#if !os(macOS)
+		public var body: some View {
+			main.navigationBarTitleDisplayMode(.inline)
+		}
+	#else
+		public var body: some View {
+			main
+		}
+	#endif
+
 	var main: some View {
 		List {
 			Section {
 				if let project = self.project {
 					VStack(alignment: .leading) {
 						HStack {
-							if let avatarUrl = URL.fromAvatar(project.avatarUrl)
-							{
+							if let avatarUrl = URL.fromAvatar(project.avatarUrl) {
 								AvatarImage(avatarUrl, size: .medium)
 							}
 							Spacer()
@@ -73,12 +72,12 @@ struct ProjectLoader: View {
 								VisibilityIcon(visibility)
 							}
 						}
-						
+
 						if let description = project.description {
 							Markdown(description.emojized())
 								.markdownTheme(.gitHub)
 						}
-						
+
 						HStack {
 							if project.topics != nil
 								&& project.topics!.count > 0
@@ -88,8 +87,7 @@ struct ProjectLoader: View {
 										.labelStyle(.iconOnly)
 									ScrollView(.horizontal) {
 										HStack {
-											ForEach(project.topics!, id: \.self)
-											{ topic in
+											ForEach(project.topics!, id: \.self) { topic in
 												PillView(topic)
 											}
 										}
@@ -97,7 +95,7 @@ struct ProjectLoader: View {
 								}
 								Spacer()
 							}
-							
+
 							if let createdAt = project.createdAt {
 								Spacer()
 								Text(
@@ -106,32 +104,40 @@ struct ProjectLoader: View {
 										dateStyle: .short)
 								)
 							}
-						}.foregroundStyle(.primary)
-							.font(.footnote)
-						
+						}.font(.footnote)
+
 						ScrollView(.horizontal) {
 							HStack {
 								if let namespace = project.namespace {
-									// TODO: How do I know whether the namespace is a user or group
-									NavigationLink(
-										destination: NamespaceLoader(
-											fullPath: namespace.fullPath),
-										label: {
-											Label(
-												namespace.name,
-												systemImage: "person"
-											)
-											.foregroundStyle(.primary)
-										}
-									)
+									if namespace.id.contains("UserNamespace") {
+										NavigationLink(
+											destination: UserLoader(username: namespace.fullPath),
+											label: {
+												Label(
+													namespace.name,
+													systemImage: "person"
+												)
+											}
+										)
+									} else if namespace.id.contains("Group") {
+										NavigationLink(
+											destination: GroupLoader(fullPath: namespace.fullPath),
+											label: {
+												Label(
+													namespace.name,
+													systemImage: "person.3"
+												)
+											}
+										)
+									}
 								}
-								
+
 								Button(
 									String(project.starCount),
 									systemImage: "star"
 								) {
 								}
-								
+
 								if let projectUrl = URL(
 									string:
 										"\(project.webUrl ?? "")/-/forks/new")
@@ -145,8 +151,9 @@ struct ProjectLoader: View {
 							}
 							.tint(.primary)
 							.buttonStyle(.bordered)
+							.controlSize(.small)
 						}
-						
+
 						if project.languages != nil
 							&& !project.languages!.isEmpty
 						{
@@ -170,15 +177,17 @@ struct ProjectLoader: View {
 							.frame(height: 30)
 						}
 					}
-				} else if loadFailed {
-					Text(LOAD_FAILED)
 				} else {
-					VStack(alignment: .center) {
-						ProgressView("Loading project")
+					VStack {
+						if loadFailed {
+							Text(loadFailedMsg)
+						} else {
+							ProgressView("Loading project")
+						}
 					}.frame(maxWidth: .infinity, minHeight: 250)
 				}
 			}
-			
+
 			if let lastCommit = project?.repository?.tree?.lastCommit {
 				Section("Last commit") {
 					HStack {
@@ -186,7 +195,7 @@ struct ProjectLoader: View {
 							if let title = lastCommit.title {
 								Text(title)
 							}
-							
+
 							if lastCommit.authorName != nil
 								&& lastCommit.authoredDate != nil
 							{
@@ -196,9 +205,9 @@ struct ProjectLoader: View {
 								.font(.footnote)
 							}
 						}
-						
+
 						Spacer()
-						
+
 						VStack {
 							HStack {
 								if lastCommit.pipelines?.nodes != nil
@@ -207,7 +216,7 @@ struct ProjectLoader: View {
 									PipelineStatus(
 										lastCommit.pipelines!.nodes![0]!.status)
 								}
-								
+
 								if lastCommit.signature?.verificationStatus?
 									.rawValue.starts(with: "VERIFIED") ?? false
 								{
@@ -220,14 +229,14 @@ struct ProjectLoader: View {
 										.controlSize(.mini)
 								}
 							}
-							
+
 							Text(lastCommit.shortId)
 								.font(.system(.footnote, design: .monospaced))
 						}
 					}
 				}
 			}
-			
+
 			Section("Actions") {
 				if project == nil || (project!.issuesEnabled ?? false) {
 					NavigationLink(
@@ -251,7 +260,7 @@ struct ProjectLoader: View {
 						}
 					)
 				}
-				
+
 				if project == nil || (project!.mergeRequestsEnabled ?? false) {
 					NavigationLink(
 						destination: ProjectMergeLoader(
@@ -265,7 +274,7 @@ struct ProjectLoader: View {
 										Text(
 											String(
 												project!.openMergeRequestsCount
-												?? 0))
+													?? 0))
 									}
 								},
 								icon: {
@@ -275,18 +284,36 @@ struct ProjectLoader: View {
 						}
 					)
 				}
-				
+
 				DisclosureGroup(
 					content: {
-						Text("Activity")
-						Text("Members")
-						Text("Labels")
-						Text("Milestones")
+						if let id = project?.id.toIntId() {
+							NavigationLink(
+								destination: EventsLoader(projectId: id),
+								label: {
+									Text("Activity")
+								})
+						}
+						NavigationLink(
+							"Members",
+							destination: MembersLoader(fullPath: self.fullPath, type: .project)
+						)
+						NavigationLink(
+							"Labels",
+							destination: LabelsLoader(fullPath: self.fullPath, queryType: .project)
+						)
+						NavigationLink(
+							"Milestones",
+							destination: MilestonesLoader(
+								fullPath: self.fullPath,
+								queryType: .project
+							)
+						)
 					},
 					label: {
 						Label("Manage", systemImage: "person.2")
 					})
-				
+
 				DisclosureGroup(
 					content: {
 						Text("Repository")
@@ -300,23 +327,47 @@ struct ProjectLoader: View {
 							systemImage:
 								"chevron.left.forwardslash.chevron.right")
 					})
-				
+
 				DisclosureGroup(
 					content: {
-						Text("Pipelines")
-						Text("Releases")
+						NavigationLink(
+							"Pipelines",
+							destination: ProjectPipelinesLoader(fullPath: self.fullPath)
+						)
+						NavigationLink(
+							"Releases",
+							destination: ProjectReleasesLoader(fullPath: self.fullPath)
+						)
 					},
 					label: {
 						Label("Build", systemImage: "flag")
 					})
-			}.foregroundStyle(.primary)
-			
-			if let readmeContent = project?.repository?.blobs?.nodes?.first??
-				.rawTextBlob
-			{
-				Section("README") {
-					Markdown(readmeContent.emojized())
-						.markdownTheme(.gitHub)
+			}
+
+			if project != nil {
+				if let readmeContent = project!.repository?.blobs?.nodes?
+					.first??
+					.rawTextBlob?.emojized()
+				{
+					Section("README") {
+						let baseUrl = URL(string: project!.webUrl ?? "")
+						let imgUrl = URL(
+							string:
+								"\(project!.webUrl ?? "")/-/raw/\(project!.repository?.rootRef ?? "")/"
+						)
+
+						if baseUrl != nil && imgUrl != nil {
+							Markdown(
+								readmeContent,
+								baseURL: baseUrl,
+								imageBaseURL: imgUrl
+							)
+							.markdownTheme(.gitHub)
+						} else {
+							Markdown(readmeContent)
+								.markdownTheme(.gitHub)
+						}
+					}
 				}
 			}
 		}.onAppear {
@@ -331,7 +382,7 @@ struct ProjectLoader: View {
 							if let url = URL(string: project.webUrl ?? "") {
 								ShareButton(url)
 							}
-							
+
 							if project.userPermissions.requestAccess {
 								Button(
 									"Request access",
@@ -341,11 +392,11 @@ struct ProjectLoader: View {
 								}
 							}
 						}
-						
+
 						let showCloneSection =
-						(project.httpUrlToRepo != nil
-						 || project.sshUrlToRepo != nil)
-						
+							(project.httpUrlToRepo != nil
+								|| project.sshUrlToRepo != nil)
+
 						if showCloneSection {
 							Section("Clone Code") {
 								if let httpUrl = project.httpUrlToRepo {
@@ -356,7 +407,7 @@ struct ProjectLoader: View {
 										UIPasteboard.general.string = httpUrl
 									}
 								}
-								
+
 								if let sshUrl = project.sshUrlToRepo {
 									Button(
 										"Copy SSH url",
@@ -376,7 +427,7 @@ struct ProjectLoader: View {
 				.menuStyle(.button)
 				.buttonStyle(.bordered)
 				.clipShape(Circle())
-				
+
 				if project.userPermissions.createIssue {
 					RoundIconButton("Create issue", icon: "plus") {
 						showNewIssue = true
@@ -386,15 +437,11 @@ struct ProjectLoader: View {
 			}
 		}.sheet(isPresented: $showVerified) {
 			VStack(alignment: .leading) {
-				HStack {
-					Text("Verified commit")
-						.font(.title)
-						.fontWeight(.bold)
-					Spacer()
-					CloseButton {
+				PopupHeader(
+					title: "Verified commit",
+					onClose: {
 						showVerified = false
-					}
-				}
+					})
 				Text(
 					"This commit was signed with a verified signature and the committer email was verified to belong to the same user."
 				)

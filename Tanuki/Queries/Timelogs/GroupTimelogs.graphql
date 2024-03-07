@@ -1,0 +1,27 @@
+query GroupTimelogs($fullPath: ID!) {
+  group(fullPath: $fullPath) {
+    timelogs(sort: SPENT_AT_DESC) {
+      nodes {
+        id
+        user {
+          avatarUrl
+          name
+          username
+        }
+        spentAt
+        summary
+        timeSpent
+        project {
+          fullPath
+          nameWithNamespace
+        }
+        issue {
+          iid
+        }
+        mergeRequest {
+          iid
+        }
+      }
+    }
+  }
+}

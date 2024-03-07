@@ -1,5 +1,6 @@
 query Project($fullPath: ID!) {
   project(fullPath: $fullPath) {
+    id
     avatarUrl
     name
     visibility
@@ -17,6 +18,7 @@ query Project($fullPath: ID!) {
     sshUrlToRepo
     createdAt
     namespace {
+      id
       name
       fullPath
     }

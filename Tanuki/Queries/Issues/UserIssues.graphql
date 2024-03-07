@@ -1,5 +1,5 @@
 query UserIssues($username: String!) {
-  currentUser {
+  user(username: $username) {
     projectMemberships {
       nodes {
         project {
@@ -14,7 +14,9 @@ query UserIssues($username: String!) {
               downvotes
               userNotesCount
               author {
+				avatarUrl
                 name
+                username
               }
               createdAt
               webUrl

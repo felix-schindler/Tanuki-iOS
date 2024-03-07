@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-protocol SmallProject {
-	var avatarUrl: String? { get }
-	var nameWithNamespace: String { get }
-	var visibility: String? { get }
-	var fullPath: String { get }
-}
-
 struct SmallProjectView: View {
 	private var project: SmallProject
 

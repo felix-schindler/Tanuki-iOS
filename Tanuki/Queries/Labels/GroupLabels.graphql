@@ -1,0 +1,13 @@
+query GroupLabels($fullPath: ID!) {
+  group(fullPath: $fullPath) {
+    labels {
+      nodes {
+        id
+        title
+        description
+        color
+        textColor
+      }
+    }
+  }
+}

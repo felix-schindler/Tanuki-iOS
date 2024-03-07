@@ -1,5 +1,5 @@
-query UserGroups {
-  currentUser {
+query UserGroups($username: String!) {
+  user(username: $username) {
     groups {
       nodes {
         avatarUrl

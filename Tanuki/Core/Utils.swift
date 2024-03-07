@@ -2,7 +2,7 @@
 //  Utils.swift
 //  Tanuki
 //
-//  Created by Felix Schindler on 26.02.24.
+//  Created by Felix Schindler on 31.10.21.
 //
 
 import Foundation
@@ -10,7 +10,7 @@ import GitLabAPI
 import NVMColor
 import SwiftUI
 
-let LOAD_FAILED =
+let loadFailedMsg =
 	"Failed to load\nPlease check token and internet connection, then try again"
 
 class EmojiHelper {
@@ -58,7 +58,7 @@ class EmojiHelper {
 		if regex.firstMatch(
 			in: key, options: [], range: NSMakeRange(0, key.utf8.count)) != nil
 		{
-			value = EMOJI_HASH[key]
+			value = emojiHashes[key]
 		}
 
 		return value ?? key
@@ -74,6 +74,10 @@ extension String {
 	func emojized() -> String {
 		return EmojiHelper.emojizedStringWithString(text: self)
 	}
+
+	func toIntId() -> Int? {
+		return Int(self.split(separator: "/").last ?? "")
+	}
 }
 
 extension StringProtocol {
@@ -87,7 +91,7 @@ extension URL {
 	public static func fromAvatar(_ avatarUrl: String?) -> URL? {
 		if var urlStr = avatarUrl {
 			if !urlStr.contains("://") {
-				urlStr = "https://" + API.domain + urlStr
+				urlStr = "https://" + API.host + urlStr
 			}
 
 			return URL(string: urlStr)
@@ -103,9 +107,20 @@ extension Date {
 		timeStyle: DateFormatter.Style = .none
 	) -> String {
 		let inFormat = ISO8601DateFormatter()
-		let outFormat = DateFormatter()
-		outFormat.dateStyle = dateStyle
-		outFormat.timeStyle = timeStyle
-		return outFormat.string(from: inFormat.date(from: date)!)
+		if let dateObj = inFormat.date(from: date) {
+			return dateObj.toString(dateStyle, timeStyle)
+		} else {
+			return date
+		}
+	}
+
+	func toString(
+		_ dateStyle: DateFormatter.Style = .medium,
+		_ timeStyle: DateFormatter.Style = .none
+	) -> String {
+		let dateFormat = DateFormatter()
+		dateFormat.dateStyle = dateStyle
+		dateFormat.timeStyle = timeStyle
+		return dateFormat.string(from: self)
 	}
 }

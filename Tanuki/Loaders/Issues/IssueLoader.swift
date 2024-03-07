@@ -88,38 +88,7 @@ struct IssueLoader: View {
 									fgColor: .white,
 									cornerRadius: 5
 								)
-								NavigationLink(
-									destination: NamespaceLoader(
-										fullPath: issue.author.username),
-									label: {
-										Label(
-											title: {
-												Text(
-													issue.author.name.isNotEmpty
-														? issue.author.name
-														: issue.author.username
-												)
-											},
-											icon: {
-												if let url = URL.fromAvatar(
-													issue.author.avatarUrl)
-												{
-													AvatarImage(
-														url, size: .tiny)
-												} else {
-													Image(systemName: "person")
-												}
-											}
-										)
-									}
-								)
-								.buttonStyle(.plain)
-								.tint(.primary)
-								.padding(.horizontal, 8)
-								.padding(.vertical, 3)
-								.background(Color(.systemGray5))
-								.foregroundStyle(.primary)
-								.cornerRadius(5)
+								AuthorView(issue._author)
 							}
 						}.font(.footnote)
 
@@ -145,8 +114,6 @@ struct IssueLoader: View {
 										fgColor: .white,
 										cornerRadius: 5
 									)
-									.monospaced()
-									.textSelection(.enabled)
 								}
 
 								if (issue.blockedByIssues?.nodes?.count ?? 0)
@@ -218,12 +185,12 @@ struct IssueLoader: View {
 						DisclosureGroup(
 							content: {
 								if assgineeCount > 0 {
-									ForEach(issue.assignees!.nodes!, id: \.self)
-									{ maybeUser in
+									ForEach(issue.assignees!.nodes!, id: \.self) { maybeUser in
 										if let user = maybeUser {
 											NavigationLink(
-												destination: NamespaceLoader(
-													fullPath: user.username),
+												destination: UserLoader(
+													username: user.username
+												),
 												label: {
 													HStack {
 														if let url =
@@ -313,16 +280,29 @@ struct IssueLoader: View {
 
 					if issue.userPermissions.updateIssue {
 						Section("Actions") {
-							Button(
-								action: {
-									// TODO: Implement
-								},
-								label: {
-									Label(
-										"Close MR",
-										systemImage: "arrow.triangle.swap")
-								}
-							).tint(.blue)
+							if issue.state == .opened {
+								Button(
+									action: {
+										// TODO: Implement
+									},
+									label: {
+										Label(
+											"Close issue",
+											systemImage: "smallcircle.circle")
+									}
+								).tint(.blue)
+							} else if issue.state == .closed {
+								Button(
+									action: {
+										// TODO: Implement
+									},
+									label: {
+										Label(
+											"Reopen issue",
+											systemImage: "arrow.triangle.swap")
+									}
+								).tint(.green)
+							}
 						}
 					}
 
@@ -366,7 +346,7 @@ struct IssueLoader: View {
 				}
 			} else if loadFailed {
 				VStack {
-					Text(LOAD_FAILED)
+					Text(loadFailedMsg)
 				}.frame(maxWidth: .infinity, minHeight: 100)
 			} else {
 				VStack {

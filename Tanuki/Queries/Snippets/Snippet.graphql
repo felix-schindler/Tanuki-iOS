@@ -1,6 +1,7 @@
 query Snippet($id: SnippetID!) {
   snippets(ids: [$id]) {
     nodes {
+      id
       title
       description
       visibilityLevel
@@ -24,6 +25,7 @@ query Snippet($id: SnippetID!) {
           id
           author {
             avatarUrl
+            name
             username
           }
           maxAccessLevelOfAuthor

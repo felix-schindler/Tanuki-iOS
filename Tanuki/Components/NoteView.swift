@@ -60,8 +60,10 @@ struct NoteView: View {
 			if note.system {
 				Label(
 					title: {
-						Markdown("@\(author.username) \(note.body)")
-							.markdownTheme(.gitHub)
+						Markdown(
+							"@\(author.username) \(note.body)", baseURL: API.url
+						)
+						.markdownTheme(.gitHub)
 					},
 					icon: {
 						Image(
@@ -72,27 +74,35 @@ struct NoteView: View {
 			} else {
 				VStack(alignment: .leading) {
 					HStack {
-						if let url = URL.fromAvatar(author.avatarUrl) {
-							AvatarImage(url, size: .tiny)
+						ScrollView(.horizontal) {
+							AuthorView(author, showUsername: true)
 						}
-						Text(author.username)
+
 						if let accessLevel = note.maxAccessLevelOfAuthor {
 							PillView(accessLevel)
-								.font(.caption2)
 						}
+
 						Spacer()
-						PillView(
-							Date.fromToString(
-								note.createdAt, dateStyle: .short,
-								timeStyle: .short),
-							icon: note.updatedAt != note.createdAt
-								? "pencil.and.scribble" : nil
-						).font(.caption2)
-					}.padding(.vertical, -5)
+
+						HStack {
+							if note.updatedAt != note.createdAt {
+								Image("pencil.and.scribble")
+							}
+							Text(
+								Date.fromToString(
+									note.createdAt,
+									dateStyle: .short,
+									timeStyle: .short
+								)
+							)
+						}.foregroundStyle(.secondary)
+					}
+					.padding(.vertical, -5)
+					.font(.footnote)
 
 					Markdown(note.body, baseURL: API.url)
 						.markdownTheme(.gitHub)
-				}.font(.footnote)
+				}
 			}
 		} else {
 			Label(

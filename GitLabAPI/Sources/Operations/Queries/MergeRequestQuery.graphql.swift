@@ -7,7 +7,7 @@ public class MergeRequestQuery: GraphQLQuery {
   public static let operationName: String = "MergeRequest"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query MergeRequest($fullPath: ID!, $iid: String!) { project(fullPath: $fullPath) { __typename avatarUrl mergeRequest(iid: $iid) { __typename iid title description reference(full: true) state sourceBranch targetBranch sourceProject { __typename fullPath } diffStatsSummary { __typename additions deletions fileCount } upvotes downvotes userNotesCount author { __typename avatarUrl name username } userPermissions { __typename canApprove canMerge updateMergeRequest createNote } createdAt webUrl approved mergeStatusEnum conflicts detailedMergeStatus assignees { __typename nodes { __typename avatarUrl username } } reviewers { __typename nodes { __typename avatarUrl username } } labels { __typename nodes { __typename title color textColor } } milestone { __typename iid title } humanTimeEstimate humanTotalTimeSpent notes { __typename nodes { __typename id author { __typename avatarUrl username } maxAccessLevelOfAuthor body system systemNoteIconName createdAt updatedAt } } } } }"#
+      #"query MergeRequest($fullPath: ID!, $iid: String!) { project(fullPath: $fullPath) { __typename avatarUrl mergeRequest(iid: $iid) { __typename iid title description reference(full: true) state sourceBranch targetBranch sourceProject { __typename fullPath } diffStatsSummary { __typename additions deletions fileCount } upvotes downvotes userNotesCount author { __typename avatarUrl name username } userPermissions { __typename canApprove canMerge updateMergeRequest createNote } createdAt webUrl approved mergeStatusEnum conflicts detailedMergeStatus assignees { __typename nodes { __typename avatarUrl username } } reviewers { __typename nodes { __typename avatarUrl username } } labels { __typename nodes { __typename title color textColor } } milestone { __typename iid title } humanTimeEstimate humanTotalTimeSpent notes { __typename nodes { __typename id author { __typename avatarUrl name username } maxAccessLevelOfAuthor body system systemNoteIconName createdAt updatedAt } } } } }"#
     ))
 
   public var fullPath: ID
@@ -438,11 +438,14 @@ public class MergeRequestQuery: GraphQLQuery {
               public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("avatarUrl", String?.self),
+                .field("name", String.self),
                 .field("username", String.self),
               ] }
 
               /// URL of the user's avatar.
               public var avatarUrl: String? { __data["avatarUrl"] }
+              /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
+              public var name: String { __data["name"] }
               /// Username of the user. Unique within this instance of GitLab.
               public var username: String { __data["username"] }
             }

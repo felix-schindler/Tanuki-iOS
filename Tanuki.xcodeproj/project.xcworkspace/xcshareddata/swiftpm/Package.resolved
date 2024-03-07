@@ -37,6 +37,24 @@
       }
     },
     {
+      "identity" : "swift-http",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/felix-schindler/swift-http/",
+      "state" : {
+        "branch" : "main",
+        "revision" : "6b76b2d73dbba2f631f6abc8b6d72fb585bbbb53"
+      }
+    },
+    {
+      "identity" : "swift-log",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-log",
+      "state" : {
+        "revision" : "e97a6fcb1ab07462881ac165fdbb37f067e205d5",
+        "version" : "1.5.4"
+      }
+    },
+    {
       "identity" : "swift-markdown-ui",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gonzalezreal/swift-markdown-ui",

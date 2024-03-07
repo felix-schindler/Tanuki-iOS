@@ -1,0 +1,12 @@
+query UserStarredProjects($username: String!) {
+  user(username:$username) {
+    starredProjects {
+      nodes {
+        avatarUrl
+        nameWithNamespace
+        visibility
+        fullPath
+      }
+    }
+  }
+}

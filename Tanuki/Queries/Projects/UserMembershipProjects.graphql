@@ -1,5 +1,5 @@
-query UserMembershipProjects {
-  currentUser {
+query UserMembershipProjects($username: String!) {
+  user(username:$username) {
     projectMemberships {
       nodes {
         project {

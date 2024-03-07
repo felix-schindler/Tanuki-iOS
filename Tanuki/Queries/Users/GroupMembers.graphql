@@ -1,0 +1,24 @@
+query GroupMembers($fullPath: ID!) {
+  group(fullPath: $fullPath) {
+    groupMembers {
+      nodes {
+        id
+        createdBy {
+          avatarUrl
+          name
+          username
+        }
+        createdAt
+        expiresAt
+        accessLevel {
+          stringValue
+        }
+        user {
+          avatarUrl
+          name
+          username
+        }
+      }
+    }
+  }
+}

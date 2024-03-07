@@ -12,8 +12,7 @@ struct DescendantGroupsLoader: View {
 	private var fullPath: String
 
 	@State
-	private var groups:
-		[DescendantGroupsQuery.Data.Group.DescendantGroups.Node?]?
+	private var groups: [DescendantGroupsQuery.Data.Group.DescendantGroups.Node?]?
 
 	@State
 	private var loadFailed = false
@@ -116,14 +115,14 @@ struct DescendantGroupsLoader: View {
 					}
 				}
 			} else {
-				VStack(alignment: .center) {
+				VStack {
 					Image(systemName: "scale.3d")
 						.resizable()
 						.scaledToFit()
 						.foregroundStyle(.red)
 						.frame(width: 50, height: 50)
 					if loadFailed {
-						Text(LOAD_FAILED)
+						Text(loadFailedMsg)
 					} else {
 						ProgressView("Loading groups")
 					}

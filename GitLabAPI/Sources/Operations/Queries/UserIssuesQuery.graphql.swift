@@ -7,7 +7,7 @@ public class UserIssuesQuery: GraphQLQuery {
   public static let operationName: String = "UserIssues"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query UserIssues($username: String!) { currentUser { __typename projectMemberships { __typename nodes { __typename project { __typename fullPath issues(state: opened, assigneeUsernames: [$username], authorUsername: $username) { __typename nodes { __typename iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename name } createdAt webUrl } } } } } } }"#
+      #"query UserIssues($username: String!) { user(username: $username) { __typename projectMemberships { __typename nodes { __typename project { __typename fullPath issues(state: opened, assigneeUsernames: [$username], authorUsername: $username) { __typename nodes { __typename iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename avatarUrl name username } createdAt webUrl } } } } } } }"#
     ))
 
   public var username: String
@@ -24,20 +24,20 @@ public class UserIssuesQuery: GraphQLQuery {
 
     public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
-      .field("currentUser", CurrentUser?.self),
+      .field("user", User?.self, arguments: ["username": .variable("username")]),
     ] }
 
-    /// Get information about current user.
-    public var currentUser: CurrentUser? { __data["currentUser"] }
+    /// Find a user.
+    public var user: User? { __data["user"] }
 
-    /// CurrentUser
+    /// User
     ///
-    /// Parent Type: `CurrentUser`
-    public struct CurrentUser: GitLabAPI.SelectionSet {
+    /// Parent Type: `UserCore`
+    public struct User: GitLabAPI.SelectionSet {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
+      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("projectMemberships", ProjectMemberships?.self),
@@ -46,7 +46,7 @@ public class UserIssuesQuery: GraphQLQuery {
       /// Project memberships of the user.
       public var projectMemberships: ProjectMemberships? { __data["projectMemberships"] }
 
-      /// CurrentUser.ProjectMemberships
+      /// User.ProjectMemberships
       ///
       /// Parent Type: `ProjectMemberConnection`
       public struct ProjectMemberships: GitLabAPI.SelectionSet {
@@ -62,7 +62,7 @@ public class UserIssuesQuery: GraphQLQuery {
         /// A list of nodes.
         public var nodes: [Node?]? { __data["nodes"] }
 
-        /// CurrentUser.ProjectMemberships.Node
+        /// User.ProjectMemberships.Node
         ///
         /// Parent Type: `ProjectMember`
         public struct Node: GitLabAPI.SelectionSet {
@@ -78,7 +78,7 @@ public class UserIssuesQuery: GraphQLQuery {
           /// Project that User is a member of.
           public var project: Project? { __data["project"] }
 
-          /// CurrentUser.ProjectMemberships.Node.Project
+          /// User.ProjectMemberships.Node.Project
           ///
           /// Parent Type: `Project`
           public struct Project: GitLabAPI.SelectionSet {
@@ -101,7 +101,7 @@ public class UserIssuesQuery: GraphQLQuery {
             /// Issues of the project.
             public var issues: Issues? { __data["issues"] }
 
-            /// CurrentUser.ProjectMemberships.Node.Project.Issues
+            /// User.ProjectMemberships.Node.Project.Issues
             ///
             /// Parent Type: `IssueConnection`
             public struct Issues: GitLabAPI.SelectionSet {
@@ -117,7 +117,7 @@ public class UserIssuesQuery: GraphQLQuery {
               /// A list of nodes.
               public var nodes: [Node?]? { __data["nodes"] }
 
-              /// CurrentUser.ProjectMemberships.Node.Project.Issues.Node
+              /// User.ProjectMemberships.Node.Project.Issues.Node
               ///
               /// Parent Type: `Issue`
               public struct Node: GitLabAPI.SelectionSet {
@@ -160,7 +160,7 @@ public class UserIssuesQuery: GraphQLQuery {
                 /// Web URL of the issue.
                 public var webUrl: String { __data["webUrl"] }
 
-                /// CurrentUser.ProjectMemberships.Node.Project.Issues.Node.Author
+                /// User.ProjectMemberships.Node.Project.Issues.Node.Author
                 ///
                 /// Parent Type: `UserCore`
                 public struct Author: GitLabAPI.SelectionSet {
@@ -170,11 +170,17 @@ public class UserIssuesQuery: GraphQLQuery {
                   public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
                   public static var __selections: [ApolloAPI.Selection] { [
                     .field("__typename", String.self),
+                    .field("avatarUrl", String?.self),
                     .field("name", String.self),
+                    .field("username", String.self),
                   ] }
 
+                  /// URL of the user's avatar.
+                  public var avatarUrl: String? { __data["avatarUrl"] }
                   /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
                   public var name: String { __data["name"] }
+                  /// Username of the user. Unique within this instance of GitLab.
+                  public var username: String { __data["username"] }
                 }
               }
             }

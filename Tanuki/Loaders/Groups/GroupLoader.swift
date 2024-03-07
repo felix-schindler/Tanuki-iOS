@@ -23,8 +23,7 @@ struct GroupLoader: View {
 	}
 
 	private func loadGroup() {
-		Network.shared.apollo.fetch(query: GroupQuery(fullPath: self.fullPath))
-		{ result in
+		Network.shared.apollo.fetch(query: GroupQuery(fullPath: self.fullPath)) { result in
 			switch result {
 			case .success(let graphQLResult):
 				print("Success! Setting group...")
@@ -77,7 +76,9 @@ struct GroupLoader: View {
 								)
 							}
 
-							PillView(group.fullName, cornerRadius: 5)
+							if group.name != group.fullName {
+								PillView(group.fullName, cornerRadius: 5)
+							}
 						}.font(.footnote)
 					}
 
@@ -129,11 +130,31 @@ struct GroupLoader: View {
 
 					DisclosureGroup(
 						content: {
-							Text("Activity")
-							Text("Members")
-							Text("Labels")
-							Text("Timelogs")
-							Text("Custom emojis")
+							// TODO: There seems to be no way to get the activity events of a group
+							// Text("Activity")
+							NavigationLink(
+								"Members",
+								destination: MembersLoader(
+									fullPath: self.fullPath,
+									type: .group
+								))
+							NavigationLink(
+								"Labels",
+								destination: LabelsLoader(
+									fullPath: self.fullPath, queryType: .group)
+							)
+							NavigationLink(
+								"Timelogs",
+								destination: TimelogsLoader(
+									fullPath_username: self.fullPath,
+									queryType: .group
+								)
+							)
+							NavigationLink(
+								"Custom emojis",
+								destination: CustomEmojisLoader(
+									fullPath: self.fullPath
+								))
 						},
 						label: {
 							Label("Manage", systemImage: "person.2")
@@ -142,11 +163,21 @@ struct GroupLoader: View {
 
 					DisclosureGroup(
 						content: {
-							Text("Issues")
-							Text("Epics")
-							Text("Issue boards")
-							Text("Epic boards")
-							Text("Milestones")
+							NavigationLink(
+								"Issues",
+								destination: GroupIssuesLoader(fullPath: self.fullPath)
+							)
+							NavigationLink(
+								"Epics",
+								destination: GroupEpicsLoader(fullPath: self.fullPath)
+							)
+							NavigationLink(
+								"Milestones",
+								destination: MilestonesLoader(
+									fullPath: self.fullPath,
+									queryType: .group
+								)
+							)
 						},
 						label: {
 							Label(
@@ -156,7 +187,9 @@ struct GroupLoader: View {
 
 					DisclosureGroup(
 						content: {
-							Text("Merge Requests")
+							NavigationLink(
+								"Merge Requests",
+								destination: GroupMergeLoader(fullPath: self.fullPath))
 						},
 						label: {
 							Label(
@@ -165,26 +198,16 @@ struct GroupLoader: View {
 									"chevron.left.forwardslash.chevron.right")
 						}
 					)
-
-					DisclosureGroup(
-						content: {
-							Text("Releases")
-							Text("Runners")
-						},
-						label: {
-							Label("Build", systemImage: "flag")
-						}
-					)
 				}.navigationTitle(group.path)
 			} else {
-				VStack(alignment: .center) {
+				VStack {
 					Image(systemName: "scale.3d")
 						.resizable()
 						.scaledToFit()
 						.foregroundStyle(.red)
 						.frame(width: 50, height: 50)
 					if loadFailed {
-						Text(LOAD_FAILED)
+						Text(loadFailedMsg)
 					} else {
 						ProgressView("Loading group")
 					}

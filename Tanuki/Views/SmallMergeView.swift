@@ -31,33 +31,40 @@ struct SmallMergeView: View {
 							.foregroundStyle(.secondary)
 					}.font(.footnote)
 					Text(mr.title.emojized())
-					HStack(spacing: 10) {
-						HStack(spacing: 2) {
-							Image(systemName: "hand.thumbsup")
-							Text(String(mr.upvotes))
-						}
-						HStack(spacing: 2) {
-							Image(systemName: "hand.thumbsdown")
-							Text(String(mr.downvotes))
-						}
-						HStack(spacing: 2) {
-							Image(systemName: "note.text")
-							Text(String(mr.userNotesCount ?? 0))
-						}
-						Spacer()
+					HStack {
 						ScrollView(.horizontal) {
 							HStack {
+								if let author = mr._author {
+									AuthorView(author)
+								}
 								HStack(spacing: 2) {
 									Image(systemName: "clock")
-									Text(Date.fromToString(mr.createdAt))
+									Text(
+										Date.fromToString(mr.createdAt)
+									)
 								}
-
-								if let author = mr._author {
-									HStack(spacing: 2) {
-										Image(systemName: "person")
-										Text(author.name)
-									}
-								}
+							}
+						}
+						Spacer()
+						HStack {
+							HStack(spacing: 2) {
+								Image(systemName: "hand.thumbsup")
+								Text(String(mr.upvotes))
+							}
+							HStack(spacing: 2) {
+								Image(
+									systemName:
+										"hand.thumbsdown")
+								Text(
+									String(mr.downvotes)
+								)
+							}
+							HStack(spacing: 2) {
+								Image(
+									systemName: "note.text")
+								Text(
+									String(mr.userNotesCount ?? 0)
+								)
 							}
 						}
 					}.font(.footnote)
@@ -66,9 +73,7 @@ struct SmallMergeView: View {
 						// TODO: Add action
 					}.tint(.blue)
 					if let webUrl = URL(string: mr.webUrl ?? "") {
-						ShareLink(item: webUrl) {
-							Label("Share", systemImage: "square.and.arrow.up")
-						}
+						ShareButton(webUrl)
 					}
 				}
 			}

@@ -119,50 +119,9 @@ struct MergeRequestLoader: View {
 						if mr.author != nil || mr.diffStatsSummary != nil {
 							ScrollView(.horizontal) {
 								HStack(spacing: 5) {
-									if let author = mr.author {
+									if let author = mr._author {
 										ScrollView(.horizontal) {
-											NavigationLink(
-												destination: NamespaceLoader(
-													fullPath: author.username),
-												label: {
-													Label(
-														title: {
-															Text(
-																author.name
-																	.isNotEmpty
-																	? author
-																		.name
-																	: author
-																		.username
-															)
-														},
-														icon: {
-															if let url =
-																URL.fromAvatar(
-																	author
-																		.avatarUrl
-																)
-															{
-																AvatarImage(
-																	url,
-																	size: .tiny)
-															} else {
-																Image(
-																	systemName:
-																		"person"
-																)
-															}
-														}
-													)
-												}
-											)
-											.buttonStyle(.plain)
-											.tint(.primary)
-											.padding(.horizontal, 8)
-											.padding(.vertical, 3)
-											.background(Color(.systemGray5))
-											.foregroundStyle(.primary)
-											.cornerRadius(5)
+											AuthorView(author)
 										}
 									}
 
@@ -231,8 +190,8 @@ struct MergeRequestLoader: View {
 										maybeUser in
 										if let user = maybeUser {
 											NavigationLink(
-												destination: NamespaceLoader(
-													fullPath: user.username),
+												destination: UserLoader(
+													username: user.username),
 												label: {
 													HStack {
 														if let url =
@@ -274,8 +233,8 @@ struct MergeRequestLoader: View {
 										maybeUser in
 										if let user = maybeUser {
 											NavigationLink(
-												destination: NamespaceLoader(
-													fullPath: user.username),
+												destination: UserLoader(
+													username: user.username),
 												label: {
 													HStack {
 														if let url =
@@ -312,16 +271,18 @@ struct MergeRequestLoader: View {
 							}
 						)
 
-						/* DisclosureGroup(
-						 content: {
-						 Text("Commits")
-						 Text("Changes")
-						 Text("Diffs")
-						 },
-						 label: {
-						 Label("Manage", systemImage: "filemenu.and.selection")
-						 }
-						 ) */
+						DisclosureGroup(
+							content: {
+								Text("Commits")
+								Text("Changes")
+								Text("Diffs")
+							},
+							label: {
+								Label(
+									"Details",
+									systemImage: "filemenu.and.selection")
+							}
+						)
 
 						if (mr.labels?.nodes?.count ?? 0) > 0 {
 							Label(
@@ -390,6 +351,7 @@ struct MergeRequestLoader: View {
 										systemImage: "person.fill.xmark"
 									) {
 										// TODO: Implement
+										Haptics.shared.notify(.error)
 									}.tint(.red)
 								} else {
 									Button(
@@ -397,21 +359,39 @@ struct MergeRequestLoader: View {
 										systemImage: "person.fill.checkmark"
 									) {
 										// TODO: Implement
+										Haptics.shared.notify(.error)
 									}.tint(.green)
 								}
 							}
 
 							if mr.userPermissions.updateMergeRequest {
-								Button(
-									action: {
-										// TODO: Implement
-									},
-									label: {
-										Label(
-											"Close MR",
-											systemImage: "arrow.triangle.swap")
-									}
-								).tint(.blue)
+								if mr.state == .opened {
+									Button(
+										action: {
+											// TODO: Implement
+											Haptics.shared.notify(.error)
+										},
+										label: {
+											Label(
+												"Close MR",
+												systemImage:
+													"arrow.triangle.swap")
+										}
+									).tint(.blue)
+								} else if mr.state == .closed {
+									Button(
+										action: {
+											// TODO: Implement
+											Haptics.shared.notify(.error)
+										},
+										label: {
+											Label(
+												"Reopen MR",
+												systemImage:
+													"arrow.triangle.swap")
+										}
+									).tint(.green)
+								}
 							}
 
 							if mr.userPermissions.canMerge
@@ -421,8 +401,9 @@ struct MergeRequestLoader: View {
 									action: {
 										if mr.mergeStatusEnum != .canBeMerged {
 											showMergeStatus = true
+											Haptics.shared.play(.light)
 										} else {
-											// TODO: Show merge options
+											// TODO: Show OPTIONS for merge
 										}
 									},
 									label: {
@@ -430,15 +411,11 @@ struct MergeRequestLoader: View {
 									}
 								).sheet(isPresented: $showMergeStatus) {
 									VStack(alignment: .leading) {
-										HStack {
-											Text("Detailed merge status")
-												.font(.title)
-												.fontWeight(.bold)
-											Spacer()
-											CloseButton {
+										PopupHeader(
+											title: "Detailed merge status",
+											onClose: {
 												showMergeStatus = false
-											}
-										}
+											})
 
 										if mr.conflicts {
 											Label(
@@ -510,7 +487,7 @@ struct MergeRequestLoader: View {
 				}
 			} else if loadFailed {
 				VStack {
-					Text(LOAD_FAILED)
+					Text(loadFailedMsg)
 				}.frame(maxWidth: .infinity, minHeight: 100)
 			} else {
 				VStack {

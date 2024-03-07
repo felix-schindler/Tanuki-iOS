@@ -1,0 +1,13 @@
+query ProjectLabels($fullPath: ID!) {
+  project(fullPath: $fullPath) {
+    labels {
+      nodes {
+        id
+        title
+        description
+        color
+        textColor
+      }
+    }
+  }
+}

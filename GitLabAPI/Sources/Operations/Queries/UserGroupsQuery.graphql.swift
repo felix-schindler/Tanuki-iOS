@@ -7,10 +7,16 @@ public class UserGroupsQuery: GraphQLQuery {
   public static let operationName: String = "UserGroups"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query UserGroups { currentUser { __typename groups { __typename nodes { __typename avatarUrl name fullPath visibility groupMembersCount projectsCount maxAccessLevel { __typename stringValue } } } } }"#
+      #"query UserGroups($username: String!) { user(username: $username) { __typename groups { __typename nodes { __typename avatarUrl name fullPath visibility groupMembersCount projectsCount maxAccessLevel { __typename stringValue } } } } }"#
     ))
 
-  public init() {}
+  public var username: String
+
+  public init(username: String) {
+    self.username = username
+  }
+
+  public var __variables: Variables? { ["username": username] }
 
   public struct Data: GitLabAPI.SelectionSet {
     public let __data: DataDict
@@ -18,20 +24,20 @@ public class UserGroupsQuery: GraphQLQuery {
 
     public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
-      .field("currentUser", CurrentUser?.self),
+      .field("user", User?.self, arguments: ["username": .variable("username")]),
     ] }
 
-    /// Get information about current user.
-    public var currentUser: CurrentUser? { __data["currentUser"] }
+    /// Find a user.
+    public var user: User? { __data["user"] }
 
-    /// CurrentUser
+    /// User
     ///
-    /// Parent Type: `CurrentUser`
-    public struct CurrentUser: GitLabAPI.SelectionSet {
+    /// Parent Type: `UserCore`
+    public struct User: GitLabAPI.SelectionSet {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
+      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("groups", Groups?.self),
@@ -40,7 +46,7 @@ public class UserGroupsQuery: GraphQLQuery {
       /// Groups where the user has access.
       public var groups: Groups? { __data["groups"] }
 
-      /// CurrentUser.Groups
+      /// User.Groups
       ///
       /// Parent Type: `GroupConnection`
       public struct Groups: GitLabAPI.SelectionSet {
@@ -56,7 +62,7 @@ public class UserGroupsQuery: GraphQLQuery {
         /// A list of nodes.
         public var nodes: [Node?]? { __data["nodes"] }
 
-        /// CurrentUser.Groups.Node
+        /// User.Groups.Node
         ///
         /// Parent Type: `Group`
         public struct Node: GitLabAPI.SelectionSet {
@@ -90,7 +96,7 @@ public class UserGroupsQuery: GraphQLQuery {
           /// The maximum access level of the current user in the group.
           public var maxAccessLevel: MaxAccessLevel { __data["maxAccessLevel"] }
 
-          /// CurrentUser.Groups.Node.MaxAccessLevel
+          /// User.Groups.Node.MaxAccessLevel
           ///
           /// Parent Type: `AccessLevel`
           public struct MaxAccessLevel: GitLabAPI.SelectionSet {

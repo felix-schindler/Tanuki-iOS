@@ -1,0 +1,22 @@
+query GroupMergeRequests($fullPath: ID!) {
+  group(fullPath: $fullPath) {
+    mergeRequests(state: opened) {
+      nodes {
+        iid
+        title
+        reference(full: true)
+        state
+        upvotes
+        downvotes
+        userNotesCount
+        author {
+          avatarUrl
+          name
+          username
+        }
+        createdAt
+        webUrl
+      }
+    }
+  }
+}

@@ -7,10 +7,16 @@ public class UserMembershipProjectsQuery: GraphQLQuery {
   public static let operationName: String = "UserMembershipProjects"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query UserMembershipProjects { currentUser { __typename projectMemberships { __typename nodes { __typename project { __typename avatarUrl nameWithNamespace visibility fullPath } } } } }"#
+      #"query UserMembershipProjects($username: String!) { user(username: $username) { __typename projectMemberships { __typename nodes { __typename project { __typename avatarUrl nameWithNamespace visibility fullPath } } } } }"#
     ))
 
-  public init() {}
+  public var username: String
+
+  public init(username: String) {
+    self.username = username
+  }
+
+  public var __variables: Variables? { ["username": username] }
 
   public struct Data: GitLabAPI.SelectionSet {
     public let __data: DataDict
@@ -18,20 +24,20 @@ public class UserMembershipProjectsQuery: GraphQLQuery {
 
     public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
-      .field("currentUser", CurrentUser?.self),
+      .field("user", User?.self, arguments: ["username": .variable("username")]),
     ] }
 
-    /// Get information about current user.
-    public var currentUser: CurrentUser? { __data["currentUser"] }
+    /// Find a user.
+    public var user: User? { __data["user"] }
 
-    /// CurrentUser
+    /// User
     ///
-    /// Parent Type: `CurrentUser`
-    public struct CurrentUser: GitLabAPI.SelectionSet {
+    /// Parent Type: `UserCore`
+    public struct User: GitLabAPI.SelectionSet {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
+      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("projectMemberships", ProjectMemberships?.self),
@@ -40,7 +46,7 @@ public class UserMembershipProjectsQuery: GraphQLQuery {
       /// Project memberships of the user.
       public var projectMemberships: ProjectMemberships? { __data["projectMemberships"] }
 
-      /// CurrentUser.ProjectMemberships
+      /// User.ProjectMemberships
       ///
       /// Parent Type: `ProjectMemberConnection`
       public struct ProjectMemberships: GitLabAPI.SelectionSet {
@@ -56,7 +62,7 @@ public class UserMembershipProjectsQuery: GraphQLQuery {
         /// A list of nodes.
         public var nodes: [Node?]? { __data["nodes"] }
 
-        /// CurrentUser.ProjectMemberships.Node
+        /// User.ProjectMemberships.Node
         ///
         /// Parent Type: `ProjectMember`
         public struct Node: GitLabAPI.SelectionSet {
@@ -72,7 +78,7 @@ public class UserMembershipProjectsQuery: GraphQLQuery {
           /// Project that User is a member of.
           public var project: Project? { __data["project"] }
 
-          /// CurrentUser.ProjectMemberships.Node.Project
+          /// User.ProjectMemberships.Node.Project
           ///
           /// Parent Type: `Project`
           public struct Project: GitLabAPI.SelectionSet {

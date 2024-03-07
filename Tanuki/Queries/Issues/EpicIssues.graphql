@@ -1,0 +1,24 @@
+query EpicIssues($fullPath: ID!, $iid: ID!) {
+  group(fullPath: $fullPath) {
+    epic(iid: $iid) {
+      issues {
+        nodes {
+          iid
+          title
+          reference(full: true)
+          state
+          upvotes
+          downvotes
+          userNotesCount
+          author {
+            avatarUrl
+            name
+            username
+          }
+          createdAt
+          webUrl
+        }
+      }
+    }
+  }
+}

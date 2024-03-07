@@ -1,0 +1,78 @@
+query Epic($fullPath: ID!, $iid: ID!) {
+  group(fullPath: $fullPath) {
+    avatarUrl
+    epic(iid: $iid) {
+      iid
+      title
+      description
+      reference(full: true)
+      state
+      dueDate
+      createdAt
+      webUrl
+      
+      startDate
+      dueDate
+      color
+      textColor
+      
+      upvotes
+      downvotes
+      userNotesCount
+      
+      author {
+        avatarUrl
+        name
+        username
+      }
+      
+      ancestors {
+        nodes {
+          iid
+        }
+      }
+      
+      blockedByEpics {
+        nodes {
+          iid
+        }
+      }
+      
+      children {
+        nodes {
+          iid
+        }
+      }
+      
+      userPermissions {
+        updateEpic
+        createNote
+      }
+      
+      labels {
+        nodes {
+          title
+          color
+          textColor
+        }
+      }
+      
+      notes {
+        nodes {
+          id
+          author {
+            avatarUrl
+            name
+            username
+          }
+          maxAccessLevelOfAuthor
+          body
+          system
+          systemNoteIconName
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+}

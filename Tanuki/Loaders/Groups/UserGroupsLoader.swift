@@ -9,21 +9,41 @@ import GitLabAPI
 import SwiftUI
 
 struct UserGroupsLoader: View {
+	private let username: String?
+
 	@State
-	private var groups: [UserGroupsQuery.Data.CurrentUser.Groups.Node?]?
+	private var groups: [Group?]?
 
 	@State
 	private var loadFailed = false
 
+	init(username: String? = nil) {
+		self.username = username
+	}
+
 	private func loadGroups() {
-		Network.shared.apollo.fetch(query: UserGroupsQuery()) { result in
-			switch result {
-			case .success(let graphQLResult):
-				print("Success! Setting merge groups...")
-				groups = graphQLResult.data?.currentUser?.groups?.nodes
-			case .failure(let error):
-				print("Failure! Error: \(error)")
-				loadFailed = true
+		if let user = self.username {
+			Network.shared.apollo.fetch(query: UserGroupsQuery(username: user)) { result in
+				switch result {
+				case .success(let graphQLResult):
+					print("Success! Setting merge groups...")
+					groups = graphQLResult.data?.user?.groups?.nodes
+				case .failure(let error):
+					print("Failure! Error: \(error)")
+					loadFailed = true
+				}
+			}
+		} else {
+			Network.shared.apollo.fetch(query: CurrentUserGroupsQuery()) {
+				result in
+				switch result {
+				case .success(let graphQLResult):
+					print("Success! Setting merge groups...")
+					groups = graphQLResult.data?.currentUser?.groups?.nodes
+				case .failure(let error):
+					print("Failure! Error: \(error)")
+					loadFailed = true
+				}
 			}
 		}
 	}
@@ -80,10 +100,7 @@ struct UserGroupsLoader: View {
 											}.font(.footnote)
 										}
 
-										if let accessLevel = group
-											.maxAccessLevel.stringValue?
-											.rawValue
-										{
+										if let accessLevel = group._accessLevel {
 											Spacer()
 											PillView(
 												accessLevel.lowercased()
@@ -97,14 +114,14 @@ struct UserGroupsLoader: View {
 					}
 				}
 			} else {
-				VStack(alignment: .center) {
+				VStack {
 					Image(systemName: "scale.3d")
 						.resizable()
 						.scaledToFit()
 						.foregroundStyle(.red)
 						.frame(width: 50, height: 50)
 					if loadFailed {
-						Text(LOAD_FAILED)
+						Text(loadFailedMsg)
 					} else {
 						ProgressView("Loading groups")
 					}

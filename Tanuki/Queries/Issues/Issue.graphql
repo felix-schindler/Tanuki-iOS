@@ -60,6 +60,7 @@ query Issue($fullPath: ID!, $iid: String!) {
 		  id
 		  author {
             avatarUrl
+            name
             username
           }
           maxAccessLevelOfAuthor

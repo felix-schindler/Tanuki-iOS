@@ -61,18 +61,20 @@ struct UserView: View {
 								}
 							)
 						} else {
-							PillView(user.location!, icon: "mappin.and.ellipse", cornerRadius: 5)
+							PillView(
+								user.location!, icon: "mappin.and.ellipse",
+								cornerRadius: 5)
 						}
 					}
-					
+
 					let hasJob = user.jobTitle != nil
 					let hasOrg = user.organization != nil
 					if hasJob || hasOrg {
 						let workInfo =
-						hasJob && hasOrg
-						? "\(user.jobTitle!) at \(user.organization!)"
-						: "\(user.jobTitle ?? "") \(user.organization ?? "")"
-							.trimmingCharacters(in: .whitespaces)
+							hasJob && hasOrg
+							? "\(user.jobTitle!) at \(user.organization!)"
+							: "\(user.jobTitle ?? "") \(user.organization ?? "")"
+								.trimmingCharacters(in: .whitespaces)
 						PillView(
 							workInfo,
 							icon: "briefcase",
@@ -81,7 +83,7 @@ struct UserView: View {
 					}
 				}.font(.footnote)
 			}
-			
+
 			ScrollView(.horizontal) {
 				HStack {
 					if let status = user._status {
@@ -98,7 +100,7 @@ struct UserView: View {
 						.background(Color(.systemGray5))
 						.cornerRadius(5)
 					}
-					
+
 					if user.pronouns?.isNotEmpty ?? false {
 						PillView(user.pronouns!, cornerRadius: 5)
 					}
@@ -131,7 +133,7 @@ struct UserView: View {
 				}
 			}.foregroundStyle(.orange)
 		}
-		
+
 		let showMail = user.publicEmail?.isNotEmpty ?? false
 		let showIn = user.linkedin?.isNotEmpty ?? false
 		let showTwitter = user.twitter?.isNotEmpty ?? false
@@ -157,43 +159,89 @@ struct UserView: View {
 				}
 			}
 		}
-		
-		Label("Activity", systemImage: "clock.arrow.circlepath")
-		Label(title: {
-			Text("Groups")
-			Spacer()
-			Text(String(user.groupCount ?? 0))
-		}, icon: {
-			Image(systemName: "scale.3d")
-				.foregroundStyle(.red)
-		})
-		Label(title: {
-			Text("Projects")
-		}, icon: {
-			Image(systemName: "app.gift.fill")
-				.foregroundStyle(.gray)
-		})
-		Label(title: {
-			Text("Starred projects")
-		}, icon: {
-			Image(systemName: "star.fill")
-				.foregroundStyle(.yellow)
-		})
-		Label(title: {
-			Text("Snippets")
-		}, icon: {
-			Image(systemName: "scissors")
-				.foregroundStyle(.purple)
-		})
-		
-		DisclosureGroup(
-			content: {
-				Text("Timelogs")
-				Text("Todos")
-			},
+
+		NavigationLink(
+			destination: UserGroupsLoader(username: user.username),
 			label: {
-				Label("More", systemImage: "ellipsis")
+				Label(
+					title: {
+						Text("Groups")
+						Spacer()
+						Text(String(user.groupCount ?? 0))
+					},
+					icon: {
+						Image(systemName: "scale.3d")
+							.foregroundStyle(.red)
+					})
+			})
+		NavigationLink(
+			destination: UserProjectsLoader(username: user.username),
+			label: {
+				Label(
+					title: {
+						Text("Projects")
+					},
+					icon: {
+						Image(systemName: "app.gift.fill")
+							.foregroundStyle(.gray)
+					})
+			})
+		NavigationLink(
+			destination: UserStarredProjectsLoader(username: user.username),
+			label: {
+				Label(
+					title: {
+						Text("Starred projects")
+					},
+					icon: {
+						Image(systemName: "star.fill")
+							.foregroundStyle(.yellow)
+					})
+			})
+		NavigationLink(
+			destination: UserSnippetsLoader(username: user.username),
+			label: {
+				Label(
+					title: {
+						Text("Snippets")
+					},
+					icon: {
+						Image(systemName: "scissors")
+							.foregroundStyle(.purple)
+					}
+				)
+			})
+		NavigationLink(
+			destination: UserIssuesLoader(username: user.username),
+			label: {
+				Label(
+					title: {
+						Text("Issues")
+					},
+					icon: {
+						Image(systemName: "smallcircle.circle")
+							.foregroundStyle(.green)
+					}
+				)
 			}
 		)
+		if let id = user.id.toIntId() {
+			NavigationLink(
+				destination: EventsLoader(userId: id),
+				label: {
+					Label("Activity", systemImage: "clock.arrow.circlepath")
+				}
+			)
+		}
+		NavigationLink(
+			destination: TimelogsLoader(
+				fullPath_username: user.username,
+				queryType: .group
+			),
+			label: {
+				Label("Timelogs", systemImage: "hourglass")
+			}
+		)
+		Label("Todos", systemImage: "checkmark.square")
 	}
 }

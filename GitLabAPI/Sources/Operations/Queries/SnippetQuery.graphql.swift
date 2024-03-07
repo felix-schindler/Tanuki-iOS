@@ -7,7 +7,7 @@ public class SnippetQuery: GraphQLQuery {
   public static let operationName: String = "Snippet"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Snippet($id: SnippetID!) { snippets(ids: [$id]) { __typename nodes { __typename title description visibilityLevel userPermissions { __typename createNote } author { __typename avatarUrl username name } blobs { __typename nodes { __typename size name rawPlainData } } notes { __typename nodes { __typename id author { __typename avatarUrl username } maxAccessLevelOfAuthor body system systemNoteIconName createdAt updatedAt } } createdAt sshUrlToRepo httpUrlToRepo webUrl } } }"#
+      #"query Snippet($id: SnippetID!) { snippets(ids: [$id]) { __typename nodes { __typename id title description visibilityLevel userPermissions { __typename createNote } author { __typename avatarUrl username name } blobs { __typename nodes { __typename size name rawPlainData } } notes { __typename nodes { __typename id author { __typename avatarUrl name username } maxAccessLevelOfAuthor body system systemNoteIconName createdAt updatedAt } } createdAt sshUrlToRepo httpUrlToRepo webUrl } } }"#
     ))
 
   public var id: SnippetID
@@ -56,6 +56,7 @@ public class SnippetQuery: GraphQLQuery {
         public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Snippet }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
+          .field("id", GitLabAPI.SnippetID.self),
           .field("title", String.self),
           .field("description", String?.self),
           .field("visibilityLevel", GraphQLEnum<GitLabAPI.VisibilityLevelsEnum>.self),
@@ -69,6 +70,8 @@ public class SnippetQuery: GraphQLQuery {
           .field("webUrl", String.self),
         ] }
 
+        /// ID of the snippet.
+        public var id: GitLabAPI.SnippetID { __data["id"] }
         /// Title of the snippet.
         public var title: String { __data["title"] }
         /// Description of the snippet.
@@ -236,11 +239,14 @@ public class SnippetQuery: GraphQLQuery {
               public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("avatarUrl", String?.self),
+                .field("name", String.self),
                 .field("username", String.self),
               ] }
 
               /// URL of the user's avatar.
               public var avatarUrl: String? { __data["avatarUrl"] }
+              /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
+              public var name: String { __data["name"] }
               /// Username of the user. Unique within this instance of GitLab.
               public var username: String { __data["username"] }
             }

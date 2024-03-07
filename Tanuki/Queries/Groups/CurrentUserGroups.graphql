@@ -1,0 +1,17 @@
+query CurrentUserGroups {
+  currentUser {
+    groups {
+      nodes {
+        avatarUrl
+        name
+        fullPath
+        visibility
+        groupMembersCount
+        projectsCount
+        maxAccessLevel {
+          stringValue
+        }
+      }
+    }
+  }
+}

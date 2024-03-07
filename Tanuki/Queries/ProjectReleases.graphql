@@ -1,0 +1,47 @@
+query ProjectReleasesQuery($fullPath: ID!) {
+  project(fullPath: $fullPath) {
+    releases {
+      nodes {
+        id
+        name
+        description
+        tagName
+        releasedAt
+        
+        author {
+          avatarUrl
+          name
+          username
+        }
+        
+        commit {
+          shortId
+        }
+        
+        milestones {
+          nodes {
+            id
+            title
+          }
+        }
+        
+        assets {
+          count
+          links {
+            nodes {
+              id
+              name
+              url
+            }
+          }
+          sources {
+            nodes {
+              url
+              format
+            }
+          }
+        }
+      }
+    }
+  }
+}

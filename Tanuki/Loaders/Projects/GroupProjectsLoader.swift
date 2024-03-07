@@ -60,14 +60,14 @@ struct GroupProjectsLoader: View {
 					}
 				}
 			} else {
-				VStack(alignment: .center) {
+				VStack {
 					Image(systemName: "app.gift.fill")
 						.resizable()
 						.scaledToFit()
 						.foregroundStyle(.gray)
 						.frame(width: 50, height: 50)
 					if loadFailed {
-						Text(LOAD_FAILED)
+						Text(loadFailedMsg)
 					} else {
 						ProgressView("Loading projects")
 					}
