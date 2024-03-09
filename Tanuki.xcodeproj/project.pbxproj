@@ -365,11 +365,11 @@
 			isa = PBXGroup;
 			children = (
 				DC5F99DF2B9384CE001C88A3 /* Info.plist */,
-				DC386A982B8D6162002E5F6D /* Queries */,
 				DC2704FE2B8BC0FB003DAA84 /* Tanuki.entitlements */,
 				DC2704FC2B8BC0FB003DAA84 /* Assets.xcassets */,
-				DC3A24592B8C4C8F00DB0E3F /* Core */,
+				DC386A982B8D6162002E5F6D /* Queries */,
 				DC2704F82B8BC0F9003DAA84 /* TanukiApp.swift */,
+				DC3A24592B8C4C8F00DB0E3F /* Core */,
 				DC6C5D9D2B8F08F900587850 /* Loaders */,
 				DC6C5D9C2B8F08F500587850 /* Views */,
 				DC3A24582B8C4C7C00DB0E3F /* Components */,
