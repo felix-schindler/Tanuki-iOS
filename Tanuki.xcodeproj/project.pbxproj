@@ -69,6 +69,10 @@
 		DC27050D2B8BC351003DAA84 /* CurrentUserStarredProjects.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC27050C2B8BC351003DAA84 /* CurrentUserStarredProjects.graphql */; };
 		DC2705112B8BC507003DAA84 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2705102B8BC507003DAA84 /* Network.swift */; };
 		DC2705192B8BC68E003DAA84 /* GitLabAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC2705182B8BC68E003DAA84 /* GitLabAPI */; };
+		DC32765E2B9B4FAF00B51EEE /* CurrentUserTodos.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC32765D2B9B4FAF00B51EEE /* CurrentUserTodos.graphql */; };
+		DC3276602B9B4FDE00B51EEE /* UserTodos.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC32765F2B9B4FDE00B51EEE /* UserTodos.graphql */; };
+		DC3276632B9B503500B51EEE /* CurrentUserTodosLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3276622B9B503500B51EEE /* CurrentUserTodosLoader.swift */; };
+		DC3276652B9B503C00B51EEE /* UserTodosLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3276642B9B503C00B51EEE /* UserTodosLoader.swift */; };
 		DC386A952B8D5FB2002E5F6D /* MergeRequestLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC386A942B8D5FB2002E5F6D /* MergeRequestLoader.swift */; };
 		DC386A972B8D615D002E5F6D /* MergeRequest.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC386A962B8D615D002E5F6D /* MergeRequest.graphql */; };
 		DC386A9A2B8D86C4002E5F6D /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC386A992B8D86C4002E5F6D /* NoteView.swift */; };
@@ -109,6 +113,7 @@
 		DCB5E0D62B96C63A000F67FB /* CustomEmojisLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5E0D52B96C63A000F67FB /* CustomEmojisLoader.swift */; };
 		DCB5E0D82B96CC5E000F67FB /* GroupMergeRequests.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCB5E0D72B96CC5E000F67FB /* GroupMergeRequests.graphql */; };
 		DCB5E0DA2B96CD33000F67FB /* GroupMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5E0D92B96CD33000F67FB /* GroupMergeLoader.swift */; };
+		DCCB5D8D2B9C0E8300D5D70A /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */; };
 		DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2662B94C29600F4B245 /* EventsLoader.swift */; };
 		DCEFB2692B94C2C100F4B245 /* RestTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2682B94C2C100F4B245 /* RestTypes.swift */; };
 		DCEFB26B2B94C37600F4B245 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB26A2B94C37600F4B245 /* API.swift */; };
@@ -173,6 +178,10 @@
 		DC2705002B8BC0FB003DAA84 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DC27050C2B8BC351003DAA84 /* CurrentUserStarredProjects.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CurrentUserStarredProjects.graphql; sourceTree = "<group>"; };
 		DC2705102B8BC507003DAA84 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		DC32765D2B9B4FAF00B51EEE /* CurrentUserTodos.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CurrentUserTodos.graphql; sourceTree = "<group>"; };
+		DC32765F2B9B4FDE00B51EEE /* UserTodos.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserTodos.graphql; sourceTree = "<group>"; };
+		DC3276622B9B503500B51EEE /* CurrentUserTodosLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserTodosLoader.swift; sourceTree = "<group>"; };
+		DC3276642B9B503C00B51EEE /* UserTodosLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTodosLoader.swift; sourceTree = "<group>"; };
 		DC386A942B8D5FB2002E5F6D /* MergeRequestLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeRequestLoader.swift; sourceTree = "<group>"; };
 		DC386A962B8D615D002E5F6D /* MergeRequest.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MergeRequest.graphql; sourceTree = "<group>"; };
 		DC386A992B8D86C4002E5F6D /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
@@ -212,6 +221,7 @@
 		DCB5E0D52B96C63A000F67FB /* CustomEmojisLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEmojisLoader.swift; sourceTree = "<group>"; };
 		DCB5E0D72B96CC5E000F67FB /* GroupMergeRequests.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GroupMergeRequests.graphql; sourceTree = "<group>"; };
 		DCB5E0D92B96CD33000F67FB /* GroupMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMergeLoader.swift; sourceTree = "<group>"; };
+		DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoView.swift; sourceTree = "<group>"; };
 		DCEFB2662B94C29600F4B245 /* EventsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsLoader.swift; sourceTree = "<group>"; };
 		DCEFB2682B94C2C100F4B245 /* RestTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTypes.swift; sourceTree = "<group>"; };
 		DCEFB26A2B94C37600F4B245 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -383,6 +393,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		DC32765C2B9B4F9C00B51EEE /* Todos */ = {
+			isa = PBXGroup;
+			children = (
+				DC32765F2B9B4FDE00B51EEE /* UserTodos.graphql */,
+				DC32765D2B9B4FAF00B51EEE /* CurrentUserTodos.graphql */,
+			);
+			path = Todos;
+			sourceTree = "<group>";
+		};
+		DC3276612B9B500F00B51EEE /* Todos */ = {
+			isa = PBXGroup;
+			children = (
+				DC3276622B9B503500B51EEE /* CurrentUserTodosLoader.swift */,
+				DC3276642B9B503C00B51EEE /* UserTodosLoader.swift */,
+			);
+			path = Todos;
+			sourceTree = "<group>";
+		};
 		DC386A982B8D6162002E5F6D /* Queries */ = {
 			isa = PBXGroup;
 			children = (
@@ -396,6 +424,7 @@
 				DC1D0FF82B994F6600B6F5D7 /* Timelogs */,
 				DC1C37E82B999F54005B7D7A /* Epics */,
 				DC1C37EF2B99BA5F005B7D7A /* Milestones */,
+				DC32765C2B9B4F9C00B51EEE /* Todos */,
 				DC69F1512B95A27F00F09269 /* ProjectReleases.graphql */,
 				DC1D100B2B9975B000B6F5D7 /* ProjectPipelines.graphql */,
 				DCB5E0D32B96C487000F67FB /* GroupCustomEmoji.graphql */,
@@ -442,6 +471,7 @@
 				DC1D10052B996C5300B6F5D7 /* SmallIssueView.swift */,
 				DC21AA7A2B905F0D00976E64 /* SettingsView.swift */,
 				DC5F37072B91A1D100BF7F9D /* AuthorView.swift */,
+				DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -456,6 +486,7 @@
 				DC217DDB2B8FD2FB00F081BC /* Groups */,
 				DC21AA732B90384D00976E64 /* Users */,
 				DC1C37E52B999F37005B7D7A /* Epics */,
+				DC3276612B9B500F00B51EEE /* Todos */,
 				DCEFB2662B94C29600F4B245 /* EventsLoader.swift */,
 				DC1D100D2B9975E000B6F5D7 /* ProjectPipelinesLoader.swift */,
 				DC69F1532B95A2DE00F09269 /* ProjectReleasesLoader.swift */,
@@ -646,6 +677,7 @@
 				DC1C37F12B99BA69005B7D7A /* GroupMilestones.graphql in Resources */,
 				DC217DDA2B8FD1CA00F081BC /* CurrentUserGroups.graphql in Resources */,
 				DC386A972B8D615D002E5F6D /* MergeRequest.graphql in Resources */,
+				DC3276602B9B4FDE00B51EEE /* UserTodos.graphql in Resources */,
 				DCB5E0D42B96C487000F67FB /* GroupCustomEmoji.graphql in Resources */,
 				DC21AA722B90364500976E64 /* CurrentUser.graphql in Resources */,
 				DC6C5DBC2B8FB34B00587850 /* CurrentUserSnippets.graphql in Resources */,
@@ -666,6 +698,7 @@
 				DC21AA692B902F0000976E64 /* DescendantGroups.graphql in Resources */,
 				DC13E8A52B8DE35C00994E8A /* Issue.graphql in Resources */,
 				DC463BB82B941933005CA5FB /* UserStarredProjects.graphql in Resources */,
+				DC32765E2B9B4FAF00B51EEE /* CurrentUserTodos.graphql in Resources */,
 				DC1D0FF72B994A6900B6F5D7 /* ProjectLabels.graphql in Resources */,
 				DC1D0FFC2B994FC300B6F5D7 /* UserTimelogs.graphql in Resources */,
 				DC463BBE2B942630005CA5FB /* UserGroups.graphql in Resources */,
@@ -712,6 +745,7 @@
 				DC0FF5B62B8C7AFB002B4FAE /* ProjectMergeLoader.swift in Sources */,
 				DC386A9A2B8D86C4002E5F6D /* NoteView.swift in Sources */,
 				DC69F1542B95A2DE00F09269 /* ProjectReleasesLoader.swift in Sources */,
+				DC3276652B9B503C00B51EEE /* UserTodosLoader.swift in Sources */,
 				DC1C37E42B9994B1005B7D7A /* GroupEpicsLoader.swift in Sources */,
 				DC1D10062B996C5300B6F5D7 /* SmallIssueView.swift in Sources */,
 				DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */,
@@ -722,8 +756,10 @@
 				DCB5E0D62B96C63A000F67FB /* CustomEmojisLoader.swift in Sources */,
 				DCEFB2692B94C2C100F4B245 /* RestTypes.swift in Sources */,
 				DC3A24512B8C3E1A00DB0E3F /* AvatarImage.swift in Sources */,
+				DCCB5D8D2B9C0E8300D5D70A /* TodoView.swift in Sources */,
 				DC463BBA2B941970005CA5FB /* UserStarredProjectsLoader.swift in Sources */,
 				DC6C5DB62B8F90E400587850 /* UserProjectsLoader.swift in Sources */,
+				DC3276632B9B503500B51EEE /* CurrentUserTodosLoader.swift in Sources */,
 				DC3A244D2B8C37BF00DB0E3F /* ProjectLoader.swift in Sources */,
 				DC217DD12B8FBA2200F081BC /* SnippetLoader.swift in Sources */,
 				DC21AA6B2B902F8400976E64 /* DescendantGroupsLoader.swift in Sources */,
@@ -863,6 +899,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tanuki/Tanuki.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -873,6 +910,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tanuki/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Tanuki Lite";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -887,7 +925,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -897,6 +935,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TVOS_DEPLOYMENT_TARGET = 16.0;
 			};
 			name = Debug;
 		};
@@ -906,6 +945,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tanuki/Tanuki.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -916,6 +956,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tanuki/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Tanuki Lite";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -930,7 +971,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -940,6 +981,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TVOS_DEPLOYMENT_TARGET = 16.0;
 			};
 			name = Release;
 		};

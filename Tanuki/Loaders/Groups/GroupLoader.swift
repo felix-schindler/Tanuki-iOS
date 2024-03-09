@@ -146,7 +146,7 @@ struct GroupLoader: View {
 							NavigationLink(
 								"Timelogs",
 								destination: TimelogsLoader(
-									fullPath_username: self.fullPath,
+									fullPath: self.fullPath,
 									queryType: .group
 								)
 							)

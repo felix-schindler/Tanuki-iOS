@@ -161,6 +161,20 @@ struct UserView: View {
 		}
 
 		NavigationLink(
+			destination: UserIssuesLoader(username: user.username),
+			label: {
+				Label(
+					title: {
+						Text("Issues")
+					},
+					icon: {
+						Image(systemName: "smallcircle.circle")
+							.foregroundStyle(.green)
+					}
+				)
+			}
+		)
+		NavigationLink(
 			destination: UserGroupsLoader(username: user.username),
 			label: {
 				Label(
@@ -211,20 +225,6 @@ struct UserView: View {
 					}
 				)
 			})
-		NavigationLink(
-			destination: UserIssuesLoader(username: user.username),
-			label: {
-				Label(
-					title: {
-						Text("Issues")
-					},
-					icon: {
-						Image(systemName: "smallcircle.circle")
-							.foregroundStyle(.green)
-					}
-				)
-			}
-		)
 		if let id = user.id.toIntId() {
 			NavigationLink(
 				destination: EventsLoader(userId: id),
@@ -235,13 +235,18 @@ struct UserView: View {
 		}
 		NavigationLink(
 			destination: TimelogsLoader(
-				fullPath_username: user.username,
+				fullPath: user.username,
 				queryType: .group
 			),
 			label: {
 				Label("Timelogs", systemImage: "hourglass")
 			}
 		)
-		Label("Todos", systemImage: "checkmark.square")
+		NavigationLink(
+			destination: UserTodosLoader(username: user.username),
+			label: {
+				Label("Todos", systemImage: "checkmark.square")
+			}
+		)
 	}
 }

@@ -9,9 +9,11 @@ import SwiftUI
 
 struct SmallProjectView: View {
 	private var project: SmallProject
+	private let avatarSize: AvatarSize
 
-	init(_ project: SmallProject) {
+	init(_ project: SmallProject, avatarSize: AvatarSize = .small) {
 		self.project = project
+		self.avatarSize = avatarSize
 	}
 
 	var body: some View {
@@ -20,7 +22,7 @@ struct SmallProjectView: View {
 			label: {
 				HStack {
 					if let url = URL.fromAvatar(project.avatarUrl) {
-						AvatarImage(url, size: .small)
+						AvatarImage(url, size: avatarSize)
 					}
 					Text(project.nameWithNamespace)
 					Spacer()

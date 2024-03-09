@@ -19,13 +19,13 @@ struct TimelogsLoader: View {
 	private let queryType: TimelogsQueryType
 
 	@State
-	private var timelogs: [Timelog?]?
+	private var timelogs: [Timelog?]? = nil
 
 	@State
 	private var loadFailed = false
 
-	init(fullPath_username: String, queryType: TimelogsQueryType) {
-		self.fullPath = fullPath_username
+	init(fullPath: String, queryType: TimelogsQueryType) {
+		self.fullPath = fullPath
 		self.queryType = queryType
 	}
 
@@ -36,7 +36,7 @@ struct TimelogsLoader: View {
 				result in
 				switch result {
 				case .success(let graphQLResult):
-					print("Success! Setting labels...")
+					print("Success! Setting timelogs...")
 					timelogs = graphQLResult.data?.group?.timelogs.nodes
 				case .failure(let error):
 					print("Failure! Error: \(error)")
@@ -48,7 +48,7 @@ struct TimelogsLoader: View {
 				result in
 				switch result {
 				case .success(let graphQLResult):
-					print("Success! Setting labels...")
+					print("Success! Setting timelogs...")
 					timelogs = graphQLResult.data?.user?.timelogs?.nodes
 				case .failure(let error):
 					print("Failure! Error: \(error)")
@@ -61,74 +61,76 @@ struct TimelogsLoader: View {
 	var body: some View {
 		List {
 			if let timelogs = self.timelogs {
-				ForEach(timelogs, id: \.?.id) { maybeLog in
-					if let log = maybeLog {
-						VStack(alignment: .leading) {
-							NavigationLink(
-								destination: ProjectLoader(
-									fullPath: log._project.fullPath
-								),
-								label: {
-									PillView(
-										log._project.nameWithNamespace,
-										icon: "app.gift.fill"
-									)
-								}
-							)
-							.foregroundStyle(.secondary)
-
-							ScrollView(.horizontal) {
+				if timelogs.isEmpty {
+					Text("There are no timelogs")
+				} else {
+					ForEach(timelogs, id: \.?.id) { maybeLog in
+						if let log = maybeLog {
+							VStack(alignment: .leading) {
 								HStack {
-									AuthorView(log._user)
-
-									if let issueIid = log._issue?.iid {
+									ScrollView(.horizontal) {
 										NavigationLink(
-											destination: IssueLoader(
-												fullPath: log._project.fullPath,
-												iid: issueIid
+											destination: ProjectLoader(
+												fullPath: log._project.fullPath
 											),
 											label: {
-												PillView(
-													"#\(issueIid)",
-													icon: "smallcircle.circle",
-													bgColor: .green,
-													fgColor: .white,
-													cornerRadius: 5
-												)
-											})
+												Text(log._project.nameWithNamespace)
+											}
+										).foregroundStyle(.secondary)
 									}
 
-									if let mergeIid = log._mergeRequest?.iid {
-										NavigationLink(
-											destination: MergeRequestLoader(
-												fullPath: log._project.fullPath,
-												iid: mergeIid
-											),
-											label: {
-												PillView(
-													"#\(mergeIid)",
-													icon: "arrow.triangle.pull",
-													bgColor: .blue,
-													fgColor: .white,
-													cornerRadius: 5
-												)
-											})
+									if let spentAt = log.spentAt {
+										Spacer()
+										Text(Date.fromToString(spentAt))
 									}
 								}.font(.footnote)
-							}
 
-							HStack {
+								ScrollView(.horizontal) {
+									HStack {
+										AuthorView(log._user)
+
+										if let issueIid = log._issue?.iid {
+											NavigationLink(
+												destination: IssueLoader(
+													fullPath: log._project.fullPath,
+													iid: issueIid
+												),
+												label: {
+													PillView(
+														"#\(issueIid)",
+														icon: "smallcircle.circle",
+														bgColor: .green,
+														fgColor: .white,
+														cornerRadius: 5
+													)
+												})
+										}
+
+										if let mergeIid = log._mergeRequest?.iid {
+											NavigationLink(
+												destination: MergeRequestLoader(
+													fullPath: log._project.fullPath,
+													iid: mergeIid
+												),
+												label: {
+													PillView(
+														"#\(mergeIid)",
+														icon: "arrow.triangle.pull",
+														bgColor: .blue,
+														fgColor: .white,
+														cornerRadius: 5
+													)
+												})
+										}
+									}.font(.footnote)
+								}
+
 								Text("\(log.timeSpent / 60) minutes")
 
-								if let spentAt = log.spentAt {
-									Spacer()
-									Text(Date.fromToString(spentAt))
+								if let summary = log.summary {
+									Markdown(summary.emojized())
+										.markdownTheme(.gitHub)
 								}
-							}.font(.footnote)
-
-							if let summary = log.summary {
-								Markdown(summary.emojized())
-									.markdownTheme(.gitHub)
 							}
 						}
 					}
@@ -152,6 +154,6 @@ struct TimelogsLoader: View {
 
 #Preview {
 	NavigationStack {
-		TimelogsLoader(fullPath_username: "felix-schindler", queryType: .user)
+		TimelogsLoader(fullPath: "felix-schindler", queryType: .user)
 	}
 }

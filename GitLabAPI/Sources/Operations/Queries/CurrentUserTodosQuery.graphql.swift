@@ -1,0 +1,188 @@
+// @generated
+// This file was automatically generated and should not be edited.
+
+@_exported import ApolloAPI
+
+public class CurrentUserTodosQuery: GraphQLQuery {
+  public static let operationName: String = "CurrentUserTodos"
+  public static let operationDocument: ApolloAPI.OperationDocument = .init(
+    definition: .init(
+      #"query CurrentUserTodos { currentUser { __typename todos { __typename nodes { __typename id body group { __typename id } state action author { __typename avatarUrl name username } target { __typename webUrl } project { __typename avatarUrl fullPath nameWithNamespace visibility } createdAt targetType } } } }"#
+    ))
+
+  public init() {}
+
+  public struct Data: GitLabAPI.SelectionSet {
+    public let __data: DataDict
+    public init(_dataDict: DataDict) { __data = _dataDict }
+
+    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __selections: [ApolloAPI.Selection] { [
+      .field("currentUser", CurrentUser?.self),
+    ] }
+
+    /// Get information about current user.
+    public var currentUser: CurrentUser? { __data["currentUser"] }
+
+    /// CurrentUser
+    ///
+    /// Parent Type: `CurrentUser`
+    public struct CurrentUser: GitLabAPI.SelectionSet {
+      public let __data: DataDict
+      public init(_dataDict: DataDict) { __data = _dataDict }
+
+      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
+      public static var __selections: [ApolloAPI.Selection] { [
+        .field("__typename", String.self),
+        .field("todos", Todos?.self),
+      ] }
+
+      /// To-do items of the user.
+      public var todos: Todos? { __data["todos"] }
+
+      /// CurrentUser.Todos
+      ///
+      /// Parent Type: `TodoConnection`
+      public struct Todos: GitLabAPI.SelectionSet {
+        public let __data: DataDict
+        public init(_dataDict: DataDict) { __data = _dataDict }
+
+        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.TodoConnection }
+        public static var __selections: [ApolloAPI.Selection] { [
+          .field("__typename", String.self),
+          .field("nodes", [Node?]?.self),
+        ] }
+
+        /// A list of nodes.
+        public var nodes: [Node?]? { __data["nodes"] }
+
+        /// CurrentUser.Todos.Node
+        ///
+        /// Parent Type: `Todo`
+        public struct Node: GitLabAPI.SelectionSet {
+          public let __data: DataDict
+          public init(_dataDict: DataDict) { __data = _dataDict }
+
+          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Todo }
+          public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("id", GitLabAPI.ID.self),
+            .field("body", String.self),
+            .field("group", Group?.self),
+            .field("state", GraphQLEnum<GitLabAPI.TodoStateEnum>.self),
+            .field("action", GraphQLEnum<GitLabAPI.TodoActionEnum>.self),
+            .field("author", Author.self),
+            .field("target", Target.self),
+            .field("project", Project?.self),
+            .field("createdAt", GitLabAPI.Time.self),
+            .field("targetType", GraphQLEnum<GitLabAPI.TodoTargetEnum>.self),
+          ] }
+
+          /// ID of the to-do item.
+          public var id: GitLabAPI.ID { __data["id"] }
+          /// Body of the to-do item.
+          public var body: String { __data["body"] }
+          /// Group this to-do item is associated with.
+          public var group: Group? { __data["group"] }
+          /// State of the to-do item.
+          public var state: GraphQLEnum<GitLabAPI.TodoStateEnum> { __data["state"] }
+          /// Action of the to-do item.
+          public var action: GraphQLEnum<GitLabAPI.TodoActionEnum> { __data["action"] }
+          /// Author of this to-do item.
+          public var author: Author { __data["author"] }
+          /// Target of the to-do item.
+          public var target: Target { __data["target"] }
+          /// Project this to-do item is associated with.
+          public var project: Project? { __data["project"] }
+          /// Timestamp this to-do item was created.
+          public var createdAt: GitLabAPI.Time { __data["createdAt"] }
+          /// Target type of the to-do item.
+          public var targetType: GraphQLEnum<GitLabAPI.TodoTargetEnum> { __data["targetType"] }
+
+          /// CurrentUser.Todos.Node.Group
+          ///
+          /// Parent Type: `Group`
+          public struct Group: GitLabAPI.SelectionSet {
+            public let __data: DataDict
+            public init(_dataDict: DataDict) { __data = _dataDict }
+
+            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+            public static var __selections: [ApolloAPI.Selection] { [
+              .field("__typename", String.self),
+              .field("id", GitLabAPI.ID.self),
+            ] }
+
+            /// ID of the namespace.
+            public var id: GitLabAPI.ID { __data["id"] }
+          }
+
+          /// CurrentUser.Todos.Node.Author
+          ///
+          /// Parent Type: `UserCore`
+          public struct Author: GitLabAPI.SelectionSet {
+            public let __data: DataDict
+            public init(_dataDict: DataDict) { __data = _dataDict }
+
+            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+            public static var __selections: [ApolloAPI.Selection] { [
+              .field("__typename", String.self),
+              .field("avatarUrl", String?.self),
+              .field("name", String.self),
+              .field("username", String.self),
+            ] }
+
+            /// URL of the user's avatar.
+            public var avatarUrl: String? { __data["avatarUrl"] }
+            /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
+            public var name: String { __data["name"] }
+            /// Username of the user. Unique within this instance of GitLab.
+            public var username: String { __data["username"] }
+          }
+
+          /// CurrentUser.Todos.Node.Target
+          ///
+          /// Parent Type: `Todoable`
+          public struct Target: GitLabAPI.SelectionSet {
+            public let __data: DataDict
+            public init(_dataDict: DataDict) { __data = _dataDict }
+
+            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Interfaces.Todoable }
+            public static var __selections: [ApolloAPI.Selection] { [
+              .field("__typename", String.self),
+              .field("webUrl", String?.self),
+            ] }
+
+            /// URL of this object.
+            public var webUrl: String? { __data["webUrl"] }
+          }
+
+          /// CurrentUser.Todos.Node.Project
+          ///
+          /// Parent Type: `Project`
+          public struct Project: GitLabAPI.SelectionSet {
+            public let __data: DataDict
+            public init(_dataDict: DataDict) { __data = _dataDict }
+
+            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+            public static var __selections: [ApolloAPI.Selection] { [
+              .field("__typename", String.self),
+              .field("avatarUrl", String?.self),
+              .field("fullPath", GitLabAPI.ID.self),
+              .field("nameWithNamespace", String.self),
+              .field("visibility", String?.self),
+            ] }
+
+            /// URL to avatar image file of the project.
+            public var avatarUrl: String? { __data["avatarUrl"] }
+            /// Full path of the project.
+            public var fullPath: GitLabAPI.ID { __data["fullPath"] }
+            /// Full name of the project with its namespace.
+            public var nameWithNamespace: String { __data["nameWithNamespace"] }
+            /// Visibility of the project.
+            public var visibility: String? { __data["visibility"] }
+          }
+        }
+      }
+    }
+  }
+}

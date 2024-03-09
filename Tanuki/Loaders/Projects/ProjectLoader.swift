@@ -125,7 +125,7 @@ struct ProjectLoader: View {
 											label: {
 												Label(
 													namespace.name,
-													systemImage: "person.3"
+													systemImage: "scale.3d"
 												)
 											}
 										)

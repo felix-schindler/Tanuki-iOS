@@ -667,3 +667,73 @@ extension ProjectMilestonesQuery.Data.Project.Milestones.Node: Milestone {
 		)
 	}
 }
+
+// MARK: - Todos
+protocol Todo {
+	var id: String { get }
+	var body: String { get }
+	var _groupPath: String? { get }
+	var state: GraphQLEnum<GitLabAPI.TodoStateEnum> { get }
+	var action: GraphQLEnum<GitLabAPI.TodoActionEnum> { get }
+	var _author: MyAuthor { get }
+	var _webUrl: String? { get }
+	var _project: SmallProject? { get }
+	var createdAt: GitLabAPI.Time { get }
+	var targetType: GraphQLEnum<GitLabAPI.TodoTargetEnum> { get }
+}
+
+extension UserTodosQuery.Data.User.Todos.Node: Todo {
+	var _project: SmallProject? {
+		guard let projectData = project else { return nil }
+		return SmallProjectStruct(
+			avatarUrl: projectData.avatarUrl,
+			nameWithNamespace: projectData.nameWithNamespace,
+			visibility: projectData.visibility,
+			fullPath: projectData.fullPath
+		)
+	}
+
+	var _groupPath: String? {
+		return group?.id
+	}
+
+	var _author: MyAuthor {
+		return MyAuthor(
+			avatarUrl: author.avatarUrl,
+			name: author.name,
+			username: author.username
+		)
+	}
+
+	var _webUrl: String? {
+		return target.webUrl
+	}
+}
+
+extension CurrentUserTodosQuery.Data.CurrentUser.Todos.Node: Todo {
+	var _project: SmallProject? {
+		guard let projectData = project else { return nil }
+		return SmallProjectStruct(
+			avatarUrl: projectData.avatarUrl,
+			nameWithNamespace: projectData.nameWithNamespace,
+			visibility: projectData.visibility,
+			fullPath: projectData.fullPath
+		)
+	}
+
+	var _groupPath: String? {
+		return group?.id
+	}
+
+	var _author: MyAuthor {
+		return MyAuthor(
+			avatarUrl: author.avatarUrl,
+			name: author.name,
+			username: author.username
+		)
+	}
+
+	var _webUrl: String? {
+		return target.webUrl
+	}
+}

@@ -114,6 +114,13 @@ struct HomeView: View {
 							})
 					}
 				)
+
+				NavigationLink(
+					destination: CurrentUserTodosLoader(),
+					label: {
+						Label("Todos", systemImage: "checkmark.square")
+					}
+				)
 			}
 
 			Section("Starred projects") {

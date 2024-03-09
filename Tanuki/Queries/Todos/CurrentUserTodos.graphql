@@ -1,0 +1,31 @@
+query CurrentUserTodos {
+  currentUser {
+    todos {
+      nodes {
+        id
+        body
+        group {
+          id
+        }
+        state
+        action
+        author {
+          avatarUrl
+          name
+          username
+        }
+        target {
+          webUrl
+        }
+        project {
+          avatarUrl
+          fullPath
+          nameWithNamespace
+          visibility
+        }
+        createdAt
+        targetType
+      }
+    }
+  }
+}
