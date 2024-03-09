@@ -149,7 +149,7 @@ struct IssueLoader: View {
 
 						if issue.description?.isNotEmpty ?? false {
 							Markdown(issue.description!.emojized())
-								.markdownTheme(.gitHub)
+								.markdownTheme(.gitLab)
 						}
 
 						HStack {
@@ -346,7 +346,7 @@ struct IssueLoader: View {
 				}
 			} else if loadFailed {
 				VStack {
-					Text(loadFailedMsg)
+					Text(failedToLoad)
 				}.frame(maxWidth: .infinity, minHeight: 100)
 			} else {
 				VStack {

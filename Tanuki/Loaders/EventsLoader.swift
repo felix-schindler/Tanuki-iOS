@@ -35,7 +35,7 @@ struct EventsLoader: View {
 					}
 				}
 			} else if loadFailed {
-				Text(loadFailedMsg)
+				Text(failedToLoad)
 			} else {
 				ProgressView()
 			}

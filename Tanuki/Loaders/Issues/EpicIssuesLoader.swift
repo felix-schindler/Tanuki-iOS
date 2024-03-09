@@ -59,7 +59,7 @@ struct EpicIssuesLoader: View {
 			} else {
 				VStack {
 					if loadFailed {
-						Text(loadFailedMsg)
+						Text(failedToLoad)
 					} else {
 						ProgressView("Loading issues")
 					}

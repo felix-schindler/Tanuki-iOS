@@ -73,6 +73,7 @@
 		DC3276602B9B4FDE00B51EEE /* UserTodos.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC32765F2B9B4FDE00B51EEE /* UserTodos.graphql */; };
 		DC3276632B9B503500B51EEE /* CurrentUserTodosLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3276622B9B503500B51EEE /* CurrentUserTodosLoader.swift */; };
 		DC3276652B9B503C00B51EEE /* UserTodosLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3276642B9B503C00B51EEE /* UserTodosLoader.swift */; };
+		DC33C27B2B9C22F200C99B85 /* MarkdownTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC33C27A2B9C22F200C99B85 /* MarkdownTheme.swift */; };
 		DC386A952B8D5FB2002E5F6D /* MergeRequestLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC386A942B8D5FB2002E5F6D /* MergeRequestLoader.swift */; };
 		DC386A972B8D615D002E5F6D /* MergeRequest.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC386A962B8D615D002E5F6D /* MergeRequest.graphql */; };
 		DC386A9A2B8D86C4002E5F6D /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC386A992B8D86C4002E5F6D /* NoteView.swift */; };
@@ -182,6 +183,7 @@
 		DC32765F2B9B4FDE00B51EEE /* UserTodos.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserTodos.graphql; sourceTree = "<group>"; };
 		DC3276622B9B503500B51EEE /* CurrentUserTodosLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserTodosLoader.swift; sourceTree = "<group>"; };
 		DC3276642B9B503C00B51EEE /* UserTodosLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTodosLoader.swift; sourceTree = "<group>"; };
+		DC33C27A2B9C22F200C99B85 /* MarkdownTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTheme.swift; sourceTree = "<group>"; };
 		DC386A942B8D5FB2002E5F6D /* MergeRequestLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeRequestLoader.swift; sourceTree = "<group>"; };
 		DC386A962B8D615D002E5F6D /* MergeRequest.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MergeRequest.graphql; sourceTree = "<group>"; };
 		DC386A992B8D86C4002E5F6D /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
@@ -457,6 +459,7 @@
 				DC217DD22B8FCC8A00F081BC /* Haptics.swift */,
 				DC6C5D992B8F089D00587850 /* GraphTypes.swift */,
 				DCEFB2682B94C2C100F4B245 /* RestTypes.swift */,
+				DC33C27A2B9C22F200C99B85 /* MarkdownTheme.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -730,6 +733,7 @@
 				DC3A24562B8C4C2200DB0E3F /* PillView.swift in Sources */,
 				DC217DD32B8FCC8A00F081BC /* Haptics.swift in Sources */,
 				DC21AA752B90385800976E64 /* CurrentUserLoader.swift in Sources */,
+				DC33C27B2B9C22F200C99B85 /* MarkdownTheme.swift in Sources */,
 				DC6C5DB32B8F8BBF00587850 /* EmojiCodes.swift in Sources */,
 				DCEFB26B2B94C37600F4B245 /* API.swift in Sources */,
 				DC0A6A3F2B8D02A600C53D56 /* CreateIssueView.swift in Sources */,

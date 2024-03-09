@@ -45,7 +45,7 @@ struct CurrentUserLoader: View {
 						.foregroundStyle(Color.accentColor)
 						.frame(width: 50, height: 50)
 					if loadFailed {
-						Text(loadFailedMsg)
+						Text(failedToLoad)
 					} else {
 						ProgressView("Loading current user...")
 					}
@@ -65,7 +65,7 @@ struct CurrentUserLoader: View {
 				Haptics.shared.play(.light)
 			}
 		}.sheet(isPresented: $showSettings) {
-			SettingsView()
+			SettingsView(isPresented: $showSettings)
 		}.navigationTitle("Account")
 	}
 }

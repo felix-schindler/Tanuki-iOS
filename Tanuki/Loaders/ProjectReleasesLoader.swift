@@ -79,7 +79,7 @@ struct ProjectReleasesLoader: View {
 
 									if let description = release.description {
 										Markdown(description, baseURL: API.url)
-											.markdownTheme(.gitHub)
+											.markdownTheme(.gitLab)
 									}
 								}
 								if let assets = release.assets {
@@ -129,7 +129,7 @@ struct ProjectReleasesLoader: View {
 			} else {
 				VStack {
 					if loadFailed {
-						Text(loadFailedMsg)
+						Text(failedToLoad)
 					} else {
 						ProgressView("Loading releases")
 					}

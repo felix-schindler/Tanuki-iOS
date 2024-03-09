@@ -129,7 +129,7 @@ struct TimelogsLoader: View {
 
 								if let summary = log.summary {
 									Markdown(summary.emojized())
-										.markdownTheme(.gitHub)
+										.markdownTheme(.gitLab)
 								}
 							}
 						}
@@ -138,7 +138,7 @@ struct TimelogsLoader: View {
 			} else {
 				VStack {
 					if loadFailed {
-						Text(loadFailedMsg)
+						Text(failedToLoad)
 					} else {
 						ProgressView("Loading timelogs")
 					}

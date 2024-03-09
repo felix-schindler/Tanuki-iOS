@@ -1,8 +1,9 @@
 //
 //  Utils.swift
-//  Tanuki
+//  Tanuki (GitLab)
 //
 //  Created by Felix Schindler on 31.10.21.
+//  Rewritten by Felix Schindler on 26.02.24.
 //
 
 import Foundation
@@ -10,7 +11,7 @@ import GitLabAPI
 import NVMColor
 import SwiftUI
 
-let loadFailedMsg =
+let failedToLoad =
 	"Failed to load\nPlease check token and internet connection, then try again"
 
 class EmojiHelper {
@@ -58,7 +59,7 @@ class EmojiHelper {
 		if regex.firstMatch(
 			in: key, options: [], range: NSMakeRange(0, key.utf8.count)) != nil
 		{
-			value = emojiHashes[key]
+			value = emojiCodes[key]
 		}
 
 		return value ?? key

@@ -75,7 +75,7 @@ struct SnippetLoader: View {
 
 					if let description = snippet.description {
 						Markdown(description.emojized())
-							.markdownTheme(.gitHub)
+							.markdownTheme(.gitLab)
 					}
 				}
 
@@ -137,7 +137,7 @@ struct SnippetLoader: View {
 						.scaledToFit()
 						.frame(width: 50, height: 50)
 					if loadFailed {
-						Text(loadFailedMsg)
+						Text(failedToLoad)
 					} else {
 						ProgressView("Loading snippet")
 					}

@@ -63,7 +63,7 @@ struct NoteView: View {
 						Markdown(
 							"@\(author.username) \(note.body)", baseURL: API.url
 						)
-						.markdownTheme(.gitHub)
+						.markdownTheme(.gitLab)
 					},
 					icon: {
 						Image(
@@ -101,14 +101,14 @@ struct NoteView: View {
 					.font(.footnote)
 
 					Markdown(note.body, baseURL: API.url)
-						.markdownTheme(.gitHub)
+						.markdownTheme(.gitLab)
 				}
 			}
 		} else {
 			Label(
 				title: {
 					Markdown(note.body, baseURL: API.url)
-						.markdownTheme(.gitHub)
+						.markdownTheme(.gitLab)
 				},
 				icon: {
 					Image(systemName: convertIconName(note.systemNoteIconName))

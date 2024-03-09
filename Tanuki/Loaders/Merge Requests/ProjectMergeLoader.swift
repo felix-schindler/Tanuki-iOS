@@ -72,7 +72,7 @@ struct ProjectMergeLoader: View {
 				}
 			} else if loadFailed {
 				VStack {
-					Text(loadFailedMsg)
+					Text(failedToLoad)
 				}.frame(maxWidth: .infinity, minHeight: 100)
 			} else {
 				VStack {

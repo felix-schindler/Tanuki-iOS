@@ -150,7 +150,7 @@ struct MergeRequestLoader: View {
 
 						if mr.description?.isNotEmpty ?? false {
 							Markdown(mr.description!.emojized())
-								.markdownTheme(.gitHub)
+								.markdownTheme(.gitLab)
 						}
 
 						HStack {
@@ -487,7 +487,7 @@ struct MergeRequestLoader: View {
 				}
 			} else if loadFailed {
 				VStack {
-					Text(loadFailedMsg)
+					Text(failedToLoad)
 				}.frame(maxWidth: .infinity, minHeight: 100)
 			} else {
 				VStack {

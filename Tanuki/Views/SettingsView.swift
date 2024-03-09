@@ -9,8 +9,8 @@ import SwiftUI
 
 struct SettingsView: View {
 	// MARK: - Config picker
-	@Environment(\.dismiss)
-	private var dismiss
+	@Binding
+	public var isPresented: Bool
 
 	@State
 	private var newHost = API.host
@@ -23,7 +23,7 @@ struct SettingsView: View {
 			PopupHeader(
 				title: "Settings",
 				onClose: {
-					self.dismiss()
+					isPresented = false
 				})
 			TextField("gitlab.com", text: self.$newHost)
 			TextField("Personal Access Token", text: self.$newToken)
@@ -32,7 +32,7 @@ struct SettingsView: View {
 				action: {
 					API.host = self.newHost
 					API.token = self.newToken
-					self.dismiss()
+					isPresented = false
 					Haptics.shared.notify(.success)
 				},
 				label: {
@@ -54,6 +54,6 @@ struct SettingsView: View {
 #Preview {
 	NavigationStack {
 	}.sheet(isPresented: .constant(true)) {
-		SettingsView()
+		SettingsView(isPresented: .constant(true))
 	}
 }

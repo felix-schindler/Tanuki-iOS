@@ -72,7 +72,7 @@ struct MilestonesLoader: View {
 
 										if let description = milestone.description?.emojized() {
 											Markdown(description)
-												.markdownTheme(.gitHub)
+												.markdownTheme(.gitLab)
 										}
 									}
 								},
@@ -93,7 +93,7 @@ struct MilestonesLoader: View {
 			} else {
 				VStack {
 					if loadFailed {
-						Text(loadFailedMsg)
+						Text(failedToLoad)
 					} else {
 						ProgressView("Loading milestones")
 					}

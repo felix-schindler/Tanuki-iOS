@@ -57,7 +57,7 @@ struct UserStarredProjectsLoader: View {
 						.foregroundStyle(.yellow)
 						.frame(width: 50, height: 50)
 					if loadFailed {
-						Text(loadFailedMsg)
+						Text(failedToLoad)
 					} else {
 						ProgressView("Loading starred projects...")
 					}

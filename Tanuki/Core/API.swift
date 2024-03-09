@@ -1,8 +1,9 @@
 //
 //  API.swift
-//  GitLab
+//  Tanuki (GitLab)
 //
 //  Created by Felix Schindler on 30.10.21.
+//  Rewritten by Felix Schindler on 07.03.24.
 //
 
 import Foundation

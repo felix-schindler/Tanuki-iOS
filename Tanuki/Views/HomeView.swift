@@ -10,16 +10,13 @@ import SwiftUI
 
 struct HomeView: View {
 	@State
-	private var showSettings = API.token == "" || API.host == ""
-
-	@State
 	private var starredProjects:
-		[CurrentUserStarredProjectsQuery.Data.CurrentUser.StarredProjects
-			.Node?]? = nil
-
+	[CurrentUserStarredProjectsQuery.Data.CurrentUser.StarredProjects
+		.Node?]? = nil
+	
 	@State
 	private var loadFailed = false
-
+	
 	private func loadStarredProjects() {
 		Network.shared.apollo.fetch(query: CurrentUserStarredProjectsQuery()) {
 			result in
@@ -27,15 +24,15 @@ struct HomeView: View {
 			case .success(let graphQLResult):
 				print("Success! Setting projects...")
 				starredProjects =
-					graphQLResult.data?.currentUser?.starredProjects?.nodes
-					?? []
+				graphQLResult.data?.currentUser?.starredProjects?.nodes
+				?? []
 			case .failure(let error):
 				print("Failure! Error: \(error)")
 				loadFailed = true
 			}
 		}
 	}
-
+	
 	public var body: some View {
 		List {
 			Section("Your work") {
@@ -51,7 +48,7 @@ struct HomeView: View {
 									.foregroundStyle(.green)
 							})
 					})
-
+				
 				DisclosureGroup(
 					content: {
 						NavigationLink(
@@ -72,7 +69,7 @@ struct HomeView: View {
 									.foregroundStyle(.blue)
 							})
 					})
-
+				
 				NavigationLink(
 					destination: UserProjectsLoader(),
 					label: {
@@ -86,7 +83,7 @@ struct HomeView: View {
 							})
 					}
 				)
-
+				
 				NavigationLink(
 					destination: UserSnippetsLoader(),
 					label: {
@@ -100,7 +97,7 @@ struct HomeView: View {
 							})
 					}
 				)
-
+				
 				NavigationLink(
 					destination: UserGroupsLoader(),
 					label: {
@@ -114,7 +111,7 @@ struct HomeView: View {
 							})
 					}
 				)
-
+				
 				NavigationLink(
 					destination: CurrentUserTodosLoader(),
 					label: {
@@ -122,7 +119,7 @@ struct HomeView: View {
 					}
 				)
 			}
-
+			
 			Section("Starred projects") {
 				if starredProjects != nil {
 					if starredProjects!.isEmpty {
@@ -139,7 +136,7 @@ struct HomeView: View {
 				} else {
 					VStack {
 						if loadFailed {
-							Text(loadFailedMsg)
+							Text(failedToLoad)
 						} else {
 							ProgressView("Loading starred projects...")
 						}
@@ -150,8 +147,6 @@ struct HomeView: View {
 			loadStarredProjects()
 		}.refreshable {
 			loadStarredProjects()
-		}.sheet(isPresented: $showSettings) {
-			SettingsView()
 		}
 		.listStyle(.sidebar)
 		.headerProminence(.increased)

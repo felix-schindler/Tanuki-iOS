@@ -67,7 +67,7 @@ struct GroupProjectsLoader: View {
 						.foregroundStyle(.gray)
 						.frame(width: 50, height: 50)
 					if loadFailed {
-						Text(loadFailedMsg)
+						Text(failedToLoad)
 					} else {
 						ProgressView("Loading projects")
 					}

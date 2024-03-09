@@ -74,7 +74,7 @@ struct LabelsLoader: View {
 
 							if label.description?.isNotEmpty ?? false {
 								Markdown(label.description!)
-									.markdownTheme(.gitHub)
+									.markdownTheme(.gitLab)
 							}
 						}
 					}
@@ -82,7 +82,7 @@ struct LabelsLoader: View {
 			} else {
 				VStack {
 					if loadFailed {
-						Text(loadFailedMsg)
+						Text(failedToLoad)
 					} else {
 						ProgressView("Loading labels")
 					}

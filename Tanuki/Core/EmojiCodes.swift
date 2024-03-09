@@ -7,7 +7,7 @@
 
 import Foundation
 
-let emojiHashes: [String: String] = [
+let emojiCodes: [String: String] = [
 	":+1:": "\u{1F44D}",
 	":-1:": "\u{1F44E}",
 	":100:": "\u{1F4AF}",

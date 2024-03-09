@@ -50,7 +50,7 @@ struct GroupMergeLoader: View {
 			} else {
 				VStack {
 					if loadFailed {
-						Text(loadFailedMsg)
+						Text(failedToLoad)
 					} else {
 						ProgressView("Loading merge requests")
 					}

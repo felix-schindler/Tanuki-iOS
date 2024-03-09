@@ -75,7 +75,7 @@ struct ProjectLoader: View {
 
 						if let description = project.description {
 							Markdown(description.emojized())
-								.markdownTheme(.gitHub)
+								.markdownTheme(.gitLab)
 						}
 
 						HStack {
@@ -180,7 +180,7 @@ struct ProjectLoader: View {
 				} else {
 					VStack {
 						if loadFailed {
-							Text(loadFailedMsg)
+							Text(failedToLoad)
 						} else {
 							ProgressView("Loading project")
 						}
@@ -362,10 +362,10 @@ struct ProjectLoader: View {
 								baseURL: baseUrl,
 								imageBaseURL: imgUrl
 							)
-							.markdownTheme(.gitHub)
+							.markdownTheme(.gitLab)
 						} else {
 							Markdown(readmeContent)
-								.markdownTheme(.gitHub)
+								.markdownTheme(.gitLab)
 						}
 					}
 				}

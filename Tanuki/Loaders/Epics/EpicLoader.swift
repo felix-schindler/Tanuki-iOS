@@ -137,7 +137,7 @@ struct EpicLoader: View {
 
 						if epic.description?.isNotEmpty ?? false {
 							Markdown(epic.description!.emojized())
-								.markdownTheme(.gitHub)
+								.markdownTheme(.gitLab)
 						}
 
 						HStack {
@@ -324,7 +324,7 @@ struct EpicLoader: View {
 			} else {
 				VStack {
 					if loadFailed {
-						Text(loadFailedMsg)
+						Text(failedToLoad)
 					} else {
 						ProgressView("Loading epic")
 					}

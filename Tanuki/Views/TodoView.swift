@@ -36,7 +36,7 @@ struct TodoView: View {
 			}.font(.footnote)
 
 			Markdown(todo.body.emojized())
-				.markdownTheme(.gitHub)
+				.markdownTheme(.gitLab)
 
 			ScrollView(.horizontal) {
 				HStack {

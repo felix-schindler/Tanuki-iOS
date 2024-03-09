@@ -142,7 +142,7 @@ struct MembersLoader: View {
 						.scaledToFit()
 						.frame(width: 50, height: 50)
 					if loadFailed {
-						Text(loadFailedMsg)
+						Text(failedToLoad)
 					} else {
 						ProgressView("Loading project members")
 					}

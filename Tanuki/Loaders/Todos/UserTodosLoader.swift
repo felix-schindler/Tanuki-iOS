@@ -49,7 +49,7 @@ struct UserTodosLoader: View {
 			} else {
 				VStack {
 					if loadFailed {
-						Text(loadFailedMsg)
+						Text(failedToLoad)
 					} else {
 						ProgressView("Loading todos of \(self.username)")
 					}
