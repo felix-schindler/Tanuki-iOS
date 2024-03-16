@@ -110,16 +110,16 @@ class API {
 
 			// print("\(res.statusCode): \(res.utf8String ?? "")")
 			return try decoder.decode(T.self, from: res.data)
-		} catch let DecodingError.dataCorrupted(context) {
+		} catch DecodingError.dataCorrupted(let context) {
 			print("Data corrupted: ", context.debugDescription)
 			print("codingPath:", context.codingPath)
-		} catch let DecodingError.keyNotFound(key, context) {
+		} catch DecodingError.keyNotFound(let key, let context) {
 			print("Key '\(key)' not found:", context.debugDescription)
 			print("codingPath:", context.codingPath)
-		} catch let DecodingError.valueNotFound(value, context) {
+		} catch DecodingError.valueNotFound(let value, let context) {
 			print("Value '\(value)' not found:", context.debugDescription)
 			print("codingPath:", context.codingPath)
-		} catch let DecodingError.typeMismatch(type, context) {
+		} catch DecodingError.typeMismatch(let type, let context) {
 			print("Type '\(type)' mismatch:", context.debugDescription)
 			print("codingPath:", context.codingPath)
 		} catch {

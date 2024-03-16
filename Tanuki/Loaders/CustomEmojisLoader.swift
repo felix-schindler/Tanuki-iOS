@@ -35,7 +35,7 @@ struct CustomEmojisLoader: View {
 		}
 	}
 
-	var body: some View {
+	public var body: some View {
 		List {
 			if let emojis = self.emojis {
 				if emojis.isEmpty {

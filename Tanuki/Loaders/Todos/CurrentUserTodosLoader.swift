@@ -28,7 +28,7 @@ struct CurrentUserTodosLoader: View {
 		}
 	}
 
-	var body: some View {
+	public var body: some View {
 		List {
 			if let todos = self.todos {
 				if todos.isEmpty {

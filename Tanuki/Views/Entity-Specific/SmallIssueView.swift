@@ -16,7 +16,7 @@ struct SmallIssueView: View {
 		self.issue = issue
 	}
 
-	var body: some View {
+	public var body: some View {
 		NavigationLink(
 			destination: IssueLoader(
 				fullPath: self.fullPath, iid: issue.iid

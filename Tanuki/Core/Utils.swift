@@ -14,6 +14,7 @@ import SwiftUI
 let failedToLoad =
 	"Failed to load\nPlease check token and internet connection, then try again"
 
+// MARK: - Emoji helpers
 class EmojiHelper {
 	public static func emojizedStringWithString(text: String) -> String {
 		var resultText = text
@@ -88,6 +89,7 @@ extension StringProtocol {
 	}
 }
 
+// MARK: - URL helpers
 extension URL {
 	public static func fromAvatar(_ avatarUrl: String?) -> URL? {
 		if var urlStr = avatarUrl {
@@ -102,6 +104,7 @@ extension URL {
 	}
 }
 
+// MARK: - Date helpers
 extension Date {
 	static func fromToString(
 		_ date: String, dateStyle: DateFormatter.Style = .medium,

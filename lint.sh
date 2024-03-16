@@ -1,1 +1,1 @@
-swift-format lint -r --configuration ./format.json ./Tanuki
+swift-format lint -p -r --configuration ./format.json ./Tanuki

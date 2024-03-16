@@ -8,18 +8,27 @@
 import SwiftUI
 
 struct EventsLoader: View {
-	@Environment(\.presentationMode)
-	var presentationMode: Binding<PresentationMode>
+	private var projectId = 0
+	private var userId = 0
 
-	@State var events: [Event]? = nil
-	@State var loadFailed = false
+	@State
+	private var events: [Event]? = nil
+	
+	@State
+	private var loadFailed = false
+	
+	init() {
+	}
+	
+	init(userId: Int) {
+		self.userId = userId
+	}
+	
+	init(projectId: Int) {
+		self.projectId = projectId
+	}
 
-	@State var projectId = 0
-	@State var userId = 0
-
-	@State var showClose = false
-
-	var body: some View {
+	public var body: some View {
 		List {
 			if events != nil {
 				if events!.isEmpty {
@@ -38,12 +47,6 @@ struct EventsLoader: View {
 				Text(failedToLoad)
 			} else {
 				ProgressView()
-			}
-		}.toolbar {
-			if showClose {
-				RoundIconButton("Close", icon: "xmark") {
-					self.presentationMode.wrappedValue.dismiss()
-				}.tint(.secondary)
 			}
 		}.onAppear {
 			Task {
@@ -94,6 +97,6 @@ struct EventsLoader: View {
 
 #Preview {
 	NavigationStack {
-		EventsLoader(events: nil, showClose: true)
+		EventsLoader()
 	}
 }

@@ -2,7 +2,8 @@
 //  UserProjectsLoader.swift
 //  Tanuki
 //
-//  Created by Felix Schindler on 29.02.24.
+//  Created by Felix Schindler on 30.10.21.
+//  Rewritten by Felix Schindler on 29.02.24.
 //
 
 import GitLabAPI
@@ -58,7 +59,7 @@ struct UserProjectsLoader: View {
 		}
 	}
 
-	var body: some View {
+	public var body: some View {
 		List {
 			if let memberShips = self.memberShipNodes {
 				if memberShips.isEmpty {

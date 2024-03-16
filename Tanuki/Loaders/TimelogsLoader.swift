@@ -58,7 +58,7 @@ struct TimelogsLoader: View {
 		}
 	}
 
-	var body: some View {
+	public var body: some View {
 		List {
 			if let timelogs = self.timelogs {
 				if timelogs.isEmpty {

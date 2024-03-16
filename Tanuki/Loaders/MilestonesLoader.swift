@@ -57,7 +57,7 @@ struct MilestonesLoader: View {
 		}
 	}
 
-	var body: some View {
+	public var body: some View {
 		List {
 			if let milestones = self.milestones {
 				if milestones.isEmpty {

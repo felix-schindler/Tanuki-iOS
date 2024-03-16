@@ -17,7 +17,7 @@ struct SmallMergeView: View {
 		self.mr = mr
 	}
 
-	var body: some View {
+	public var body: some View {
 		NavigationLink(
 			destination: MergeRequestLoader(
 				fullPath: fullPath,

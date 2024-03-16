@@ -2,7 +2,8 @@
 //  Project.swift
 //  Tanuki
 //
-//  Created by Felix Schindler on 26.02.24.
+//  Created by Felix Schindler on 31.10.21.
+//  Rewritten by Felix Schindler on 14.03.23 and 26.02.24.
 //
 
 import Charts

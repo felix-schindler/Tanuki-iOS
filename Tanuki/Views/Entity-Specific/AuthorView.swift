@@ -16,7 +16,7 @@ struct AuthorView: View {
 		self.showUsername = showUsername
 	}
 
-	var body: some View {
+	public var body: some View {
 		NavigationLink(
 			destination: UserLoader(username: author.username),
 			label: {

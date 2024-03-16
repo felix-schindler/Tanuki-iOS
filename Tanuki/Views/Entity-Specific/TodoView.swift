@@ -16,7 +16,7 @@ struct TodoView: View {
 		self.todo = todo
 	}
 
-	var body: some View {
+	public var body: some View {
 		VStack(alignment: .leading) {
 			HStack {
 				ScrollView(.horizontal) {

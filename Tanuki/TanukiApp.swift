@@ -12,7 +12,7 @@ import SwiftUI
 struct TanukiApp: App {
 	@State
 	public var showChangeConf = API.host.isEmpty || API.token.isEmpty
-	
+
 	public var body: some Scene {
 		WindowGroup {
 			TabView {
@@ -22,10 +22,15 @@ struct TanukiApp: App {
 					Label("Home", systemImage: "house")
 				}.tag(0)
 				NavigationStack {
+					EventsLoader()
+				}.tabItem {
+					Label("Activity", systemImage: "clock.arrow.circlepath")
+				}.tag(1)
+				NavigationStack {
 					CurrentUserLoader()
 				}.tabItem {
 					Label("Account", systemImage: "person")
-				}.tag(1)
+				}.tag(2)
 			}.sheet(isPresented: $showChangeConf) {
 				SettingsView(isPresented: $showChangeConf)
 			}

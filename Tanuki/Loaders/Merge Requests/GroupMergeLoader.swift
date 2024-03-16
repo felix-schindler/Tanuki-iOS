@@ -35,7 +35,7 @@ struct GroupMergeLoader: View {
 		}
 	}
 
-	var body: some View {
+	public var body: some View {
 		List {
 			if let mergeRequests = self.mergeRequests {
 				if mergeRequests.isEmpty {

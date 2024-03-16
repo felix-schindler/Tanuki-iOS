@@ -65,7 +65,7 @@ struct MembersLoader: View {
 		}
 	}
 
-	var body: some View {
+	public var body: some View {
 		List {
 			if let memberships = self.projectMembers {
 				if memberships.isEmpty {

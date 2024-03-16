@@ -10,13 +10,11 @@ import SwiftUI
 
 struct HomeView: View {
 	@State
-	private var starredProjects:
-	[CurrentUserStarredProjectsQuery.Data.CurrentUser.StarredProjects
-		.Node?]? = nil
-	
+	private var starredProjects: [SmallProject?]? = nil
+
 	@State
 	private var loadFailed = false
-	
+
 	private func loadStarredProjects() {
 		Network.shared.apollo.fetch(query: CurrentUserStarredProjectsQuery()) {
 			result in
@@ -24,15 +22,15 @@ struct HomeView: View {
 			case .success(let graphQLResult):
 				print("Success! Setting projects...")
 				starredProjects =
-				graphQLResult.data?.currentUser?.starredProjects?.nodes
-				?? []
+					graphQLResult.data?.currentUser?.starredProjects?.nodes
+					?? []
 			case .failure(let error):
 				print("Failure! Error: \(error)")
 				loadFailed = true
 			}
 		}
 	}
-	
+
 	public var body: some View {
 		List {
 			Section("Your work") {
@@ -48,7 +46,7 @@ struct HomeView: View {
 									.foregroundStyle(.green)
 							})
 					})
-				
+
 				DisclosureGroup(
 					content: {
 						NavigationLink(
@@ -69,7 +67,7 @@ struct HomeView: View {
 									.foregroundStyle(.blue)
 							})
 					})
-				
+
 				NavigationLink(
 					destination: UserProjectsLoader(),
 					label: {
@@ -83,7 +81,7 @@ struct HomeView: View {
 							})
 					}
 				)
-				
+
 				NavigationLink(
 					destination: UserSnippetsLoader(),
 					label: {
@@ -97,7 +95,7 @@ struct HomeView: View {
 							})
 					}
 				)
-				
+
 				NavigationLink(
 					destination: UserGroupsLoader(),
 					label: {
@@ -111,7 +109,7 @@ struct HomeView: View {
 							})
 					}
 				)
-				
+
 				NavigationLink(
 					destination: CurrentUserTodosLoader(),
 					label: {
@@ -119,7 +117,7 @@ struct HomeView: View {
 					}
 				)
 			}
-			
+
 			Section("Starred projects") {
 				if starredProjects != nil {
 					if starredProjects!.isEmpty {
@@ -127,7 +125,7 @@ struct HomeView: View {
 							Text("There are no starred projects")
 						}.frame(maxWidth: .infinity, minHeight: 100)
 					} else {
-						ForEach(starredProjects!, id: \.self) { maybeProject in
+						ForEach(starredProjects!, id: \.?.fullPath) { maybeProject in
 							if let project = maybeProject {
 								SmallProjectView(project)
 							}
@@ -147,6 +145,10 @@ struct HomeView: View {
 			loadStarredProjects()
 		}.refreshable {
 			loadStarredProjects()
+		}.toolbar {
+			RoundIconButton("New project", icon: "plus") {
+				// TODO: Implement
+			}
 		}
 		.listStyle(.sidebar)
 		.headerProminence(.increased)

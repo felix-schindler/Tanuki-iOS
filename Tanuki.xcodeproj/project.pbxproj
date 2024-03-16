@@ -374,7 +374,6 @@
 				DC3A24592B8C4C8F00DB0E3F /* Core */,
 				DC6C5D9D2B8F08F900587850 /* Loaders */,
 				DC6C5D9C2B8F08F500587850 /* Views */,
-				DC3A24582B8C4C7C00DB0E3F /* Components */,
 				DC2704FF2B8BC0FB003DAA84 /* Preview Content */,
 			);
 			path = Tanuki;
@@ -434,19 +433,16 @@
 			path = Queries;
 			sourceTree = "<group>";
 		};
-		DC3A24582B8C4C7C00DB0E3F /* Components */ = {
+		DC3A24582B8C4C7C00DB0E3F /* General */ = {
 			isa = PBXGroup;
 			children = (
 				DC3A24502B8C3E1A00DB0E3F /* AvatarImage.swift */,
 				DC3A24552B8C4C2200DB0E3F /* PillView.swift */,
 				DC3A245D2B8C557E00DB0E3F /* RoundIconButton.swift */,
-				DC0A6A382B8CE4FF00C53D56 /* PipelineStatus.swift */,
-				DC0A6A402B8D03EC00C53D56 /* StateIcons.swift */,
 				DC0A6A492B8D0ABE00C53D56 /* VisibilityIcon.swift */,
-				DC386A992B8D86C4002E5F6D /* NoteView.swift */,
 				DC69F14F2B95703900F09269 /* PopupHeader.swift */,
 			);
-			path = Components;
+			path = General;
 			sourceTree = "<group>";
 		};
 		DC3A24592B8C4C8F00DB0E3F /* Core */ = {
@@ -464,17 +460,29 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
-		DC6C5D9C2B8F08F500587850 /* Views */ = {
+		DC4B42842BA55C03007A9DB1 /* Entity-Specific */ = {
 			isa = PBXGroup;
 			children = (
-				DC13E8A72B8E073300994E8A /* HomeView.swift */,
-				DC21AA762B903ECA00976E64 /* UserView.swift */,
+				DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */,
 				DC6C5D972B8F085A00587850 /* SmallProjectView.swift */,
 				DC6C5DA42B8F0A3300587850 /* SmallMergeView.swift */,
 				DC1D10052B996C5300B6F5D7 /* SmallIssueView.swift */,
-				DC21AA7A2B905F0D00976E64 /* SettingsView.swift */,
 				DC5F37072B91A1D100BF7F9D /* AuthorView.swift */,
-				DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */,
+				DC386A992B8D86C4002E5F6D /* NoteView.swift */,
+				DC0A6A402B8D03EC00C53D56 /* StateIcons.swift */,
+				DC0A6A382B8CE4FF00C53D56 /* PipelineStatus.swift */,
+			);
+			path = "Entity-Specific";
+			sourceTree = "<group>";
+		};
+		DC6C5D9C2B8F08F500587850 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DC3A24582B8C4C7C00DB0E3F /* General */,
+				DC4B42842BA55C03007A9DB1 /* Entity-Specific */,
+				DC13E8A72B8E073300994E8A /* HomeView.swift */,
+				DC21AA762B903ECA00976E64 /* UserView.swift */,
+				DC21AA7A2B905F0D00976E64 /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

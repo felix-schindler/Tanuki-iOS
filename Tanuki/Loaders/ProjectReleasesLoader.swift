@@ -36,7 +36,7 @@ struct ProjectReleasesLoader: View {
 		}
 	}
 
-	var body: some View {
+	public var body: some View {
 		List {
 			if let releases = self.releases {
 				ForEach(releases, id: \.?.id) { maybeRelease in
@@ -139,6 +139,11 @@ struct ProjectReleasesLoader: View {
 			loadReleases()
 		}.refreshable {
 			loadReleases()
+		}.toolbar {
+			RoundIconButton("Create new release", icon: "plus") {
+				// TODO: Implement
+				Haptics.shared.notify(.success)
+			}
 		}
 		.headerProminence(.increased)
 		.navigationTitle("Releases")

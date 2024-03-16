@@ -36,7 +36,7 @@ struct GroupEpicsLoader: View {
 		}
 	}
 
-	var body: some View {
+	public var body: some View {
 		List {
 			if let epics = self.epics {
 				if epics.isEmpty {

@@ -11,7 +11,7 @@ struct PopupHeader: View {
 	public let title: String
 	public let onClose: () -> Void
 
-	var body: some View {
+	public var body: some View {
 		HStack {
 			Text(title)
 				.font(.title)

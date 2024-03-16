@@ -48,7 +48,7 @@ struct EpicLoader: View {
 		}
 	}
 
-	var body: some View {
+	public var body: some View {
 		List {
 			if let group = self.group {
 				if let epic = group.epic {

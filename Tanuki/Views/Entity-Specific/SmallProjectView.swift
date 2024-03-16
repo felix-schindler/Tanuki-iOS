@@ -16,7 +16,7 @@ struct SmallProjectView: View {
 		self.avatarSize = avatarSize
 	}
 
-	var body: some View {
+	public var body: some View {
 		NavigationLink(
 			destination: ProjectLoader(fullPath: project.fullPath),
 			label: {

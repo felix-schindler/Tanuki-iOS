@@ -51,7 +51,7 @@ struct UserSnippetsLoader: View {
 		}
 	}
 
-	var body: some View {
+	public var body: some View {
 		List {
 			if let snippets = self.snippets {
 				if snippets.isEmpty {

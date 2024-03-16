@@ -2,7 +2,8 @@
 //  UserStarredProjectsLoader.swift
 //  Tanuki
 //
-//  Created by Felix Schindler on 03.03.24.
+//  Created by Felix Schindler on 30.10.21.
+//  Rewritten by Felix Schindler on 03.03.24.
 //
 
 import GitLabAPI
@@ -37,7 +38,7 @@ struct UserStarredProjectsLoader: View {
 		}
 	}
 
-	var body: some View {
+	public var body: some View {
 		List {
 			if let projects = self.projects {
 				if projects.isEmpty {

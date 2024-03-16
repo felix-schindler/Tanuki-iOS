@@ -2,7 +2,8 @@
 //  GroupIssuesLoader.swift
 //  Tanuki
 //
-//  Created by Felix Schindler on 07.03.24.
+//  Created by Felix Schindler on 31.10.21.
+//  Rewritten by Felix Schindler on 07.03.24.
 //
 
 import GitLabAPI
@@ -36,7 +37,7 @@ struct GroupIssuesLoader: View {
 		}
 	}
 
-	var body: some View {
+	public var body: some View {
 		List {
 			if let issues = self.issues {
 				if issues.isEmpty {
