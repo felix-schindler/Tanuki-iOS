@@ -101,7 +101,7 @@ struct TreeLoader: View {
 						}
 					}
 				} else {
-					VStack(alignment: .leading) {
+					VStack {
 						if loadFailed {
 							Text(failedToLoad)
 						} else {

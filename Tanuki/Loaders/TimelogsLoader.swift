@@ -137,6 +137,11 @@ struct TimelogsLoader: View {
 				}
 			} else {
 				VStack {
+					Image(systemName: "hourglass")
+						.resizable()
+						.scaledToFit()
+						.foregroundStyle(.accent)
+						.frame(width: 50, height: 50)
 					if loadFailed {
 						Text(failedToLoad)
 					} else {

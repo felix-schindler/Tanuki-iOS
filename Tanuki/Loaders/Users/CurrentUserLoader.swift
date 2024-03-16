@@ -15,9 +15,6 @@ struct CurrentUserLoader: View {
 	@State
 	private var loadFailed = false
 
-	@State
-	private var showSettings = false
-
 	private func loadUser() {
 		Network.shared.apollo.fetch(
 			query: CurrentUserQuery()
@@ -60,12 +57,17 @@ struct CurrentUserLoader: View {
 				ShareButton(url)
 			}
 
-			RoundIconButton("Show settings", icon: "gear") {
-				showSettings = true
-				Haptics.shared.play(.light)
-			}
-		}.sheet(isPresented: $showSettings) {
-			SettingsView(isPresented: $showSettings)
+			Button(
+				role: .destructive,
+				action: {
+					API.host = "gitlab.com"
+					API.token = ""
+					Haptics.shared.notify(.success)
+				},
+				label: {
+					Label("Sign out", systemImage: "rectangle.portrait.and.arrow.right")
+				}
+			).tint(.red)
 		}.navigationTitle("Account")
 	}
 }

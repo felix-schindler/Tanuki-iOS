@@ -47,10 +47,19 @@ struct EventsLoader: View {
 						}
 					}
 				}
-			} else if loadFailed {
-				Text(failedToLoad)
 			} else {
-				ProgressView()
+				VStack {
+					Image(systemName: "clock.arrow.circlepath")
+						.resizable()
+						.scaledToFit()
+						.foregroundStyle(.accent)
+						.frame(width: 50, height: 50)
+					if loadFailed {
+						Text(failedToLoad)
+					} else {
+						ProgressView("Loading activities")
+					}
+				}.frame(maxWidth: .infinity, minHeight: 100)
 			}
 		}.onAppear {
 			Task {

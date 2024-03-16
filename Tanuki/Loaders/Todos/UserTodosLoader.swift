@@ -48,6 +48,11 @@ struct UserTodosLoader: View {
 				}
 			} else {
 				VStack {
+					Image(systemName: "checkmark.square")
+						.resizable()
+						.scaledToFit()
+						.foregroundStyle(.accent)
+						.frame(width: 50, height: 50)
 					if loadFailed {
 						Text(failedToLoad)
 					} else {

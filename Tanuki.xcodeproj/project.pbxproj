@@ -58,7 +58,6 @@
 		DC21AA722B90364500976E64 /* CurrentUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC21AA712B90364500976E64 /* CurrentUser.graphql */; };
 		DC21AA752B90385800976E64 /* CurrentUserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC21AA742B90385800976E64 /* CurrentUserLoader.swift */; };
 		DC21AA772B903ECA00976E64 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC21AA762B903ECA00976E64 /* UserView.swift */; };
-		DC21AA7B2B905F0D00976E64 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC21AA7A2B905F0D00976E64 /* SettingsView.swift */; };
 		DC21AA7D2B906F8000976E64 /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC21AA7C2B906F8000976E64 /* User.graphql */; };
 		DC21AA7F2B906FF400976E64 /* UserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC21AA7E2B906FF400976E64 /* UserLoader.swift */; };
 		DC2704F92B8BC0F9003DAA84 /* TanukiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2704F82B8BC0F9003DAA84 /* TanukiApp.swift */; };
@@ -115,6 +114,7 @@
 		DC6C5DBA2B8FA10500587850 /* UserIssues.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DB92B8FA10500587850 /* UserIssues.graphql */; };
 		DC6C5DBC2B8FB34B00587850 /* CurrentUserSnippets.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DBB2B8FB34B00587850 /* CurrentUserSnippets.graphql */; };
 		DC6C5DBF2B8FB3CA00587850 /* Snippet.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DBE2B8FB3CA00587850 /* Snippet.graphql */; };
+		DC7A7FA72BA5D0D600E128B1 /* SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */; };
 		DC8CFE132B95B3D3007F6D32 /* GroupMembers.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC8CFE122B95B3D3007F6D32 /* GroupMembers.graphql */; };
 		DCB5E0D42B96C487000F67FB /* GroupCustomEmoji.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCB5E0D32B96C487000F67FB /* GroupCustomEmoji.graphql */; };
 		DCB5E0D62B96C63A000F67FB /* CustomEmojisLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5E0D52B96C63A000F67FB /* CustomEmojisLoader.swift */; };
@@ -175,7 +175,6 @@
 		DC21AA712B90364500976E64 /* CurrentUser.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CurrentUser.graphql; sourceTree = "<group>"; };
 		DC21AA742B90385800976E64 /* CurrentUserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserLoader.swift; sourceTree = "<group>"; };
 		DC21AA762B903ECA00976E64 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
-		DC21AA7A2B905F0D00976E64 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DC21AA7C2B906F8000976E64 /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
 		DC21AA7E2B906FF400976E64 /* UserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoader.swift; sourceTree = "<group>"; };
 		DC2704F52B8BC0F9003DAA84 /* Tanuki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tanuki.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -230,6 +229,7 @@
 		DC6C5DB92B8FA10500587850 /* UserIssues.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserIssues.graphql; sourceTree = "<group>"; };
 		DC6C5DBB2B8FB34B00587850 /* CurrentUserSnippets.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CurrentUserSnippets.graphql; sourceTree = "<group>"; };
 		DC6C5DBE2B8FB3CA00587850 /* Snippet.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Snippet.graphql; sourceTree = "<group>"; };
+		DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupView.swift; sourceTree = "<group>"; };
 		DC8CFE122B95B3D3007F6D32 /* GroupMembers.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GroupMembers.graphql; sourceTree = "<group>"; };
 		DCB5E0D32B96C487000F67FB /* GroupCustomEmoji.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GroupCustomEmoji.graphql; sourceTree = "<group>"; };
 		DCB5E0D52B96C63A000F67FB /* CustomEmojisLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEmojisLoader.swift; sourceTree = "<group>"; };
@@ -507,7 +507,7 @@
 				DC4B42842BA55C03007A9DB1 /* Entity-Specific */,
 				DC13E8A72B8E073300994E8A /* HomeView.swift */,
 				DC21AA762B903ECA00976E64 /* UserView.swift */,
-				DC21AA7A2B905F0D00976E64 /* SettingsView.swift */,
+				DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -757,7 +757,6 @@
 				DC1C37EA2B999F87005B7D7A /* EpicLoader.swift in Sources */,
 				DC21AA6F2B9032DA00976E64 /* GroupProjectsLoader.swift in Sources */,
 				DC6C5DA52B8F0A3300587850 /* SmallMergeView.swift in Sources */,
-				DC21AA7B2B905F0D00976E64 /* SettingsView.swift in Sources */,
 				DC0A6A4A2B8D0ABE00C53D56 /* VisibilityIcon.swift in Sources */,
 				DC1D0FF52B99469900B6F5D7 /* LabelsLoader.swift in Sources */,
 				DC2704F92B8BC0F9003DAA84 /* TanukiApp.swift in Sources */,
@@ -804,6 +803,7 @@
 				DC3276632B9B503500B51EEE /* CurrentUserTodosLoader.swift in Sources */,
 				DC3A244D2B8C37BF00DB0E3F /* ProjectLoader.swift in Sources */,
 				DC217DD12B8FBA2200F081BC /* SnippetLoader.swift in Sources */,
+				DC7A7FA72BA5D0D600E128B1 /* SetupView.swift in Sources */,
 				DC21AA6B2B902F8400976E64 /* DescendantGroupsLoader.swift in Sources */,
 				DC4B428D2BA561E7007A9DB1 /* CommitsLoader.swift in Sources */,
 				DC217DDD2B8FD30700F081BC /* GroupLoader.swift in Sources */,
