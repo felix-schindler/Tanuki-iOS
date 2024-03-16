@@ -45,17 +45,7 @@ struct ProjectLoader: View {
 		}
 	}
 
-	#if !os(macOS)
-		public var body: some View {
-			main.navigationBarTitleDisplayMode(.inline)
-		}
-	#else
-		public var body: some View {
-			main
-		}
-	#endif
-
-	var main: some View {
+	public var body: some View {
 		List {
 			Section {
 				if let project = self.project {
@@ -317,10 +307,28 @@ struct ProjectLoader: View {
 
 				DisclosureGroup(
 					content: {
-						Text("Repository")
-						Text("Branches")
-						Text("Commits")
-						Text("Tags")
+						if let projectId = project?.id.toIntId() {
+							if let ref = project?.repository?.rootRef {
+								NavigationLink(
+									"Repository",
+									destination: TreeLoader(id: projectId, refName: ref)
+								)
+
+								NavigationLink(
+									"Commits",
+									destination: CommitsLoader(projectId, refName: ref)
+								)
+							}
+							NavigationLink(
+								"Branches",
+								destination: BranchesLoader(projectId)
+							)
+
+							NavigationLink(
+								"Tags",
+								destination: TagsLoader(projectId)
+							)
+						}
 					},
 					label: {
 						Label(
@@ -451,7 +459,9 @@ struct ProjectLoader: View {
 				.presentationDetents([.fraction(0.2)])
 		}.sheet(isPresented: $showNewIssue) {
 			CreateIssueView(showNewIssue: $showNewIssue)
-		}.navigationTitle(self.fullPath)
+		}
+		.navigationTitle(self.fullPath)
+		.navigationBarTitleDisplayMode(.inline)
 	}
 }
 

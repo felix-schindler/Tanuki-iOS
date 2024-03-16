@@ -148,6 +148,7 @@ struct HomeView: View {
 		}.toolbar {
 			RoundIconButton("New project", icon: "plus") {
 				// TODO: Implement
+				Haptics.shared.play(.light)
 			}
 		}
 		.listStyle(.sidebar)

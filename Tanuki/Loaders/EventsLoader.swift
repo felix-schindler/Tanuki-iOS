@@ -13,17 +13,17 @@ struct EventsLoader: View {
 
 	@State
 	private var events: [Event]? = nil
-	
+
 	@State
 	private var loadFailed = false
-	
+
 	init() {
 	}
-	
+
 	init(userId: Int) {
 		self.userId = userId
 	}
-	
+
 	init(projectId: Int) {
 		self.projectId = projectId
 	}
@@ -36,9 +36,13 @@ struct EventsLoader: View {
 				} else {
 					ForEach(events!, id: \.id) { event in
 						VStack(alignment: .leading) {
-							Text(event.createdAt.toString())
-								.font(.footnote)
-								.foregroundStyle(.secondary)
+							HStack {
+								ScrollView(.horizontal) {
+									AuthorView(event.author)
+								}
+								Spacer()
+								Text(event.createdAt.toString(timeStyle: .short))
+							}.font(.footnote)
 							Text(getStupidText(event: event))
 						}
 					}
@@ -58,22 +62,20 @@ struct EventsLoader: View {
 	}
 
 	private func getStupidText(event: Event) -> String {
-		var ret: String = "@\(event.author.username)"
-		ret += " " + event.actionName
-		if event.targetType != nil {
-			ret += " \(event.targetType!)"
+		var ret = event.actionName.firstCapitalized
+		if let targetType = event.targetType {
+			ret += " \(targetType)"
 		}
-		if event.targetIid != nil {
-			ret += " \(event.targetIid!)"
+		if let targetIid = event.targetIid {
+			ret += " \(targetIid)"
 		}
-		if event.targetTitle != nil {
-			ret += " '\(event.targetTitle!.emojized())'"
+		if let targetTitle = event.targetTitle?.emojized() {
+			ret += " '\(targetTitle)'"
 		}
-		if event.pushData != nil {
-			ret += " \(event.pushData!.refType) '\(event.pushData!.ref)'"
-			if event.pushData!.commitTitle != nil {
-				ret +=
-					" with message '\(event.pushData!.commitTitle!.emojized())'"
+		if let pushData = event.pushData {
+			ret += " \(pushData.refType) '\(pushData.ref)'"
+			if let commitTitle = pushData.commitTitle?.emojized() {
+				ret += " with message '\(commitTitle)'"
 			}
 		}
 		return ret.trimmingCharacters(in: .whitespacesAndNewlines)

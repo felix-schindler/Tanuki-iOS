@@ -12,7 +12,7 @@ struct VisibilityIcon: View {
 	private let systemName: String
 	private let showText: Bool
 
-	public init(_ visibility: String, showText: Bool = false) {
+	init(_ visibility: String, showText: Bool = false) {
 		self.visibility = visibility
 		self.showText = showText
 

@@ -112,7 +112,7 @@ extension Date {
 	) -> String {
 		let inFormat = ISO8601DateFormatter()
 		if let dateObj = inFormat.date(from: date) {
-			return dateObj.toString(dateStyle, timeStyle)
+			return dateObj.toString(dateStyle, timeStyle: timeStyle)
 		} else {
 			return date
 		}
@@ -120,7 +120,7 @@ extension Date {
 
 	func toString(
 		_ dateStyle: DateFormatter.Style = .medium,
-		_ timeStyle: DateFormatter.Style = .none
+		timeStyle: DateFormatter.Style = .none
 	) -> String {
 		let dateFormat = DateFormatter()
 		dateFormat.dateStyle = dateStyle

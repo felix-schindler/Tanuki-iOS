@@ -8,7 +8,7 @@
 import MarkdownUI
 import SwiftUI
 
-extension Theme {
+extension MarkdownUI.Theme {
 	/// A theme that mimics the GitHub style.
 	///
 	/// Style | Preview

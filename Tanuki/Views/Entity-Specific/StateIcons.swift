@@ -263,7 +263,7 @@ struct DetailedMergeStatusView: View {
 			}
 	}
 
-	var body: some View {
+	public var body: some View {
 		Label(
 			title: {
 				Text(msg)

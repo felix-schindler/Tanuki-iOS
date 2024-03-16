@@ -90,6 +90,12 @@
 		DC463BBA2B941970005CA5FB /* UserStarredProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC463BB92B941970005CA5FB /* UserStarredProjectsLoader.swift */; };
 		DC463BBC2B9420F2005CA5FB /* UserMembershipProjects.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC463BBB2B9420F2005CA5FB /* UserMembershipProjects.graphql */; };
 		DC463BBE2B942630005CA5FB /* UserGroups.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC463BBD2B942630005CA5FB /* UserGroups.graphql */; };
+		DC4B42892BA5609A007A9DB1 /* FileLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4B42882BA5609A007A9DB1 /* FileLoader.swift */; };
+		DC4B428B2BA560B0007A9DB1 /* TreeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4B428A2BA560B0007A9DB1 /* TreeLoader.swift */; };
+		DC4B428D2BA561E7007A9DB1 /* CommitsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4B428C2BA561E7007A9DB1 /* CommitsLoader.swift */; };
+		DC4B428F2BA56213007A9DB1 /* CommitSignatureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4B428E2BA56213007A9DB1 /* CommitSignatureLoader.swift */; };
+		DC4B42962BA56968007A9DB1 /* BranchesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4B42952BA56968007A9DB1 /* BranchesLoader.swift */; };
+		DC4B429A2BA56EA6007A9DB1 /* TagsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4B42992BA56EA6007A9DB1 /* TagsLoader.swift */; };
 		DC5F37082B91A1D100BF7F9D /* AuthorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5F37072B91A1D100BF7F9D /* AuthorView.swift */; };
 		DC69F14B2B956E0600F09269 /* ProjectMembers.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC69F14A2B956E0600F09269 /* ProjectMembers.graphql */; };
 		DC69F14D2B956ED300F09269 /* MembersLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69F14C2B956ED300F09269 /* MembersLoader.swift */; };
@@ -198,6 +204,12 @@
 		DC463BB92B941970005CA5FB /* UserStarredProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStarredProjectsLoader.swift; sourceTree = "<group>"; };
 		DC463BBB2B9420F2005CA5FB /* UserMembershipProjects.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserMembershipProjects.graphql; sourceTree = "<group>"; };
 		DC463BBD2B942630005CA5FB /* UserGroups.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserGroups.graphql; sourceTree = "<group>"; };
+		DC4B42882BA5609A007A9DB1 /* FileLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLoader.swift; sourceTree = "<group>"; };
+		DC4B428A2BA560B0007A9DB1 /* TreeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeLoader.swift; sourceTree = "<group>"; };
+		DC4B428C2BA561E7007A9DB1 /* CommitsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitsLoader.swift; sourceTree = "<group>"; };
+		DC4B428E2BA56213007A9DB1 /* CommitSignatureLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitSignatureLoader.swift; sourceTree = "<group>"; };
+		DC4B42952BA56968007A9DB1 /* BranchesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchesLoader.swift; sourceTree = "<group>"; };
+		DC4B42992BA56EA6007A9DB1 /* TagsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsLoader.swift; sourceTree = "<group>"; };
 		DC5F37072B91A1D100BF7F9D /* AuthorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorView.swift; sourceTree = "<group>"; };
 		DC5F99DF2B9384CE001C88A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DC69F14A2B956E0600F09269 /* ProjectMembers.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ProjectMembers.graphql; sourceTree = "<group>"; };
@@ -475,6 +487,19 @@
 			path = "Entity-Specific";
 			sourceTree = "<group>";
 		};
+		DC4B42872BA5606A007A9DB1 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				DC4B42882BA5609A007A9DB1 /* FileLoader.swift */,
+				DC4B428A2BA560B0007A9DB1 /* TreeLoader.swift */,
+				DC4B428C2BA561E7007A9DB1 /* CommitsLoader.swift */,
+				DC4B428E2BA56213007A9DB1 /* CommitSignatureLoader.swift */,
+				DC4B42952BA56968007A9DB1 /* BranchesLoader.swift */,
+				DC4B42992BA56EA6007A9DB1 /* TagsLoader.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
 		DC6C5D9C2B8F08F500587850 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -575,6 +600,7 @@
 		DC6C5DB42B8F90C700587850 /* Projects */ = {
 			isa = PBXGroup;
 			children = (
+				DC4B42872BA5606A007A9DB1 /* Repository */,
 				DC3A244C2B8C37BF00DB0E3F /* ProjectLoader.swift */,
 				DC6C5DB52B8F90E400587850 /* UserProjectsLoader.swift */,
 				DC463BB92B941970005CA5FB /* UserStarredProjectsLoader.swift */,
@@ -737,14 +763,18 @@
 				DC2704F92B8BC0F9003DAA84 /* TanukiApp.swift in Sources */,
 				DC2705112B8BC507003DAA84 /* Network.swift in Sources */,
 				DC69F1502B95703900F09269 /* PopupHeader.swift in Sources */,
+				DC4B42892BA5609A007A9DB1 /* FileLoader.swift in Sources */,
 				DC386A952B8D5FB2002E5F6D /* MergeRequestLoader.swift in Sources */,
 				DC3A24562B8C4C2200DB0E3F /* PillView.swift in Sources */,
 				DC217DD32B8FCC8A00F081BC /* Haptics.swift in Sources */,
 				DC21AA752B90385800976E64 /* CurrentUserLoader.swift in Sources */,
 				DC33C27B2B9C22F200C99B85 /* MarkdownTheme.swift in Sources */,
+				DC4B42962BA56968007A9DB1 /* BranchesLoader.swift in Sources */,
+				DC4B428B2BA560B0007A9DB1 /* TreeLoader.swift in Sources */,
 				DC6C5DB32B8F8BBF00587850 /* EmojiCodes.swift in Sources */,
 				DCEFB26B2B94C37600F4B245 /* API.swift in Sources */,
 				DC0A6A3F2B8D02A600C53D56 /* CreateIssueView.swift in Sources */,
+				DC4B429A2BA56EA6007A9DB1 /* TagsLoader.swift in Sources */,
 				DC13E8A82B8E073300994E8A /* HomeView.swift in Sources */,
 				DC217DDF2B8FD34600F081BC /* UserGroupsLoader.swift in Sources */,
 				DC6C5DAD2B8F10D500587850 /* UserMergeLoader.swift in Sources */,
@@ -775,7 +805,9 @@
 				DC3A244D2B8C37BF00DB0E3F /* ProjectLoader.swift in Sources */,
 				DC217DD12B8FBA2200F081BC /* SnippetLoader.swift in Sources */,
 				DC21AA6B2B902F8400976E64 /* DescendantGroupsLoader.swift in Sources */,
+				DC4B428D2BA561E7007A9DB1 /* CommitsLoader.swift in Sources */,
 				DC217DDD2B8FD30700F081BC /* GroupLoader.swift in Sources */,
+				DC4B428F2BA56213007A9DB1 /* CommitSignatureLoader.swift in Sources */,
 				DC0A6A412B8D03EC00C53D56 /* StateIcons.swift in Sources */,
 				DC1C37EE2B99B18A005B7D7A /* EpicIssuesLoader.swift in Sources */,
 				DC0FF5B42B8C7892002B4FAE /* ProjectIssuesLoader.swift in Sources */,
@@ -1041,7 +1073,7 @@
 			repositoryURL = "https://github.com/apollographql/apollo-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.9.0;
+				minimumVersion = 1.9.2;
 			};
 		};
 		DC3A24522B8C3F5800DB0E3F /* XCRemoteSwiftPackageReference "NVMColor_swift" */ = {
