@@ -5,26 +5,22 @@
 //  Created by Felix Schindler on 23.01.22.
 //
 
+import GitLabAPI
 import SwiftUI
-
-struct TreeFile: Codable {
-	let id: String
-	let name: String
-	let type: String
-	let path: String
-}
 
 struct TreeLoader: View {
 	// MARK: - Initialized
-	private let id: Int
-	private var filePath: String?
+	private let projectId: Int
+	private let fullPath: String
+
+	private let folderPath: String?
 
 	@State
-	private var refName: String
+	private var refName: String?
 
 	// MARK: - Loaded by API
 	@State
-	private var tree: [TreeFile]? = nil
+	private var repo: RepoTreeQuery.Data.Project.Repository? = nil
 
 	@State
 	private var branches: [Branch]? = nil
@@ -32,15 +28,61 @@ struct TreeLoader: View {
 	@State
 	private var loadFailed: Bool = false
 
-	init(id: Int, refName: String, filePath: String? = nil) {
-		self.id = id
+	init(projectId: Int, fullPath: String, refName: String? = nil, folderPath: String? = nil) {
+		self.projectId = projectId
+		self.fullPath = fullPath
 		self.refName = refName
-		self.filePath = filePath
+		self.folderPath = folderPath
+	}
+
+	private func loadTree() {
+		let ref: GraphQLNullable<String>
+		let path: GraphQLNullable<String>
+
+		if let refName = self.refName {
+			ref = .some(refName)
+		} else {
+			ref = .none
+		}
+
+		if let filePath = self.folderPath {
+			path = .some(filePath)
+		} else {
+			path = .none
+		}
+
+		Network.shared.apollo.fetch(
+			query: RepoTreeQuery(
+				fullPath: self.fullPath,
+				ref: ref,
+				path: path
+			)
+		) {
+			result in
+			switch result {
+			case .success(let graphQLResult):
+				print("Success! Setting project...")
+				self.repo = graphQLResult.data?.project?.repository
+				if self.refName == nil {
+					self.refName = self.repo?.rootRef
+				}
+			case .failure(let error):
+				print("Failure! Error: \(error)")
+				self.loadFailed = true
+			}
+		}
+	}
+
+	private func getBranches() async {
+		branches = await API.get(
+			type: [Branch].self,
+			endpoint: "projects/\(self.projectId)/repository/branches"
+		)
 	}
 
 	public var body: some View {
 		List {
-			if self.filePath == nil {
+			if self.folderPath == nil {
 				Section {
 					if let branches = self.branches {
 						HStack {
@@ -51,9 +93,7 @@ struct TreeLoader: View {
 							}
 							.pickerStyle(.menu)
 							.onChange(of: refName) { _ in
-								Task {
-									await getTree()
-								}
+								loadTree()
 							}
 						}
 					} else {
@@ -68,35 +108,39 @@ struct TreeLoader: View {
 				}
 			}
 
-			Section("Files") {
-				if let tree = self.tree {
-					if tree.isEmpty {
-						Text(
-							"There are no files yet. You'll see them after you pushed them to branch \(refName)"
-						)
-					} else {
-						ForEach(tree, id: \.id) { file in
-							if file.type == "tree" {
+			Section("Tree") {
+				if let tree = self.repo?.tree {
+					if let folders = tree.trees.nodes {
+						ForEach(folders, id: \.?.path) { maybeFolder in
+							if let folder = maybeFolder {
 								NavigationLink(
 									destination: TreeLoader(
-										id: self.id,
-										refName: self.refName,
-										filePath: file.path
+										projectId: self.projectId,
+										fullPath: self.fullPath,
+										refName: self.refName ?? repo!.rootRef,
+										folderPath: folder.path
 									),
 									label: {
-										Label(file.name, systemImage: "folder")
+										Label(folder.name, systemImage: "folder")
 									}
 								)
-							} else {
+							}
+						}
+					}
+
+					if let files = tree.blobs.nodes {
+						ForEach(files, id: \.?.path) { maybeFile in
+							if let file = maybeFile {
 								NavigationLink(
 									destination: FileLoader(
-										id: self.id,
+										id: projectId,
 										filePath: file.path,
-										refName: self.refName
+										refName: self.refName ?? repo!.rootRef ?? ""
 									),
 									label: {
 										Label(file.name, systemImage: "doc.text")
-									})
+									}
+								)
 							}
 						}
 					}
@@ -105,39 +149,30 @@ struct TreeLoader: View {
 						if loadFailed {
 							Text(failedToLoad)
 						} else {
-							ProgressView("Loading file tree on branch \(refName)")
+							ProgressView("Loading file tree")
 						}
 					}.frame(maxWidth: .infinity, minHeight: 100)
 				}
 			}
 		}.onAppear {
+			loadTree()
 			Task {
-				await getTree()
 				await getBranches()
-				loadFailed = (tree == nil) || (branches == nil)
 			}
 		}.refreshable {
-			await getTree()
-			if filePath == nil {
+			loadTree()
+			if folderPath == nil {
 				await getBranches()
 			}
-		}.navigationTitle(filePath ?? "Files")
-	}
-
-	private func getTree() async {
-		tree = await API.get(
-			type: [TreeFile].self, endpoint: "projects/\(id)/repository/tree",
-			query: ["ref": refName, "path": filePath ?? "", "per_page": String(100)])
-	}
-
-	private func getBranches() async {
-		branches = await API.get(
-			type: [Branch].self, endpoint: "projects/\(id)/repository/branches")
+		}.navigationTitle("Files")
 	}
 }
 
-struct TreeLoader_Previews: PreviewProvider {
-	static var previews: some View {
-		TreeLoader(id: 33_025_310, refName: "main")
+#Preview {
+	NavigationStack {
+		TreeLoader(
+			projectId: 33_025_310,
+			fullPath: "felix-schindler/gitlab-ios"
+		)
 	}
 }

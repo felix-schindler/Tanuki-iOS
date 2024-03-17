@@ -1,0 +1,22 @@
+query RepoTree($fullPath: ID!, $ref: String, $path: String) {
+  project(fullPath: $fullPath) {
+	repository {
+	  rootRef
+
+	  tree(ref: $ref, path: $path) {
+		blobs {
+		  nodes {
+			name
+			path
+		  }
+		}
+		trees {
+		  nodes {
+			name
+			path
+		  }
+		}
+	  }
+	}
+  }
+}

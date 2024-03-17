@@ -23,8 +23,7 @@ struct FileLoader: View {
 	init(
 		id: Int,
 		filePath: String,
-		refName: String,
-		inline: Bool = false
+		refName: String
 	) {
 		self.url = HttpUrl(
 			host: API.host,

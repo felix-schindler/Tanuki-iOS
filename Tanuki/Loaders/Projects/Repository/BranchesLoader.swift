@@ -78,8 +78,8 @@ struct BranchesLoader: View {
 	}
 }
 
-struct BranchesView_Previews: PreviewProvider {
-	static var previews: some View {
+#Preview {
+	NavigationStack {
 		BranchesLoader(33_025_310)
 	}
 }

@@ -344,56 +344,6 @@ struct MergeRequestLoader: View {
 							|| mr.userPermissions.updateMergeRequest)
 					if showMergeSection {
 						Section("Actions") {
-							if mr.userPermissions.canApprove {
-								if mr.approved {
-									Button(
-										"Revoke approval",
-										systemImage: "person.fill.xmark"
-									) {
-										// TODO: Implement
-										Haptics.shared.notify(.error)
-									}.tint(.red)
-								} else {
-									Button(
-										"Approve",
-										systemImage: "person.fill.checkmark"
-									) {
-										// TODO: Implement
-										Haptics.shared.notify(.error)
-									}.tint(.green)
-								}
-							}
-
-							if mr.userPermissions.updateMergeRequest {
-								if mr.state == .opened {
-									Button(
-										action: {
-											// TODO: Implement
-											Haptics.shared.notify(.error)
-										},
-										label: {
-											Label(
-												"Close MR",
-												systemImage:
-													"arrow.triangle.swap")
-										}
-									).tint(.blue)
-								} else if mr.state == .closed {
-									Button(
-										action: {
-											// TODO: Implement
-											Haptics.shared.notify(.error)
-										},
-										label: {
-											Label(
-												"Reopen MR",
-												systemImage:
-													"arrow.triangle.swap")
-										}
-									).tint(.green)
-								}
-							}
-
 							if mr.userPermissions.canMerge
 								&& mr.mergeStatusEnum != nil
 							{
@@ -443,6 +393,61 @@ struct MergeRequestLoader: View {
 									.padding()
 									.presentationDetents([.fraction(0.2)])
 								}
+							}
+
+							if mr.userPermissions.canApprove {
+								if mr.approved {
+									Button(
+										"Revoke approval",
+										systemImage: "person.fill.xmark"
+									) {
+										// TODO: Implement
+										Haptics.shared.notify(.error)
+									}.tint(.red)
+								} else {
+									Button(
+										"Approve",
+										systemImage: "person.fill.checkmark"
+									) {
+										// TODO: Implement
+										Haptics.shared.notify(.error)
+									}.tint(.green)
+								}
+							}
+
+							if mr.userPermissions.updateMergeRequest {
+								if mr.state == .opened {
+									Button(
+										action: {
+											// TODO: Implement
+											Haptics.shared.notify(.error)
+										},
+										label: {
+											Label(
+												"Close MR",
+												systemImage:
+													"arrow.triangle.swap")
+										}
+									).tint(.blue)
+								} else if mr.state == .closed {
+									Button(
+										action: {
+											// TODO: Implement
+											Haptics.shared.notify(.error)
+										},
+										label: {
+											Label(
+												"Reopen MR",
+												systemImage:
+													"arrow.triangle.swap")
+										}
+									).tint(.green)
+								}
+
+								Button("Delete MR", systemImage: "trash") {
+									// TODO: Implement
+									Haptics.shared.notify(.error)
+								}.tint(.red)
 							}
 						}
 					}

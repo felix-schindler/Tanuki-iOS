@@ -142,10 +142,8 @@ struct CommitsLoader: View {
 	}
 }
 
-struct CommitsView_Previews: PreviewProvider {
-	static var previews: some View {
-		NavigationStack {
-			CommitsLoader(33_025_310, refName: "main")
-		}
+#Preview {
+	NavigationStack {
+		CommitsLoader(33_025_310, refName: "main")
 	}
 }

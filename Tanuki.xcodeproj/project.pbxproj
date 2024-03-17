@@ -121,6 +121,7 @@
 		DCB5E0D82B96CC5E000F67FB /* GroupMergeRequests.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCB5E0D72B96CC5E000F67FB /* GroupMergeRequests.graphql */; };
 		DCB5E0DA2B96CD33000F67FB /* GroupMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5E0D92B96CD33000F67FB /* GroupMergeLoader.swift */; };
 		DCCB5D8D2B9C0E8300D5D70A /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */; };
+		DCD386F22BA6E1A800223DEC /* RepoTree.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCD386F12BA6E1A800223DEC /* RepoTree.graphql */; };
 		DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2662B94C29600F4B245 /* EventsLoader.swift */; };
 		DCEFB2692B94C2C100F4B245 /* RestTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2682B94C2C100F4B245 /* RestTypes.swift */; };
 		DCEFB26B2B94C37600F4B245 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB26A2B94C37600F4B245 /* API.swift */; };
@@ -236,6 +237,7 @@
 		DCB5E0D72B96CC5E000F67FB /* GroupMergeRequests.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GroupMergeRequests.graphql; sourceTree = "<group>"; };
 		DCB5E0D92B96CD33000F67FB /* GroupMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMergeLoader.swift; sourceTree = "<group>"; };
 		DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoView.swift; sourceTree = "<group>"; };
+		DCD386F12BA6E1A800223DEC /* RepoTree.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RepoTree.graphql; sourceTree = "<group>"; };
 		DCEFB2662B94C29600F4B245 /* EventsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsLoader.swift; sourceTree = "<group>"; };
 		DCEFB2682B94C2C100F4B245 /* RestTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTypes.swift; sourceTree = "<group>"; };
 		DCEFB26A2B94C37600F4B245 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -441,6 +443,7 @@
 				DC69F1512B95A27F00F09269 /* ProjectReleases.graphql */,
 				DC1D100B2B9975B000B6F5D7 /* ProjectPipelines.graphql */,
 				DCB5E0D32B96C487000F67FB /* GroupCustomEmoji.graphql */,
+				DCD386F12BA6E1A800223DEC /* RepoTree.graphql */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -739,6 +742,7 @@
 				DC1D0FF72B994A6900B6F5D7 /* ProjectLabels.graphql in Resources */,
 				DC1D0FFC2B994FC300B6F5D7 /* UserTimelogs.graphql in Resources */,
 				DC463BBE2B942630005CA5FB /* UserGroups.graphql in Resources */,
+				DCD386F22BA6E1A800223DEC /* RepoTree.graphql in Resources */,
 				DC69F1522B95A27F00F09269 /* ProjectReleases.graphql in Resources */,
 				DC0A6A3D2B8CF7D300C53D56 /* ProjectMergeRequests.graphql in Resources */,
 			);

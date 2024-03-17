@@ -311,14 +311,27 @@ struct ProjectLoader: View {
 							if let ref = project?.repository?.rootRef {
 								NavigationLink(
 									"Repository",
-									destination: TreeLoader(id: projectId, refName: ref)
+									destination: TreeLoader(
+										projectId: projectId,
+										fullPath: self.fullPath,
+										refName: ref
+									)
 								)
 
 								NavigationLink(
 									"Commits",
 									destination: CommitsLoader(projectId, refName: ref)
 								)
+							} else {
+								NavigationLink(
+									"Repository",
+									destination: TreeLoader(
+										projectId: projectId,
+										fullPath: self.fullPath
+									)
+								)
 							}
+
 							NavigationLink(
 								"Branches",
 								destination: BranchesLoader(projectId)
