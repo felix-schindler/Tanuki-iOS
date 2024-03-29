@@ -37,7 +37,7 @@ extension MarkdownUI.Theme {
 			FontWeight(.semibold)
 		}
 		.link {
-			ForegroundColor(.link)
+			ForegroundColor(.accentColor)
 		}
 		.heading1 { configuration in
 			VStack(alignment: .leading, spacing: 0) {
@@ -189,9 +189,6 @@ extension Color {
 	)
 	fileprivate static let secondaryBackground = Color(
 		light: Color(rgba: 0xf7f7_f9ff), dark: Color(rgba: 0x2526_2aff)
-	)
-	fileprivate static let link = Color(
-		light: Color(rgba: 0x2c65_cfff), dark: Color(rgba: 0x4c8e_f8ff)
 	)
 	fileprivate static let border = Color(
 		light: Color(rgba: 0xe4e4_e8ff), dark: Color(rgba: 0x4244_4eff)
