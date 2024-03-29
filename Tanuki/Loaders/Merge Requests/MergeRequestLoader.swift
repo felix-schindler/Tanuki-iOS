@@ -83,25 +83,38 @@ struct MergeRequestLoader: View {
 
 						ScrollView(.horizontal) {
 							HStack(spacing: 5) {
-								PillView(
-									mr.state.rawValue.firstCapitalized,
-									icon: MergeStateHelper.getIconByState(
-										mr.state),
-									bgColor: MergeStateHelper.getColorByState(
-										mr.state),
-									fgColor: .white,
-									cornerRadius: 5
-								)
-								PillView(
-									mr.sourceProject?.fullPath == self.fullPath
-										? mr.sourceBranch
-										: "\(mr.sourceProject?.fullPath ?? "")/\(mr.sourceBranch)",
-									bgColor: .blue,
-									fgColor: .white,
-									cornerRadius: 5
-								)
-								.monospaced()
-								.textSelection(.enabled)
+								if let author = mr._author {
+									ScrollView(.horizontal) {
+										AuthorView(author)
+									}
+								}
+
+								if mr.sourceProject?.fullPath == self.fullPath
+									|| mr.sourceProject?.fullPath == nil
+								{
+									PillView(
+										mr.sourceBranch,
+										bgColor: .blue,
+										fgColor: .white,
+										cornerRadius: 5
+									)
+									.monospaced()
+									.textSelection(.enabled)
+								} else {
+									NavigationLink(
+										destination: ProjectLoader(
+											fullPath: mr.sourceProject!.fullPath),
+										label: {
+											PillView(
+												"\(mr.sourceProject!.fullPath)/\(mr.sourceBranch)",
+												bgColor: .blue,
+												fgColor: .white,
+												cornerRadius: 5
+											)
+											.monospaced()
+											.textSelection(.enabled)
+										})
+								}
 
 								Image(systemName: "arrow.right")
 
@@ -119,12 +132,6 @@ struct MergeRequestLoader: View {
 						if mr.author != nil || mr.diffStatsSummary != nil {
 							ScrollView(.horizontal) {
 								HStack(spacing: 5) {
-									if let author = mr._author {
-										ScrollView(.horizontal) {
-											AuthorView(author)
-										}
-									}
-
 									if let diffStats = mr.diffStatsSummary {
 										PillView(
 											"\(diffStats.fileCount) files",
@@ -135,12 +142,12 @@ struct MergeRequestLoader: View {
 											"+\(diffStats.additions)",
 											fgColor: .green,
 											cornerRadius: 5
-										)
+										).monospaced()
 										PillView(
 											"-\(diffStats.deletions)",
 											fgColor: .red,
 											cornerRadius: 5
-										)
+										).monospaced()
 									}
 								}
 							}
@@ -273,9 +280,20 @@ struct MergeRequestLoader: View {
 
 						DisclosureGroup(
 							content: {
-								Text("Commits")
-								Text("Changes")
-								Text("Diffs")
+								NavigationLink(
+									"Commits",
+									destination: MrCommitsLoader(
+										fullPath: self.fullPath,
+										iid: self.iid
+									)
+								)
+								NavigationLink(
+									"Diffs",
+									destination: DiffsLoader(
+										fullPath: self.fullPath,
+										iid: self.iid
+									)
+								)
 							},
 							label: {
 								Label(
@@ -504,6 +522,18 @@ struct MergeRequestLoader: View {
 		}.refreshable {
 			loadMergeRequest()
 		}.toolbar {
+			if let state = self.project?.mergeRequest?.state {
+				PillView(
+					state.rawValue.firstCapitalized,
+					icon: MergeStateHelper.getIconByState(state),
+					bgColor: MergeStateHelper.getColorByState(state),
+					fgColor: .white,
+					cornerRadius: 5
+				)
+				.labelStyle(.titleAndIcon)
+				.font(.footnote)
+			}
+
 			if let url = project?.mergeRequest?.webUrl {
 				ShareButton(URL(string: url)!)
 			}

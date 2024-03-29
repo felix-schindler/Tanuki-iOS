@@ -79,18 +79,7 @@ struct IssueLoader: View {
 							.padding(.bottom, 1)
 
 						ScrollView(.horizontal) {
-							HStack(spacing: 5) {
-								PillView(
-									issue.state.rawValue.firstCapitalized,
-									icon: IssueStateHelper.getIconByState(
-										issue.state),
-									bgColor: IssueStateHelper.getColorByState(
-										issue.state),
-									fgColor: .white,
-									cornerRadius: 5
-								)
-								AuthorView(issue._author)
-							}
+							AuthorView(issue._author)
 						}.font(.footnote)
 
 						ScrollView(.horizontal) {
@@ -359,6 +348,18 @@ struct IssueLoader: View {
 		}.refreshable {
 			loadIssue()
 		}.toolbar {
+			if let state = project?.issue?.state {
+				PillView(
+					state.rawValue.firstCapitalized,
+					icon: IssueStateHelper.getIconByState(state),
+					bgColor: IssueStateHelper.getColorByState(state),
+					fgColor: .white,
+					cornerRadius: 5
+				)
+				.labelStyle(.titleAndIcon)
+				.font(.footnote)
+			}
+
 			if let url = project?.issue?.webUrl {
 				ShareButton(URL(string: url)!)
 			}

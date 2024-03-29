@@ -120,6 +120,11 @@
 		DCB5E0D62B96C63A000F67FB /* CustomEmojisLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5E0D52B96C63A000F67FB /* CustomEmojisLoader.swift */; };
 		DCB5E0D82B96CC5E000F67FB /* GroupMergeRequests.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCB5E0D72B96CC5E000F67FB /* GroupMergeRequests.graphql */; };
 		DCB5E0DA2B96CD33000F67FB /* GroupMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5E0D92B96CD33000F67FB /* GroupMergeLoader.swift */; };
+		DCB6B62F2BB7043C006C8437 /* MergeRequestCommits.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCB6B62E2BB7043C006C8437 /* MergeRequestCommits.graphql */; };
+		DCB6B6332BB7046C006C8437 /* MergeRequestDiffs.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCB6B6322BB7046C006C8437 /* MergeRequestDiffs.graphql */; };
+		DCB6B6352BB7063B006C8437 /* DiffsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6342BB7063B006C8437 /* DiffsLoader.swift */; };
+		DCB6B6372BB70CD8006C8437 /* MrCommitsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6362BB70CD8006C8437 /* MrCommitsLoader.swift */; };
+		DCB6B6392BB70F9C006C8437 /* SmallCommitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */; };
 		DCCB5D8D2B9C0E8300D5D70A /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */; };
 		DCD386F22BA6E1A800223DEC /* RepoTree.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCD386F12BA6E1A800223DEC /* RepoTree.graphql */; };
 		DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2662B94C29600F4B245 /* EventsLoader.swift */; };
@@ -236,6 +241,11 @@
 		DCB5E0D52B96C63A000F67FB /* CustomEmojisLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEmojisLoader.swift; sourceTree = "<group>"; };
 		DCB5E0D72B96CC5E000F67FB /* GroupMergeRequests.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GroupMergeRequests.graphql; sourceTree = "<group>"; };
 		DCB5E0D92B96CD33000F67FB /* GroupMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMergeLoader.swift; sourceTree = "<group>"; };
+		DCB6B62E2BB7043C006C8437 /* MergeRequestCommits.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MergeRequestCommits.graphql; sourceTree = "<group>"; };
+		DCB6B6322BB7046C006C8437 /* MergeRequestDiffs.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MergeRequestDiffs.graphql; sourceTree = "<group>"; };
+		DCB6B6342BB7063B006C8437 /* DiffsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffsLoader.swift; sourceTree = "<group>"; };
+		DCB6B6362BB70CD8006C8437 /* MrCommitsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MrCommitsLoader.swift; sourceTree = "<group>"; };
+		DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCommitView.swift; sourceTree = "<group>"; };
 		DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoView.swift; sourceTree = "<group>"; };
 		DCD386F12BA6E1A800223DEC /* RepoTree.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RepoTree.graphql; sourceTree = "<group>"; };
 		DCEFB2662B94C29600F4B245 /* EventsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsLoader.swift; sourceTree = "<group>"; };
@@ -444,6 +454,8 @@
 				DC1D100B2B9975B000B6F5D7 /* ProjectPipelines.graphql */,
 				DCB5E0D32B96C487000F67FB /* GroupCustomEmoji.graphql */,
 				DCD386F12BA6E1A800223DEC /* RepoTree.graphql */,
+				DCB6B62E2BB7043C006C8437 /* MergeRequestCommits.graphql */,
+				DCB6B6322BB7046C006C8437 /* MergeRequestDiffs.graphql */,
 			);
 			path = Queries;
 			sourceTree = "<group>";
@@ -486,6 +498,7 @@
 				DC386A992B8D86C4002E5F6D /* NoteView.swift */,
 				DC0A6A402B8D03EC00C53D56 /* StateIcons.swift */,
 				DC0A6A382B8CE4FF00C53D56 /* PipelineStatus.swift */,
+				DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */,
 			);
 			path = "Entity-Specific";
 			sourceTree = "<group>";
@@ -570,6 +583,8 @@
 				DC0FF5B52B8C7AFB002B4FAE /* ProjectMergeLoader.swift */,
 				DC6C5DAC2B8F10D500587850 /* UserMergeLoader.swift */,
 				DCB5E0D92B96CD33000F67FB /* GroupMergeLoader.swift */,
+				DCB6B6342BB7063B006C8437 /* DiffsLoader.swift */,
+				DCB6B6362BB70CD8006C8437 /* MrCommitsLoader.swift */,
 			);
 			path = "Merge Requests";
 			sourceTree = "<group>";
@@ -701,6 +716,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC2705012B8BC0FB003DAA84 /* Preview Assets.xcassets in Resources */,
+				DCB6B62F2BB7043C006C8437 /* MergeRequestCommits.graphql in Resources */,
 				DC6C5DAB2B8F109600587850 /* UserReviewRequestedMergeRequests.graphql in Resources */,
 				DC1C37F32B99BA96005B7D7A /* ProjectMilestones.graphql in Resources */,
 				DC1D0FF22B9945B700B6F5D7 /* GroupLabels.graphql in Resources */,
@@ -724,6 +740,7 @@
 				DC1D10082B996ED500B6F5D7 /* GroupIssues.graphql in Resources */,
 				DC463BBC2B9420F2005CA5FB /* UserMembershipProjects.graphql in Resources */,
 				DC1C37EC2B99B0B9005B7D7A /* EpicIssues.graphql in Resources */,
+				DCB6B6332BB7046C006C8437 /* MergeRequestDiffs.graphql in Resources */,
 				DC2704FD2B8BC0FB003DAA84 /* Assets.xcassets in Resources */,
 				DC1D100C2B9975B000B6F5D7 /* ProjectPipelines.graphql in Resources */,
 				DC6C5DA72B8F0F8600587850 /* UserAssignedMergeRequests.graphql in Resources */,
@@ -768,10 +785,12 @@
 				DC69F1502B95703900F09269 /* PopupHeader.swift in Sources */,
 				DC4B42892BA5609A007A9DB1 /* FileLoader.swift in Sources */,
 				DC386A952B8D5FB2002E5F6D /* MergeRequestLoader.swift in Sources */,
+				DCB6B6392BB70F9C006C8437 /* SmallCommitView.swift in Sources */,
 				DC3A24562B8C4C2200DB0E3F /* PillView.swift in Sources */,
 				DC217DD32B8FCC8A00F081BC /* Haptics.swift in Sources */,
 				DC21AA752B90385800976E64 /* CurrentUserLoader.swift in Sources */,
 				DC33C27B2B9C22F200C99B85 /* MarkdownTheme.swift in Sources */,
+				DCB6B6372BB70CD8006C8437 /* MrCommitsLoader.swift in Sources */,
 				DC4B42962BA56968007A9DB1 /* BranchesLoader.swift in Sources */,
 				DC4B428B2BA560B0007A9DB1 /* TreeLoader.swift in Sources */,
 				DC6C5DB32B8F8BBF00587850 /* EmojiCodes.swift in Sources */,
@@ -819,6 +838,7 @@
 				DC13E8A32B8DE32400994E8A /* IssueLoader.swift in Sources */,
 				DC69F14D2B956ED300F09269 /* MembersLoader.swift in Sources */,
 				DC21AA7F2B906FF400976E64 /* UserLoader.swift in Sources */,
+				DCB6B6352BB7063B006C8437 /* DiffsLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1077,7 +1097,7 @@
 			repositoryURL = "https://github.com/apollographql/apollo-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.9.2;
+				minimumVersion = 1.9.3;
 			};
 		};
 		DC3A24522B8C3F5800DB0E3F /* XCRemoteSwiftPackageReference "NVMColor_swift" */ = {

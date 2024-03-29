@@ -23,12 +23,17 @@ struct UserView: View {
 					AvatarImage(avatarUrl, size: .medium)
 				}
 				VStack(alignment: .leading) {
-					HStack(spacing: 2) {
-						if user.bot {
-							Text("🤖")
+					ScrollView(.horizontal) {
+						HStack {
+							if user.bot {
+								Text("🤖")
+							}
+							Text(user.name)
+								.fontWeight(.bold)
+							if user.pronouns?.isNotEmpty ?? false {
+								PillView(user.pronouns!, cornerRadius: 5)
+							}
 						}
-						Text(user.name)
-							.fontWeight(.bold)
 					}
 					Text("@\(user.username)")
 						.foregroundStyle(.secondary)
@@ -84,27 +89,21 @@ struct UserView: View {
 				}.font(.footnote)
 			}
 
-			ScrollView(.horizontal) {
+			if let status = user._status {
 				HStack {
-					if let status = user._status {
-						HStack(spacing: 2) {
-							if let emoji = status.emoji {
-								Text(":\(emoji):".emojized())
-							}
-							if let message = status.message {
-								Text(message.emojized())
-							}
-						}
-						.padding(.horizontal, 8)
-						.padding(.vertical, 3)
-						.background(Color(.systemGray5))
-						.cornerRadius(5)
+					if let emoji = status.emoji {
+						Text(":\(emoji):".emojized())
 					}
-
-					if user.pronouns?.isNotEmpty ?? false {
-						PillView(user.pronouns!, cornerRadius: 5)
+					if let message = status.message {
+						Text(message.emojized())
 					}
-				}.font(.footnote)
+				}
+				.frame(maxWidth: .infinity, alignment: .leading)
+				.font(.callout)
+				.padding(.horizontal, 8)
+				.padding(.vertical, 6)
+				.background(Color(.systemGray5))
+				.cornerRadius(5)
 			}
 
 			if user.bio?.isNotEmpty ?? false {

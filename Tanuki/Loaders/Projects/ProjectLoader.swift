@@ -22,9 +22,6 @@ struct ProjectLoader: View {
 	private var loadFailed = false
 
 	@State
-	private var showVerified = false
-
-	@State
 	private var showNewIssue = false
 
 	init(fullPath: String) {
@@ -181,50 +178,7 @@ struct ProjectLoader: View {
 
 			if let lastCommit = project?.repository?.tree?.lastCommit {
 				Section("Last commit") {
-					HStack {
-						VStack(alignment: .leading) {
-							if let title = lastCommit.title {
-								Text(title)
-							}
-
-							if lastCommit.authorName != nil
-								&& lastCommit.authoredDate != nil
-							{
-								Text(
-									"\(lastCommit.authorName!) authored at \(Date.fromToString(lastCommit.authoredDate!))"
-								)
-								.font(.footnote)
-							}
-						}
-
-						Spacer()
-
-						VStack {
-							HStack {
-								if lastCommit.pipelines?.nodes != nil
-									&& lastCommit.pipelines!.nodes!.count > 0
-								{
-									PipelineStatus(
-										lastCommit.pipelines!.nodes![0]!.status)
-								}
-
-								if lastCommit.signature?.verificationStatus?
-									.rawValue.starts(with: "VERIFIED") ?? false
-								{
-									RoundIconButton(
-										"Verified", icon: "checkmark.seal"
-									) {
-										Haptics.shared.play(.light)
-										showVerified = true
-									}.tint(.green)
-										.controlSize(.mini)
-								}
-							}
-
-							Text(lastCommit.shortId)
-								.font(.system(.footnote, design: .monospaced))
-						}
-					}
+					SmallCommitView(lastCommit)
 				}
 			}
 
@@ -457,19 +411,6 @@ struct ProjectLoader: View {
 					}
 				}
 			}
-		}.sheet(isPresented: $showVerified) {
-			VStack(alignment: .leading) {
-				PopupHeader(
-					title: "Verified commit",
-					onClose: {
-						showVerified = false
-					})
-				Text(
-					"This commit was signed with a verified signature and the committer email was verified to belong to the same user."
-				)
-				Spacer()
-			}.padding()
-				.presentationDetents([.fraction(0.2)])
 		}.sheet(isPresented: $showNewIssue) {
 			CreateIssueView(showNewIssue: $showNewIssue)
 		}

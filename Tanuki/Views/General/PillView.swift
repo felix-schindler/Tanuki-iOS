@@ -54,5 +54,7 @@ struct PillView: View {
 		PillView("abc", bgColor: .orange, fgColor: .black)
 		PillView("abc", bgColor: .blue, fgColor: .white)
 		PillView("abc", bgColor: .red, fgColor: .white)
+		PillView("Full width", bgColor: .red, fgColor: .white)
+			.frame(maxWidth: .infinity)
 	}
 }

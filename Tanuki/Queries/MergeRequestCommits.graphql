@@ -1,0 +1,23 @@
+query MergeRequestCommits($fullPath: ID!, $iid: String!) {
+  project(fullPath: $fullPath) {
+	mergeRequest(iid: $iid) {
+	  commits {
+		nodes {
+		  title
+		  shortId
+		  authorName
+		  authoredDate
+		  webUrl
+		  signature {
+			verificationStatus
+		  }
+		  pipelines {
+			nodes {
+			  status
+			}
+		  }
+		}
+	  }
+	}
+  }
+}

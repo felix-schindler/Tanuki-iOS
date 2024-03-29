@@ -737,3 +737,42 @@ extension CurrentUserTodosQuery.Data.CurrentUser.Todos.Node: Todo {
 		return target.webUrl
 	}
 }
+
+// MARK: - Commits
+protocol NewCommit {
+	var title: String? { get }
+	var shortId: String { get }
+	var authorName: String? { get }
+	var authoredDate: GitLabAPI.Time? { get }
+	var webUrl: String { get }
+	var _signatureVerificationStatus: String? { get }
+	var _lastPipelineStatus: GraphQLEnum<GitLabAPI.PipelineStatusEnum>? { get }
+}
+
+extension ProjectQuery.Data.Project.Repository.Tree.LastCommit: NewCommit {
+	var _signatureVerificationStatus: String? {
+		return self.signature?.verificationStatus?.rawValue
+	}
+
+	var _lastPipelineStatus: ApolloAPI.GraphQLEnum<GitLabAPI.PipelineStatusEnum>? {
+		if !(pipelines?.nodes?.isEmpty ?? true) {
+			return pipelines?.nodes?[0]?.status
+		} else {
+			return nil
+		}
+	}
+}
+
+extension MergeRequestCommitsQuery.Data.Project.MergeRequest.Commits.Node: NewCommit {
+	var _signatureVerificationStatus: String? {
+		return self.signature?.verificationStatus?.rawValue
+	}
+
+	var _lastPipelineStatus: ApolloAPI.GraphQLEnum<GitLabAPI.PipelineStatusEnum>? {
+		if !(pipelines?.nodes?.isEmpty ?? true) {
+			return pipelines?.nodes?[0]?.status
+		} else {
+			return nil
+		}
+	}
+}

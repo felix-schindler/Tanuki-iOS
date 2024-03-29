@@ -7,7 +7,7 @@ public class ProjectQuery: GraphQLQuery {
   public static let operationName: String = "Project"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename id avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt namespace { __typename id name fullPath } repository { __typename rootRef blobs(paths: ["README", "README.txt", "README.md"]) { __typename nodes { __typename rawTextBlob } } tree { __typename lastCommit { __typename title shortId authorName authoredDate signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue pushCode forkProject requestAccess } } }"#
+      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename id avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt namespace { __typename id name fullPath } repository { __typename rootRef blobs(paths: ["README", "README.txt", "README.md"]) { __typename nodes { __typename rawTextBlob } } tree { __typename lastCommit { __typename title shortId authorName authoredDate webUrl signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue pushCode forkProject requestAccess } } }"#
     ))
 
   public var fullPath: ID
@@ -215,6 +215,7 @@ public class ProjectQuery: GraphQLQuery {
               .field("shortId", String.self),
               .field("authorName", String?.self),
               .field("authoredDate", GitLabAPI.Time?.self),
+              .field("webUrl", String.self),
               .field("signature", Signature?.self),
               .field("pipelines", Pipelines?.self),
             ] }
@@ -227,6 +228,8 @@ public class ProjectQuery: GraphQLQuery {
             public var authorName: String? { __data["authorName"] }
             /// Timestamp of when the commit was authored.
             public var authoredDate: GitLabAPI.Time? { __data["authoredDate"] }
+            /// Web URL of the commit.
+            public var webUrl: String { __data["webUrl"] }
             /// Signature of the commit.
             public var signature: Signature? { __data["signature"] }
             /// Pipelines of the commit ordered latest first.

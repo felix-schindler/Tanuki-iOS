@@ -35,6 +35,7 @@ query Project($fullPath: ID!) {
           shortId
           authorName
           authoredDate
+		  webUrl
           signature {
             verificationStatus
           }

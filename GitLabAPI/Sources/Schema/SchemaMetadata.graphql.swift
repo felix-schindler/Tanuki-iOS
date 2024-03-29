@@ -73,6 +73,11 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "Snippet": return GitLabAPI.Objects.Snippet
     case "Vulnerability": return GitLabAPI.Objects.Vulnerability
     case "WorkItem": return GitLabAPI.Objects.WorkItem
+    case "CommitConnection": return GitLabAPI.Objects.CommitConnection
+    case "GpgSignature": return GitLabAPI.Objects.GpgSignature
+    case "SshSignature": return GitLabAPI.Objects.SshSignature
+    case "X509Signature": return GitLabAPI.Objects.X509Signature
+    case "DiffStats": return GitLabAPI.Objects.DiffStats
     case "Repository": return GitLabAPI.Objects.Repository
     case "Tree": return GitLabAPI.Objects.Tree
     case "BlobConnection": return GitLabAPI.Objects.BlobConnection
@@ -112,9 +117,6 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "Namespace": return GitLabAPI.Objects.Namespace
     case "RepositoryBlobConnection": return GitLabAPI.Objects.RepositoryBlobConnection
     case "RepositoryBlob": return GitLabAPI.Objects.RepositoryBlob
-    case "GpgSignature": return GitLabAPI.Objects.GpgSignature
-    case "SshSignature": return GitLabAPI.Objects.SshSignature
-    case "X509Signature": return GitLabAPI.Objects.X509Signature
     case "RepositoryLanguage": return GitLabAPI.Objects.RepositoryLanguage
     case "ProjectPermissions": return GitLabAPI.Objects.ProjectPermissions
     case "GroupConnection": return GitLabAPI.Objects.GroupConnection
