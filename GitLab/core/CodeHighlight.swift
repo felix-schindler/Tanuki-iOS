@@ -17,9 +17,9 @@ struct SplashCodeSyntaxHighlighter: CodeSyntaxHighlighter {
 	}
 	
 	func highlightCode(_ content: String, language: String?) -> Text {
-		do {
+		if language == "swift" {
 			return self.syntaxHighlighter.highlight(content)
-		} catch {
+		} else {
 			return Text(content)
 		}
 	}
