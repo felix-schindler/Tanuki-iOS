@@ -55,20 +55,20 @@ struct User: Codable {
 	let username: String
 	let name: String
 	let state: String
-	let avatarUrl: String
 	let webUrl: String
-	let createdAt: Date?
-	let bio: String
 	let bot: Bool
+	let avatarUrl: String?
+	let createdAt: Date?
+	let bio: String?
 	let location: String?
 	let publicEmail: String?
-	let skype: String
-	let linkedin: String
-	let twitter: String
-	let discord: String
-	let websiteUrl: String
-	let organization: String
-	let jobTitle: String
+	let skype: String?
+	let linkedin: String?
+	let twitter: String?
+	let discord: String?
+	let websiteUrl: String?
+	let organization: String?
+	let jobTitle: String?
 	let pronouns: String?
 	let workInformation: String?
 	let followers: Int?

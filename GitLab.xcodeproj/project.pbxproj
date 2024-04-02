@@ -320,10 +320,10 @@
 				DCDCACC529CC52E40011230D /* models */,
 				DCF14E3B29C71B7D00D1F43B /* types */,
 				DC5EB90B272D955E0015BF0D /* API.swift */,
+				DC90CA62272E878900B758E7 /* Utils.swift */,
 				DCEE699127312F8A00AE666C /* EmojiCodes.swift */,
 				DC06BE62273F1D3C0049599E /* Errors.swift */,
 				DC8FE05229C6499A001C5D82 /* Store.swift */,
-				DC90CA62272E878900B758E7 /* Utils.swift */,
 				DCDD1E102B16025C00D0B6B9 /* CodeHighlight.swift */,
 			);
 			path = core;

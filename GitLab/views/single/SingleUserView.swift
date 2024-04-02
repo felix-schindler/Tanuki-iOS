@@ -60,8 +60,8 @@ struct SingleUserView: View {
 				}
 			}
 			
-			if (!user.bio.isEmpty) {
-				Text(user.bio.emojized())
+			if (!(user.bio?.isEmpty ?? true)) {
+				Text(user.bio!.emojized())
 			}
 			
 			if (!(user.location?.isEmpty ?? true)) {
@@ -74,7 +74,7 @@ struct SingleUserView: View {
 					.foregroundStyle(.primary)
 			}
 			
-			let workStr = user.workInformation ?? "\(user.jobTitle) \(user.organization)".trim()
+			let workStr = user.workInformation ?? "\(user.jobTitle ?? "") \(user.organization ?? "")".trim()
 			if (!workStr.isEmpty) {
 				Label(workStr, systemImage: "briefcase")
 					.foregroundStyle(.primary)
@@ -84,18 +84,23 @@ struct SingleUserView: View {
 				Label(user.publicEmail!, systemImage: "envelope")
 					.textSelection(.enabled)
 			}
-			
-			if (!user.websiteUrl.isEmpty) {
-				Link(destination: URL(string: user.websiteUrl)!, label: {
-					Label(user.websiteUrl, systemImage: "paperclip")
-						.foregroundStyle(.primary)
-				})
+
+			if (user.websiteUrl?.isNotEmpty ?? false) {
+				if let websiteUrl = URL(string: user.websiteUrl!) {
+					Link(
+						destination: websiteUrl,
+						label: {
+							Label(user.websiteUrl!, systemImage: "paperclip")
+								.foregroundStyle(.primary)
+						}
+					)
+				}
 			}
 			
-			let showSkype =		!user.skype.isEmpty
-			let showIn =			!user.linkedin.isEmpty
-			let showTwitter =	!user.twitter.isEmpty
-			let showDiscord =	!user.discord.isEmpty
+			let showSkype =     user.skype?.isNotEmpty ?? false
+			let showIn =        user.linkedin?.isNotEmpty ?? false
+			let showTwitter =   user.twitter?.isNotEmpty ?? false
+			let showDiscord =   user.discord?.isNotEmpty ?? false
 			
 			if (showSkype || showIn || showTwitter || showDiscord) {
 				HStack {
@@ -103,18 +108,18 @@ struct SingleUserView: View {
 					ScrollView(.horizontal) {
 						HStack {
 							if (showSkype) {
-								Link(user.skype, destination: URL(string: "skype:\(user.skype)")!)
+								Link(user.skype!, destination: URL(string: "skype:\(user.skype!)")!)
 							}
 							if (showIn) {
-								Text("linkedIn: \(user.linkedin)")
+								Text("linkedIn: \(user.linkedin!)")
 									.textSelection(.enabled)
 							}
 							if (showTwitter) {
-								Label(user.twitter, systemImage: "bird")
+								Label(user.twitter!, systemImage: "bird")
 									.textSelection(.enabled)
 							}
 							if (showDiscord) {
-								Text("👾 \(user.discord)")
+								Text("👾 \(user.discord!)")
 									.textSelection(.enabled)
 							}
 						}
@@ -136,7 +141,38 @@ struct SingleUserView: View {
 struct SingleUserView_Previews: PreviewProvider {
 	static var previews: some View {
 		NavigationStack {
-			SingleUserView(user: User(id: 9005085, username: "felix-schindler", name: "Felix", state: "active", avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png", webUrl: "https://gitlab.com/felix-schindler", createdAt: Date(), bio: "Studying computer science as a German-Chinese double degree", bot: true, location: "Stuttgart, Germany", publicEmail: "", skype: "", linkedin: "", twitter: "", discord: "", websiteUrl: "https://schindlerfelix.de", organization: "WUD", jobTitle: "Software Developer", pronouns: "he/him", workInformation: "Software Developer at WUD", followers: 0, following: 0, localTime: "8:51 AM", isFollowed: false), status: UserStatus(emoji: "+1", message: "This is a status."))
+			SingleUserView(
+				user: User(
+					id: 9005085,
+					username: "felix-schindler",
+					name: "Felix",
+					state: "active",
+					webUrl: "https://gitlab.com/felix-schindler",
+					bot: true,
+					avatarUrl: "https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png",
+					createdAt: Date(),
+					bio: "Studying computer science as a German-Chinese double degree",
+					location: "Stuttgart, Germany",
+					publicEmail: "",
+					skype: "",
+					linkedin: "",
+					twitter: "",
+					discord: "",
+					websiteUrl: "https://schindlerfelix.de",
+					organization: "WUD",
+					jobTitle: "Software Developer",
+					pronouns: "he/him",
+					workInformation: "Software Developer at WUD",
+					followers: 0,
+					following: 0,
+					localTime: "8:51 AM",
+					isFollowed: false
+				),
+				status: UserStatus(
+					emoji: "+1",
+					message: "This is a status."
+				)
+			)
 		}
 	}
 }
