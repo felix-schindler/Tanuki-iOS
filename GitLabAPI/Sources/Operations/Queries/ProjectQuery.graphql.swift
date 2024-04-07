@@ -7,7 +7,7 @@ public class ProjectQuery: GraphQLQuery {
   public static let operationName: String = "Project"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename id avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt namespace { __typename id name fullPath } repository { __typename rootRef blobs(paths: ["README", "README.txt", "README.md"]) { __typename nodes { __typename rawTextBlob } } tree { __typename lastCommit { __typename title shortId authorName authoredDate webUrl signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue pushCode forkProject requestAccess } } }"#
+      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename id avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt namespace { __typename id name fullPath } repository { __typename rootRef readme: blobs(paths: ["README.md", "README", "README.txt"], first: 1) { __typename nodes { __typename rawTextBlob } } license: blobs(paths: ["LICENSE", "LICENSE.txt", "LICENSE.md"], first: 1) { __typename nodes { __typename rawTextBlob } } contributing: blobs( paths: ["CONTRIBUTING", "CONTRIBUTING.txt", "CONTRIBUTING.md"] first: 1 ) { __typename nodes { __typename rawTextBlob } } tree { __typename lastCommit { __typename title shortId authorName authoredDate webUrl signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue pushCode forkProject requestAccess } } }"#
     ))
 
   public var fullPath: ID
@@ -140,21 +140,36 @@ public class ProjectQuery: GraphQLQuery {
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("rootRef", String?.self),
-          .field("blobs", Blobs?.self, arguments: ["paths": ["README", "README.txt", "README.md"]]),
+          .field("blobs", alias: "readme", Readme?.self, arguments: [
+            "paths": ["README.md", "README", "README.txt"],
+            "first": 1
+          ]),
+          .field("blobs", alias: "license", License?.self, arguments: [
+            "paths": ["LICENSE", "LICENSE.txt", "LICENSE.md"],
+            "first": 1
+          ]),
+          .field("blobs", alias: "contributing", Contributing?.self, arguments: [
+            "paths": ["CONTRIBUTING", "CONTRIBUTING.txt", "CONTRIBUTING.md"],
+            "first": 1
+          ]),
           .field("tree", Tree?.self),
         ] }
 
         /// Default branch of the repository.
         public var rootRef: String? { __data["rootRef"] }
         /// Blobs contained within the repository
-        public var blobs: Blobs? { __data["blobs"] }
+        public var readme: Readme? { __data["readme"] }
+        /// Blobs contained within the repository
+        public var license: License? { __data["license"] }
+        /// Blobs contained within the repository
+        public var contributing: Contributing? { __data["contributing"] }
         /// Tree of the repository.
         public var tree: Tree? { __data["tree"] }
 
-        /// Project.Repository.Blobs
+        /// Project.Repository.Readme
         ///
         /// Parent Type: `RepositoryBlobConnection`
-        public struct Blobs: GitLabAPI.SelectionSet {
+        public struct Readme: GitLabAPI.SelectionSet {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -167,7 +182,75 @@ public class ProjectQuery: GraphQLQuery {
           /// A list of nodes.
           public var nodes: [Node?]? { __data["nodes"] }
 
-          /// Project.Repository.Blobs.Node
+          /// Project.Repository.Readme.Node
+          ///
+          /// Parent Type: `RepositoryBlob`
+          public struct Node: GitLabAPI.SelectionSet {
+            public let __data: DataDict
+            public init(_dataDict: DataDict) { __data = _dataDict }
+
+            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
+            public static var __selections: [ApolloAPI.Selection] { [
+              .field("__typename", String.self),
+              .field("rawTextBlob", String?.self),
+            ] }
+
+            /// Raw content of the blob, if the blob is text data.
+            public var rawTextBlob: String? { __data["rawTextBlob"] }
+          }
+        }
+
+        /// Project.Repository.License
+        ///
+        /// Parent Type: `RepositoryBlobConnection`
+        public struct License: GitLabAPI.SelectionSet {
+          public let __data: DataDict
+          public init(_dataDict: DataDict) { __data = _dataDict }
+
+          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
+          public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("nodes", [Node?]?.self),
+          ] }
+
+          /// A list of nodes.
+          public var nodes: [Node?]? { __data["nodes"] }
+
+          /// Project.Repository.License.Node
+          ///
+          /// Parent Type: `RepositoryBlob`
+          public struct Node: GitLabAPI.SelectionSet {
+            public let __data: DataDict
+            public init(_dataDict: DataDict) { __data = _dataDict }
+
+            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
+            public static var __selections: [ApolloAPI.Selection] { [
+              .field("__typename", String.self),
+              .field("rawTextBlob", String?.self),
+            ] }
+
+            /// Raw content of the blob, if the blob is text data.
+            public var rawTextBlob: String? { __data["rawTextBlob"] }
+          }
+        }
+
+        /// Project.Repository.Contributing
+        ///
+        /// Parent Type: `RepositoryBlobConnection`
+        public struct Contributing: GitLabAPI.SelectionSet {
+          public let __data: DataDict
+          public init(_dataDict: DataDict) { __data = _dataDict }
+
+          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
+          public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("nodes", [Node?]?.self),
+          ] }
+
+          /// A list of nodes.
+          public var nodes: [Node?]? { __data["nodes"] }
+
+          /// Project.Repository.Contributing.Node
           ///
           /// Parent Type: `RepositoryBlob`
           public struct Node: GitLabAPI.SelectionSet {

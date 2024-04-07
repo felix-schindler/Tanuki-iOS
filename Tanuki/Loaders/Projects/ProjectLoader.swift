@@ -24,6 +24,10 @@ struct ProjectLoader: View {
 	@State
 	private var showNewIssue = false
 
+	/// Selected special file (README, LICENSE, ...)
+	@State
+	private var selectedFile = 0
+
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
@@ -276,14 +280,6 @@ struct ProjectLoader: View {
 									"Commits",
 									destination: CommitsLoader(projectId, refName: ref)
 								)
-							} else {
-								NavigationLink(
-									"Repository",
-									destination: TreeLoader(
-										projectId: projectId,
-										fullPath: self.fullPath
-									)
-								)
 							}
 
 							NavigationLink(
@@ -320,28 +316,51 @@ struct ProjectLoader: View {
 					})
 			}
 
-			if project != nil {
-				if let readmeContent = project!.repository?.blobs?.nodes?
-					.first??
-					.rawTextBlob?.emojized()
-				{
-					Section("README") {
-						let baseUrl = URL(string: project!.webUrl ?? "")
-						let imgUrl = URL(
-							string:
-								"\(project!.webUrl ?? "")/-/raw/\(project!.repository?.rootRef ?? "")/"
-						)
+			if let project = self.project {
+				let readme = project.repository?.readme?.nodes?.first??.rawTextBlob?.emojized()
+				let license = project.repository?.license?.nodes?.first??.rawTextBlob?.emojized()
+				let contributing = project.repository?.contributing?.nodes?.first??.rawTextBlob?
+					.emojized()
 
-						if baseUrl != nil && imgUrl != nil {
-							Markdown(
-								readmeContent,
-								baseURL: baseUrl,
-								imageBaseURL: imgUrl
-							)
-							.markdownTheme(.gitLab)
-						} else {
-							Markdown(readmeContent)
-								.markdownTheme(.gitLab)
+				let baseUrl = URL(string: project.webUrl ?? "")
+				let imgUrl = URL(
+					string:
+						"\(project.webUrl ?? "")/-/raw/\(project.repository?.rootRef ?? "")/"
+				)
+
+				if readme != nil || license != nil || contributing != nil {
+					Section("Special files") {
+						VStack {
+							Picker("", selection: $selectedFile) {
+								if readme != nil {
+									Text("README").tag(0)
+								}
+
+								if license != nil {
+									Text("LICENSE").tag(1)
+								}
+
+								if contributing != nil {
+									Text("CONTRIBUTING").tag(2)
+								}
+							}.pickerStyle(.segmented)
+
+							if selectedFile == 0 && readme != nil {
+								Markdown(
+									readme!,
+									baseURL: baseUrl,
+									imageBaseURL: imgUrl
+								).markdownTheme(.gitLab)
+							} else if selectedFile == 1 && license != nil {
+								Markdown(license!)
+									.markdownTheme(.gitLab)
+							} else if selectedFile == 2 && contributing != nil {
+								Markdown(
+									contributing!,
+									baseURL: baseUrl,
+									imageBaseURL: imgUrl
+								).markdownTheme(.gitLab)
+							}
 						}
 					}
 				}
