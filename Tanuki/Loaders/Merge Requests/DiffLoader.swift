@@ -33,17 +33,17 @@ struct DiffLoader: View {
 	private let projectId: Int
 	private let iid: Int
 
+	@Environment(\.colorScheme)
+	private var colorScheme: ColorScheme
+
 	@State
 	private var diffs: [Diff]? = nil
 
 	@State
 	private var loadFailed = false
 
-	@AppStorage("mr_diff_unified")
+	@AppStorage("diff_unified")
 	private var unidiff = false
-
-	@AppStorage("mr_list_style")
-	private var listStyle = 1
 
 	init(projectId: Int, iid: Int) {
 		self.projectId = projectId
@@ -74,48 +74,54 @@ struct DiffLoader: View {
 			}
 
 			if let diffs = self.diffs {
-				ForEach(diffs, id: \.oldPath) { diff in
-					Section(
-						content: {
-							VStack(alignment: .leading) {
-								if diff.aMode != diff.bMode {
-									Text("Mode changed: \(diff.aMode) → \(diff.bMode)")
-										.padding(.bottom)
+				if diffs.isEmpty {
+					Text("There are no changes")
+				} else {
+					ForEach(diffs, id: \.oldPath) { diff in
+						Section(
+							content: {
+								VStack(alignment: .leading) {
+									if diff.aMode != diff.bMode {
+										Text("Mode changed: \(diff.aMode) → \(diff.bMode)")
+											.padding(.bottom)
+									}
+									CodeTextView(
+										diff.diff,
+										language: "diff",
+										colorScheme: self.colorScheme,
+										fontSize: 12
+									)
 								}
-								CodeTextView(
-									diff.diff,
-									language: "diff"
-								)
-							}
-						},
-						header: {
-							HStack {
-								if diff.newFile {
-									Image(systemName: "plus.square")
-										.foregroundStyle(.green)
-								} else if diff.renamedFile {
-									Image(systemName: "arrow.right.square")
-										.foregroundStyle(.blue)
-								} else if diff.deletedFile {
-									Image(systemName: "minus.square")
-										.foregroundStyle(.red)
-								} else if diff.generatedFile {
-									Image(systemName: "gear.circle")
-										.foregroundStyle(.purple)
-								} else {
-									Image(systemName: "dot.square")
-										.foregroundStyle(.orange)
-								}
-
-								ScrollView(.horizontal) {
-									if diff.renamedFile {
-										Text("\(diff.oldPath) → \(diff.newPath)")
+							},
+							header: {
+								HStack {
+									if diff.newFile {
+										Image(systemName: "plus.square")
+											.foregroundStyle(.green)
+									} else if diff.renamedFile {
+										Image(systemName: "arrow.right.square")
+											.foregroundStyle(.blue)
+									} else if diff.deletedFile {
+										Image(systemName: "minus.square")
+											.foregroundStyle(.red)
+									} else if diff.generatedFile {
+										Image(systemName: "gear.circle")
+											.foregroundStyle(.purple)
 									} else {
-										Text(diff.newPath)
+										Image(systemName: "dot.square")
+											.foregroundStyle(.orange)
+									}
+
+									ScrollView(.horizontal) {
+										if diff.renamedFile {
+											Text("\(diff.oldPath) → \(diff.newPath)")
+										} else {
+											Text(diff.newPath)
+										}
 									}
 								}
-							}
-						})
+							})
+					}
 				}
 			} else {
 				VStack {
