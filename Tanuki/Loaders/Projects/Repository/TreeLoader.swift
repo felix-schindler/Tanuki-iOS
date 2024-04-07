@@ -16,7 +16,7 @@ struct TreeLoader: View {
 	private let folderPath: String?
 
 	@State
-	private var refName: String?
+	private var refName: String
 
 	// MARK: - Loaded by API
 	@State
@@ -28,7 +28,7 @@ struct TreeLoader: View {
 	@State
 	private var loadFailed: Bool = false
 
-	init(projectId: Int, fullPath: String, refName: String? = nil, folderPath: String? = nil) {
+	init(projectId: Int, fullPath: String, refName: String, folderPath: String? = nil) {
 		self.projectId = projectId
 		self.fullPath = fullPath
 		self.refName = refName
@@ -39,11 +39,7 @@ struct TreeLoader: View {
 		let ref: GraphQLNullable<String>
 		let path: GraphQLNullable<String>
 
-		if let refName = self.refName {
-			ref = .some(refName)
-		} else {
-			ref = .none
-		}
+		ref = .some(refName)
 
 		if let filePath = self.folderPath {
 			path = .some(filePath)
@@ -61,11 +57,8 @@ struct TreeLoader: View {
 			result in
 			switch result {
 			case .success(let graphQLResult):
-				print("Success! Setting project...")
+				print("Success! Setting file tree...")
 				self.repo = graphQLResult.data?.project?.repository
-				if self.refName == nil {
-					self.refName = self.repo?.rootRef
-				}
 			case .failure(let error):
 				print("Failure! Error: \(error)")
 				self.loadFailed = true
@@ -93,6 +86,8 @@ struct TreeLoader: View {
 							}
 							.pickerStyle(.menu)
 							.onChange(of: refName) { _ in
+								// Show loading state
+								self.repo = nil
 								loadTree()
 							}
 						}
@@ -117,7 +112,7 @@ struct TreeLoader: View {
 									destination: TreeLoader(
 										projectId: self.projectId,
 										fullPath: self.fullPath,
-										refName: self.refName ?? repo!.rootRef,
+										refName: self.refName,
 										folderPath: folder.path
 									),
 									label: {
@@ -135,7 +130,7 @@ struct TreeLoader: View {
 									destination: FileLoader(
 										id: projectId,
 										filePath: file.path,
-										refName: self.refName ?? repo!.rootRef ?? ""
+										refName: self.refName
 									),
 									label: {
 										Label(file.name, systemImage: "doc.text")
@@ -164,7 +159,7 @@ struct TreeLoader: View {
 			if folderPath == nil {
 				await getBranches()
 			}
-		}.navigationTitle("Files")
+		}.navigationTitle(folderPath != nil ? folderPath! : "Files")
 	}
 }
 
@@ -172,7 +167,8 @@ struct TreeLoader: View {
 	NavigationStack {
 		TreeLoader(
 			projectId: 33_025_310,
-			fullPath: "felix-schindler/gitlab-ios"
+			fullPath: "felix-schindler/gitlab-ios",
+			refName: "main"
 		)
 	}
 }

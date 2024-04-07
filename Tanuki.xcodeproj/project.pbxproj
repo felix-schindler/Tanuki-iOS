@@ -127,6 +127,8 @@
 		DCB6B6392BB70F9C006C8437 /* SmallCommitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */; };
 		DCCB5D8D2B9C0E8300D5D70A /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */; };
 		DCD386F22BA6E1A800223DEC /* RepoTree.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCD386F12BA6E1A800223DEC /* RepoTree.graphql */; };
+		DCD40E142BC2A90A0055EE4C /* CodeHighlighter in Frameworks */ = {isa = PBXBuildFile; productRef = DCD40E132BC2A90A0055EE4C /* CodeHighlighter */; };
+		DCD40E182BC2B2960055EE4C /* FileExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E172BC2B2960055EE4C /* FileExtensions.swift */; };
 		DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2662B94C29600F4B245 /* EventsLoader.swift */; };
 		DCEFB2692B94C2C100F4B245 /* RestTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2682B94C2C100F4B245 /* RestTypes.swift */; };
 		DCEFB26B2B94C37600F4B245 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB26A2B94C37600F4B245 /* API.swift */; };
@@ -248,6 +250,7 @@
 		DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCommitView.swift; sourceTree = "<group>"; };
 		DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoView.swift; sourceTree = "<group>"; };
 		DCD386F12BA6E1A800223DEC /* RepoTree.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RepoTree.graphql; sourceTree = "<group>"; };
+		DCD40E172BC2B2960055EE4C /* FileExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensions.swift; sourceTree = "<group>"; };
 		DCEFB2662B94C29600F4B245 /* EventsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsLoader.swift; sourceTree = "<group>"; };
 		DCEFB2682B94C2C100F4B245 /* RestTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTypes.swift; sourceTree = "<group>"; };
 		DCEFB26A2B94C37600F4B245 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -264,6 +267,7 @@
 				DC0A6A552B8D148000C53D56 /* CachedAsyncImage in Frameworks */,
 				DCEFB26E2B94C3FD00F4B245 /* SwiftHttp in Frameworks */,
 				DC2705092B8BC1B8003DAA84 /* Apollo in Frameworks */,
+				DCD40E142BC2A90A0055EE4C /* CodeHighlighter in Frameworks */,
 				DC27050B2B8BC1B8003DAA84 /* ApolloWebSocket in Frameworks */,
 				DC0A6A522B8D12BE00C53D56 /* ApolloWebSocket in Frameworks */,
 				DC2705192B8BC68E003DAA84 /* GitLabAPI in Frameworks */,
@@ -479,6 +483,7 @@
 				DC2705102B8BC507003DAA84 /* Network.swift */,
 				DC3A244E2B8C3B8100DB0E3F /* Utils.swift */,
 				DC6C5DB22B8F8BBF00587850 /* EmojiCodes.swift */,
+				DCD40E172BC2B2960055EE4C /* FileExtensions.swift */,
 				DC217DD22B8FCC8A00F081BC /* Haptics.swift */,
 				DC6C5D992B8F089D00587850 /* GraphTypes.swift */,
 				DCEFB2682B94C2C100F4B245 /* RestTypes.swift */,
@@ -664,6 +669,7 @@
 				DC0A6A512B8D12BE00C53D56 /* ApolloWebSocket */,
 				DC0A6A542B8D148000C53D56 /* CachedAsyncImage */,
 				DCEFB26D2B94C3FD00F4B245 /* SwiftHttp */,
+				DCD40E132BC2A90A0055EE4C /* CodeHighlighter */,
 			);
 			productName = Tanuki;
 			productReference = DC2704F52B8BC0F9003DAA84 /* Tanuki.app */;
@@ -700,6 +706,7 @@
 				DC3A245A2B8C513C00DB0E3F /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				DC0A6A532B8D148000C53D56 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 				DCEFB26C2B94C3FD00F4B245 /* XCRemoteSwiftPackageReference "swift-http" */,
+				DCD40E122BC2A90A0055EE4C /* XCRemoteSwiftPackageReference "CodeHighlighter" */,
 			);
 			productRefGroup = DC2704F62B8BC0F9003DAA84 /* Products */;
 			projectDirPath = "";
@@ -815,6 +822,7 @@
 				DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */,
 				DC1D0FFE2B994FDD00B6F5D7 /* TimelogsLoader.swift in Sources */,
 				DC6C5D9A2B8F089D00587850 /* GraphTypes.swift in Sources */,
+				DCD40E182BC2B2960055EE4C /* FileExtensions.swift in Sources */,
 				DC21AA772B903ECA00976E64 /* UserView.swift in Sources */,
 				DC6C5D982B8F085A00587850 /* SmallProjectView.swift in Sources */,
 				DCB5E0D62B96C63A000F67FB /* CustomEmojisLoader.swift in Sources */,
@@ -1116,6 +1124,14 @@
 				minimumVersion = 2.3.0;
 			};
 		};
+		DCD40E122BC2A90A0055EE4C /* XCRemoteSwiftPackageReference "CodeHighlighter" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mortenjust/CodeHighlighter";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		DCEFB26C2B94C3FD00F4B245 /* XCRemoteSwiftPackageReference "swift-http" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/felix-schindler/swift-http/";
@@ -1171,6 +1187,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DC3A245A2B8C513C00DB0E3F /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
+		};
+		DCD40E132BC2A90A0055EE4C /* CodeHighlighter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DCD40E122BC2A90A0055EE4C /* XCRemoteSwiftPackageReference "CodeHighlighter" */;
+			productName = CodeHighlighter;
 		};
 		DCEFB26D2B94C3FD00F4B245 /* SwiftHttp */ = {
 			isa = XCSwiftPackageProductDependency;
