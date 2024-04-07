@@ -296,39 +296,42 @@ struct IssueLoader: View {
 						}
 					}
 
-					Section("Notes (\(issue.userNotesCount))") {
-						if issue.userPermissions.createNote {
-							HStack {
-								TextField(
-									"New note",
-									text: $newNoteContent,
-									axis: .vertical
-								)
-								RoundIconButton("Comment", icon: "arrow.up") {
-									// TODO: Save note
-									if newNoteContent.isEmpty {
-										Haptics.shared.notify(.error)
-										newNoteError = true
-									} else {
-										Haptics.shared.notify(.success)
-										newNoteContent = ""
-									}
-								}.alert(
-									"Failed to create new note",
-									isPresented: $newNoteError,
-									actions: {
-										Button("OK") {
-											newNoteError = false
+					let noteCount = issue.notes.nodes?.count ?? 0
+					if issue.userPermissions.createNote || noteCount > 0 {
+						Section("Notes (\(issue.userNotesCount))") {
+							if issue.userPermissions.createNote {
+								HStack {
+									TextField(
+										"New note",
+										text: $newNoteContent,
+										axis: .vertical
+									)
+									RoundIconButton("Comment", icon: "arrow.up") {
+										// TODO: Save note
+										if newNoteContent.isEmpty {
+											Haptics.shared.notify(.error)
+											newNoteError = true
+										} else {
+											Haptics.shared.notify(.success)
+											newNoteContent = ""
 										}
-									})
+									}.alert(
+										"Failed to create new note",
+										isPresented: $newNoteError,
+										actions: {
+											Button("OK") {
+												newNoteError = false
+											}
+										})
+								}
 							}
-						}
 
-						if (issue.notes.nodes?.count ?? 0) > 0 {
-							ForEach(issue.notes.nodes!, id: \.self?.id) {
-								maybeNote in
-								if let note = maybeNote {
-									NoteView(note)
+							if noteCount > 0 {
+								ForEach(issue.notes.nodes!, id: \.self?.id) {
+									maybeNote in
+									if let note = maybeNote {
+										NoteView(note)
+									}
 								}
 							}
 						}

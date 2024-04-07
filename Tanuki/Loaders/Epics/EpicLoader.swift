@@ -282,38 +282,41 @@ struct EpicLoader: View {
 						}
 					}
 
-					Section("Notes (\(epic.userNotesCount))") {
-						if epic.userPermissions.createNote {
-							HStack {
-								TextField(
-									"New note",
-									text: $newNoteContent,
-									axis: .vertical
-								)
-								RoundIconButton("Comment", icon: "arrow.up") {
-									// TODO: Save note
-									if newNoteContent.isEmpty {
-										Haptics.shared.notify(.error)
-										newNoteError = true
-									} else {
-										Haptics.shared.notify(.success)
-										newNoteContent = ""
-									}
-								}.alert(
-									"Failed to create new note",
-									isPresented: $newNoteError,
-									actions: {
-										Button("OK") {
-											newNoteError = false
+					let noteCount = epic.notes.nodes?.count ?? 0
+					if epic.userPermissions.createNote || noteCount > 0 {
+						Section("Notes (\(epic.userNotesCount))") {
+							if epic.userPermissions.createNote {
+								HStack {
+									TextField(
+										"New note",
+										text: $newNoteContent,
+										axis: .vertical
+									)
+									RoundIconButton("Comment", icon: "arrow.up") {
+										// TODO: Save note
+										if newNoteContent.isEmpty {
+											Haptics.shared.notify(.error)
+											newNoteError = true
+										} else {
+											Haptics.shared.notify(.success)
+											newNoteContent = ""
 										}
-									})
+									}.alert(
+										"Failed to create new note",
+										isPresented: $newNoteError,
+										actions: {
+											Button("OK") {
+												newNoteError = false
+											}
+										})
+								}
 							}
-						}
 
-						if (epic.notes.nodes?.count ?? 0) > 0 {
-							ForEach(epic.notes.nodes!, id: \.self?.id) { maybeNote in
-								if let note = maybeNote {
-									NoteView(note)
+							if noteCount > 0 {
+								ForEach(epic.notes.nodes!, id: \.self?.id) { maybeNote in
+									if let note = maybeNote {
+										NoteView(note)
+									}
 								}
 							}
 						}

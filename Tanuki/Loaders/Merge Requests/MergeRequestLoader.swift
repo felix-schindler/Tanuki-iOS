@@ -58,7 +58,7 @@ struct MergeRequestLoader: View {
 		}
 	#endif
 
-	var main: some View {
+	private var main: some View {
 		List {
 			if let project = self.project {
 				if let mr = project.mergeRequest {
@@ -288,12 +288,22 @@ struct MergeRequestLoader: View {
 									)
 								)
 								NavigationLink(
-									"Diffs",
-									destination: DiffsLoader(
+									"Diff stats",
+									destination: DiffsStatsLoader(
 										fullPath: self.fullPath,
 										iid: self.iid
 									)
 								)
+
+								let projectId = project.id.toIntId()
+								let iid = self.iid.toIntId()
+								NavigationLink(
+									"Diffs",
+									destination: DiffLoader(
+										projectId: projectId ?? 0,
+										iid: iid ?? 0
+									)
+								).disabled(projectId == nil || iid == 0)
 							},
 							label: {
 								Label(
@@ -470,39 +480,42 @@ struct MergeRequestLoader: View {
 						}
 					}
 
-					Section("Notes (\(mr.userNotesCount ?? 0))") {
-						if mr.userPermissions.createNote {
-							HStack {
-								TextField(
-									"New note",
-									text: $newNoteContent,
-									axis: .vertical
-								)
-								RoundIconButton("Comment", icon: "arrow.up") {
-									// TODO: Save note
-									if newNoteContent.isEmpty {
-										Haptics.shared.notify(.error)
-										newNoteError = true
-									} else {
-										Haptics.shared.notify(.success)
-										newNoteContent = ""
-									}
-								}.alert(
-									"Failed to create new note",
-									isPresented: $newNoteError,
-									actions: {
-										Button("OK") {
-											newNoteError = false
+					let noteCount = mr.notes.nodes?.count ?? 0
+					if mr.userPermissions.createNote || noteCount > 0 {
+						Section("Notes (\(mr.userNotesCount ?? 0))") {
+							if mr.userPermissions.createNote {
+								HStack {
+									TextField(
+										"New note",
+										text: $newNoteContent,
+										axis: .vertical
+									)
+									RoundIconButton("Comment", icon: "arrow.up") {
+										// TODO: Save note
+										if newNoteContent.isEmpty {
+											Haptics.shared.notify(.error)
+											newNoteError = true
+										} else {
+											Haptics.shared.notify(.success)
+											newNoteContent = ""
 										}
-									})
+									}.alert(
+										"Failed to create new note",
+										isPresented: $newNoteError,
+										actions: {
+											Button("OK") {
+												newNoteError = false
+											}
+										})
+								}
 							}
-						}
 
-						if mr.notes.nodes != nil && mr.notes.nodes!.count > 0 {
-							ForEach(mr.notes.nodes!, id: \.self?.id) {
-								maybeNote in
-								if let note = maybeNote {
-									NoteView(note)
+							if noteCount > 0 {
+								ForEach(mr.notes.nodes!, id: \.self?.id) {
+									maybeNote in
+									if let note = maybeNote {
+										NoteView(note)
+									}
 								}
 							}
 						}

@@ -16,6 +16,11 @@ struct Formats {
 		"wvc",
 	]
 	static let videoFormats = ["mp4", "mov", "avi", "mkv"]
-	static let imageFormats = ["jpg", "jpeg", "png", "gif", "bmp", "svg", "tiff", "webp", "heic", "heif"]
-	static let binaryFormats = ["bin", "lockb", "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "exe", "app", "msi", "apk", "jar", "zip", "tar", "gz", "7z", "rar", "iso", "dmg", "pkg", "deb", "rpm", "xz"]
+	static let imageFormats = [
+		"jpg", "jpeg", "png", "gif", "bmp", "svg", "tiff", "webp", "heic", "heif",
+	]
+	static let binaryFormats = [
+		"bin", "lockb", "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "exe", "app", "msi",
+		"apk", "jar", "zip", "tar", "gz", "7z", "rar", "iso", "dmg", "pkg", "deb", "rpm", "xz",
+	]
 }

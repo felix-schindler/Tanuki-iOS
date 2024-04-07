@@ -1,5 +1,6 @@
 query MergeRequest($fullPath: ID!, $iid: String!) {
   project(fullPath: $fullPath) {
+	id
 	avatarUrl
 	
     mergeRequest(iid: $iid) {

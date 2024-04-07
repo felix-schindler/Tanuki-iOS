@@ -122,13 +122,14 @@
 		DCB5E0DA2B96CD33000F67FB /* GroupMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5E0D92B96CD33000F67FB /* GroupMergeLoader.swift */; };
 		DCB6B62F2BB7043C006C8437 /* MergeRequestCommits.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCB6B62E2BB7043C006C8437 /* MergeRequestCommits.graphql */; };
 		DCB6B6332BB7046C006C8437 /* MergeRequestDiffs.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCB6B6322BB7046C006C8437 /* MergeRequestDiffs.graphql */; };
-		DCB6B6352BB7063B006C8437 /* DiffsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6342BB7063B006C8437 /* DiffsLoader.swift */; };
+		DCB6B6352BB7063B006C8437 /* DiffsStatsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6342BB7063B006C8437 /* DiffsStatsLoader.swift */; };
 		DCB6B6372BB70CD8006C8437 /* MrCommitsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6362BB70CD8006C8437 /* MrCommitsLoader.swift */; };
 		DCB6B6392BB70F9C006C8437 /* SmallCommitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */; };
 		DCCB5D8D2B9C0E8300D5D70A /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */; };
 		DCD386F22BA6E1A800223DEC /* RepoTree.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCD386F12BA6E1A800223DEC /* RepoTree.graphql */; };
 		DCD40E142BC2A90A0055EE4C /* CodeHighlighter in Frameworks */ = {isa = PBXBuildFile; productRef = DCD40E132BC2A90A0055EE4C /* CodeHighlighter */; };
 		DCD40E182BC2B2960055EE4C /* FileExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E172BC2B2960055EE4C /* FileExtensions.swift */; };
+		DCD40E1A2BC2C6600055EE4C /* DiffLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E192BC2C6600055EE4C /* DiffLoader.swift */; };
 		DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2662B94C29600F4B245 /* EventsLoader.swift */; };
 		DCEFB2692B94C2C100F4B245 /* RestTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2682B94C2C100F4B245 /* RestTypes.swift */; };
 		DCEFB26B2B94C37600F4B245 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB26A2B94C37600F4B245 /* API.swift */; };
@@ -245,12 +246,13 @@
 		DCB5E0D92B96CD33000F67FB /* GroupMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMergeLoader.swift; sourceTree = "<group>"; };
 		DCB6B62E2BB7043C006C8437 /* MergeRequestCommits.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MergeRequestCommits.graphql; sourceTree = "<group>"; };
 		DCB6B6322BB7046C006C8437 /* MergeRequestDiffs.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = MergeRequestDiffs.graphql; sourceTree = "<group>"; };
-		DCB6B6342BB7063B006C8437 /* DiffsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffsLoader.swift; sourceTree = "<group>"; };
+		DCB6B6342BB7063B006C8437 /* DiffsStatsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffsStatsLoader.swift; sourceTree = "<group>"; };
 		DCB6B6362BB70CD8006C8437 /* MrCommitsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MrCommitsLoader.swift; sourceTree = "<group>"; };
 		DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCommitView.swift; sourceTree = "<group>"; };
 		DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoView.swift; sourceTree = "<group>"; };
 		DCD386F12BA6E1A800223DEC /* RepoTree.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RepoTree.graphql; sourceTree = "<group>"; };
 		DCD40E172BC2B2960055EE4C /* FileExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensions.swift; sourceTree = "<group>"; };
+		DCD40E192BC2C6600055EE4C /* DiffLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffLoader.swift; sourceTree = "<group>"; };
 		DCEFB2662B94C29600F4B245 /* EventsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsLoader.swift; sourceTree = "<group>"; };
 		DCEFB2682B94C2C100F4B245 /* RestTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTypes.swift; sourceTree = "<group>"; };
 		DCEFB26A2B94C37600F4B245 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -588,8 +590,9 @@
 				DC0FF5B52B8C7AFB002B4FAE /* ProjectMergeLoader.swift */,
 				DC6C5DAC2B8F10D500587850 /* UserMergeLoader.swift */,
 				DCB5E0D92B96CD33000F67FB /* GroupMergeLoader.swift */,
-				DCB6B6342BB7063B006C8437 /* DiffsLoader.swift */,
+				DCB6B6342BB7063B006C8437 /* DiffsStatsLoader.swift */,
 				DCB6B6362BB70CD8006C8437 /* MrCommitsLoader.swift */,
+				DCD40E192BC2C6600055EE4C /* DiffLoader.swift */,
 			);
 			path = "Merge Requests";
 			sourceTree = "<group>";
@@ -793,6 +796,7 @@
 				DC4B42892BA5609A007A9DB1 /* FileLoader.swift in Sources */,
 				DC386A952B8D5FB2002E5F6D /* MergeRequestLoader.swift in Sources */,
 				DCB6B6392BB70F9C006C8437 /* SmallCommitView.swift in Sources */,
+				DCD40E1A2BC2C6600055EE4C /* DiffLoader.swift in Sources */,
 				DC3A24562B8C4C2200DB0E3F /* PillView.swift in Sources */,
 				DC217DD32B8FCC8A00F081BC /* Haptics.swift in Sources */,
 				DC21AA752B90385800976E64 /* CurrentUserLoader.swift in Sources */,
@@ -846,7 +850,7 @@
 				DC13E8A32B8DE32400994E8A /* IssueLoader.swift in Sources */,
 				DC69F14D2B956ED300F09269 /* MembersLoader.swift in Sources */,
 				DC21AA7F2B906FF400976E64 /* UserLoader.swift in Sources */,
-				DCB6B6352BB7063B006C8437 /* DiffsLoader.swift in Sources */,
+				DCB6B6352BB7063B006C8437 /* DiffsStatsLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

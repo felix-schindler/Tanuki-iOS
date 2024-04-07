@@ -8,7 +8,7 @@
 import GitLabAPI
 import SwiftUI
 
-struct DiffsLoader: View {
+struct DiffsStatsLoader: View {
 	private let fullPath: String
 	private let iid: String
 
@@ -75,6 +75,6 @@ struct DiffsLoader: View {
 
 #Preview {
 	NavigationStack {
-		DiffsLoader(fullPath: "felix-schindler/gitlab-ios", iid: "1")
+		DiffsStatsLoader(fullPath: "felix-schindler/gitlab-ios", iid: "1")
 	}
 }
