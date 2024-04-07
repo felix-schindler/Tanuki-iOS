@@ -58,14 +58,7 @@ public struct CodeTextView: View {
 
 #Preview {
 	CodeTextView(
-		"""
-		let a = 2;
-		console.log('Test', a);
-
-		for (const b of c) {
-			console.log(b);
-		}
-		""",
+		"let a = 2;\nconsole.log('Test', a);\n\nfor (const b of c) {\n\tconsole.log(b);\n}\n",
 		language: "javascript",
 		colorScheme: .light,
 		lightTheme: .vs,
