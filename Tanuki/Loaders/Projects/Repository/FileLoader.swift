@@ -15,17 +15,17 @@ struct FileLoader: View {
 	// MARK: - Config
 	private let url: HttpUrl
 	private let filePath: String
-	
+
 	private let fileExtension: String
 	private let refName: String
-	
+
 	// MARK: - State
 	@State
 	private var content: String? = nil
-	
+
 	@State
 	private var loadFailed = false
-	
+
 	init(
 		id: Int,
 		filePath: String,
@@ -45,12 +45,12 @@ struct FileLoader: View {
 			suffix: "/raw",
 			query: ["ref": refName]
 		)
-		
+
 		self.refName = refName
 		self.filePath = filePath
 		self.fileExtension = filePath.components(separatedBy: ".").last?.lowercased() ?? ""
 	}
-	
+
 	public var body: some View {
 		ScrollView {
 			VStack(alignment: .leading) {
@@ -61,12 +61,17 @@ struct FileLoader: View {
 					} else {
 						CodeTextView(
 							content,
-							language: self.fileExtension
+							language: self.fileExtension,
+							fontSize: 12
 						)
 					}
 				} else if Formats.audioFormats.contains(fileExtension) {
 					VStack {
 						Image(systemName: "play")
+							.resizable()
+							.scaledToFit()
+							.foregroundStyle(.gray)
+							.frame(width: 50, height: 50)
 						Text("Can't preview this \(fileExtension) audio file")
 					}
 				} else if Formats.videoFormats.contains(fileExtension) {
@@ -94,6 +99,10 @@ struct FileLoader: View {
 				} else if Formats.binaryFormats.contains(fileExtension) {
 					VStack {
 						Image(systemName: "doc.zipper")
+							.resizable()
+							.scaledToFit()
+							.foregroundStyle(.gray)
+							.frame(width: 50, height: 50)
 						Text("Can't preview this \(fileExtension) binary file")
 					}
 				} else {
@@ -116,7 +125,7 @@ struct FileLoader: View {
 			await getFile()
 		}.navigationTitle(filePath)
 	}
-	
+
 	private func getFile() async {
 		do {
 			let res = try await API.raw(method: .get, url: self.url)
