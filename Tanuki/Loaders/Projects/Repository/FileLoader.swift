@@ -19,6 +19,9 @@ struct FileLoader: View {
 	private let fileExtension: String
 	private let refName: String
 
+	@Environment(\.colorScheme)
+	private var colorScheme: ColorScheme
+
 	// MARK: - State
 	@State
 	private var content: String? = nil
@@ -62,6 +65,7 @@ struct FileLoader: View {
 						CodeTextView(
 							content,
 							language: self.fileExtension,
+							colorScheme: self.colorScheme,
 							fontSize: 12
 						)
 					}

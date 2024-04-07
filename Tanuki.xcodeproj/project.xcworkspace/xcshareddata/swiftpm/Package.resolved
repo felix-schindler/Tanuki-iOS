@@ -1,5 +1,5 @@
 {
-  "originHash" : "fca81b407cec194de07ab4799d6bde2dca73bbe1ba419827b939d627eb658db9",
+  "originHash" : "6a15602f54dc201dcd42bd1cd2bfa3f3b7a9a1fbdad6ad47016b6e6b9c4ec1e0",
   "pins" : [
     {
       "identity" : "apollo-ios",
@@ -11,21 +11,12 @@
       }
     },
     {
-      "identity" : "codehighlighter",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mortenjust/CodeHighlighter",
-      "state" : {
-        "branch" : "main",
-        "revision" : "5fe019a1829ee48af945f6b4da83bf51fedde016"
-      }
-    },
-    {
       "identity" : "highlightr",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mortenjust/Highlightr",
+      "location" : "https://github.com/raspu/Highlightr",
       "state" : {
-        "branch" : "master",
-        "revision" : "9deceba149e481f85a6a8f2eec72e5036cb8f7d8"
+        "revision" : "93199b9e434f04bda956a613af8f571933f9f037",
+        "version" : "2.1.2"
       }
     },
     {
