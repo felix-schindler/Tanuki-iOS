@@ -72,8 +72,8 @@ struct UserView: View {
 						}
 					}
 
-					let hasJob = user.jobTitle != nil
-					let hasOrg = user.organization != nil
+					let hasJob = user.jobTitle?.isNotEmpty ?? false
+					let hasOrg = user.organization?.isNotEmpty ?? false
 					if hasJob || hasOrg {
 						let workInfo =
 							hasJob && hasOrg
