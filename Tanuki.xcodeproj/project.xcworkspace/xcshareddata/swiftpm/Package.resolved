@@ -1,5 +1,5 @@
 {
-  "originHash" : "6a15602f54dc201dcd42bd1cd2bfa3f3b7a9a1fbdad6ad47016b6e6b9c4ec1e0",
+  "originHash" : "609f242d5c9eddc82c1e84bc384da45a9e37016f479fc76e72532c5411c95c7d",
   "pins" : [
     {
       "identity" : "apollo-ios",
@@ -13,10 +13,10 @@
     {
       "identity" : "highlightr",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/raspu/Highlightr",
+      "location" : "https://github.com/felix-schindler/Highlightr",
       "state" : {
-        "revision" : "93199b9e434f04bda956a613af8f571933f9f037",
-        "version" : "2.1.2"
+        "branch" : "master",
+        "revision" : "e453b82b723778ad82778516dcff0fd65406ee84"
       }
     },
     {

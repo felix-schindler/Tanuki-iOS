@@ -116,6 +116,8 @@
 		DC6C5DBF2B8FB3CA00587850 /* Snippet.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DBE2B8FB3CA00587850 /* Snippet.graphql */; };
 		DC7A7FA72BA5D0D600E128B1 /* SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */; };
 		DC8CFE132B95B3D3007F6D32 /* GroupMembers.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC8CFE122B95B3D3007F6D32 /* GroupMembers.graphql */; };
+		DCAF9D9C2BC36912001FF2E5 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAF9D9B2BC36912001FF2E5 /* PreferencesView.swift */; };
+		DCAF9D9F2BC3755F001FF2E5 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = DCAF9D9E2BC3755F001FF2E5 /* Highlightr */; };
 		DCB5E0D42B96C487000F67FB /* GroupCustomEmoji.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCB5E0D32B96C487000F67FB /* GroupCustomEmoji.graphql */; };
 		DCB5E0D62B96C63A000F67FB /* CustomEmojisLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5E0D52B96C63A000F67FB /* CustomEmojisLoader.swift */; };
 		DCB5E0D82B96CC5E000F67FB /* GroupMergeRequests.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCB5E0D72B96CC5E000F67FB /* GroupMergeRequests.graphql */; };
@@ -129,9 +131,7 @@
 		DCD386F22BA6E1A800223DEC /* RepoTree.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCD386F12BA6E1A800223DEC /* RepoTree.graphql */; };
 		DCD40E182BC2B2960055EE4C /* FileExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E172BC2B2960055EE4C /* FileExtensions.swift */; };
 		DCD40E1A2BC2C6600055EE4C /* DiffLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E192BC2C6600055EE4C /* DiffLoader.swift */; };
-		DCD40E202BC2E59A0055EE4C /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = DCD40E1F2BC2E59A0055EE4C /* Highlightr */; };
 		DCD40E222BC2E5CC0055EE4C /* CodeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E212BC2E5CC0055EE4C /* CodeTextView.swift */; };
-		DCD40E272BC2E85F0055EE4C /* HilghligtherTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E262BC2E85F0055EE4C /* HilghligtherTheme.swift */; };
 		DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2662B94C29600F4B245 /* EventsLoader.swift */; };
 		DCEFB2692B94C2C100F4B245 /* RestTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2682B94C2C100F4B245 /* RestTypes.swift */; };
 		DCEFB26B2B94C37600F4B245 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB26A2B94C37600F4B245 /* API.swift */; };
@@ -242,6 +242,7 @@
 		DC6C5DBE2B8FB3CA00587850 /* Snippet.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Snippet.graphql; sourceTree = "<group>"; };
 		DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupView.swift; sourceTree = "<group>"; };
 		DC8CFE122B95B3D3007F6D32 /* GroupMembers.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GroupMembers.graphql; sourceTree = "<group>"; };
+		DCAF9D9B2BC36912001FF2E5 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		DCB5E0D32B96C487000F67FB /* GroupCustomEmoji.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GroupCustomEmoji.graphql; sourceTree = "<group>"; };
 		DCB5E0D52B96C63A000F67FB /* CustomEmojisLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEmojisLoader.swift; sourceTree = "<group>"; };
 		DCB5E0D72B96CC5E000F67FB /* GroupMergeRequests.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GroupMergeRequests.graphql; sourceTree = "<group>"; };
@@ -256,7 +257,6 @@
 		DCD40E172BC2B2960055EE4C /* FileExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensions.swift; sourceTree = "<group>"; };
 		DCD40E192BC2C6600055EE4C /* DiffLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffLoader.swift; sourceTree = "<group>"; };
 		DCD40E212BC2E5CC0055EE4C /* CodeTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeTextView.swift; sourceTree = "<group>"; };
-		DCD40E262BC2E85F0055EE4C /* HilghligtherTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HilghligtherTheme.swift; sourceTree = "<group>"; };
 		DCEFB2662B94C29600F4B245 /* EventsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsLoader.swift; sourceTree = "<group>"; };
 		DCEFB2682B94C2C100F4B245 /* RestTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTypes.swift; sourceTree = "<group>"; };
 		DCEFB26A2B94C37600F4B245 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -271,11 +271,11 @@
 				DC0A6A502B8D12BE00C53D56 /* ApolloSQLite in Frameworks */,
 				DC0A6A4E2B8D12BE00C53D56 /* Apollo in Frameworks */,
 				DC0A6A552B8D148000C53D56 /* CachedAsyncImage in Frameworks */,
-				DCD40E202BC2E59A0055EE4C /* Highlightr in Frameworks */,
 				DCEFB26E2B94C3FD00F4B245 /* SwiftHttp in Frameworks */,
 				DC2705092B8BC1B8003DAA84 /* Apollo in Frameworks */,
 				DC27050B2B8BC1B8003DAA84 /* ApolloWebSocket in Frameworks */,
 				DC0A6A522B8D12BE00C53D56 /* ApolloWebSocket in Frameworks */,
+				DCAF9D9F2BC3755F001FF2E5 /* Highlightr in Frameworks */,
 				DC2705192B8BC68E003DAA84 /* GitLabAPI in Frameworks */,
 				DC3A245C2B8C513C00DB0E3F /* MarkdownUI in Frameworks */,
 			);
@@ -473,7 +473,7 @@
 		DC3A24582B8C4C7C00DB0E3F /* General */ = {
 			isa = PBXGroup;
 			children = (
-				DCD40E232BC2E7530055EE4C /* Highlight */,
+				DCD40E212BC2E5CC0055EE4C /* CodeTextView.swift */,
 				DC3A24502B8C3E1A00DB0E3F /* AvatarImage.swift */,
 				DC3A24552B8C4C2200DB0E3F /* PillView.swift */,
 				DC3A245D2B8C557E00DB0E3F /* RoundIconButton.swift */,
@@ -536,6 +536,7 @@
 				DC13E8A72B8E073300994E8A /* HomeView.swift */,
 				DC21AA762B903ECA00976E64 /* UserView.swift */,
 				DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */,
+				DCAF9D9B2BC36912001FF2E5 /* PreferencesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -650,15 +651,6 @@
 			path = Snippets;
 			sourceTree = "<group>";
 		};
-		DCD40E232BC2E7530055EE4C /* Highlight */ = {
-			isa = PBXGroup;
-			children = (
-				DCD40E212BC2E5CC0055EE4C /* CodeTextView.swift */,
-				DCD40E262BC2E85F0055EE4C /* HilghligtherTheme.swift */,
-			);
-			path = Highlight;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -686,7 +678,7 @@
 				DC0A6A512B8D12BE00C53D56 /* ApolloWebSocket */,
 				DC0A6A542B8D148000C53D56 /* CachedAsyncImage */,
 				DCEFB26D2B94C3FD00F4B245 /* SwiftHttp */,
-				DCD40E1F2BC2E59A0055EE4C /* Highlightr */,
+				DCAF9D9E2BC3755F001FF2E5 /* Highlightr */,
 			);
 			productName = Tanuki;
 			productReference = DC2704F52B8BC0F9003DAA84 /* Tanuki.app */;
@@ -723,7 +715,7 @@
 				DC3A245A2B8C513C00DB0E3F /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				DC0A6A532B8D148000C53D56 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 				DCEFB26C2B94C3FD00F4B245 /* XCRemoteSwiftPackageReference "swift-http" */,
-				DCD40E1E2BC2E59A0055EE4C /* XCRemoteSwiftPackageReference "Highlightr" */,
+				DCAF9D9D2BC3755F001FF2E5 /* XCRemoteSwiftPackageReference "Highlightr" */,
 			);
 			productRefGroup = DC2704F62B8BC0F9003DAA84 /* Products */;
 			projectDirPath = "";
@@ -812,6 +804,7 @@
 				DCB6B6392BB70F9C006C8437 /* SmallCommitView.swift in Sources */,
 				DCD40E1A2BC2C6600055EE4C /* DiffLoader.swift in Sources */,
 				DC3A24562B8C4C2200DB0E3F /* PillView.swift in Sources */,
+				DCAF9D9C2BC36912001FF2E5 /* PreferencesView.swift in Sources */,
 				DC217DD32B8FCC8A00F081BC /* Haptics.swift in Sources */,
 				DC21AA752B90385800976E64 /* CurrentUserLoader.swift in Sources */,
 				DC33C27B2B9C22F200C99B85 /* MarkdownTheme.swift in Sources */,
@@ -819,7 +812,6 @@
 				DC4B42962BA56968007A9DB1 /* BranchesLoader.swift in Sources */,
 				DC4B428B2BA560B0007A9DB1 /* TreeLoader.swift in Sources */,
 				DC6C5DB32B8F8BBF00587850 /* EmojiCodes.swift in Sources */,
-				DCD40E272BC2E85F0055EE4C /* HilghligtherTheme.swift in Sources */,
 				DCEFB26B2B94C37600F4B245 /* API.swift in Sources */,
 				DC0A6A3F2B8D02A600C53D56 /* CreateIssueView.swift in Sources */,
 				DC4B429A2BA56EA6007A9DB1 /* TagsLoader.swift in Sources */,
@@ -1144,12 +1136,12 @@
 				minimumVersion = 2.3.0;
 			};
 		};
-		DCD40E1E2BC2E59A0055EE4C /* XCRemoteSwiftPackageReference "Highlightr" */ = {
+		DCAF9D9D2BC3755F001FF2E5 /* XCRemoteSwiftPackageReference "Highlightr" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/raspu/Highlightr";
+			repositoryURL = "https://github.com/felix-schindler/Highlightr";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.1.2;
+				branch = master;
+				kind = branch;
 			};
 		};
 		DCEFB26C2B94C3FD00F4B245 /* XCRemoteSwiftPackageReference "swift-http" */ = {
@@ -1208,9 +1200,9 @@
 			package = DC3A245A2B8C513C00DB0E3F /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
 		};
-		DCD40E1F2BC2E59A0055EE4C /* Highlightr */ = {
+		DCAF9D9E2BC3755F001FF2E5 /* Highlightr */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DCD40E1E2BC2E59A0055EE4C /* XCRemoteSwiftPackageReference "Highlightr" */;
+			package = DCAF9D9D2BC3755F001FF2E5 /* XCRemoteSwiftPackageReference "Highlightr" */;
 			productName = Highlightr;
 		};
 		DCEFB26D2B94C3FD00F4B245 /* SwiftHttp */ = {

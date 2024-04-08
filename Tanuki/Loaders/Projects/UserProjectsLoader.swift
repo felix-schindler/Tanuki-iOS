@@ -84,7 +84,7 @@ struct UserProjectsLoader: View {
 					if loadFailed {
 						Text(failedToLoad)
 					} else {
-						ProgressView("Loading project")
+						ProgressView("Loading projects")
 					}
 				}.frame(maxWidth: .infinity, minHeight: 100)
 			}

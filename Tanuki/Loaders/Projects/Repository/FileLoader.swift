@@ -107,7 +107,7 @@ struct FileLoader: View {
 							.scaledToFit()
 							.foregroundStyle(.gray)
 							.frame(width: 50, height: 50)
-						Text("Can't preview this \(fileExtension) binary file")
+						Text("Can't preview this \(fileExtension) file")
 					}
 				} else {
 					Spacer()
@@ -142,10 +142,15 @@ struct FileLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	VStack {
 		FileLoader(
 			id: 33_025_310,
 			filePath: "GitLab/GitLabApp.swift",
+			refName: "main"
+		)
+		FileLoader(
+			id: 45_748_717,
+			filePath: "tanuki.svg",
 			refName: "main"
 		)
 	}

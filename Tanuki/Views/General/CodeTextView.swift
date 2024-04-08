@@ -17,18 +17,17 @@ public struct CodeTextView: View {
 		_ code: String,
 		language: String,
 		colorScheme: ColorScheme,
-		lightTheme: HighlighterTheme = .vs,
-		darkTheme: HighlighterTheme = .vs2015,
+		lightTheme: String = "vs",
+		darkTheme: String = "vs2015",
 		fontSize: Double = 12
 	) {
 		if let highlighter = Highlightr() {
 			var lang = language.lowercased()
 			if !highlighter.supportedLanguages().contains(lang) {
-				print("WARNING: Language \(lang) isn't supported")
-				lang = "text"
+				print("WARNING: Language \(lang) isn't supported, using auto detect")
 			}
 
-			let theme = colorScheme == .dark ? darkTheme.rawValue : lightTheme.rawValue
+			let theme = colorScheme == .dark ? darkTheme : lightTheme
 			if highlighter.availableThemes().contains(theme) {
 				highlighter.setTheme(to: theme)
 			} else {
@@ -49,10 +48,9 @@ public struct CodeTextView: View {
 	}
 
 	public var body: some View {
-		VStack {
-			Text(highlightedCode)
-				.lineSpacing(4)
-		}
+		Text(highlightedCode)
+			.lineSpacing(4)
+			.textSelection(.enabled)
 	}
 }
 
@@ -61,8 +59,6 @@ public struct CodeTextView: View {
 		"let a = 2;\nconsole.log('Test', a);\n\nfor (const b of c) {\n\tconsole.log(b);\n}\n",
 		language: "javascript",
 		colorScheme: .light,
-		lightTheme: .vs,
-		darkTheme: .vs2015,
 		fontSize: 24
 	)
 }
