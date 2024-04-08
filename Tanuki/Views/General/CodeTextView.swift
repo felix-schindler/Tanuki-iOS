@@ -22,7 +22,7 @@ public struct CodeTextView: View {
 		fontSize: Double = 12
 	) {
 		if let highlighter = Highlightr() {
-			var lang = language.lowercased()
+			let lang = language.lowercased()
 			if !highlighter.supportedLanguages().contains(lang) {
 				print("WARNING: Language \(lang) isn't supported, using auto detect")
 			}
