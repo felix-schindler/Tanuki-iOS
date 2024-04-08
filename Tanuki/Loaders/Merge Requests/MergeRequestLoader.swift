@@ -301,7 +301,7 @@ struct MergeRequestLoader: View {
 								"Diffs",
 								destination: DiffLoader(
 									projectId: projectId ?? 0,
-									iid: iid ?? 0
+									mrIid: iid ?? 0
 								)
 							).disabled(projectId == nil || iid == 0)
 						},

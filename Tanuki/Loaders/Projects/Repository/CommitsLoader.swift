@@ -78,29 +78,34 @@ struct CommitsLoader: View {
 					}
 					Section("Commits") {
 						ForEach(commits!, id: \.id) { commit in
-							HStack {
-								VStack(alignment: .leading) {
-									Text(commit.title.emojized())
-										.fontWeight(.medium)
+							NavigationLink(
+								destination: DiffLoader(projectId: self.projectId, commitSha: commit.id),
+								label: {
+									HStack {
+										VStack(alignment: .leading) {
+											Text(commit.title.emojized())
+												.fontWeight(.medium)
 
-									VStack(alignment: .leading) {
-										HStack {
-											Text(
-												"Authored by \(commit.authorName) at \(commit.authoredDate.toString(.short))"
-											)
-										}.font(.footnote)
+											VStack(alignment: .leading) {
+												HStack {
+													Text(
+														"Authored by \(commit.authorName) at \(commit.authoredDate.toString(.short))"
+													)
+												}.font(.footnote)
+											}
+										}
+										Spacer()
+										VStack {
+											SignatureLoader(projectId: self.projectId, commitId: commit.id)
+											Text(commit.shortId)
+												.textSelection(.enabled)
+												.font(.system(.caption, design: .monospaced))
+										}
+									}.swipeActions {
+										ShareButton(URL(string: commit.webUrl)!)
 									}
 								}
-								Spacer()
-								VStack {
-									SignatureLoader(projectId: self.projectId, commitId: commit.id)
-									Text(commit.shortId)
-										.textSelection(.enabled)
-										.font(.system(.caption, design: .monospaced))
-								}
-							}.swipeActions {
-								ShareButton(URL(string: commit.webUrl)!)
-							}
+							)
 						}
 					}
 				}

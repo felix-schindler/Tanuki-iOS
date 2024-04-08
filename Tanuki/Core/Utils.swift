@@ -80,6 +80,14 @@ extension String {
 	func toIntId() -> Int? {
 		return Int(self.split(separator: "/").last ?? "")
 	}
+
+	func toStringId() -> String? {
+		if let last = self.split(separator: "/").last {
+			return String(last)
+		}
+		
+		return nil
+	}
 }
 
 extension StringProtocol {

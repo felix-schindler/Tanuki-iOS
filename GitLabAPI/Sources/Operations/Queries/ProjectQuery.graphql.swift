@@ -7,7 +7,7 @@ public class ProjectQuery: GraphQLQuery {
   public static let operationName: String = "Project"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename id avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt namespace { __typename id name fullPath } repository { __typename rootRef readme: blobs(paths: ["README.md", "README", "README.txt"], first: 1) { __typename nodes { __typename rawTextBlob } } license: blobs(paths: ["LICENSE", "LICENSE.txt", "LICENSE.md"], first: 1) { __typename nodes { __typename rawTextBlob } } contributing: blobs( paths: ["CONTRIBUTING", "CONTRIBUTING.txt", "CONTRIBUTING.md"] first: 1 ) { __typename nodes { __typename rawTextBlob } } tree { __typename lastCommit { __typename title shortId authorName authoredDate webUrl signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue pushCode forkProject requestAccess } } }"#
+      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename id avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt namespace { __typename id name fullPath } repository { __typename rootRef readme: blobs(paths: ["README.md", "README", "README.txt"], first: 1) { __typename nodes { __typename rawTextBlob } } license: blobs(paths: ["LICENSE", "LICENSE.txt", "LICENSE.md"], first: 1) { __typename nodes { __typename rawTextBlob } } contributing: blobs( paths: ["CONTRIBUTING", "CONTRIBUTING.txt", "CONTRIBUTING.md"] first: 1 ) { __typename nodes { __typename rawTextBlob } } tree { __typename lastCommit { __typename id title shortId authorName authoredDate webUrl signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue pushCode forkProject requestAccess } } }"#
     ))
 
   public var fullPath: ID
@@ -294,6 +294,7 @@ public class ProjectQuery: GraphQLQuery {
             public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
+              .field("id", GitLabAPI.ID.self),
               .field("title", String?.self),
               .field("shortId", String.self),
               .field("authorName", String?.self),
@@ -303,6 +304,8 @@ public class ProjectQuery: GraphQLQuery {
               .field("pipelines", Pipelines?.self),
             ] }
 
+            /// ID (global ID) of the commit.
+            public var id: GitLabAPI.ID { __data["id"] }
             /// Title of the commit message.
             public var title: String? { __data["title"] }
             /// Short SHA1 ID of the commit.

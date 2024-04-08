@@ -1,8 +1,10 @@
 query MergeRequestCommits($fullPath: ID!, $iid: String!) {
   project(fullPath: $fullPath) {
+	id
 	mergeRequest(iid: $iid) {
 	  commits {
 		nodes {
+		  id
 		  title
 		  shortId
 		  authorName

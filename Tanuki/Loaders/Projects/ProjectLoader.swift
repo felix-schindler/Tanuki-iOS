@@ -180,9 +180,10 @@ struct ProjectLoader: View {
 				}
 			}
 
+			let projectId = project?.id.toIntId()
 			if let lastCommit = project?.repository?.tree?.lastCommit {
 				Section("Last commit") {
-					SmallCommitView(lastCommit)
+					SmallCommitView(lastCommit, projectId)
 				}
 			}
 

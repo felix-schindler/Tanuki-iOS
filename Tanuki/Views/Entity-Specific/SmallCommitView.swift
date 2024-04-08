@@ -9,16 +9,32 @@ import MarkdownUI
 import SwiftUI
 
 struct SmallCommitView: View {
+	private let projectId: Int?
 	private let commit: NewCommit
 
 	@State
 	private var showVerified = false
 
-	init(_ commit: NewCommit) {
+	init(_ commit: NewCommit, _ projectId: Int? = nil) {
 		self.commit = commit
+		self.projectId = projectId
+	}
+	
+	public var body: some View {
+		if let id = self.projectId,
+		   let sha = commit.id.toStringId() {
+			NavigationLink(
+				destination: DiffLoader(projectId: id, commitSha: sha),
+				label: {
+					main
+				}
+			)
+		} else {
+			main
+		}
 	}
 
-	var body: some View {
+	private var main: some View {
 		HStack {
 			VStack(alignment: .leading) {
 				if let title = commit.title {

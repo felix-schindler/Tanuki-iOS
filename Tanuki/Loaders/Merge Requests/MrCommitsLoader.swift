@@ -13,7 +13,7 @@ struct MrCommitsLoader: View {
 	private let iid: String
 
 	@State
-	private var commits: [MergeRequestCommitsQuery.Data.Project.MergeRequest.Commits.Node?]? = nil
+	private var project: MergeRequestCommitsQuery.Data.Project? = nil
 
 	@State
 	private var loadFailed = false
@@ -30,7 +30,7 @@ struct MrCommitsLoader: View {
 			switch result {
 			case .success(let graphQLResult):
 				print("Success! Setting MR commits...")
-				self.commits = graphQLResult.data?.project?.mergeRequest?.commits?.nodes
+				self.project = graphQLResult.data?.project
 			case .failure(let error):
 				print("Failure! Error: \(error)")
 				loadFailed = true
@@ -40,13 +40,14 @@ struct MrCommitsLoader: View {
 
 	public var body: some View {
 		List {
-			if let commits = self.commits {
+			if let commits = self.project?.mergeRequest?.commits?.nodes {
 				if commits.isEmpty {
 					Text("There are no commits in this MR")
 				} else {
+					let projectId = project?.id.toIntId()
 					ForEach(commits, id: \.?.shortId) { maybeCommit in
 						if let commit = maybeCommit {
-							SmallCommitView(commit)
+							SmallCommitView(commit, projectId)
 						}
 					}
 				}

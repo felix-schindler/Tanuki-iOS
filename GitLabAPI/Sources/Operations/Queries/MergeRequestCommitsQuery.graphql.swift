@@ -7,7 +7,7 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
   public static let operationName: String = "MergeRequestCommits"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query MergeRequestCommits($fullPath: ID!, $iid: String!) { project(fullPath: $fullPath) { __typename mergeRequest(iid: $iid) { __typename commits { __typename nodes { __typename title shortId authorName authoredDate webUrl signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } } }"#
+      #"query MergeRequestCommits($fullPath: ID!, $iid: String!) { project(fullPath: $fullPath) { __typename id mergeRequest(iid: $iid) { __typename commits { __typename nodes { __typename id title shortId authorName authoredDate webUrl signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } } }"#
     ))
 
   public var fullPath: ID
@@ -48,9 +48,12 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
       public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
+        .field("id", GitLabAPI.ID.self),
         .field("mergeRequest", MergeRequest?.self, arguments: ["iid": .variable("iid")]),
       ] }
 
+      /// ID of the project.
+      public var id: GitLabAPI.ID { __data["id"] }
       /// A single merge request of the project.
       public var mergeRequest: MergeRequest? { __data["mergeRequest"] }
 
@@ -96,6 +99,7 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
             public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
+              .field("id", GitLabAPI.ID.self),
               .field("title", String?.self),
               .field("shortId", String.self),
               .field("authorName", String?.self),
@@ -105,6 +109,8 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
               .field("pipelines", Pipelines?.self),
             ] }
 
+            /// ID (global ID) of the commit.
+            public var id: GitLabAPI.ID { __data["id"] }
             /// Title of the commit message.
             public var title: String? { __data["title"] }
             /// Short SHA1 ID of the commit.

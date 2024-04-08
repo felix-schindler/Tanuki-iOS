@@ -41,6 +41,7 @@ query Project($fullPath: ID!) {
 	  }
       tree {
         lastCommit {
+          id
           title
           shortId
           authorName
