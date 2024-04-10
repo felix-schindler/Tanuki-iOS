@@ -130,7 +130,13 @@ struct UserView: View {
 				default:
 					Text("Unknown user state.")
 				}
-			}.foregroundStyle(.orange)
+			}
+			.frame(maxWidth: .infinity, alignment: .leading)
+			.font(.callout)
+			.padding(.horizontal, 8)
+			.padding(.vertical, 6)
+			.background(.orange)
+			.cornerRadius(5)
 		}
 
 		let showMail = user.publicEmail?.isNotEmpty ?? false
@@ -141,22 +147,49 @@ struct UserView: View {
 		if showMail || showIn || showTwitter || showDiscord {
 			Section("Contact") {
 				if showMail {
-					Label(user.publicEmail!, systemImage: "envelope")
-						.textSelection(.enabled)
+					let mailLink = "mailto:\(user.publicEmail!)"
+					if let mailUrl = URL(string: mailLink) {
+						Link(user.publicEmail!, destination: mailUrl)
+					} else {
+						Text(user.publicEmail!)
+							.textSelection(.enabled)
+					}
 				}
+
 				if showIn {
-					Text("Linkedin: \(user.linkedin!)")
-						.textSelection(.enabled)
+					let inLink = "https://www.linkedin.com/in/\(user.linkedin!)"
+					if let inUrl = URL(string: inLink) {
+						Link("LinkedIn / \(user.linkedin!)", destination: inUrl)
+					} else {
+						Text(inLink)
+							.textSelection(.enabled)
+					}
 				}
+
 				if showTwitter {
-					Text("𝕏: \(user.twitter!)")
-						.textSelection(.enabled)
+					let xLink = "https://twitter.com/\(user.twitter!)"
+					if let xUrl = URL(string: xLink) {
+						Link("𝕏 / \(user.twitter!)", destination: xUrl)
+					} else {
+						Text(xLink)
+							.textSelection(.enabled)
+					}
 				}
+
 				if showDiscord {
-					Text("👾 \(user.discord!)")
-						.textSelection(.enabled)
+					let discordLink = "https://discord.gg/\(user.discord!)"
+					if let discordUrl = URL(string: discordLink) {
+						Link("Discord / \(user.discord!)", destination: discordUrl)
+					} else {
+						Text(discordLink)
+							.textSelection(.enabled)
+					}
 				}
 			}
+		}
+
+		Section("Contributions") {
+			ContributionsLoader(username: user.username)
 		}
 
 		NavigationLink(

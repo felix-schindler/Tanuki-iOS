@@ -127,6 +127,7 @@
 		DCB6B6352BB7063B006C8437 /* DiffsStatsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6342BB7063B006C8437 /* DiffsStatsLoader.swift */; };
 		DCB6B6372BB70CD8006C8437 /* MrCommitsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6362BB70CD8006C8437 /* MrCommitsLoader.swift */; };
 		DCB6B6392BB70F9C006C8437 /* SmallCommitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */; };
+		DCC95E572BC5274B0040D657 /* ContributionsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC95E562BC5274B0040D657 /* ContributionsLoader.swift */; };
 		DCCB5D8D2B9C0E8300D5D70A /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */; };
 		DCD386F22BA6E1A800223DEC /* RepoTree.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCD386F12BA6E1A800223DEC /* RepoTree.graphql */; };
 		DCD40E182BC2B2960055EE4C /* FileExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E172BC2B2960055EE4C /* FileExtensions.swift */; };
@@ -252,6 +253,7 @@
 		DCB6B6342BB7063B006C8437 /* DiffsStatsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffsStatsLoader.swift; sourceTree = "<group>"; };
 		DCB6B6362BB70CD8006C8437 /* MrCommitsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MrCommitsLoader.swift; sourceTree = "<group>"; };
 		DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCommitView.swift; sourceTree = "<group>"; };
+		DCC95E562BC5274B0040D657 /* ContributionsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributionsLoader.swift; sourceTree = "<group>"; };
 		DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoView.swift; sourceTree = "<group>"; };
 		DCD386F12BA6E1A800223DEC /* RepoTree.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RepoTree.graphql; sourceTree = "<group>"; };
 		DCD40E172BC2B2960055EE4C /* FileExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensions.swift; sourceTree = "<group>"; };
@@ -559,6 +561,7 @@
 				DC1D0FF42B99469900B6F5D7 /* LabelsLoader.swift */,
 				DC1D0FFD2B994FDD00B6F5D7 /* TimelogsLoader.swift */,
 				DC1C37F52B99BACC005B7D7A /* MilestonesLoader.swift */,
+				DCC95E562BC5274B0040D657 /* ContributionsLoader.swift */,
 			);
 			path = Loaders;
 			sourceTree = "<group>";
@@ -810,6 +813,7 @@
 				DC33C27B2B9C22F200C99B85 /* MarkdownTheme.swift in Sources */,
 				DCB6B6372BB70CD8006C8437 /* MrCommitsLoader.swift in Sources */,
 				DC4B42962BA56968007A9DB1 /* BranchesLoader.swift in Sources */,
+				DCC95E572BC5274B0040D657 /* ContributionsLoader.swift in Sources */,
 				DC4B428B2BA560B0007A9DB1 /* TreeLoader.swift in Sources */,
 				DC6C5DB32B8F8BBF00587850 /* EmojiCodes.swift in Sources */,
 				DCEFB26B2B94C37600F4B245 /* API.swift in Sources */,
