@@ -85,7 +85,7 @@ extension String {
 		if let last = self.split(separator: "/").last {
 			return String(last)
 		}
-		
+
 		return nil
 	}
 }

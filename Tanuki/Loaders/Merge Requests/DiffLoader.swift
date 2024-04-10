@@ -50,7 +50,7 @@ struct DiffLoader: View {
 		self.projectId = projectId
 		self.mrIid = mrIid
 		self.commitSha = commitSha
-		
+
 		if mrIid == nil && commitSha == nil {
 			fatalError("Either IID or SHA needs to be provided")
 		}
@@ -100,8 +100,10 @@ struct DiffLoader: View {
 							content: {
 								VStack(alignment: .leading) {
 									if diff.aMode != diff.bMode {
-										Text("Mode changed: \(diff.aMode ?? "null") → \(diff.bMode ?? "null")")
-											.padding(.bottom)
+										Text(
+											"Mode changed: \(diff.aMode ?? "null") → \(diff.bMode ?? "null")"
+										)
+										.padding(.bottom)
 									}
 									CodeTextView(
 										diff.diff,

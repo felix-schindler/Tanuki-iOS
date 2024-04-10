@@ -12,27 +12,27 @@ import SwiftUI
 struct MergeRequestLoader: View {
 	private let fullPath: String
 	private let iid: String
-	
+
 	@State
 	private var project: GitLabAPI.MergeRequestQuery.Data.Project? = nil
-	
+
 	@State
 	private var loadFailed = false
-	
+
 	@State
 	private var newNoteContent = ""
-	
+
 	@State
 	private var newNoteError = false
-	
+
 	@State
 	private var showMergeStatus = false
-	
+
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
 		self.iid = iid
 	}
-	
+
 	private func loadMergeRequest() {
 		Network.shared.apollo.fetch(
 			query: MergeRequestQuery(fullPath: self.fullPath, iid: self.iid)
@@ -47,21 +47,22 @@ struct MergeRequestLoader: View {
 			}
 		}
 	}
-	
-#if !os(macOS)
-	public var body: some View {
-		main.navigationBarTitleDisplayMode(.inline)
-	}
-#else
-	public var body: some View {
-		main
-	}
-#endif
-	
+
+	#if !os(macOS)
+		public var body: some View {
+			main.navigationBarTitleDisplayMode(.inline)
+		}
+	#else
+		public var body: some View {
+			main
+		}
+	#endif
+
 	private var main: some View {
 		List {
 			if let project = self.project,
-			   let mr = project.mergeRequest {
+				let mr = project.mergeRequest
+			{
 				VStack(alignment: .leading) {
 					HStack(spacing: 5) {
 						if let url = URL.fromAvatar(project.avatarUrl) {
@@ -73,14 +74,15 @@ struct MergeRequestLoader: View {
 						}
 						Spacer()
 						Text(Date.fromToString(mr.createdAt))
-					}.font(.footnote)
-						.padding(.bottom, 1)
-					
+					}
+					.font(.footnote)
+					.padding(.bottom, 1)
+
 					Text(mr.title.emojized())
 						.font(.title3)
 						.fontWeight(.medium)
 						.padding(.bottom, 1)
-					
+
 					ScrollView(.horizontal) {
 						HStack(spacing: 5) {
 							if let author = mr._author {
@@ -88,7 +90,7 @@ struct MergeRequestLoader: View {
 									AuthorView(author)
 								}
 							}
-							
+
 							if mr.sourceProject?.fullPath == self.fullPath
 								|| mr.sourceProject?.fullPath == nil
 							{
@@ -115,9 +117,9 @@ struct MergeRequestLoader: View {
 										.textSelection(.enabled)
 									})
 							}
-							
+
 							Image(systemName: "arrow.right")
-							
+
 							PillView(
 								mr.targetBranch,
 								bgColor: .blue,
@@ -128,38 +130,12 @@ struct MergeRequestLoader: View {
 							.textSelection(.enabled)
 						}
 					}.font(.footnote)
-					
-					if mr.author != nil || mr.diffStatsSummary != nil {
-						ScrollView(.horizontal) {
-							HStack(spacing: 5) {
-								if let diffStats = mr.diffStatsSummary {
-									PillView(
-										"\(diffStats.fileCount) files",
-										icon: "doc.text",
-										cornerRadius: 5
-									)
-									PillView(
-										"+\(diffStats.additions)",
-										fgColor: .green,
-										cornerRadius: 5
-									).monospaced()
-									PillView(
-										"-\(diffStats.deletions)",
-										fgColor: .red,
-										cornerRadius: 5
-									).monospaced()
-								}
-							}
-						}
-						.font(.footnote)
-						.monospacedDigit()
-					}
-					
+
 					if mr.description?.isNotEmpty ?? false {
 						Markdown(mr.description!.emojized())
 							.markdownTheme(.gitLab)
 					}
-					
+
 					HStack {
 						Button(
 							action: {
@@ -187,7 +163,7 @@ struct MergeRequestLoader: View {
 					.font(.footnote)
 					.foregroundStyle(.primary)
 				}
-				
+
 				Section("Details") {
 					let assgineeCount = mr.assignees?.nodes?.count ?? 0
 					DisclosureGroup(
@@ -231,7 +207,7 @@ struct MergeRequestLoader: View {
 								})
 						}
 					)
-					
+
 					let reviewerCount = mr.reviewers?.nodes?.count ?? 0
 					DisclosureGroup(
 						content: {
@@ -277,41 +253,7 @@ struct MergeRequestLoader: View {
 								})
 						}
 					)
-					
-					DisclosureGroup(
-						content: {
-							NavigationLink(
-								"Commits",
-								destination: MrCommitsLoader(
-									fullPath: self.fullPath,
-									iid: self.iid
-								)
-							)
-							NavigationLink(
-								"Diff stats",
-								destination: DiffsStatsLoader(
-									fullPath: self.fullPath,
-									iid: self.iid
-								)
-							)
-							
-							let projectId = project.id.toIntId()
-							let iid = self.iid.toIntId()
-							NavigationLink(
-								"Diffs",
-								destination: DiffLoader(
-									projectId: projectId ?? 0,
-									mrIid: iid ?? 0
-								)
-							).disabled(projectId == nil || iid == 0)
-						},
-						label: {
-							Label(
-								"Details",
-								systemImage: "filemenu.and.selection")
-						}
-					)
-					
+
 					if (mr.labels?.nodes?.count ?? 0) > 0 {
 						Label(
 							title: {
@@ -338,13 +280,13 @@ struct MergeRequestLoader: View {
 								Image(systemName: "tag")
 							})
 					}
-					
+
 					if let milestone = mr.milestone {
 						Label(
 							milestone.title,
 							systemImage: "signpost.right.and.left")
 					}
-					
+
 					if mr.humanTimeEstimate != nil
 						|| mr.humanTotalTimeSpent != nil
 					{
@@ -365,11 +307,56 @@ struct MergeRequestLoader: View {
 							})
 					}
 				}
-				
+
+				Section("Changes") {
+					let projectId = project.id.toIntId()
+					let iid = self.iid.toIntId()
+					NavigationLink(
+						destination: DiffLoader(
+							projectId: projectId ?? 0,
+							mrIid: iid ?? 0
+						),
+						label: {
+							if let diffStats = mr.diffStatsSummary {
+								Label(
+									title: {
+										HStack {
+											Text("\(diffStats.fileCount) files changed")
+											Spacer()
+											HStack {
+												Text("+\(diffStats.additions)")
+													.foregroundStyle(.green)
+												Text("-\(diffStats.deletions)")
+													.foregroundStyle(.red)
+											}
+											.monospaced()
+										}
+									},
+									icon: {
+										Image(systemName: "doc.text")
+									}
+								)
+							} else {
+								Text("Diff")
+							}
+						}
+					).disabled(projectId == nil || iid == 0)
+
+					NavigationLink(
+						destination: MrCommitsLoader(
+							fullPath: self.fullPath,
+							iid: self.iid
+						),
+						label: {
+							Label("Commits", systemImage: "circle.and.line.horizontal")
+						}
+					)
+				}
+
 				let showMergeSection =
-				(mr.userPermissions.canApprove
-				 || mr.userPermissions.canMerge
-				 || mr.userPermissions.updateMergeRequest)
+					(mr.userPermissions.canApprove
+						|| mr.userPermissions.canMerge
+						|| mr.userPermissions.updateMergeRequest)
 				if showMergeSection {
 					Section("Actions") {
 						if mr.userPermissions.canMerge
@@ -393,14 +380,18 @@ struct MergeRequestLoader: View {
 										title: "Detailed merge status",
 										onClose: {
 											showMergeStatus = false
-										})
-									
+										}
+									)
+
 									if mr.conflicts {
 										Label(
 											title: {
-												Text(
-													"Merge conflicts must be resolved."
-												)
+												VStack {
+													Text(
+														"Merge conflicts must be resolved."
+													)
+
+												}
 											},
 											icon: {
 												Image(
@@ -408,21 +399,19 @@ struct MergeRequestLoader: View {
 														"minus.circle.fill"
 												)
 												.foregroundStyle(.red)
-											})
+											}
+										)
 									}
-									
-									if let detailedMergeStatus = mr
-										.detailedMergeStatus
-									{
-										DetailedMergeStatusView(
-											detailedMergeStatus)
+
+									if let detailedMergeStatus = mr.detailedMergeStatus {
+										DetailedMergeStatusView(detailedMergeStatus)
 									}
 								}
 								.padding()
 								.presentationDetents([.fraction(0.2)])
 							}
 						}
-						
+
 						if mr.userPermissions.canApprove {
 							if mr.approved {
 								Button(
@@ -442,7 +431,7 @@ struct MergeRequestLoader: View {
 								}.tint(.green)
 							}
 						}
-						
+
 						if mr.userPermissions.updateMergeRequest {
 							if mr.state == .opened {
 								Button(
@@ -471,7 +460,7 @@ struct MergeRequestLoader: View {
 									}
 								).tint(.green)
 							}
-							
+
 							Button("Delete MR", systemImage: "trash") {
 								// TODO: Implement
 								Haptics.shared.notify(.error)
@@ -479,7 +468,7 @@ struct MergeRequestLoader: View {
 						}
 					}
 				}
-				
+
 				let noteCount = mr.notes.nodes?.count ?? 0
 				if mr.userPermissions.createNote || noteCount > 0 {
 					Section("Notes (\(mr.userNotesCount ?? 0))") {
@@ -509,7 +498,7 @@ struct MergeRequestLoader: View {
 									})
 							}
 						}
-						
+
 						if noteCount > 0 {
 							ForEach(mr.notes.nodes!, id: \.self?.id) {
 								maybeNote in
@@ -545,7 +534,7 @@ struct MergeRequestLoader: View {
 				.labelStyle(.titleAndIcon)
 				.font(.footnote)
 			}
-			
+
 			if let url = project?.mergeRequest?.webUrl {
 				ShareButton(URL(string: url)!)
 			}

@@ -79,7 +79,8 @@ struct CommitsLoader: View {
 					Section("Commits") {
 						ForEach(commits!, id: \.id) { commit in
 							NavigationLink(
-								destination: DiffLoader(projectId: self.projectId, commitSha: commit.id),
+								destination: DiffLoader(
+									projectId: self.projectId, commitSha: commit.id),
 								label: {
 									HStack {
 										VStack(alignment: .leading) {
@@ -96,7 +97,8 @@ struct CommitsLoader: View {
 										}
 										Spacer()
 										VStack {
-											SignatureLoader(projectId: self.projectId, commitId: commit.id)
+											SignatureLoader(
+												projectId: self.projectId, commitId: commit.id)
 											Text(commit.shortId)
 												.textSelection(.enabled)
 												.font(.system(.caption, design: .monospaced))

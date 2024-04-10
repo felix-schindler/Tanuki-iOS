@@ -11,17 +11,17 @@ import SwiftUI
 
 struct UserIssuesLoader: View {
 	private let username: String?
-	
+
 	init(username: String? = nil) {
 		self.username = username
 	}
-	
+
 	@State
 	private var projectMemberships: [IssueProjectMembership?]? = nil
-	
+
 	@State
 	private var loadFailed = false
-	
+
 	private func loadIssues() {
 		if self.username != nil {
 			Network.shared.apollo.fetch(
@@ -49,13 +49,14 @@ struct UserIssuesLoader: View {
 			}
 		}
 	}
-	
+
 	public var body: some View {
 		List {
 			if let projectMemberships = self.projectMemberships {
 				ForEach(projectMemberships, id: \.?.fullPath) { maybeMember in
 					if let fullPath = maybeMember?.fullPath,
-					   let issues = maybeMember?._issues {
+						let issues = maybeMember?._issues
+					{
 						if !issues.isEmpty {
 							ForEach(issues, id: \.?.reference) { maybeIssue in
 								if let issue = maybeIssue {

@@ -19,10 +19,11 @@ struct SmallCommitView: View {
 		self.commit = commit
 		self.projectId = projectId
 	}
-	
+
 	public var body: some View {
 		if let id = self.projectId,
-		   let sha = commit.id.toStringId() {
+			let sha = commit.id.toStringId()
+		{
 			NavigationLink(
 				destination: DiffLoader(projectId: id, commitSha: sha),
 				label: {

@@ -12,25 +12,25 @@ import SwiftUI
 struct EpicLoader: View {
 	private let fullPath: String
 	private let iid: String
-	
+
 	@State
 	private var group: EpicQuery.Data.Group? = nil
-	
+
 	@State
 	private var loadFailed = false
-	
+
 	// MARK: New note
 	@State
 	private var newNoteContent = ""
-	
+
 	@State
 	private var newNoteError = false
-	
+
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
 		self.iid = iid
 	}
-	
+
 	private func loadEpic() {
 		Network.shared.apollo.fetch(
 			query: EpicQuery(
@@ -47,11 +47,12 @@ struct EpicLoader: View {
 			}
 		}
 	}
-	
+
 	public var body: some View {
 		List {
 			if let group = self.group,
-			   let epic = group.epic {
+				let epic = group.epic
+			{
 				VStack(alignment: .leading) {
 					HStack(spacing: 5) {
 						if let url = URL.fromAvatar(group.avatarUrl) {
@@ -66,14 +67,14 @@ struct EpicLoader: View {
 							Text(Date.fromToString(createdAt))
 						}
 					}.padding(.bottom, 1)
-					
+
 					if let title = epic.title {
 						Text(title.emojized())
 							.font(.title3)
 							.fontWeight(.medium)
 							.padding(.bottom, 1)
 					}
-					
+
 					ScrollView(.horizontal) {
 						HStack(spacing: 5) {
 							PillView(
@@ -83,7 +84,7 @@ struct EpicLoader: View {
 								fgColor: .white,
 								cornerRadius: 5
 							)
-							
+
 							if let color = epic.color {
 								PillView(
 									"Color",
@@ -92,19 +93,19 @@ struct EpicLoader: View {
 									cornerRadius: 5
 								)
 							}
-							
+
 							AuthorView(epic._author)
-							
+
 							if let startDate = epic.startDate {
 								PillView(startDate, icon: "clock")
 							}
-							
+
 							if let dueDate = epic.dueDate {
 								PillView(dueDate, icon: "alarm")
 							}
 						}
 					}
-					
+
 					if (epic.blockedByEpics?.nodes?.count ?? 0)
 						> 0
 					{
@@ -134,12 +135,12 @@ struct EpicLoader: View {
 							}
 						}
 					}
-					
+
 					if epic.description?.isNotEmpty ?? false {
 						Markdown(epic.description!.emojized())
 							.markdownTheme(.gitLab)
 					}
-					
+
 					HStack {
 						Button(
 							action: {
@@ -167,7 +168,7 @@ struct EpicLoader: View {
 					.font(.footnote)
 					.foregroundStyle(.primary)
 				}.font(.footnote)
-				
+
 				Section("Details") {
 					NavigationLink(
 						destination: EpicIssuesLoader(
@@ -184,7 +185,7 @@ struct EpicLoader: View {
 										.foregroundStyle(.green)
 								})
 						})
-					
+
 					if (epic.labels?.nodes?.count ?? 0) > 0 {
 						Label(
 							title: {
@@ -208,7 +209,7 @@ struct EpicLoader: View {
 								Image(systemName: "tag")
 							})
 					}
-					
+
 					if !(epic.ancestors?.nodes?.isEmpty ?? false) {
 						DisclosureGroup(
 							content: {
@@ -230,7 +231,7 @@ struct EpicLoader: View {
 								Label("Ancestors", systemImage: "figure.and.child.holdinghands")
 							})
 					}
-					
+
 					if !(epic.children?.nodes?.isEmpty ?? false) {
 						DisclosureGroup(
 							content: {
@@ -253,7 +254,7 @@ struct EpicLoader: View {
 							})
 					}
 				}
-				
+
 				if epic.userPermissions.updateEpic {
 					Section("Actions") {
 						if epic.state == .opened {
@@ -281,7 +282,7 @@ struct EpicLoader: View {
 						}
 					}
 				}
-				
+
 				let noteCount = epic.notes.nodes?.count ?? 0
 				if epic.userPermissions.createNote || noteCount > 0 {
 					Section("Notes (\(epic.userNotesCount))") {
@@ -311,7 +312,7 @@ struct EpicLoader: View {
 									})
 							}
 						}
-						
+
 						if noteCount > 0 {
 							ForEach(epic.notes.nodes!, id: \.self?.id) { maybeNote in
 								if let note = maybeNote {

@@ -5,13 +5,13 @@
 //  Created by Felix Schindler on 08.04.24.
 //
 
-import SwiftUI
 import Highlightr
+import SwiftUI
 
 struct PreferencesView: View {
 	let highlighter = Highlightr()
-	
-    var body: some View {
+
+	var body: some View {
 		List {
 			NavigationLink(
 				"Syntax highlighting",
@@ -35,7 +35,7 @@ struct PreferencesView: View {
 				}
 			).disabled(highlighter == nil)
 		}
-    }
+	}
 }
 
 #Preview {

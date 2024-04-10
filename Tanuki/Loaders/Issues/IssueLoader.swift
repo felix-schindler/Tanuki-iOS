@@ -274,6 +274,7 @@ struct IssueLoader: View {
 								Button(
 									action: {
 										// TODO: Implement
+										Haptics.shared.notify(.error)
 									},
 									label: {
 										Label(

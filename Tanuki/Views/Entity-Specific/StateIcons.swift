@@ -178,24 +178,34 @@ struct MergeStatus: View {
 	private let status: GraphQLEnum<GitLabAPI.MergeStatus>
 	private let icon: String
 	private let color: SwiftUI.Color
+	private let msg: String
 
 	init(_ status: GraphQLEnum<GitLabAPI.MergeStatus>) {
 		self.status = status
 
 		switch status {
 		case .canBeMerged:
+			self.msg = "There are no conflicts between the source and target branches."
 			self.icon = "checkmark"
 			self.color = Color.green
 		case .cannotBeMerged:
+			self.msg = "There are conflicts between the source and target branches."
 			self.icon = "xmark"
 			self.color = Color.red
 		case .checking:
+			self.msg = "Currently checking for mergeability."
 			self.icon = "arrow.2.circlepath"
 			self.color = Color.orange
-		case .unchecked, .cannotBeMergedRecheck:
+		case .unchecked:
+			self.msg = "Merge status has not been checked."
+			self.icon = "questionmark"
+			self.color = Color.secondary
+		case .cannotBeMergedRecheck:
+			self.msg = "Currently unchecked. The previous state was `CANNOT_BE_MERGED`."
 			self.icon = "questionmark"
 			self.color = Color.secondary
 		default:
+			self.msg = ""
 			self.icon = "questionmark"
 			self.color = Color.primary
 		}
@@ -203,12 +213,24 @@ struct MergeStatus: View {
 
 	public var body: some View {
 		Label(
-			self.status.rawValue
-				.split(separator: "_")
-				.joined(separator: " ")
-				.lowercased()
-				.firstCapitalized,
-			systemImage: self.icon
+			title: {
+				VStack(alignment: .leading) {
+					Text(
+						self.status.rawValue
+							.split(separator: "_")
+							.joined(separator: " ")
+							.lowercased()
+							.firstCapitalized
+					)
+					if self.msg.isNotEmpty {
+						Text(self.msg)
+							.foregroundStyle(.secondary)
+					}
+				}
+			},
+			icon: {
+				Image(systemName: self.icon)
+			}
 		).foregroundStyle(self.color)
 	}
 }
@@ -271,7 +293,8 @@ struct DetailedMergeStatusView: View {
 			icon: {
 				Image(systemName: "minus.circle.fill")
 					.foregroundStyle(.red)
-			})
+			}
+		)
 	}
 }
 
