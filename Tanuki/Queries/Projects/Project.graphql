@@ -29,7 +29,7 @@ query Project($fullPath: ID!) {
 		  rawTextBlob
 	    }
 	  }
-	  license: blobs(paths: ["LICENSE", "LICENSE.txt", "LICENSE.md"], first: 1) {
+	  license: blobs(paths: ["LICENSE", "LICENSE.txt", "LICENSE.md", "COPYING"], first: 1) {
 	    nodes {
 		  rawTextBlob
 	    }
