@@ -44,10 +44,9 @@ struct CreateIssueView: View {
 				Button(
 					action: {
 						if title.isEmpty {
-							Haptics.shared.notify(.error)
-							showError = true
+							Notify.status(.error, "Failed to create issue")
 						} else {
-							Haptics.shared.notify(.success)
+							Notify.status(.success)
 							showNewIssue = false
 						}
 					},
@@ -60,14 +59,7 @@ struct CreateIssueView: View {
 				.controlSize(.large)
 				.buttonStyle(.bordered)
 			}
-		}.alert(
-			"Failed to create new issue", isPresented: $showError,
-			actions: {
-				Button("OK") {
-					showError = false
-				}
-			}
-		)
+		}
 		.padding()
 		.presentationDetents([.large, .medium])
 	}

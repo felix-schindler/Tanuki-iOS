@@ -83,7 +83,9 @@ struct ProjectIssuesLoader: View {
 			loadIssues()
 		}.toolbar {
 			RoundIconButton("New issue", icon: "plus") {
-				Haptics.shared.play(.light)
+				#if os(iOS)
+					Haptics.shared.play(.light)
+				#endif
 				showNewIssue = true
 			}
 		}.sheet(isPresented: $showNewIssue) {

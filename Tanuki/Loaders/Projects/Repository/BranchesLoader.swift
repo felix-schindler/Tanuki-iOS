@@ -68,7 +68,7 @@ struct BranchesLoader: View {
 			}
 		}.refreshable {
 			await getBranches()
-		}.navigationBarTitle("Branches")
+		}.navigationTitle("Branches")
 	}
 
 	private func getBranches() async {

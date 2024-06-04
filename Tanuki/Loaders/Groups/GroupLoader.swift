@@ -253,7 +253,9 @@ struct GroupLoader: View {
 			}
 		}
 		.navigationTitle(fullPath)
-		.navigationBarTitleDisplayMode(.inline)
+		#if os(iOS)
+			.navigationBarTitleDisplayMode(.inline)
+		#endif
 	}
 }
 

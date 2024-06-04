@@ -88,6 +88,17 @@ extension String {
 
 		return nil
 	}
+
+	/// Writes the string to clipboard
+	func copyToClipboard() {
+		#if os(iOS)
+			UIPasteboard.general.string = self
+		#else
+			let pasteboard = NSPasteboard.general
+			pasteboard.clearContents()
+			pasteboard.writeObjects([self as NSString])
+		#endif
+	}
 }
 
 extension StringProtocol {

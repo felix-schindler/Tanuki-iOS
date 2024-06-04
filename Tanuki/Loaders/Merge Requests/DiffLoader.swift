@@ -5,7 +5,6 @@
 //  Created by Felix Schindler on 07.04.24.
 //
 
-import CodeHighlighter
 import SwiftUI
 
 struct Diff: Codable {
@@ -86,7 +85,9 @@ struct DiffLoader: View {
 					.onChange(of: unidiff) { _ in
 						Task {
 							await loadDiffs()
-							Haptics.shared.play(.soft)
+							#if os(iOS)
+								Haptics.shared.play(.soft)
+							#endif
 						}
 					}
 			}
@@ -164,7 +165,9 @@ struct DiffLoader: View {
 		}.refreshable {
 			await loadDiffs()
 		}
-		.listStyle(.grouped)
+		#if os(iOS)
+			.listStyle(.grouped)
+		#endif
 		.headerProminence(.increased)
 		.navigationTitle("Diffs")
 	}

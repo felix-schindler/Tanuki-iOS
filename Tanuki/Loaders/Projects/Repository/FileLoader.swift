@@ -6,7 +6,6 @@
 //
 
 import AVKit
-import CodeHighlighter
 import MarkdownUI
 import SwiftHttp
 import SwiftUI
@@ -57,7 +56,7 @@ struct FileLoader: View {
 	public var body: some View {
 		ScrollView {
 			VStack(alignment: .leading) {
-				if let content = self.content {
+				if let content {
 					if fileExtension == "md" {
 						Markdown(content)
 							.markdownTheme(.gitLab)

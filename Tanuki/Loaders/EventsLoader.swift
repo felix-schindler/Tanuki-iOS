@@ -67,7 +67,7 @@ struct EventsLoader: View {
 			}
 		}.refreshable {
 			await getEvents()
-		}.navigationBarTitle("Activity")
+		}.navigationTitle("Activity")
 	}
 
 	private func getStupidText(event: Event) -> String {

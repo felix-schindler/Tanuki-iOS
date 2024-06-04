@@ -53,7 +53,9 @@ struct PipelineStatus: View {
 	public var body: some View {
 		VStack {
 			RoundIconButton("Pipeline status", icon: icon) {
-				Haptics.shared.play(.light)
+				#if os(iOS)
+					Haptics.shared.play(.light)
+				#endif
 				showInfo = true
 			}
 			.tint(self.color)

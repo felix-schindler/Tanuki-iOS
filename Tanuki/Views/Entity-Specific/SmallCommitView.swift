@@ -65,7 +65,9 @@ struct SmallCommitView: View {
 						RoundIconButton(
 							"Verified", icon: "checkmark.seal"
 						) {
-							Haptics.shared.play(.light)
+							#if os(iOS)
+								Haptics.shared.play(.light)
+							#endif
 							showVerified = true
 						}
 						.tint(.green)

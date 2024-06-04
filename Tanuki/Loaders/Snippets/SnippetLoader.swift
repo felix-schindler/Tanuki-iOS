@@ -67,7 +67,11 @@ struct SnippetLoader: View {
 							)
 							.padding(.horizontal, 8)
 							.padding(.vertical, 3)
-							.background(Color(.systemGray5))
+							#if os(iOS)
+								.background(Color(.systemGray5))
+							#else
+								.background(.accent)
+							#endif
 							.foregroundStyle(.primary)
 							.cornerRadius(5)
 						}.font(.footnote)
@@ -106,20 +110,12 @@ struct SnippetLoader: View {
 								RoundIconButton("Comment", icon: "arrow.up") {
 									// TODO: Save note
 									if newNoteContent.isEmpty {
-										Haptics.shared.notify(.error)
-										newNoteError = true
+										Notify.status(.error, "Please provide content")
 									} else {
-										Haptics.shared.notify(.success)
+										Notify.status(.success)
 										newNoteContent = ""
 									}
-								}.alert(
-									"Failed to create new note",
-									isPresented: $newNoteError,
-									actions: {
-										Button("OK") {
-											newNoteError = false
-										}
-									})
+								}
 							}
 						}
 
@@ -168,7 +164,7 @@ struct SnippetLoader: View {
 										"Copy HTTP url",
 										systemImage: "doc.on.doc"
 									) {
-										UIPasteboard.general.string = httpUrl
+										httpUrl.copyToClipboard()
 									}
 								}
 
@@ -177,7 +173,7 @@ struct SnippetLoader: View {
 										"Copy SSH url",
 										systemImage: "doc.on.doc"
 									) {
-										UIPasteboard.general.string = sshUrl
+										sshUrl.copyToClipboard()
 									}
 								}
 							}

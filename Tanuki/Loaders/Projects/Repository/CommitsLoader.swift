@@ -129,8 +129,9 @@ struct CommitsLoader: View {
 			await getCommits()
 			await getBranches()
 			loadFailed = (commits == nil) || (branches == nil)
-		}.navigationBarTitle("Commits")
-			.headerProminence(.increased)
+		}
+		.navigationTitle("Commits")
+		.headerProminence(.increased)
 	}
 
 	private func getCommits() async {

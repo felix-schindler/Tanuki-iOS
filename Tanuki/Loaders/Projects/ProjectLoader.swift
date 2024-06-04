@@ -400,7 +400,7 @@ struct ProjectLoader: View {
 										"Copy HTTP url",
 										systemImage: "doc.on.doc"
 									) {
-										UIPasteboard.general.string = httpUrl
+										httpUrl.copyToClipboard()
 									}
 								}
 
@@ -409,7 +409,7 @@ struct ProjectLoader: View {
 										"Copy SSH url",
 										systemImage: "doc.on.doc"
 									) {
-										UIPasteboard.general.string = sshUrl
+										sshUrl.copyToClipboard()
 									}
 								}
 							}
@@ -427,7 +427,9 @@ struct ProjectLoader: View {
 				if project.userPermissions.createIssue {
 					RoundIconButton("Create issue", icon: "plus") {
 						showNewIssue = true
-						Haptics.shared.play(.light)
+						#if os(iOS)
+							Haptics.shared.play(.light)
+						#endif
 					}
 				}
 			}
@@ -435,7 +437,9 @@ struct ProjectLoader: View {
 			CreateIssueView(showNewIssue: $showNewIssue)
 		}
 		.navigationTitle(self.fullPath)
-		.navigationBarTitleDisplayMode(.inline)
+		#if os(iOS)
+			.navigationBarTitleDisplayMode(.inline)
+		#endif
 	}
 }
 

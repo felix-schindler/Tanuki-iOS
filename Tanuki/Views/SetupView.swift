@@ -19,11 +19,13 @@ struct SetupView: View {
 		VStack {
 			Spacer()
 
-			Image(uiImage: UIImage(named: "AppIcon")!)
-				.resizable()
-				.scaledToFit()
-				.cornerRadius(15)
-				.frame(maxWidth: 100, maxHeight: 100)
+			#if os(iOS)
+				Image(uiImage: UIImage(named: "AppIcon")!)
+					.resizable()
+					.scaledToFit()
+					.cornerRadius(15)
+					.frame(maxWidth: 100, maxHeight: 100)
+			#endif
 			Text("Welcome to **Tanuki for GitLab**")
 
 			Spacer()
@@ -50,7 +52,7 @@ struct SetupView: View {
 				action: {
 					API.host = self.newHost
 					API.token = self.newToken
-					Haptics.shared.notify(.success)
+					Notify.status(.success)
 				},
 				label: {
 					Text("Save config")

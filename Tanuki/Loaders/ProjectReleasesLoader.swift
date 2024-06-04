@@ -142,7 +142,7 @@ struct ProjectReleasesLoader: View {
 		}.toolbar {
 			RoundIconButton("Create new release", icon: "plus") {
 				// TODO: Implement
-				Haptics.shared.notify(.success)
+				Notify.status(.success)
 			}
 		}
 		.headerProminence(.increased)

@@ -65,7 +65,7 @@ struct TagsLoader: View {
 			}
 		}.refreshable {
 			await getTags()
-		}.navigationBarTitle("Tags")
+		}.navigationTitle("Tags")
 	}
 
 	private func getTags() async {

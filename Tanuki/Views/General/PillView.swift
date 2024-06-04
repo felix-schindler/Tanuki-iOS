@@ -21,7 +21,11 @@ struct PillView: View {
 		self.label = label
 		self.icon = icon
 		self.fgColor = fgColor ?? .primary
-		self.bgColor = bgColor ?? Color(.systemGray5)
+		#if os(iOS)
+			self.bgColor = bgColor ?? Color(.systemGray5)
+		#else
+			self.bgColor = bgColor ?? Color.accent
+		#endif
 		self.cornerRadius = cornerRadius
 	}
 

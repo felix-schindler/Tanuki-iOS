@@ -366,7 +366,9 @@ struct MergeRequestLoader: View {
 								action: {
 									if mr.mergeStatusEnum != .canBeMerged {
 										showMergeStatus = true
-										Haptics.shared.play(.light)
+										#if os(iOS)
+											Haptics.shared.play(.light)
+										#endif
 									} else {
 										// TODO: Show OPTIONS for merge
 									}
@@ -419,7 +421,7 @@ struct MergeRequestLoader: View {
 									systemImage: "person.fill.xmark"
 								) {
 									// TODO: Implement
-									Haptics.shared.notify(.error)
+									Notify.status(.error, "Not yet implemented")
 								}.tint(.red)
 							} else {
 								Button(
@@ -427,7 +429,7 @@ struct MergeRequestLoader: View {
 									systemImage: "person.fill.checkmark"
 								) {
 									// TODO: Implement
-									Haptics.shared.notify(.error)
+									Notify.status(.error, "Not yet implemented")
 								}.tint(.green)
 							}
 						}
@@ -437,7 +439,7 @@ struct MergeRequestLoader: View {
 								Button(
 									action: {
 										// TODO: Implement
-										Haptics.shared.notify(.error)
+										Notify.status(.error, "Not yet implemented")
 									},
 									label: {
 										Label(
@@ -450,7 +452,7 @@ struct MergeRequestLoader: View {
 								Button(
 									action: {
 										// TODO: Implement
-										Haptics.shared.notify(.error)
+										Notify.status(.error, "Not yet implemented")
 									},
 									label: {
 										Label(
@@ -463,7 +465,7 @@ struct MergeRequestLoader: View {
 
 							Button("Delete MR", systemImage: "trash") {
 								// TODO: Implement
-								Haptics.shared.notify(.error)
+								Notify.status(.error, "Not yet implemented")
 							}.tint(.red)
 						}
 					}
@@ -482,10 +484,10 @@ struct MergeRequestLoader: View {
 								RoundIconButton("Comment", icon: "arrow.up") {
 									// TODO: Save note
 									if newNoteContent.isEmpty {
-										Haptics.shared.notify(.error)
+										Notify.status(.error, "Please provide content")
 										newNoteError = true
 									} else {
-										Haptics.shared.notify(.success)
+										Notify.status(.success)
 										newNoteContent = ""
 									}
 								}.alert(

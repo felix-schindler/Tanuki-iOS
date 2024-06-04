@@ -274,7 +274,7 @@ struct IssueLoader: View {
 								Button(
 									action: {
 										// TODO: Implement
-										Haptics.shared.notify(.error)
+										Notify.status(.error, "Not yet implemented")
 									},
 									label: {
 										Label(
@@ -286,6 +286,7 @@ struct IssueLoader: View {
 								Button(
 									action: {
 										// TODO: Implement
+										Notify.status(.error, "Not yet implemented")
 									},
 									label: {
 										Label(
@@ -310,20 +311,13 @@ struct IssueLoader: View {
 									RoundIconButton("Comment", icon: "arrow.up") {
 										// TODO: Save note
 										if newNoteContent.isEmpty {
-											Haptics.shared.notify(.error)
+											Notify.status(.error, "Please provide content")
 											newNoteError = true
 										} else {
-											Haptics.shared.notify(.success)
+											Notify.status(.success)
 											newNoteContent = ""
 										}
-									}.alert(
-										"Failed to create new note",
-										isPresented: $newNoteError,
-										actions: {
-											Button("OK") {
-												newNoteError = false
-											}
-										})
+									}
 								}
 							}
 

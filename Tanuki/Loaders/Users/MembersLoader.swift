@@ -151,7 +151,9 @@ struct MembersLoader: View {
 		}.toolbar {
 			RoundIconButton("Add new member", icon: "person.badge.plus") {
 				showNewMember = true
-				Haptics.shared.play(.light)
+				#if os(iOS)
+					Haptics.shared.play(.light)
+				#endif
 			}
 		}.sheet(isPresented: $showNewMember) {
 			VStack {
@@ -166,7 +168,7 @@ struct MembersLoader: View {
 					action: {
 						newMemberUsername = ""
 						showNewMember = false
-						Haptics.shared.notify(.success)
+						Notify.status(.success)
 					},
 					label: {
 						Text("Add member")

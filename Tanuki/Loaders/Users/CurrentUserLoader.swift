@@ -62,7 +62,7 @@ struct CurrentUserLoader: View {
 				action: {
 					API.host = "gitlab.com"
 					API.token = ""
-					Haptics.shared.notify(.success)
+					Notify.status(.success, "Logged out")
 				},
 				label: {
 					Label("Sign out", systemImage: "rectangle.portrait.and.arrow.right")

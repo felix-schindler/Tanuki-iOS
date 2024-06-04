@@ -102,7 +102,11 @@ struct UserView: View {
 				.font(.callout)
 				.padding(.horizontal, 8)
 				.padding(.vertical, 6)
-				.background(Color(.systemGray5))
+				#if os(iOS)
+					.background(Color(.systemGray5))
+				#else
+					.background(.accent)
+				#endif
 				.cornerRadius(5)
 			}
 

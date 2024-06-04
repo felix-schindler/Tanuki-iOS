@@ -133,6 +133,8 @@
 		DCD40E182BC2B2960055EE4C /* FileExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E172BC2B2960055EE4C /* FileExtensions.swift */; };
 		DCD40E1A2BC2C6600055EE4C /* DiffLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E192BC2C6600055EE4C /* DiffLoader.swift */; };
 		DCD40E222BC2E5CC0055EE4C /* CodeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E212BC2E5CC0055EE4C /* CodeTextView.swift */; };
+		DCEB20B42BD61A9A00393A44 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEB20B32BD61A9A00393A44 /* Notify.swift */; };
+		DCEB20B72BD61FA100393A44 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = DCEB20B62BD61FA100393A44 /* AlertToast */; };
 		DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2662B94C29600F4B245 /* EventsLoader.swift */; };
 		DCEFB2692B94C2C100F4B245 /* RestTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2682B94C2C100F4B245 /* RestTypes.swift */; };
 		DCEFB26B2B94C37600F4B245 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB26A2B94C37600F4B245 /* API.swift */; };
@@ -259,6 +261,7 @@
 		DCD40E172BC2B2960055EE4C /* FileExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensions.swift; sourceTree = "<group>"; };
 		DCD40E192BC2C6600055EE4C /* DiffLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffLoader.swift; sourceTree = "<group>"; };
 		DCD40E212BC2E5CC0055EE4C /* CodeTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeTextView.swift; sourceTree = "<group>"; };
+		DCEB20B32BD61A9A00393A44 /* Notify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
 		DCEFB2662B94C29600F4B245 /* EventsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsLoader.swift; sourceTree = "<group>"; };
 		DCEFB2682B94C2C100F4B245 /* RestTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTypes.swift; sourceTree = "<group>"; };
 		DCEFB26A2B94C37600F4B245 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -278,6 +281,7 @@
 				DC27050B2B8BC1B8003DAA84 /* ApolloWebSocket in Frameworks */,
 				DC0A6A522B8D12BE00C53D56 /* ApolloWebSocket in Frameworks */,
 				DCAF9D9F2BC3755F001FF2E5 /* Highlightr in Frameworks */,
+				DCEB20B72BD61FA100393A44 /* AlertToast in Frameworks */,
 				DC2705192B8BC68E003DAA84 /* GitLabAPI in Frameworks */,
 				DC3A245C2B8C513C00DB0E3F /* MarkdownUI in Frameworks */,
 			);
@@ -493,6 +497,7 @@
 				DC3A244E2B8C3B8100DB0E3F /* Utils.swift */,
 				DC6C5DB22B8F8BBF00587850 /* EmojiCodes.swift */,
 				DCD40E172BC2B2960055EE4C /* FileExtensions.swift */,
+				DCEB20B32BD61A9A00393A44 /* Notify.swift */,
 				DC217DD22B8FCC8A00F081BC /* Haptics.swift */,
 				DC6C5D992B8F089D00587850 /* GraphTypes.swift */,
 				DCEFB2682B94C2C100F4B245 /* RestTypes.swift */,
@@ -682,6 +687,7 @@
 				DC0A6A542B8D148000C53D56 /* CachedAsyncImage */,
 				DCEFB26D2B94C3FD00F4B245 /* SwiftHttp */,
 				DCAF9D9E2BC3755F001FF2E5 /* Highlightr */,
+				DCEB20B62BD61FA100393A44 /* AlertToast */,
 			);
 			productName = Tanuki;
 			productReference = DC2704F52B8BC0F9003DAA84 /* Tanuki.app */;
@@ -719,6 +725,7 @@
 				DC0A6A532B8D148000C53D56 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 				DCEFB26C2B94C3FD00F4B245 /* XCRemoteSwiftPackageReference "swift-http" */,
 				DCAF9D9D2BC3755F001FF2E5 /* XCRemoteSwiftPackageReference "Highlightr" */,
+				DCEB20B52BD61FA100393A44 /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
 			productRefGroup = DC2704F62B8BC0F9003DAA84 /* Products */;
 			projectDirPath = "";
@@ -854,6 +861,7 @@
 				DC21AA6B2B902F8400976E64 /* DescendantGroupsLoader.swift in Sources */,
 				DC4B428D2BA561E7007A9DB1 /* CommitsLoader.swift in Sources */,
 				DC217DDD2B8FD30700F081BC /* GroupLoader.swift in Sources */,
+				DCEB20B42BD61A9A00393A44 /* Notify.swift in Sources */,
 				DC4B428F2BA56213007A9DB1 /* CommitSignatureLoader.swift in Sources */,
 				DC0A6A412B8D03EC00C53D56 /* StateIcons.swift in Sources */,
 				DC1C37EE2B99B18A005B7D7A /* EpicIssuesLoader.swift in Sources */,
@@ -1021,8 +1029,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1067,8 +1075,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1148,6 +1156,14 @@
 				kind = branch;
 			};
 		};
+		DCEB20B52BD61FA100393A44 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.9;
+			};
+		};
 		DCEFB26C2B94C3FD00F4B245 /* XCRemoteSwiftPackageReference "swift-http" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/felix-schindler/swift-http/";
@@ -1208,6 +1224,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DCAF9D9D2BC3755F001FF2E5 /* XCRemoteSwiftPackageReference "Highlightr" */;
 			productName = Highlightr;
+		};
+		DCEB20B62BD61FA100393A44 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DCEB20B52BD61FA100393A44 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
 		};
 		DCEFB26D2B94C3FD00F4B245 /* SwiftHttp */ = {
 			isa = XCSwiftPackageProductDependency;

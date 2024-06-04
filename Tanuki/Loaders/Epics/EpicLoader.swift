@@ -296,20 +296,12 @@ struct EpicLoader: View {
 								RoundIconButton("Comment", icon: "arrow.up") {
 									// TODO: Save note
 									if newNoteContent.isEmpty {
-										Haptics.shared.notify(.error)
-										newNoteError = true
+										Notify.status(.error, "Please provide content")
 									} else {
-										Haptics.shared.notify(.success)
+										Notify.status(.success)
 										newNoteContent = ""
 									}
-								}.alert(
-									"Failed to create new note",
-									isPresented: $newNoteError,
-									actions: {
-										Button("OK") {
-											newNoteError = false
-										}
-									})
+								}
 							}
 						}
 
