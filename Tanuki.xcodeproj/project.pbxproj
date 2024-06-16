@@ -1129,7 +1129,7 @@
 			repositoryURL = "https://github.com/apollographql/apollo-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.9.3;
+				minimumVersion = 1.12.2;
 			};
 		};
 		DC3A24522B8C3F5800DB0E3F /* XCRemoteSwiftPackageReference "NVMColor_swift" */ = {
@@ -1145,7 +1145,7 @@
 			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.3.0;
+				minimumVersion = 2.3.1;
 			};
 		};
 		DCAF9D9D2BC3755F001FF2E5 /* XCRemoteSwiftPackageReference "Highlightr" */ = {

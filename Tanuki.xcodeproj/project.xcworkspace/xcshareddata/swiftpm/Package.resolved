@@ -1,5 +1,5 @@
 {
-  "originHash" : "8bc685d3f9e24c192383963efb65788f963484da87537a0c4c67b6172ee414ad",
+  "originHash" : "c6936672df94c291989e5cde13fba37ac8a54c2519f95a3737ab2950a6761629",
   "pins" : [
     {
       "identity" : "alerttoast",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apollographql/apollo-ios",
       "state" : {
-        "revision" : "eedde2151859011a44bb7cb05388deb2bf532644",
-        "version" : "1.9.3"
+        "revision" : "99dfbdb869dbba16bd09e086b2b669bfcab811ec",
+        "version" : "1.12.2"
       }
     },
     {
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/stephencelis/SQLite.swift.git",
       "state" : {
-        "revision" : "e78ae0220e17525a15ac68c697a155eb7a672a8e",
-        "version" : "0.15.0"
+        "revision" : "a95fc6df17d108bd99210db5e8a9bac90fe984b8",
+        "version" : "0.15.3"
       }
     },
     {
@@ -78,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gonzalezreal/swift-markdown-ui",
       "state" : {
-        "revision" : "ae799d015a5374708f7b4c85f3294c05f2a564e2",
-        "version" : "2.3.0"
+        "revision" : "9a8119b37e09a770367eeb26e05267c75d854053",
+        "version" : "2.3.1"
       }
     },
     {
