@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import HighlightedTextEditor
 
 struct CreateIssueView: View {
 	@Binding
@@ -31,11 +32,8 @@ struct CreateIssueView: View {
 
 			VStack {
 				TextField("Title", text: $title)
-				TextField(
-					"Description (Markdown supported)",
-					text: $description,
-					axis: .vertical
-				).lineLimit(5...10)
+				HighlightedTextEditor(text: $description, highlightRules: .markdown)
+					.border(.secondary)
 			}.textFieldStyle(.roundedBorder)
 
 			Spacer()

@@ -84,6 +84,7 @@
 		DC3A24562B8C4C2200DB0E3F /* PillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3A24552B8C4C2200DB0E3F /* PillView.swift */; };
 		DC3A245C2B8C513C00DB0E3F /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = DC3A245B2B8C513C00DB0E3F /* MarkdownUI */; };
 		DC3A245E2B8C557E00DB0E3F /* RoundIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3A245D2B8C557E00DB0E3F /* RoundIconButton.swift */; };
+		DC42A2112C62D36E00B1EA85 /* HighlightedTextEditor in Frameworks */ = {isa = PBXBuildFile; productRef = DC42A2102C62D36E00B1EA85 /* HighlightedTextEditor */; };
 		DC463BB42B941577005CA5FB /* UserSnippets.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC463BB32B941577005CA5FB /* UserSnippets.graphql */; };
 		DC463BB82B941933005CA5FB /* UserStarredProjects.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC463BB72B941933005CA5FB /* UserStarredProjects.graphql */; };
 		DC463BBA2B941970005CA5FB /* UserStarredProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC463BB92B941970005CA5FB /* UserStarredProjectsLoader.swift */; };
@@ -276,6 +277,7 @@
 				DC0A6A502B8D12BE00C53D56 /* ApolloSQLite in Frameworks */,
 				DC0A6A4E2B8D12BE00C53D56 /* Apollo in Frameworks */,
 				DC0A6A552B8D148000C53D56 /* CachedAsyncImage in Frameworks */,
+				DC42A2112C62D36E00B1EA85 /* HighlightedTextEditor in Frameworks */,
 				DCEFB26E2B94C3FD00F4B245 /* SwiftHttp in Frameworks */,
 				DC2705092B8BC1B8003DAA84 /* Apollo in Frameworks */,
 				DC27050B2B8BC1B8003DAA84 /* ApolloWebSocket in Frameworks */,
@@ -688,6 +690,7 @@
 				DCEFB26D2B94C3FD00F4B245 /* SwiftHttp */,
 				DCAF9D9E2BC3755F001FF2E5 /* Highlightr */,
 				DCEB20B62BD61FA100393A44 /* AlertToast */,
+				DC42A2102C62D36E00B1EA85 /* HighlightedTextEditor */,
 			);
 			productName = Tanuki;
 			productReference = DC2704F52B8BC0F9003DAA84 /* Tanuki.app */;
@@ -726,6 +729,7 @@
 				DCEFB26C2B94C3FD00F4B245 /* XCRemoteSwiftPackageReference "swift-http" */,
 				DCAF9D9D2BC3755F001FF2E5 /* XCRemoteSwiftPackageReference "Highlightr" */,
 				DCEB20B52BD61FA100393A44 /* XCRemoteSwiftPackageReference "AlertToast" */,
+				DC42A20F2C62D36E00B1EA85 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */,
 			);
 			productRefGroup = DC2704F62B8BC0F9003DAA84 /* Products */;
 			projectDirPath = "";
@@ -1148,6 +1152,14 @@
 				minimumVersion = 2.3.1;
 			};
 		};
+		DC42A20F2C62D36E00B1EA85 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kyle-n/HighlightedTextEditor";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.2;
+			};
+		};
 		DCAF9D9D2BC3755F001FF2E5 /* XCRemoteSwiftPackageReference "Highlightr" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/felix-schindler/Highlightr";
@@ -1219,6 +1231,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DC3A245A2B8C513C00DB0E3F /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
+		};
+		DC42A2102C62D36E00B1EA85 /* HighlightedTextEditor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC42A20F2C62D36E00B1EA85 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */;
+			productName = HighlightedTextEditor;
 		};
 		DCAF9D9E2BC3755F001FF2E5 /* Highlightr */ = {
 			isa = XCSwiftPackageProductDependency;
