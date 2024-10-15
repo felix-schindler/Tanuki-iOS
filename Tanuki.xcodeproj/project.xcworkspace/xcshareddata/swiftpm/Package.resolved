@@ -1,5 +1,5 @@
 {
-  "originHash" : "96068af5f1555154d0c0d8a6651703b3df2ee870f142e2d39481c5bef0e727de",
+  "originHash" : "79988136a254733012eb8a69bbdb6248b7996cf79cbc9ebf74918a308f846a9f",
   "pins" : [
     {
       "identity" : "alerttoast",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apollographql/apollo-ios",
       "state" : {
-        "revision" : "99dfbdb869dbba16bd09e086b2b669bfcab811ec",
-        "version" : "1.12.2"
+        "revision" : "7122421c2ba9ce2d252943cef055c74ef56ea431",
+        "version" : "1.15.2"
       }
     },
     {
@@ -34,7 +34,7 @@
       "location" : "https://github.com/felix-schindler/Highlightr",
       "state" : {
         "branch" : "master",
-        "revision" : "e453b82b723778ad82778516dcff0fd65406ee84"
+        "revision" : "719104912cc331c84c3b1b8ab10565cbc2bd5a8b"
       }
     },
     {
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gonzalezreal/NetworkImage",
       "state" : {
-        "revision" : "7aff8d1b31148d32c5933d75557d42f6323ee3d1",
-        "version" : "6.0.0"
+        "revision" : "2849f5323265386e200484b0d0f896e73c3411b9",
+        "version" : "6.0.1"
       }
     },
     {
@@ -65,12 +65,21 @@
       }
     },
     {
+      "identity" : "swift-cmark",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-cmark",
+      "state" : {
+        "revision" : "3ccff77b2dc5b96b77db3da0d68d28068593fa53",
+        "version" : "0.5.0"
+      }
+    },
+    {
       "identity" : "swift-http",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/felix-schindler/swift-http/",
       "state" : {
         "branch" : "main",
-        "revision" : "6b76b2d73dbba2f631f6abc8b6d72fb585bbbb53"
+        "revision" : "18133c39232a648d2c93ab42376bde84ee79f6cc"
       }
     },
     {
@@ -78,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log",
       "state" : {
-        "revision" : "e97a6fcb1ab07462881ac165fdbb37f067e205d5",
-        "version" : "1.5.4"
+        "revision" : "9cb486020ebf03bfa5b5df985387a14a98744537",
+        "version" : "1.6.1"
       }
     },
     {
@@ -87,8 +96,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gonzalezreal/swift-markdown-ui",
       "state" : {
-        "revision" : "9a8119b37e09a770367eeb26e05267c75d854053",
-        "version" : "2.3.1"
+        "revision" : "5f613358148239d0292c0cef674a3c2314737f9e",
+        "version" : "2.4.1"
       }
     },
     {
