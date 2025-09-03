@@ -20,13 +20,13 @@ struct SetupView: View {
 			Spacer()
 
 			#if os(iOS)
-			if let icon = UIImage(named: "AppIcon") {
-				Image(uiImage: icon)
-					.resizable()
-					.scaledToFit()
-					.cornerRadius(15)
-					.frame(maxWidth: 100, maxHeight: 100)
-			}
+				if let icon = UIImage(named: "AppIcon") {
+					Image(uiImage: icon)
+						.resizable()
+						.scaledToFit()
+						.cornerRadius(15)
+						.frame(maxWidth: 100, maxHeight: 100)
+				}
 			#endif
 			Text("Welcome to **Tanuki for GitLab**")
 

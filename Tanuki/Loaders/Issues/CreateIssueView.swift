@@ -6,8 +6,8 @@
 //  Rewritten by Felix Schindler on 27.02.24.
 //
 
-import SwiftUI
 import HighlightedTextEditor
+import SwiftUI
 
 struct CreateIssueView: View {
 	@Binding
