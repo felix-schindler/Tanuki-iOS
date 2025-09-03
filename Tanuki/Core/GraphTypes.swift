@@ -511,12 +511,20 @@ protocol Group {
 }
 
 extension UserGroupsQuery.Data.User.Groups.Node: Group {
+	var name: String {
+		return self.name
+	}
+	
 	var _accessLevel: String? {
 		return self.maxAccessLevel.stringValue?.rawValue
 	}
 }
 
 extension CurrentUserGroupsQuery.Data.CurrentUser.Groups.Node: Group {
+	var name: String {
+		return self.name
+	}
+	
 	var _accessLevel: String? {
 		return self.maxAccessLevel.stringValue?.rawValue
 	}
@@ -706,7 +714,7 @@ extension UserTodosQuery.Data.User.Todos.Node: Todo {
 	}
 
 	var _webUrl: String? {
-		return target.webUrl
+		return targetEntity?.webUrl
 	}
 }
 
@@ -734,7 +742,7 @@ extension CurrentUserTodosQuery.Data.CurrentUser.Todos.Node: Todo {
 	}
 
 	var _webUrl: String? {
-		return target.webUrl
+		return targetEntity?.webUrl
 	}
 }
 

@@ -7,6 +7,7 @@ public extension Objects {
   /// Represents the snippet blob
   static let SnippetBlob = ApolloAPI.Object(
     typename: "SnippetBlob",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

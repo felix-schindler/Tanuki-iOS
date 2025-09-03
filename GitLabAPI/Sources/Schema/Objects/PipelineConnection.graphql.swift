@@ -7,6 +7,7 @@ public extension Objects {
   /// The connection type for Pipeline.
   static let PipelineConnection = ApolloAPI.Object(
     typename: "PipelineConnection",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

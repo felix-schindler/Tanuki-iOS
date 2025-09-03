@@ -7,6 +7,7 @@ public extension Objects {
   /// Represents a notes widget
   static let WorkItemWidgetNotes = ApolloAPI.Object(
     typename: "WorkItemWidgetNotes",
-    implementedInterfaces: [Interfaces.WorkItemWidget.self]
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
   )
 }

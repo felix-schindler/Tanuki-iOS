@@ -6,6 +6,7 @@ import ApolloAPI
 public extension Objects {
   static let WorkItem = ApolloAPI.Object(
     typename: "WorkItem",
-    implementedInterfaces: [Interfaces.Todoable.self]
+    implementedInterfaces: [Interfaces.Todoable.self],
+    keyFields: nil
   )
 }

@@ -7,6 +7,7 @@ public extension Objects {
   /// Aggregated summary of changes
   static let DiffStatsSummary = ApolloAPI.Object(
     typename: "DiffStatsSummary",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

@@ -22,7 +22,7 @@ public class UserGroupsQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("user", User?.self, arguments: ["username": .variable("username")]),
     ] }
@@ -37,7 +37,7 @@ public class UserGroupsQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("groups", Groups?.self),
@@ -53,7 +53,7 @@ public class UserGroupsQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.GroupConnection }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.GroupConnection }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -69,11 +69,11 @@ public class UserGroupsQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("avatarUrl", String?.self),
-            .field("name", String.self),
+            .field("name", String?.self),
             .field("fullPath", GitLabAPI.ID.self),
             .field("visibility", String?.self),
             .field("groupMembersCount", Int.self),
@@ -83,17 +83,17 @@ public class UserGroupsQuery: GraphQLQuery {
 
           /// Avatar URL of the group.
           public var avatarUrl: String? { __data["avatarUrl"] }
-          /// Name of the namespace.
-          public var name: String { __data["name"] }
+          /// Name of the group.
+          public var name: String? { __data["name"] }
           /// Full path of the namespace.
           public var fullPath: GitLabAPI.ID { __data["fullPath"] }
           /// Visibility of the namespace.
           public var visibility: String? { __data["visibility"] }
-          /// Count of direct members of this group.
+          /// Count of direct members of the group.
           public var groupMembersCount: Int { __data["groupMembersCount"] }
-          /// Count of direct projects in this group.
+          /// Count of direct projects in the group.
           public var projectsCount: Int { __data["projectsCount"] }
-          /// The maximum access level of the current user in the group.
+          /// Maximum access level of the current user in the group.
           public var maxAccessLevel: MaxAccessLevel { __data["maxAccessLevel"] }
 
           /// User.Groups.Node.MaxAccessLevel
@@ -103,13 +103,13 @@ public class UserGroupsQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.AccessLevel }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.AccessLevel }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("stringValue", GraphQLEnum<GitLabAPI.AccessLevelEnum>?.self),
             ] }
 
-            /// String representation of access level.
+            /// Enum string of the the access level.
             public var stringValue: GraphQLEnum<GitLabAPI.AccessLevelEnum>? { __data["stringValue"] }
           }
         }

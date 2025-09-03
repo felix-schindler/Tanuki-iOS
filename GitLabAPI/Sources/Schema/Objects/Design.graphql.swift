@@ -12,6 +12,7 @@ public extension Objects {
       Interfaces.DesignFields.self,
       Interfaces.NoteableInterface.self,
       Interfaces.Todoable.self
-    ]
+    ],
+    keyFields: nil
   )
 }

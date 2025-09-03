@@ -10,6 +10,7 @@ public extension Objects {
     implementedInterfaces: [
       Interfaces.CurrentUserTodos.self,
       Interfaces.WorkItemWidget.self
-    ]
+    ],
+    keyFields: nil
   )
 }

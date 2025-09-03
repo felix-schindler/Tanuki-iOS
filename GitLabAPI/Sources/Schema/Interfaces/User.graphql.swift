@@ -5,5 +5,18 @@ import ApolloAPI
 
 public extension Interfaces {
   /// Representation of a GitLab user.
-  static let User = Interface(name: "User")
+  static let User = ApolloAPI.Interface(
+    name: "User",
+    keyFields: nil,
+    implementingObjects: [
+      "AddOnUser",
+      "AutocompletedUser",
+      "CurrentUser",
+      "MergeRequestAssignee",
+      "MergeRequestAuthor",
+      "MergeRequestParticipant",
+      "MergeRequestReviewer",
+      "UserCore"
+    ]
+  )
 }

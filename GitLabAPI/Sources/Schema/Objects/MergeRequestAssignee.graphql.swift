@@ -7,6 +7,10 @@ public extension Objects {
   /// A user assigned to a merge request.
   static let MergeRequestAssignee = ApolloAPI.Object(
     typename: "MergeRequestAssignee",
-    implementedInterfaces: [Interfaces.User.self]
+    implementedInterfaces: [
+      Interfaces.Todoable.self,
+      Interfaces.User.self
+    ],
+    keyFields: nil
   )
 }

@@ -23,6 +23,8 @@ public enum VerificationStatus: String, EnumType {
   case revokedKey = "REVOKED_KEY"
   /// verified_system verification status.
   case verifiedSystem = "VERIFIED_SYSTEM"
+  /// unverified_author_email verification status.
+  case unverifiedAuthorEmail = "UNVERIFIED_AUTHOR_EMAIL"
   /// verified_ca verification status.
   case verifiedCa = "VERIFIED_CA"
 }

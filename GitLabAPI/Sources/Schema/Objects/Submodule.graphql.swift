@@ -6,6 +6,7 @@ import ApolloAPI
 public extension Objects {
   static let Submodule = ApolloAPI.Object(
     typename: "Submodule",
-    implementedInterfaces: [Interfaces.Entry.self]
+    implementedInterfaces: [Interfaces.Entry.self],
+    keyFields: nil
   )
 }

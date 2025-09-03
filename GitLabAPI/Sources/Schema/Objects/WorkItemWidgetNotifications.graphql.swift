@@ -7,6 +7,7 @@ public extension Objects {
   /// Represents the notifications widget
   static let WorkItemWidgetNotifications = ApolloAPI.Object(
     typename: "WorkItemWidgetNotifications",
-    implementedInterfaces: [Interfaces.WorkItemWidget.self]
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
   )
 }

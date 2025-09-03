@@ -7,6 +7,7 @@ public extension Objects {
   /// Represents a participants widget
   static let WorkItemWidgetParticipants = ApolloAPI.Object(
     typename: "WorkItemWidgetParticipants",
-    implementedInterfaces: [Interfaces.WorkItemWidget.self]
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
   )
 }

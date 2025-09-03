@@ -7,6 +7,7 @@ public extension Objects {
   /// Check permissions for the current user on a merge request
   static let MergeRequestPermissions = ApolloAPI.Object(
     typename: "MergeRequestPermissions",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

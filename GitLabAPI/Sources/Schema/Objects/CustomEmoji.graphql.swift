@@ -7,6 +7,7 @@ public extension Objects {
   /// A custom emoji uploaded by user
   static let CustomEmoji = ApolloAPI.Object(
     typename: "CustomEmoji",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

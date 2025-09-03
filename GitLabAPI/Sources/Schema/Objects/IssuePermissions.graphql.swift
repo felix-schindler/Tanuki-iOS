@@ -7,6 +7,7 @@ public extension Objects {
   /// Check permissions for the current user on a issue
   static let IssuePermissions = ApolloAPI.Object(
     typename: "IssuePermissions",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

@@ -6,6 +6,10 @@ import ApolloAPI
 public extension Objects {
   static let Group = ApolloAPI.Object(
     typename: "Group",
-    implementedInterfaces: []
+    implementedInterfaces: [
+      Interfaces.GroupInterface.self,
+      Interfaces.Todoable.self
+    ],
+    keyFields: nil
   )
 }

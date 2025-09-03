@@ -22,7 +22,7 @@ public class ProjectReleasesQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -37,7 +37,7 @@ public class ProjectReleasesQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("releases", Releases?.self),
@@ -53,7 +53,7 @@ public class ProjectReleasesQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseConnection }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseConnection }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -69,7 +69,7 @@ public class ProjectReleasesQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Release }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Release }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("id", GitLabAPI.ReleaseID.self),
@@ -109,7 +109,7 @@ public class ProjectReleasesQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
@@ -121,7 +121,7 @@ public class ProjectReleasesQuery: GraphQLQuery {
             public var avatarUrl: String? { __data["avatarUrl"] }
             /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
             public var name: String { __data["name"] }
-            /// Username of the user. Unique within this instance of GitLab.
+            /// Username of the user. Unique within the instance of GitLab.
             public var username: String { __data["username"] }
           }
 
@@ -132,7 +132,7 @@ public class ProjectReleasesQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("shortId", String.self),
@@ -149,7 +149,7 @@ public class ProjectReleasesQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MilestoneConnection }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MilestoneConnection }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("nodes", [Node?]?.self),
@@ -165,7 +165,7 @@ public class ProjectReleasesQuery: GraphQLQuery {
               public let __data: DataDict
               public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Milestone }
+              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Milestone }
               public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("id", GitLabAPI.ID.self),
@@ -186,7 +186,7 @@ public class ProjectReleasesQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseAssets }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseAssets }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("count", Int?.self),
@@ -208,7 +208,7 @@ public class ProjectReleasesQuery: GraphQLQuery {
               public let __data: DataDict
               public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseAssetLinkConnection }
+              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseAssetLinkConnection }
               public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("nodes", [Node?]?.self),
@@ -224,7 +224,7 @@ public class ProjectReleasesQuery: GraphQLQuery {
                 public let __data: DataDict
                 public init(_dataDict: DataDict) { __data = _dataDict }
 
-                public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseAssetLink }
+                public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseAssetLink }
                 public static var __selections: [ApolloAPI.Selection] { [
                   .field("__typename", String.self),
                   .field("id", GitLabAPI.ID.self),
@@ -248,7 +248,7 @@ public class ProjectReleasesQuery: GraphQLQuery {
               public let __data: DataDict
               public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseSourceConnection }
+              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseSourceConnection }
               public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("nodes", [Node?]?.self),
@@ -264,7 +264,7 @@ public class ProjectReleasesQuery: GraphQLQuery {
                 public let __data: DataDict
                 public init(_dataDict: DataDict) { __data = _dataDict }
 
-                public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseSource }
+                public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseSource }
                 public static var __selections: [ApolloAPI.Selection] { [
                   .field("__typename", String.self),
                   .field("url", String?.self),

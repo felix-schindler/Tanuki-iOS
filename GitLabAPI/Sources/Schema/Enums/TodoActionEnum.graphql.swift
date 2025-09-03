@@ -4,28 +4,40 @@
 import ApolloAPI
 
 public enum TodoActionEnum: String, EnumType {
-  /// User was assigned.
+  /// Todo action name for assigned.
   case assigned = "assigned"
-  /// User was mentioned.
-  case mentioned = "mentioned"
-  /// Build triggered by the user failed.
-  case buildFailed = "build_failed"
-  /// User added a to-do item.
-  case marked = "marked"
-  /// User was set as an approver.
-  case approvalRequired = "approval_required"
-  /// Merge request authored by the user could not be merged.
-  case unmergeable = "unmergeable"
-  /// User was directly addressed.
-  case directlyAddressed = "directly_addressed"
-  /// Merge request authored by the user was removed from the merge train.
-  case mergeTrainRemoved = "merge_train_removed"
-  /// Review was requested from the user.
+  /// Todo action name for review_requested.
   case reviewRequested = "review_requested"
-  /// Group or project access requested from the user.
+  /// Todo action name for mentioned.
+  case mentioned = "mentioned"
+  /// Todo action name for build_failed.
+  case buildFailed = "build_failed"
+  /// Todo action name for marked.
+  case marked = "marked"
+  /// Todo action name for approval_required.
+  case approvalRequired = "approval_required"
+  /// Todo action name for unmergeable.
+  case unmergeable = "unmergeable"
+  /// Todo action name for directly_addressed.
+  case directlyAddressed = "directly_addressed"
+  /// Todo action name for member_access_requested.
   case memberAccessRequested = "member_access_requested"
-  /// Merge request authored by the user received a review.
+  /// Todo action name for review_submitted.
   case reviewSubmitted = "review_submitted"
-  /// An OKR assigned to the user requires an update.
+  /// Todo action name for ssh_key_expired.
+  case sshKeyExpired = "ssh_key_expired"
+  /// Todo action name for ssh_key_expiring_soon.
+  case sshKeyExpiringSoon = "ssh_key_expiring_soon"
+  /// Todo action name for merge_train_removed.
+  case mergeTrainRemoved = "merge_train_removed"
+  /// Todo action name for okr_checkin_requested.
   case okrCheckinRequested = "okr_checkin_requested"
+  /// Todo action name for added_approver.
+  case addedApprover = "added_approver"
+  /// Todo action name for duo_pro_access_granted.
+  case duoProAccessGranted = "duo_pro_access_granted"
+  /// Todo action name for duo_enterprise_access_granted.
+  case duoEnterpriseAccessGranted = "duo_enterprise_access_granted"
+  /// Todo action name for duo_core_access_granted.
+  case duoCoreAccessGranted = "duo_core_access_granted"
 }

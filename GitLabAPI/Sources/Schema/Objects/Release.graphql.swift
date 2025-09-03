@@ -7,6 +7,7 @@ public extension Objects {
   /// Represents a release
   static let Release = ApolloAPI.Object(
     typename: "Release",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

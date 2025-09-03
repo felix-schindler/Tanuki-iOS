@@ -30,7 +30,7 @@ public class MergeRequestQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -45,7 +45,7 @@ public class MergeRequestQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("id", GitLabAPI.ID.self),
@@ -55,7 +55,7 @@ public class MergeRequestQuery: GraphQLQuery {
 
       /// ID of the project.
       public var id: GitLabAPI.ID { __data["id"] }
-      /// URL to avatar image file of the project.
+      /// Avatar URL of the project.
       public var avatarUrl: String? { __data["avatarUrl"] }
       /// A single merge request of the project.
       public var mergeRequest: MergeRequest? { __data["mergeRequest"] }
@@ -67,7 +67,7 @@ public class MergeRequestQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("iid", String.self),
@@ -115,7 +115,7 @@ public class MergeRequestQuery: GraphQLQuery {
         public var targetBranch: String { __data["targetBranch"] }
         /// Source project of the merge request.
         public var sourceProject: SourceProject? { __data["sourceProject"] }
-        /// Summary of which files were changed in this merge request.
+        /// Summary of which files were changed in the merge request.
         public var diffStatsSummary: DiffStatsSummary? { __data["diffStatsSummary"] }
         /// Number of upvotes for the merge request.
         public var upvotes: Int { __data["upvotes"] }
@@ -123,7 +123,7 @@ public class MergeRequestQuery: GraphQLQuery {
         public var downvotes: Int { __data["downvotes"] }
         /// User notes count of the merge request.
         public var userNotesCount: Int? { __data["userNotesCount"] }
-        /// User who created this merge request.
+        /// User who created the merge request.
         public var author: Author? { __data["author"] }
         /// Permissions for the current user on the resource
         public var userPermissions: UserPermissions { __data["userPermissions"] }
@@ -161,7 +161,7 @@ public class MergeRequestQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("fullPath", GitLabAPI.ID.self),
@@ -178,7 +178,7 @@ public class MergeRequestQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.DiffStatsSummary }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.DiffStatsSummary }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("additions", Int.self),
@@ -201,7 +201,7 @@ public class MergeRequestQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAuthor }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAuthor }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("avatarUrl", String?.self),
@@ -213,7 +213,7 @@ public class MergeRequestQuery: GraphQLQuery {
           public var avatarUrl: String? { __data["avatarUrl"] }
           /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
           public var name: String { __data["name"] }
-          /// Username of the user. Unique within this instance of GitLab.
+          /// Username of the user. Unique within the instance of GitLab.
           public var username: String { __data["username"] }
         }
 
@@ -224,7 +224,7 @@ public class MergeRequestQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestPermissions }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestPermissions }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("canApprove", Bool.self),
@@ -250,7 +250,7 @@ public class MergeRequestQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAssigneeConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAssigneeConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -266,7 +266,7 @@ public class MergeRequestQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAssignee }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAssignee }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
@@ -275,7 +275,7 @@ public class MergeRequestQuery: GraphQLQuery {
 
             /// URL of the user's avatar.
             public var avatarUrl: String? { __data["avatarUrl"] }
-            /// Username of the user. Unique within this instance of GitLab.
+            /// Username of the user. Unique within the instance of GitLab.
             public var username: String { __data["username"] }
           }
         }
@@ -287,7 +287,7 @@ public class MergeRequestQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestReviewerConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestReviewerConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -303,7 +303,7 @@ public class MergeRequestQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestReviewer }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestReviewer }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
@@ -312,7 +312,7 @@ public class MergeRequestQuery: GraphQLQuery {
 
             /// URL of the user's avatar.
             public var avatarUrl: String? { __data["avatarUrl"] }
-            /// Username of the user. Unique within this instance of GitLab.
+            /// Username of the user. Unique within the instance of GitLab.
             public var username: String { __data["username"] }
           }
         }
@@ -324,7 +324,7 @@ public class MergeRequestQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.LabelConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.LabelConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -340,7 +340,7 @@ public class MergeRequestQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Label }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Label }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("title", String.self),
@@ -364,7 +364,7 @@ public class MergeRequestQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Milestone }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Milestone }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("iid", GitLabAPI.ID.self),
@@ -384,7 +384,7 @@ public class MergeRequestQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.NoteConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.NoteConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -400,7 +400,7 @@ public class MergeRequestQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Note }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Note }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("id", GitLabAPI.NoteID.self),
@@ -415,13 +415,13 @@ public class MergeRequestQuery: GraphQLQuery {
 
             /// ID of the note.
             public var id: GitLabAPI.NoteID { __data["id"] }
-            /// User who wrote this note.
+            /// User who wrote the note.
             public var author: Author? { __data["author"] }
             /// Max access level of the note author in the project.
             public var maxAccessLevelOfAuthor: String? { __data["maxAccessLevelOfAuthor"] }
             /// Content of the note.
             public var body: String { __data["body"] }
-            /// Indicates whether this note was created by the system or by a user.
+            /// Indicates whether the note was created by the system or by a user.
             public var system: Bool { __data["system"] }
             /// Name of the icon corresponding to a system note.
             public var systemNoteIconName: String? { __data["systemNoteIconName"] }
@@ -437,7 +437,7 @@ public class MergeRequestQuery: GraphQLQuery {
               public let __data: DataDict
               public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
               public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("avatarUrl", String?.self),
@@ -449,7 +449,7 @@ public class MergeRequestQuery: GraphQLQuery {
               public var avatarUrl: String? { __data["avatarUrl"] }
               /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
               public var name: String { __data["name"] }
-              /// Username of the user. Unique within this instance of GitLab.
+              /// Username of the user. Unique within the instance of GitLab.
               public var username: String { __data["username"] }
             }
           }

@@ -22,7 +22,7 @@ public class GroupLabelsQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("group", Group?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -37,7 +37,7 @@ public class GroupLabelsQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("labels", Labels?.self),
@@ -53,7 +53,7 @@ public class GroupLabelsQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.LabelConnection }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.LabelConnection }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -69,18 +69,18 @@ public class GroupLabelsQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Label }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Label }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
-            .field("id", GitLabAPI.ID.self),
+            .field("id", GitLabAPI.LabelID.self),
             .field("title", String.self),
             .field("description", String?.self),
             .field("color", String.self),
             .field("textColor", String.self),
           ] }
 
-          /// Label ID.
-          public var id: GitLabAPI.ID { __data["id"] }
+          /// Global ID of the label.
+          public var id: GitLabAPI.LabelID { __data["id"] }
           /// Content of the label.
           public var title: String { __data["title"] }
           /// Description of the label (Markdown rendered as HTML for caching).

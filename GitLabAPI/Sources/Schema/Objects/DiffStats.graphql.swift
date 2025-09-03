@@ -7,6 +7,7 @@ public extension Objects {
   /// Changes to a single file
   static let DiffStats = ApolloAPI.Object(
     typename: "DiffStats",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

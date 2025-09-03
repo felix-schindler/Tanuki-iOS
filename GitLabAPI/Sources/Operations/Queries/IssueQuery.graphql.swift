@@ -30,7 +30,7 @@ public class IssueQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -45,14 +45,14 @@ public class IssueQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("avatarUrl", String?.self),
         .field("issue", Issue?.self, arguments: ["iid": .variable("iid")]),
       ] }
 
-      /// URL to avatar image file of the project.
+      /// Avatar URL of the project.
       public var avatarUrl: String? { __data["avatarUrl"] }
       /// A single issue of the project.
       public var issue: Issue? { __data["issue"] }
@@ -64,10 +64,10 @@ public class IssueQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Issue }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Issue }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
-          .field("iid", GitLabAPI.ID.self),
+          .field("iid", String.self),
           .field("title", String.self),
           .field("description", String?.self),
           .field("reference", String.self, arguments: ["full": true]),
@@ -91,7 +91,7 @@ public class IssueQuery: GraphQLQuery {
         ] }
 
         /// Internal ID of the issue.
-        public var iid: GitLabAPI.ID { __data["iid"] }
+        public var iid: String { __data["iid"] }
         /// Title of the issue.
         public var title: String { __data["title"] }
         /// Description of the issue.
@@ -104,7 +104,7 @@ public class IssueQuery: GraphQLQuery {
         public var weight: Int? { __data["weight"] }
         /// Due date of the issue.
         public var dueDate: GitLabAPI.Time? { __data["dueDate"] }
-        /// Issues blocking this issue.
+        /// Issues blocking the issue.
         public var blockedByIssues: BlockedByIssues? { __data["blockedByIssues"] }
         /// Timestamp of when the issue was created.
         public var createdAt: GitLabAPI.Time { __data["createdAt"] }
@@ -140,7 +140,7 @@ public class IssueQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.IssueConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.IssueConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -156,14 +156,14 @@ public class IssueQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Issue }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Issue }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
-              .field("iid", GitLabAPI.ID.self),
+              .field("iid", String.self),
             ] }
 
             /// Internal ID of the issue.
-            public var iid: GitLabAPI.ID { __data["iid"] }
+            public var iid: String { __data["iid"] }
           }
         }
 
@@ -174,7 +174,7 @@ public class IssueQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("avatarUrl", String?.self),
@@ -186,7 +186,7 @@ public class IssueQuery: GraphQLQuery {
           public var avatarUrl: String? { __data["avatarUrl"] }
           /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
           public var name: String { __data["name"] }
-          /// Username of the user. Unique within this instance of GitLab.
+          /// Username of the user. Unique within the instance of GitLab.
           public var username: String { __data["username"] }
         }
 
@@ -197,7 +197,7 @@ public class IssueQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.IssuePermissions }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.IssuePermissions }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("updateIssue", Bool.self),
@@ -217,7 +217,7 @@ public class IssueQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCoreConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCoreConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -233,7 +233,7 @@ public class IssueQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
@@ -242,7 +242,7 @@ public class IssueQuery: GraphQLQuery {
 
             /// URL of the user's avatar.
             public var avatarUrl: String? { __data["avatarUrl"] }
-            /// Username of the user. Unique within this instance of GitLab.
+            /// Username of the user. Unique within the instance of GitLab.
             public var username: String { __data["username"] }
           }
         }
@@ -254,7 +254,7 @@ public class IssueQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.LabelConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.LabelConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -270,7 +270,7 @@ public class IssueQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Label }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Label }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("title", String.self),
@@ -294,7 +294,7 @@ public class IssueQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Milestone }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Milestone }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("iid", GitLabAPI.ID.self),
@@ -314,7 +314,7 @@ public class IssueQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.NoteConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.NoteConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -330,7 +330,7 @@ public class IssueQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Note }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Note }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("id", GitLabAPI.NoteID.self),
@@ -345,13 +345,13 @@ public class IssueQuery: GraphQLQuery {
 
             /// ID of the note.
             public var id: GitLabAPI.NoteID { __data["id"] }
-            /// User who wrote this note.
+            /// User who wrote the note.
             public var author: Author? { __data["author"] }
             /// Max access level of the note author in the project.
             public var maxAccessLevelOfAuthor: String? { __data["maxAccessLevelOfAuthor"] }
             /// Content of the note.
             public var body: String { __data["body"] }
-            /// Indicates whether this note was created by the system or by a user.
+            /// Indicates whether the note was created by the system or by a user.
             public var system: Bool { __data["system"] }
             /// Name of the icon corresponding to a system note.
             public var systemNoteIconName: String? { __data["systemNoteIconName"] }
@@ -367,7 +367,7 @@ public class IssueQuery: GraphQLQuery {
               public let __data: DataDict
               public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
               public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("avatarUrl", String?.self),
@@ -379,7 +379,7 @@ public class IssueQuery: GraphQLQuery {
               public var avatarUrl: String? { __data["avatarUrl"] }
               /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
               public var name: String { __data["name"] }
-              /// Username of the user. Unique within this instance of GitLab.
+              /// Username of the user. Unique within the instance of GitLab.
               public var username: String { __data["username"] }
             }
           }

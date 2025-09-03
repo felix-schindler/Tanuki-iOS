@@ -72,7 +72,9 @@ struct DescendantGroupsLoader: View {
 												{
 													VisibilityIcon(visibility)
 												}
-												Text(group.name.emojized())
+												if let name = group.name?.emojized() {
+													Text(name)
+												}
 											}
 
 											HStack(spacing: 10) {

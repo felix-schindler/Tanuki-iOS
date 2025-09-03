@@ -6,6 +6,7 @@ import ApolloAPI
 public extension Objects {
   static let Tree = ApolloAPI.Object(
     typename: "Tree",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

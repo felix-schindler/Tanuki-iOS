@@ -30,7 +30,7 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -45,7 +45,7 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("id", GitLabAPI.ID.self),
@@ -64,7 +64,7 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("commits", Commits?.self),
@@ -80,7 +80,7 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.CommitConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CommitConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -96,7 +96,7 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("id", GitLabAPI.ID.self),
@@ -133,7 +133,7 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
               public let __data: DataDict
               public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Interfaces.CommitSignature }
+              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Interfaces.CommitSignature }
               public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("verificationStatus", GraphQLEnum<GitLabAPI.VerificationStatus>?.self),
@@ -150,7 +150,7 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
               public let __data: DataDict
               public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.PipelineConnection }
+              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.PipelineConnection }
               public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("nodes", [Node?]?.self),
@@ -166,13 +166,13 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
                 public let __data: DataDict
                 public init(_dataDict: DataDict) { __data = _dataDict }
 
-                public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Pipeline }
+                public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Pipeline }
                 public static var __selections: [ApolloAPI.Selection] { [
                   .field("__typename", String.self),
                   .field("status", GraphQLEnum<GitLabAPI.PipelineStatusEnum>.self),
                 ] }
 
-                /// Status of the pipeline (CREATED, WAITING_FOR_RESOURCE, PREPARING, WAITING_FOR_CALLBACK, PENDING, RUNNING, FAILED, SUCCESS, CANCELED, SKIPPED, MANUAL, SCHEDULED)
+                /// Status of the pipeline (CREATED, WAITING_FOR_RESOURCE, PREPARING, WAITING_FOR_CALLBACK, PENDING, RUNNING, FAILED, SUCCESS, CANCELED, CANCELING, SKIPPED, MANUAL, SCHEDULED)
                 public var status: GraphQLEnum<GitLabAPI.PipelineStatusEnum> { __data["status"] }
               }
             }

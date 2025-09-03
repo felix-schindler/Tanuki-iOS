@@ -6,6 +6,10 @@ import ApolloAPI
 public extension Objects {
   static let Note = ApolloAPI.Object(
     typename: "Note",
-    implementedInterfaces: [Interfaces.ResolvableInterface.self]
+    implementedInterfaces: [
+      Interfaces.BaseNoteInterface.self,
+      Interfaces.ResolvableInterface.self
+    ],
+    keyFields: nil
   )
 }

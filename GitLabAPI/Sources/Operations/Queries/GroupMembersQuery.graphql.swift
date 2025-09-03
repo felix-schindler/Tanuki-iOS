@@ -22,7 +22,7 @@ public class GroupMembersQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("group", Group?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -37,7 +37,7 @@ public class GroupMembersQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("groupMembers", GroupMembers?.self),
@@ -53,7 +53,7 @@ public class GroupMembersQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.GroupMemberConnection }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.GroupMemberConnection }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -69,7 +69,7 @@ public class GroupMembersQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.GroupMember }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.GroupMember }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("id", GitLabAPI.ID.self),
@@ -100,7 +100,7 @@ public class GroupMembersQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
@@ -112,7 +112,7 @@ public class GroupMembersQuery: GraphQLQuery {
             public var avatarUrl: String? { __data["avatarUrl"] }
             /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
             public var name: String { __data["name"] }
-            /// Username of the user. Unique within this instance of GitLab.
+            /// Username of the user. Unique within the instance of GitLab.
             public var username: String { __data["username"] }
           }
 
@@ -123,13 +123,13 @@ public class GroupMembersQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.AccessLevel }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.AccessLevel }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("stringValue", GraphQLEnum<GitLabAPI.AccessLevelEnum>?.self),
             ] }
 
-            /// String representation of access level.
+            /// Enum string of the the access level.
             public var stringValue: GraphQLEnum<GitLabAPI.AccessLevelEnum>? { __data["stringValue"] }
           }
 
@@ -140,7 +140,7 @@ public class GroupMembersQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
@@ -152,7 +152,7 @@ public class GroupMembersQuery: GraphQLQuery {
             public var avatarUrl: String? { __data["avatarUrl"] }
             /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
             public var name: String { __data["name"] }
-            /// Username of the user. Unique within this instance of GitLab.
+            /// Username of the user. Unique within the instance of GitLab.
             public var username: String { __data["username"] }
           }
         }

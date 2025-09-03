@@ -6,6 +6,10 @@ import ApolloAPI
 public extension Objects {
   static let Project = ApolloAPI.Object(
     typename: "Project",
-    implementedInterfaces: []
+    implementedInterfaces: [
+      Interfaces.ProjectInterface.self,
+      Interfaces.Todoable.self
+    ],
+    keyFields: nil
   )
 }

@@ -44,9 +44,11 @@ struct GroupLoader: View {
 							AvatarImage(avatarUrl, size: .medium)
 						}
 						Spacer()
-						Text(group.name)
-							.font(.title)
-							.fontWeight(.bold)
+						if let name = group.name?.emojized() {
+							Text(name)
+								.font(.title)
+								.fontWeight(.bold)
+						}
 						Spacer()
 						if let visibility = group.visibility {
 							VisibilityIcon(visibility)
@@ -67,7 +69,7 @@ struct GroupLoader: View {
 										fullPath: parent.fullPath),
 									label: {
 										PillView(
-											parent.name,
+											parent.name ?? parent.fullPath,
 											icon:
 												"figure.and.child.holdinghands",
 											cornerRadius: 5
@@ -77,7 +79,7 @@ struct GroupLoader: View {
 							}
 
 							if group.name != group.fullName {
-								PillView(group.fullName, cornerRadius: 5)
+								PillView(group.fullName ?? group.path, cornerRadius: 5)
 							}
 						}.font(.footnote)
 					}

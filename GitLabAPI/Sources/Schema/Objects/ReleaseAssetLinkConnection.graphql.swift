@@ -7,6 +7,7 @@ public extension Objects {
   /// The connection type for ReleaseAssetLink.
   static let ReleaseAssetLinkConnection = ApolloAPI.Object(
     typename: "ReleaseAssetLinkConnection",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

@@ -7,6 +7,7 @@ public extension Objects {
   /// Check permissions for the current user on an epic
   static let EpicPermissions = ApolloAPI.Object(
     typename: "EpicPermissions",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

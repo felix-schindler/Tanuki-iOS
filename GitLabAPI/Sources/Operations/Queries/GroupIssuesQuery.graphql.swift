@@ -22,7 +22,7 @@ public class GroupIssuesQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("group", Group?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -37,7 +37,7 @@ public class GroupIssuesQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("issues", Issues?.self, arguments: ["state": "opened"]),
@@ -53,7 +53,7 @@ public class GroupIssuesQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.IssueConnection }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.IssueConnection }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -69,10 +69,10 @@ public class GroupIssuesQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Issue }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Issue }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
-            .field("iid", GitLabAPI.ID.self),
+            .field("iid", String.self),
             .field("title", String.self),
             .field("reference", String.self, arguments: ["full": true]),
             .field("state", GraphQLEnum<GitLabAPI.IssueState>.self),
@@ -85,7 +85,7 @@ public class GroupIssuesQuery: GraphQLQuery {
           ] }
 
           /// Internal ID of the issue.
-          public var iid: GitLabAPI.ID { __data["iid"] }
+          public var iid: String { __data["iid"] }
           /// Title of the issue.
           public var title: String { __data["title"] }
           /// Internal reference of the issue. Returned in shortened format by default.
@@ -112,7 +112,7 @@ public class GroupIssuesQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
@@ -124,7 +124,7 @@ public class GroupIssuesQuery: GraphQLQuery {
             public var avatarUrl: String? { __data["avatarUrl"] }
             /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
             public var name: String { __data["name"] }
-            /// Username of the user. Unique within this instance of GitLab.
+            /// Username of the user. Unique within the instance of GitLab.
             public var username: String { __data["username"] }
           }
         }

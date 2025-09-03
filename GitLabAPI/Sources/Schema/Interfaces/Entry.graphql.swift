@@ -4,5 +4,13 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let Entry = Interface(name: "Entry")
+  static let Entry = ApolloAPI.Interface(
+    name: "Entry",
+    keyFields: nil,
+    implementingObjects: [
+      "Blob",
+      "Submodule",
+      "TreeEntry"
+    ]
+  )
 }

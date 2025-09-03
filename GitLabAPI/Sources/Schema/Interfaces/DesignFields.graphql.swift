@@ -4,5 +4,12 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let DesignFields = Interface(name: "DesignFields")
+  static let DesignFields = ApolloAPI.Interface(
+    name: "DesignFields",
+    keyFields: nil,
+    implementingObjects: [
+      "Design",
+      "DesignAtVersion"
+    ]
+  )
 }

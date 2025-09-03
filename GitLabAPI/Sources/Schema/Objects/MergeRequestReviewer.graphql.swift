@@ -7,6 +7,10 @@ public extension Objects {
   /// A user assigned to a merge request as a reviewer.
   static let MergeRequestReviewer = ApolloAPI.Object(
     typename: "MergeRequestReviewer",
-    implementedInterfaces: [Interfaces.User.self]
+    implementedInterfaces: [
+      Interfaces.Todoable.self,
+      Interfaces.User.self
+    ],
+    keyFields: nil
   )
 }

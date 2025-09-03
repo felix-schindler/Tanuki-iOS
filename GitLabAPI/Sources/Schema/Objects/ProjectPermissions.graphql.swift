@@ -6,6 +6,7 @@ import ApolloAPI
 public extension Objects {
   static let ProjectPermissions = ApolloAPI.Object(
     typename: "ProjectPermissions",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

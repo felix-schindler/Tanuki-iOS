@@ -4,5 +4,14 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let MemberInterface = Interface(name: "MemberInterface")
+  static let MemberInterface = ApolloAPI.Interface(
+    name: "MemberInterface",
+    keyFields: nil,
+    implementingObjects: [
+      "GroupMember",
+      "PendingGroupMember",
+      "PendingProjectMember",
+      "ProjectMember"
+    ]
+  )
 }

@@ -7,6 +7,7 @@ public extension Objects {
   /// The connection type for Snippet.
   static let SnippetConnection = ApolloAPI.Object(
     typename: "SnippetConnection",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

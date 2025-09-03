@@ -4,9 +4,10 @@
 import ApolloAPI
 
 public extension Objects {
-  /// Represents a time tracking widget
+  /// Represents the time tracking widget on the work item
   static let WorkItemWidgetTimeTracking = ApolloAPI.Object(
     typename: "WorkItemWidgetTimeTracking",
-    implementedInterfaces: [Interfaces.WorkItemWidget.self]
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
   )
 }

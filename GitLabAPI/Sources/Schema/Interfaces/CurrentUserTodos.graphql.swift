@@ -4,5 +4,17 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let CurrentUserTodos = Interface(name: "CurrentUserTodos")
+  static let CurrentUserTodos = ApolloAPI.Interface(
+    name: "CurrentUserTodos",
+    keyFields: nil,
+    implementingObjects: [
+      "BoardEpic",
+      "Design",
+      "Epic",
+      "EpicIssue",
+      "Issue",
+      "MergeRequest",
+      "WorkItemWidgetCurrentUserTodos"
+    ]
+  )
 }

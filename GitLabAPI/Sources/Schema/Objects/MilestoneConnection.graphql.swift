@@ -7,6 +7,7 @@ public extension Objects {
   /// The connection type for Milestone.
   static let MilestoneConnection = ApolloAPI.Object(
     typename: "MilestoneConnection",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

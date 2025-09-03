@@ -7,6 +7,7 @@ public extension Objects {
   /// Represents an asset link associated with a release
   static let ReleaseAssetLink = ApolloAPI.Object(
     typename: "ReleaseAssetLink",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

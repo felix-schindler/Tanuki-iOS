@@ -20,6 +20,8 @@ public enum PipelineStatusEnum: String, EnumType {
   case failed = "FAILED"
   /// Pipeline completed successfully.
   case success = "SUCCESS"
+  /// Pipeline is in the process of canceling.
+  case canceling = "CANCELING"
   /// Pipeline was canceled before completion.
   case canceled = "CANCELED"
   /// Pipeline was skipped.

@@ -22,7 +22,7 @@ public class ProjectPipelinesQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -37,13 +37,13 @@ public class ProjectPipelinesQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("pipelines", Pipelines?.self),
       ] }
 
-      /// Build pipelines of the project.
+      /// Pipelines of the project.
       public var pipelines: Pipelines? { __data["pipelines"] }
 
       /// Project.Pipelines
@@ -53,7 +53,7 @@ public class ProjectPipelinesQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.PipelineConnection }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.PipelineConnection }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -69,7 +69,7 @@ public class ProjectPipelinesQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Pipeline }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Pipeline }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("id", GitLabAPI.ID.self),
@@ -93,9 +93,9 @@ public class ProjectPipelinesQuery: GraphQLQuery {
           public var ref: String? { __data["ref"] }
           /// Git commit of the pipeline.
           public var commit: Commit? { __data["commit"] }
-          /// The source of the pipeline
+          /// Source of the pipeline.
           public var source: String? { __data["source"] }
-          /// Status of the pipeline (CREATED, WAITING_FOR_RESOURCE, PREPARING, WAITING_FOR_CALLBACK, PENDING, RUNNING, FAILED, SUCCESS, CANCELED, SKIPPED, MANUAL, SCHEDULED)
+          /// Status of the pipeline (CREATED, WAITING_FOR_RESOURCE, PREPARING, WAITING_FOR_CALLBACK, PENDING, RUNNING, FAILED, SUCCESS, CANCELED, CANCELING, SKIPPED, MANUAL, SCHEDULED)
           public var status: GraphQLEnum<GitLabAPI.PipelineStatusEnum> { __data["status"] }
           /// Specifies if a pipeline can be canceled.
           public var cancelable: Bool { __data["cancelable"] }
@@ -109,7 +109,7 @@ public class ProjectPipelinesQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
@@ -121,7 +121,7 @@ public class ProjectPipelinesQuery: GraphQLQuery {
             public var avatarUrl: String? { __data["avatarUrl"] }
             /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
             public var name: String { __data["name"] }
-            /// Username of the user. Unique within this instance of GitLab.
+            /// Username of the user. Unique within the instance of GitLab.
             public var username: String { __data["username"] }
           }
 
@@ -132,7 +132,7 @@ public class ProjectPipelinesQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("shortId", String.self),

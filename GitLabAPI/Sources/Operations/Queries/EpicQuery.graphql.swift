@@ -30,7 +30,7 @@ public class EpicQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("group", Group?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -45,7 +45,7 @@ public class EpicQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("avatarUrl", String?.self),
@@ -54,7 +54,8 @@ public class EpicQuery: GraphQLQuery {
 
       /// Avatar URL of the group.
       public var avatarUrl: String? { __data["avatarUrl"] }
-      /// Find a single epic.
+      /// Find a single epic. Deprecated in GitLab 17.5: Replaced by `WorkItem` type. For more information, see [migration guide](https://docs.gitlab.com/api/graphql/epic_work_items_api_migration_guide/).
+      @available(*, deprecated, message: "Replaced by `WorkItem` type. For more information, see [migration guide](https://docs.gitlab.com/api/graphql/epic_work_items_api_migration_guide/). Deprecated in GitLab 17.5.")
       public var epic: Epic? { __data["epic"] }
 
       /// Group.Epic
@@ -64,10 +65,10 @@ public class EpicQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Epic }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Epic }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
-          .field("iid", GitLabAPI.ID.self),
+          .field("iid", String.self),
           .field("title", String?.self),
           .field("description", String?.self),
           .field("reference", String.self, arguments: ["full": true]),
@@ -91,7 +92,7 @@ public class EpicQuery: GraphQLQuery {
         ] }
 
         /// Internal ID of the epic.
-        public var iid: GitLabAPI.ID { __data["iid"] }
+        public var iid: String { __data["iid"] }
         /// Title of the epic.
         public var title: String? { __data["title"] }
         /// Description of the epic.
@@ -108,9 +109,9 @@ public class EpicQuery: GraphQLQuery {
         public var webUrl: String { __data["webUrl"] }
         /// Start date of the epic.
         public var startDate: GitLabAPI.Time? { __data["startDate"] }
-        /// Color of the epic. Returns `null` if `epic_color_highlight` feature flag is disabled.
+        /// Color of the epic.
         public var color: String? { __data["color"] }
-        /// Text color generated for the epic. Returns `null` if `epic_color_highlight` feature flag is disabled.
+        /// Text color generated for the epic.
         public var textColor: String? { __data["textColor"] }
         /// Number of upvotes the epic has received.
         public var upvotes: Int { __data["upvotes"] }
@@ -122,7 +123,7 @@ public class EpicQuery: GraphQLQuery {
         public var author: Author { __data["author"] }
         /// Ancestors (parents) of the epic.
         public var ancestors: Ancestors? { __data["ancestors"] }
-        /// Epics blocking this epic.
+        /// Epics blocking the epic.
         public var blockedByEpics: BlockedByEpics? { __data["blockedByEpics"] }
         /// Children (sub-epics) of the epic.
         public var children: Children? { __data["children"] }
@@ -140,7 +141,7 @@ public class EpicQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("avatarUrl", String?.self),
@@ -152,7 +153,7 @@ public class EpicQuery: GraphQLQuery {
           public var avatarUrl: String? { __data["avatarUrl"] }
           /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
           public var name: String { __data["name"] }
-          /// Username of the user. Unique within this instance of GitLab.
+          /// Username of the user. Unique within the instance of GitLab.
           public var username: String { __data["username"] }
         }
 
@@ -163,7 +164,7 @@ public class EpicQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.EpicConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.EpicConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -179,14 +180,14 @@ public class EpicQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Epic }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Epic }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
-              .field("iid", GitLabAPI.ID.self),
+              .field("iid", String.self),
             ] }
 
             /// Internal ID of the epic.
-            public var iid: GitLabAPI.ID { __data["iid"] }
+            public var iid: String { __data["iid"] }
           }
         }
 
@@ -197,7 +198,7 @@ public class EpicQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.EpicConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.EpicConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -213,14 +214,14 @@ public class EpicQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Epic }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Epic }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
-              .field("iid", GitLabAPI.ID.self),
+              .field("iid", String.self),
             ] }
 
             /// Internal ID of the epic.
-            public var iid: GitLabAPI.ID { __data["iid"] }
+            public var iid: String { __data["iid"] }
           }
         }
 
@@ -231,7 +232,7 @@ public class EpicQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.EpicConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.EpicConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -247,14 +248,14 @@ public class EpicQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Epic }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Epic }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
-              .field("iid", GitLabAPI.ID.self),
+              .field("iid", String.self),
             ] }
 
             /// Internal ID of the epic.
-            public var iid: GitLabAPI.ID { __data["iid"] }
+            public var iid: String { __data["iid"] }
           }
         }
 
@@ -265,7 +266,7 @@ public class EpicQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.EpicPermissions }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.EpicPermissions }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("updateEpic", Bool.self),
@@ -285,7 +286,7 @@ public class EpicQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.LabelConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.LabelConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -301,7 +302,7 @@ public class EpicQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Label }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Label }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("title", String.self),
@@ -325,7 +326,7 @@ public class EpicQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.NoteConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.NoteConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -341,7 +342,7 @@ public class EpicQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Note }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Note }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("id", GitLabAPI.NoteID.self),
@@ -356,13 +357,13 @@ public class EpicQuery: GraphQLQuery {
 
             /// ID of the note.
             public var id: GitLabAPI.NoteID { __data["id"] }
-            /// User who wrote this note.
+            /// User who wrote the note.
             public var author: Author? { __data["author"] }
             /// Max access level of the note author in the project.
             public var maxAccessLevelOfAuthor: String? { __data["maxAccessLevelOfAuthor"] }
             /// Content of the note.
             public var body: String { __data["body"] }
-            /// Indicates whether this note was created by the system or by a user.
+            /// Indicates whether the note was created by the system or by a user.
             public var system: Bool { __data["system"] }
             /// Name of the icon corresponding to a system note.
             public var systemNoteIconName: String? { __data["systemNoteIconName"] }
@@ -378,7 +379,7 @@ public class EpicQuery: GraphQLQuery {
               public let __data: DataDict
               public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
               public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("avatarUrl", String?.self),
@@ -390,7 +391,7 @@ public class EpicQuery: GraphQLQuery {
               public var avatarUrl: String? { __data["avatarUrl"] }
               /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
               public var name: String { __data["name"] }
-              /// Username of the user. Unique within this instance of GitLab.
+              /// Username of the user. Unique within the instance of GitLab.
               public var username: String { __data["username"] }
             }
           }

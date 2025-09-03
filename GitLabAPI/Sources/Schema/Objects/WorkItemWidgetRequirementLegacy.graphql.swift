@@ -7,6 +7,7 @@ public extension Objects {
   /// Represents a legacy requirement widget
   static let WorkItemWidgetRequirementLegacy = ApolloAPI.Object(
     typename: "WorkItemWidgetRequirementLegacy",
-    implementedInterfaces: [Interfaces.WorkItemWidget.self]
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
   )
 }

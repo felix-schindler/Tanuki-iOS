@@ -7,6 +7,7 @@ public extension Objects {
   /// The connection type for MergeRequest.
   static let MergeRequestConnection = ApolloAPI.Object(
     typename: "MergeRequestConnection",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

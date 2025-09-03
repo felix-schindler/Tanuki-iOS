@@ -34,7 +34,7 @@ public class RepoTreeQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -49,7 +49,7 @@ public class RepoTreeQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("repository", Repository?.self),
@@ -65,7 +65,7 @@ public class RepoTreeQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Repository }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Repository }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("rootRef", String?.self),
@@ -87,7 +87,7 @@ public class RepoTreeQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Tree }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Tree }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("blobs", Blobs.self),
@@ -106,7 +106,7 @@ public class RepoTreeQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.BlobConnection }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.BlobConnection }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("nodes", [Node?]?.self),
@@ -122,7 +122,7 @@ public class RepoTreeQuery: GraphQLQuery {
               public let __data: DataDict
               public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Blob }
+              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Blob }
               public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("name", String.self),
@@ -143,7 +143,7 @@ public class RepoTreeQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.TreeEntryConnection }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.TreeEntryConnection }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("nodes", [Node?]?.self),
@@ -159,7 +159,7 @@ public class RepoTreeQuery: GraphQLQuery {
               public let __data: DataDict
               public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.TreeEntry }
+              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.TreeEntry }
               public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("name", String.self),

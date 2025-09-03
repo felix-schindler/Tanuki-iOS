@@ -7,6 +7,7 @@ public extension Objects {
   /// The connection type for UserCore.
   static let UserCoreConnection = ApolloAPI.Object(
     typename: "UserCoreConnection",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

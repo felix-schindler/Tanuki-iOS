@@ -22,7 +22,7 @@ public class UserTimelogsQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("user", User?.self, arguments: ["username": .variable("username")]),
     ] }
@@ -37,7 +37,7 @@ public class UserTimelogsQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("timelogs", Timelogs?.self, arguments: ["sort": "SPENT_AT_DESC"]),
@@ -53,7 +53,7 @@ public class UserTimelogsQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.TimelogConnection }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.TimelogConnection }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -69,7 +69,7 @@ public class UserTimelogsQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Timelog }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Timelog }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("id", GitLabAPI.ID.self),
@@ -106,7 +106,7 @@ public class UserTimelogsQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
@@ -118,7 +118,7 @@ public class UserTimelogsQuery: GraphQLQuery {
             public var avatarUrl: String? { __data["avatarUrl"] }
             /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
             public var name: String { __data["name"] }
-            /// Username of the user. Unique within this instance of GitLab.
+            /// Username of the user. Unique within the instance of GitLab.
             public var username: String { __data["username"] }
           }
 
@@ -129,7 +129,7 @@ public class UserTimelogsQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("fullPath", GitLabAPI.ID.self),
@@ -138,7 +138,7 @@ public class UserTimelogsQuery: GraphQLQuery {
 
             /// Full path of the project.
             public var fullPath: GitLabAPI.ID { __data["fullPath"] }
-            /// Full name of the project with its namespace.
+            /// Name of the project including the namespace.
             public var nameWithNamespace: String { __data["nameWithNamespace"] }
           }
 
@@ -149,14 +149,14 @@ public class UserTimelogsQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Issue }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Issue }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
-              .field("iid", GitLabAPI.ID.self),
+              .field("iid", String.self),
             ] }
 
             /// Internal ID of the issue.
-            public var iid: GitLabAPI.ID { __data["iid"] }
+            public var iid: String { __data["iid"] }
           }
 
           /// User.Timelogs.Node.MergeRequest
@@ -166,7 +166,7 @@ public class UserTimelogsQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("iid", String.self),

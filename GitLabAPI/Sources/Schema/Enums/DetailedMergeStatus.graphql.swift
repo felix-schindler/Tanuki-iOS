@@ -11,8 +11,6 @@ public enum DetailedMergeStatus: String, EnumType {
   case checking = "CHECKING"
   /// Branch can be merged.
   case mergeable = "MERGEABLE"
-  /// Can not merge the source into the target branch, potential conflict.
-  case brokenStatus = "BROKEN_STATUS"
   /// Source branch exists and contains commits.
   case commitsStatus = "COMMITS_STATUS"
   /// Pipeline must succeed before merging.
@@ -29,8 +27,6 @@ public enum DetailedMergeStatus: String, EnumType {
   case notApproved = "NOT_APPROVED"
   /// Merge request dependencies must be merged.
   case blockedStatus = "BLOCKED_STATUS"
-  /// There are denied policies for the merge request.
-  case policiesDenied = "POLICIES_DENIED"
   /// Status checks must pass.
   case externalStatusChecks = "EXTERNAL_STATUS_CHECKS"
   /// Merge request diff is being created.
@@ -41,4 +37,18 @@ public enum DetailedMergeStatus: String, EnumType {
   case conflict = "CONFLICT"
   /// Merge request needs to be rebased.
   case needRebase = "NEED_REBASE"
+  /// Merge request approvals currently syncing.
+  case approvalsSyncing = "APPROVALS_SYNCING"
+  /// Merge request includes locked paths.
+  case lockedPaths = "LOCKED_PATHS"
+  /// Merge request includes locked LFS files.
+  case lockedLfsFiles = "LOCKED_LFS_FILES"
+  /// Merge request may not be merged until after the specified time.
+  case mergeTime = "MERGE_TIME"
+  /// All policy rules must be satisfied.
+  case securityPoliciesViolations = "SECURITY_POLICIES_VIOLATIONS"
+  /// Merge request title does not match required regex.
+  case titleNotMatching = "TITLE_NOT_MATCHING"
+  /// Indicates a reviewer has requested changes.
+  case requestedChanges = "REQUESTED_CHANGES"
 }

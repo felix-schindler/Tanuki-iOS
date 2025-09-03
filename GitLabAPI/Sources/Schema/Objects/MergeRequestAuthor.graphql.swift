@@ -7,6 +7,10 @@ public extension Objects {
   /// The author of the merge request.
   static let MergeRequestAuthor = ApolloAPI.Object(
     typename: "MergeRequestAuthor",
-    implementedInterfaces: [Interfaces.User.self]
+    implementedInterfaces: [
+      Interfaces.Todoable.self,
+      Interfaces.User.self
+    ],
+    keyFields: nil
   )
 }

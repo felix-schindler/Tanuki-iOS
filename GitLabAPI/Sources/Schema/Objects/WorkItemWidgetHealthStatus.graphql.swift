@@ -7,6 +7,7 @@ public extension Objects {
   /// Represents a health status widget
   static let WorkItemWidgetHealthStatus = ApolloAPI.Object(
     typename: "WorkItemWidgetHealthStatus",
-    implementedInterfaces: [Interfaces.WorkItemWidget.self]
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
   )
 }

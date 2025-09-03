@@ -6,6 +6,10 @@ import ApolloAPI
 public extension Objects {
   static let Discussion = ApolloAPI.Object(
     typename: "Discussion",
-    implementedInterfaces: [Interfaces.ResolvableInterface.self]
+    implementedInterfaces: [
+      Interfaces.BaseDiscussionInterface.self,
+      Interfaces.ResolvableInterface.self
+    ],
+    keyFields: nil
   )
 }

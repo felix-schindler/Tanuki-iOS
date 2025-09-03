@@ -22,7 +22,7 @@ public class UserSnippetsQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("user", User?.self, arguments: ["username": .variable("username")]),
     ] }
@@ -37,7 +37,7 @@ public class UserSnippetsQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("snippets", Snippets?.self),
@@ -53,7 +53,7 @@ public class UserSnippetsQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.SnippetConnection }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.SnippetConnection }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -69,7 +69,7 @@ public class UserSnippetsQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Snippet }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Snippet }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("id", GitLabAPI.SnippetID.self),
@@ -88,7 +88,7 @@ public class UserSnippetsQuery: GraphQLQuery {
           public var visibilityLevel: GraphQLEnum<GitLabAPI.VisibilityLevelsEnum> { __data["visibilityLevel"] }
           /// Owner of the snippet.
           public var author: Author? { __data["author"] }
-          /// Timestamp this snippet was created.
+          /// Timestamp the snippet was created.
           public var createdAt: GitLabAPI.Time { __data["createdAt"] }
           /// Web URL of the snippet.
           public var webUrl: String { __data["webUrl"] }
@@ -100,7 +100,7 @@ public class UserSnippetsQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
@@ -112,7 +112,7 @@ public class UserSnippetsQuery: GraphQLQuery {
             public var avatarUrl: String? { __data["avatarUrl"] }
             /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
             public var name: String { __data["name"] }
-            /// Username of the user. Unique within this instance of GitLab.
+            /// Username of the user. Unique within the instance of GitLab.
             public var username: String { __data["username"] }
           }
         }

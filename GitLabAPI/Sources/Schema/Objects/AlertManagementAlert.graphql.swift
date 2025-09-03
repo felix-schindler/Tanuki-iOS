@@ -10,6 +10,7 @@ public extension Objects {
     implementedInterfaces: [
       Interfaces.NoteableInterface.self,
       Interfaces.Todoable.self
-    ]
+    ],
+    keyFields: nil
   )
 }

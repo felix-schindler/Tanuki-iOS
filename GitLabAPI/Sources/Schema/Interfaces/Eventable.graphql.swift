@@ -4,5 +4,12 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let Eventable = Interface(name: "Eventable")
+  static let Eventable = ApolloAPI.Interface(
+    name: "Eventable",
+    keyFields: nil,
+    implementingObjects: [
+      "BoardEpic",
+      "Epic"
+    ]
+  )
 }

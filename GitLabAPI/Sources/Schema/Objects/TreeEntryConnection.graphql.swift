@@ -7,6 +7,7 @@ public extension Objects {
   /// The connection type for TreeEntry.
   static let TreeEntryConnection = ApolloAPI.Object(
     typename: "TreeEntryConnection",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

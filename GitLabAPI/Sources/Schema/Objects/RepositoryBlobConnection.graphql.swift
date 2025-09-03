@@ -7,6 +7,7 @@ public extension Objects {
   /// The connection type for RepositoryBlob.
   static let RepositoryBlobConnection = ApolloAPI.Object(
     typename: "RepositoryBlobConnection",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

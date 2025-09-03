@@ -6,6 +6,7 @@ import ApolloAPI
 public extension Objects {
   static let Timelog = ApolloAPI.Object(
     typename: "Timelog",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

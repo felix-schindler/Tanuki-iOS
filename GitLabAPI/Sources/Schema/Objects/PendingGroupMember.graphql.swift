@@ -7,6 +7,10 @@ public extension Objects {
   /// Represents a Pending Group Membership
   static let PendingGroupMember = ApolloAPI.Object(
     typename: "PendingGroupMember",
-    implementedInterfaces: [Interfaces.MemberInterface.self]
+    implementedInterfaces: [
+      Interfaces.MemberInterface.self,
+      Interfaces.PendingMemberInterface.self
+    ],
+    keyFields: nil
   )
 }

@@ -14,7 +14,7 @@ query CurrentUserTodos {
           name
           username
         }
-        target {
+        targetEntity {
           webUrl
         }
         project {

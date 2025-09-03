@@ -7,6 +7,7 @@ public extension Objects {
   /// The connection type for Release.
   static let ReleaseConnection = ApolloAPI.Object(
     typename: "ReleaseConnection",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

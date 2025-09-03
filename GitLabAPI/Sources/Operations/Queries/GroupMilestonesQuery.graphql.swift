@@ -22,7 +22,7 @@ public class GroupMilestonesQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("group", Group?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -37,7 +37,7 @@ public class GroupMilestonesQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("milestones", Milestones?.self, arguments: [
@@ -56,7 +56,7 @@ public class GroupMilestonesQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MilestoneConnection }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MilestoneConnection }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -72,7 +72,7 @@ public class GroupMilestonesQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Milestone }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Milestone }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("iid", GitLabAPI.ID.self),
@@ -112,7 +112,7 @@ public class GroupMilestonesQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MilestoneStats }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MilestoneStats }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("closedIssuesCount", Int?.self),

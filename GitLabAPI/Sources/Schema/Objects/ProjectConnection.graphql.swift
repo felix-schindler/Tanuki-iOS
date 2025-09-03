@@ -7,6 +7,7 @@ public extension Objects {
   /// The connection type for Project.
   static let ProjectConnection = ApolloAPI.Object(
     typename: "ProjectConnection",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

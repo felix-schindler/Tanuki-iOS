@@ -7,6 +7,7 @@ public extension Objects {
   /// Represents a test reports widget
   static let WorkItemWidgetTestReports = ApolloAPI.Object(
     typename: "WorkItemWidgetTestReports",
-    implementedInterfaces: [Interfaces.WorkItemWidget.self]
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
   )
 }

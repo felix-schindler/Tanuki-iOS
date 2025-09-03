@@ -22,7 +22,7 @@ public class SnippetQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("snippets", Snippets?.self, arguments: ["ids": [.variable("id")]]),
     ] }
@@ -37,7 +37,7 @@ public class SnippetQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.SnippetConnection }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.SnippetConnection }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("nodes", [Node?]?.self),
@@ -53,7 +53,7 @@ public class SnippetQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Snippet }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Snippet }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("id", GitLabAPI.SnippetID.self),
@@ -86,7 +86,7 @@ public class SnippetQuery: GraphQLQuery {
         public var blobs: Blobs? { __data["blobs"] }
         /// All notes on this noteable.
         public var notes: Notes { __data["notes"] }
-        /// Timestamp this snippet was created.
+        /// Timestamp the snippet was created.
         public var createdAt: GitLabAPI.Time { __data["createdAt"] }
         /// SSH URL to the snippet repository.
         public var sshUrlToRepo: String? { __data["sshUrlToRepo"] }
@@ -102,7 +102,7 @@ public class SnippetQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.SnippetPermissions }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.SnippetPermissions }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("createNote", Bool.self),
@@ -119,7 +119,7 @@ public class SnippetQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("avatarUrl", String?.self),
@@ -129,7 +129,7 @@ public class SnippetQuery: GraphQLQuery {
 
           /// URL of the user's avatar.
           public var avatarUrl: String? { __data["avatarUrl"] }
-          /// Username of the user. Unique within this instance of GitLab.
+          /// Username of the user. Unique within the instance of GitLab.
           public var username: String { __data["username"] }
           /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
           public var name: String { __data["name"] }
@@ -142,7 +142,7 @@ public class SnippetQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.SnippetBlobConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.SnippetBlobConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -158,7 +158,7 @@ public class SnippetQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.SnippetBlob }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.SnippetBlob }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("size", Int.self),
@@ -182,7 +182,7 @@ public class SnippetQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.NoteConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.NoteConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -198,7 +198,7 @@ public class SnippetQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Note }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Note }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("id", GitLabAPI.NoteID.self),
@@ -213,13 +213,13 @@ public class SnippetQuery: GraphQLQuery {
 
             /// ID of the note.
             public var id: GitLabAPI.NoteID { __data["id"] }
-            /// User who wrote this note.
+            /// User who wrote the note.
             public var author: Author? { __data["author"] }
             /// Max access level of the note author in the project.
             public var maxAccessLevelOfAuthor: String? { __data["maxAccessLevelOfAuthor"] }
             /// Content of the note.
             public var body: String { __data["body"] }
-            /// Indicates whether this note was created by the system or by a user.
+            /// Indicates whether the note was created by the system or by a user.
             public var system: Bool { __data["system"] }
             /// Name of the icon corresponding to a system note.
             public var systemNoteIconName: String? { __data["systemNoteIconName"] }
@@ -235,7 +235,7 @@ public class SnippetQuery: GraphQLQuery {
               public let __data: DataDict
               public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
               public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("avatarUrl", String?.self),
@@ -247,7 +247,7 @@ public class SnippetQuery: GraphQLQuery {
               public var avatarUrl: String? { __data["avatarUrl"] }
               /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
               public var name: String { __data["name"] }
-              /// Username of the user. Unique within this instance of GitLab.
+              /// Username of the user. Unique within the instance of GitLab.
               public var username: String { __data["username"] }
             }
           }

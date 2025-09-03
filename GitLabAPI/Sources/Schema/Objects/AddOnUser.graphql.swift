@@ -7,6 +7,10 @@ public extension Objects {
   /// A user with add-on data
   static let AddOnUser = ApolloAPI.Object(
     typename: "AddOnUser",
-    implementedInterfaces: [Interfaces.User.self]
+    implementedInterfaces: [
+      Interfaces.Todoable.self,
+      Interfaces.User.self
+    ],
+    keyFields: nil
   )
 }

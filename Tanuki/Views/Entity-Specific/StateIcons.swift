@@ -250,8 +250,6 @@ struct DetailedMergeStatusView: View {
 				"Currently checking for mergeability."
 			case .mergeable:
 				"Branch can be merged."
-			case .brokenStatus:
-				"Can not merge the source into the target branch, potential conflict."
 			case .commitsStatus:
 				"Source branch exists and contains commits."
 			case .ciMustPass:
@@ -268,8 +266,6 @@ struct DetailedMergeStatusView: View {
 				"Merge request must be approved before merging."
 			case .blockedStatus:
 				"Merge request dependencies must be merged."
-			case .policiesDenied:
-				"There are denied policies for the merge request."
 			case .externalStatusChecks:
 				"Status checks must pass."
 			case .preparing:

@@ -6,6 +6,7 @@ import ApolloAPI
 public extension Objects {
   static let Label = ApolloAPI.Object(
     typename: "Label",
-    implementedInterfaces: []
+    implementedInterfaces: [Interfaces.LabelInterface.self],
+    keyFields: nil
   )
 }

@@ -4,5 +4,22 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let NoteableInterface = Interface(name: "NoteableInterface")
+  static let NoteableInterface = ApolloAPI.Interface(
+    name: "NoteableInterface",
+    keyFields: nil,
+    implementingObjects: [
+      "AlertManagementAlert",
+      "BoardEpic",
+      "CountableVulnerability",
+      "Design",
+      "Epic",
+      "EpicIssue",
+      "Issue",
+      "MergeRequest",
+      "ProjectComplianceViolation",
+      "Snippet",
+      "Vulnerability",
+      "WikiPage"
+    ]
+  )
 }

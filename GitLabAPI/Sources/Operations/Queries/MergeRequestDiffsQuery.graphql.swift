@@ -30,7 +30,7 @@ public class MergeRequestDiffsQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -45,7 +45,7 @@ public class MergeRequestDiffsQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("mergeRequest", MergeRequest?.self, arguments: ["iid": .variable("iid")]),
@@ -61,13 +61,13 @@ public class MergeRequestDiffsQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("diffStats", [DiffStat]?.self),
         ] }
 
-        /// Details about which files were changed in this merge request.
+        /// Details about which files were changed in the merge request.
         public var diffStats: [DiffStat]? { __data["diffStats"] }
 
         /// Project.MergeRequest.DiffStat
@@ -77,7 +77,7 @@ public class MergeRequestDiffsQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.DiffStats }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.DiffStats }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("path", String.self),
@@ -87,9 +87,9 @@ public class MergeRequestDiffsQuery: GraphQLQuery {
 
           /// File path, relative to repository root.
           public var path: String { __data["path"] }
-          /// Number of lines added to this file.
+          /// Number of lines added to the file.
           public var additions: Int { __data["additions"] }
-          /// Number of lines deleted from this file.
+          /// Number of lines deleted from the file.
           public var deletions: Int { __data["deletions"] }
         }
       }

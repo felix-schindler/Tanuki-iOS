@@ -7,6 +7,7 @@ public extension Objects {
   /// Represents the labels widget
   static let WorkItemWidgetLabels = ApolloAPI.Object(
     typename: "WorkItemWidgetLabels",
-    implementedInterfaces: [Interfaces.WorkItemWidget.self]
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
   )
 }

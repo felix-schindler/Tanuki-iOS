@@ -11,6 +11,7 @@ public extension Objects {
       Interfaces.CurrentUserTodos.self,
       Interfaces.NoteableInterface.self,
       Interfaces.Todoable.self
-    ]
+    ],
+    keyFields: nil
   )
 }

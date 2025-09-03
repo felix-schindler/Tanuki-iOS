@@ -7,6 +7,7 @@ public extension Objects {
   /// The connection type for GroupMember.
   static let GroupMemberConnection = ApolloAPI.Object(
     typename: "GroupMemberConnection",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

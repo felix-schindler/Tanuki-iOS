@@ -16,7 +16,7 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("currentUser", CurrentUser?.self),
     ] }
@@ -31,7 +31,7 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("authoredMergeRequests", AuthoredMergeRequests?.self, arguments: ["state": "opened"]),
@@ -47,7 +47,7 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestConnection }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestConnection }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -63,7 +63,7 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("project", Project.self),
@@ -95,7 +95,7 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
           public var downvotes: Int { __data["downvotes"] }
           /// User notes count of the merge request.
           public var userNotesCount: Int? { __data["userNotesCount"] }
-          /// User who created this merge request.
+          /// User who created the merge request.
           public var author: Author? { __data["author"] }
           /// Timestamp of when the merge request was created.
           public var createdAt: GitLabAPI.Time { __data["createdAt"] }
@@ -109,7 +109,7 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("fullPath", GitLabAPI.ID.self),
@@ -126,7 +126,7 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAuthor }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAuthor }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
@@ -138,7 +138,7 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
             public var avatarUrl: String? { __data["avatarUrl"] }
             /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
             public var name: String { __data["name"] }
-            /// Username of the user. Unique within this instance of GitLab.
+            /// Username of the user. Unique within the instance of GitLab.
             public var username: String { __data["username"] }
           }
         }

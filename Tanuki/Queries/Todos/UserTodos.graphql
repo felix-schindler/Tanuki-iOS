@@ -14,7 +14,7 @@ query UserTodos($username: String!) {
           name
           username
         }
-        target {
+        targetEntity {
           webUrl
         }
         project {

@@ -7,6 +7,7 @@ public extension Objects {
   /// The connection type for MemberInterface.
   static let MemberInterfaceConnection = ApolloAPI.Object(
     typename: "MemberInterfaceConnection",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

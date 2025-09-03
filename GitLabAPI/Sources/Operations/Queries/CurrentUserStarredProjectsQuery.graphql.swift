@@ -16,7 +16,7 @@ public class CurrentUserStarredProjectsQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("currentUser", CurrentUser?.self),
     ] }
@@ -31,7 +31,7 @@ public class CurrentUserStarredProjectsQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("starredProjects", StarredProjects?.self),
@@ -47,7 +47,7 @@ public class CurrentUserStarredProjectsQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.ProjectConnection }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ProjectConnection }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -63,7 +63,7 @@ public class CurrentUserStarredProjectsQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("avatarUrl", String?.self),
@@ -72,9 +72,9 @@ public class CurrentUserStarredProjectsQuery: GraphQLQuery {
             .field("fullPath", GitLabAPI.ID.self),
           ] }
 
-          /// URL to avatar image file of the project.
+          /// Avatar URL of the project.
           public var avatarUrl: String? { __data["avatarUrl"] }
-          /// Full name of the project with its namespace.
+          /// Name of the project including the namespace.
           public var nameWithNamespace: String { __data["nameWithNamespace"] }
           /// Visibility of the project.
           public var visibility: String? { __data["visibility"] }

@@ -7,6 +7,10 @@ public extension Objects {
   /// Core representation of a GitLab user.
   static let AutocompletedUser = ApolloAPI.Object(
     typename: "AutocompletedUser",
-    implementedInterfaces: [Interfaces.User.self]
+    implementedInterfaces: [
+      Interfaces.Todoable.self,
+      Interfaces.User.self
+    ],
+    keyFields: nil
   )
 }

@@ -7,6 +7,7 @@ public extension Objects {
   /// The connection type for Commit.
   static let CommitConnection = ApolloAPI.Object(
     typename: "CommitConnection",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

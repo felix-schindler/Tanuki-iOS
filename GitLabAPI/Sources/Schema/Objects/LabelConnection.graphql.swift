@@ -7,6 +7,7 @@ public extension Objects {
   /// The connection type for Label.
   static let LabelConnection = ApolloAPI.Object(
     typename: "LabelConnection",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

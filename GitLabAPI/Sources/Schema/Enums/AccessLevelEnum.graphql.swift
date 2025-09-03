@@ -11,6 +11,8 @@ public enum AccessLevelEnum: String, EnumType {
   case minimalAccess = "MINIMAL_ACCESS"
   /// Guest access.
   case guest = "GUEST"
+  /// Planner access.
+  case planner = "PLANNER"
   /// Reporter access.
   case reporter = "REPORTER"
   /// Developer access.

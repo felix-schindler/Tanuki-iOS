@@ -6,6 +6,7 @@ import ApolloAPI
 public extension Objects {
   static let RepositoryLanguage = ApolloAPI.Object(
     typename: "RepositoryLanguage",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

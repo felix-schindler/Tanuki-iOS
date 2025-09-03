@@ -22,7 +22,7 @@ public class ProjectQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -37,7 +37,7 @@ public class ProjectQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("id", GitLabAPI.ID.self),
@@ -65,9 +65,9 @@ public class ProjectQuery: GraphQLQuery {
 
       /// ID of the project.
       public var id: GitLabAPI.ID { __data["id"] }
-      /// URL to avatar image file of the project.
+      /// Avatar URL of the project.
       public var avatarUrl: String? { __data["avatarUrl"] }
-      /// Name of the project (without namespace).
+      /// Name of the project without the namespace.
       public var name: String { __data["name"] }
       /// Visibility of the project.
       public var visibility: String? { __data["visibility"] }
@@ -83,7 +83,7 @@ public class ProjectQuery: GraphQLQuery {
       public var issuesEnabled: Bool? { __data["issuesEnabled"] }
       /// Number of open issues for the project.
       public var openIssuesCount: Int? { __data["openIssuesCount"] }
-      /// Indicates if Merge Requests are enabled for the current user
+      /// Indicates if Merge requests are enabled for the current user
       public var mergeRequestsEnabled: Bool? { __data["mergeRequestsEnabled"] }
       /// Indicates if CI/CD pipeline jobs are enabled for the current user.
       public var jobsEnabled: Bool? { __data["jobsEnabled"] }
@@ -113,7 +113,7 @@ public class ProjectQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Namespace }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Namespace }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("id", GitLabAPI.ID.self),
@@ -136,7 +136,7 @@ public class ProjectQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Repository }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Repository }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("rootRef", String?.self),
@@ -173,7 +173,7 @@ public class ProjectQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -189,7 +189,7 @@ public class ProjectQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("rawTextBlob", String?.self),
@@ -207,7 +207,7 @@ public class ProjectQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -223,7 +223,7 @@ public class ProjectQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("rawTextBlob", String?.self),
@@ -241,7 +241,7 @@ public class ProjectQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -257,7 +257,7 @@ public class ProjectQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("rawTextBlob", String?.self),
@@ -275,7 +275,7 @@ public class ProjectQuery: GraphQLQuery {
           public let __data: DataDict
           public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Tree }
+          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Tree }
           public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("lastCommit", LastCommit?.self),
@@ -291,7 +291,7 @@ public class ProjectQuery: GraphQLQuery {
             public let __data: DataDict
             public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
+            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
             public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("id", GitLabAPI.ID.self),
@@ -328,7 +328,7 @@ public class ProjectQuery: GraphQLQuery {
               public let __data: DataDict
               public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Interfaces.CommitSignature }
+              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Interfaces.CommitSignature }
               public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("verificationStatus", GraphQLEnum<GitLabAPI.VerificationStatus>?.self),
@@ -345,7 +345,7 @@ public class ProjectQuery: GraphQLQuery {
               public let __data: DataDict
               public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.PipelineConnection }
+              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.PipelineConnection }
               public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("nodes", [Node?]?.self),
@@ -361,13 +361,13 @@ public class ProjectQuery: GraphQLQuery {
                 public let __data: DataDict
                 public init(_dataDict: DataDict) { __data = _dataDict }
 
-                public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Pipeline }
+                public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Pipeline }
                 public static var __selections: [ApolloAPI.Selection] { [
                   .field("__typename", String.self),
                   .field("status", GraphQLEnum<GitLabAPI.PipelineStatusEnum>.self),
                 ] }
 
-                /// Status of the pipeline (CREATED, WAITING_FOR_RESOURCE, PREPARING, WAITING_FOR_CALLBACK, PENDING, RUNNING, FAILED, SUCCESS, CANCELED, SKIPPED, MANUAL, SCHEDULED)
+                /// Status of the pipeline (CREATED, WAITING_FOR_RESOURCE, PREPARING, WAITING_FOR_CALLBACK, PENDING, RUNNING, FAILED, SUCCESS, CANCELED, CANCELING, SKIPPED, MANUAL, SCHEDULED)
                 public var status: GraphQLEnum<GitLabAPI.PipelineStatusEnum> { __data["status"] }
               }
             }
@@ -382,7 +382,7 @@ public class ProjectQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryLanguage }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryLanguage }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("name", String.self),
@@ -405,7 +405,7 @@ public class ProjectQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.ProjectPermissions }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ProjectPermissions }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("createIssue", Bool.self),

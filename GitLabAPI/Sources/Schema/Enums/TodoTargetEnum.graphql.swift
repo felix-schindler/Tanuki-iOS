@@ -16,6 +16,20 @@ public enum TodoTargetEnum: String, EnumType {
   case design = "DESIGN"
   /// Alert.
   case alert = "ALERT"
+  /// Project.
+  case project = "PROJECT"
+  /// Namespace.
+  case namespace = "NAMESPACE"
+  /// SSH key.
+  case key = "KEY"
+  /// Wiki page.
+  case wikipagemeta = "WIKIPAGEMETA"
   /// An Epic.
   case epic = "EPIC"
+  /// User.
+  case user = "USER"
+  /// Vulnerability.
+  case vulnerability = "VULNERABILITY"
+  /// Project Compliance Violation.
+  case complianceViolation = "COMPLIANCE_VIOLATION"
 }

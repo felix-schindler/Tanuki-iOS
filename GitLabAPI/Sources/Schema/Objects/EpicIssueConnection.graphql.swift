@@ -7,6 +7,7 @@ public extension Objects {
   /// The connection type for EpicIssue.
   static let EpicIssueConnection = ApolloAPI.Object(
     typename: "EpicIssueConnection",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

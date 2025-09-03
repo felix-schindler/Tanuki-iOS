@@ -22,7 +22,7 @@ public class UserQuery: GraphQLQuery {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
       .field("user", User?.self, arguments: ["username": .variable("username")]),
     ] }
@@ -37,10 +37,10 @@ public class UserQuery: GraphQLQuery {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
       public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
-        .field("id", GitLabAPI.ID.self),
+        .field("id", GitLabAPI.UserID.self),
         .field("avatarUrl", String?.self),
         .field("name", String.self),
         .field("username", String.self),
@@ -61,13 +61,13 @@ public class UserQuery: GraphQLQuery {
         .field("webUrl", String.self),
       ] }
 
-      /// ID of the user.
-      public var id: GitLabAPI.ID { __data["id"] }
+      /// Global ID of the user.
+      public var id: GitLabAPI.UserID { __data["id"] }
       /// URL of the user's avatar.
       public var avatarUrl: String? { __data["avatarUrl"] }
       /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
       public var name: String { __data["name"] }
-      /// Username of the user. Unique within this instance of GitLab.
+      /// Username of the user. Unique within the instance of GitLab.
       public var username: String { __data["username"] }
       /// Indicates if the user is a bot.
       public var bot: Bool { __data["bot"] }
@@ -107,7 +107,7 @@ public class UserQuery: GraphQLQuery {
         public let __data: DataDict
         public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: ApolloAPI.ParentType { GitLabAPI.Objects.UserStatus }
+        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserStatus }
         public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("emoji", String?.self),

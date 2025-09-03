@@ -6,6 +6,7 @@ import ApolloAPI
 public extension Objects {
   static let Pipeline = ApolloAPI.Object(
     typename: "Pipeline",
-    implementedInterfaces: []
+    implementedInterfaces: [Interfaces.PipelineInterface.self],
+    keyFields: nil
   )
 }

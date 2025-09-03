@@ -6,6 +6,7 @@ import ApolloAPI
 public extension Objects {
   static let GroupPermissions = ApolloAPI.Object(
     typename: "GroupPermissions",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }
