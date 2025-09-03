@@ -4,15 +4,14 @@ This is my [GitLab App](https://gitlab.com/felix-schindler/gitlab-ios), reimagin
 
 My goal is to merge these changes back to the original project and then use a mix of REST-API v4 and GraphQL to deliver the best usibility with the most features.
 
-## Changelog
+## GraphQL
 
-### 25.02. - 27.02.2024
+To fetch the latest schema and generate the API code, run:
 
-I've worked on this project for about 2 days (Sunday night - Thuesday night) and the most important things can be viewed.
-
-### 09.04.2024
-
-I got limited time but so far there are more features than in the current version on the app store. The only CRUD things missing is the RUD part and filters.
+```bash
+./apollo-ios-cli fetch-schema
+./apollo-ios-cli generate
+```
 
 ## Tokei
 
