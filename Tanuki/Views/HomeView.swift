@@ -18,11 +18,11 @@ struct HomeView: View {
 
 	private func loadStarredProjects() {
 		isLoading = true
-		
+
 		defer {
 			isLoading = false
 		}
-		
+
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: CurrentUserStarredProjectsQuery(), cachePolicy: .cacheAndNetwork)
@@ -39,6 +39,22 @@ struct HomeView: View {
 					}
 				}
 			}
+		} catch let error {
+			starredProjects = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadStarredProjects() async {
+		do {
+			let response = try await Network.shared.apollo.fetch(
+				query: CurrentUserStarredProjectsQuery(), cachePolicy: .networkOnly)
+
+			if let projects = response.data?.currentUser?.starredProjects?.nodes {
+				starredProjects = .success(projects)
+			}
+
+			Notify.status(.success)
 		} catch let error {
 			starredProjects = .failure(error)
 			Notify.status(.error)
@@ -154,13 +170,12 @@ struct HomeView: View {
 						FailedView(error.localizedDescription)
 							.frame(maxWidth: .infinity, minHeight: 100)
 					}
-					
 				}
 			}
 		}.onAppear {
 			loadStarredProjects()
 		}.refreshable {
-			loadStarredProjects()
+			await reloadStarredProjects()
 		}.toolbar {
 			RoundIconButton("New project", icon: "plus") {
 				// TODO: Implement
