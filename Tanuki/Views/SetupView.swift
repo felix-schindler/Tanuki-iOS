@@ -35,11 +35,15 @@ struct SetupView: View {
 			Label("GitLab URL", systemImage: "link")
 				.font(.headline)
 			TextField("gitlab.com", text: self.$newHost)
+				.textInputAutocapitalization(.never)
+				.autocorrectionDisabled()
 
 			Label("Personal Access Token", systemImage: "key")
 				.padding(.top)
 				.font(.headline)
 			TextField("glpat-4Rzq-VKwapmWqj4MfBsi", text: self.$newToken)
+				.textInputAutocapitalization(.never)
+				.autocorrectionDisabled()
 
 			VStack {
 				Label("Requirements", systemImage: "checkmark.square")
