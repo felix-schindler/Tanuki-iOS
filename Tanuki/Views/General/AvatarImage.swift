@@ -16,7 +16,7 @@ enum AvatarSize {
 }
 
 struct AvatarImage: View {
-	let url: URL?
+	let url: URL
 
 	let radius: CGFloat
 	let width: CGFloat
@@ -55,8 +55,14 @@ struct AvatarImage: View {
 		}
 	}
 
+	var request: URLRequest {
+		var req = URLRequest(url: url)
+		req.setValue("Bearer \(API.token)", forHTTPHeaderField: "Authorization")
+		return req
+	}
+
 	public var body: some View {
-		CachedAsyncImage(url: url) { phase in
+		CachedAsyncImage(urlRequest: self.request) { phase in
 			switch phase {
 			case .empty:
 				ProgressView()
@@ -65,10 +71,12 @@ struct AvatarImage: View {
 					.resizable()
 					.scaledToFit()
 					.cornerRadius(radius)
-			default:
-				Image(systemName: "photo")
+			case .failure:
+				Image(systemName: "photo.trianglebadge.exclamationmark")
 					.resizable()
 					.scaledToFit()
+			@unknown default:
+				EmptyView()
 			}
 		}.frame(width: width, height: height, alignment: .leading)
 	}
@@ -97,6 +105,9 @@ struct AvatarImage: View {
 					"https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png"
 			)!, size: .big)
 		AvatarImage(URL(string: "https://schindlerfelix.de/favicon.ico")!)
+		AvatarImage(
+			URL(string: "https://gitlab.com/uploads/-/system/project/avatar/39986149/flexbase.png")!
+		)
 		AvatarImage(
 			URL(
 				string:
