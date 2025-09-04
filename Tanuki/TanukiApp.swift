@@ -11,7 +11,7 @@ import SwiftUI
 @main
 struct TanukiApp: App {
 	private var showSetup = API.host.isEmpty || API.token.isEmpty
-	
+
 	public var body: some Scene {
 		WindowGroup {
 			if showSetup {

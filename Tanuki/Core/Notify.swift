@@ -37,7 +37,7 @@ class Notify {
 			#endif
 			break
 		}
-		
+
 		if let title {
 			let toast = Toast.text(title, subtitle: subtitle)
 			toast.show()
