@@ -93,7 +93,6 @@
 		DC5AD7CF2E697E4B0031FC7B /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = DC5AD7CE2E697E4B0031FC7B /* Apollo */; };
 		DC5AD7D12E697E4B0031FC7B /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC5AD7D02E697E4B0031FC7B /* ApolloAPI */; };
 		DC5AD7D32E697E4B0031FC7B /* ApolloSQLite in Frameworks */ = {isa = PBXBuildFile; productRef = DC5AD7D22E697E4B0031FC7B /* ApolloSQLite */; };
-		DC5AD7D72E69B41D0031FC7B /* EmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5AD7D62E69B41D0031FC7B /* EmptyListView.swift */; };
 		DC5F37082B91A1D100BF7F9D /* AuthorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5F37072B91A1D100BF7F9D /* AuthorView.swift */; };
 		DC69F14B2B956E0600F09269 /* ProjectMembers.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC69F14A2B956E0600F09269 /* ProjectMembers.graphql */; };
 		DC69F14D2B956ED300F09269 /* MembersLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69F14C2B956ED300F09269 /* MembersLoader.swift */; };
@@ -223,7 +222,6 @@
 		DC4B428E2BA56213007A9DB1 /* CommitSignatureLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitSignatureLoader.swift; sourceTree = "<group>"; };
 		DC4B42952BA56968007A9DB1 /* BranchesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchesLoader.swift; sourceTree = "<group>"; };
 		DC4B42992BA56EA6007A9DB1 /* TagsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsLoader.swift; sourceTree = "<group>"; };
-		DC5AD7D62E69B41D0031FC7B /* EmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListView.swift; sourceTree = "<group>"; };
 		DC5F37072B91A1D100BF7F9D /* AuthorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorView.swift; sourceTree = "<group>"; };
 		DC5F99DF2B9384CE001C88A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DC69F14A2B956E0600F09269 /* ProjectMembers.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ProjectMembers.graphql; sourceTree = "<group>"; };
@@ -544,7 +542,6 @@
 				DC21AA762B903ECA00976E64 /* UserView.swift */,
 				DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */,
 				DCAF9D9B2BC36912001FF2E5 /* PreferencesView.swift */,
-				DC5AD7D62E69B41D0031FC7B /* EmptyListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -833,7 +830,6 @@
 				DC1D10002B995FD200B6F5D7 /* UserIssuesLoader.swift in Sources */,
 				DC3A245E2B8C557E00DB0E3F /* RoundIconButton.swift in Sources */,
 				DC1D100A2B996FCE00B6F5D7 /* GroupIssuesLoader.swift in Sources */,
-				DC5AD7D72E69B41D0031FC7B /* EmptyListView.swift in Sources */,
 				DC1C37F62B99BACC005B7D7A /* MilestonesLoader.swift in Sources */,
 				DCB5E0DA2B96CD33000F67FB /* GroupMergeLoader.swift in Sources */,
 				DC5F37082B91A1D100BF7F9D /* AuthorView.swift in Sources */,
