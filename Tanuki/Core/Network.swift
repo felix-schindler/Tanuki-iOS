@@ -14,47 +14,54 @@ class Network {
 	static let shared = Network()
 
 	private(set) lazy var apollo: ApolloClient = {
-		let client = URLSessionClient()
-		let cache = InMemoryNormalizedCache()
+		let documentsPath = NSSearchPathForDirectoriesInDomains(
+			.documentDirectory,
+			.userDomainMask,
+			true
+		).first!
+		let documentsURL = URL(fileURLWithPath: documentsPath)
+		let sqliteFileURL = documentsURL.appendingPathComponent("tanuki_graphql_cache.sqlite")
+
+		// Cache on disk; Fall back to in-memory cache if unavailable
+		var cache: NormalizedCache
+		do {
+			cache = try SQLiteNormalizedCache(fileURL: sqliteFileURL)
+		} catch let error {
+			print("Using in-memory cache", error)
+			cache = InMemoryNormalizedCache()
+		}
+
 		let store = ApolloStore(cache: cache)
-		let provider = NetworkInterceptorProvider(client: client, store: store)
-		let url = API.graphUrl
+
 		let transport = RequestChainNetworkTransport(
-			interceptorProvider: provider, endpointURL: url)
+			urlSession: URLSession.shared,
+			interceptorProvider: NetworkInterceptorProvider(),
+			store: store,
+			endpointURL: API.graphUrl
+		)
 
 		return ApolloClient(networkTransport: transport, store: store)
 	}()
 }
 
-class AuthorizationInterceptor: ApolloInterceptor {
-	public let id: String = UUID().uuidString
+final class AuthorizationInterceptor: GraphQLInterceptor {
+	func intercept<Request>(
+		request: Request, next: @Sendable (Request) async -> Apollo.InterceptorResultStream<Request>
+	) async throws -> Apollo.InterceptorResultStream<Request> where Request: Apollo.GraphQLRequest {
 
-	func interceptAsync<Operation>(
-		chain: RequestChain,
-		request: HTTPRequest<Operation>,
-		response: HTTPResponse<Operation>?,
-		completion: @escaping (Result<GraphQLResult<Operation.Data>, Error>) ->
-			Void
-	) where Operation: GraphQLOperation {
-		request.addHeader(
-			name: "Authorization", value: "Bearer \(API.token)")
+		var req = request
+		req.addHeader(name: "Authorization", value: "Bearer \(API.token)")
 
-		chain.proceedAsync(
-			request: request,
-			response: response,
-			interceptor: self,
-			completion: completion
-		)
+		return await next(req)
 	}
 }
 
-class NetworkInterceptorProvider: DefaultInterceptorProvider {
-
-	override func interceptors<Operation>(for operation: Operation)
-		-> [ApolloInterceptor] where Operation: GraphQLOperation
+final class NetworkInterceptorProvider: InterceptorProvider {
+	func graphQLInterceptors<Operation: GraphQLOperation>(for operation: Operation)
+		-> [any GraphQLInterceptor]
 	{
-		var interceptors = super.interceptors(for: operation)
-		interceptors.insert(AuthorizationInterceptor(), at: 0)
-		return interceptors
+		return [
+			AuthorizationInterceptor()
+		]
 	}
 }

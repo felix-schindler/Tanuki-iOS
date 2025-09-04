@@ -1,7 +1,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import ApolloAPI
+@_spi(Internal) import ApolloAPI
 
 /// Representation of whether a GitLab merge request can be merged.
 public enum MergeStatus: String, EnumType {

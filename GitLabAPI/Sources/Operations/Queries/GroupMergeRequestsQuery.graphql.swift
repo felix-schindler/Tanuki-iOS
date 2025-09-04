@@ -2,8 +2,9 @@
 // This file was automatically generated and should not be edited.
 
 @_exported import ApolloAPI
+@_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public class GroupMergeRequestsQuery: GraphQLQuery {
+public struct GroupMergeRequestsQuery: GraphQLQuery {
   public static let operationName: String = "GroupMergeRequests"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -16,15 +17,18 @@ public class GroupMergeRequestsQuery: GraphQLQuery {
     self.fullPath = fullPath
   }
 
-  public var __variables: Variables? { ["fullPath": fullPath] }
+  @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
 
   public struct Data: GitLabAPI.SelectionSet {
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    @_spi(Unsafe) public let __data: DataDict
+    @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
-    public static var __selections: [ApolloAPI.Selection] { [
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("group", Group?.self, arguments: ["fullPath": .variable("fullPath")]),
+    ] }
+    @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+      GroupMergeRequestsQuery.Data.self
     ] }
 
     /// Find a group.
@@ -34,13 +38,16 @@ public class GroupMergeRequestsQuery: GraphQLQuery {
     ///
     /// Parent Type: `Group`
     public struct Group: GitLabAPI.SelectionSet {
-      public let __data: DataDict
-      public init(_dataDict: DataDict) { __data = _dataDict }
+      @_spi(Unsafe) public let __data: DataDict
+      @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
-      public static var __selections: [ApolloAPI.Selection] { [
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+      @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("mergeRequests", MergeRequests?.self, arguments: ["state": "opened"]),
+      ] }
+      @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+        GroupMergeRequestsQuery.Data.Group.self
       ] }
 
       /// Merge requests for projects in this group.
@@ -50,13 +57,16 @@ public class GroupMergeRequestsQuery: GraphQLQuery {
       ///
       /// Parent Type: `MergeRequestConnection`
       public struct MergeRequests: GitLabAPI.SelectionSet {
-        public let __data: DataDict
-        public init(_dataDict: DataDict) { __data = _dataDict }
+        @_spi(Unsafe) public let __data: DataDict
+        @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestConnection }
-        public static var __selections: [ApolloAPI.Selection] { [
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestConnection }
+        @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
+        ] }
+        @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+          GroupMergeRequestsQuery.Data.Group.MergeRequests.self
         ] }
 
         /// A list of nodes.
@@ -66,11 +76,11 @@ public class GroupMergeRequestsQuery: GraphQLQuery {
         ///
         /// Parent Type: `MergeRequest`
         public struct Node: GitLabAPI.SelectionSet {
-          public let __data: DataDict
-          public init(_dataDict: DataDict) { __data = _dataDict }
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
-          public static var __selections: [ApolloAPI.Selection] { [
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("iid", String.self),
             .field("title", String.self),
@@ -82,6 +92,9 @@ public class GroupMergeRequestsQuery: GraphQLQuery {
             .field("author", Author?.self),
             .field("createdAt", GitLabAPI.Time.self),
             .field("webUrl", String?.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            GroupMergeRequestsQuery.Data.Group.MergeRequests.Node.self
           ] }
 
           /// Internal ID of the merge request.
@@ -109,15 +122,18 @@ public class GroupMergeRequestsQuery: GraphQLQuery {
           ///
           /// Parent Type: `MergeRequestAuthor`
           public struct Author: GitLabAPI.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAuthor }
-            public static var __selections: [ApolloAPI.Selection] { [
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAuthor }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
               .field("name", String.self),
               .field("username", String.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              GroupMergeRequestsQuery.Data.Group.MergeRequests.Node.Author.self
             ] }
 
             /// URL of the user's avatar.

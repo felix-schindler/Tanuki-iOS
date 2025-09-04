@@ -18,7 +18,7 @@ where Schema == GitLabAPI.SchemaMetadata {}
 public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
   public static let configuration: any ApolloAPI.SchemaConfiguration.Type = SchemaConfiguration.self
 
-  public static func objectType(forTypename typename: String) -> ApolloAPI.Object? {
+  @_spi(Execution) public static func objectType(forTypename typename: String) -> ApolloAPI.Object? {
     switch typename {
     case "AbuseReportDiscussion": return GitLabAPI.Objects.AbuseReportDiscussion
     case "AbuseReportLabel": return GitLabAPI.Objects.AbuseReportLabel

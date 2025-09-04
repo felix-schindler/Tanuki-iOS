@@ -2,8 +2,9 @@
 // This file was automatically generated and should not be edited.
 
 @_exported import ApolloAPI
+@_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public class CurrentUserStarredProjectsQuery: GraphQLQuery {
+public struct CurrentUserStarredProjectsQuery: GraphQLQuery {
   public static let operationName: String = "CurrentUserStarredProjects"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -13,12 +14,15 @@ public class CurrentUserStarredProjectsQuery: GraphQLQuery {
   public init() {}
 
   public struct Data: GitLabAPI.SelectionSet {
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    @_spi(Unsafe) public let __data: DataDict
+    @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
-    public static var __selections: [ApolloAPI.Selection] { [
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("currentUser", CurrentUser?.self),
+    ] }
+    @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+      CurrentUserStarredProjectsQuery.Data.self
     ] }
 
     /// Get information about current user.
@@ -28,13 +32,16 @@ public class CurrentUserStarredProjectsQuery: GraphQLQuery {
     ///
     /// Parent Type: `CurrentUser`
     public struct CurrentUser: GitLabAPI.SelectionSet {
-      public let __data: DataDict
-      public init(_dataDict: DataDict) { __data = _dataDict }
+      @_spi(Unsafe) public let __data: DataDict
+      @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
-      public static var __selections: [ApolloAPI.Selection] { [
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
+      @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("starredProjects", StarredProjects?.self),
+      ] }
+      @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+        CurrentUserStarredProjectsQuery.Data.CurrentUser.self
       ] }
 
       /// Projects starred by the user.
@@ -44,13 +51,16 @@ public class CurrentUserStarredProjectsQuery: GraphQLQuery {
       ///
       /// Parent Type: `ProjectConnection`
       public struct StarredProjects: GitLabAPI.SelectionSet {
-        public let __data: DataDict
-        public init(_dataDict: DataDict) { __data = _dataDict }
+        @_spi(Unsafe) public let __data: DataDict
+        @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ProjectConnection }
-        public static var __selections: [ApolloAPI.Selection] { [
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ProjectConnection }
+        @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
+        ] }
+        @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+          CurrentUserStarredProjectsQuery.Data.CurrentUser.StarredProjects.self
         ] }
 
         /// A list of nodes.
@@ -60,16 +70,19 @@ public class CurrentUserStarredProjectsQuery: GraphQLQuery {
         ///
         /// Parent Type: `Project`
         public struct Node: GitLabAPI.SelectionSet {
-          public let __data: DataDict
-          public init(_dataDict: DataDict) { __data = _dataDict }
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
-          public static var __selections: [ApolloAPI.Selection] { [
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("avatarUrl", String?.self),
             .field("nameWithNamespace", String.self),
             .field("visibility", String?.self),
             .field("fullPath", GitLabAPI.ID.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            CurrentUserStarredProjectsQuery.Data.CurrentUser.StarredProjects.Node.self
           ] }
 
           /// Avatar URL of the project.

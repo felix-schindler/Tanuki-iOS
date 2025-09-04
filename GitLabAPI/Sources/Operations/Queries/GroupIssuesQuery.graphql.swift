@@ -2,8 +2,9 @@
 // This file was automatically generated and should not be edited.
 
 @_exported import ApolloAPI
+@_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public class GroupIssuesQuery: GraphQLQuery {
+public struct GroupIssuesQuery: GraphQLQuery {
   public static let operationName: String = "GroupIssues"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -16,15 +17,18 @@ public class GroupIssuesQuery: GraphQLQuery {
     self.fullPath = fullPath
   }
 
-  public var __variables: Variables? { ["fullPath": fullPath] }
+  @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
 
   public struct Data: GitLabAPI.SelectionSet {
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    @_spi(Unsafe) public let __data: DataDict
+    @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
-    public static var __selections: [ApolloAPI.Selection] { [
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("group", Group?.self, arguments: ["fullPath": .variable("fullPath")]),
+    ] }
+    @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+      GroupIssuesQuery.Data.self
     ] }
 
     /// Find a group.
@@ -34,13 +38,16 @@ public class GroupIssuesQuery: GraphQLQuery {
     ///
     /// Parent Type: `Group`
     public struct Group: GitLabAPI.SelectionSet {
-      public let __data: DataDict
-      public init(_dataDict: DataDict) { __data = _dataDict }
+      @_spi(Unsafe) public let __data: DataDict
+      @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
-      public static var __selections: [ApolloAPI.Selection] { [
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+      @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("issues", Issues?.self, arguments: ["state": "opened"]),
+      ] }
+      @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+        GroupIssuesQuery.Data.Group.self
       ] }
 
       /// Issues for projects in this group.
@@ -50,13 +57,16 @@ public class GroupIssuesQuery: GraphQLQuery {
       ///
       /// Parent Type: `IssueConnection`
       public struct Issues: GitLabAPI.SelectionSet {
-        public let __data: DataDict
-        public init(_dataDict: DataDict) { __data = _dataDict }
+        @_spi(Unsafe) public let __data: DataDict
+        @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.IssueConnection }
-        public static var __selections: [ApolloAPI.Selection] { [
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.IssueConnection }
+        @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
+        ] }
+        @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+          GroupIssuesQuery.Data.Group.Issues.self
         ] }
 
         /// A list of nodes.
@@ -66,11 +76,11 @@ public class GroupIssuesQuery: GraphQLQuery {
         ///
         /// Parent Type: `Issue`
         public struct Node: GitLabAPI.SelectionSet {
-          public let __data: DataDict
-          public init(_dataDict: DataDict) { __data = _dataDict }
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Issue }
-          public static var __selections: [ApolloAPI.Selection] { [
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Issue }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("iid", String.self),
             .field("title", String.self),
@@ -82,6 +92,9 @@ public class GroupIssuesQuery: GraphQLQuery {
             .field("author", Author.self),
             .field("createdAt", GitLabAPI.Time.self),
             .field("webUrl", String.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            GroupIssuesQuery.Data.Group.Issues.Node.self
           ] }
 
           /// Internal ID of the issue.
@@ -109,15 +122,18 @@ public class GroupIssuesQuery: GraphQLQuery {
           ///
           /// Parent Type: `UserCore`
           public struct Author: GitLabAPI.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
-            public static var __selections: [ApolloAPI.Selection] { [
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
               .field("name", String.self),
               .field("username", String.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              GroupIssuesQuery.Data.Group.Issues.Node.Author.self
             ] }
 
             /// URL of the user's avatar.

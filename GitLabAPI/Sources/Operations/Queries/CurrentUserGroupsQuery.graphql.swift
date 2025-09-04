@@ -2,8 +2,9 @@
 // This file was automatically generated and should not be edited.
 
 @_exported import ApolloAPI
+@_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public class CurrentUserGroupsQuery: GraphQLQuery {
+public struct CurrentUserGroupsQuery: GraphQLQuery {
   public static let operationName: String = "CurrentUserGroups"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -13,12 +14,15 @@ public class CurrentUserGroupsQuery: GraphQLQuery {
   public init() {}
 
   public struct Data: GitLabAPI.SelectionSet {
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    @_spi(Unsafe) public let __data: DataDict
+    @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
-    public static var __selections: [ApolloAPI.Selection] { [
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("currentUser", CurrentUser?.self),
+    ] }
+    @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+      CurrentUserGroupsQuery.Data.self
     ] }
 
     /// Get information about current user.
@@ -28,13 +32,16 @@ public class CurrentUserGroupsQuery: GraphQLQuery {
     ///
     /// Parent Type: `CurrentUser`
     public struct CurrentUser: GitLabAPI.SelectionSet {
-      public let __data: DataDict
-      public init(_dataDict: DataDict) { __data = _dataDict }
+      @_spi(Unsafe) public let __data: DataDict
+      @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
-      public static var __selections: [ApolloAPI.Selection] { [
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
+      @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("groups", Groups?.self),
+      ] }
+      @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+        CurrentUserGroupsQuery.Data.CurrentUser.self
       ] }
 
       /// Groups where the user has access.
@@ -44,13 +51,16 @@ public class CurrentUserGroupsQuery: GraphQLQuery {
       ///
       /// Parent Type: `GroupConnection`
       public struct Groups: GitLabAPI.SelectionSet {
-        public let __data: DataDict
-        public init(_dataDict: DataDict) { __data = _dataDict }
+        @_spi(Unsafe) public let __data: DataDict
+        @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.GroupConnection }
-        public static var __selections: [ApolloAPI.Selection] { [
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.GroupConnection }
+        @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
+        ] }
+        @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+          CurrentUserGroupsQuery.Data.CurrentUser.Groups.self
         ] }
 
         /// A list of nodes.
@@ -60,11 +70,11 @@ public class CurrentUserGroupsQuery: GraphQLQuery {
         ///
         /// Parent Type: `Group`
         public struct Node: GitLabAPI.SelectionSet {
-          public let __data: DataDict
-          public init(_dataDict: DataDict) { __data = _dataDict }
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
-          public static var __selections: [ApolloAPI.Selection] { [
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("avatarUrl", String?.self),
             .field("name", String?.self),
@@ -73,6 +83,9 @@ public class CurrentUserGroupsQuery: GraphQLQuery {
             .field("groupMembersCount", Int.self),
             .field("projectsCount", Int.self),
             .field("maxAccessLevel", MaxAccessLevel.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            CurrentUserGroupsQuery.Data.CurrentUser.Groups.Node.self
           ] }
 
           /// Avatar URL of the group.
@@ -94,13 +107,16 @@ public class CurrentUserGroupsQuery: GraphQLQuery {
           ///
           /// Parent Type: `AccessLevel`
           public struct MaxAccessLevel: GitLabAPI.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.AccessLevel }
-            public static var __selections: [ApolloAPI.Selection] { [
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.AccessLevel }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("stringValue", GraphQLEnum<GitLabAPI.AccessLevelEnum>?.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              CurrentUserGroupsQuery.Data.CurrentUser.Groups.Node.MaxAccessLevel.self
             ] }
 
             /// Enum string of the the access level.

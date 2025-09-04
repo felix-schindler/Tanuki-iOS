@@ -1,7 +1,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import ApolloAPI
+@_spi(Internal) import ApolloAPI
 
 /// Access level to a resource
 public enum AccessLevelEnum: String, EnumType {

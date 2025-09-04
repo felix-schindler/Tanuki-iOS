@@ -2,8 +2,9 @@
 // This file was automatically generated and should not be edited.
 
 @_exported import ApolloAPI
+@_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public class SnippetQuery: GraphQLQuery {
+public struct SnippetQuery: GraphQLQuery {
   public static let operationName: String = "Snippet"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -16,15 +17,18 @@ public class SnippetQuery: GraphQLQuery {
     self.id = id
   }
 
-  public var __variables: Variables? { ["id": id] }
+  @_spi(Unsafe) public var __variables: Variables? { ["id": id] }
 
   public struct Data: GitLabAPI.SelectionSet {
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    @_spi(Unsafe) public let __data: DataDict
+    @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
-    public static var __selections: [ApolloAPI.Selection] { [
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("snippets", Snippets?.self, arguments: ["ids": [.variable("id")]]),
+    ] }
+    @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+      SnippetQuery.Data.self
     ] }
 
     /// Find Snippets visible to the current user.
@@ -34,13 +38,16 @@ public class SnippetQuery: GraphQLQuery {
     ///
     /// Parent Type: `SnippetConnection`
     public struct Snippets: GitLabAPI.SelectionSet {
-      public let __data: DataDict
-      public init(_dataDict: DataDict) { __data = _dataDict }
+      @_spi(Unsafe) public let __data: DataDict
+      @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.SnippetConnection }
-      public static var __selections: [ApolloAPI.Selection] { [
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.SnippetConnection }
+      @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("nodes", [Node?]?.self),
+      ] }
+      @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+        SnippetQuery.Data.Snippets.self
       ] }
 
       /// A list of nodes.
@@ -50,11 +57,11 @@ public class SnippetQuery: GraphQLQuery {
       ///
       /// Parent Type: `Snippet`
       public struct Node: GitLabAPI.SelectionSet {
-        public let __data: DataDict
-        public init(_dataDict: DataDict) { __data = _dataDict }
+        @_spi(Unsafe) public let __data: DataDict
+        @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Snippet }
-        public static var __selections: [ApolloAPI.Selection] { [
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Snippet }
+        @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("id", GitLabAPI.SnippetID.self),
           .field("title", String.self),
@@ -68,6 +75,9 @@ public class SnippetQuery: GraphQLQuery {
           .field("sshUrlToRepo", String?.self),
           .field("httpUrlToRepo", String?.self),
           .field("webUrl", String.self),
+        ] }
+        @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+          SnippetQuery.Data.Snippets.Node.self
         ] }
 
         /// ID of the snippet.
@@ -99,13 +109,16 @@ public class SnippetQuery: GraphQLQuery {
         ///
         /// Parent Type: `SnippetPermissions`
         public struct UserPermissions: GitLabAPI.SelectionSet {
-          public let __data: DataDict
-          public init(_dataDict: DataDict) { __data = _dataDict }
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.SnippetPermissions }
-          public static var __selections: [ApolloAPI.Selection] { [
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.SnippetPermissions }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("createNote", Bool.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            SnippetQuery.Data.Snippets.Node.UserPermissions.self
           ] }
 
           /// If `true`, the user can perform `create_note` on this resource
@@ -116,15 +129,18 @@ public class SnippetQuery: GraphQLQuery {
         ///
         /// Parent Type: `UserCore`
         public struct Author: GitLabAPI.SelectionSet {
-          public let __data: DataDict
-          public init(_dataDict: DataDict) { __data = _dataDict }
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
-          public static var __selections: [ApolloAPI.Selection] { [
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("avatarUrl", String?.self),
             .field("username", String.self),
             .field("name", String.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            SnippetQuery.Data.Snippets.Node.Author.self
           ] }
 
           /// URL of the user's avatar.
@@ -139,13 +155,16 @@ public class SnippetQuery: GraphQLQuery {
         ///
         /// Parent Type: `SnippetBlobConnection`
         public struct Blobs: GitLabAPI.SelectionSet {
-          public let __data: DataDict
-          public init(_dataDict: DataDict) { __data = _dataDict }
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.SnippetBlobConnection }
-          public static var __selections: [ApolloAPI.Selection] { [
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.SnippetBlobConnection }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            SnippetQuery.Data.Snippets.Node.Blobs.self
           ] }
 
           /// A list of nodes.
@@ -155,15 +174,18 @@ public class SnippetQuery: GraphQLQuery {
           ///
           /// Parent Type: `SnippetBlob`
           public struct Node: GitLabAPI.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.SnippetBlob }
-            public static var __selections: [ApolloAPI.Selection] { [
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.SnippetBlob }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("size", Int.self),
               .field("name", String?.self),
               .field("rawPlainData", String?.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              SnippetQuery.Data.Snippets.Node.Blobs.Node.self
             ] }
 
             /// Blob size.
@@ -179,13 +201,16 @@ public class SnippetQuery: GraphQLQuery {
         ///
         /// Parent Type: `NoteConnection`
         public struct Notes: GitLabAPI.SelectionSet {
-          public let __data: DataDict
-          public init(_dataDict: DataDict) { __data = _dataDict }
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.NoteConnection }
-          public static var __selections: [ApolloAPI.Selection] { [
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.NoteConnection }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            SnippetQuery.Data.Snippets.Node.Notes.self
           ] }
 
           /// A list of nodes.
@@ -195,11 +220,11 @@ public class SnippetQuery: GraphQLQuery {
           ///
           /// Parent Type: `Note`
           public struct Node: GitLabAPI.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Note }
-            public static var __selections: [ApolloAPI.Selection] { [
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Note }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("id", GitLabAPI.NoteID.self),
               .field("author", Author?.self),
@@ -209,6 +234,9 @@ public class SnippetQuery: GraphQLQuery {
               .field("systemNoteIconName", String?.self),
               .field("createdAt", GitLabAPI.Time.self),
               .field("updatedAt", GitLabAPI.Time.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              SnippetQuery.Data.Snippets.Node.Notes.Node.self
             ] }
 
             /// ID of the note.
@@ -232,15 +260,18 @@ public class SnippetQuery: GraphQLQuery {
             ///
             /// Parent Type: `UserCore`
             public struct Author: GitLabAPI.SelectionSet {
-              public let __data: DataDict
-              public init(_dataDict: DataDict) { __data = _dataDict }
+              @_spi(Unsafe) public let __data: DataDict
+              @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
-              public static var __selections: [ApolloAPI.Selection] { [
+              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+              @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("avatarUrl", String?.self),
                 .field("name", String.self),
                 .field("username", String.self),
+              ] }
+              @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+                SnippetQuery.Data.Snippets.Node.Notes.Node.Author.self
               ] }
 
               /// URL of the user's avatar.

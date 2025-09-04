@@ -2,8 +2,9 @@
 // This file was automatically generated and should not be edited.
 
 @_exported import ApolloAPI
+@_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
+public struct UserAuthoredMergeRequestsQuery: GraphQLQuery {
   public static let operationName: String = "UserAuthoredMergeRequests"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -13,12 +14,15 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
   public init() {}
 
   public struct Data: GitLabAPI.SelectionSet {
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    @_spi(Unsafe) public let __data: DataDict
+    @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
-    public static var __selections: [ApolloAPI.Selection] { [
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("currentUser", CurrentUser?.self),
+    ] }
+    @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+      UserAuthoredMergeRequestsQuery.Data.self
     ] }
 
     /// Get information about current user.
@@ -28,13 +32,16 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
     ///
     /// Parent Type: `CurrentUser`
     public struct CurrentUser: GitLabAPI.SelectionSet {
-      public let __data: DataDict
-      public init(_dataDict: DataDict) { __data = _dataDict }
+      @_spi(Unsafe) public let __data: DataDict
+      @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
-      public static var __selections: [ApolloAPI.Selection] { [
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
+      @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("authoredMergeRequests", AuthoredMergeRequests?.self, arguments: ["state": "opened"]),
+      ] }
+      @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+        UserAuthoredMergeRequestsQuery.Data.CurrentUser.self
       ] }
 
       /// Merge requests authored by the user.
@@ -44,13 +51,16 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
       ///
       /// Parent Type: `MergeRequestConnection`
       public struct AuthoredMergeRequests: GitLabAPI.SelectionSet {
-        public let __data: DataDict
-        public init(_dataDict: DataDict) { __data = _dataDict }
+        @_spi(Unsafe) public let __data: DataDict
+        @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestConnection }
-        public static var __selections: [ApolloAPI.Selection] { [
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestConnection }
+        @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
+        ] }
+        @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+          UserAuthoredMergeRequestsQuery.Data.CurrentUser.AuthoredMergeRequests.self
         ] }
 
         /// A list of nodes.
@@ -60,11 +70,11 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
         ///
         /// Parent Type: `MergeRequest`
         public struct Node: GitLabAPI.SelectionSet {
-          public let __data: DataDict
-          public init(_dataDict: DataDict) { __data = _dataDict }
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
-          public static var __selections: [ApolloAPI.Selection] { [
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("project", Project.self),
             .field("iid", String.self),
@@ -77,6 +87,9 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
             .field("author", Author?.self),
             .field("createdAt", GitLabAPI.Time.self),
             .field("webUrl", String?.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            UserAuthoredMergeRequestsQuery.Data.CurrentUser.AuthoredMergeRequests.Node.self
           ] }
 
           /// Alias for target_project.
@@ -106,13 +119,16 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
           ///
           /// Parent Type: `Project`
           public struct Project: GitLabAPI.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
-            public static var __selections: [ApolloAPI.Selection] { [
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("fullPath", GitLabAPI.ID.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              UserAuthoredMergeRequestsQuery.Data.CurrentUser.AuthoredMergeRequests.Node.Project.self
             ] }
 
             /// Full path of the project.
@@ -123,15 +139,18 @@ public class UserAuthoredMergeRequestsQuery: GraphQLQuery {
           ///
           /// Parent Type: `MergeRequestAuthor`
           public struct Author: GitLabAPI.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAuthor }
-            public static var __selections: [ApolloAPI.Selection] { [
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAuthor }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
               .field("name", String.self),
               .field("username", String.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              UserAuthoredMergeRequestsQuery.Data.CurrentUser.AuthoredMergeRequests.Node.Author.self
             ] }
 
             /// URL of the user's avatar.

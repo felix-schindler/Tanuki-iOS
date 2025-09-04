@@ -10,4 +10,5 @@ import ApolloAPI
 /// Color represented as a hex code or named color.
 ///
 /// For example: "#fefefe".
+///
 public typealias Color = String

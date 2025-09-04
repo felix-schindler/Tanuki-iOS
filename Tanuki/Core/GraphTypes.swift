@@ -514,7 +514,7 @@ extension UserGroupsQuery.Data.User.Groups.Node: Group {
 	var name: String {
 		return self.name
 	}
-	
+
 	var _accessLevel: String? {
 		return self.maxAccessLevel.stringValue?.rawValue
 	}
@@ -524,7 +524,7 @@ extension CurrentUserGroupsQuery.Data.CurrentUser.Groups.Node: Group {
 	var name: String {
 		return self.name
 	}
-	
+
 	var _accessLevel: String? {
 		return self.maxAccessLevel.stringValue?.rawValue
 	}

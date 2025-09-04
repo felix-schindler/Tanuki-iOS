@@ -2,8 +2,9 @@
 // This file was automatically generated and should not be edited.
 
 @_exported import ApolloAPI
+@_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public class ProjectReleasesQuery: GraphQLQuery {
+public struct ProjectReleasesQuery: GraphQLQuery {
   public static let operationName: String = "ProjectReleasesQuery"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -16,15 +17,18 @@ public class ProjectReleasesQuery: GraphQLQuery {
     self.fullPath = fullPath
   }
 
-  public var __variables: Variables? { ["fullPath": fullPath] }
+  @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
 
   public struct Data: GitLabAPI.SelectionSet {
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    @_spi(Unsafe) public let __data: DataDict
+    @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
-    public static var __selections: [ApolloAPI.Selection] { [
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
+    ] }
+    @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+      ProjectReleasesQuery.Data.self
     ] }
 
     /// Find a project.
@@ -34,13 +38,16 @@ public class ProjectReleasesQuery: GraphQLQuery {
     ///
     /// Parent Type: `Project`
     public struct Project: GitLabAPI.SelectionSet {
-      public let __data: DataDict
-      public init(_dataDict: DataDict) { __data = _dataDict }
+      @_spi(Unsafe) public let __data: DataDict
+      @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
-      public static var __selections: [ApolloAPI.Selection] { [
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("releases", Releases?.self),
+      ] }
+      @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+        ProjectReleasesQuery.Data.Project.self
       ] }
 
       /// Releases of the project.
@@ -50,13 +57,16 @@ public class ProjectReleasesQuery: GraphQLQuery {
       ///
       /// Parent Type: `ReleaseConnection`
       public struct Releases: GitLabAPI.SelectionSet {
-        public let __data: DataDict
-        public init(_dataDict: DataDict) { __data = _dataDict }
+        @_spi(Unsafe) public let __data: DataDict
+        @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseConnection }
-        public static var __selections: [ApolloAPI.Selection] { [
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseConnection }
+        @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
+        ] }
+        @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+          ProjectReleasesQuery.Data.Project.Releases.self
         ] }
 
         /// A list of nodes.
@@ -66,11 +76,11 @@ public class ProjectReleasesQuery: GraphQLQuery {
         ///
         /// Parent Type: `Release`
         public struct Node: GitLabAPI.SelectionSet {
-          public let __data: DataDict
-          public init(_dataDict: DataDict) { __data = _dataDict }
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Release }
-          public static var __selections: [ApolloAPI.Selection] { [
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Release }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("id", GitLabAPI.ReleaseID.self),
             .field("name", String?.self),
@@ -81,6 +91,9 @@ public class ProjectReleasesQuery: GraphQLQuery {
             .field("commit", Commit?.self),
             .field("milestones", Milestones?.self),
             .field("assets", Assets?.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            ProjectReleasesQuery.Data.Project.Releases.Node.self
           ] }
 
           /// Global ID of the release.
@@ -106,15 +119,18 @@ public class ProjectReleasesQuery: GraphQLQuery {
           ///
           /// Parent Type: `UserCore`
           public struct Author: GitLabAPI.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
-            public static var __selections: [ApolloAPI.Selection] { [
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
               .field("name", String.self),
               .field("username", String.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              ProjectReleasesQuery.Data.Project.Releases.Node.Author.self
             ] }
 
             /// URL of the user's avatar.
@@ -129,13 +145,16 @@ public class ProjectReleasesQuery: GraphQLQuery {
           ///
           /// Parent Type: `Commit`
           public struct Commit: GitLabAPI.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
-            public static var __selections: [ApolloAPI.Selection] { [
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("shortId", String.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              ProjectReleasesQuery.Data.Project.Releases.Node.Commit.self
             ] }
 
             /// Short SHA1 ID of the commit.
@@ -146,13 +165,16 @@ public class ProjectReleasesQuery: GraphQLQuery {
           ///
           /// Parent Type: `MilestoneConnection`
           public struct Milestones: GitLabAPI.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MilestoneConnection }
-            public static var __selections: [ApolloAPI.Selection] { [
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MilestoneConnection }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("nodes", [Node?]?.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              ProjectReleasesQuery.Data.Project.Releases.Node.Milestones.self
             ] }
 
             /// A list of nodes.
@@ -162,14 +184,17 @@ public class ProjectReleasesQuery: GraphQLQuery {
             ///
             /// Parent Type: `Milestone`
             public struct Node: GitLabAPI.SelectionSet {
-              public let __data: DataDict
-              public init(_dataDict: DataDict) { __data = _dataDict }
+              @_spi(Unsafe) public let __data: DataDict
+              @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Milestone }
-              public static var __selections: [ApolloAPI.Selection] { [
+              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Milestone }
+              @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("id", GitLabAPI.ID.self),
                 .field("title", String.self),
+              ] }
+              @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+                ProjectReleasesQuery.Data.Project.Releases.Node.Milestones.Node.self
               ] }
 
               /// ID of the milestone.
@@ -183,15 +208,18 @@ public class ProjectReleasesQuery: GraphQLQuery {
           ///
           /// Parent Type: `ReleaseAssets`
           public struct Assets: GitLabAPI.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseAssets }
-            public static var __selections: [ApolloAPI.Selection] { [
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseAssets }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("count", Int?.self),
               .field("links", Links?.self),
               .field("sources", Sources?.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              ProjectReleasesQuery.Data.Project.Releases.Node.Assets.self
             ] }
 
             /// Number of assets of the release.
@@ -205,13 +233,16 @@ public class ProjectReleasesQuery: GraphQLQuery {
             ///
             /// Parent Type: `ReleaseAssetLinkConnection`
             public struct Links: GitLabAPI.SelectionSet {
-              public let __data: DataDict
-              public init(_dataDict: DataDict) { __data = _dataDict }
+              @_spi(Unsafe) public let __data: DataDict
+              @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseAssetLinkConnection }
-              public static var __selections: [ApolloAPI.Selection] { [
+              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseAssetLinkConnection }
+              @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("nodes", [Node?]?.self),
+              ] }
+              @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+                ProjectReleasesQuery.Data.Project.Releases.Node.Assets.Links.self
               ] }
 
               /// A list of nodes.
@@ -221,15 +252,18 @@ public class ProjectReleasesQuery: GraphQLQuery {
               ///
               /// Parent Type: `ReleaseAssetLink`
               public struct Node: GitLabAPI.SelectionSet {
-                public let __data: DataDict
-                public init(_dataDict: DataDict) { __data = _dataDict }
+                @_spi(Unsafe) public let __data: DataDict
+                @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-                public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseAssetLink }
-                public static var __selections: [ApolloAPI.Selection] { [
+                @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseAssetLink }
+                @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                   .field("__typename", String.self),
                   .field("id", GitLabAPI.ID.self),
                   .field("name", String?.self),
                   .field("url", String?.self),
+                ] }
+                @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+                  ProjectReleasesQuery.Data.Project.Releases.Node.Assets.Links.Node.self
                 ] }
 
                 /// ID of the link.
@@ -245,13 +279,16 @@ public class ProjectReleasesQuery: GraphQLQuery {
             ///
             /// Parent Type: `ReleaseSourceConnection`
             public struct Sources: GitLabAPI.SelectionSet {
-              public let __data: DataDict
-              public init(_dataDict: DataDict) { __data = _dataDict }
+              @_spi(Unsafe) public let __data: DataDict
+              @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseSourceConnection }
-              public static var __selections: [ApolloAPI.Selection] { [
+              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseSourceConnection }
+              @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("nodes", [Node?]?.self),
+              ] }
+              @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+                ProjectReleasesQuery.Data.Project.Releases.Node.Assets.Sources.self
               ] }
 
               /// A list of nodes.
@@ -261,14 +298,17 @@ public class ProjectReleasesQuery: GraphQLQuery {
               ///
               /// Parent Type: `ReleaseSource`
               public struct Node: GitLabAPI.SelectionSet {
-                public let __data: DataDict
-                public init(_dataDict: DataDict) { __data = _dataDict }
+                @_spi(Unsafe) public let __data: DataDict
+                @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-                public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseSource }
-                public static var __selections: [ApolloAPI.Selection] { [
+                @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ReleaseSource }
+                @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                   .field("__typename", String.self),
                   .field("url", String?.self),
                   .field("format", String?.self),
+                ] }
+                @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+                  ProjectReleasesQuery.Data.Project.Releases.Node.Assets.Sources.Node.self
                 ] }
 
                 /// Download URL of the source.

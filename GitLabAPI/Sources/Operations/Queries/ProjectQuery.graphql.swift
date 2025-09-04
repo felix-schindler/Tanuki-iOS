@@ -2,8 +2,9 @@
 // This file was automatically generated and should not be edited.
 
 @_exported import ApolloAPI
+@_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public class ProjectQuery: GraphQLQuery {
+public struct ProjectQuery: GraphQLQuery {
   public static let operationName: String = "Project"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -16,15 +17,18 @@ public class ProjectQuery: GraphQLQuery {
     self.fullPath = fullPath
   }
 
-  public var __variables: Variables? { ["fullPath": fullPath] }
+  @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
 
   public struct Data: GitLabAPI.SelectionSet {
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    @_spi(Unsafe) public let __data: DataDict
+    @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
-    public static var __selections: [ApolloAPI.Selection] { [
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
+    ] }
+    @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+      ProjectQuery.Data.self
     ] }
 
     /// Find a project.
@@ -34,11 +38,11 @@ public class ProjectQuery: GraphQLQuery {
     ///
     /// Parent Type: `Project`
     public struct Project: GitLabAPI.SelectionSet {
-      public let __data: DataDict
-      public init(_dataDict: DataDict) { __data = _dataDict }
+      @_spi(Unsafe) public let __data: DataDict
+      @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
-      public static var __selections: [ApolloAPI.Selection] { [
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("id", GitLabAPI.ID.self),
         .field("avatarUrl", String?.self),
@@ -61,6 +65,9 @@ public class ProjectQuery: GraphQLQuery {
         .field("repository", Repository?.self),
         .field("languages", [Language]?.self),
         .field("userPermissions", UserPermissions.self),
+      ] }
+      @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+        ProjectQuery.Data.Project.self
       ] }
 
       /// ID of the project.
@@ -110,15 +117,18 @@ public class ProjectQuery: GraphQLQuery {
       ///
       /// Parent Type: `Namespace`
       public struct Namespace: GitLabAPI.SelectionSet {
-        public let __data: DataDict
-        public init(_dataDict: DataDict) { __data = _dataDict }
+        @_spi(Unsafe) public let __data: DataDict
+        @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Namespace }
-        public static var __selections: [ApolloAPI.Selection] { [
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Namespace }
+        @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("id", GitLabAPI.ID.self),
           .field("name", String.self),
           .field("fullPath", GitLabAPI.ID.self),
+        ] }
+        @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+          ProjectQuery.Data.Project.Namespace.self
         ] }
 
         /// ID of the namespace.
@@ -133,11 +143,11 @@ public class ProjectQuery: GraphQLQuery {
       ///
       /// Parent Type: `Repository`
       public struct Repository: GitLabAPI.SelectionSet {
-        public let __data: DataDict
-        public init(_dataDict: DataDict) { __data = _dataDict }
+        @_spi(Unsafe) public let __data: DataDict
+        @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Repository }
-        public static var __selections: [ApolloAPI.Selection] { [
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Repository }
+        @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("rootRef", String?.self),
           .field("blobs", alias: "readme", Readme?.self, arguments: [
@@ -153,6 +163,9 @@ public class ProjectQuery: GraphQLQuery {
             "first": 1
           ]),
           .field("tree", Tree?.self),
+        ] }
+        @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+          ProjectQuery.Data.Project.Repository.self
         ] }
 
         /// Default branch of the repository.
@@ -170,13 +183,16 @@ public class ProjectQuery: GraphQLQuery {
         ///
         /// Parent Type: `RepositoryBlobConnection`
         public struct Readme: GitLabAPI.SelectionSet {
-          public let __data: DataDict
-          public init(_dataDict: DataDict) { __data = _dataDict }
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
-          public static var __selections: [ApolloAPI.Selection] { [
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            ProjectQuery.Data.Project.Repository.Readme.self
           ] }
 
           /// A list of nodes.
@@ -186,13 +202,16 @@ public class ProjectQuery: GraphQLQuery {
           ///
           /// Parent Type: `RepositoryBlob`
           public struct Node: GitLabAPI.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
-            public static var __selections: [ApolloAPI.Selection] { [
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("rawTextBlob", String?.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              ProjectQuery.Data.Project.Repository.Readme.Node.self
             ] }
 
             /// Raw content of the blob, if the blob is text data.
@@ -204,13 +223,16 @@ public class ProjectQuery: GraphQLQuery {
         ///
         /// Parent Type: `RepositoryBlobConnection`
         public struct License: GitLabAPI.SelectionSet {
-          public let __data: DataDict
-          public init(_dataDict: DataDict) { __data = _dataDict }
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
-          public static var __selections: [ApolloAPI.Selection] { [
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            ProjectQuery.Data.Project.Repository.License.self
           ] }
 
           /// A list of nodes.
@@ -220,13 +242,16 @@ public class ProjectQuery: GraphQLQuery {
           ///
           /// Parent Type: `RepositoryBlob`
           public struct Node: GitLabAPI.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
-            public static var __selections: [ApolloAPI.Selection] { [
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("rawTextBlob", String?.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              ProjectQuery.Data.Project.Repository.License.Node.self
             ] }
 
             /// Raw content of the blob, if the blob is text data.
@@ -238,13 +263,16 @@ public class ProjectQuery: GraphQLQuery {
         ///
         /// Parent Type: `RepositoryBlobConnection`
         public struct Contributing: GitLabAPI.SelectionSet {
-          public let __data: DataDict
-          public init(_dataDict: DataDict) { __data = _dataDict }
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
-          public static var __selections: [ApolloAPI.Selection] { [
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            ProjectQuery.Data.Project.Repository.Contributing.self
           ] }
 
           /// A list of nodes.
@@ -254,13 +282,16 @@ public class ProjectQuery: GraphQLQuery {
           ///
           /// Parent Type: `RepositoryBlob`
           public struct Node: GitLabAPI.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
-            public static var __selections: [ApolloAPI.Selection] { [
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("rawTextBlob", String?.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              ProjectQuery.Data.Project.Repository.Contributing.Node.self
             ] }
 
             /// Raw content of the blob, if the blob is text data.
@@ -272,13 +303,16 @@ public class ProjectQuery: GraphQLQuery {
         ///
         /// Parent Type: `Tree`
         public struct Tree: GitLabAPI.SelectionSet {
-          public let __data: DataDict
-          public init(_dataDict: DataDict) { __data = _dataDict }
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Tree }
-          public static var __selections: [ApolloAPI.Selection] { [
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Tree }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("lastCommit", LastCommit?.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            ProjectQuery.Data.Project.Repository.Tree.self
           ] }
 
           /// Last commit for the tree.
@@ -288,11 +322,11 @@ public class ProjectQuery: GraphQLQuery {
           ///
           /// Parent Type: `Commit`
           public struct LastCommit: GitLabAPI.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
-            public static var __selections: [ApolloAPI.Selection] { [
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("id", GitLabAPI.ID.self),
               .field("title", String?.self),
@@ -302,6 +336,9 @@ public class ProjectQuery: GraphQLQuery {
               .field("webUrl", String.self),
               .field("signature", Signature?.self),
               .field("pipelines", Pipelines?.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              ProjectQuery.Data.Project.Repository.Tree.LastCommit.self
             ] }
 
             /// ID (global ID) of the commit.
@@ -325,13 +362,16 @@ public class ProjectQuery: GraphQLQuery {
             ///
             /// Parent Type: `CommitSignature`
             public struct Signature: GitLabAPI.SelectionSet {
-              public let __data: DataDict
-              public init(_dataDict: DataDict) { __data = _dataDict }
+              @_spi(Unsafe) public let __data: DataDict
+              @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Interfaces.CommitSignature }
-              public static var __selections: [ApolloAPI.Selection] { [
+              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Interfaces.CommitSignature }
+              @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("verificationStatus", GraphQLEnum<GitLabAPI.VerificationStatus>?.self),
+              ] }
+              @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+                ProjectQuery.Data.Project.Repository.Tree.LastCommit.Signature.self
               ] }
 
               /// Indicates verification status of the associated key or certificate.
@@ -342,13 +382,16 @@ public class ProjectQuery: GraphQLQuery {
             ///
             /// Parent Type: `PipelineConnection`
             public struct Pipelines: GitLabAPI.SelectionSet {
-              public let __data: DataDict
-              public init(_dataDict: DataDict) { __data = _dataDict }
+              @_spi(Unsafe) public let __data: DataDict
+              @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.PipelineConnection }
-              public static var __selections: [ApolloAPI.Selection] { [
+              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.PipelineConnection }
+              @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("nodes", [Node?]?.self),
+              ] }
+              @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+                ProjectQuery.Data.Project.Repository.Tree.LastCommit.Pipelines.self
               ] }
 
               /// A list of nodes.
@@ -358,13 +401,16 @@ public class ProjectQuery: GraphQLQuery {
               ///
               /// Parent Type: `Pipeline`
               public struct Node: GitLabAPI.SelectionSet {
-                public let __data: DataDict
-                public init(_dataDict: DataDict) { __data = _dataDict }
+                @_spi(Unsafe) public let __data: DataDict
+                @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-                public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Pipeline }
-                public static var __selections: [ApolloAPI.Selection] { [
+                @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Pipeline }
+                @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                   .field("__typename", String.self),
                   .field("status", GraphQLEnum<GitLabAPI.PipelineStatusEnum>.self),
+                ] }
+                @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+                  ProjectQuery.Data.Project.Repository.Tree.LastCommit.Pipelines.Node.self
                 ] }
 
                 /// Status of the pipeline (CREATED, WAITING_FOR_RESOURCE, PREPARING, WAITING_FOR_CALLBACK, PENDING, RUNNING, FAILED, SUCCESS, CANCELED, CANCELING, SKIPPED, MANUAL, SCHEDULED)
@@ -379,15 +425,18 @@ public class ProjectQuery: GraphQLQuery {
       ///
       /// Parent Type: `RepositoryLanguage`
       public struct Language: GitLabAPI.SelectionSet {
-        public let __data: DataDict
-        public init(_dataDict: DataDict) { __data = _dataDict }
+        @_spi(Unsafe) public let __data: DataDict
+        @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryLanguage }
-        public static var __selections: [ApolloAPI.Selection] { [
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryLanguage }
+        @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("name", String.self),
           .field("share", Double?.self),
           .field("color", GitLabAPI.Color?.self),
+        ] }
+        @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+          ProjectQuery.Data.Project.Language.self
         ] }
 
         /// Name of the repository language.
@@ -402,16 +451,19 @@ public class ProjectQuery: GraphQLQuery {
       ///
       /// Parent Type: `ProjectPermissions`
       public struct UserPermissions: GitLabAPI.SelectionSet {
-        public let __data: DataDict
-        public init(_dataDict: DataDict) { __data = _dataDict }
+        @_spi(Unsafe) public let __data: DataDict
+        @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ProjectPermissions }
-        public static var __selections: [ApolloAPI.Selection] { [
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ProjectPermissions }
+        @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("createIssue", Bool.self),
           .field("pushCode", Bool.self),
           .field("forkProject", Bool.self),
           .field("requestAccess", Bool.self),
+        ] }
+        @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+          ProjectQuery.Data.Project.UserPermissions.self
         ] }
 
         /// If `true`, the user can perform `create_issue` on this resource

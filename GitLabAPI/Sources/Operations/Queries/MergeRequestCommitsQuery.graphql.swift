@@ -2,8 +2,9 @@
 // This file was automatically generated and should not be edited.
 
 @_exported import ApolloAPI
+@_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public class MergeRequestCommitsQuery: GraphQLQuery {
+public struct MergeRequestCommitsQuery: GraphQLQuery {
   public static let operationName: String = "MergeRequestCommits"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -21,18 +22,21 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
     self.iid = iid
   }
 
-  public var __variables: Variables? { [
+  @_spi(Unsafe) public var __variables: Variables? { [
     "fullPath": fullPath,
     "iid": iid
   ] }
 
   public struct Data: GitLabAPI.SelectionSet {
-    public let __data: DataDict
-    public init(_dataDict: DataDict) { __data = _dataDict }
+    @_spi(Unsafe) public let __data: DataDict
+    @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
-    public static var __selections: [ApolloAPI.Selection] { [
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
+    ] }
+    @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+      MergeRequestCommitsQuery.Data.self
     ] }
 
     /// Find a project.
@@ -42,14 +46,17 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
     ///
     /// Parent Type: `Project`
     public struct Project: GitLabAPI.SelectionSet {
-      public let __data: DataDict
-      public init(_dataDict: DataDict) { __data = _dataDict }
+      @_spi(Unsafe) public let __data: DataDict
+      @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
-      public static var __selections: [ApolloAPI.Selection] { [
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("id", GitLabAPI.ID.self),
         .field("mergeRequest", MergeRequest?.self, arguments: ["iid": .variable("iid")]),
+      ] }
+      @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+        MergeRequestCommitsQuery.Data.Project.self
       ] }
 
       /// ID of the project.
@@ -61,13 +68,16 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
       ///
       /// Parent Type: `MergeRequest`
       public struct MergeRequest: GitLabAPI.SelectionSet {
-        public let __data: DataDict
-        public init(_dataDict: DataDict) { __data = _dataDict }
+        @_spi(Unsafe) public let __data: DataDict
+        @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
-        public static var __selections: [ApolloAPI.Selection] { [
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
+        @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("commits", Commits?.self),
+        ] }
+        @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+          MergeRequestCommitsQuery.Data.Project.MergeRequest.self
         ] }
 
         /// Merge request commits.
@@ -77,13 +87,16 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
         ///
         /// Parent Type: `CommitConnection`
         public struct Commits: GitLabAPI.SelectionSet {
-          public let __data: DataDict
-          public init(_dataDict: DataDict) { __data = _dataDict }
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CommitConnection }
-          public static var __selections: [ApolloAPI.Selection] { [
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CommitConnection }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            MergeRequestCommitsQuery.Data.Project.MergeRequest.Commits.self
           ] }
 
           /// A list of nodes.
@@ -93,11 +106,11 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
           ///
           /// Parent Type: `Commit`
           public struct Node: GitLabAPI.SelectionSet {
-            public let __data: DataDict
-            public init(_dataDict: DataDict) { __data = _dataDict }
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
-            public static var __selections: [ApolloAPI.Selection] { [
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("id", GitLabAPI.ID.self),
               .field("title", String?.self),
@@ -107,6 +120,9 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
               .field("webUrl", String.self),
               .field("signature", Signature?.self),
               .field("pipelines", Pipelines?.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              MergeRequestCommitsQuery.Data.Project.MergeRequest.Commits.Node.self
             ] }
 
             /// ID (global ID) of the commit.
@@ -130,13 +146,16 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
             ///
             /// Parent Type: `CommitSignature`
             public struct Signature: GitLabAPI.SelectionSet {
-              public let __data: DataDict
-              public init(_dataDict: DataDict) { __data = _dataDict }
+              @_spi(Unsafe) public let __data: DataDict
+              @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Interfaces.CommitSignature }
-              public static var __selections: [ApolloAPI.Selection] { [
+              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Interfaces.CommitSignature }
+              @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("verificationStatus", GraphQLEnum<GitLabAPI.VerificationStatus>?.self),
+              ] }
+              @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+                MergeRequestCommitsQuery.Data.Project.MergeRequest.Commits.Node.Signature.self
               ] }
 
               /// Indicates verification status of the associated key or certificate.
@@ -147,13 +166,16 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
             ///
             /// Parent Type: `PipelineConnection`
             public struct Pipelines: GitLabAPI.SelectionSet {
-              public let __data: DataDict
-              public init(_dataDict: DataDict) { __data = _dataDict }
+              @_spi(Unsafe) public let __data: DataDict
+              @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-              public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.PipelineConnection }
-              public static var __selections: [ApolloAPI.Selection] { [
+              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.PipelineConnection }
+              @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("nodes", [Node?]?.self),
+              ] }
+              @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+                MergeRequestCommitsQuery.Data.Project.MergeRequest.Commits.Node.Pipelines.self
               ] }
 
               /// A list of nodes.
@@ -163,13 +185,16 @@ public class MergeRequestCommitsQuery: GraphQLQuery {
               ///
               /// Parent Type: `Pipeline`
               public struct Node: GitLabAPI.SelectionSet {
-                public let __data: DataDict
-                public init(_dataDict: DataDict) { __data = _dataDict }
+                @_spi(Unsafe) public let __data: DataDict
+                @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-                public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Pipeline }
-                public static var __selections: [ApolloAPI.Selection] { [
+                @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Pipeline }
+                @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                   .field("__typename", String.self),
                   .field("status", GraphQLEnum<GitLabAPI.PipelineStatusEnum>.self),
+                ] }
+                @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+                  MergeRequestCommitsQuery.Data.Project.MergeRequest.Commits.Node.Pipelines.Node.self
                 ] }
 
                 /// Status of the pipeline (CREATED, WAITING_FOR_RESOURCE, PREPARING, WAITING_FOR_CALLBACK, PENDING, RUNNING, FAILED, SUCCESS, CANCELED, CANCELING, SKIPPED, MANUAL, SCHEDULED)
