@@ -7,27 +7,41 @@
 
 import GitLabAPI
 import SwiftUI
+import Toast
 
 struct HomeView: View {
 	@State
-	private var starredProjects: [SmallProject?]? = nil
+	private var starredProjects: Result<[SmallProject?], Error>?
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	private func loadStarredProjects() {
-		Network.shared.apollo.fetch(query: CurrentUserStarredProjectsQuery()) {
-			result in
-			switch result {
-			case .success(let graphQLResult):
-				print("Success! Setting projects...")
-				starredProjects =
-					graphQLResult.data?.currentUser?.starredProjects?.nodes
-					?? []
-			case .failure(let error):
-				print("Failure! Error: \(error)")
-				loadFailed = true
+		isLoading = true
+		
+		defer {
+			isLoading = false
+		}
+		
+		do {
+			let responses = try Network.shared.apollo.fetch(
+				query: CurrentUserStarredProjectsQuery(), cachePolicy: .cacheAndNetwork)
+
+			Task {
+				for try await response in responses {
+					if let projects = response.data?.currentUser?.starredProjects?.nodes {
+						starredProjects = .success(projects)
+						Notify.status(.success)
+					} else if let errors = response.errors {
+						for error in errors {
+							Notify.status(.error, error.localizedDescription)
+						}
+					}
+				}
 			}
+		} catch let error {
+			starredProjects = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
@@ -119,26 +133,28 @@ struct HomeView: View {
 			}
 
 			Section("Starred projects") {
-				if starredProjects != nil {
-					if starredProjects!.isEmpty {
-						VStack {
-							Text("There are no starred projects")
-						}.frame(maxWidth: .infinity, minHeight: 100)
-					} else {
-						ForEach(starredProjects!, id: \.?.fullPath) { maybeProject in
-							if let project = maybeProject {
-								SmallProjectView(project)
+				if isLoading {
+					ProgressView("Loading starred projects...")
+						.frame(maxWidth: .infinity, minHeight: 100)
+				} else if let starredProjects {
+					switch starredProjects {
+					case .success(let projects):
+						if projects.isEmpty {
+							VStack {
+								Text("There are no starred projects")
+							}.frame(maxWidth: .infinity, minHeight: 100)
+						} else {
+							ForEach(projects, id: \.?.fullPath) { maybeProject in
+								if let project = maybeProject {
+									SmallProjectView(project)
+								}
 							}
 						}
+					case .failure(let error):
+						FailedView(error.localizedDescription)
+							.frame(maxWidth: .infinity, minHeight: 100)
 					}
-				} else {
-					VStack {
-						if loadFailed {
-							Text(failedToLoad)
-						} else {
-							ProgressView("Loading starred projects...")
-						}
-					}.frame(maxWidth: .infinity, minHeight: 100)
+					
 				}
 			}
 		}.onAppear {
