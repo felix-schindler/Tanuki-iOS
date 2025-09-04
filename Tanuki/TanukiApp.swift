@@ -6,40 +6,18 @@
 //  Rewritten by Felix Schindler on 26.02.24.
 //
 
-import AlertToast
 import SwiftUI
 
 @main
 struct TanukiApp: App {
 	private var showSetup = API.host.isEmpty || API.token.isEmpty
-
-	@State
-	public var showToast = false
-
-	@State
-	public var toast: AlertToast? = nil
-
+	
 	public var body: some Scene {
 		WindowGroup {
 			if showSetup {
 				SetupView()
 			} else {
 				main
-					.toast(
-						isPresenting: $showToast,
-						alert: {
-							if let toast {
-								toast
-							} else {
-								AlertToast(
-									displayMode: .hud,
-									type: .error(.red),
-									title: "This is a bug",
-									subTitle:
-										"Kindly report this issue on GitLab or via email, providing details about your activities leading up to this occurrence"
-								)
-							}
-						})
 			}
 		}
 	}
@@ -67,7 +45,7 @@ struct TanukiApp: App {
 			NavigationSplitView {
 				HomeView()
 			} detail: {
-				Text("Welcome to Tanuki")
+				ContentUnavailableView("Welcome to Tanuki")
 			}
 		#endif
 	}

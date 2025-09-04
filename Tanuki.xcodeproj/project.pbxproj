@@ -93,6 +93,8 @@
 		DC5AD7CF2E697E4B0031FC7B /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = DC5AD7CE2E697E4B0031FC7B /* Apollo */; };
 		DC5AD7D12E697E4B0031FC7B /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC5AD7D02E697E4B0031FC7B /* ApolloAPI */; };
 		DC5AD7D32E697E4B0031FC7B /* ApolloSQLite in Frameworks */ = {isa = PBXBuildFile; productRef = DC5AD7D22E697E4B0031FC7B /* ApolloSQLite */; };
+		DC5AD7DA2E69D40B0031FC7B /* FailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5AD7D92E69D40B0031FC7B /* FailedView.swift */; };
+		DC5AD7DD2E69D6E50031FC7B /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = DC5AD7DC2E69D6E50031FC7B /* Toast */; };
 		DC5F37082B91A1D100BF7F9D /* AuthorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5F37072B91A1D100BF7F9D /* AuthorView.swift */; };
 		DC69F14B2B956E0600F09269 /* ProjectMembers.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC69F14A2B956E0600F09269 /* ProjectMembers.graphql */; };
 		DC69F14D2B956ED300F09269 /* MembersLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC69F14C2B956ED300F09269 /* MembersLoader.swift */; };
@@ -133,7 +135,6 @@
 		DCD40E1A2BC2C6600055EE4C /* DiffLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E192BC2C6600055EE4C /* DiffLoader.swift */; };
 		DCD40E222BC2E5CC0055EE4C /* CodeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E212BC2E5CC0055EE4C /* CodeTextView.swift */; };
 		DCEB20B42BD61A9A00393A44 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEB20B32BD61A9A00393A44 /* Notify.swift */; };
-		DCEB20B72BD61FA100393A44 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = DCEB20B62BD61FA100393A44 /* AlertToast */; };
 		DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2662B94C29600F4B245 /* EventsLoader.swift */; };
 		DCEFB2692B94C2C100F4B245 /* RestTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2682B94C2C100F4B245 /* RestTypes.swift */; };
 		DCEFB26B2B94C37600F4B245 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB26A2B94C37600F4B245 /* API.swift */; };
@@ -222,6 +223,7 @@
 		DC4B428E2BA56213007A9DB1 /* CommitSignatureLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitSignatureLoader.swift; sourceTree = "<group>"; };
 		DC4B42952BA56968007A9DB1 /* BranchesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchesLoader.swift; sourceTree = "<group>"; };
 		DC4B42992BA56EA6007A9DB1 /* TagsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsLoader.swift; sourceTree = "<group>"; };
+		DC5AD7D92E69D40B0031FC7B /* FailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedView.swift; sourceTree = "<group>"; };
 		DC5F37072B91A1D100BF7F9D /* AuthorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorView.swift; sourceTree = "<group>"; };
 		DC5F99DF2B9384CE001C88A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DC69F14A2B956E0600F09269 /* ProjectMembers.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ProjectMembers.graphql; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC5AD7DD2E69D6E50031FC7B /* Toast in Frameworks */,
 				DCD225042E696BC8002256F0 /* GitLabAPI in Frameworks */,
 				DC3A24542B8C3F5800DB0E3F /* NVMColor in Frameworks */,
 				DC0A6A552B8D148000C53D56 /* CachedAsyncImage in Frameworks */,
@@ -279,7 +282,6 @@
 				DC5AD7CF2E697E4B0031FC7B /* Apollo in Frameworks */,
 				DCEFB26E2B94C3FD00F4B245 /* SwiftHttp in Frameworks */,
 				DCAF9D9F2BC3755F001FF2E5 /* Highlightr in Frameworks */,
-				DCEB20B72BD61FA100393A44 /* AlertToast in Frameworks */,
 				DC5AD7D32E697E4B0031FC7B /* ApolloSQLite in Frameworks */,
 				DC3A245C2B8C513C00DB0E3F /* MarkdownUI in Frameworks */,
 			);
@@ -542,6 +544,7 @@
 				DC21AA762B903ECA00976E64 /* UserView.swift */,
 				DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */,
 				DCAF9D9B2BC36912001FF2E5 /* PreferencesView.swift */,
+				DC5AD7D92E69D40B0031FC7B /* FailedView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -679,12 +682,12 @@
 				DC0A6A542B8D148000C53D56 /* CachedAsyncImage */,
 				DCEFB26D2B94C3FD00F4B245 /* SwiftHttp */,
 				DCAF9D9E2BC3755F001FF2E5 /* Highlightr */,
-				DCEB20B62BD61FA100393A44 /* AlertToast */,
 				DC42A2102C62D36E00B1EA85 /* HighlightedTextEditor */,
 				DCD225032E696BC8002256F0 /* GitLabAPI */,
 				DC5AD7CE2E697E4B0031FC7B /* Apollo */,
 				DC5AD7D02E697E4B0031FC7B /* ApolloAPI */,
 				DC5AD7D22E697E4B0031FC7B /* ApolloSQLite */,
+				DC5AD7DC2E69D6E50031FC7B /* Toast */,
 			);
 			productName = Tanuki;
 			productReference = DC2704F52B8BC0F9003DAA84 /* Tanuki.app */;
@@ -720,10 +723,10 @@
 				DC0A6A532B8D148000C53D56 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 				DCEFB26C2B94C3FD00F4B245 /* XCRemoteSwiftPackageReference "swift-http" */,
 				DCAF9D9D2BC3755F001FF2E5 /* XCRemoteSwiftPackageReference "Highlightr" */,
-				DCEB20B52BD61FA100393A44 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				DC42A20F2C62D36E00B1EA85 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */,
 				DCD225022E696BC8002256F0 /* XCLocalSwiftPackageReference "GitLabAPI" */,
 				DC5AD7CD2E697E4B0031FC7B /* XCRemoteSwiftPackageReference "apollo-ios" */,
+				DC5AD7DB2E69D6E50031FC7B /* XCRemoteSwiftPackageReference "toast-swift" */,
 			);
 			productRefGroup = DC2704F62B8BC0F9003DAA84 /* Products */;
 			projectDirPath = "";
@@ -845,6 +848,7 @@
 				DCD40E182BC2B2960055EE4C /* FileExtensions.swift in Sources */,
 				DC21AA772B903ECA00976E64 /* UserView.swift in Sources */,
 				DCD40E222BC2E5CC0055EE4C /* CodeTextView.swift in Sources */,
+				DC5AD7DA2E69D40B0031FC7B /* FailedView.swift in Sources */,
 				DC6C5D982B8F085A00587850 /* SmallProjectView.swift in Sources */,
 				DCB5E0D62B96C63A000F67FB /* CustomEmojisLoader.swift in Sources */,
 				DCEFB2692B94C2C100F4B245 /* RestTypes.swift in Sources */,
@@ -1020,10 +1024,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1034,7 +1038,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3";
-				TVOS_DEPLOYMENT_TARGET = 16.0;
+				TVOS_DEPLOYMENT_TARGET = 17.0;
 			};
 			name = Debug;
 		};
@@ -1065,10 +1069,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1079,7 +1083,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3";
-				TVOS_DEPLOYMENT_TARGET = 16.0;
+				TVOS_DEPLOYMENT_TARGET = 17.0;
 			};
 			name = Release;
 		};
@@ -1154,20 +1158,20 @@
 				version = "2.0.0-beta-1";
 			};
 		};
+		DC5AD7DB2E69D6E50031FC7B /* XCRemoteSwiftPackageReference "toast-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/BastiaanJansen/toast-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.3;
+			};
+		};
 		DCAF9D9D2BC3755F001FF2E5 /* XCRemoteSwiftPackageReference "Highlightr" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/felix-schindler/Highlightr";
 			requirement = {
 				branch = master;
 				kind = branch;
-			};
-		};
-		DCEB20B52BD61FA100393A44 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/elai950/AlertToast/";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.3.9;
 			};
 		};
 		DCEFB26C2B94C3FD00F4B245 /* XCRemoteSwiftPackageReference "swift-http" */ = {
@@ -1216,6 +1220,11 @@
 			package = DC5AD7CD2E697E4B0031FC7B /* XCRemoteSwiftPackageReference "apollo-ios" */;
 			productName = ApolloSQLite;
 		};
+		DC5AD7DC2E69D6E50031FC7B /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC5AD7DB2E69D6E50031FC7B /* XCRemoteSwiftPackageReference "toast-swift" */;
+			productName = Toast;
+		};
 		DCAF9D9E2BC3755F001FF2E5 /* Highlightr */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DCAF9D9D2BC3755F001FF2E5 /* XCRemoteSwiftPackageReference "Highlightr" */;
@@ -1224,11 +1233,6 @@
 		DCD225032E696BC8002256F0 /* GitLabAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GitLabAPI;
-		};
-		DCEB20B62BD61FA100393A44 /* AlertToast */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DCEB20B52BD61FA100393A44 /* XCRemoteSwiftPackageReference "AlertToast" */;
-			productName = AlertToast;
 		};
 		DCEFB26D2B94C3FD00F4B245 /* SwiftHttp */ = {
 			isa = XCSwiftPackageProductDependency;

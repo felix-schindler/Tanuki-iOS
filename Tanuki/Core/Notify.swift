@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Toast
 
 enum NotifyStatus: Int {
 	case success = 0
@@ -35,6 +36,11 @@ class Notify {
 				Haptics.shared.notify(.error)
 			#endif
 			break
+		}
+		
+		if let title {
+			let toast = Toast.text(title, subtitle: subtitle)
+			toast.show()
 		}
 	}
 }
