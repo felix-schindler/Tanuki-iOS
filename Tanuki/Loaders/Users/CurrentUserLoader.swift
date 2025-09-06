@@ -10,51 +10,82 @@ import SwiftUI
 
 struct CurrentUserLoader: View {
 	@State
-	private var user: CurrentUserQuery.Data.CurrentUser? = nil
+	private var user: Result<CurrentUserQuery.Data.CurrentUser, Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
-	private func loadUser() {
-		Network.shared.apollo.fetch(
-			query: CurrentUserQuery()
-		) { result in
-			switch result {
-			case .success(let graphQLResult):
-				print("Success! Setting namespace...")
-				user = graphQLResult.data?.currentUser
-			case .failure(let error):
-				print("Failure! Error: \(error)")
-				loadFailed = true
+	private func loadUser() async {
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			let responses = try Network.shared.apollo.fetch(
+				query: CurrentUserQuery(), cachePolicy: .cacheAndNetwork)
+
+			Task {
+				for try await response in responses {
+					if let user = response.data?.currentUser {
+						self.user = .success(user)
+						Notify.status(.success)
+					} else if let errors = response.errors {
+						for error in errors {
+							Notify.status(.error, error.localizedDescription)
+						}
+					}
+				}
 			}
+		} catch let error {
+			self.user = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadUser() async {
+		do {
+			let response = try await Network.shared.apollo.fetch(
+				query: CurrentUserQuery(), cachePolicy: .networkOnly)
+
+			if let user = response.data?.currentUser {
+				self.user = .success(user)
+			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.user = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let user {
-				UserView(user)
-			} else {
-				VStack {
-					Image(systemName: "person")
-						.resizable()
-						.scaledToFit()
-						.foregroundStyle(Color.accentColor)
-						.frame(width: 50, height: 50)
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading current user...")
-					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
+			if isLoading {
+				ProgressView("Loading current user...")
+			} else if let user {
+				switch user {
+				case .success(let user):
+					UserView(user)
+				case .failure(let error):
+					FailedView(error.localizedDescription)
+				}
 			}
 		}.onAppear {
-			loadUser()
+			Task {
+				await loadUser()
+			}
 		}.refreshable {
-			loadUser()
+			await reloadUser()
 		}.toolbar {
-			if let url = URL(string: user?.webUrl ?? "") {
-				ShareButton(url)
+			switch self.user {
+			case .success(let user):
+				if let url = URL(string: user.webUrl) {
+					ShareButton(url)
+				}
+			default:
+				EmptyView()
 			}
 
 			Button(

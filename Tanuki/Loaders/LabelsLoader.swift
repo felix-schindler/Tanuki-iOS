@@ -19,10 +19,10 @@ struct LabelsLoader: View {
 	private let queryType: LabelQueryType
 
 	@State
-	private var labels: [MyLabel?]? = nil
+	private var labels: Result<[MyLabel?], Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	init(fullPath: String, queryType: LabelQueryType) {
 		self.fullPath = fullPath
@@ -30,63 +30,110 @@ struct LabelsLoader: View {
 	}
 
 	private func loadLabels() {
-		switch self.queryType {
-		case .group:
-			Network.shared.apollo.fetch(query: GroupLabelsQuery(fullPath: self.fullPath)) {
-				result in
-				switch result {
-				case .success(let graphQLResult):
-					print("Success! Setting labels...")
-					labels = graphQLResult.data?.group?.labels?.nodes
-				case .failure(let error):
-					print("Failure! Error: \(error)")
-					loadFailed = true
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			switch self.queryType {
+			case .group:
+				let responses = try Network.shared.apollo.fetch(
+					query: GroupLabelsQuery(fullPath: self.fullPath), cachePolicy: .cacheAndNetwork)
+
+				Task {
+					for try await response in responses {
+						if let labels = response.data?.group?.labels?.nodes {
+							self.labels = .success(labels)
+							Notify.status(.success)
+						} else if let errors = response.errors {
+							for error in errors {
+								Notify.status(.error, error.localizedDescription)
+							}
+						}
+					}
+				}
+			case .project:
+				let responses = try Network.shared.apollo.fetch(
+					query: ProjectLabelsQuery(fullPath: self.fullPath),
+					cachePolicy: .cacheAndNetwork)
+
+				Task {
+					for try await response in responses {
+						if let labels = response.data?.project?.labels?.nodes {
+							self.labels = .success(labels)
+							Notify.status(.success)
+						} else if let errors = response.errors {
+							for error in errors {
+								Notify.status(.error, error.localizedDescription)
+							}
+						}
+					}
 				}
 			}
-		case .project:
-			Network.shared.apollo.fetch(query: ProjectLabelsQuery(fullPath: self.fullPath)) {
-				result in
-				switch result {
-				case .success(let graphQLResult):
-					print("Success! Setting labels...")
-					labels = graphQLResult.data?.project?.labels?.nodes
-				case .failure(let error):
-					print("Failure! Error: \(error)")
-					loadFailed = true
+		} catch let error {
+			self.labels = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadLabels() async {
+		do {
+			switch self.queryType {
+			case .group:
+				let response = try await Network.shared.apollo.fetch(
+					query: GroupLabelsQuery(fullPath: self.fullPath), cachePolicy: .networkOnly)
+
+				if let labels = response.data?.group?.labels?.nodes {
+					self.labels = .success(labels)
 				}
+
+				Notify.status(.success)
+			case .project:
+				let response = try await Network.shared.apollo.fetch(
+					query: ProjectLabelsQuery(fullPath: self.fullPath), cachePolicy: .networkOnly)
+
+				if let labels = response.data?.project?.labels?.nodes {
+					self.labels = .success(labels)
+				}
+
+				Notify.status(.success)
 			}
+		} catch let error {
+			self.labels = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let labels = self.labels {
-				ForEach(labels, id: \.?.id) { maybeLabel in
-					if let label = maybeLabel {
-						VStack(alignment: .leading) {
-							ScrollView(.horizontal) {
-								PillView(
-									label.title.emojized(),
-									bgColor: Color(hex: label.color),
-									fgColor: Color(hex: label.textColor)
-								)
-							}
+			if isLoading {
+				ProgressView("Loading labels")
+			} else if let labels {
+				switch labels {
+				case .success(let labels):
+					ForEach(labels, id: \.?.id) { maybeLabel in
+						if let label = maybeLabel {
+							VStack(alignment: .leading) {
+								ScrollView(.horizontal) {
+									PillView(
+										label.title.emojized(),
+										bgColor: Color(hex: label.color),
+										fgColor: Color(hex: label.textColor)
+									)
+								}
 
-							if label.description?.isNotEmpty ?? false {
-								Markdown(label.description!)
-									.markdownTheme(.gitLab)
+								if label.description?.isNotEmpty ?? false {
+									Markdown(label.description!)
+										.markdownTheme(.gitLab)
+								}
 							}
 						}
 					}
+				case .failure(let error):
+					FailedView(error.localizedDescription)
 				}
-			} else {
-				VStack {
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading labels")
-					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
 			}
 		}.onAppear {
 			loadLabels()

@@ -19,10 +19,10 @@ struct TimelogsLoader: View {
 	private let queryType: TimelogsQueryType
 
 	@State
-	private var timelogs: [Timelog?]? = nil
+	private var timelogs: Result<[Timelog?], Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	init(fullPath: String, queryType: TimelogsQueryType) {
 		self.fullPath = fullPath
@@ -30,129 +30,176 @@ struct TimelogsLoader: View {
 	}
 
 	private func loadTimelogs() {
-		switch self.queryType {
-		case .group:
-			Network.shared.apollo.fetch(query: GroupTimelogsQuery(fullPath: self.fullPath)) {
-				result in
-				switch result {
-				case .success(let graphQLResult):
-					print("Success! Setting timelogs...")
-					timelogs = graphQLResult.data?.group?.timelogs.nodes
-				case .failure(let error):
-					print("Failure! Error: \(error)")
-					loadFailed = true
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			switch self.queryType {
+			case .group:
+				let responses = try Network.shared.apollo.fetch(
+					query: GroupTimelogsQuery(fullPath: self.fullPath),
+					cachePolicy: .cacheAndNetwork)
+
+				Task {
+					for try await response in responses {
+						if let timelogs = response.data?.group?.timelogs.nodes {
+							self.timelogs = .success(timelogs)
+							Notify.status(.success)
+						} else if let errors = response.errors {
+							for error in errors {
+								Notify.status(.error, error.localizedDescription)
+							}
+						}
+					}
 				}
-			}
-		case .user:
-			Network.shared.apollo.fetch(query: UserTimelogsQuery(username: self.fullPath)) {
-				result in
-				switch result {
-				case .success(let graphQLResult):
-					print("Success! Setting timelogs...")
-					timelogs = graphQLResult.data?.user?.timelogs?.nodes
-				case .failure(let error):
-					print("Failure! Error: \(error)")
-					loadFailed = true
+				break
+			case .user:
+				let responses = try Network.shared.apollo.fetch(
+					query: UserTimelogsQuery(username: self.fullPath), cachePolicy: .cacheAndNetwork
+				)
+
+				Task {
+					for try await response in responses {
+						if let timelogs = response.data?.user?.timelogs?.nodes {
+							self.timelogs = .success(timelogs)
+							Notify.status(.success)
+						} else if let errors = response.errors {
+							for error in errors {
+								Notify.status(.error, error.localizedDescription)
+							}
+						}
+					}
 				}
+				break
 			}
+		} catch let error {
+			self.timelogs = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadTimelogs() async {
+		do {
+			switch self.queryType {
+			case .group:
+				let response = try await Network.shared.apollo.fetch(
+					query: GroupTimelogsQuery(fullPath: self.fullPath), cachePolicy: .networkOnly)
+
+				if let timelogs = response.data?.group?.timelogs.nodes {
+					self.timelogs = .success(timelogs)
+				}
+
+				break
+			case .user:
+				let response = try await Network.shared.apollo.fetch(
+					query: UserTimelogsQuery(username: self.fullPath), cachePolicy: .networkOnly)
+
+				if let timelogs = response.data?.user?.timelogs?.nodes {
+					self.timelogs = .success(timelogs)
+				}
+
+				break
+			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.timelogs = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let timelogs = self.timelogs {
-				if timelogs.isEmpty {
-					Text("There are no timelogs")
-				} else {
-					ForEach(timelogs, id: \.?.id) { maybeLog in
-						if let log = maybeLog {
-							VStack(alignment: .leading) {
-								HStack {
-									ScrollView(.horizontal) {
-										NavigationLink(
-											destination: ProjectLoader(
-												fullPath: log._project.fullPath
-											),
-											label: {
-												Text(log._project.nameWithNamespace)
-											}
-										).foregroundStyle(.secondary)
-									}
-
-									if let spentAt = log.spentAt {
-										Spacer()
-										Text(Date.fromToString(spentAt))
-									}
-								}.font(.footnote)
-
-								ScrollView(.horizontal) {
+			if isLoading {
+				ProgressView("Loading timelogs")
+			} else if let timelogs {
+				switch timelogs {
+				case .success(let timelogs):
+					if timelogs.isEmpty {
+						ContentUnavailableView("There are no timelogs", systemImage: "person.2")
+					} else {
+						ForEach(timelogs, id: \.?.id) { maybeLog in
+							if let log = maybeLog {
+								VStack(alignment: .leading) {
 									HStack {
-										AuthorView(log._user)
-
-										if let issueIid = log._issue?.iid {
+										ScrollView(.horizontal) {
 											NavigationLink(
-												destination: IssueLoader(
-													fullPath: log._project.fullPath,
-													iid: issueIid
+												destination: ProjectLoader(
+													fullPath: log._project.fullPath
 												),
 												label: {
-													PillView(
-														"#\(issueIid)",
-														icon: "smallcircle.circle",
-														bgColor: .green,
-														fgColor: .white,
-														cornerRadius: 5
-													)
-												})
+													Text(log._project.nameWithNamespace)
+												}
+											).foregroundStyle(.secondary)
 										}
 
-										if let mergeIid = log._mergeRequest?.iid {
-											NavigationLink(
-												destination: MergeRequestLoader(
-													fullPath: log._project.fullPath,
-													iid: mergeIid
-												),
-												label: {
-													PillView(
-														"#\(mergeIid)",
-														icon: "arrow.triangle.pull",
-														bgColor: .blue,
-														fgColor: .white,
-														cornerRadius: 5
-													)
-												})
+										if let spentAt = log.spentAt {
+											Spacer()
+											Text(Date.fromToString(spentAt))
 										}
 									}.font(.footnote)
-								}
 
-								Text("\(log.timeSpent / 60) minutes")
+									ScrollView(.horizontal) {
+										HStack {
+											AuthorView(log._user)
 
-								if let summary = log.summary {
-									Markdown(summary.emojized())
-										.markdownTheme(.gitLab)
+											if let issueIid = log._issue?.iid {
+												NavigationLink(
+													destination: IssueLoader(
+														fullPath: log._project.fullPath,
+														iid: issueIid
+													),
+													label: {
+														PillView(
+															"#\(issueIid)",
+															icon: "smallcircle.circle",
+															bgColor: .green,
+															fgColor: .white,
+															cornerRadius: 5
+														)
+													})
+											}
+
+											if let mergeIid = log._mergeRequest?.iid {
+												NavigationLink(
+													destination: MergeRequestLoader(
+														fullPath: log._project.fullPath,
+														iid: mergeIid
+													),
+													label: {
+														PillView(
+															"#\(mergeIid)",
+															icon: "arrow.triangle.pull",
+															bgColor: .blue,
+															fgColor: .white,
+															cornerRadius: 5
+														)
+													})
+											}
+										}.font(.footnote)
+									}
+
+									Text("\(log.timeSpent / 60) minutes")
+
+									if let summary = log.summary {
+										Markdown(summary.emojized())
+											.markdownTheme(.gitLab)
+									}
 								}
 							}
 						}
 					}
+				case .failure(let error):
+					FailedView(error.localizedDescription)
 				}
-			} else {
-				VStack {
-					Image(systemName: "hourglass")
-						.resizable()
-						.scaledToFit()
-						.foregroundStyle(.accent)
-						.frame(width: 50, height: 50)
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading timelogs")
-					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
 			}
 		}.onAppear {
 			loadTimelogs()
 		}.refreshable {
-			loadTimelogs()
+			await reloadTimelogs()
 		}.navigationTitle("Timelogs")
 	}
 }

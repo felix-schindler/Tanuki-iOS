@@ -15,13 +15,13 @@ enum MemberType {
 
 struct MembersLoader: View {
 	private let fullPath: String
-	private let type: MemberType
+	private let queryType: MemberType
 
 	@State
-	private var projectMembers: [Member?]? = nil
+	private var memberships: Result<[Member?], Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	@State
 	private var showNewMember = false
@@ -31,122 +31,199 @@ struct MembersLoader: View {
 
 	init(fullPath: String, type: MemberType) {
 		self.fullPath = fullPath
-		self.type = type
+		self.queryType = type
 	}
 
 	private func loadMembers() {
-		if self.type == .project {
-			Network.shared.apollo.fetch(
-				query: ProjectMembersQuery(fullPath: self.fullPath)
-			) { result in
-				switch result {
-				case .success(let graphQLResult):
-					print("Success! Setting namespace...")
-					projectMembers =
-						graphQLResult.data?.project?.projectMembers?.nodes
-				case .failure(let error):
-					print("Failure! Error: \(error)")
-					loadFailed = true
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			switch self.queryType {
+			case .project:
+				let responses = try Network.shared.apollo.fetch(
+					query: ProjectMembersQuery(fullPath: self.fullPath),
+					cachePolicy: .cacheAndNetwork
+				)
+
+				Task {
+					for try await response in responses {
+						if let memberships = response.data?.project?.projectMembers?.nodes {
+							self.memberships = .success(memberships)
+							Notify.status(.success)
+						} else if let errors = response.errors {
+							for error in errors {
+								Notify
+									.status(.error, error.localizedDescription)
+							}
+						}
+					}
+				}
+			case .group:
+				let responses = try Network.shared.apollo.fetch(
+					query: GroupMembersQuery(fullPath: self.fullPath),
+					cachePolicy: .cacheAndNetwork
+				)
+
+				Task {
+					for try await response in responses {
+						if let memberships = response.data?.group?.groupMembers?.nodes {
+							self.memberships = .success(memberships)
+							Notify.status(.success)
+						} else if let errors = response.errors {
+							for error in errors {
+								Notify
+									.status(.error, error.localizedDescription)
+							}
+						}
+					}
 				}
 			}
-		} else {
-			Network.shared.apollo.fetch(query: GroupMembersQuery(fullPath: self.fullPath)) {
-				result in
-				switch result {
-				case .success(let graphQLResult):
-					print("Success! Setting namespace...")
-					projectMembers =
-						graphQLResult.data?.group?.groupMembers?.nodes
-				case .failure(let error):
-					print("Failure! Error: \(error)")
-					loadFailed = true
+		} catch let error {
+			self.memberships = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadMembers() async {
+		do {
+			switch self.queryType {
+			case .project:
+				let response = try await Network.shared.apollo.fetch(
+					query: ProjectMembersQuery(fullPath: self.fullPath),
+					cachePolicy: .networkOnly
+				)
+
+				if let memberships = response.data?.project?.projectMembers?.nodes {
+					self.memberships = .success(memberships)
+				}
+			case .group:
+				let response = try await Network.shared.apollo.fetch(
+					query: GroupMembersQuery(fullPath: self.fullPath),
+					cachePolicy: .networkOnly
+				)
+
+				if let memberships = response.data?.group?.groupMembers?.nodes {
+					self.memberships = .success(memberships)
 				}
 			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.memberships = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let memberships = self.projectMembers {
-				if memberships.isEmpty {
-					Text("This project has no members")
-				} else {
-					ForEach(memberships, id: \.?.id) { maybeMember in
-						if let member = maybeMember {
-							if let user = member._user {
-								NavigationLink(
-									destination: UserLoader(
-										username: user.username
-									),
-									label: {
-										VStack(alignment: .leading) {
-											HStack {
-												if let avatarUrl = URL.fromAvatar(user.avatarUrl) {
-													AvatarImage(avatarUrl)
-												}
-												VStack(alignment: .leading) {
-													Text(user.name)
-													Text("@\(user.username)")
-														.foregroundStyle(.secondary)
-												}
-												if let accessLevel = member
-													._accessLevel?.lowercased()
-													.firstCapitalized
-												{
-													Spacer()
-													PillView(accessLevel)
-														.font(.footnote)
-												}
-											}
-
-											ScrollView(.horizontal) {
+			if isLoading {
+				ProgressView("Loading members")
+			} else if let memberships {
+				switch memberships {
+				case .success(let memberships):
+					if memberships.isEmpty {
+						ContentUnavailableView(
+							"This project has no members",
+							systemImage: "person.2"
+						)
+					} else {
+						ForEach(memberships, id: \.?.id) { maybeMember in
+							if let member = maybeMember {
+								if let user = member._user {
+									NavigationLink(
+										destination: UserLoader(
+											username: user.username
+										),
+										label: {
+											VStack(alignment: .leading) {
 												HStack {
-													if let author = member._createdBy {
-														if author.username != user.username {
-															ScrollView(.horizontal) {
-																HStack {
-																	AuthorView(author)
-																}.font(.footnote)
+													if let avatarUrl = URL.fromAvatar(
+														user.avatarUrl
+													) {
+														AvatarImage(avatarUrl)
+													}
+													VStack(
+														alignment: .leading
+													) {
+														Text(user.name)
+														Text(
+															"@\(user.username)"
+														)
+														.foregroundStyle(
+															.secondary
+														)
+													}
+													if let accessLevel = member
+														._accessLevel?
+														.lowercased()
+														.firstCapitalized
+													{
+														Spacer()
+														PillView(accessLevel)
+															.font(.footnote)
+													}
+												}
+
+												ScrollView(.horizontal) {
+													HStack {
+														if let author = member._createdBy {
+															if author.username != user.username {
+																ScrollView(
+																	.horizontal
+																) {
+																	HStack {
+																		AuthorView(
+																			author
+																		)
+																	}.font(
+																		.footnote
+																	)
+																}
 															}
 														}
-													}
-													if member.createdAt != nil {
-														HStack(spacing: 2) {
-															Image(systemName: "clock")
-															Text(
-																Date.fromToString(member.createdAt!)
-															)
+														if member.createdAt != nil {
+															HStack(spacing: 2) {
+																Image(
+																	systemName: "clock"
+																)
+																Text(
+																	Date
+																		.fromToString(
+																			member.createdAt!
+																		)
+																)
+															}
 														}
-													}
-													if member.expiresAt != nil {
-														HStack(spacing: 2) {
-															Image(systemName: "alarm")
-															Text(
-																Date.fromToString(member.createdAt!)
-															)
+														if member.expiresAt != nil {
+															HStack(spacing: 2) {
+																Image(
+																	systemName: "alarm"
+																)
+																Text(
+																	Date
+																		.fromToString(
+																			member.createdAt!
+																		)
+																)
+															}
 														}
-													}
-												}.font(.footnote)
+													}.font(.footnote)
+												}
 											}
 										}
-									}
-								)
+									)
+								}
 							}
 						}
 					}
+				case .failure(let error):
+					FailedView(error.localizedDescription)
 				}
-			} else {
-				VStack {
-					Image(systemName: "person.2")
-						.resizable()
-						.scaledToFit()
-						.frame(width: 50, height: 50)
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading project members")
-					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
+
 			}
 		}.toolbar {
 			RoundIconButton("Add new member", icon: "person.badge.plus") {

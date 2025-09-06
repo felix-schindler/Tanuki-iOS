@@ -12,10 +12,10 @@ struct EventsLoader: View {
 	private var userId = 0
 
 	@State
-	private var events: [Event]? = nil
+	private var events: Result<[Event], Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	init() {
 	}
@@ -30,36 +30,31 @@ struct EventsLoader: View {
 
 	public var body: some View {
 		List {
-			if events != nil {
-				if events!.isEmpty {
-					Text("There are no events")
-				} else {
-					ForEach(events!, id: \.id) { event in
-						VStack(alignment: .leading) {
-							HStack {
-								ScrollView(.horizontal) {
-									AuthorView(event.author)
-								}
-								Spacer()
-								Text(event.createdAt.toString(timeStyle: .short))
-							}.font(.footnote)
-							Text(getStupidText(event: event))
+			if isLoading {
+				ProgressView("Loading events")
+			} else if let events {
+				switch events {
+				case .success(let events):
+					if events.isEmpty {
+						ContentUnavailableView(
+							"There are no events", image: "clock.arrow.circlepath")
+					} else {
+						ForEach(events, id: \.id) { event in
+							VStack(alignment: .leading) {
+								HStack {
+									ScrollView(.horizontal) {
+										AuthorView(event.author)
+									}
+									Spacer()
+									Text(event.createdAt.toString(timeStyle: .short))
+								}.font(.footnote)
+								Text(getStupidText(event: event))
+							}
 						}
 					}
+				case .failure(let failure):
+					FailedView(failure.localizedDescription)
 				}
-			} else {
-				VStack {
-					Image(systemName: "clock.arrow.circlepath")
-						.resizable()
-						.scaledToFit()
-						.foregroundStyle(.accent)
-						.frame(width: 50, height: 50)
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading activities")
-					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
 			}
 		}.onAppear {
 			Task {
@@ -87,10 +82,19 @@ struct EventsLoader: View {
 				ret += " with message '\(commitTitle)'"
 			}
 		}
+		if ret == event.actionName.firstCapitalized {
+			ret += " project \(event.projectId)"
+		}
 		return ret.trimmingCharacters(in: .whitespacesAndNewlines)
 	}
 
 	private func getEvents() async {
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
 		var endpoint: String
 
 		if projectId != 0 {
@@ -101,8 +105,12 @@ struct EventsLoader: View {
 			endpoint = "events"
 		}
 
-		events = await API.get(type: [Event].self, endpoint: endpoint)
-		loadFailed = (events == nil)
+		do {
+			let events = try await API.get(type: [Event].self, endpoint: endpoint)
+			self.events = .success(events)
+		} catch let error {
+			self.events = .failure(error)
+		}
 	}
 }
 

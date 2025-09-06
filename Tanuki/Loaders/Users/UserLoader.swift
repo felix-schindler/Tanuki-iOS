@@ -12,50 +12,86 @@ struct UserLoader: View {
 	private let username: String
 
 	@State
-	private var user: UserQuery.Data.User? = nil
+	private var user: Result<UserQuery.Data.User, Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	init(username: String) {
 		self.username = username
 	}
 
 	private func loadUser() {
-		Network.shared.apollo.fetch(
-			query: UserQuery(username: self.username)
-		) { result in
-			switch result {
-			case .success(let graphQLResult):
-				print("Success! Setting namespace...")
-				user = graphQLResult.data?.user
-			case .failure(let error):
-				print("Failure! Error: \(error)")
-				loadFailed = true
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			let responses = try Network.shared.apollo.fetch(
+				query: UserQuery(username: self.username), cachePolicy: .cacheAndNetwork)
+
+			Task {
+				for try await response in responses {
+					if let user = response.data?.user {
+						self.user = .success(user)
+						Notify.status(.success)
+					} else if let errors = response.errors {
+						for error in errors {
+							Notify.status(.error, error.localizedDescription)
+						}
+					}
+				}
 			}
+		} catch let error {
+			self.user = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadUser() async {
+		do {
+			let response = try await Network.shared.apollo.fetch(
+				query: UserQuery(username: self.username), cachePolicy: .networkOnly)
+
+			if let user = response.data?.user {
+				self.user = .success(user)
+			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.user = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let user {
-				UserView(user)
-			} else {
-				VStack {
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading user \(self.username)")
-					}
-				}.frame(maxWidth: .infinity)
+			if isLoading {
+				ProgressView("Loading user \(self.username)")
+			} else if let user {
+				switch user {
+				case .success(let user):
+					UserView(user)
+				case .failure(let error):
+					FailedView(error.localizedDescription)
+				}
 			}
 		}.onAppear {
 			loadUser()
 		}.refreshable {
-			loadUser()
+			await reloadUser()
 		}.toolbar {
-			if let url = URL(string: user?.webUrl ?? "") {
-				ShareButton(url)
+			if let user {
+				switch user {
+				case .success(let user):
+					if let url = URL(string: user.webUrl) {
+						ShareButton(url)
+					}
+				case .failure:
+					EmptyView()
+				}
 			}
 		}.navigationTitle("User")
 	}

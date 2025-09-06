@@ -14,21 +14,29 @@ struct ContributionsLoader: View {
 
 	/// User contributions in format ["YYYY-MM-DD" → intCount]
 	@State
-	private var contributions: [String: Int]? = nil
+	private var contributions: Result<[String: Int], Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	init(username: String) {
 		self.username = username
 	}
 
 	private func loadContributions() async {
-		if var temp = await API.get(
-			type: [String: Int].self,
-			endpoint: "users/\(username)/calendar.json",
-			useBase: false
-		) {
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			var temp = try await API.get(
+				type: [String: Int].self,
+				endpoint: "users/\(username)/calendar.json",
+				useBase: false
+			)
+
 			if let startDate = Calendar.current.date(byAdding: .year, value: -1, to: Date()) {
 				let endDate = Date()
 				var currentDate = startDate
@@ -44,34 +52,35 @@ struct ContributionsLoader: View {
 				}
 			}
 
-			contributions = temp
+			contributions = .success(temp)
+		} catch let error {
+			contributions = .failure(error)
 		}
-
-		loadFailed = contributions == nil
 	}
 
 	var body: some View {
 		VStack {
-			if let contributions = self.contributions {
-				Chart {
-					ForEach(contributions.sorted(by: { $0.key < $1.key }), id: \.key) {
-						key, value in
-						BarMark(
-							x: .value("Date", key),
-							y: .value("Contributions", value)
-						)
+			if isLoading {
+				ProgressView("Loading contributions")
+			} else if let contributions {
+				switch contributions {
+				case .success(let contributions):
+					Chart {
+						ForEach(contributions.sorted(by: { $0.key < $1.key }), id: \.key) {
+							key, value in
+							BarMark(
+								x: .value("Date", key),
+								y: .value("Contributions", value)
+							)
+						}
 					}
-				}
-				.chartYAxis {
-					AxisMarks(values: .automatic(desiredCount: 3))
-				}
-				.chartXAxis(.hidden)
-				.frame(height: self.height)
-			} else {
-				if loadFailed {
-					Text("Failed to load contributions")
-				} else {
-					ProgressView("Loading contributions")
+					.chartYAxis {
+						AxisMarks(values: .automatic(desiredCount: 3))
+					}
+					.chartXAxis(.hidden)
+					.frame(height: self.height)
+				case .failure(let error):
+					FailedView(error.localizedDescription)
 				}
 			}
 		}.onAppear {

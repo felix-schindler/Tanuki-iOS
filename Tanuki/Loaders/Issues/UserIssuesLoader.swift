@@ -17,74 +17,128 @@ struct UserIssuesLoader: View {
 	}
 
 	@State
-	private var projectMemberships: [IssueProjectMembership?]? = nil
+	private var projectMemberships: Result<[IssueProjectMembership?], Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	private func loadIssues() {
-		if self.username != nil {
-			Network.shared.apollo.fetch(
-				query: UserIssuesQuery(username: self.username!)
-			) { result in
-				switch result {
-				case .success(let graphQLResult):
-					print("Success! Setting issues...")
-					projectMemberships = graphQLResult.data?.user?.projectMemberships?.nodes
-				case .failure(let error):
-					print("Failure! Error: \(error)")
-					loadFailed = true
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			if let username {
+				let responses = try Network.shared.apollo.fetch(
+					query: UserIssuesQuery(username: username), cachePolicy: .cacheAndNetwork)
+
+				Task {
+					for try await response in responses {
+						if let projectMemberships = response.data?.user?.projectMemberships?.nodes {
+							self.projectMemberships = .success(projectMemberships)
+							Notify.status(.success)
+						} else if let errors = response.errors {
+							for error in errors {
+								Notify.status(.error, error.localizedDescription)
+							}
+						}
+					}
+				}
+			} else {
+				let responses = try Network.shared.apollo.fetch(
+					query: CurrentUserIssuesQuery(), cachePolicy: .cacheAndNetwork)
+
+				Task {
+					for try await response in responses {
+						if let projectMemberships = response.data?.currentUser?.projectMemberships?
+							.nodes
+						{
+							self.projectMemberships = .success(projectMemberships)
+							Notify.status(.success)
+						} else if let errors = response.errors {
+							for error in errors {
+								Notify.status(.error, error.localizedDescription)
+							}
+						}
+					}
 				}
 			}
-		} else {
-			Network.shared.apollo.fetch(query: CurrentUserIssuesQuery()) { result in
-				switch result {
-				case .success(let graphQLResult):
-					print("Success! Setting issues...")
-					projectMemberships = graphQLResult.data?.currentUser?.projectMemberships?.nodes
-				case .failure(let error):
-					print("Failure! Error: \(error)")
-					loadFailed = true
+		} catch let error {
+			self.projectMemberships = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	func reloadIssues() async {
+		do {
+			if let username {
+				let response = try await Network.shared.apollo.fetch(
+					query: UserIssuesQuery(username: username), cachePolicy: .networkOnly)
+
+				if let projectMemberships = response.data?.user?.projectMemberships?.nodes {
+					self.projectMemberships = .success(projectMemberships)
+				}
+			} else {
+				let response = try await Network.shared.apollo.fetch(
+					query: CurrentUserIssuesQuery(), cachePolicy: .networkOnly)
+
+				if let projectMemberships = response.data?.currentUser?.projectMemberships?.nodes {
+					self.projectMemberships = .success(projectMemberships)
 				}
 			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.projectMemberships = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
 			if let projectMemberships = self.projectMemberships {
-				ForEach(projectMemberships, id: \.?.fullPath) { maybeMember in
-					if let fullPath = maybeMember?.fullPath,
-						let issues = maybeMember?._issues
-					{
-						if !issues.isEmpty {
-							ForEach(issues, id: \.?.reference) { maybeIssue in
-								if let issue = maybeIssue {
-									SmallIssueView(fullPath, issue)
-								}
-							}
+				switch projectMemberships {
+				case .success(let projectMemberships):
+					let validMemberships = projectMemberships.compactMap { $0 }
+						.filter {
+							$0.fullPath != nil && ($0._issues?.contains { $0 != nil } ?? false)
+						}
+
+					let issues: [(String, any SmallIssue)] = validMemberships.flatMap {
+						membership in
+						let fullPath = membership.fullPath!  // safe because we filtered nil above
+						return membership._issues!.compactMap { $0 }.map { issue in
+							(fullPath, issue)
 						}
 					}
-				}
-			} else {
-				VStack {
-					if loadFailed {
-						Text(failedToLoad)
+
+					if issues.isEmpty {
+						ContentUnavailableView(
+							"All caught up!", systemImage: "smallcircle.circle")
 					} else {
-						ProgressView("Loading issues")
+						ForEach(0..<issues.count, id: \.self) { index in
+							let (fullPath, issue) = issues[index]
+							SmallIssueView(fullPath, issue)
+						}
 					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
+				case .failure(let error):
+					FailedView(error.localizedDescription)
+				}
 			}
 		}.onAppear {
-			loadIssues()
+			Task {
+				loadIssues()
+			}
 		}.refreshable {
-			loadIssues()
+			await reloadIssues()
 		}.navigationTitle("Issues")
 	}
 }
 
 #Preview {
 	NavigationStack {
-		UserIssuesLoader()
+		UserIssuesLoader(username: "felix-schindler")
 	}
 }

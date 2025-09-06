@@ -19,10 +19,10 @@ struct MilestonesLoader: View {
 	private let queryType: MilestoneQueryType
 
 	@State
-	private var milestones: [Milestone?]? = nil
+	private var milestones: Result<[Milestone?], Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	init(fullPath: String, queryType: MilestoneQueryType) {
 		self.fullPath = fullPath
@@ -30,74 +30,129 @@ struct MilestonesLoader: View {
 	}
 
 	private func loadMilestones() {
-		if self.queryType == .group {
-			Network.shared.apollo.fetch(query: GroupMilestonesQuery(fullPath: self.fullPath)) {
-				result in
-				switch result {
-				case .success(let graphQLResult):
-					print("Success! Setting milestones...")
-					milestones = graphQLResult.data?.group?.milestones?.nodes
-				case .failure(let error):
-					print("Failure! Error: \(error)")
-					loadFailed = true
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			switch self.queryType {
+			case .group:
+				let responses = try Network.shared.apollo.fetch(
+					query: GroupMilestonesQuery(fullPath: self.fullPath),
+					cachePolicy: .cacheAndNetwork)
+
+				Task {
+					for try await response in responses {
+						if let milestones = response.data?.group?.milestones?.nodes {
+							self.milestones = .success(milestones)
+							Notify.status(.success)
+						} else if let errors = response.errors {
+							for error in errors {
+								Notify.status(.error, error.localizedDescription)
+							}
+						}
+					}
 				}
-			}
-		} else {
-			Network.shared.apollo.fetch(query: ProjectMilestonesQuery(fullPath: self.fullPath)) {
-				result in
-				switch result {
-				case .success(let graphQLResult):
-					print("Success! Setting milestones...")
-					milestones = graphQLResult.data?.project?.milestones?.nodes
-				case .failure(let error):
-					print("Failure! Error: \(error)")
-					loadFailed = true
+				break
+			case .project:
+				let responses = try Network.shared.apollo.fetch(
+					query: ProjectMilestonesQuery(fullPath: self.fullPath),
+					cachePolicy: .cacheAndNetwork)
+
+				Task {
+					for try await response in responses {
+						if let milestones = response.data?.project?.milestones?.nodes {
+							self.milestones = .success(milestones)
+							Notify.status(.success)
+						} else if let errors = response.errors {
+							for error in errors {
+								Notify.status(.error, error.localizedDescription)
+							}
+						}
+					}
 				}
+				break
 			}
+		} catch let error {
+			self.milestones = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadTimelogs() async {
+		do {
+			switch self.queryType {
+			case .group:
+				let response = try await Network.shared.apollo.fetch(
+					query: GroupMilestonesQuery(fullPath: self.fullPath), cachePolicy: .networkOnly)
+
+				if let milestones = response.data?.group?.milestones?.nodes {
+					self.milestones = .success(milestones)
+				}
+
+				break
+			case .project:
+				let response = try await Network.shared.apollo.fetch(
+					query: ProjectMilestonesQuery(fullPath: self.fullPath),
+					cachePolicy: .networkOnly)
+
+				if let milestones = response.data?.project?.milestones?.nodes {
+					self.milestones = .success(milestones)
+				}
+
+				break
+			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.milestones = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let milestones = self.milestones {
-				if milestones.isEmpty {
-					Text("There are no milestones")
-				} else {
-					ForEach(milestones, id: \.?.iid) { maybeStone in
-						if let milestone = maybeStone {
-							Label(
-								title: {
-									VStack {
-										Text(milestone.title.emojized())
+			if isLoading {
 
-										if let description = milestone.description?.emojized() {
-											Markdown(description)
-												.markdownTheme(.gitLab)
+			} else if let milestones {
+				switch milestones {
+				case .success(let milestones):
+					if milestones.isEmpty {
+						ContentUnavailableView(
+							"There are no milestones", systemImage: "calendar.badge.checkmark")
+					} else {
+						ForEach(milestones, id: \.?.iid) { maybeStone in
+							if let milestone = maybeStone {
+								Label(
+									title: {
+										VStack {
+											Text(milestone.title.emojized())
+
+											if let description = milestone.description?.emojized() {
+												Markdown(description)
+													.markdownTheme(.gitLab)
+											}
 										}
+									},
+									icon: {
+										Image(systemName: "flag.circle")
+											.foregroundStyle(
+												milestone.state == .closed
+													? .red
+													: (milestone.expired
+														? .orange
+														: .green)
+											)
 									}
-								},
-								icon: {
-									Image(systemName: "flag.circle")
-										.foregroundStyle(
-											milestone.state == .closed
-												? .red
-												: (milestone.expired
-													? .orange
-													: .green)
-										)
-								}
-							)
+								)
+							}
 						}
 					}
+				case .failure(let error):
+					FailedView(error.localizedDescription)
 				}
-			} else {
-				VStack {
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading milestones")
-					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
 			}
 		}.onAppear {
 			loadMilestones()

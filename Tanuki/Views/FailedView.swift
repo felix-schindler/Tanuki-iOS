@@ -17,26 +17,21 @@ struct FailedView: View {
 	}
 
 	init(
-		icon: String = "exclamationmark.triangle",
-		msg: String = "Failed to load. Please make sure you're connected to the internet."
+		_ message: String = "Failed to load. Please make sure you're connected to the internet.",
+		icon: String = "exclamationmark.triangle"
 	) {
 		self.icon = icon
-		self.msg = msg
+		self.msg = message
 	}
 
 	public var body: some View {
-		VStack {
-			Image(systemName: icon)
-				.resizable()
-				.frame(width: 50, height: 50)
-			Text(msg)
-				.foregroundStyle(.red)
-		}.frame(maxWidth: .infinity)
+		ContentUnavailableView(msg, systemImage: icon)
+			.foregroundStyle(.red)
 	}
 }
 
 #Preview {
 	List {
-		FailedView(msg: "short")
+		FailedView("short")
 	}
 }

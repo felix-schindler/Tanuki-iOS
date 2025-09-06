@@ -13,244 +13,277 @@ struct GroupLoader: View {
 	private let fullPath: String
 
 	@State
-	private var group: GroupQuery.Data.Group?
+	private var group: Result<GroupQuery.Data.Group, Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
 
 	private func loadGroup() {
-		Network.shared.apollo.fetch(query: GroupQuery(fullPath: self.fullPath)) { result in
-			switch result {
-			case .success(let graphQLResult):
-				print("Success! Setting group...")
-				group = graphQLResult.data?.group
-			case .failure(let error):
-				print("Failure! Error: \(error)")
-				loadFailed = true
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			let responses = try Network.shared.apollo.fetch(
+				query: GroupQuery(fullPath: self.fullPath), cachePolicy: .cacheAndNetwork)
+
+			Task {
+				for try await response in responses {
+					if let group = response.data?.group {
+						self.group = .success(group)
+						Notify.status(.success)
+					} else if let errors = response.errors {
+						for error in errors {
+							Notify.status(.error, error.localizedDescription)
+						}
+					}
+				}
 			}
+		} catch let error {
+			self.group = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadGroup() async {
+		do {
+			let response = try await Network.shared.apollo.fetch(
+				query: GroupQuery(fullPath: self.fullPath), cachePolicy: .networkOnly)
+
+			if let group = response.data?.group {
+				self.group = .success(group)
+			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.group = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let group = self.group {
-				VStack(alignment: .leading) {
-					HStack {
-						if let avatarUrl = URL.fromAvatar(group.avatarUrl) {
-							AvatarImage(avatarUrl, size: .medium)
-						}
-						Spacer()
-						if let name = group.name?.emojized() {
-							Text(name)
-								.font(.title)
-								.fontWeight(.bold)
-						}
-						Spacer()
-						if let visibility = group.visibility {
-							VisibilityIcon(visibility)
-						}
-					}
-
-					ScrollView(.horizontal) {
+			if isLoading {
+				ProgressView("Loading group")
+			} else if let group {
+				switch group {
+				case .success(let group):
+					VStack(alignment: .leading) {
 						HStack {
-							PillView(
-								String(group.groupMembersCount),
-								icon: "person.2",
-								cornerRadius: 5
+							if let avatarUrl = URL.fromAvatar(group.avatarUrl) {
+								AvatarImage(avatarUrl, size: .medium)
+							}
+							Spacer()
+							if let name = group.name?.emojized() {
+								Text(name)
+									.font(.title)
+									.fontWeight(.bold)
+							}
+							Spacer()
+							if let visibility = group.visibility {
+								VisibilityIcon(visibility)
+							}
+						}
+
+						ScrollView(.horizontal) {
+							HStack {
+								PillView(
+									String(group.groupMembersCount),
+									icon: "person.2",
+									cornerRadius: 5
+								)
+
+								if let parent = group.parent {
+									NavigationLink(
+										destination: GroupLoader(
+											fullPath: parent.fullPath),
+										label: {
+											PillView(
+												parent.name ?? parent.fullPath,
+												icon:
+													"figure.and.child.holdinghands",
+												cornerRadius: 5
+											)
+										}
+									)
+								}
+
+								if group.name != group.fullName {
+									PillView(group.fullName ?? group.path, cornerRadius: 5)
+								}
+							}.font(.footnote)
+						}
+
+						if let description = group.description {
+							Markdown(description)
+								.markdownTheme(.gitLab)
+						}
+					}
+
+					Section {
+						HStack {
+							NavigationLink(
+								destination: GroupProjectsLoader(
+									fullPath: self.fullPath),
+								label: {
+									Label(
+										title: {
+											Text("Projects")
+											Spacer()
+											Text(String(group.projectsCount))
+										},
+										icon: {
+											Image(systemName: "app.gift.fill")
+												.foregroundStyle(.gray)
+										}
+									)
+								}
 							)
+						}
+						HStack {
+							NavigationLink(
+								destination: DescendantGroupsLoader(
+									fullPath: self.fullPath),
+								label: {
+									Label(
+										title: {
+											Text("Descendant groups")
+											Spacer()
+											Text(
+												String(group.descendantGroupsCount))
+										},
+										icon: {
+											Image(systemName: "scale.3d")
+												.foregroundStyle(.red)
+										}
+									)
+								})
+						}
 
-							if let parent = group.parent {
+						DisclosureGroup(
+							content: {
+								// TODO: There seems to be no way to get the activity events of a group
+								// Text("Activity")
 								NavigationLink(
-									destination: GroupLoader(
-										fullPath: parent.fullPath),
-									label: {
-										PillView(
-											parent.name ?? parent.fullPath,
-											icon:
-												"figure.and.child.holdinghands",
-											cornerRadius: 5
-										)
-									}
+									"Members",
+									destination: MembersLoader(
+										fullPath: self.fullPath,
+										type: .group
+									))
+								NavigationLink(
+									"Labels",
+									destination: LabelsLoader(
+										fullPath: self.fullPath, queryType: .group)
 								)
-							}
-
-							if group.name != group.fullName {
-								PillView(group.fullName ?? group.path, cornerRadius: 5)
-							}
-						}.font(.footnote)
-					}
-
-					if let description = group.description {
-						Markdown(description)
-							.markdownTheme(.gitLab)
-					}
-				}
-
-				Section {
-					HStack {
-						NavigationLink(
-							destination: GroupProjectsLoader(
-								fullPath: self.fullPath),
+								NavigationLink(
+									"Timelogs",
+									destination: TimelogsLoader(
+										fullPath: self.fullPath,
+										queryType: .group
+									)
+								)
+								NavigationLink(
+									"Custom emojis",
+									destination: CustomEmojisLoader(
+										fullPath: self.fullPath
+									))
+							},
 							label: {
-								Label(
-									title: {
-										Text("Projects")
-										Spacer()
-										Text(String(group.projectsCount))
-									},
-									icon: {
-										Image(systemName: "app.gift.fill")
-											.foregroundStyle(.gray)
-									}
-								)
+								Label("Manage", systemImage: "person.2")
 							}
 						)
-					}
-					HStack {
-						NavigationLink(
-							destination: DescendantGroupsLoader(
-								fullPath: self.fullPath),
+
+						DisclosureGroup(
+							content: {
+								NavigationLink(
+									"Issues",
+									destination: GroupIssuesLoader(fullPath: self.fullPath)
+								)
+								NavigationLink(
+									"Epics",
+									destination: GroupEpicsLoader(fullPath: self.fullPath)
+								)
+								NavigationLink(
+									"Milestones",
+									destination: MilestonesLoader(
+										fullPath: self.fullPath,
+										queryType: .group
+									)
+								)
+							},
 							label: {
 								Label(
-									title: {
-										Text("Descendant groups")
-										Spacer()
-										Text(
-											String(group.descendantGroupsCount))
-									},
-									icon: {
-										Image(systemName: "scale.3d")
-											.foregroundStyle(.red)
-									}
-								)
-							})
-					}
+									"Plan", systemImage: "calendar.badge.checkmark")
+							}
+						)
 
-					DisclosureGroup(
-						content: {
-							// TODO: There seems to be no way to get the activity events of a group
-							// Text("Activity")
-							NavigationLink(
-								"Members",
-								destination: MembersLoader(
-									fullPath: self.fullPath,
-									type: .group
-								))
-							NavigationLink(
-								"Labels",
-								destination: LabelsLoader(
-									fullPath: self.fullPath, queryType: .group)
-							)
-							NavigationLink(
-								"Timelogs",
-								destination: TimelogsLoader(
-									fullPath: self.fullPath,
-									queryType: .group
-								)
-							)
-							NavigationLink(
-								"Custom emojis",
-								destination: CustomEmojisLoader(
-									fullPath: self.fullPath
-								))
-						},
-						label: {
-							Label("Manage", systemImage: "person.2")
-						}
-					)
-
-					DisclosureGroup(
-						content: {
-							NavigationLink(
-								"Issues",
-								destination: GroupIssuesLoader(fullPath: self.fullPath)
-							)
-							NavigationLink(
-								"Epics",
-								destination: GroupEpicsLoader(fullPath: self.fullPath)
-							)
-							NavigationLink(
-								"Milestones",
-								destination: MilestonesLoader(
-									fullPath: self.fullPath,
-									queryType: .group
-								)
-							)
-						},
-						label: {
-							Label(
-								"Plan", systemImage: "calendar.badge.checkmark")
-						}
-					)
-
-					DisclosureGroup(
-						content: {
-							NavigationLink(
-								"Merge Requests",
-								destination: GroupMergeLoader(fullPath: self.fullPath))
-						},
-						label: {
-							Label(
-								"Code",
-								systemImage:
-									"chevron.left.forwardslash.chevron.right")
-						}
-					)
-				}.navigationTitle(group.path)
-			} else {
-				VStack {
-					Image(systemName: "scale.3d")
-						.resizable()
-						.scaledToFit()
-						.foregroundStyle(.red)
-						.frame(width: 50, height: 50)
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading group")
-					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
+						DisclosureGroup(
+							content: {
+								NavigationLink(
+									"Merge Requests",
+									destination: GroupMergeLoader(fullPath: self.fullPath))
+							},
+							label: {
+								Label(
+									"Code",
+									systemImage:
+										"chevron.left.forwardslash.chevron.right")
+							}
+						)
+					}.navigationTitle(group.path)
+				case .failure(let error):
+					FailedView(error.localizedDescription, icon: "scale.3d")
+				}
 			}
 		}.onAppear {
 			loadGroup()
 		}.refreshable {
-			loadGroup()
+			await reloadGroup()
 		}.toolbar {
-			if let group = self.group {
-				ShareButton(URL(string: group.webUrl)!)
-
-				if (group.requestAccessEnabled ?? false)
-					|| group.userPermissions.createProjects
-				{
-					Menu(
-						content: {
-							if group.requestAccessEnabled ?? false {
-								Button(
-									"Request access",
-									systemImage: "person.badge.plus"
-								) {
-									// TODO: Implement
+			if let group {
+				switch group {
+				case .success(let group):
+					if let url = URL(string: group.webUrl) {
+						ShareButton(url)
+					}
+					
+					if (group.requestAccessEnabled ?? false)
+						|| group.userPermissions.createProjects
+					{
+						Menu(
+							content: {
+								if group.requestAccessEnabled ?? false {
+									Button(
+										"Request access",
+										systemImage: "person.badge.plus"
+									) {
+										// TODO: Implement
+									}
 								}
-							}
 
-							if group.userPermissions.createProjects {
-								Button("Create project", systemImage: "plus") {
-									// TODO: Implement
+								if group.userPermissions.createProjects {
+									Button("Create project", systemImage: "plus") {
+										// TODO: Implement
+									}
 								}
+							},
+							label: {
+								Label("More", systemImage: "ellipsis")
+									.frame(width: 16, height: 16)
 							}
-						},
-						label: {
-							Label("More", systemImage: "ellipsis")
-								.frame(width: 16, height: 16)
-						}
-					)
-					.menuStyle(.button)
-					.buttonStyle(.bordered)
-					.clipShape(Circle())
+						)
+						.menuStyle(.button)
+						.buttonStyle(.bordered)
+						.clipShape(Circle())
+					}
+				case .failure:
+					EmptyView()
 				}
 			}
 		}

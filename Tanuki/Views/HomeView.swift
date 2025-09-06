@@ -156,9 +156,9 @@ struct HomeView: View {
 					switch starredProjects {
 					case .success(let projects):
 						if projects.isEmpty {
-							VStack {
-								Text("There are no starred projects")
-							}.frame(maxWidth: .infinity, minHeight: 100)
+							ContentUnavailableView(
+								"There are no starred projects",
+								systemImage: "star.square.on.square.fill")
 						} else {
 							ForEach(projects, id: \.?.fullPath) { maybeProject in
 								if let project = maybeProject {
