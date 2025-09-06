@@ -1,1 +1,1 @@
-swift-format format -p -r -i --configuration ./format.json ./Tanuki
+swift format format -p -r -i --configuration ./format.json ./Tanuki
