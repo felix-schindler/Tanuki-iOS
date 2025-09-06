@@ -10,6 +10,7 @@ import Foundation
 // MARK: - Events
 struct Event: Codable {
 	let id: Int
+	let projectId: Int
 	let actionName: String
 	let targetIid: Int?
 	let targetType: String?
