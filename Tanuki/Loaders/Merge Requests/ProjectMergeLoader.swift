@@ -12,28 +12,62 @@ struct ProjectMergeLoader: View {
 	private let fullPath: String
 
 	@State
-	private var project: GitLabAPI.ProjectMergeRequestsQuery.Data.Project?
+	private var project: Result<GitLabAPI.ProjectMergeRequestsQuery.Data.Project, Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	init(fullPath: String) {
 		self.fullPath = fullPath
 		self.project = nil
 	}
-
+	
 	private func loadMergeRequests() {
-		Network.shared.apollo.fetch(
-			query: ProjectMergeRequestsQuery(fullPath: self.fullPath)
-		) { result in
-			switch result {
-			case .success(let graphQLResult):
-				print("Success! Setting merge requests...")
-				project = graphQLResult.data?.project
-			case .failure(let error):
-				print("Failure! Error: \(error)")
-				loadFailed = true
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			let responses = try Network.shared.apollo.fetch(
+				query: ProjectMergeRequestsQuery(fullPath: self.fullPath),
+				cachePolicy: .cacheAndNetwork
+			)
+
+			Task {
+				for try await response in responses {
+					if let project = response.data?.project {
+						self.project = .success(project)
+						Notify.status(.success)
+					} else if let errors = response.errors {
+						for error in errors {
+							Notify.status(.error, error.localizedDescription)
+						}
+					}
+				}
 			}
+		} catch let error {
+			self.project = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadMergeRequests() async {
+		do {
+			let response = try await Network.shared.apollo.fetch(
+				query: ProjectMergeRequestsQuery(fullPath: self.fullPath),
+				cachePolicy: .networkOnly
+			)
+
+			if let project = response.data?.project {
+				self.project = .success(project)
+			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.project = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
@@ -49,40 +83,32 @@ struct ProjectMergeLoader: View {
 
 	var main: some View {
 		List {
-			if let project = self.project {
-				if !(project.mergeRequestsEnabled ?? false) {
-					VStack {
-						Text("Merge requests are not enabled for this project")
-					}.frame(maxWidth: .infinity, minHeight: 100)
-				} else {
-					if project.mergeRequests == nil
-						|| project.mergeRequests!.nodes == nil
-						|| project.mergeRequests!.nodes!.count == 0
-					{
-						VStack {
-							Text("There are no merge requests")
-						}.frame(maxWidth: .infinity, minHeight: 100)
-					} else {
-						ForEach(project.mergeRequests!.nodes!, id: \.self?.iid) { mergeRequest in
-							if let mr = mergeRequest {
-								SmallMergeView(self.fullPath, mr)
+			if isLoading {
+				ProgressView("Loading merge requests")
+			} else if let project {
+				switch project {
+				case .success(let project):
+					if project.mergeRequestsEnabled ?? false {
+						ContentUnavailableView("Merge requests are not enabled for this project", systemImage: "arrow.triangle.pull")
+					} else if let mrs = project.mergeRequests?.nodes {
+						if mrs.count == 0 {
+							ContentUnavailableView("There are no merge requests", systemImage: "arrow.triangle.pull")
+						} else {
+							ForEach(project.mergeRequests!.nodes!, id: \.self?.iid) { mergeRequest in
+								if let mr = mergeRequest {
+									SmallMergeView(self.fullPath, mr)
+								}
 							}
 						}
 					}
+				case .failure(let error):
+					FailedView(error.localizedDescription)
 				}
-			} else if loadFailed {
-				VStack {
-					Text(failedToLoad)
-				}.frame(maxWidth: .infinity, minHeight: 100)
-			} else {
-				VStack {
-					ProgressView("Loading merge requests")
-				}.frame(maxWidth: .infinity, minHeight: 100)
 			}
 		}.onAppear {
 			loadMergeRequests()
 		}.refreshable {
-			loadMergeRequests()
+			await reloadMergeRequests()
 		}.navigationTitle("Merge Requests")
 	}
 }

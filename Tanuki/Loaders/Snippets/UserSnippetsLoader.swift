@@ -12,108 +12,153 @@ struct UserSnippetsLoader: View {
 	private let username: String?
 
 	@State
-	private var snippets: [Snippet?]?
+	private var snippets: Result<[Snippet?], Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	init(username: String? = nil) {
 		self.username = username
 	}
-
+	
 	private func loadSnippets() {
-		if let user = username {
-			Network.shared.apollo.fetch(
-				query: UserSnippetsQuery(username: user)
-			) {
-				result in
-				switch result {
-				case .success(let graphQLResult):
-					print("Success! Setting snippets...")
-					snippets = graphQLResult.data?.user?.snippets?.nodes
-				case .failure(let error):
-					print("Failure! Error: \(error)")
-					loadFailed = true
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			if let username {
+				let responses = try Network.shared.apollo.fetch(
+					query: UserSnippetsQuery(username: username),
+					cachePolicy: .cacheAndNetwork
+				)
+
+				Task {
+					for try await response in responses {
+						if let snippets = response.data?.user?.snippets?.nodes {
+							self.snippets = .success(snippets)
+							Notify.status(.success)
+						} else if let errors = response.errors {
+							for error in errors {
+								Notify.status(.error, error.localizedDescription)
+							}
+						}
+					}
+				}
+			} else {
+				let responses = try Network.shared.apollo.fetch(
+					query: CurrentUserSnippetsQuery(),
+					cachePolicy: .cacheAndNetwork
+				)
+
+				Task {
+					for try await response in responses {
+						if let snippets = response.data?.currentUser?.snippets?.nodes {
+							self.snippets = .success(snippets)
+							Notify.status(.success)
+						} else if let errors = response.errors {
+							for error in errors {
+								Notify.status(.error, error.localizedDescription)
+							}
+						}
+					}
 				}
 			}
-		} else {
-			Network.shared.apollo.fetch(query: CurrentUserSnippetsQuery()) {
-				result in
-				switch result {
-				case .success(let graphQLResult):
-					print("Success! Setting snippets...")
-					snippets = graphQLResult.data?.currentUser?.snippets?.nodes
-				case .failure(let error):
-					print("Failure! Error: \(error)")
-					loadFailed = true
+		} catch let error {
+			self.snippets = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadSnippets() async {
+		do {
+			if let username {
+				let response = try await Network.shared.apollo.fetch(
+					query: UserSnippetsQuery(username: username),
+					cachePolicy: .networkOnly
+				)
+
+				if let snippets = response.data?.user?.snippets?.nodes {
+					self.snippets = .success(snippets)
+				}
+			} else {
+				let response = try await Network.shared.apollo.fetch(
+					query: CurrentUserSnippetsQuery(),
+					cachePolicy: .networkOnly
+				)
+
+				if let snippets = response.data?.currentUser?.snippets?.nodes {
+					self.snippets = .success(snippets)
 				}
 			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.snippets = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let snippets = self.snippets {
-				if snippets.isEmpty {
-					Text("There are no snippets")
-				} else {
-					ForEach(snippets, id: \.self?.id) { maybeSnippet in
-						if let snippet = maybeSnippet {
-							NavigationLink(
-								destination: SnippetLoader(id: snippet.id),
-								label: {
-									HStack {
-										VStack(alignment: .leading) {
-											HStack {
-												VisibilityIcon(
-													snippet
-														.visibilityLevel
-														.rawValue
-												)
-												Text(snippet.title.emojized())
-											}
-
-											ScrollView(.horizontal) {
+			if isLoading {
+				ProgressView("Loading snippets")
+			} else if let snippets {
+				switch snippets {
+				case .success(let snippets):
+					if snippets.isEmpty {
+						ContentUnavailableView("There are no snippets", systemImage: "scissors")
+					} else {
+						ForEach(snippets, id: \.self?.id) { maybeSnippet in
+							if let snippet = maybeSnippet {
+								NavigationLink(
+									destination: SnippetLoader(id: snippet.id),
+									label: {
+										HStack {
+											VStack(alignment: .leading) {
 												HStack {
-													if let author = snippet
-														._author
-													{
-														AuthorView(author)
-													}
+													VisibilityIcon(
+														snippet
+															.visibilityLevel
+															.rawValue
+													)
+													Text(snippet.title.emojized())
+												}
 
-													HStack(spacing: 2) {
-														Image(
-															systemName: "clock")
-														Text(
-															Date.fromToString(
-																snippet
-																	.createdAt))
-													}
-												}.font(.footnote)
+												ScrollView(.horizontal) {
+													HStack {
+														if let author = snippet
+															._author
+														{
+															AuthorView(author)
+														}
+
+														HStack(spacing: 2) {
+															Image(
+																systemName: "clock")
+															Text(
+																Date.fromToString(
+																	snippet
+																		.createdAt))
+														}
+													}.font(.footnote)
+												}
 											}
-										}
-									}.swipeActions {
-										if let url = URL(string: snippet.webUrl) {
-											ShareButton(url)
+										}.swipeActions {
+											if let url = URL(string: snippet.webUrl) {
+												ShareButton(url)
+											}
 										}
 									}
-								}
-							)
+								)
+							}
 						}
 					}
+				case .failure(let error):
+					FailedView(error.localizedDescription, icon: "scissors")
 				}
-			} else {
-				VStack {
-					Image(systemName: "scissors")
-						.resizable()
-						.scaledToFit()
-						.frame(width: 50, height: 50)
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading snippets")
-					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
 			}
 		}.onAppear {
 			loadSnippets()
