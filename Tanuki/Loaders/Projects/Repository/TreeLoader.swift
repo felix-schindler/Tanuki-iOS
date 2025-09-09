@@ -66,8 +66,8 @@ struct TreeLoader: View {
 		}
 	}
 
-	private func getBranches() async {
-		branches = await API.get(
+	private func getBranches() async throws {
+		branches = try await API.get(
 			type: [Branch].self,
 			endpoint: "projects/\(self.projectId)/repository/branches"
 		)
@@ -152,12 +152,14 @@ struct TreeLoader: View {
 		}.onAppear {
 			loadTree()
 			Task {
-				await getBranches()
+				try await getBranches()
 			}
 		}.refreshable {
-			loadTree()
-			if folderPath == nil {
-				await getBranches()
+			Task {
+				loadTree()
+				if folderPath == nil {
+					try await getBranches()
+				}
 			}
 		}.navigationTitle(folderPath != nil ? folderPath! : "Files")
 	}

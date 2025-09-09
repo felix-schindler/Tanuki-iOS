@@ -68,7 +68,7 @@ struct CommitsLoader: View {
 								}
 							}.pickerStyle(.menu)
 								.onChange(of: refName) { _ in
-									Task { await getCommits() }
+									Task { try await getCommits() }
 								}
 						} else {
 							Picker("", selection: $refName) {
@@ -121,29 +121,31 @@ struct CommitsLoader: View {
 			}
 		}.onAppear {
 			Task {
-				await getCommits()
-				await getBranches()
+				try await getCommits()
+				try await getBranches()
 				loadFailed = (commits == nil) || (branches == nil)
 			}
 		}.refreshable {
-			await getCommits()
-			await getBranches()
-			loadFailed = (commits == nil) || (branches == nil)
+			Task {
+				try await getCommits()
+				try await getBranches()
+				loadFailed = (commits == nil) || (branches == nil)
+			}
 		}
 		.navigationTitle("Commits")
 		.headerProminence(.increased)
 	}
 
-	private func getCommits() async {
-		commits = await API.get(
+	private func getCommits() async throws {
+		commits = try await API.get(
 			type: [Commit].self,
 			endpoint: "projects/\(projectId)/repository/commits",
 			query: ["ref_name": refName]
 		)
 	}
 
-	private func getBranches() async {
-		branches = await API.get(
+	private func getBranches() async throws {
+		branches = try await API.get(
 			type: [Branch].self,
 			endpoint: "projects/\(projectId)/repository/branches"
 		)

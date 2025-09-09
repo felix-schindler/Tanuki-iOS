@@ -252,7 +252,7 @@ struct GroupLoader: View {
 					if let url = URL(string: group.webUrl) {
 						ShareButton(url)
 					}
-					
+
 					if (group.requestAccessEnabled ?? false)
 						|| group.userPermissions.createProjects
 					{

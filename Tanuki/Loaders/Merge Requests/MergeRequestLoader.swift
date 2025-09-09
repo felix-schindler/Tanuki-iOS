@@ -549,7 +549,8 @@ struct MergeRequestLoader: View {
 							}
 						}
 					} else {
-						ContentUnavailableView("Can't find merge request", systemImage: "arrow.triangle.pull")
+						ContentUnavailableView(
+							"Can't find merge request", systemImage: "arrow.triangle.pull")
 					}
 				case .failure(let error):
 					FailedView(error.localizedDescription)
@@ -573,9 +574,10 @@ struct MergeRequestLoader: View {
 						)
 						.labelStyle(.titleAndIcon)
 						.font(.footnote)
-						
+
 						if let webUrl = mr.webUrl,
-						   let url = URL(string: webUrl) {
+							let url = URL(string: webUrl)
+						{
 							ShareButton(url)
 						}
 					}

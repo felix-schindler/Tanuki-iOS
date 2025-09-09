@@ -20,7 +20,7 @@ struct UserSnippetsLoader: View {
 	init(username: String? = nil) {
 		self.username = username
 	}
-	
+
 	private func loadSnippets() {
 		isLoading = true
 

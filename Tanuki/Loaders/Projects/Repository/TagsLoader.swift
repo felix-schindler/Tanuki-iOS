@@ -61,15 +61,18 @@ struct TagsLoader: View {
 			}
 		}.onAppear {
 			Task {
-				await getTags()
+				try await getTags()
 			}
 		}.refreshable {
-			await getTags()
+			Task {
+				try await getTags()
+			}
 		}.navigationTitle("Tags")
 	}
 
-	private func getTags() async {
-		tags = await API.get(type: [Tag].self, endpoint: "projects/\(projectId)/repository/tags")
+	private func getTags() async throws {
+		tags = try await API.get(
+			type: [Tag].self, endpoint: "projects/\(projectId)/repository/tags")
 		loadFailed = tags == nil
 	}
 }

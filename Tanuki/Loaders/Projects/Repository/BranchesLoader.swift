@@ -64,15 +64,17 @@ struct BranchesLoader: View {
 			}
 		}.onAppear {
 			Task {
-				await getBranches()
+				try await getBranches()
 			}
 		}.refreshable {
-			await getBranches()
+			Task {
+				try await getBranches()
+			}
 		}.navigationTitle("Branches")
 	}
 
-	private func getBranches() async {
-		branches = await API.get(
+	private func getBranches() async throws {
+		branches = try await API.get(
 			type: [Branch].self, endpoint: "projects/\(projectId)/repository/branches")
 		loadFailed = branches == nil
 	}

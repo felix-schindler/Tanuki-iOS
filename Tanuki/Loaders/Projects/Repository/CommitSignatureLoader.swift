@@ -36,12 +36,10 @@ struct SignatureLoader: View {
 			}
 		}.onAppear {
 			Task {
-				if let res = await API.get(
+				signature = try await API.get(
 					type: CommitSignature.self,
 					endpoint: "projects/\(projectId)/repository/commits/\(commitId)/signature"
-				) {
-					signature = res
-				}
+				)
 			}
 		}.sheet(isPresented: $showDetails) {
 			VStack(alignment: .leading) {

@@ -37,10 +37,10 @@ struct DiffLoader: View {
 	private var colorScheme: ColorScheme
 
 	@State
-	private var diffs: [Diff]? = nil
+	private var diffs: Result<[Diff], Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	@AppStorage("diff_unified")
 	private var unidiff = false
@@ -56,110 +56,118 @@ struct DiffLoader: View {
 	}
 
 	private func loadDiffs() async {
-		if let iid = self.mrIid {
-			self.diffs = await API.get(
-				type: [Diff].self,
-				endpoint: "projects/\(self.projectId)/merge_requests/\(iid)/diffs",
-				query: [
-					"unidiff": String(self.unidiff)
-				]
-			)
-		} else if let sha = self.commitSha {
-			self.diffs = await API.get(
-				type: [Diff].self,
-				endpoint: "projects/\(self.projectId)/repository/commits/\(sha)/diff",
-				query: [
-					"unidiff": String(self.unidiff)
-				]
-			)
-		} else {
-			self.diffs = nil
+		do {
+			if let iid = self.mrIid {
+				let diffs = try await API.get(
+					type: [Diff].self,
+					endpoint: "projects/\(self.projectId)/merge_requests/\(iid)/diffs",
+					query: [
+						"unidiff": String(self.unidiff)
+					]
+				)
+
+				self.diffs = .success(diffs)
+			} else if let sha = self.commitSha {
+				let diffs = try await API.get(
+					type: [Diff].self,
+					endpoint: "projects/\(self.projectId)/repository/commits/\(sha)/diff",
+					query: [
+						"unidiff": String(self.unidiff)
+					]
+				)
+
+				self.diffs = .success(diffs)
+			}
+		} catch let error {
+			self.diffs = .failure(error)
+			Notify.status(.error)
 		}
-		loadFailed = self.diffs == nil
 	}
 
 	var body: some View {
 		List {
 			Section {
 				Toggle("Unified diff", isOn: $unidiff)
-					.onChange(of: unidiff) { _ in
-						Task {
-							await loadDiffs()
-							#if os(iOS)
-								Haptics.shared.play(.soft)
-							#endif
-						}
-					}
+					.onChange(
+						of: unidiff,
+						{
+							Task {
+								await loadDiffs()
+								#if os(iOS)
+									Haptics.shared.play(.soft)
+								#endif
+							}
+						})
 			}
 
-			if let diffs = self.diffs {
-				if diffs.isEmpty {
-					Text("There are no changes")
-				} else {
-					ForEach(diffs, id: \.oldPath) { diff in
-						Section(
-							content: {
-								VStack(alignment: .leading) {
-									if diff.aMode != diff.bMode {
-										Text(
-											"Mode changed: \(diff.aMode ?? "null") → \(diff.bMode ?? "null")"
+			if isLoading {
+				ProgressView("Loading diffs")
+			} else if let diffs {
+				switch diffs {
+				case .success(let diffs):
+					if diffs.isEmpty {
+						ContentUnavailableView("There are no changes", systemImage: "plusminus")
+					} else {
+						ForEach(diffs, id: \.oldPath) { diff in
+							Section(
+								content: {
+									VStack(alignment: .leading) {
+										if diff.aMode != diff.bMode {
+											Text(
+												"Mode changed: \(diff.aMode ?? "null") → \(diff.bMode ?? "null")"
+											)
+											.padding(.bottom)
+										}
+										CodeTextView(
+											diff.diff,
+											language: "diff",
+											colorScheme: self.colorScheme,
+											fontSize: 12
 										)
-										.padding(.bottom)
 									}
-									CodeTextView(
-										diff.diff,
-										language: "diff",
-										colorScheme: self.colorScheme,
-										fontSize: 12
-									)
-								}
-							},
-							header: {
-								HStack {
-									if diff.newFile {
-										Image(systemName: "plus.square")
-											.foregroundStyle(.green)
-									} else if diff.renamedFile {
-										Image(systemName: "arrow.right.square")
-											.foregroundStyle(.blue)
-									} else if diff.deletedFile {
-										Image(systemName: "minus.square")
-											.foregroundStyle(.red)
-									} else if diff.generatedFile ?? false {
-										Image(systemName: "gear.circle")
-											.foregroundStyle(.purple)
-									} else {
-										Image(systemName: "dot.square")
-											.foregroundStyle(.orange)
-									}
-
-									ScrollView(.horizontal) {
-										if diff.renamedFile {
-											Text("\(diff.oldPath) → \(diff.newPath)")
+								},
+								header: {
+									HStack {
+										if diff.newFile {
+											Image(systemName: "plus.square")
+												.foregroundStyle(.green)
+										} else if diff.renamedFile {
+											Image(systemName: "arrow.right.square")
+												.foregroundStyle(.blue)
+										} else if diff.deletedFile {
+											Image(systemName: "minus.square")
+												.foregroundStyle(.red)
+										} else if diff.generatedFile ?? false {
+											Image(systemName: "gear.circle")
+												.foregroundStyle(.purple)
 										} else {
-											Text(diff.newPath)
+											Image(systemName: "dot.square")
+												.foregroundStyle(.orange)
+										}
+
+										ScrollView(.horizontal) {
+											if diff.renamedFile {
+												Text("\(diff.oldPath) → \(diff.newPath)")
+											} else {
+												Text(diff.newPath)
+											}
 										}
 									}
-								}
-							})
+								})
+						}
 					}
+				case .failure(let error):
+					FailedView(error.localizedDescription)
 				}
-			} else {
-				VStack {
-					Image(systemName: "plusminus")
-						.resizable()
-						.scaledToFit()
-						.foregroundStyle(.gray)
-						.frame(width: 50, height: 50)
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading diffs")
-					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
 			}
 		}.onAppear {
 			Task {
+				isLoading = true
+
+				defer {
+					isLoading = false
+				}
+
 				await loadDiffs()
 			}
 		}.refreshable {

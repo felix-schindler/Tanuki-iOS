@@ -21,7 +21,7 @@ struct ProjectMergeLoader: View {
 		self.fullPath = fullPath
 		self.project = nil
 	}
-	
+
 	private func loadMergeRequests() {
 		isLoading = true
 
@@ -89,12 +89,16 @@ struct ProjectMergeLoader: View {
 				switch project {
 				case .success(let project):
 					if project.mergeRequestsEnabled ?? false {
-						ContentUnavailableView("Merge requests are not enabled for this project", systemImage: "arrow.triangle.pull")
+						ContentUnavailableView(
+							"Merge requests are not enabled for this project",
+							systemImage: "arrow.triangle.pull")
 					} else if let mrs = project.mergeRequests?.nodes {
 						if mrs.count == 0 {
-							ContentUnavailableView("There are no merge requests", systemImage: "arrow.triangle.pull")
+							ContentUnavailableView(
+								"There are no merge requests", systemImage: "arrow.triangle.pull")
 						} else {
-							ForEach(project.mergeRequests!.nodes!, id: \.self?.iid) { mergeRequest in
+							ForEach(project.mergeRequests!.nodes!, id: \.self?.iid) {
+								mergeRequest in
 								if let mr = mergeRequest {
 									SmallMergeView(self.fullPath, mr)
 								}
