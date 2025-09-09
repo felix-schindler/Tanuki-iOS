@@ -13,10 +13,11 @@ struct DiffsStatsLoader: View {
 	private let iid: String
 
 	@State
-	private var diffs: [MergeRequestDiffsQuery.Data.Project.MergeRequest.DiffStat]? = nil
+	private var diffs: Result<[MergeRequestDiffsQuery.Data.Project.MergeRequest.DiffStat], Error>? =
+		nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
@@ -24,46 +25,82 @@ struct DiffsStatsLoader: View {
 	}
 
 	private func loadDiffs() {
-		Network.shared.apollo.fetch(
-			query: MergeRequestDiffsQuery(fullPath: self.fullPath, iid: self.iid)
-		) { result in
-			switch result {
-			case .success(let graphQLResult):
-				print("Success! Setting diffs...")
-				diffs = graphQLResult.data?.project?.mergeRequest?.diffStats
-			case .failure(let error):
-				print("Failure! Error: \(error)")
-				loadFailed = true
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			let responses = try Network.shared.apollo.fetch(
+				query: MergeRequestDiffsQuery(fullPath: self.fullPath, iid: self.iid),
+				cachePolicy: .cacheAndNetwork
+			)
+
+			Task {
+				for try await response in responses {
+					if let diffs = response.data?.project?.mergeRequest?.diffStats {
+						self.diffs = .success(diffs)
+						Notify.status(.success)
+					} else if let errors = response.errors {
+						for error in errors {
+							Notify.status(.error, error.localizedDescription)
+						}
+					}
+				}
 			}
+		} catch let error {
+			self.diffs = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadDiffs() async {
+		do {
+			let response = try await Network.shared.apollo.fetch(
+				query: MergeRequestDiffsQuery(fullPath: self.fullPath, iid: self.iid),
+				cachePolicy: .networkOnly
+			)
+
+			if let diffs = response.data?.project?.mergeRequest?.diffStats {
+				self.diffs = .success(diffs)
+			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.diffs = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let diffs = self.diffs {
-				if diffs.isEmpty {
-					Text("There are no files with changed content")
-				} else {
-					ForEach(diffs, id: \.path) { diff in
-						VStack(alignment: .leading) {
-							Text(diff.path)
-							ScrollView(.horizontal) {
-								HStack {
-									PillView("+\(diff.additions)", bgColor: .green, fgColor: .white)
-									PillView("-\(diff.deletions)", bgColor: .red, fgColor: .white)
-								}.monospaced()
+			if isLoading {
+				ProgressView("Loading file diffs")
+			} else if let diffs {
+				switch diffs {
+				case .success(let diffs):
+					if diffs.isEmpty {
+						ContentUnavailableView(
+							"There are no files with changed content", systemImage: "plusminus")
+					} else {
+						ForEach(diffs, id: \.path) { diff in
+							VStack(alignment: .leading) {
+								Text(diff.path)
+								ScrollView(.horizontal) {
+									HStack {
+										PillView(
+											"+\(diff.additions)", bgColor: .green, fgColor: .white)
+										PillView(
+											"-\(diff.deletions)", bgColor: .red, fgColor: .white)
+									}.monospaced()
+								}
 							}
 						}
 					}
+				case .failure(let error):
+					FailedView(error.localizedDescription)
 				}
-			} else {
-				VStack {
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading file diffs")
-					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
 			}
 		}.onAppear {
 			loadDiffs()

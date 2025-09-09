@@ -13,10 +13,10 @@ struct MrCommitsLoader: View {
 	private let iid: String
 
 	@State
-	private var project: MergeRequestCommitsQuery.Data.Project? = nil
+	private var project: Result<MergeRequestCommitsQuery.Data.Project, Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
@@ -24,46 +24,83 @@ struct MrCommitsLoader: View {
 	}
 
 	private func loadCommits() {
-		Network.shared.apollo.fetch(
-			query: MergeRequestCommitsQuery(fullPath: self.fullPath, iid: self.iid)
-		) { result in
-			switch result {
-			case .success(let graphQLResult):
-				print("Success! Setting MR commits...")
-				self.project = graphQLResult.data?.project
-			case .failure(let error):
-				print("Failure! Error: \(error)")
-				loadFailed = true
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			let responses = try Network.shared.apollo.fetch(
+				query: MergeRequestCommitsQuery(fullPath: self.fullPath, iid: self.iid),
+				cachePolicy: .cacheAndNetwork
+			)
+
+			Task {
+				for try await response in responses {
+					if let project = response.data?.project {
+						self.project = .success(project)
+						Notify.status(.success)
+					} else if let errors = response.errors {
+						for error in errors {
+							Notify.status(.error, error.localizedDescription)
+						}
+					}
+				}
 			}
+		} catch let error {
+			self.project = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadCommits() async {
+		do {
+			let response = try await Network.shared.apollo.fetch(
+				query: MergeRequestCommitsQuery(fullPath: self.fullPath, iid: self.iid),
+				cachePolicy: .networkOnly
+			)
+
+			if let project = response.data?.project {
+				self.project = .success(project)
+			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.project = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let commits = self.project?.mergeRequest?.commits?.nodes {
-				if commits.isEmpty {
-					Text("There are no commits in this MR")
-				} else {
-					let projectId = project?.id.toIntId()
-					ForEach(commits, id: \.?.shortId) { maybeCommit in
-						if let commit = maybeCommit {
-							SmallCommitView(commit, projectId)
+			if isLoading {
+				ProgressView("Loading commits")
+			} else if let project {
+				switch project {
+				case .success(let project):
+					if let projectId = project.id.toIntId(),
+						let commits = project.mergeRequest?.commits?.nodes,
+						!commits.isEmpty
+					{
+						ForEach(commits, id: \.?.shortId) { maybeCommit in
+							if let commit = maybeCommit {
+								SmallCommitView(commit, projectId)
+							}
 						}
-					}
-				}
-			} else {
-				VStack {
-					if loadFailed {
-						Text(failedToLoad)
 					} else {
-						ProgressView("Loading commits")
+						ContentUnavailableView(
+							"There are no commits in this MR",
+							systemImage: "circle.and.line.horizontal")
 					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
+				case .failure(let error):
+					FailedView(error.localizedDescription)
+				}
 			}
 		}.onAppear {
 			loadCommits()
 		}.refreshable {
-			loadCommits()
+			await reloadCommits()
 		}.navigationTitle("Commits")
 	}
 }
