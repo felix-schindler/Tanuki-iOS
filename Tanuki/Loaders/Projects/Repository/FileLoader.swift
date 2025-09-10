@@ -23,10 +23,10 @@ struct FileLoader: View {
 
 	// MARK: - State
 	@State
-	private var content: String? = nil
+	private var content: Result<String, Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	init(
 		id: Int,
@@ -53,22 +53,29 @@ struct FileLoader: View {
 		self.fileExtension = filePath.components(separatedBy: ".").last?.lowercased() ?? ""
 	}
 
+	private func loadFile() async {
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			let res = try await API.raw(method: .get, url: self.url)
+			if let content = res.utf8String {
+				self.content = .success(content)
+			}
+			Notify.status(.success)
+		} catch let error {
+			self.content = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
 	public var body: some View {
 		ScrollView {
 			VStack(alignment: .leading) {
-				if let content {
-					if fileExtension == "md" {
-						Markdown(content)
-							.markdownTheme(.gitLab)
-					} else {
-						CodeTextView(
-							content,
-							language: self.fileExtension,
-							colorScheme: self.colorScheme,
-							fontSize: 12
-						)
-					}
-				} else if Formats.audioFormats.contains(fileExtension) {
+				if Formats.audioFormats.contains(fileExtension) {
 					VStack {
 						Image(systemName: "play")
 							.resizable()
@@ -108,12 +115,24 @@ struct FileLoader: View {
 							.frame(width: 50, height: 50)
 						Text("Can't preview this \(fileExtension) file")
 					}
-				} else {
-					Spacer()
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading file")
+				} else if isLoading {
+					ProgressView("Loading file")
+				} else if let content {
+					switch content {
+					case .success(let content):
+						if fileExtension == "md" {
+							Markdown(content)
+								.markdownTheme(.gitLab)
+						} else {
+							CodeTextView(
+								content,
+								language: self.fileExtension,
+								colorScheme: self.colorScheme,
+								fontSize: 12
+							)
+						}
+					case .failure(let error):
+						FailedView(error)
 					}
 				}
 				Spacer()
@@ -122,21 +141,11 @@ struct FileLoader: View {
 			.frame(maxWidth: .infinity)
 		}.onAppear {
 			Task {
-				await getFile()
+				await loadFile()
 			}
 		}.refreshable {
-			await getFile()
+			await loadFile()
 		}.navigationTitle(filePath)
-	}
-
-	private func getFile() async {
-		do {
-			let res = try await API.raw(method: .get, url: self.url)
-			content = res.utf8String
-			loadFailed = (content == nil)
-		} catch {
-			loadFailed = true
-		}
 	}
 }
 

@@ -105,9 +105,7 @@ struct DescendantGroupsLoader: View {
 
 											VStack(alignment: .leading) {
 												HStack {
-													if let visibility = group
-														.visibility
-													{
+													if let visibility = group.visibility {
 														VisibilityIcon(visibility)
 													}
 													if let name = group.name?.emojized() {

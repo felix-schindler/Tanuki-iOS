@@ -17,51 +17,84 @@ struct GroupIssuesLoader: View {
 	}
 
 	@State
-	private var issues: [SmallIssue?]? = nil
+	private var issues: Result<[SmallIssue?], Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	private func loadIssues() {
-		Network.shared.apollo.fetch(
-			query: GroupIssuesQuery(fullPath: self.fullPath)
-		) { result in
-			switch result {
-			case .success(let graphQLResult):
-				print("Success! Setting issues...")
-				issues = graphQLResult.data?.group?.issues?.nodes
-			case .failure(let error):
-				print("Failure! Error: \(error)")
-				loadFailed = true
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			let responses = try Network.shared.apollo.fetch(
+				query: GroupIssuesQuery(fullPath: self.fullPath),
+				cachePolicy: .cacheAndNetwork
+			)
+
+			Task {
+				for try await response in responses {
+					if let issues = response.data?.group?.issues?.nodes {
+						self.issues = .success(issues)
+						Notify.status(.success)
+					} else if let errors = response.errors {
+						for error in errors {
+							Notify.status(.error, error.localizedDescription)
+						}
+					}
+				}
 			}
+		} catch let error {
+			self.issues = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadIssues() async {
+		do {
+			let response = try await Network.shared.apollo.fetch(
+				query: GroupIssuesQuery(fullPath: self.fullPath),
+				cachePolicy: .networkOnly
+			)
+
+			if let issues = response.data?.group?.issues?.nodes {
+				self.issues = .success(issues)
+			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.issues = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let issues = self.issues {
-				if issues.isEmpty {
-					Text("There are no issues")
-				} else {
-					ForEach(issues, id: \.?.reference) { maybeIssue in
-						if let issue = maybeIssue {
-							SmallIssueView(self.fullPath, issue)
+			if isLoading {
+				ProgressView("Loading issues")
+			} else if let issues {
+				switch issues {
+				case .success(let issues):
+					if issues.isEmpty {
+						Text("There are no issues")
+					} else {
+						ForEach(issues, id: \.?.reference) { maybeIssue in
+							if let issue = maybeIssue {
+								SmallIssueView(self.fullPath, issue)
+							}
 						}
 					}
+				case .failure(let error):
+					FailedView(error.localizedDescription)
 				}
-			} else {
-				VStack {
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading issues")
-					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
 			}
 		}.onAppear {
 			loadIssues()
 		}.refreshable {
-			loadIssues()
+			await reloadIssues()
 		}.navigationTitle("Issues")
 	}
 }

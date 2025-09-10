@@ -502,7 +502,7 @@ extension UserSnippetsQuery.Data.User.Snippets.Node: Snippet {
 // MARK: - Groups
 protocol Group {
 	var avatarUrl: String? { get }
-	var name: String { get }
+	var _name: String? { get }
 	var fullPath: String { get }
 	var visibility: String? { get }
 	var groupMembersCount: Int { get }
@@ -511,7 +511,7 @@ protocol Group {
 }
 
 extension UserGroupsQuery.Data.User.Groups.Node: Group {
-	var name: String {
+	var _name: String? {
 		return self.name
 	}
 
@@ -521,7 +521,7 @@ extension UserGroupsQuery.Data.User.Groups.Node: Group {
 }
 
 extension CurrentUserGroupsQuery.Data.CurrentUser.Groups.Node: Group {
-	var name: String {
+	var _name: String? {
 		return self.name
 	}
 

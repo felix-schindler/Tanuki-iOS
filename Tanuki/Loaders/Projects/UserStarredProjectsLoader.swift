@@ -13,61 +13,89 @@ struct UserStarredProjectsLoader: View {
 	private let username: String
 
 	@State
-	private var projects: [UserStarredProjectsQuery.Data.User.StarredProjects.Node?]?
+	private var projects:
+		Result<[UserStarredProjectsQuery.Data.User.StarredProjects.Node?], Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	init(username: String) {
 		self.username = username
 	}
 
-	private func loadStarredProjects() {
-		Network.shared.apollo.fetch(
-			query: UserStarredProjectsQuery(username: self.username)
-		) {
-			result in
-			switch result {
-			case .success(let graphQLResult):
-				print("Success! Setting projects...")
-				projects = graphQLResult.data?.user?.starredProjects?.nodes
-			case .failure(let error):
-				print("Failure! Error: \(error)")
-				loadFailed = true
+	private func loadProjects() {
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			let responses = try Network.shared.apollo.fetch(
+				query: UserStarredProjectsQuery(username: self.username),
+				cachePolicy: .cacheAndNetwork
+			)
+
+			Task {
+				for try await response in responses {
+					if let projects = response.data?.user?.starredProjects?.nodes {
+						self.projects = .success(projects)
+						Notify.status(.success)
+					} else if let errors = response.errors {
+						for error in errors {
+							Notify.status(.error, error.localizedDescription)
+						}
+					}
+				}
 			}
+		} catch let error {
+			self.projects = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadProjects() async {
+		do {
+			let response = try await Network.shared.apollo.fetch(
+				query: UserStarredProjectsQuery(username: self.username),
+				cachePolicy: .networkOnly
+			)
+
+			if let projects = response.data?.user?.starredProjects?.nodes {
+				self.projects = .success(projects)
+			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.projects = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let projects = self.projects {
-				if projects.isEmpty {
-					Text("There are no starred projects")
-				} else {
-					ForEach(projects, id: \.self?.fullPath) { maybeProject in
-						if let project = maybeProject {
-							SmallProjectView(project)
+			if isLoading {
+				ProgressView("Loading starred projects")
+			} else if let projects {
+				switch projects {
+				case .success(let projects):
+					if projects.isEmpty {
+						ContentUnavailableView("There are no starred projects", systemImage: "star")
+					} else {
+						ForEach(projects, id: \.self?.fullPath) { maybeProject in
+							if let project = maybeProject {
+								SmallProjectView(project)
+							}
 						}
 					}
+				case .failure(let error):
+					FailedView(error)
 				}
-			} else {
-				VStack {
-					Image(systemName: "star")
-						.resizable()
-						.scaledToFit()
-						.foregroundStyle(.yellow)
-						.frame(width: 50, height: 50)
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading starred projects...")
-					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
 			}
 		}.onAppear {
-			loadStarredProjects()
+			loadProjects()
 		}.refreshable {
-			loadStarredProjects()
+			await reloadProjects()
 		}.navigationTitle("Stars of \(username)")
 	}
 }

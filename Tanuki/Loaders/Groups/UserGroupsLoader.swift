@@ -118,12 +118,12 @@ struct UserGroupsLoader: View {
 
 											VStack(alignment: .leading) {
 												HStack {
-													if let visibility = group
-														.visibility
-													{
+													if let visibility = group.visibility {
 														VisibilityIcon(visibility)
 													}
-													Text(group.name.emojized())
+													if let groupName = group._name?.emojized() {
+														Text(groupName)
+													}
 												}
 
 												HStack(spacing: 10) {

@@ -10,19 +10,14 @@ import GitLabAPI
 import SwiftUI
 
 struct ProjectIssuesLoader: View {
-	// MARK: - Things to load
 	/// Path of project to load issues from
 	private let fullPath: String
 
 	@State
-	private var project: GitLabAPI.ProjectIssuesQuery.Data.Project?
+	private var project: Result<GitLabAPI.ProjectIssuesQuery.Data.Project, Error>? = nil
 
 	@State
-	private var loadFailed = false
-
-	// MARK: - New issue
-	@State
-	private var showNewIssue = false
+	private var isLoading = false
 
 	init(fullPath: String) {
 		self.fullPath = fullPath
@@ -30,52 +25,81 @@ struct ProjectIssuesLoader: View {
 	}
 
 	private func loadIssues() {
-		Network.shared.apollo.fetch(
-			query: ProjectIssuesQuery(fullPath: self.fullPath)
-		) { result in
-			switch result {
-			case .success(let graphQLResult):
-				print("Success! Setting issues...")
-				project = graphQLResult.data?.project
-			case .failure(let error):
-				print("Failure! Error: \(error)")
-				loadFailed = true
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			let responses = try Network.shared.apollo.fetch(
+				query: ProjectIssuesQuery(fullPath: self.fullPath),
+				cachePolicy: .cacheAndNetwork
+			)
+
+			Task {
+				for try await response in responses {
+					if let project = response.data?.project {
+						self.project = .success(project)
+						Notify.status(.success)
+					} else if let errors = response.errors {
+						for error in errors {
+							Notify.status(.error, error.localizedDescription)
+						}
+					}
+				}
 			}
+		} catch let error {
+			self.project = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadIssues() async {
+		do {
+			let response = try await Network.shared.apollo.fetch(
+				query: ProjectIssuesQuery(fullPath: self.fullPath),
+				cachePolicy: .networkOnly
+			)
+
+			if let project = response.data?.project {
+				self.project = .success(project)
+			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.project = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let project = self.project {
-				if project.issuesEnabled ?? false {
-					if (project.issues?.nodes?.count ?? 0) == 0 {
-						VStack {
-							Text("There are no issues")
-						}.frame(maxWidth: .infinity, minHeight: 100)
-					} else {
-						ForEach(project.issues!.nodes!, id: \.self?.iid) {
-							maybeIssue in
-							if let issue = maybeIssue {
-								SmallIssueView(self.fullPath, issue)
+			if isLoading {
+				ProgressView("Loading issues")
+			} else if let project {
+				switch project {
+				case .success(let project):
+					if !(project.issuesEnabled ?? false) {
+						ContentUnavailableView(
+							"Issues are not enabled for this project",
+							systemImage: "smallcircle.circle")
+					} else if let issues = project.issues?.nodes {
+						if issues.isEmpty {
+							ContentUnavailableView(
+								"There are no issues", systemImage: "smallcircle.circle")
+						} else {
+							ForEach(project.issues!.nodes!, id: \.self?.iid) {
+								maybeIssue in
+								if let issue = maybeIssue {
+									SmallIssueView(self.fullPath, issue)
+								}
 							}
 						}
 					}
-				} else {
-					Text("Issues are not enabled for this project")
+				case .failure(let error):
+					FailedView(error.localizedDescription)
 				}
-			} else {
-				VStack {
-					Image(systemName: "smallcircle.circle")
-						.resizable()
-						.scaledToFit()
-						.foregroundStyle(.green)
-						.frame(width: 50, height: 50)
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading issues")
-					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
 			}
 		}.onAppear {
 			loadIssues()
@@ -86,10 +110,7 @@ struct ProjectIssuesLoader: View {
 				#if os(iOS)
 					Haptics.shared.play(.light)
 				#endif
-				showNewIssue = true
 			}
-		}.sheet(isPresented: $showNewIssue) {
-			CreateIssueView(showNewIssue: $showNewIssue)
 		}.navigationTitle("Issues")
 	}
 }

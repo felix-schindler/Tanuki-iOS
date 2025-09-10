@@ -13,85 +13,122 @@ struct UserProjectsLoader: View {
 	private let username: String?
 
 	@State
-	private var memberShipNodes: [ProjectMembership?]? = nil
+	private var projectMemberships: Result<[ProjectMembership?], Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	init(username: String? = nil) {
 		self.username = username
 	}
 
-	private func loadMembershipProjects() {
-		if let user = username {
-			Network.shared.apollo.fetch(
-				query: UserMembershipProjectsQuery(username: user)
-			) {
-				result in
-				switch result {
-				case .success(let graphQLResult):
-					print("Success! Setting projects...")
-					memberShipNodes =
-						graphQLResult.data?.user?.projectMemberships?.nodes
-						?? []
-				case .failure(let error):
-					print("Failure! Error: \(error)")
-					loadFailed = true
-				}
-			}
-		} else {
-			Network.shared.apollo.fetch(
-				query: CurrentUserMembershipProjectsQuery()
-			) {
-				result in
-				switch result {
-				case .success(let graphQLResult):
-					print("Success! Setting projects...")
-					memberShipNodes =
-						graphQLResult.data?.currentUser?.projectMemberships?
-						.nodes
-						?? []
-				case .failure(let error):
-					print("Failure! Error: \(error)")
-					loadFailed = true
-				}
-			}
-		}
-	}
+	private func loadProjects() {
+		isLoading = true
 
-	public var body: some View {
-		List {
-			if let memberShips = self.memberShipNodes {
-				if memberShips.isEmpty {
-					Text("There are no projects")
-				} else {
-					ForEach(memberShips, id: \.?._project?.fullPath) {
-						memberShip in
-						if let project = memberShip?._project {
-							VStack(alignment: .leading) {
-								SmallProjectView(project)
+		defer {
+			isLoading = false
+		}
+
+		do {
+			if let username {
+				let responses = try Network.shared.apollo.fetch(
+					query: UserMembershipProjectsQuery(username: username),
+					cachePolicy: .cacheAndNetwork
+				)
+
+				Task {
+					for try await response in responses {
+						if let projectMemberships = response.data?.user?.projectMemberships?.nodes {
+							self.projectMemberships = .success(projectMemberships)
+							Notify.status(.success)
+						} else if let errors = response.errors {
+							for error in errors {
+								Notify.status(.error, error.localizedDescription)
 							}
 						}
 					}
 				}
 			} else {
-				VStack {
-					Image(systemName: "app.gift.fill")
-						.resizable()
-						.scaledToFit()
-						.foregroundStyle(.gray)
-						.frame(width: 50, height: 50)
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading projects")
+				let responses = try Network.shared.apollo.fetch(
+					query: CurrentUserMembershipProjectsQuery(),
+					cachePolicy: .cacheAndNetwork
+				)
+
+				Task {
+					for try await response in responses {
+						if let projectMemberships = response.data?.currentUser?.projectMemberships?
+							.nodes
+						{
+							self.projectMemberships = .success(projectMemberships)
+							Notify.status(.success)
+						} else if let errors = response.errors {
+							for error in errors {
+								Notify.status(.error, error.localizedDescription)
+							}
+						}
 					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
+				}
+			}
+		} catch let error {
+			self.projectMemberships = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadProjects() async {
+		do {
+			if let username {
+				let response = try await Network.shared.apollo.fetch(
+					query: UserMembershipProjectsQuery(username: username),
+					cachePolicy: .networkOnly
+				)
+
+				if let projectMemberships = response.data?.user?.projectMemberships?.nodes {
+					self.projectMemberships = .success(projectMemberships)
+				}
+			} else {
+				let response = try await Network.shared.apollo.fetch(
+					query: CurrentUserMembershipProjectsQuery(),
+					cachePolicy: .networkOnly
+				)
+
+				if let projectMemberships = response.data?.currentUser?.projectMemberships?.nodes {
+					self.projectMemberships = .success(projectMemberships)
+				}
+			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.projectMemberships = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	public var body: some View {
+		List {
+			if isLoading {
+				ProgressView("Loading projects")
+			} else if let projectMemberships {
+				switch projectMemberships {
+				case .success(let projectMemberships):
+					if projectMemberships.isEmpty {
+						ContentUnavailableView(
+							"There are no projects", systemImage: "app.gift.fill")
+					} else {
+						ForEach(projectMemberships, id: \.?._project?.fullPath) { memberShip in
+							if let project = memberShip?._project {
+								SmallProjectView(project)
+							}
+						}
+					}
+				case .failure(let error):
+					FailedView(error)
+				}
 			}
 		}.onAppear {
-			loadMembershipProjects()
+			loadProjects()
 		}.refreshable {
-			loadMembershipProjects()
+			await reloadProjects()
 		}.navigationTitle("Projects")
 	}
 }

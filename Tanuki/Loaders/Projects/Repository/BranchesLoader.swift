@@ -14,69 +14,76 @@ struct BranchesLoader: View {
 	private var presentationMode: Binding<PresentationMode>
 
 	@State
-	private var branches: [Branch]? = nil
+	private var branches: Result<[Branch], Error>? = nil
 
 	@State
-	private var loadFailed: Bool = false
+	private var isLoading = false
 
 	init(_ projectId: Int) {
 		self.projectId = projectId
 	}
 
+	private func loadBranches() async {
+		do {
+			let temp = try await API.get(
+				type: [Branch].self, endpoint: "projects/\(projectId)/repository/branches")
+
+			self.branches = .success(temp)
+			Notify.status(.success)
+		} catch let error {
+			self.branches = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
 	public var body: some View {
 		List {
-			if branches != nil {
-				if branches!.isEmpty {
-					Text("You'll see your branches after you pushed them")
-				} else {
-					ForEach(branches!, id: \.name) { branch in
-						HStack {
-							VStack(alignment: .leading) {
-								HStack {
-									if branch.protected {
-										Image(systemName: "lock")
-									}
-									Text(branch.name.emojized())
-										.font(.headline)
-								}
-
+			if isLoading {
+				ProgressView("Loading Branches")
+			} else if let branches {
+				switch branches {
+				case .success(let branches):
+					if branches.isEmpty {
+						ContentUnavailableView(
+							"You'll see your branches after you pushed them",
+							systemImage: "chevron.left.forwardslash.chevron.right")
+					} else {
+						ForEach(branches, id: \.name) { branch in
+							HStack {
 								VStack(alignment: .leading) {
 									HStack {
-										Text(branch.commit.shortId)
-											.font(.system(.footnote, design: .monospaced))
-										Text(branch.commit.authoredDate.toString())
+										if branch.protected {
+											Image(systemName: "lock")
+										}
+										Text(branch.name.emojized())
+											.font(.headline)
 									}
-									Text(branch.commit.title.emojized())
-								}.font(.footnote)
+
+									VStack(alignment: .leading) {
+										HStack {
+											Text(branch.commit.shortId)
+												.font(.system(.footnote, design: .monospaced))
+											Text(branch.commit.authoredDate.toString())
+										}
+										Text(branch.commit.title.emojized())
+									}.font(.footnote)
+								}
+								Spacer()
+								// TODO: PipelineLoader(id: id, branch: branch.name)
 							}
-							Spacer()
-							// PipelineLoader(id: id, branch: branch.name)
 						}
 					}
-				}
-			} else {
-				if loadFailed {
-					Text(failedToLoad)
-						.foregroundStyle(.red)
-				} else {
-					ProgressView()
+				case .failure(let error):
+					FailedView(error)
 				}
 			}
 		}.onAppear {
 			Task {
-				try await getBranches()
+				await loadBranches()
 			}
 		}.refreshable {
-			Task {
-				try await getBranches()
-			}
+			await loadBranches()
 		}.navigationTitle("Branches")
-	}
-
-	private func getBranches() async throws {
-		branches = try await API.get(
-			type: [Branch].self, endpoint: "projects/\(projectId)/repository/branches")
-		loadFailed = branches == nil
 	}
 }
 

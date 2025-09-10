@@ -11,6 +11,11 @@ struct FailedView: View {
 	private let icon: String
 	private let msg: String
 
+	init(_ error: Error) {
+		self.icon = "exclamationmark.triangle"
+		self.msg = error.localizedDescription
+	}
+
 	init(_ message: String) {
 		self.icon = "exclamationmark.triangle"
 		self.msg = message

@@ -48,107 +48,132 @@ struct CommitsLoader: View {
 	private var branches: [Branch]? = nil
 
 	@State
-	private var commits: [Commit]? = nil
+	private var commits: Result<[Commit], Error>? = nil
 
 	@State
-	private var loadFailed: Bool = false
+	private var isLoading = false
+
+	private func loadCommits() async {
+		do {
+			let temp = try await API.get(
+				type: [Commit].self,
+				endpoint: "projects/\(projectId)/repository/commits",
+				query: ["ref_name": refName]
+			)
+
+			self.commits = .success(temp)
+			Notify.status(.success)
+		} catch let error {
+			self.commits = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func loadBranches() async {
+		do {
+			self.branches = try await API.get(
+				type: [Branch].self,
+				endpoint: "projects/\(projectId)/repository/branches"
+			)
+		} catch let error {
+			Notify.status(.error, error.localizedDescription)
+		}
+	}
 
 	var body: some View {
 		List {
-			if commits != nil {
-				if commits!.isEmpty {
-					Text("You'll see your commits after you pushed something to branch \(refName)")
-				} else {
-					HStack {
-						Text("On branch")
-						if branches != nil {
-							Picker("", selection: $refName) {
-								ForEach(branches!, id: \.name) { branch in
-									Text(branch.name).tag(branch.name)
-								}
-							}.pickerStyle(.menu)
-								.onChange(of: refName) { _ in
-									Task { try await getCommits() }
-								}
-						} else {
-							Picker("", selection: $refName) {
-								Text(refName).tag(refName)
-							}.pickerStyle(.menu)
-						}
-					}
-					Section("Commits") {
-						ForEach(commits!, id: \.id) { commit in
-							NavigationLink(
-								destination: DiffLoader(
-									projectId: self.projectId, commitSha: commit.id),
-								label: {
-									HStack {
-										VStack(alignment: .leading) {
-											Text(commit.title.emojized())
-												.fontWeight(.medium)
-
-											VStack(alignment: .leading) {
-												HStack {
-													Text(
-														"Authored by \(commit.authorName) at \(commit.authoredDate.toString(.short))"
-													)
-												}.font(.footnote)
-											}
-										}
-										Spacer()
-										VStack {
-											SignatureLoader(
-												projectId: self.projectId, commitId: commit.id)
-											Text(commit.shortId)
-												.textSelection(.enabled)
-												.font(.system(.caption, design: .monospaced))
-										}
-									}.swipeActions {
-										ShareButton(URL(string: commit.webUrl)!)
+			if isLoading {
+				ProgressView("Loading branches and commits")
+			} else if let commits {
+				switch commits {
+				case .success(let commits):
+					if commits.isEmpty {
+						ContentUnavailableView(
+							"You'll see your commits after you pushed something to branch \(refName)",
+							systemImage: "chevron.left.forwardslash.chevron.right"
+						)
+					} else {
+						HStack {
+							Text("On branch")
+							if branches != nil {
+								Picker("", selection: $refName) {
+									ForEach(branches!, id: \.name) { branch in
+										Text(branch.name).tag(branch.name)
 									}
-								}
-							)
+								}.pickerStyle(.menu)
+									.onChange(of: refName) {
+										Task {
+											await loadCommits()
+										}
+									}
+							} else {
+								Picker("", selection: $refName) {
+									Text(refName).tag(refName)
+								}.pickerStyle(.menu)
+							}
+						}
+						Section("Commits") {
+							ForEach(commits, id: \.id) { commit in
+								NavigationLink(
+									destination: DiffLoader(
+										projectId: self.projectId, commitSha: commit.id),
+									label: {
+										HStack {
+											VStack(alignment: .leading) {
+												Text(commit.title.emojized())
+													.fontWeight(.medium)
+
+												VStack(alignment: .leading) {
+													HStack {
+														Text(
+															"Authored by \(commit.authorName) at \(commit.authoredDate.toString(.short))"
+														)
+													}.font(.footnote)
+												}
+											}
+											Spacer()
+											VStack {
+												SignatureLoader(
+													projectId: self.projectId, commitId: commit.id)
+												Text(commit.shortId)
+													.textSelection(.enabled)
+													.font(.system(.caption, design: .monospaced))
+											}
+										}.swipeActions {
+											ShareButton(URL(string: commit.webUrl)!)
+										}
+									}
+								)
+							}
 						}
 					}
-				}
-			} else {
-				if loadFailed {
-					Text(failedToLoad)
-						.foregroundStyle(.red)
-				} else {
-					ProgressView()
+				case .failure(let error):
+					FailedView(error)
 				}
 			}
 		}.onAppear {
 			Task {
-				try await getCommits()
-				try await getBranches()
-				loadFailed = (commits == nil) || (branches == nil)
+				isLoading = true
+
+				defer {
+					isLoading = false
+				}
+
+				await loadCommits()
+				await loadBranches()
 			}
 		}.refreshable {
-			Task {
-				try await getCommits()
-				try await getBranches()
-				loadFailed = (commits == nil) || (branches == nil)
+			isLoading = true
+
+			defer {
+				isLoading = false
 			}
+
+			await loadCommits()
+			await loadBranches()
 		}
 		.navigationTitle("Commits")
 		.headerProminence(.increased)
-	}
-
-	private func getCommits() async throws {
-		commits = try await API.get(
-			type: [Commit].self,
-			endpoint: "projects/\(projectId)/repository/commits",
-			query: ["ref_name": refName]
-		)
-	}
-
-	private func getBranches() async throws {
-		branches = try await API.get(
-			type: [Branch].self,
-			endpoint: "projects/\(projectId)/repository/branches"
-		)
 	}
 }
 

@@ -19,61 +19,80 @@ struct Tag: Codable {
 struct TagsLoader: View {
 	private let projectId: Int
 
-	@State var tags: [Tag]? = nil
-	@State var loadFailed: Bool = false
+	@State
+	private var tags: Result<[Tag], Error>? = nil
+
+	@State
+	private var isLoading = false
 
 	init(_ projectId: Int) {
 		self.projectId = projectId
 	}
 
+	private func loadTags() async {
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			let temp = try await API.get(
+				type: [Tag].self,
+				endpoint: "projects/\(projectId)/repository/tags"
+			)
+
+			self.tags = .success(temp)
+			Notify.status(.success)
+		} catch let error {
+			self.tags = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
 	public var body: some View {
 		List {
-			if tags != nil {
-				if tags!.isEmpty {
-					Text("You'll see your tags after you pushed them")
-				} else {
-					ForEach(tags!, id: \.name) { tag in
-						VStack(alignment: .leading) {
-							Text(tag.name.emojized())
-								.fontWeight(.medium)
-
-							if !tag.message.isEmpty {
-								Markdown(tag.message)
-							}
-
+			if isLoading {
+				ProgressView("Loading Tags")
+			} else if let tags {
+				switch tags {
+				case .success(let tags):
+					if tags.isEmpty {
+						ContentUnavailableView(
+							"You'll see your tags after you pushed them",
+							systemImage: "chevron.left.forwardslash.chevron.right")
+					} else {
+						ForEach(tags, id: \.name) { tag in
 							VStack(alignment: .leading) {
-								HStack(alignment: .top) {
-									Text(tag.commit.shortId)
-										.font(.system(.footnote, design: .monospaced))
-									Text(tag.commit.authoredDate.toString())
+								Text(tag.name.emojized())
+									.fontWeight(.medium)
+
+								if tag.message.isNotEmpty {
+									Markdown(tag.message)
 								}
-								Text(tag.commit.title.emojized())
-							}.font(.footnote)
+
+								VStack(alignment: .leading) {
+									HStack(alignment: .top) {
+										Text(tag.commit.shortId)
+											.font(.system(.footnote, design: .monospaced))
+										Text(tag.commit.authoredDate.toString())
+									}
+									Text(tag.commit.title.emojized())
+								}.font(.footnote)
+							}
 						}
 					}
-				}
-			} else {
-				if loadFailed {
-					Text(failedToLoad)
-				} else {
-					ProgressView()
+				case .failure(let error):
+					FailedView(error)
 				}
 			}
 		}.onAppear {
 			Task {
-				try await getTags()
+				await loadTags()
 			}
 		}.refreshable {
-			Task {
-				try await getTags()
-			}
+			await loadTags()
 		}.navigationTitle("Tags")
-	}
-
-	private func getTags() async throws {
-		tags = try await API.get(
-			type: [Tag].self, endpoint: "projects/\(projectId)/repository/tags")
-		loadFailed = tags == nil
 	}
 }
 

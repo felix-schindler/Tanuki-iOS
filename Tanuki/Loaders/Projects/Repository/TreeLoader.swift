@@ -20,13 +20,13 @@ struct TreeLoader: View {
 
 	// MARK: - Loaded by API
 	@State
-	private var repo: RepoTreeQuery.Data.Project.Repository? = nil
+	private var tree: Result<RepoTreeQuery.Data.Project.Repository.Tree, Error>? = nil
 
 	@State
 	private var branches: [Branch]? = nil
 
 	@State
-	private var loadFailed: Bool = false
+	private var isLoading = false
 
 	init(projectId: Int, fullPath: String, refName: String, folderPath: String? = nil) {
 		self.projectId = projectId
@@ -36,6 +36,12 @@ struct TreeLoader: View {
 	}
 
 	private func loadTree() {
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
 		let ref: GraphQLNullable<String>
 		let path: GraphQLNullable<String>
 
@@ -47,37 +53,82 @@ struct TreeLoader: View {
 			path = .none
 		}
 
-		Network.shared.apollo.fetch(
-			query: RepoTreeQuery(
-				fullPath: self.fullPath,
-				ref: ref,
-				path: path
+		do {
+			let responses = try Network.shared.apollo.fetch(
+				query: RepoTreeQuery(
+					fullPath: self.fullPath,
+					ref: ref,
+					path: path
+				),
+				cachePolicy: .cacheAndNetwork
 			)
-		) {
-			result in
-			switch result {
-			case .success(let graphQLResult):
-				print("Success! Setting file tree...")
-				self.repo = graphQLResult.data?.project?.repository
-			case .failure(let error):
-				print("Failure! Error: \(error)")
-				self.loadFailed = true
+
+			Task {
+				for try await response in responses {
+					if let tree = response.data?.project?.repository?.tree {
+						self.tree = .success(tree)
+						Notify.status(.success)
+					} else if let errors = response.errors {
+						for error in errors {
+							Notify.status(.error, error.localizedDescription)
+						}
+					}
+				}
 			}
+		} catch let error {
+			Notify.status(.error, error.localizedDescription)
 		}
 	}
 
-	private func getBranches() async throws {
-		branches = try await API.get(
-			type: [Branch].self,
-			endpoint: "projects/\(self.projectId)/repository/branches"
-		)
+	private func reloadTree() async {
+		let ref: GraphQLNullable<String>
+		let path: GraphQLNullable<String>
+
+		ref = .some(refName)
+
+		if let filePath = self.folderPath {
+			path = .some(filePath)
+		} else {
+			path = .none
+		}
+
+		do {
+			let response = try await Network.shared.apollo.fetch(
+				query: RepoTreeQuery(
+					fullPath: self.fullPath,
+					ref: ref,
+					path: path
+				),
+				cachePolicy: .networkOnly
+			)
+
+			if let tree = response.data?.project?.repository?.tree {
+				self.tree = .success(tree)
+			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.tree = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func loadBranches() async {
+		do {
+			self.branches = try await API.get(
+				type: [Branch].self,
+				endpoint: "projects/\(self.projectId)/repository/branches"
+			)
+		} catch let error {
+			Notify.status(.error, error.localizedDescription)
+		}
 	}
 
 	public var body: some View {
 		List {
 			if self.folderPath == nil {
 				Section {
-					if let branches = self.branches {
+					if let branches {
 						HStack {
 							Picker("Branch: ", selection: $refName) {
 								ForEach(branches, id: \.name) { branch in
@@ -85,83 +136,70 @@ struct TreeLoader: View {
 								}
 							}
 							.pickerStyle(.menu)
-							.onChange(of: refName) { _ in
-								// Show loading state
-								self.repo = nil
+							.onChange(of: refName) {
 								loadTree()
 							}
 						}
-					} else {
-						VStack(alignment: .leading) {
-							if loadFailed {
-								Text(failedToLoad)
-							} else {
-								ProgressView("Loading branches")
-							}
-						}.frame(maxWidth: .infinity)
 					}
 				}
 			}
 
 			Section("Tree") {
-				if let tree = self.repo?.tree {
-					if let folders = tree.trees.nodes {
-						ForEach(folders, id: \.?.path) { maybeFolder in
-							if let folder = maybeFolder {
-								NavigationLink(
-									destination: TreeLoader(
-										projectId: self.projectId,
-										fullPath: self.fullPath,
-										refName: self.refName,
-										folderPath: folder.path
-									),
-									label: {
-										Label(folder.name, systemImage: "folder")
-									}
-								)
+				if isLoading {
+					ProgressView("Loading file tree")
+				} else if let tree {
+					switch tree {
+					case .success(let tree):
+						if let folders = tree.trees.nodes {
+							ForEach(folders, id: \.?.path) { maybeFolder in
+								if let folder = maybeFolder {
+									NavigationLink(
+										destination: TreeLoader(
+											projectId: self.projectId,
+											fullPath: self.fullPath,
+											refName: self.refName,
+											folderPath: folder.path
+										),
+										label: {
+											Label(folder.name, systemImage: "folder")
+										}
+									)
+								}
 							}
 						}
-					}
 
-					if let files = tree.blobs.nodes {
-						ForEach(files, id: \.?.path) { maybeFile in
-							if let file = maybeFile {
-								NavigationLink(
-									destination: FileLoader(
-										id: projectId,
-										filePath: file.path,
-										refName: self.refName
-									),
-									label: {
-										Label(file.name, systemImage: "doc.text")
-									}
-								)
+						if let files = tree.blobs.nodes {
+							ForEach(files, id: \.?.path) { maybeFile in
+								if let file = maybeFile {
+									NavigationLink(
+										destination: FileLoader(
+											id: projectId,
+											filePath: file.path,
+											refName: self.refName
+										),
+										label: {
+											Label(file.name, systemImage: "doc.text")
+										}
+									)
+								}
 							}
 						}
+					case .failure(let error):
+						FailedView(error)
 					}
-				} else {
-					VStack {
-						if loadFailed {
-							Text(failedToLoad)
-						} else {
-							ProgressView("Loading file tree")
-						}
-					}.frame(maxWidth: .infinity, minHeight: 100)
 				}
 			}
 		}.onAppear {
 			loadTree()
 			Task {
-				try await getBranches()
+				await loadBranches()
 			}
 		}.refreshable {
-			Task {
-				loadTree()
-				if folderPath == nil {
-					try await getBranches()
-				}
+			await reloadTree()
+			if folderPath == nil {
+				await loadBranches()
 			}
-		}.navigationTitle(folderPath != nil ? folderPath! : "Files")
+		}.navigationTitle(folderPath ?? "Files")
 	}
 }
 

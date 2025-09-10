@@ -26,20 +26,25 @@ struct SignatureLoader: View {
 
 	public var body: some View {
 		VStack {
-			if signature != nil && signature!.verificationStatus.starts(with: "verified") {
+			if let signature, signature.verificationStatus.starts(with: "verified") {
 				RoundIconButton("Show signature", icon: "checkmark.seal") {
 					showDetails = true
-				}.tint(.green)
-					.controlSize(.mini)
+				}
+				.tint(.green)
+				.controlSize(.mini)
 			} else {
 				EmptyView()
 			}
 		}.onAppear {
 			Task {
-				signature = try await API.get(
-					type: CommitSignature.self,
-					endpoint: "projects/\(projectId)/repository/commits/\(commitId)/signature"
-				)
+				do {
+					self.signature = try await API.get(
+						type: CommitSignature.self,
+						endpoint: "projects/\(projectId)/repository/commits/\(commitId)/signature"
+					)
+				} catch let error {
+					Notify.status(.error, error.localizedDescription)
+				}
 			}
 		}.sheet(isPresented: $showDetails) {
 			VStack(alignment: .leading) {

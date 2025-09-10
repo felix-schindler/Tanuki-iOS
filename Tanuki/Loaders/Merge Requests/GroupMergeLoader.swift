@@ -12,49 +12,83 @@ struct GroupMergeLoader: View {
 	private let fullPath: String
 
 	@State
-	private var mergeRequests: [SmallMergeRequest?]? = nil
+	private var mergeRequests: Result<[SmallMergeRequest?], Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
 
 	private func loadMergeRequests() {
-		Network.shared.apollo.fetch(query: GroupMergeRequestsQuery(fullPath: self.fullPath)) {
-			result in
-			switch result {
-			case .success(let graphQLResult):
-				print("Success! Setting merge requests...")
-				mergeRequests = graphQLResult.data?.group?.mergeRequests?.nodes
-			case .failure(let error):
-				print("Failure! Error: \(error)")
-				loadFailed = true
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			let responses = try Network.shared.apollo.fetch(
+				query: GroupMergeRequestsQuery(fullPath: self.fullPath),
+				cachePolicy: .cacheAndNetwork
+			)
+
+			Task {
+				for try await response in responses {
+					if let mrs = response.data?.group?.mergeRequests?.nodes {
+						self.mergeRequests = .success(mrs)
+						Notify.status(.success)
+					} else if let errors = response.errors {
+						for error in errors {
+							Notify.status(.error, error.localizedDescription)
+						}
+					}
+				}
 			}
+		} catch let error {
+			self.mergeRequests = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadMergeRequests() async {
+		do {
+			let response = try await Network.shared.apollo.fetch(
+				query: GroupMergeRequestsQuery(fullPath: self.fullPath),
+				cachePolicy: .networkOnly
+			)
+
+			if let mrs = response.data?.group?.mergeRequests?.nodes {
+				self.mergeRequests = .success(mrs)
+			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.mergeRequests = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let mergeRequests = self.mergeRequests {
-				if mergeRequests.isEmpty {
-					Text("There are no merge requests")
-				} else {
-					ForEach(mergeRequests, id: \.?.reference) { maybeMerge in
-						if let mr = maybeMerge {
-							SmallMergeView(self.fullPath, mr)
+			if isLoading {
+				ProgressView("Loading merge requests")
+			} else if let mergeRequests {
+				switch mergeRequests {
+				case .success(let mrs):
+					if mrs.isEmpty {
+						ContentUnavailableView("There are no merge requests", systemImage: "")
+					} else {
+						ForEach(mrs, id: \.?.reference) { maybeMerge in
+							if let mr = maybeMerge {
+								SmallMergeView(self.fullPath, mr)
+							}
 						}
 					}
+				case .failure(let error):
+					FailedView(error.localizedDescription)
 				}
-			} else {
-				VStack {
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading merge requests")
-					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
 			}
 		}.onAppear {
 			loadMergeRequests()

@@ -13,28 +13,61 @@ struct GroupProjectsLoader: View {
 	private let fullPath: String
 
 	@State
-	private var projects: [GroupProjectsQuery.Data.Group.Projects.Node?]? = nil
+	private var projects: Result<[GroupProjectsQuery.Data.Group.Projects.Node?], Error>? = nil
 
 	@State
-	private var loadFailed = false
+	private var isLoading = false
 
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
 
-	private func loadGroupProjects() {
-		Network.shared.apollo.fetch(
-			query: GroupProjectsQuery(fullPath: self.fullPath)
-		) {
-			result in
-			switch result {
-			case .success(let graphQLResult):
-				print("Success! Setting projects...")
-				projects = graphQLResult.data?.group?.projects.nodes
-			case .failure(let error):
-				print("Failure! Error: \(error)")
-				loadFailed = true
+	private func loadProjects() {
+		isLoading = true
+
+		defer {
+			isLoading = false
+		}
+
+		do {
+			let responses = try Network.shared.apollo.fetch(
+				query: GroupProjectsQuery(fullPath: self.fullPath),
+				cachePolicy: .cacheAndNetwork
+			)
+
+			Task {
+				for try await response in responses {
+					if let projects = response.data?.group?.projects.nodes {
+						self.projects = .success(projects)
+						Notify.status(.success)
+					} else if let errors = response.errors {
+						for error in errors {
+							Notify.status(.error, error.localizedDescription)
+						}
+					}
+				}
 			}
+		} catch let error {
+			self.projects = .failure(error)
+			Notify.status(.error)
+		}
+	}
+
+	private func reloadProjects() async {
+		do {
+			let response = try await Network.shared.apollo.fetch(
+				query: GroupProjectsQuery(fullPath: self.fullPath),
+				cachePolicy: .networkOnly
+			)
+
+			if let projects = response.data?.group?.projects.nodes {
+				self.projects = .success(projects)
+			}
+
+			Notify.status(.success)
+		} catch let error {
+			self.projects = .failure(error)
+			Notify.status(.error)
 		}
 	}
 
@@ -50,34 +83,31 @@ struct GroupProjectsLoader: View {
 
 	var main: some View {
 		List {
-			if let projects = self.projects {
-				if projects.isEmpty {
-					Text("The group \(self.fullPath) doesn't have any projects")
-				} else {
-					ForEach(projects, id: \.self?.fullPath) { maybeProject in
-						if let project = maybeProject {
-							SmallProjectView(project)
+			if isLoading {
+				ProgressView("Loading projects")
+			} else if let projects {
+				switch projects {
+				case .success(let projects):
+					if projects.isEmpty {
+						ContentUnavailableView(
+							"The group \(self.fullPath) doesn't have any projects",
+							systemImage: "app.gift.fill"
+						)
+					} else {
+						ForEach(projects, id: \.self?.fullPath) { maybeProject in
+							if let project = maybeProject {
+								SmallProjectView(project)
+							}
 						}
 					}
+				case .failure(let error):
+					FailedView(error.localizedDescription)
 				}
-			} else {
-				VStack {
-					Image(systemName: "app.gift.fill")
-						.resizable()
-						.scaledToFit()
-						.foregroundStyle(.gray)
-						.frame(width: 50, height: 50)
-					if loadFailed {
-						Text(failedToLoad)
-					} else {
-						ProgressView("Loading projects")
-					}
-				}.frame(maxWidth: .infinity, minHeight: 100)
 			}
 		}.onAppear {
-			loadGroupProjects()
+			loadProjects()
 		}.refreshable {
-			loadGroupProjects()
+			await reloadProjects()
 		}.navigationTitle("Projects")
 	}
 }
