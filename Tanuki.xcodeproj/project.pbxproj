@@ -62,6 +62,7 @@
 		DC2705012B8BC0FB003DAA84 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC2705002B8BC0FB003DAA84 /* Preview Assets.xcassets */; };
 		DC27050D2B8BC351003DAA84 /* CurrentUserStarredProjects.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC27050C2B8BC351003DAA84 /* CurrentUserStarredProjects.graphql */; };
 		DC2705112B8BC507003DAA84 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2705102B8BC507003DAA84 /* Network.swift */; };
+		DC31F2792E71CD96005F31A2 /* NewProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31F2782E71CD96005F31A2 /* NewProjectView.swift */; };
 		DC32765E2B9B4FAF00B51EEE /* CurrentUserTodos.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC32765D2B9B4FAF00B51EEE /* CurrentUserTodos.graphql */; };
 		DC3276602B9B4FDE00B51EEE /* UserTodos.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC32765F2B9B4FDE00B51EEE /* UserTodos.graphql */; };
 		DC3276632B9B503500B51EEE /* CurrentUserTodosLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3276622B9B503500B51EEE /* CurrentUserTodosLoader.swift */; };
@@ -198,6 +199,7 @@
 		DC2705002B8BC0FB003DAA84 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DC27050C2B8BC351003DAA84 /* CurrentUserStarredProjects.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CurrentUserStarredProjects.graphql; sourceTree = "<group>"; };
 		DC2705102B8BC507003DAA84 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		DC31F2782E71CD96005F31A2 /* NewProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProjectView.swift; sourceTree = "<group>"; };
 		DC32765D2B9B4FAF00B51EEE /* CurrentUserTodos.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CurrentUserTodos.graphql; sourceTree = "<group>"; };
 		DC32765F2B9B4FDE00B51EEE /* UserTodos.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserTodos.graphql; sourceTree = "<group>"; };
 		DC3276622B9B503500B51EEE /* CurrentUserTodosLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserTodosLoader.swift; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 				DC3A24592B8C4C8F00DB0E3F /* Core */,
 				DC6C5D9D2B8F08F900587850 /* Loaders */,
 				DC6C5D9C2B8F08F500587850 /* Views */,
+				DC31F2762E71B197005F31A2 /* Forms */,
 				DC2704FF2B8BC0FB003DAA84 /* Preview Content */,
 			);
 			path = Tanuki;
@@ -432,6 +435,41 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DC31F2762E71B197005F31A2 /* Forms */ = {
+			isa = PBXGroup;
+			children = (
+				DC31F2782E71CD96005F31A2 /* NewProjectView.swift */,
+			);
+			path = Forms;
+			sourceTree = "<group>";
+		};
+		DC31F27A2E71DC59005F31A2 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				DC6C5D992B8F089D00587850 /* GraphTypes.swift */,
+				DCEFB2682B94C2C100F4B245 /* RestTypes.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		DC31F27B2E71DC8E005F31A2 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				DC2705102B8BC507003DAA84 /* Network.swift */,
+				DCEFB26A2B94C37600F4B245 /* API.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		DC31F27C2E71DC99005F31A2 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				DCEB20B32BD61A9A00393A44 /* Notify.swift */,
+				DC217DD22B8FCC8A00F081BC /* Haptics.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		DC32765C2B9B4F9C00B51EEE /* Todos */ = {
@@ -492,15 +530,12 @@
 		DC3A24592B8C4C8F00DB0E3F /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				DCEFB26A2B94C37600F4B245 /* API.swift */,
-				DC2705102B8BC507003DAA84 /* Network.swift */,
+				DC31F27C2E71DC99005F31A2 /* Notifications */,
+				DC31F27B2E71DC8E005F31A2 /* Networking */,
+				DC31F27A2E71DC59005F31A2 /* Types */,
 				DC3A244E2B8C3B8100DB0E3F /* Utils.swift */,
 				DC6C5DB22B8F8BBF00587850 /* EmojiCodes.swift */,
 				DCD40E172BC2B2960055EE4C /* FileExtensions.swift */,
-				DCEB20B32BD61A9A00393A44 /* Notify.swift */,
-				DC217DD22B8FCC8A00F081BC /* Haptics.swift */,
-				DC6C5D992B8F089D00587850 /* GraphTypes.swift */,
-				DCEFB2682B94C2C100F4B245 /* RestTypes.swift */,
 				DC33C27A2B9C22F200C99B85 /* MarkdownTheme.swift */,
 			);
 			path = Core;
@@ -840,6 +875,7 @@
 				DC386A9A2B8D86C4002E5F6D /* NoteView.swift in Sources */,
 				DC69F1542B95A2DE00F09269 /* ProjectReleasesLoader.swift in Sources */,
 				DC3276652B9B503C00B51EEE /* UserTodosLoader.swift in Sources */,
+				DC31F2792E71CD96005F31A2 /* NewProjectView.swift in Sources */,
 				DC1C37E42B9994B1005B7D7A /* GroupEpicsLoader.swift in Sources */,
 				DC1D10062B996C5300B6F5D7 /* SmallIssueView.swift in Sources */,
 				DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */,
@@ -1029,7 +1065,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 2.0;
-				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki;
+				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
@@ -1074,7 +1110,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 2.0;
-				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki;
+				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
