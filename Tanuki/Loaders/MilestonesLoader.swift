@@ -81,7 +81,7 @@ struct MilestonesLoader: View {
 		}
 	}
 
-	private func reloadTimelogs() async {
+	private func reloadMilestones() async {
 		do {
 			switch self.queryType {
 			case .group:
@@ -157,7 +157,7 @@ struct MilestonesLoader: View {
 		}.onAppear {
 			loadMilestones()
 		}.refreshable {
-			loadMilestones()
+			await reloadMilestones()
 		}.navigationTitle("Milestones")
 	}
 }
