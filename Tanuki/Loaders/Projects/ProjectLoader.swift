@@ -188,19 +188,20 @@ struct ProjectLoader: View {
 			}
 
 			Section("Actions") {
-				if project == nil || (project!.issuesEnabled ?? false) {
+				if project?.issuesEnabled ?? true {
 					NavigationLink(
 						destination: ProjectIssuesLoader(
-							fullPath: self.fullPath),
+							fullPath: self.fullPath
+						),
 						label: {
 							Label(
 								title: {
-									Text("Issues")
-									Spacer()
-									if project != nil {
-										Text(
-											String(
-												project!.openIssuesCount ?? 0))
+									HStack {
+										Text("Issues")
+										Spacer()
+										if let project {
+											Text("\(project.openIssuesCount ?? 0)")
+										}
 									}
 								},
 								icon: {
@@ -211,26 +212,25 @@ struct ProjectLoader: View {
 					)
 				}
 
-				if project == nil || (project!.mergeRequestsEnabled ?? false) {
+				if project?.mergeRequestsEnabled ?? true {
 					NavigationLink(
-						destination: ProjectMergeLoader(
-							fullPath: self.fullPath),
+						destination: ProjectMergeLoader(fullPath: self.fullPath),
 						label: {
 							Label(
 								title: {
-									Text("Merge Requests")
-									Spacer()
-									if project != nil {
-										Text(
-											String(
-												project!.openMergeRequestsCount
-													?? 0))
+									HStack {
+										Text("Merge Requests")
+										Spacer()
+										if let project {
+											Text("\(project.openMergeRequestsCount ?? 0)")
+										}
 									}
 								},
 								icon: {
 									Image(systemName: "arrow.triangle.pull")
 										.foregroundStyle(.blue)
-								})
+								}
+							)
 						}
 					)
 				}
