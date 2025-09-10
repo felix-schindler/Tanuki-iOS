@@ -151,7 +151,7 @@ struct MilestonesLoader: View {
 						}
 					}
 				case .failure(let error):
-					FailedView(error.localizedDescription)
+					FailedView(error)
 				}
 			}
 		}.onAppear {

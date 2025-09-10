@@ -94,7 +94,7 @@ struct MrCommitsLoader: View {
 							systemImage: "circle.and.line.horizontal")
 					}
 				case .failure(let error):
-					FailedView(error.localizedDescription)
+					FailedView(error)
 				}
 			}
 		}.onAppear {

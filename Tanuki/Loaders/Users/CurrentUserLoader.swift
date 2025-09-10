@@ -69,7 +69,7 @@ struct CurrentUserLoader: View {
 				case .success(let user):
 					UserView(user)
 				case .failure(let error):
-					FailedView(error.localizedDescription)
+					FailedView(error)
 				}
 			}
 		}.onAppear {

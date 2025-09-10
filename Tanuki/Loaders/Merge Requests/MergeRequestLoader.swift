@@ -553,7 +553,7 @@ struct MergeRequestLoader: View {
 							"Can't find merge request", systemImage: "arrow.triangle.pull")
 					}
 				case .failure(let error):
-					FailedView(error.localizedDescription)
+					FailedView(error)
 				}
 			}
 		}.onAppear {

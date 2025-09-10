@@ -221,7 +221,7 @@ struct MembersLoader: View {
 						}
 					}
 				case .failure(let error):
-					FailedView(error.localizedDescription)
+					FailedView(error)
 				}
 
 			}

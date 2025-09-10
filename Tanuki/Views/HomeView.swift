@@ -167,7 +167,7 @@ struct HomeView: View {
 							}
 						}
 					case .failure(let error):
-						FailedView(error.localizedDescription)
+						FailedView(error)
 							.frame(maxWidth: .infinity, minHeight: 100)
 					}
 				}

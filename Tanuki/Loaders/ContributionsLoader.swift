@@ -80,7 +80,7 @@ struct ContributionsLoader: View {
 					.chartXAxis(.hidden)
 					.frame(height: self.height)
 				case .failure(let error):
-					FailedView(error.localizedDescription)
+					FailedView(error)
 				}
 			}
 		}.onAppear {

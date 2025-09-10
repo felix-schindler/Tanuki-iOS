@@ -8,35 +8,24 @@
 import SwiftUI
 
 struct FailedView: View {
-	private let icon: String
 	private let msg: String
+	private let icon: String
 
 	init(_ error: Error) {
 		self.icon = "exclamationmark.triangle"
 		self.msg = error.localizedDescription
 	}
 
-	init(_ message: String) {
-		self.icon = "exclamationmark.triangle"
-		self.msg = message
-	}
-
 	init(
 		_ message: String = "Failed to load. Please make sure you're connected to the internet.",
 		icon: String = "exclamationmark.triangle"
 	) {
-		self.icon = icon
 		self.msg = message
+		self.icon = icon
 	}
 
 	public var body: some View {
 		ContentUnavailableView(msg, systemImage: icon)
 			.foregroundStyle(.red)
-	}
-}
-
-#Preview {
-	List {
-		FailedView("short")
 	}
 }

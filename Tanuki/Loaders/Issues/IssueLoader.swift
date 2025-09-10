@@ -374,7 +374,7 @@ struct IssueLoader: View {
 							"Issue was not found", systemImage: "smallcircle.circle")
 					}
 				case .failure(let error):
-					FailedView(error.localizedDescription)
+					FailedView(error)
 				}
 			}
 		}.onAppear {

@@ -352,7 +352,7 @@ struct EpicLoader: View {
 						ContentUnavailableView("Epic not found", systemImage: "")
 					}
 				case .failure(let error):
-					FailedView(error.localizedDescription)
+					FailedView(error)
 				}
 			}
 		}.onAppear {
