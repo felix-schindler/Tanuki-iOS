@@ -21,19 +21,21 @@ struct SignatureLoader: View {
 		self.commitId = commitId
 	}
 
-	@State private var signature: CommitSignature?
+	@State private var signature: CommitSignature? = nil
 	@State private var showDetails = false
 
 	public var body: some View {
 		VStack {
-			if let signature, signature.verificationStatus.starts(with: "verified") {
-				RoundIconButton("Show signature", icon: "checkmark.seal") {
-					showDetails = true
+			if let signature {
+				if signature.verificationStatus.starts(with: "verified") {
+					RoundIconButton("Show signature", icon: "checkmark.seal") {
+						showDetails = true
+					}
+					.tint(.green)
+					.controlSize(.mini)
+				} else {
+					EmptyView()
 				}
-				.tint(.green)
-				.controlSize(.mini)
-			} else {
-				EmptyView()
 			}
 		}.onAppear {
 			Task {
@@ -46,36 +48,29 @@ struct SignatureLoader: View {
 					Notify.status(.error, error.localizedDescription)
 				}
 			}
-		}.sheet(isPresented: $showDetails) {
+		}.sheet(
+			isPresented: $showDetails,
+			onDismiss: {
+				self.showDetails = false
+			}
+		) {
 			VStack(alignment: .leading) {
-				if signature!.verificationStatus.starts(with: "verified") {
-					if signature!.verificationStatus == "verified_system" {
-						Text(
-							"This commit was created in the GitLab UI, and signed with a GitLab-verified signature."
-						)
-					} else {
-						Text(
-							"This commit was signed using \(signature!.signatureType) with a verified signature and the committer email was verified to belong to the same user."
-						)
+				if let signature {
+					if signature.verificationStatus.starts(with: "verified") {
+						if signature.verificationStatus == "verified_system" {
+							Text(
+								"This commit was created in the GitLab UI, and signed with a GitLab-verified signature."
+							)
+						} else {
+							Text(
+								"This commit was signed using \(signature.signatureType) with a verified signature and the committer email was verified to belong to the same user."
+							)
+						}
 					}
 				}
-
-				Spacer()
-
-				Button(
-					role: .cancel,
-					action: {
-						showDetails = false
-					},
-					label: {
-						Text("Close")
-							.frame(maxWidth: .infinity)
-					}
-				).foregroundStyle(.secondary)
-					.buttonStyle(.bordered)
-					.controlSize(.large)
-			}.padding()
-				.presentationDetents([.fraction(0.25)])
+			}
+			.padding()
+			.presentationDetents([.fraction(0.139712), .medium])
 		}
 	}
 }
