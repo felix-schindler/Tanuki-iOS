@@ -67,6 +67,13 @@ class EmojiHelper {
 	}
 }
 
+// MARK: - Array helpers
+extension Array {
+	var isNotEmpty: Bool {
+		return !self.isEmpty
+	}
+}
+
 // MARK: - String helpers
 extension String {
 	var isNotEmpty: Bool {
