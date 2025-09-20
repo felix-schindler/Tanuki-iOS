@@ -10,6 +10,9 @@ import MarkdownUI
 import SwiftUI
 
 struct SnippetLoader: View {
+	@Environment(\.colorScheme)
+	private var colorScheme: ColorScheme
+
 	private let id: String
 
 	@State
@@ -116,22 +119,19 @@ struct SnippetLoader: View {
 								.markdownTheme(.gitLab)
 						}
 					}
-
-					if (snippet.blobs?.nodes?.count ?? 0) > 0 {
-						ForEach(
-							snippet.blobs!.nodes!,
-							id: \.self?.name
-						) { file in
-							if file != nil && file!.rawPlainData != nil {
-								Section(
-									"\(file!.name ?? "File") (\(file!.size) B)"
-								) {
-									Markdown(
-										"""
-										```txt
-										\(file!.rawPlainData!.trimmingCharacters(in: .whitespacesAndNewlines))
-										```
-										""")
+					
+					if let blobs = snippet.blobs?.nodes, blobs.isNotEmpty {
+						ForEach(blobs, id: \.self?.name) { file in
+							if let file {
+								Section("\(file.name ?? "File") (\(file.size) B)") {
+									if let contents = file.rawPlainData?.trimmingCharacters(in: .whitespacesAndNewlines), contents.isNotEmpty {
+										CodeTextView(
+											contents,
+											language: String(file.name?.split(separator: ".").last ?? "unknown"),
+											colorScheme: self.colorScheme,
+											fontSize: 12
+										)
+									}
 								}
 							}
 						}
@@ -181,54 +181,40 @@ struct SnippetLoader: View {
 		}.refreshable {
 			await reloadSnippet()
 		}.toolbar {
-			if let snippet {
-				switch snippet {
-				case .success(let snippet):
-					Menu(
-						content: {
-							Section {
-								if let url = URL(string: snippet.webUrl) {
-									ShareButton(url)
-								}
-							}
-
-							let showCloneSection =
-								(snippet.httpUrlToRepo != nil
-									|| snippet.sshUrlToRepo != nil)
-
-							if showCloneSection {
-								Section("Clone Code") {
-									if let httpUrl = snippet.httpUrlToRepo {
-										Button(
-											"Copy HTTP url",
-											systemImage: "doc.on.doc"
-										) {
-											httpUrl.copyToClipboard()
-										}
-									}
-
-									if let sshUrl = snippet.sshUrlToRepo {
-										Button(
-											"Copy SSH url",
-											systemImage: "doc.on.doc"
-										) {
-											sshUrl.copyToClipboard()
-										}
-									}
-								}
-							}
-						},
-						label: {
-							Label("More", systemImage: "ellipsis")
-								.frame(width: 16, height: 16)
+			if let snippet, case .success(let snippet) = snippet {
+				Menu("More", systemImage: "ellipsis") {
+					if let url = URL(string: snippet.webUrl) {
+						Section {
+							ShareButton(url)
 						}
-					)
-					.menuStyle(.button)
-					.buttonStyle(.bordered)
-					.clipShape(Circle())
-				case .failure:
-					EmptyView()
-				}
+					}
+
+					let showCloneSection =
+						(snippet.httpUrlToRepo != nil
+							|| snippet.sshUrlToRepo != nil)
+
+					if showCloneSection {
+						Section("Clone Code") {
+							if let httpUrl = snippet.httpUrlToRepo {
+								Button(
+									"Copy HTTP url",
+									systemImage: "doc.on.doc"
+								) {
+									httpUrl.copyToClipboard()
+								}
+							}
+
+							if let sshUrl = snippet.sshUrlToRepo {
+								Button(
+									"Copy SSH url",
+									systemImage: "doc.on.doc"
+								) {
+									sshUrl.copyToClipboard()
+								}
+							}
+						}
+					}
+				}.menuStyle(.button)
 			}
 		}.scrollDismissesKeyboard(.immediately)
 	}
