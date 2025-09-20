@@ -1,14 +1,13 @@
 //
-//  SetupView.swift
+//  ConfigView.swift
 //  Tanuki
 //
-//  Created by Felix Schindler on 16.03.24.
+//  Created by Felix Schindler on 11.09.25.
 //
 
-import MarkdownUI
 import SwiftUI
 
-struct SetupView: View {
+struct ConfigView: View {
 	@State
 	private var newHost = API.host
 
@@ -17,19 +16,6 @@ struct SetupView: View {
 
 	var body: some View {
 		VStack {
-			Spacer()
-
-			#if os(iOS)
-				if let icon = UIImage(named: "AppIcon") {
-					Image(uiImage: icon)
-						.resizable()
-						.scaledToFit()
-						.cornerRadius(15)
-						.frame(maxWidth: 100, maxHeight: 100)
-				}
-			#endif
-			Text("Welcome to **Tanuki for GitLab**")
-
 			Spacer()
 
 			Label("GitLab URL", systemImage: "link")
@@ -61,20 +47,24 @@ struct SetupView: View {
 					Notify.status(.success)
 				},
 				label: {
-					Text("Save config")
+					Label("Save config", systemImage: "checkmark")
 						.frame(maxWidth: .infinity)
 				}
 			)
-			.tint(.green)
+			.tint(.accentColor)
+			.buttonBorderShape(.capsule)
 			.buttonStyle(.bordered)
 			.controlSize(.large)
 		}
 		.padding()
 		.textFieldStyle(.roundedBorder)
 		.scrollDismissesKeyboard(.immediately)
+		.navigationTitle("Self-Hosted")
 	}
 }
 
 #Preview {
-	SetupView()
+	NavigationStack {
+		ConfigView()
+	}
 }
