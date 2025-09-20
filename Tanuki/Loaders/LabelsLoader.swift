@@ -111,20 +111,26 @@ struct LabelsLoader: View {
 			} else if let labels {
 				switch labels {
 				case .success(let labels):
-					ForEach(labels, id: \.?.id) { maybeLabel in
-						if let label = maybeLabel {
-							VStack(alignment: .leading) {
-								ScrollView(.horizontal) {
-									PillView(
-										label.title.emojized(),
-										bgColor: Color(hex: label.color),
-										fgColor: Color(hex: label.textColor)
-									)
-								}
+					if labels.isEmpty {
+						ContentUnavailableView("There are no labels", systemImage: "person.2")
+					} else {
+						ForEach(labels, id: \.?.id) { maybeLabel in
+							if let label = maybeLabel {
+								VStack(alignment: .leading) {
+									ScrollView(.horizontal) {
+										PillView(
+											label.title.emojized(),
+											bgColor: Color(hex: label.color),
+											fgColor: Color(hex: label.textColor)
+										)
+									}
 
-								if label.description?.isNotEmpty ?? false {
-									Markdown(label.description!)
-										.markdownTheme(.gitLab)
+									if let description = label.description,
+										description.isNotEmpty
+									{
+										Markdown(description)
+											.markdownTheme(.gitLab)
+									}
 								}
 							}
 						}
@@ -136,7 +142,16 @@ struct LabelsLoader: View {
 		}.onAppear {
 			loadLabels()
 		}.refreshable {
-			loadLabels()
+			await reloadLabels()
+		}.toolbar {
+			if let labels, case .success = labels {
+				NavigationLink(
+					destination: NewLabelView(id: 1, groupId: 1),
+					label: {
+						Label("New label", systemImage: "plus")
+					}
+				).tint(.accentColor)
+			}
 		}.navigationTitle("Labels")
 	}
 }

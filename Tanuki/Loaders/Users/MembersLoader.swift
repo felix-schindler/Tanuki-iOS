@@ -23,12 +23,6 @@ struct MembersLoader: View {
 	@State
 	private var isLoading = false
 
-	@State
-	private var showNewMember = false
-
-	@State
-	private var newMemberUsername = ""
-
 	init(fullPath: String, type: MemberType) {
 		self.fullPath = fullPath
 		self.queryType = type
@@ -224,41 +218,16 @@ struct MembersLoader: View {
 
 			}
 		}.toolbar {
-			RoundIconButton("Add new member", icon: "person.badge.plus") {
-				showNewMember = true
-				Haptics.shared.play(.light)
-			}
-		}.sheet(isPresented: $showNewMember) {
-			VStack {
-				PopupHeader(
-					title: "New Member",
-					onClose: {
-						showNewMember = false
-					})
-				TextField("Username", text: $newMemberUsername)
-				Spacer()
-				Button(
-					action: {
-						newMemberUsername = ""
-						showNewMember = false
-						Notify.status(.success)
-					},
-					label: {
-						Text("Add member")
-							.frame(maxWidth: .infinity)
-					}
-				)
-				.tint(.green)
-				.buttonStyle(.bordered)
-				.controlSize(.large)
-			}
-			.padding()
-			.presentationDetents([.large, .medium])
-			.textFieldStyle(.roundedBorder)
+			NavigationLink(
+				destination: NewMemberView(id: 1, groupId: 1),
+				label: {
+					Label("Add new member", systemImage: "person.badge.plus")
+				}
+			).tint(.accentColor)
 		}.onAppear {
 			loadMembers()
 		}.refreshable {
-			loadMembers()
+			await reloadMembers()
 		}.navigationTitle("Members")
 	}
 }

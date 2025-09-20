@@ -88,16 +88,12 @@ struct CurrentUserLoader: View {
 			}
 
 			Button(
-				role: .destructive,
-				action: {
-					API.host = "gitlab.com"
-					API.token = ""
-					Notify.status(.success, "Logged out")
-				},
-				label: {
-					Label("Sign out", systemImage: "rectangle.portrait.and.arrow.right")
-				}
-			).tint(.red)
+				"Sign out", systemImage: "rectangle.portrait.and.arrow.right", role: .destructive
+			) {
+				API.host = "gitlab.com"
+				API.token = ""
+				Notify.status(.success, "Logged out")
+			}.tint(.red)
 		}.navigationTitle("Account")
 	}
 }

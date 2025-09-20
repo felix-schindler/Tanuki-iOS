@@ -133,9 +133,11 @@ struct GroupLoader: View {
 								label: {
 									Label(
 										title: {
-											Text("Projects")
-											Spacer()
-											Text(String(group.projectsCount))
+											HStack {
+												Text("Projects")
+												Spacer()
+												Text("\(group.projectsCount)")
+											}
 										},
 										icon: {
 											Image(systemName: "app.gift.fill")
@@ -152,10 +154,11 @@ struct GroupLoader: View {
 								label: {
 									Label(
 										title: {
-											Text("Descendant groups")
-											Spacer()
-											Text(
-												String(group.descendantGroupsCount))
+											HStack {
+												Text("Descendant groups")
+												Spacer()
+												Text("\(group.descendantGroupsCount)")
+											}
 										},
 										icon: {
 											Image(systemName: "scale.3d")
@@ -245,44 +248,28 @@ struct GroupLoader: View {
 		}.refreshable {
 			await reloadGroup()
 		}.toolbar {
-			if let group {
-				switch group {
-				case .success(let group):
-					if let url = URL(string: group.webUrl) {
-						ShareButton(url)
-					}
-
-					if (group.requestAccessEnabled ?? false)
-						|| group.userPermissions.createProjects
-					{
-						Menu(
-							content: {
-								if group.requestAccessEnabled ?? false {
-									Button(
-										"Request access",
-										systemImage: "person.badge.plus"
-									) {
-										// TODO: Implement
-									}
-								}
-
-								if group.userPermissions.createProjects {
-									Button("Create project", systemImage: "plus") {
-										// TODO: Implement
-									}
-								}
-							},
-							label: {
-								Label("More", systemImage: "ellipsis")
-									.frame(width: 16, height: 16)
+			if let group, case .success(let group) = group {
+				if let url = URL(string: group.webUrl) {
+					ShareButton(url)
+				}
+				
+				if group.userPermissions.createProjects || group.requestAccessEnabled ?? false {
+					Menu("More", systemImage: "ellipsis") {
+						if group.userPermissions.createProjects {
+							Button("Create project", systemImage: "plus") {
+								// TODO: Implement
 							}
-						)
-						.menuStyle(.button)
-						.buttonStyle(.bordered)
-						.clipShape(Circle())
-					}
-				case .failure:
-					EmptyView()
+						}
+						
+						if group.requestAccessEnabled ?? false {
+							Button(
+								"Request access",
+								systemImage: "person.badge.plus"
+							) {
+								// TODO: Implement
+							}
+						}
+					}.menuStyle(.button)
 				}
 			}
 		}

@@ -103,11 +103,14 @@ struct ProjectIssuesLoader: View {
 		}.onAppear {
 			loadIssues()
 		}.refreshable {
-			loadIssues()
+			await reloadIssues()
 		}.toolbar {
-			RoundIconButton("New issue", icon: "plus") {
-				Haptics.shared.play(.light)
-			}
+			NavigationLink(
+				destination: NewIssueView(),
+				label: {
+					Label("New issue", systemImage: "plus")
+				}
+			).tint(.accentColor)
 		}.navigationTitle("Issues")
 	}
 }

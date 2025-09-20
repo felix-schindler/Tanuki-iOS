@@ -180,10 +180,12 @@ struct ProjectReleasesLoader: View {
 		}.refreshable {
 			await reloadReleases()
 		}.toolbar {
-			RoundIconButton("Create new release", icon: "plus") {
-				// TODO: Implement
-				Notify.status(.success)
-			}
+			NavigationLink(
+				destination: NewReleaseView(id: 1),
+				label: {
+					Label("Create new release", systemImage: "plus")
+				}
+			).tint(.accentColor)
 		}
 		.headerProminence(.increased)
 		.navigationTitle("Releases")

@@ -76,6 +76,9 @@ struct ProjectLoader: View {
 		}
 	}
 
+	private func requestAccess() async {
+	}
+
 	public var body: some View {
 		List {
 			if isLoading {
@@ -286,70 +289,59 @@ struct ProjectLoader: View {
 		}.refreshable {
 			await reloadProject()
 		}.toolbar {
-			if let project {
-				switch project {
-				case .success(let project):
-					Menu(
-						content: {
-							Section {
-								if let webUrl = project.webUrl,
-									let url = URL(string: webUrl)
-								{
-									ShareButton(url)
-								}
-
-								if project.userPermissions.requestAccess {
-									Button(
-										"Request access",
-										systemImage: "person.badge.plus"
-									) {
-										// TODO: Request access
-									}
-								}
-							}
-
-							let showCloneSection =
-								(project.httpUrlToRepo != nil
-									|| project.sshUrlToRepo != nil)
-
-							if showCloneSection {
-								Section("Clone Code") {
-									if let httpUrl = project.httpUrlToRepo {
-										Button(
-											"Copy HTTP url",
-											systemImage: "doc.on.doc"
-										) {
-											httpUrl.copyToClipboard()
-										}
-									}
-
-									if let sshUrl = project.sshUrlToRepo {
-										Button(
-											"Copy SSH url",
-											systemImage: "doc.on.doc"
-										) {
-											sshUrl.copyToClipboard()
-										}
-									}
-								}
-							}
-						},
-						label: {
-							Label("More", systemImage: "ellipsis")
-								.frame(width: 16, height: 16)
+			if let project, case .success(let project) = project {
+				Menu("More", systemImage: "ellipsis") {
+					Section {
+						if let webUrl = project.webUrl,
+							let url = URL(string: webUrl)
+						{
+							ShareButton(url)
 						}
-					)
-					.menuStyle(.button)
-					.buttonStyle(.bordered)
-					.clipShape(Circle())
 
-					if project.userPermissions.createIssue {
-						RoundIconButton("Create issue", icon: "plus") {
-							Haptics.shared.play(.light)
+						if project.userPermissions.requestAccess {
+							AsyncButton(
+								"Request access",
+								systemImage: "person.badge.plus"
+							) {
+								await requestAccess()
+							}
 						}
 					}
-				case .failure:
-					EmptyView()
+
+					let showCloneSection =
+						(project.httpUrlToRepo != nil
+							|| project.sshUrlToRepo != nil)
+
+					if showCloneSection {
+						Section("Clone Code") {
+							if let httpUrl = project.httpUrlToRepo {
+								Button(
+									"Copy HTTP url",
+									systemImage: "doc.on.doc"
+								) {
+									httpUrl.copyToClipboard()
+								}
+							}
+
+							if let sshUrl = project.sshUrlToRepo {
+								Button(
+									"Copy SSH url",
+									systemImage: "doc.on.doc"
+								) {
+									sshUrl.copyToClipboard()
+								}
+							}
+						}
+					}
+				}.menuStyle(.button)
+
+				if project.userPermissions.createIssue {
+					NavigationLink(
+						destination: NewIssueView(),
+						label: {
+							Label("Create issue", systemImage: "plus")
+						}
+					).tint(.accentColor)
 				}
 			}
 		}
