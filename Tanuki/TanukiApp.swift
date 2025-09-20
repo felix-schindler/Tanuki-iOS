@@ -37,15 +37,20 @@ struct TanukiApp: App {
 					Label("Home", systemImage: "house")
 				}.tag(0)
 				NavigationStack {
+					ExploreView()
+				}.tabItem {
+					Label("Explore", systemImage: "sparkles")
+				}.tag(1)
+				NavigationStack {
 					EventsLoader()
 				}.tabItem {
 					Label("Activity", systemImage: "clock.arrow.circlepath")
-				}.tag(1)
+				}.tag(2)
 				NavigationStack {
 					CurrentUserLoader()
 				}.tabItem {
 					Label("Account", systemImage: "person")
-				}.tag(2)
+				}.tag(3)
 			}
 		#endif
 	}
