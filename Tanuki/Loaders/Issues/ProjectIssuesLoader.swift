@@ -107,9 +107,7 @@ struct ProjectIssuesLoader: View {
 			loadIssues()
 		}.toolbar {
 			RoundIconButton("New issue", icon: "plus") {
-				#if os(iOS)
-					Haptics.shared.play(.light)
-				#endif
+				Haptics.shared.play(.light)
 			}
 		}.navigationTitle("Issues")
 	}

@@ -403,9 +403,7 @@ struct MergeRequestLoader: View {
 										action: {
 											if mr.mergeStatusEnum != .canBeMerged {
 												showMergeStatus = true
-												#if os(iOS)
-													Haptics.shared.play(.light)
-												#endif
+												Haptics.shared.play(.light)
 											} else {
 												// TODO: Show OPTIONS for merge
 											}

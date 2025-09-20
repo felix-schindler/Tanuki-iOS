@@ -228,9 +228,7 @@ struct MembersLoader: View {
 		}.toolbar {
 			RoundIconButton("Add new member", icon: "person.badge.plus") {
 				showNewMember = true
-				#if os(iOS)
-					Haptics.shared.play(.light)
-				#endif
+				Haptics.shared.play(.light)
 			}
 		}.sheet(isPresented: $showNewMember) {
 			VStack {

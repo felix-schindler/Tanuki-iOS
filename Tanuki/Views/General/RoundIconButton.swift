@@ -53,9 +53,7 @@ struct RoundIconButton: View {
 		Button(label, systemImage: iconName, action: action)
 			.frame(minWidth: 30, minHeight: 30)
 			.buttonStyle(.bordered)
-			#if os(iOS)
-				.clipShape(Circle())
-			#endif
+			.clipShape(Circle())
 			.labelStyle(.iconOnly)
 	}
 }

@@ -288,9 +288,7 @@ struct GroupLoader: View {
 			}
 		}
 		.navigationTitle(fullPath)
-		#if os(iOS)
-			.navigationBarTitleDisplayMode(.inline)
-		#endif
+		.navigationBarTitleDisplayMode(.inline)
 	}
 }
 

@@ -93,9 +93,7 @@ struct DiffLoader: View {
 						{
 							Task {
 								await loadDiffs()
-								#if os(iOS)
-									Haptics.shared.play(.soft)
-								#endif
+								Haptics.shared.play(.soft)
 							}
 						})
 			}
@@ -173,9 +171,7 @@ struct DiffLoader: View {
 		}.refreshable {
 			await loadDiffs()
 		}
-		#if os(iOS)
-			.listStyle(.grouped)
-		#endif
+		.listStyle(.grouped)
 		.headerProminence(.increased)
 		.navigationTitle("Diffs")
 	}

@@ -346,9 +346,7 @@ struct ProjectLoader: View {
 
 					if project.userPermissions.createIssue {
 						RoundIconButton("Create issue", icon: "plus") {
-							#if os(iOS)
-								Haptics.shared.play(.light)
-							#endif
+							Haptics.shared.play(.light)
 						}
 					}
 				case .failure:
@@ -357,9 +355,7 @@ struct ProjectLoader: View {
 			}
 		}
 		.navigationTitle(self.fullPath)
-		#if os(iOS)
-			.navigationBarTitleDisplayMode(.inline)
-		#endif
+		.navigationBarTitleDisplayMode(.inline)
 	}
 }
 

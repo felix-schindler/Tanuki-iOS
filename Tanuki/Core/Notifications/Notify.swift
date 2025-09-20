@@ -22,19 +22,13 @@ class Notify {
 	) {
 		switch feedbackType {
 		case .success:
-			#if os(iOS)
-				Haptics.shared.notify(.success)
-			#endif
+			Haptics.shared.notify(.success)
 			break
 		case .warning:
-			#if os(iOS)
-				Haptics.shared.notify(.warning)
-			#endif
+			Haptics.shared.notify(.warning)
 			break
 		case .error:
-			#if os(iOS)
-				Haptics.shared.notify(.error)
-			#endif
+			Haptics.shared.notify(.error)
 			break
 		}
 

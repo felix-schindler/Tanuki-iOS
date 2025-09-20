@@ -23,7 +23,13 @@ struct TanukiApp: App {
 	}
 
 	public var main: some View {
-		#if os(iOS)
+		#if targetEnvironment(macCatalyst)
+			NavigationSplitView {
+				HomeView()
+			} detail: {
+				ContentUnavailableView("Welcome to Tanuki", systemImage: "house")
+			}
+		#else
 			TabView {
 				NavigationStack {
 					HomeView()
@@ -40,12 +46,6 @@ struct TanukiApp: App {
 				}.tabItem {
 					Label("Account", systemImage: "person")
 				}.tag(2)
-			}
-		#else
-			NavigationSplitView {
-				HomeView()
-			} detail: {
-				ContentUnavailableView("Welcome to Tanuki")
 			}
 		#endif
 	}

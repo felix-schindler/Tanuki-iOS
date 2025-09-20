@@ -106,11 +106,7 @@ struct SnippetLoader: View {
 								)
 								.padding(.horizontal, 8)
 								.padding(.vertical, 3)
-								#if os(iOS)
-									.background(Color(.systemGray5))
-								#else
-									.background(.accent)
-								#endif
+								.background(Color(.systemGray5))
 								.foregroundStyle(.primary)
 								.cornerRadius(5)
 							}.font(.footnote)
