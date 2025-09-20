@@ -40,7 +40,6 @@ struct UserProjectsLoader: View {
 					for try await response in responses {
 						if let projectMemberships = response.data?.user?.projectMemberships?.nodes {
 							self.projectMemberships = .success(projectMemberships)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify.status(.error, error.localizedDescription)
@@ -60,7 +59,6 @@ struct UserProjectsLoader: View {
 							.nodes
 						{
 							self.projectMemberships = .success(projectMemberships)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify.status(.error, error.localizedDescription)

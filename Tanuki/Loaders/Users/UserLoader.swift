@@ -36,7 +36,6 @@ struct UserLoader: View {
 				for try await response in responses {
 					if let user = response.data?.user {
 						self.user = .success(user)
-						Notify.status(.success)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)

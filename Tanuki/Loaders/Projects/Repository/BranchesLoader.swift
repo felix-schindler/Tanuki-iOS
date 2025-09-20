@@ -29,7 +29,6 @@ struct BranchesLoader: View {
 				type: [Branch].self, endpoint: "projects/\(projectId)/repository/branches")
 
 			self.branches = .success(temp)
-			Notify.status(.success)
 		} catch let error {
 			self.branches = .failure(error)
 			Notify.status(.error)

@@ -32,7 +32,6 @@ struct ProjectPipelinesLoader: View {
 				for try await response in responses {
 					if let pipelines = response.data?.project?.pipelines?.nodes {
 						self.pipelines = .success(pipelines)
-						Notify.status(.success)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)

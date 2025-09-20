@@ -41,7 +41,6 @@ struct ProjectIssuesLoader: View {
 				for try await response in responses {
 					if let project = response.data?.project {
 						self.project = .success(project)
-						Notify.status(.success)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)

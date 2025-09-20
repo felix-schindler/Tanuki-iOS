@@ -45,7 +45,6 @@ struct SnippetLoader: View {
 				for try await response in responses {
 					if let snippet = response.data?.snippets?.nodes?.first {
 						self.snippet = .success(snippet!)
-						Notify.status(.success)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)

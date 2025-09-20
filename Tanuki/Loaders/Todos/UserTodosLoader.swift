@@ -36,7 +36,6 @@ struct UserTodosLoader: View {
 				for try await response in responses {
 					if let todos = response.data?.user?.todos?.nodes {
 						self.todos = .success(todos)
-						Notify.status(.success)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)

@@ -53,7 +53,6 @@ struct MembersLoader: View {
 					for try await response in responses {
 						if let memberships = response.data?.project?.projectMembers?.nodes {
 							self.memberships = .success(memberships)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify
@@ -72,7 +71,6 @@ struct MembersLoader: View {
 					for try await response in responses {
 						if let memberships = response.data?.group?.groupMembers?.nodes {
 							self.memberships = .success(memberships)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify

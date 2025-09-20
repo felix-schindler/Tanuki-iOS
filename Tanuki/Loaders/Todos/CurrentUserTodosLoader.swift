@@ -30,7 +30,6 @@ struct CurrentUserTodosLoader: View {
 				for try await response in responses {
 					if let todos = response.data?.currentUser?.todos?.nodes {
 						self.todos = .success(todos)
-						Notify.status(.success)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)

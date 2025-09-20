@@ -65,7 +65,6 @@ struct FileLoader: View {
 			if let content = res.utf8String {
 				self.content = .success(content)
 			}
-			Notify.status(.success)
 		} catch let error {
 			self.content = .failure(error)
 			Notify.status(.error)

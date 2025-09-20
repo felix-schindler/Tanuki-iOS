@@ -31,7 +31,6 @@ struct HomeView: View {
 				for try await response in responses {
 					if let projects = response.data?.currentUser?.starredProjects?.nodes {
 						starredProjects = .success(projects)
-						Notify.status(.success)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)

@@ -47,7 +47,6 @@ struct EpicLoader: View {
 				for try await response in responses {
 					if let group = response.data?.group {
 						self.group = .success(group)
-						Notify.status(.success)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)

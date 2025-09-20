@@ -43,7 +43,6 @@ struct TagsLoader: View {
 			)
 
 			self.tags = .success(temp)
-			Notify.status(.success)
 		} catch let error {
 			self.tags = .failure(error)
 			Notify.status(.error)

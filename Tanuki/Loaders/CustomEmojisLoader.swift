@@ -37,7 +37,6 @@ struct CustomEmojisLoader: View {
 				for try await response in responses {
 					if let emojis = response.data?.group?.customEmoji?.nodes {
 						self.emojis = .success(emojis)
-						Notify.status(.success)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)

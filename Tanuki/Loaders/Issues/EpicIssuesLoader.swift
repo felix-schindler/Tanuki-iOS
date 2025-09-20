@@ -41,7 +41,6 @@ struct EpicIssuesLoader: View {
 				for try await response in responses {
 					if let issues = response.data?.group?.epic?.issues?.nodes {
 						self.issues = .success(issues)
-						Notify.status(.success)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)

@@ -47,7 +47,6 @@ struct MilestonesLoader: View {
 					for try await response in responses {
 						if let milestones = response.data?.group?.milestones?.nodes {
 							self.milestones = .success(milestones)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify.status(.error, error.localizedDescription)
@@ -65,7 +64,6 @@ struct MilestonesLoader: View {
 					for try await response in responses {
 						if let milestones = response.data?.project?.milestones?.nodes {
 							self.milestones = .success(milestones)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify.status(.error, error.localizedDescription)

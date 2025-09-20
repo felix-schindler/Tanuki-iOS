@@ -62,7 +62,6 @@ struct CommitsLoader: View {
 			)
 
 			self.commits = .success(temp)
-			Notify.status(.success)
 		} catch let error {
 			self.commits = .failure(error)
 			Notify.status(.error)

@@ -39,7 +39,6 @@ struct UserSnippetsLoader: View {
 					for try await response in responses {
 						if let snippets = response.data?.user?.snippets?.nodes {
 							self.snippets = .success(snippets)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify.status(.error, error.localizedDescription)
@@ -57,7 +56,6 @@ struct UserSnippetsLoader: View {
 					for try await response in responses {
 						if let snippets = response.data?.currentUser?.snippets?.nodes {
 							self.snippets = .success(snippets)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify.status(.error, error.localizedDescription)

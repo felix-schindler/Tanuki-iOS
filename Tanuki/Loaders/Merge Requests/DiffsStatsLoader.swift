@@ -41,7 +41,6 @@ struct DiffsStatsLoader: View {
 				for try await response in responses {
 					if let diffs = response.data?.project?.mergeRequest?.diffStats {
 						self.diffs = .success(diffs)
-						Notify.status(.success)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)

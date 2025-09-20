@@ -47,7 +47,6 @@ struct TimelogsLoader: View {
 					for try await response in responses {
 						if let timelogs = response.data?.group?.timelogs.nodes {
 							self.timelogs = .success(timelogs)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify.status(.error, error.localizedDescription)
@@ -65,7 +64,6 @@ struct TimelogsLoader: View {
 					for try await response in responses {
 						if let timelogs = response.data?.user?.timelogs?.nodes {
 							self.timelogs = .success(timelogs)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify.status(.error, error.localizedDescription)

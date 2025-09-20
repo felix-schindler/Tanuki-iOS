@@ -38,7 +38,6 @@ struct GroupMergeLoader: View {
 				for try await response in responses {
 					if let mrs = response.data?.group?.mergeRequests?.nodes {
 						self.mergeRequests = .success(mrs)
-						Notify.status(.success)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)

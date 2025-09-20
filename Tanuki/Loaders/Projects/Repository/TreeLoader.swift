@@ -67,7 +67,6 @@ struct TreeLoader: View {
 				for try await response in responses {
 					if let tree = response.data?.project?.repository?.tree {
 						self.tree = .success(tree)
-						Notify.status(.success)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)

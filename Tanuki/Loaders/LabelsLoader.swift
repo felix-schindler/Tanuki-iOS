@@ -46,7 +46,6 @@ struct LabelsLoader: View {
 					for try await response in responses {
 						if let labels = response.data?.group?.labels?.nodes {
 							self.labels = .success(labels)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify.status(.error, error.localizedDescription)
@@ -63,7 +62,6 @@ struct LabelsLoader: View {
 					for try await response in responses {
 						if let labels = response.data?.project?.labels?.nodes {
 							self.labels = .success(labels)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify.status(.error, error.localizedDescription)

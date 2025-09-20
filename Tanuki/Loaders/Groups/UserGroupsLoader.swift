@@ -37,7 +37,6 @@ struct UserGroupsLoader: View {
 					for try await response in responses {
 						if let groups = response.data?.user?.groups?.nodes {
 							self.groups = .success(groups)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify.status(.error, error.localizedDescription)
@@ -53,7 +52,6 @@ struct UserGroupsLoader: View {
 					for try await response in responses {
 						if let groups = response.data?.currentUser?.groups?.nodes {
 							self.groups = .success(groups)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify.status(.error, error.localizedDescription)

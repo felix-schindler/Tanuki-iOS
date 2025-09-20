@@ -37,7 +37,6 @@ struct ProjectReleasesLoader: View {
 				for try await response in responses {
 					if let releases = response.data?.project?.releases?.nodes {
 						self.releases = .success(releases)
-						Notify.status(.success)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)

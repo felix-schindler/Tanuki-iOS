@@ -57,7 +57,6 @@ struct UserMergeLoader: View {
 					for try await response in responses {
 						if let mrs = response.data?.currentUser?.assignedMergeRequests?.nodes {
 							self.mergeRequests = .success(mrs)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify.status(.error, error.localizedDescription)
@@ -75,7 +74,6 @@ struct UserMergeLoader: View {
 					for try await response in responses {
 						if let mrs = response.data?.currentUser?.authoredMergeRequests?.nodes {
 							self.mergeRequests = .success(mrs)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify.status(.error, error.localizedDescription)
@@ -94,7 +92,6 @@ struct UserMergeLoader: View {
 						if let mrs = response.data?.currentUser?.reviewRequestedMergeRequests?.nodes
 						{
 							self.mergeRequests = .success(mrs)
-							Notify.status(.success)
 						} else if let errors = response.errors {
 							for error in errors {
 								Notify.status(.error, error.localizedDescription)

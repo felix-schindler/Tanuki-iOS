@@ -40,7 +40,6 @@ struct UserStarredProjectsLoader: View {
 				for try await response in responses {
 					if let projects = response.data?.user?.starredProjects?.nodes {
 						self.projects = .success(projects)
-						Notify.status(.success)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)

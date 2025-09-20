@@ -38,7 +38,6 @@ struct DescendantGroupsLoader: View {
 				for try await response in responses {
 					if let groups = response.data?.group?.descendantGroups?.nodes {
 						self.groups = .success(groups)
-						Notify.status(.success)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)
