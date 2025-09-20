@@ -177,12 +177,9 @@ struct HomeView: View {
 		}.refreshable {
 			await reloadStarredProjects()
 		}.toolbar {
-			RoundIconButton("New project", icon: "plus") {
-				// TODO: Implement
-				#if os(iOS)
-					Haptics.shared.play(.light)
-				#endif
-			}
+			NavigationLink(destination: NewProjectView()) {
+				Label("New project", systemImage: "plus")
+			}.tint(.accentColor)
 		}
 		.listStyle(.sidebar)
 		.headerProminence(.increased)
