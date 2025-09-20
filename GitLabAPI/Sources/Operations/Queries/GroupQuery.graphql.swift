@@ -154,7 +154,7 @@ public struct GroupQuery: GraphQLQuery {
 
         /// Name of the group.
         public var name: String? { __data["name"] }
-        /// Full path of the namespace.
+        /// Full path of the group.
         public var fullPath: GitLabAPI.ID { __data["fullPath"] }
       }
     }

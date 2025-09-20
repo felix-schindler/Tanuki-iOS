@@ -92,6 +92,7 @@
 		DC4B428F2BA56213007A9DB1 /* CommitSignatureLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4B428E2BA56213007A9DB1 /* CommitSignatureLoader.swift */; };
 		DC4B42962BA56968007A9DB1 /* BranchesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4B42952BA56968007A9DB1 /* BranchesLoader.swift */; };
 		DC4B429A2BA56EA6007A9DB1 /* TagsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4B42992BA56EA6007A9DB1 /* TagsLoader.swift */; };
+		DC4D10122E72E78F0001B54E /* ConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D10112E72E78F0001B54E /* ConfigView.swift */; };
 		DC5AD7CF2E697E4B0031FC7B /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = DC5AD7CE2E697E4B0031FC7B /* Apollo */; };
 		DC5AD7D12E697E4B0031FC7B /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC5AD7D02E697E4B0031FC7B /* ApolloAPI */; };
 		DC5AD7D32E697E4B0031FC7B /* ApolloSQLite in Frameworks */ = {isa = PBXBuildFile; productRef = DC5AD7D22E697E4B0031FC7B /* ApolloSQLite */; };
@@ -227,6 +228,7 @@
 		DC4B428E2BA56213007A9DB1 /* CommitSignatureLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitSignatureLoader.swift; sourceTree = "<group>"; };
 		DC4B42952BA56968007A9DB1 /* BranchesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchesLoader.swift; sourceTree = "<group>"; };
 		DC4B42992BA56EA6007A9DB1 /* TagsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsLoader.swift; sourceTree = "<group>"; };
+		DC4D10112E72E78F0001B54E /* ConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigView.swift; sourceTree = "<group>"; };
 		DC5AD7D92E69D40B0031FC7B /* FailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedView.swift; sourceTree = "<group>"; };
 		DC5F37072B91A1D100BF7F9D /* AuthorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorView.swift; sourceTree = "<group>"; };
 		DC5F99DF2B9384CE001C88A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -573,14 +575,23 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
+		DC4D10102E72E76A0001B54E /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */,
+				DC4D10112E72E78F0001B54E /* ConfigView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		DC6C5D9C2B8F08F500587850 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DC4D10102E72E76A0001B54E /* Auth */,
 				DC3A24582B8C4C7C00DB0E3F /* General */,
 				DC4B42842BA55C03007A9DB1 /* Entity-Specific */,
 				DC13E8A72B8E073300994E8A /* HomeView.swift */,
 				DC21AA762B903ECA00976E64 /* UserView.swift */,
-				DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */,
 				DCAF9D9B2BC36912001FF2E5 /* PreferencesView.swift */,
 				DC5AD7D92E69D40B0031FC7B /* FailedView.swift */,
 			);
@@ -896,6 +907,7 @@
 				DCCB5D8D2B9C0E8300D5D70A /* TodoView.swift in Sources */,
 				DC463BBA2B941970005CA5FB /* UserStarredProjectsLoader.swift in Sources */,
 				DC6C5DB62B8F90E400587850 /* UserProjectsLoader.swift in Sources */,
+				DC4D10122E72E78F0001B54E /* ConfigView.swift in Sources */,
 				DC3276632B9B503500B51EEE /* CurrentUserTodosLoader.swift in Sources */,
 				DC3A244D2B8C37BF00DB0E3F /* ProjectLoader.swift in Sources */,
 				DC217DD12B8FBA2200F081BC /* SnippetLoader.swift in Sources */,
@@ -1072,8 +1084,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1117,8 +1129,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1195,7 +1207,7 @@
 			repositoryURL = "https://github.com/apollographql/apollo-ios";
 			requirement = {
 				kind = exactVersion;
-				version = "2.0.0-beta-1";
+				version = "2.0.0-beta-2";
 			};
 		};
 		DC5AD7DB2E69D6E50031FC7B /* XCRemoteSwiftPackageReference "toast-swift" */ = {
