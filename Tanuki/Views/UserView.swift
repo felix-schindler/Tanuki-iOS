@@ -211,9 +211,11 @@ struct UserView: View {
 			label: {
 				Label(
 					title: {
-						Text("Groups")
-						Spacer()
-						Text(String(user.groupCount ?? 0))
+						HStack {
+							Text("Groups")
+							Spacer()
+							Text(String(user.groupCount ?? 0))
+						}
 					},
 					icon: {
 						Image(systemName: "scale.3d")

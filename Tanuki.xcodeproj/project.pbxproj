@@ -61,6 +61,7 @@
 		DC2705012B8BC0FB003DAA84 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC2705002B8BC0FB003DAA84 /* Preview Assets.xcassets */; };
 		DC27050D2B8BC351003DAA84 /* CurrentUserStarredProjects.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC27050C2B8BC351003DAA84 /* CurrentUserStarredProjects.graphql */; };
 		DC2705112B8BC507003DAA84 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2705102B8BC507003DAA84 /* Network.swift */; };
+		DC2D65E52E7EF510007A800C /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2D65E42E7EF510007A800C /* ExploreView.swift */; };
 		DC31F2792E71CD96005F31A2 /* NewProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31F2782E71CD96005F31A2 /* NewProjectView.swift */; };
 		DC31F27E2E721686005F31A2 /* ProjectHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31F27D2E721686005F31A2 /* ProjectHeaderView.swift */; };
 		DC31F2812E72221E005F31A2 /* NewIssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC31F2802E72221E005F31A2 /* NewIssueView.swift */; };
@@ -119,7 +120,6 @@
 		DC6C5DBF2B8FB3CA00587850 /* Snippet.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DBE2B8FB3CA00587850 /* Snippet.graphql */; };
 		DC7A7FA72BA5D0D600E128B1 /* SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */; };
 		DC8CFE132B95B3D3007F6D32 /* GroupMembers.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC8CFE122B95B3D3007F6D32 /* GroupMembers.graphql */; };
-		DCAF9D9C2BC36912001FF2E5 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAF9D9B2BC36912001FF2E5 /* PreferencesView.swift */; };
 		DCAF9D9F2BC3755F001FF2E5 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = DCAF9D9E2BC3755F001FF2E5 /* Highlightr */; };
 		DCB5E0D42B96C487000F67FB /* GroupCustomEmoji.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCB5E0D32B96C487000F67FB /* GroupCustomEmoji.graphql */; };
 		DCB5E0D62B96C63A000F67FB /* CustomEmojisLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5E0D52B96C63A000F67FB /* CustomEmojisLoader.swift */; };
@@ -200,6 +200,7 @@
 		DC2705002B8BC0FB003DAA84 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DC27050C2B8BC351003DAA84 /* CurrentUserStarredProjects.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CurrentUserStarredProjects.graphql; sourceTree = "<group>"; };
 		DC2705102B8BC507003DAA84 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		DC2D65E42E7EF510007A800C /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		DC31F2782E71CD96005F31A2 /* NewProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProjectView.swift; sourceTree = "<group>"; };
 		DC31F27D2E721686005F31A2 /* ProjectHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectHeaderView.swift; sourceTree = "<group>"; };
 		DC31F2802E72221E005F31A2 /* NewIssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewIssueView.swift; sourceTree = "<group>"; };
@@ -252,7 +253,6 @@
 		DC6C5DBE2B8FB3CA00587850 /* Snippet.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = Snippet.graphql; sourceTree = "<group>"; };
 		DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupView.swift; sourceTree = "<group>"; };
 		DC8CFE122B95B3D3007F6D32 /* GroupMembers.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GroupMembers.graphql; sourceTree = "<group>"; };
-		DCAF9D9B2BC36912001FF2E5 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		DCB5E0D32B96C487000F67FB /* GroupCustomEmoji.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GroupCustomEmoji.graphql; sourceTree = "<group>"; };
 		DCB5E0D52B96C63A000F67FB /* CustomEmojisLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEmojisLoader.swift; sourceTree = "<group>"; };
 		DCB5E0D72B96CC5E000F67FB /* GroupMergeRequests.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = GroupMergeRequests.graphql; sourceTree = "<group>"; };
@@ -591,8 +591,8 @@
 				DC3A24582B8C4C7C00DB0E3F /* General */,
 				DC4B42842BA55C03007A9DB1 /* Entity-Specific */,
 				DC13E8A72B8E073300994E8A /* HomeView.swift */,
+				DC2D65E42E7EF510007A800C /* ExploreView.swift */,
 				DC21AA762B903ECA00976E64 /* UserView.swift */,
-				DCAF9D9B2BC36912001FF2E5 /* PreferencesView.swift */,
 				DC5AD7D92E69D40B0031FC7B /* FailedView.swift */,
 			);
 			path = Views;
@@ -848,6 +848,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC2D65E52E7EF510007A800C /* ExploreView.swift in Sources */,
 				DC0A6A392B8CE4FF00C53D56 /* PipelineStatus.swift in Sources */,
 				DC217DCE2B8FB9F100F081BC /* UserSnippetsLoader.swift in Sources */,
 				DC3A244F2B8C3B8100DB0E3F /* Utils.swift in Sources */,
@@ -864,7 +865,6 @@
 				DCB6B6392BB70F9C006C8437 /* SmallCommitView.swift in Sources */,
 				DCD40E1A2BC2C6600055EE4C /* DiffLoader.swift in Sources */,
 				DC3A24562B8C4C2200DB0E3F /* PillView.swift in Sources */,
-				DCAF9D9C2BC36912001FF2E5 /* PreferencesView.swift in Sources */,
 				DC217DD32B8FCC8A00F081BC /* Haptics.swift in Sources */,
 				DC21AA752B90385800976E64 /* CurrentUserLoader.swift in Sources */,
 				DC33C27B2B9C22F200C99B85 /* MarkdownTheme.swift in Sources */,
