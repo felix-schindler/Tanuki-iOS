@@ -29,26 +29,17 @@ struct NewIssueView: View {
 		VStack {
 			Form {
 				TextField("Title", text: $title)
-				HighlightedTextEditor(text: $description, highlightRules: .markdown)
-					.frame(minHeight: 200)
-			}.scrollDismissesKeyboard(.interactively)
 
-			Button(
-				action: {
-					Task {
-						await createIssue()
-					}
-				},
-				label: {
-					Label("Create Issue", systemImage: "checkmark")
-						.frame(maxWidth: .infinity)
+				Section("Description (Markdown supported)") {
+					HighlightedTextEditor(text: $description, highlightRules: .markdown)
+						.frame(minHeight: 200)
 				}
-			)
-			.buttonBorderShape(.capsule)
-			.buttonStyle(.bordered)
-			.controlSize(.large)
-			.padding()
-		}.navigationTitle("New Project")
+			}.toolbar {
+				AsyncButton("Create issue", systemImage: "checkmark") {
+					await createIssue()
+				}.tint(.accentColor)
+			}.scrollDismissesKeyboard(.interactively)
+		}.navigationTitle("New Issue")
 	}
 }
 

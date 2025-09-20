@@ -64,56 +64,43 @@ struct NewProjectView: View {
 	}
 
 	var body: some View {
-		VStack {
-			Form {
+		Form {
+			VStack(alignment: .leading) {
+				TextField("Project name", text: $projectName)
+				Text(
+					"Must start with a lowercase or uppercase letter, digit, emoji, or underscore. Can also contain dots, pluses, dashes, or spaces."
+				)
+				.foregroundStyle(.secondary)
+				.font(.footnote)
+			}
+
+			Picker("Visibility Level", selection: $visibility) {
+				Label("Private", systemImage: "lock")
+					.tag(ProjectVisibility.private)
+				Label("Public", systemImage: "globe")
+					.tag(ProjectVisibility.public)
+				Label("Internal", systemImage: "shield.lefthalf.filled")
+					.tag(ProjectVisibility.internal)
+			}
+
+			Toggle("Initialize with README", isOn: $readme)
+			if readme {
 				VStack(alignment: .leading) {
-					TextField("Project name", text: $projectName)
-					Text(
-						"Must start with a lowercase or uppercase letter, digit, emoji, or underscore. Can also contain dots, pluses, dashes, or spaces."
-					)
-					.foregroundStyle(.secondary)
-					.font(.footnote)
+					TextField("Default branch", text: $defaultBranch)
+						.autocorrectionDisabled()
+						.textInputAutocapitalization(.never)
+					Text("Default branch")
+						.foregroundStyle(.secondary)
+						.font(.footnote)
 				}
-
-				Picker("Visibility Level", selection: $visibility) {
-					Label("Private", systemImage: "lock")
-						.tag(ProjectVisibility.private)
-					Label("Public", systemImage: "globe")
-						.tag(ProjectVisibility.public)
-					Label("Internal", systemImage: "shield.lefthalf.filled")
-						.tag(ProjectVisibility.internal)
-				}
-
-				Toggle("Initialize with README", isOn: $readme)
-				if readme {
-					VStack(alignment: .leading) {
-						TextField("Default branch", text: $defaultBranch)
-							.autocorrectionDisabled()
-							.textInputAutocapitalization(.never)
-						Text("Default branch")
-							.foregroundStyle(.secondary)
-							.font(.footnote)
-					}
-				}
-			}.scrollDismissesKeyboard(.interactively)
-
-			Button(
-				action: {
-					Task {
-						await createProject()
-					}
-				},
-				label: {
-					Label("Create Project", systemImage: "checkmark")
-						.frame(maxWidth: .infinity)
-				}
-			)
-			.buttonBorderShape(.capsule)
-			.tint(.accentColor)
-			.buttonStyle(.bordered)
-			.controlSize(.large)
-			.padding()
-		}.navigationTitle("New Project")
+			}
+		}.toolbar {
+			AsyncButton("Create Project", systemImage: "checkmark") {
+				await createProject()
+			}.tint(.accentColor)
+		}
+		.scrollDismissesKeyboard(.interactively)
+		.navigationTitle("New Project")
 	}
 }
 
