@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -56,6 +56,7 @@
 		DC21AA772B903ECA00976E64 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC21AA762B903ECA00976E64 /* UserView.swift */; };
 		DC21AA7D2B906F8000976E64 /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC21AA7C2B906F8000976E64 /* User.graphql */; };
 		DC21AA7F2B906FF400976E64 /* UserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC21AA7E2B906FF400976E64 /* UserLoader.swift */; };
+		DC2511E22E7F4C7E0021371C /* Tanuki Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = DC2511D82E7F4C7D0021371C /* Tanuki Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DC2704F92B8BC0F9003DAA84 /* TanukiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2704F82B8BC0F9003DAA84 /* TanukiApp.swift */; };
 		DC2704FD2B8BC0FB003DAA84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC2704FC2B8BC0FB003DAA84 /* Assets.xcassets */; };
 		DC2705012B8BC0FB003DAA84 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC2705002B8BC0FB003DAA84 /* Preview Assets.xcassets */; };
@@ -116,13 +117,17 @@
 		DC6C5DA92B8F106B00587850 /* UserAuthoredMergeRequests.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DA82B8F106B00587850 /* UserAuthoredMergeRequests.graphql */; };
 		DC6C5DAB2B8F109600587850 /* UserReviewRequestedMergeRequests.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DAA2B8F109600587850 /* UserReviewRequestedMergeRequests.graphql */; };
 		DC6C5DAD2B8F10D500587850 /* UserMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C5DAC2B8F10D500587850 /* UserMergeLoader.swift */; };
-		DC6C5DB32B8F8BBF00587850 /* EmojiCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C5DB22B8F8BBF00587850 /* EmojiCodes.swift */; };
+		DC6C5DB32B8F8BBF00587850 /* Emojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C5DB22B8F8BBF00587850 /* Emojis.swift */; };
 		DC6C5DB62B8F90E400587850 /* UserProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C5DB52B8F90E400587850 /* UserProjectsLoader.swift */; };
 		DC6C5DB82B8F919100587850 /* CurrentUserMembershipProjects.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DB72B8F919100587850 /* CurrentUserMembershipProjects.graphql */; };
 		DC6C5DBA2B8FA10500587850 /* UserIssues.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DB92B8FA10500587850 /* UserIssues.graphql */; };
 		DC6C5DBC2B8FB34B00587850 /* CurrentUserSnippets.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DBB2B8FB34B00587850 /* CurrentUserSnippets.graphql */; };
 		DC6C5DBF2B8FB3CA00587850 /* Snippet.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC6C5DBE2B8FB3CA00587850 /* Snippet.graphql */; };
 		DC7A7FA72BA5D0D600E128B1 /* SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */; };
+		DC8978222E7F514200D42E4C /* GitLabAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC8978212E7F514200D42E4C /* GitLabAPI */; };
+		DC8978242E7F515800D42E4C /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = DC8978232E7F515800D42E4C /* Apollo */; };
+		DC8978262E7F515800D42E4C /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC8978252E7F515800D42E4C /* ApolloAPI */; };
+		DC89783D2E7F558300D42E4C /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = DC89783C2E7F558300D42E4C /* CachedAsyncImage */; };
 		DC8CFE132B95B3D3007F6D32 /* GroupMembers.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC8CFE122B95B3D3007F6D32 /* GroupMembers.graphql */; };
 		DCAF9D9F2BC3755F001FF2E5 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = DCAF9D9E2BC3755F001FF2E5 /* Highlightr */; };
 		DCB5E0D42B96C487000F67FB /* GroupCustomEmoji.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DCB5E0D32B96C487000F67FB /* GroupCustomEmoji.graphql */; };
@@ -147,6 +152,30 @@
 		DCEFB26B2B94C37600F4B245 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB26A2B94C37600F4B245 /* API.swift */; };
 		DCEFB26E2B94C3FD00F4B245 /* SwiftHttp in Frameworks */ = {isa = PBXBuildFile; productRef = DCEFB26D2B94C3FD00F4B245 /* SwiftHttp */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DC2511E02E7F4C7E0021371C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DC2704ED2B8BC0F9003DAA84 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC2511D72E7F4C7D0021371C;
+			remoteInfo = "Tanuki Watch Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DC2511E62E7F4C7E0021371C /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				DC2511E22E7F4C7E0021371C /* Tanuki Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		DC0A6A382B8CE4FF00C53D56 /* PipelineStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineStatus.swift; sourceTree = "<group>"; };
@@ -197,6 +226,7 @@
 		DC21AA762B903ECA00976E64 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		DC21AA7C2B906F8000976E64 /* User.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = User.graphql; sourceTree = "<group>"; };
 		DC21AA7E2B906FF400976E64 /* UserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoader.swift; sourceTree = "<group>"; };
+		DC2511D82E7F4C7D0021371C /* Tanuki Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tanuki Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC2704F52B8BC0F9003DAA84 /* Tanuki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tanuki.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC2704F82B8BC0F9003DAA84 /* TanukiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TanukiApp.swift; sourceTree = "<group>"; };
 		DC2704FC2B8BC0FB003DAA84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -253,7 +283,7 @@
 		DC6C5DA82B8F106B00587850 /* UserAuthoredMergeRequests.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserAuthoredMergeRequests.graphql; sourceTree = "<group>"; };
 		DC6C5DAA2B8F109600587850 /* UserReviewRequestedMergeRequests.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserReviewRequestedMergeRequests.graphql; sourceTree = "<group>"; };
 		DC6C5DAC2B8F10D500587850 /* UserMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMergeLoader.swift; sourceTree = "<group>"; };
-		DC6C5DB22B8F8BBF00587850 /* EmojiCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCodes.swift; sourceTree = "<group>"; };
+		DC6C5DB22B8F8BBF00587850 /* Emojis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emojis.swift; sourceTree = "<group>"; };
 		DC6C5DB52B8F90E400587850 /* UserProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProjectsLoader.swift; sourceTree = "<group>"; };
 		DC6C5DB72B8F919100587850 /* CurrentUserMembershipProjects.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CurrentUserMembershipProjects.graphql; sourceTree = "<group>"; };
 		DC6C5DB92B8FA10500587850 /* UserIssues.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserIssues.graphql; sourceTree = "<group>"; };
@@ -282,7 +312,22 @@
 		DCEFB26A2B94C37600F4B245 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		DC2511D92E7F4C7D0021371C /* Tanuki Watch App */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Tanuki Watch App"; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
+		DC2511D52E7F4C7D0021371C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC8978262E7F515800D42E4C /* ApolloAPI in Frameworks */,
+				DC89783D2E7F558300D42E4C /* CachedAsyncImage in Frameworks */,
+				DC8978222E7F514200D42E4C /* GitLabAPI in Frameworks */,
+				DC8978242E7F515800D42E4C /* Apollo in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC2704F22B8BC0F9003DAA84 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -404,6 +449,7 @@
 			isa = PBXGroup;
 			children = (
 				DC2704F72B8BC0F9003DAA84 /* Tanuki */,
+				DC2511D92E7F4C7D0021371C /* Tanuki Watch App */,
 				DC2704F62B8BC0F9003DAA84 /* Products */,
 				DC3013102B8BC78300D33B23 /* Frameworks */,
 			);
@@ -413,6 +459,7 @@
 			isa = PBXGroup;
 			children = (
 				DC2704F52B8BC0F9003DAA84 /* Tanuki.app */,
+				DC2511D82E7F4C7D0021371C /* Tanuki Watch App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -551,7 +598,7 @@
 				DC31F27B2E71DC8E005F31A2 /* Networking */,
 				DC31F27A2E71DC59005F31A2 /* Types */,
 				DC3A244E2B8C3B8100DB0E3F /* Utils.swift */,
-				DC6C5DB22B8F8BBF00587850 /* EmojiCodes.swift */,
+				DC6C5DB22B8F8BBF00587850 /* Emojis.swift */,
 				DCD40E172BC2B2960055EE4C /* FileExtensions.swift */,
 				DC33C27A2B9C22F200C99B85 /* MarkdownTheme.swift */,
 			);
@@ -724,6 +771,32 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		DC2511D72E7F4C7D0021371C /* Tanuki Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC2511E32E7F4C7E0021371C /* Build configuration list for PBXNativeTarget "Tanuki Watch App" */;
+			buildPhases = (
+				DC2511D42E7F4C7D0021371C /* Sources */,
+				DC2511D52E7F4C7D0021371C /* Frameworks */,
+				DC2511D62E7F4C7D0021371C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				DC2511D92E7F4C7D0021371C /* Tanuki Watch App */,
+			);
+			name = "Tanuki Watch App";
+			packageProductDependencies = (
+				DC8978212E7F514200D42E4C /* GitLabAPI */,
+				DC8978232E7F515800D42E4C /* Apollo */,
+				DC8978252E7F515800D42E4C /* ApolloAPI */,
+				DC89783C2E7F558300D42E4C /* CachedAsyncImage */,
+			);
+			productName = "Tanuki Watch Watch App";
+			productReference = DC2511D82E7F4C7D0021371C /* Tanuki Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
 		DC2704F42B8BC0F9003DAA84 /* Tanuki */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC2705042B8BC0FB003DAA84 /* Build configuration list for PBXNativeTarget "Tanuki" */;
@@ -731,10 +804,12 @@
 				DC2704F12B8BC0F9003DAA84 /* Sources */,
 				DC2704F22B8BC0F9003DAA84 /* Frameworks */,
 				DC2704F32B8BC0F9003DAA84 /* Resources */,
+				DC2511E62E7F4C7E0021371C /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				DC2511E12E7F4C7E0021371C /* PBXTargetDependency */,
 			);
 			name = Tanuki;
 			packageProductDependencies = (
@@ -761,9 +836,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1640;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
+					DC2511D72E7F4C7D0021371C = {
+						CreatedOnToolsVersion = 26.0;
+					};
 					DC2704F42B8BC0F9003DAA84 = {
 						CreatedOnToolsVersion = 15.2;
 					};
@@ -794,11 +872,19 @@
 			projectRoot = "";
 			targets = (
 				DC2704F42B8BC0F9003DAA84 /* Tanuki */,
+				DC2511D72E7F4C7D0021371C /* Tanuki Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		DC2511D62E7F4C7D0021371C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC2704F32B8BC0F9003DAA84 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -856,6 +942,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		DC2511D42E7F4C7D0021371C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DC2704F12B8BC0F9003DAA84 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -886,7 +979,7 @@
 				DC31F27E2E721686005F31A2 /* ProjectHeaderView.swift in Sources */,
 				DCC95E572BC5274B0040D657 /* ContributionsLoader.swift in Sources */,
 				DC4B428B2BA560B0007A9DB1 /* TreeLoader.swift in Sources */,
-				DC6C5DB32B8F8BBF00587850 /* EmojiCodes.swift in Sources */,
+				DC6C5DB32B8F8BBF00587850 /* Emojis.swift in Sources */,
 				DCEFB26B2B94C37600F4B245 /* API.swift in Sources */,
 				DC4B429A2BA56EA6007A9DB1 /* TagsLoader.swift in Sources */,
 				DC13E8A82B8E073300994E8A /* HomeView.swift in Sources */,
@@ -946,7 +1039,81 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		DC2511E12E7F4C7E0021371C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC2511D72E7F4C7D0021371C /* Tanuki Watch App */;
+			targetProxy = DC2511E02E7F4C7E0021371C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		DC2511E42E7F4C7E0021371C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Tanuki;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = de.schindlerfelix.Tanuki;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+			};
+			name = Debug;
+		};
+		DC2511E52E7F4C7E0021371C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Tanuki;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = de.schindlerfelix.Tanuki;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+			};
+			name = Release;
+		};
 		DC2705022B8BC0FB003DAA84 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1004,7 +1171,8 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1061,6 +1229,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -1076,8 +1245,11 @@
 				CURRENT_PROJECT_VERSION = 52;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Tanuki/Preview Content\"";
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tanuki/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Tanuki;
@@ -1096,16 +1268,17 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = "2.0.0-beta.3";
+				MARKETING_VERSION = "2.0.0-beta.4";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 			};
 			name = Debug;
@@ -1121,8 +1294,11 @@
 				CURRENT_PROJECT_VERSION = 52;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Tanuki/Preview Content\"";
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tanuki/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Tanuki;
@@ -1141,16 +1317,16 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = "2.0.0-beta.3";
+				MARKETING_VERSION = "2.0.0-beta.4";
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 			};
 			name = Release;
@@ -1158,6 +1334,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		DC2511E32E7F4C7E0021371C /* Build configuration list for PBXNativeTarget "Tanuki Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC2511E42E7F4C7E0021371C /* Debug */,
+				DC2511E52E7F4C7E0021371C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DC2704F02B8BC0F9003DAA84 /* Build configuration list for PBXProject "Tanuki" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1292,6 +1477,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DC5AD7DB2E69D6E50031FC7B /* XCRemoteSwiftPackageReference "toast-swift" */;
 			productName = Toast;
+		};
+		DC8978212E7F514200D42E4C /* GitLabAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DCD225022E696BC8002256F0 /* XCLocalSwiftPackageReference "GitLabAPI" */;
+			productName = GitLabAPI;
+		};
+		DC8978232E7F515800D42E4C /* Apollo */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC5AD7CD2E697E4B0031FC7B /* XCRemoteSwiftPackageReference "apollo-ios" */;
+			productName = Apollo;
+		};
+		DC8978252E7F515800D42E4C /* ApolloAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC5AD7CD2E697E4B0031FC7B /* XCRemoteSwiftPackageReference "apollo-ios" */;
+			productName = ApolloAPI;
+		};
+		DC89783C2E7F558300D42E4C /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC0A6A532B8D148000C53D56 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
 		};
 		DCAF9D9E2BC3755F001FF2E5 /* Highlightr */ = {
 			isa = XCSwiftPackageProductDependency;
