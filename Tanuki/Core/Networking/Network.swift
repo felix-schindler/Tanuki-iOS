@@ -8,7 +8,7 @@
 import Apollo
 import ApolloAPI
 import ApolloSQLite
-import SwiftUI
+import Foundation
 
 class Network {
 	static let shared = Network()
@@ -45,10 +45,10 @@ class Network {
 }
 
 final class AuthorizationInterceptor: GraphQLInterceptor {
-	func intercept<Request>(
-		request: Request, next: @Sendable (Request) async -> Apollo.InterceptorResultStream<Request>
-	) async throws -> Apollo.InterceptorResultStream<Request> where Request: Apollo.GraphQLRequest {
-
+	func intercept<Request: GraphQLRequest>(
+	  request: Request,
+	  next: NextInterceptorFunction<Request>
+	) async throws -> InterceptorResultStream<Request> {
 		var req = request
 		req.addHeader(name: "Authorization", value: "Bearer \(API.token)")
 
