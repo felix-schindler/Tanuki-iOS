@@ -46,8 +46,8 @@ class Network {
 
 final class AuthorizationInterceptor: GraphQLInterceptor {
 	func intercept<Request: GraphQLRequest>(
-	  request: Request,
-	  next: NextInterceptorFunction<Request>
+		request: Request,
+		next: NextInterceptorFunction<Request>
 	) async throws -> InterceptorResultStream<Request> {
 		var req = request
 		req.addHeader(name: "Authorization", value: "Bearer \(API.token)")

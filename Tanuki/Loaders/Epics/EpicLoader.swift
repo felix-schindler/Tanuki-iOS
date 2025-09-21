@@ -361,7 +361,7 @@ struct EpicLoader: View {
 		}.toolbar {
 			if let group, case .success(let group) = group {
 				if let webUrl = group.epic?.webUrl,
-				   let url = URL(string: webUrl)
+					let url = URL(string: webUrl)
 				{
 					ShareButton(url)
 				}

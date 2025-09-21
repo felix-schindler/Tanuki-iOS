@@ -119,15 +119,18 @@ struct SnippetLoader: View {
 								.markdownTheme(.gitLab)
 						}
 					}
-					
+
 					if let blobs = snippet.blobs?.nodes, blobs.isNotEmpty {
 						ForEach(blobs, id: \.self?.name) { file in
 							if let file {
 								Section("\(file.name ?? "File") (\(file.size) B)") {
-									if let contents = file.rawPlainData?.trimmingCharacters(in: .whitespacesAndNewlines), contents.isNotEmpty {
+									if let contents = file.rawPlainData?.trimmingCharacters(
+										in: .whitespacesAndNewlines), contents.isNotEmpty
+									{
 										CodeTextView(
 											contents,
-											language: String(file.name?.split(separator: ".").last ?? "unknown"),
+											language: String(
+												file.name?.split(separator: ".").last ?? "unknown"),
 											colorScheme: self.colorScheme,
 											fontSize: 12
 										)

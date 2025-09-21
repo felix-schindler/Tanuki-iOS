@@ -5,8 +5,8 @@
 //  Created by Felix Schindler on 20.09.25.
 //
 
-import SwiftUI
 import HighlightedTextEditor
+import SwiftUI
 
 struct NewReleaseView: View {
 	@Environment(\.presentationMode)
@@ -29,7 +29,7 @@ struct NewReleaseView: View {
 				type: [Tag].self,
 				endpoint: "/projects/\(id)/repository/tags"
 			)
-			
+
 			self.tags = temp
 			self.tagName = temp[0].name
 		} catch let error {
@@ -72,7 +72,7 @@ struct NewReleaseView: View {
 	public var body: some View {
 		Form {
 			if let tags,
-			   tags.isNotEmpty
+				tags.isNotEmpty
 			{
 				Picker(
 					"Tag", selection: $tagName,
@@ -85,7 +85,7 @@ struct NewReleaseView: View {
 			} else {
 				TextField("Tag name", text: $tagName)
 			}
-			
+
 			Section("Details (optional)") {
 				TextField("Name", text: $releaseName)
 				VStack(alignment: .leading) {
