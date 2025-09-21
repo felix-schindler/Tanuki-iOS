@@ -16,11 +16,11 @@ enum DateError: String, Error {
 
 class API {
 	/// GitLab host
-	@AppStorage("domain")
+	@AppStorage("domain", store: UserDefaults(suiteName: "de.schindlerfelix.Tanuki"))
 	public static var host: String = "gitlab.com"
 
 	/// GitLab token
-	@AppStorage("token")
+	@AppStorage("token", store: UserDefaults(suiteName: "de.schindlerfelix.Tanuki"))
 	public static var token: String = ""
 
 	/// API endpoint (including version)
