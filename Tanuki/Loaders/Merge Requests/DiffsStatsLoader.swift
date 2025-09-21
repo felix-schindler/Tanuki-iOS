@@ -16,21 +16,12 @@ struct DiffsStatsLoader: View {
 	private var diffs: Result<[MergeRequestDiffsQuery.Data.Project.MergeRequest.DiffStat], Error>? =
 		nil
 
-	@State
-	private var isLoading = false
-
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
 		self.iid = iid
 	}
 
 	private func loadDiffs() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: MergeRequestDiffsQuery(fullPath: self.fullPath, iid: self.iid),
@@ -74,13 +65,11 @@ struct DiffsStatsLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading file diffs")
-			} else if let diffs {
+			if let diffs {
 				switch diffs {
 				case .success(let diffs):
 					if diffs.isEmpty {
-						ContentUnavailableView(
+						NoContentView(
 							"There are no files with changed content", systemImage: "plusminus")
 					} else {
 						ForEach(diffs, id: \.path) { diff in
@@ -92,7 +81,7 @@ struct DiffsStatsLoader: View {
 											"+\(diff.additions)", bgColor: .green, fgColor: .white)
 										PillView(
 											"-\(diff.deletions)", bgColor: .red, fgColor: .white)
-									}.monospaced()
+									}.font(.system(.body, design: .monospaced))
 								}
 							}
 						}
@@ -100,6 +89,8 @@ struct DiffsStatsLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading file diffs", systemImage: "plusminus")
 			}
 		}.onAppear {
 			loadDiffs()
@@ -110,7 +101,7 @@ struct DiffsStatsLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		DiffsStatsLoader(fullPath: "felix-schindler/gitlab-ios", iid: "1")
 	}
 }

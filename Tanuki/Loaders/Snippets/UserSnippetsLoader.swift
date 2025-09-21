@@ -14,20 +14,11 @@ struct UserSnippetsLoader: View {
 	@State
 	private var snippets: Result<[Snippet?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(username: String? = nil) {
 		self.username = username
 	}
 
 	private func loadSnippets() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			if let username {
 				let responses = try Network.shared.apollo.fetch(
@@ -101,13 +92,11 @@ struct UserSnippetsLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading snippets")
-			} else if let snippets {
+			if let snippets {
 				switch snippets {
 				case .success(let snippets):
 					if snippets.isEmpty {
-						ContentUnavailableView("There are no snippets", systemImage: "scissors")
+						NoContentView("There are no snippets", systemImage: "scissors")
 					} else {
 						ForEach(snippets, id: \.self?.id) { maybeSnippet in
 							if let snippet = maybeSnippet {
@@ -157,6 +146,8 @@ struct UserSnippetsLoader: View {
 				case .failure(let error):
 					FailedView(error.localizedDescription, icon: "scissors")
 				}
+			} else {
+				LoadingView("Loading Snippets", systemImage: "scissors")
 			}
 		}.onAppear {
 			loadSnippets()
@@ -167,7 +158,7 @@ struct UserSnippetsLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		UserSnippetsLoader(username: "felix-schindler")
 	}
 }

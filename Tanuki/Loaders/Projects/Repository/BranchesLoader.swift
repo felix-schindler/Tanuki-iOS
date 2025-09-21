@@ -16,9 +16,6 @@ struct BranchesLoader: View {
 	@State
 	private var branches: Result<[Branch], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(_ projectId: Int) {
 		self.projectId = projectId
 	}
@@ -37,13 +34,11 @@ struct BranchesLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading Branches")
-			} else if let branches {
+			if let branches {
 				switch branches {
 				case .success(let branches):
 					if branches.isEmpty {
-						ContentUnavailableView(
+						NoContentView(
 							"You'll see your branches after you pushed them",
 							systemImage: "chevron.left.forwardslash.chevron.right")
 					} else {
@@ -75,6 +70,9 @@ struct BranchesLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView(
+					"Loading Branches", systemImage: "chevron.left.forwardslash.chevron.right")
 			}
 		}.onAppear {
 			Task {
@@ -87,7 +85,7 @@ struct BranchesLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		BranchesLoader(33_025_310)
 	}
 }

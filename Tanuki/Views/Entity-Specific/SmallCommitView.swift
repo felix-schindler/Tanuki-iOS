@@ -77,18 +77,34 @@ struct SmallCommitView: View {
 					.font(.system(.footnote, design: .monospaced))
 			}
 		}.sheet(isPresented: $showVerified) {
-			VStack(alignment: .leading) {
-				PopupHeader(
-					title: "Verified commit",
-					onClose: {
-						showVerified = false
-					})
-				Text(
-					"This commit was signed with a verified signature and the committer email was verified to belong to the same user."
-				)
-				Spacer()
-			}.padding()
+			if #available(iOS 16.0, *) {
+				VStack(alignment: .leading) {
+					PopupHeader(
+						title: "Verified commit",
+						onClose: {
+							showVerified = false
+						})
+					Text(
+						"This commit was signed with a verified signature and the committer email was verified to belong to the same user."
+					)
+					Spacer()
+				}
+				.padding()
 				.presentationDetents([.fraction(0.2)])
+			} else {
+				VStack(alignment: .leading) {
+					PopupHeader(
+						title: "Verified commit",
+						onClose: {
+							showVerified = false
+						})
+					Text(
+						"This commit was signed with a verified signature and the committer email was verified to belong to the same user."
+					)
+					Spacer()
+				}
+				.padding()
+			}
 		}.swipeActions {
 			if let url = URL(string: commit.webUrl) {
 				ShareButton(url)

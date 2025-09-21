@@ -25,9 +25,6 @@ struct FileLoader: View {
 	@State
 	private var content: Result<String, Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(
 		id: Int,
 		filePath: String,
@@ -54,12 +51,6 @@ struct FileLoader: View {
 	}
 
 	private func loadFile() async {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let res = try await API.raw(method: .get, url: self.url)
 			if let content = res.utf8String {
@@ -114,8 +105,6 @@ struct FileLoader: View {
 							.frame(width: 50, height: 50)
 						Text("Can't preview this \(fileExtension) file")
 					}
-				} else if isLoading {
-					ProgressView("Loading file")
 				} else if let content {
 					switch content {
 					case .success(let content):
@@ -133,6 +122,8 @@ struct FileLoader: View {
 					case .failure(let error):
 						FailedView(error)
 					}
+				} else {
+					LoadingView("Loading file", systemImage: "document")
 				}
 				Spacer()
 			}

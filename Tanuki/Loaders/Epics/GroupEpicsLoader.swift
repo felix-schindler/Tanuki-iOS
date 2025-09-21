@@ -18,16 +18,7 @@ struct GroupEpicsLoader: View {
 	@State
 	private var epics: Result<[GroupEpicsQuery.Data.Group.Epics.Node?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	private func loadIssues() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: GroupEpicsQuery(fullPath: self.fullPath), cachePolicy: .cacheAndNetwork)
@@ -67,14 +58,16 @@ struct GroupEpicsLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading epics")
-			} else if let epics {
+			if let epics {
 				switch epics {
 				case .success(let epics):
 					if epics.isEmpty {
-						ContentUnavailableView(
-							"There are no epics", systemImage: "calendar.badge.checkmark")
+						if #available(iOS 17.0, *) {
+							NoContentView(
+								"There are no epics", systemImage: "calendar.badge.checkmark")
+						} else {
+							NoContentView("There are no epics", systemImage: "calendar")
+						}
 					} else {
 						ForEach(epics, id: \.?.reference) { maybeEpic in
 							if let epic = maybeEpic {
@@ -134,6 +127,8 @@ struct GroupEpicsLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Epics", systemImage: "calendar")
 			}
 		}.onAppear {
 			loadIssues()
@@ -144,7 +139,7 @@ struct GroupEpicsLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		GroupEpicsLoader(fullPath: "gitlab-org")
 	}
 }

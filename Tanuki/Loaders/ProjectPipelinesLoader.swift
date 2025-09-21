@@ -15,9 +15,6 @@ struct ProjectPipelinesLoader: View {
 	private var pipelines: Result<[ProjectPipelinesQuery.Data.Project.Pipelines.Node?], Error>? =
 		nil
 
-	@State
-	private var isLoading = false
-
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
@@ -63,13 +60,11 @@ struct ProjectPipelinesLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading pipelines")
-			} else if let pipelines {
+			if let pipelines {
 				switch pipelines {
 				case .success(let pipelines):
 					if pipelines.isEmpty {
-						ContentUnavailableView("There are no pipelines", systemImage: "flag")
+						NoContentView("There are no pipelines", systemImage: "flag")
 					} else {
 						ForEach(pipelines, id: \.?.id) { maybePipeline in
 							if let pipeline = maybePipeline {
@@ -93,7 +88,7 @@ struct ProjectPipelinesLoader: View {
 															"text.line.first.and.arrowtriangle.forward"
 													)
 													.textSelection(.enabled)
-													.monospaced()
+													.font(.system(.body, design: .monospaced))
 												}
 											}.font(.footnote)
 										}
@@ -126,6 +121,8 @@ struct ProjectPipelinesLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Pipelines", systemImage: "flag")
 			}
 		}.onAppear {
 			loadPipelines()
@@ -136,7 +133,7 @@ struct ProjectPipelinesLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		ProjectPipelinesLoader(fullPath: "felix-schindler/gitlab-ios")
 	}
 }

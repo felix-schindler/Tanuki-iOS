@@ -99,13 +99,13 @@ struct NewProjectView: View {
 				await createProject()
 			}.tint(.accentColor)
 		}
-		.scrollDismissesKeyboard(.interactively)
 		.navigationTitle("New Project")
+		.modifier(ScrollDismissIfAvailable())
 	}
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		NewProjectView()
 	}
 }

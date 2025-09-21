@@ -22,20 +22,11 @@ struct TagsLoader: View {
 	@State
 	private var tags: Result<[Tag], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(_ projectId: Int) {
 		self.projectId = projectId
 	}
 
 	private func loadTags() async {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let temp = try await API.get(
 				type: [Tag].self,
@@ -51,13 +42,11 @@ struct TagsLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading Tags")
-			} else if let tags {
+			if let tags {
 				switch tags {
 				case .success(let tags):
 					if tags.isEmpty {
-						ContentUnavailableView(
+						NoContentView(
 							"You'll see your tags after you pushed them",
 							systemImage: "chevron.left.forwardslash.chevron.right")
 					} else {
@@ -84,6 +73,8 @@ struct TagsLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Tags", systemImage: "chevron.left.forwardslash.chevron.right")
 			}
 		}.onAppear {
 			Task {
@@ -96,7 +87,7 @@ struct TagsLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		TagsLoader(33_025_310)
 	}
 }

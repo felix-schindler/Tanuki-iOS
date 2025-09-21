@@ -14,20 +14,11 @@ struct UserTodosLoader: View {
 	@State
 	private var todos: Result<[Todo?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(username: String) {
 		self.username = username
 	}
 
 	private func loadTodos() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: UserTodosQuery(username: self.username), cachePolicy: .cacheAndNetwork)
@@ -67,15 +58,15 @@ struct UserTodosLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading your todos")
-			} else if let todos {
+			if let todos {
 				switch todos {
 				case .success(let todos):
 					if todos.isEmpty {
-						ContentUnavailableView(
-							"All caught up!", systemImage: "checkmark.square",
-							description: Text("There are no Todos"))
+						NoContentView(
+							"All caught up!",
+							systemImage: "checkmark.square",
+							description: "There are no Todos"
+						)
 					} else {
 						ForEach(todos, id: \.?.id) { maybeTodo in
 							if let todo = maybeTodo {
@@ -86,6 +77,8 @@ struct UserTodosLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Todos", systemImage: "checkmark.square")
 			}
 		}.onAppear {
 			loadTodos()
@@ -96,7 +89,7 @@ struct UserTodosLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		UserTodosLoader(username: "felix-schindler")
 	}
 }

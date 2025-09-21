@@ -16,21 +16,12 @@ struct ProjectIssuesLoader: View {
 	@State
 	private var project: Result<GitLabAPI.ProjectIssuesQuery.Data.Project, Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(fullPath: String) {
 		self.fullPath = fullPath
 		self.project = nil
 	}
 
 	private func loadIssues() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: ProjectIssuesQuery(fullPath: self.fullPath),
@@ -74,18 +65,16 @@ struct ProjectIssuesLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading issues")
-			} else if let project {
+			if let project {
 				switch project {
 				case .success(let project):
 					if !(project.issuesEnabled ?? false) {
-						ContentUnavailableView(
+						NoContentView(
 							"Issues are not enabled for this project",
 							systemImage: "smallcircle.circle")
 					} else if let issues = project.issues?.nodes {
 						if issues.isEmpty {
-							ContentUnavailableView(
+							NoContentView(
 								"There are no issues", systemImage: "smallcircle.circle")
 						} else {
 							ForEach(project.issues!.nodes!, id: \.self?.iid) {
@@ -99,6 +88,8 @@ struct ProjectIssuesLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Issues", systemImage: "smallcircle.circle", color: .green)
 			}
 		}.onAppear {
 			loadIssues()
@@ -116,7 +107,7 @@ struct ProjectIssuesLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		ProjectIssuesLoader(fullPath: "felix-schindler/gitlab-ios")
 	}
 }

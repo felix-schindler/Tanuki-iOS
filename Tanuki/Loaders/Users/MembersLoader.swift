@@ -20,21 +20,12 @@ struct MembersLoader: View {
 	@State
 	private var memberships: Result<[Member?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(fullPath: String, type: MemberType) {
 		self.fullPath = fullPath
 		self.queryType = type
 	}
 
 	private func loadMembers() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			switch self.queryType {
 			case .project:
@@ -112,13 +103,11 @@ struct MembersLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading members")
-			} else if let memberships {
+			if let memberships {
 				switch memberships {
 				case .success(let memberships):
 					if memberships.isEmpty {
-						ContentUnavailableView(
+						NoContentView(
 							"This project has no members",
 							systemImage: "person.2"
 						)
@@ -215,7 +204,8 @@ struct MembersLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
-
+			} else {
+				LoadingView("Loading Members", systemImage: "person.2")
 			}
 		}.toolbar {
 			NavigationLink(
@@ -233,7 +223,7 @@ struct MembersLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		MembersLoader(fullPath: "gitlab-org/gitlab", type: .project)
 	}
 }

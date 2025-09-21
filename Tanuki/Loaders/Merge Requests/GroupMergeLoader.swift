@@ -14,20 +14,11 @@ struct GroupMergeLoader: View {
 	@State
 	private var mergeRequests: Result<[SmallMergeRequest?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
 
 	private func loadMergeRequests() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: GroupMergeRequestsQuery(fullPath: self.fullPath),
@@ -71,13 +62,12 @@ struct GroupMergeLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading merge requests")
-			} else if let mergeRequests {
+			if let mergeRequests {
 				switch mergeRequests {
 				case .success(let mrs):
 					if mrs.isEmpty {
-						ContentUnavailableView("There are no merge requests", systemImage: "")
+						NoContentView(
+							"There are no Merge Requests", systemImage: "arrow.triangle.pull")
 					} else {
 						ForEach(mrs, id: \.?.reference) { maybeMerge in
 							if let mr = maybeMerge {
@@ -88,6 +78,9 @@ struct GroupMergeLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView(
+					"Loading Merge Requests", systemImage: "arrow.triangle.pull", color: .blue)
 			}
 		}.onAppear {
 			loadMergeRequests()
@@ -98,7 +91,7 @@ struct GroupMergeLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		GroupMergeLoader(fullPath: "gitlab-org")
 	}
 }

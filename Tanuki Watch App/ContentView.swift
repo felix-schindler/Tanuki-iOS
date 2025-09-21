@@ -11,7 +11,7 @@ struct ContentView: View {
     var body: some View {
 		TabView {
 			if #available(watchOS 9.0, *) {
-				NavigationStack {
+				NavigationView {
 					UserIssuesLoader()
 						.navigationTitle("Issues")
 				}

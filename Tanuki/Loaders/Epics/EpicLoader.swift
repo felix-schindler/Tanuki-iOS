@@ -16,9 +16,6 @@ struct EpicLoader: View {
 	@State
 	private var group: Result<EpicQuery.Data.Group, Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	// MARK: New note
 	@State
 	private var newNoteContent = ""
@@ -32,12 +29,6 @@ struct EpicLoader: View {
 	}
 
 	private func loadEpic() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: EpicQuery(fullPath: self.fullPath, iid: self.iid),
@@ -78,9 +69,7 @@ struct EpicLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading epic")
-			} else if let group {
+			if let group {
 				switch group {
 				case .success(let group):
 					if let epic = group.epic {
@@ -323,8 +312,7 @@ struct EpicLoader: View {
 									HStack {
 										TextField(
 											"New note",
-											text: $newNoteContent,
-											axis: .vertical
+											text: $newNoteContent
 										)
 										RoundIconButton("Comment", icon: "arrow.up") {
 											// TODO: Save note
@@ -348,11 +336,13 @@ struct EpicLoader: View {
 							}
 						}
 					} else {
-						ContentUnavailableView("Epic not found", systemImage: "")
+						NoContentView("Epic not found", systemImage: "calendar")
 					}
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Epics", systemImage: "calendar")
 			}
 		}.onAppear {
 			loadEpic()
@@ -371,7 +361,7 @@ struct EpicLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		EpicLoader(fullPath: "gitlab-org", iid: "12691")
 	}
 }

@@ -44,6 +44,16 @@ extension String {
 	func copyToClipboard() {
 		UIPasteboard.general.string = self
 	}
+
+	func replacing(_ target: String, with replacement: String) -> String {
+		var result = self
+
+		while let range = result.range(of: target) {
+			result.replaceSubrange(range, with: replacement)
+		}
+
+		return result
+	}
 }
 
 extension StringProtocol {

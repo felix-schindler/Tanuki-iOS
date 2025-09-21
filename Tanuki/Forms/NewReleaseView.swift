@@ -111,7 +111,7 @@ struct NewReleaseView: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		NewReleaseView(id: 278_964)
 	}
 }

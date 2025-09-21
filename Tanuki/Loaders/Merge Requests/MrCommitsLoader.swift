@@ -15,21 +15,12 @@ struct MrCommitsLoader: View {
 	@State
 	private var project: Result<MergeRequestCommitsQuery.Data.Project, Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
 		self.iid = iid
 	}
 
 	private func loadCommits() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: MergeRequestCommitsQuery(fullPath: self.fullPath, iid: self.iid),
@@ -73,9 +64,7 @@ struct MrCommitsLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading commits")
-			} else if let project {
+			if let project {
 				switch project {
 				case .success(let project):
 					if let projectId = project.id.toIntId(),
@@ -88,13 +77,15 @@ struct MrCommitsLoader: View {
 							}
 						}
 					} else {
-						ContentUnavailableView(
+						NoContentView(
 							"There are no commits in this MR",
 							systemImage: "circle.and.line.horizontal")
 					}
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Commits", systemImage: "circle.and.line.horizontal")
 			}
 		}.onAppear {
 			loadCommits()
@@ -105,7 +96,7 @@ struct MrCommitsLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		MrCommitsLoader(fullPath: "felix-schindler/gitlab-ios", iid: "1")
 	}
 }

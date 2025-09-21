@@ -15,20 +15,11 @@ struct GroupProjectsLoader: View {
 	@State
 	private var projects: Result<[GroupProjectsQuery.Data.Group.Projects.Node?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
 
 	private func loadProjects() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: GroupProjectsQuery(fullPath: self.fullPath),
@@ -70,25 +61,13 @@ struct GroupProjectsLoader: View {
 		}
 	}
 
-	#if !os(macOS)
-		public var body: some View {
-			main.navigationBarTitleDisplayMode(.large)
-		}
-	#else
-		public var body: some View {
-			main
-		}
-	#endif
-
-	var main: some View {
+	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading projects")
-			} else if let projects {
+			if let projects {
 				switch projects {
 				case .success(let projects):
 					if projects.isEmpty {
-						ContentUnavailableView(
+						NoContentView(
 							"The group \(self.fullPath) doesn't have any projects",
 							systemImage: "app.gift.fill"
 						)
@@ -102,17 +81,21 @@ struct GroupProjectsLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Projects", systemImage: "app.gift.fill")
 			}
 		}.onAppear {
 			loadProjects()
 		}.refreshable {
 			await reloadProjects()
-		}.navigationTitle("Projects")
+		}
+		.navigationBarTitleDisplayMode(.large)
+		.navigationTitle("Projects")
 	}
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		GroupProjectsLoader(fullPath: "gitlab-org")
 	}
 }

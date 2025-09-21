@@ -14,9 +14,6 @@ struct EventsLoader: View {
 	@State
 	private var events: Result<[Event], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init() {
 	}
 
@@ -26,43 +23,6 @@ struct EventsLoader: View {
 
 	init(projectId: Int) {
 		self.projectId = projectId
-	}
-
-	public var body: some View {
-		List {
-			if isLoading {
-				ProgressView("Loading events")
-			} else if let events {
-				switch events {
-				case .success(let events):
-					if events.isEmpty {
-						ContentUnavailableView(
-							"There are no events", image: "clock.arrow.circlepath")
-					} else {
-						ForEach(events, id: \.id) { event in
-							VStack(alignment: .leading) {
-								HStack {
-									ScrollView(.horizontal) {
-										AuthorView(event.author)
-									}
-									Spacer()
-									Text(event.createdAt.toString(timeStyle: .short))
-								}.font(.footnote)
-								Text(getStupidText(event: event))
-							}
-						}
-					}
-				case .failure(let failure):
-					FailedView(failure.localizedDescription)
-				}
-			}
-		}.onAppear {
-			Task {
-				await getEvents()
-			}
-		}.refreshable {
-			await getEvents()
-		}.navigationTitle("Activity")
 	}
 
 	private func getStupidText(event: Event) -> String {
@@ -89,12 +49,6 @@ struct EventsLoader: View {
 	}
 
 	private func getEvents() async {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		var endpoint: String
 
 		if projectId != 0 {
@@ -112,10 +66,46 @@ struct EventsLoader: View {
 			self.events = .failure(error)
 		}
 	}
+
+	public var body: some View {
+		List {
+			if let events {
+				switch events {
+				case .success(let events):
+					if events.isEmpty {
+						NoContentView("There are no events", systemImage: "clock.arrow.circlepath")
+					} else {
+						ForEach(events, id: \.id) { event in
+							VStack(alignment: .leading) {
+								HStack {
+									ScrollView(.horizontal) {
+										AuthorView(event.author)
+									}
+									Spacer()
+									Text(event.createdAt.toString(timeStyle: .short))
+								}.font(.footnote)
+								Text(getStupidText(event: event))
+							}
+						}
+					}
+				case .failure(let failure):
+					FailedView(failure.localizedDescription)
+				}
+			} else {
+				LoadingView("Loading events", systemImage: "bell")
+			}
+		}.onAppear {
+			Task {
+				await getEvents()
+			}
+		}.refreshable {
+			await getEvents()
+		}.navigationTitle("Activity")
+	}
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		EventsLoader()
 	}
 }

@@ -19,16 +19,7 @@ struct UserIssuesLoader: View {
 	@State
 	private var projectMemberships: Result<[IssueProjectMembership?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	private func loadIssues() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			if let username {
 				let responses = try Network.shared.apollo.fetch(
@@ -113,8 +104,9 @@ struct UserIssuesLoader: View {
 					}
 
 					if issues.isEmpty {
-						ContentUnavailableView(
-							"All caught up!", systemImage: "smallcircle.circle")
+						NoContentView(
+							"All caught up!", systemImage: "smallcircle.circle",
+							description: "There are no Issues")
 					} else {
 						ForEach(0..<issues.count, id: \.self) { index in
 							let (fullPath, issue) = issues[index]
@@ -124,6 +116,8 @@ struct UserIssuesLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Issues", systemImage: "smallcircle.circle", color: .green)
 			}
 		}.onAppear {
 			Task {
@@ -136,7 +130,7 @@ struct UserIssuesLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		UserIssuesLoader(username: "felix-schindler")
 	}
 }

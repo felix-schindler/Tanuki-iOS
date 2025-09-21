@@ -21,21 +21,12 @@ struct LabelsLoader: View {
 	@State
 	private var labels: Result<[MyLabel?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(fullPath: String, queryType: LabelQueryType) {
 		self.fullPath = fullPath
 		self.queryType = queryType
 	}
 
 	private func loadLabels() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			switch self.queryType {
 			case .group:
@@ -106,13 +97,11 @@ struct LabelsLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading labels")
-			} else if let labels {
+			if let labels {
 				switch labels {
 				case .success(let labels):
 					if labels.isEmpty {
-						ContentUnavailableView("There are no labels", systemImage: "person.2")
+						NoContentView("There are no labels", systemImage: "person.2")
 					} else {
 						ForEach(labels, id: \.?.id) { maybeLabel in
 							if let label = maybeLabel {
@@ -138,6 +127,8 @@ struct LabelsLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Labels", systemImage: "person.2")
 			}
 		}.onAppear {
 			loadLabels()
@@ -157,7 +148,7 @@ struct LabelsLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		LabelsLoader(fullPath: "gitlab-org", queryType: .group)
 	}
 }

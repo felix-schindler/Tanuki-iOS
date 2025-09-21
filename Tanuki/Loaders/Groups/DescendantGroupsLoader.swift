@@ -15,20 +15,11 @@ struct DescendantGroupsLoader: View {
 	private var groups: Result<[DescendantGroupsQuery.Data.Group.DescendantGroups.Node?], Error>? =
 		nil
 
-	@State
-	private var isLoading = false
-
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
 
 	private func loadGroups() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: DescendantGroupsQuery(fullPath: self.fullPath), cachePolicy: .cacheAndNetwork
@@ -67,25 +58,13 @@ struct DescendantGroupsLoader: View {
 		}
 	}
 
-	#if !os(macOS)
-		public var body: some View {
-			main.navigationBarTitleDisplayMode(.large)
-		}
-	#else
-		public var body: some View {
-			main
-		}
-	#endif
-
-	var main: some View {
+	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading groups")
-			} else if let groups {
+			if let groups {
 				switch groups {
 				case .success(let groups):
 					if groups.isEmpty {
-						ContentUnavailableView(
+						NoContentView(
 							"There are no descendant groups of \(self.fullPath)",
 							systemImage: "scale.3d")
 					} else {
@@ -154,17 +133,22 @@ struct DescendantGroupsLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView(
+					"Loading descendant Groups of \(self.fullPath)", systemImage: "scale.3d")
 			}
 		}.onAppear {
 			loadGroups()
 		}.refreshable {
 			await reloadGroups()
-		}.navigationTitle("Descendant groups")
+		}
+		.navigationTitle("Groups")
+		.navigationBarTitleDisplayMode(.large)
 	}
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		DescendantGroupsLoader(fullPath: "gitlab-org")
 	}
 }

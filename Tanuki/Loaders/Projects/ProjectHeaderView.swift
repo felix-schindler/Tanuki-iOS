@@ -114,8 +114,9 @@ struct ProjectHeaderView: View {
 				.controlSize(.small)
 			}
 
-			if project.languages != nil
-				&& !project.languages!.isEmpty
+			if #available(iOS 16.0, *),
+				let languages = project.languages,
+				languages.isNotEmpty
 			{
 				Chart {
 					ForEach(project.languages!, id: \.self) {

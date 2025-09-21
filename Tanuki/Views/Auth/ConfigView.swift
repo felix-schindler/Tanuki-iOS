@@ -58,13 +58,13 @@ struct ConfigView: View {
 		}
 		.padding()
 		.textFieldStyle(.roundedBorder)
-		.scrollDismissesKeyboard(.immediately)
 		.navigationTitle("Self-Hosted")
+		.modifier(ScrollDismissIfAvailable())
 	}
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		ConfigView()
 	}
 }

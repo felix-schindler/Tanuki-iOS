@@ -13,16 +13,7 @@ struct HomeView: View {
 	@State
 	private var starredProjects: Result<[SmallProject?], Error>?
 
-	@State
-	private var isLoading = false
-
 	private func loadStarredProjects() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: CurrentUserStarredProjectsQuery(), cachePolicy: .cacheAndNetwork)
@@ -148,14 +139,11 @@ struct HomeView: View {
 			}
 
 			Section("Starred projects") {
-				if isLoading {
-					ProgressView("Loading starred projects...")
-						.frame(maxWidth: .infinity, minHeight: 100)
-				} else if let starredProjects {
+				if let starredProjects {
 					switch starredProjects {
 					case .success(let projects):
 						if projects.isEmpty {
-							ContentUnavailableView(
+							NoContentView(
 								"There are no starred projects",
 								systemImage: "star.square.on.square.fill")
 						} else {
@@ -169,6 +157,8 @@ struct HomeView: View {
 						FailedView(error)
 							.frame(maxWidth: .infinity, minHeight: 100)
 					}
+				} else {
+					LoadingView("Loading starred Projects", systemImage: "star", color: .yellow)
 				}
 			}
 		}.onAppear {
@@ -187,7 +177,7 @@ struct HomeView: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		HomeView()
 	}
 }

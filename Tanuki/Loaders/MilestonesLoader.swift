@@ -21,21 +21,12 @@ struct MilestonesLoader: View {
 	@State
 	private var milestones: Result<[Milestone?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(fullPath: String, queryType: MilestoneQueryType) {
 		self.fullPath = fullPath
 		self.queryType = queryType
 	}
 
 	private func loadMilestones() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			switch self.queryType {
 			case .group:
@@ -112,14 +103,16 @@ struct MilestonesLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading Milestones")
-			} else if let milestones {
+			if let milestones {
 				switch milestones {
 				case .success(let milestones):
 					if milestones.isEmpty {
-						ContentUnavailableView(
-							"There are no milestones", systemImage: "calendar.badge.checkmark")
+						if #available(iOS 17.0, *) {
+							NoContentView(
+								"There are no milestones", systemImage: "calendar.badge.checkmark")
+						} else {
+							NoContentView("There are no milestones", systemImage: "calendar")
+						}
 					} else {
 						ForEach(milestones, id: \.?.iid) { milestone in
 							if let milestone {
@@ -173,6 +166,12 @@ struct MilestonesLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				if #available(iOS 17.0, *) {
+					LoadingView("Loading Milestones", systemImage: "calendar.badge.checkmark")
+				} else {
+					LoadingView("Loading Milestones", systemImage: "calendar")
+				}
 			}
 		}.onAppear {
 			loadMilestones()
@@ -190,7 +189,7 @@ struct MilestonesLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		MilestonesLoader(fullPath: "gitlab-org", queryType: .group)
 	}
 }

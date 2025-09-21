@@ -87,7 +87,7 @@ struct CommitsLoader: View {
 				switch commits {
 				case .success(let commits):
 					if commits.isEmpty {
-						ContentUnavailableView(
+						NoContentView(
 							"You'll see your commits after you pushed something to branch \(refName)",
 							systemImage: "chevron.left.forwardslash.chevron.right"
 						)
@@ -100,7 +100,7 @@ struct CommitsLoader: View {
 										Text(branch.name).tag(branch.name)
 									}
 								}.pickerStyle(.menu)
-									.onChange(of: refName) {
+									.onChange(of: refName) { _ in
 										Task {
 											await loadCommits()
 										}
@@ -177,7 +177,7 @@ struct CommitsLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		CommitsLoader(33_025_310, refName: "main")
 	}
 }

@@ -14,20 +14,11 @@ struct CustomEmojisLoader: View {
 	@State
 	private var emojis: Result<[GroupCustomEmojiQuery.Data.Group.CustomEmoji.Node?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
 
 	private func loadEmojis() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: GroupCustomEmojiQuery(fullPath: self.fullPath), cachePolicy: .cacheAndNetwork
@@ -68,13 +59,11 @@ struct CustomEmojisLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading custom emojis")
-			} else if let emojis {
+			if let emojis {
 				switch emojis {
 				case .success(let emojis):
 					if emojis.isEmpty {
-						ContentUnavailableView(
+						NoContentView(
 							"There are no custom emojis", systemImage: "face.smiling")
 					} else {
 						ForEach(emojis, id: \.?.id) { maybeEmoji in
@@ -97,6 +86,8 @@ struct CustomEmojisLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading custom emojis", systemImage: "face.smiling")
 			}
 		}.onAppear {
 			loadEmojis()
@@ -107,7 +98,7 @@ struct CustomEmojisLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		CustomEmojisLoader(fullPath: "gitlab-org")
 	}
 }

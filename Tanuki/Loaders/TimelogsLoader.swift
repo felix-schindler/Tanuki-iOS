@@ -21,21 +21,12 @@ struct TimelogsLoader: View {
 	@State
 	private var timelogs: Result<[Timelog?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(fullPath: String, queryType: TimelogsQueryType) {
 		self.fullPath = fullPath
 		self.queryType = queryType
 	}
 
 	private func loadTimelogs() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			switch self.queryType {
 			case .group:
@@ -111,13 +102,11 @@ struct TimelogsLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading timelogs")
-			} else if let timelogs {
+			if let timelogs {
 				switch timelogs {
 				case .success(let timelogs):
 					if timelogs.isEmpty {
-						ContentUnavailableView("There are no timelogs", systemImage: "person.2")
+						NoContentView("There are no timelogs", systemImage: "hourglass")
 					} else {
 						ForEach(timelogs, id: \.?.id) { maybeLog in
 							if let log = maybeLog {
@@ -193,6 +182,8 @@ struct TimelogsLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Timelogs", systemImage: "hourglass")
 			}
 		}.onAppear {
 			loadTimelogs()
@@ -203,7 +194,7 @@ struct TimelogsLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		TimelogsLoader(fullPath: "felix-schindler", queryType: .user)
 	}
 }

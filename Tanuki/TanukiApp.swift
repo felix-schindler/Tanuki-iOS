@@ -27,29 +27,29 @@ struct TanukiApp: App {
 			NavigationSplitView {
 				HomeView()
 			} detail: {
-				ContentUnavailableView("Welcome to Tanuki", systemImage: "house")
+				NoContentView("Welcome to Tanuki", systemImage: "house")
 			}
 		#else
 			TabView {
-				NavigationStack {
+				NavigationView {
 					HomeView()
 				}.tabItem {
 					Label("Home", systemImage: "house")
 				}.tag(0)
-				NavigationStack {
+				NavigationView {
+					EventsLoader()
+				}.tabItem {
+					Label("Activity", systemImage: "bell")
+				}.tag(1)
+				NavigationView {
 					ExploreView()
 				}.tabItem {
 					Label("Explore", systemImage: "sparkles")
-				}.tag(1)
-				NavigationStack {
-					EventsLoader()
-				}.tabItem {
-					Label("Activity", systemImage: "clock.arrow.circlepath")
 				}.tag(2)
-				NavigationStack {
+				NavigationView {
 					CurrentUserLoader()
 				}.tabItem {
-					Label("Account", systemImage: "person")
+					Label("Profile", systemImage: "person")
 				}.tag(3)
 			}
 		#endif

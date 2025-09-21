@@ -16,21 +16,12 @@ struct EpicIssuesLoader: View {
 	@State
 	private var issues: Result<[SmallIssue?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
 		self.iid = iid
 	}
 
 	private func loadIssues() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: EpicIssuesQuery(fullPath: self.fullPath, iid: self.iid),
@@ -74,13 +65,11 @@ struct EpicIssuesLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading issues")
-			} else if let issues {
+			if let issues {
 				switch issues {
 				case .success(let issues):
 					if issues.isEmpty {
-						ContentUnavailableView(
+						NoContentView(
 							"There are no issues", systemImage: "smallcircle.circle")
 					} else {
 						ForEach(issues, id: \.?.reference) { maybeIssue in
@@ -95,6 +84,8 @@ struct EpicIssuesLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Issues", systemImage: "smallcircle.circle", color: .green)
 			}
 		}.onAppear {
 			loadIssues()
@@ -105,7 +96,7 @@ struct EpicIssuesLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		EpicIssuesLoader(fullPath: "gitlab-org", iid: "12691")
 	}
 }

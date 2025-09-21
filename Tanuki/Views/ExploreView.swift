@@ -47,7 +47,7 @@ struct ExploreView: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		ExploreView()
 	}
 }

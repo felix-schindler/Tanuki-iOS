@@ -15,20 +15,11 @@ struct ProjectReleasesLoader: View {
 	@State
 	private var releases: Result<[ProjectReleasesQuery.Data.Project.Releases.Node?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
 
 	private func loadReleases() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: ProjectReleasesQuery(fullPath: self.fullPath), cachePolicy: .cacheAndNetwork)
@@ -68,13 +59,11 @@ struct ProjectReleasesLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading releases")
-			} else if let releases {
+			if let releases {
 				switch releases {
 				case .success(let releases):
 					if releases.isEmpty {
-						ContentUnavailableView("There are no releases", systemImage: "flag")
+						NoContentView("There are no releases", systemImage: "flag")
 					} else {
 						ForEach(releases, id: \.?.id) { maybeRelease in
 							if let release = maybeRelease {
@@ -110,7 +99,7 @@ struct ProjectReleasesLoader: View {
 																"text.line.first.and.arrowtriangle.forward"
 														)
 														.textSelection(.enabled)
-														.monospaced()
+														.font(.system(.body, design: .monospaced))
 													}
 												}.font(.footnote)
 											}
@@ -174,6 +163,8 @@ struct ProjectReleasesLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Releases", systemImage: "flag")
 			}
 		}.onAppear {
 			loadReleases()
@@ -193,7 +184,7 @@ struct ProjectReleasesLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		ProjectReleasesLoader(fullPath: "felix-schindler/gitlab-ios")
 	}
 }

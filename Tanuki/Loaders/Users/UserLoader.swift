@@ -14,20 +14,11 @@ struct UserLoader: View {
 	@State
 	private var user: Result<UserQuery.Data.User, Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(username: String) {
 		self.username = username
 	}
 
 	private func loadUser() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: UserQuery(username: self.username), cachePolicy: .cacheAndNetwork)
@@ -67,15 +58,15 @@ struct UserLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading user \(self.username)")
-			} else if let user {
+			if let user {
 				switch user {
 				case .success(let user):
 					UserView(user)
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading user \(self.username)", systemImage: "person")
 			}
 		}.onAppear {
 			loadUser()

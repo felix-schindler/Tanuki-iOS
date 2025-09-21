@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SetupView: View {
 	var body: some View {
-		NavigationStack {
+		NavigationView {
 			VStack {
 				Spacer()
 
@@ -54,7 +54,6 @@ struct SetupView: View {
 			}
 			.padding()
 			.textFieldStyle(.roundedBorder)
-			.scrollDismissesKeyboard(.immediately)
 		}
 	}
 }

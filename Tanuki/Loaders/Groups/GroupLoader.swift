@@ -15,20 +15,11 @@ struct GroupLoader: View {
 	@State
 	private var group: Result<GroupQuery.Data.Group, Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
 
 	private func loadGroup() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: GroupQuery(fullPath: self.fullPath), cachePolicy: .cacheAndNetwork)
@@ -68,9 +59,7 @@ struct GroupLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading group")
-			} else if let group {
+			if let group {
 				switch group {
 				case .success(let group):
 					VStack(alignment: .leading) {
@@ -220,8 +209,11 @@ struct GroupLoader: View {
 								)
 							},
 							label: {
-								Label(
-									"Plan", systemImage: "calendar.badge.checkmark")
+								if #available(iOS 17.0, *) {
+									Label("Plan", systemImage: "calendar.badge.checkmark")
+								} else {
+									Label("Plan", systemImage: "calendar")
+								}
 							}
 						)
 
@@ -242,6 +234,8 @@ struct GroupLoader: View {
 				case .failure(let error):
 					FailedView(error.localizedDescription, icon: "scale.3d")
 				}
+			} else {
+				LoadingView("Loading Group \(self.fullPath)", systemImage: "scale.3d")
 			}
 		}.onAppear {
 			loadGroup()
@@ -269,7 +263,7 @@ struct GroupLoader: View {
 								// TODO: Implement
 							}
 						}
-					}.menuStyle(.button)
+					}
 				}
 			}
 		}
@@ -279,7 +273,7 @@ struct GroupLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		GroupLoader(fullPath: "gitlab-org/production-engineering")
 	}
 }

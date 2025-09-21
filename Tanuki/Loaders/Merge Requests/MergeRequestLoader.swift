@@ -17,9 +17,6 @@ struct MergeRequestLoader: View {
 	private var project: Result<GitLabAPI.MergeRequestQuery.Data.Project, Error>? = nil
 
 	@State
-	private var isLoading = false
-
-	@State
 	private var newNoteContent = ""
 
 	@State
@@ -34,12 +31,6 @@ struct MergeRequestLoader: View {
 	}
 
 	private func loadMergeRequest() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: MergeRequestQuery(fullPath: self.fullPath, iid: self.iid),
@@ -81,21 +72,9 @@ struct MergeRequestLoader: View {
 		}
 	}
 
-	#if !os(macOS)
-		public var body: some View {
-			main.navigationBarTitleDisplayMode(.inline)
-		}
-	#else
-		public var body: some View {
-			main
-		}
-	#endif
-
-	private var main: some View {
+	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading merge request !\(self.iid)")
-			} else if let project {
+			if let project {
 				switch project {
 				case .success(let project):
 					if let mr = project.mergeRequest {
@@ -136,7 +115,7 @@ struct MergeRequestLoader: View {
 											fgColor: .white,
 											cornerRadius: 5
 										)
-										.monospaced()
+										.font(.system(.body, design: .monospaced))
 										.textSelection(.enabled)
 									} else {
 										NavigationLink(
@@ -149,7 +128,7 @@ struct MergeRequestLoader: View {
 													fgColor: .white,
 													cornerRadius: 5
 												)
-												.monospaced()
+												.font(.system(.body, design: .monospaced))
 												.textSelection(.enabled)
 											})
 									}
@@ -162,7 +141,7 @@ struct MergeRequestLoader: View {
 										fgColor: .white,
 										cornerRadius: 5
 									)
-									.monospaced()
+									.font(.system(.body, design: .monospaced))
 									.textSelection(.enabled)
 								}
 							}.font(.footnote)
@@ -368,8 +347,7 @@ struct MergeRequestLoader: View {
 															.foregroundStyle(.green)
 														Text("-\(diffStats.deletions)")
 															.foregroundStyle(.red)
-													}
-													.monospaced()
+													}.font(.system(.body, design: .monospaced))
 												}
 											},
 											icon: {
@@ -448,7 +426,6 @@ struct MergeRequestLoader: View {
 											}
 										}
 										.padding()
-										.presentationDetents([.fraction(0.2)])
 									}
 								}
 
@@ -516,8 +493,7 @@ struct MergeRequestLoader: View {
 									HStack {
 										TextField(
 											"New note",
-											text: $newNoteContent,
-											axis: .vertical
+											text: $newNoteContent
 										)
 										RoundIconButton("Comment", icon: "arrow.up") {
 											// TODO: Save note
@@ -550,12 +526,16 @@ struct MergeRequestLoader: View {
 							}
 						}
 					} else {
-						ContentUnavailableView(
+						NoContentView(
 							"Can't find merge request", systemImage: "arrow.triangle.pull")
 					}
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView(
+					"Loading Merge Request !\(self.iid)", systemImage: "arrow.triangle.pull",
+					color: .blue)
 			}
 		}.onAppear {
 			loadMergeRequest()
@@ -586,12 +566,14 @@ struct MergeRequestLoader: View {
 					EmptyView()
 				}
 			}
-		}.scrollDismissesKeyboard(.immediately)
+		}
+		.navigationBarTitleDisplayMode(.inline)
+		.modifier(ScrollDismissIfAvailable())
 	}
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		MergeRequestLoader(fullPath: "felix-schindler/gitlab-ios", iid: "1")
 	}
 }

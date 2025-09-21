@@ -14,20 +14,11 @@ struct UserGroupsLoader: View {
 	@State
 	private var groups: Result<[Group?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(username: String? = nil) {
 		self.username = username
 	}
 
 	private func loadGroups() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			if let username {
 				let responses = try Network.shared.apollo.fetch(
@@ -93,13 +84,11 @@ struct UserGroupsLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading groups")
-			} else if let groups {
+			if let groups {
 				switch groups {
 				case .success(let groups):
 					if groups.isEmpty {
-						ContentUnavailableView("There are no groups", systemImage: "scale.3d")
+						NoContentView("There are no groups", systemImage: "scale.3d")
 					} else {
 						ForEach(groups, id: \.self?.fullPath) { maybeGroup in
 							if let group = maybeGroup {
@@ -163,6 +152,8 @@ struct UserGroupsLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Groups", systemImage: "scale.3d")
 			}
 		}.onAppear {
 			loadGroups()
@@ -173,7 +164,7 @@ struct UserGroupsLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		UserGroupsLoader()
 	}
 }

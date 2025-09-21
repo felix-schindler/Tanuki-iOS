@@ -21,9 +21,6 @@ struct UserMergeLoader: View {
 	@State
 	private var mergeRequests: Result<[UserSmallMergeRequest?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(_ userRequestType: UserMergeRequestType) {
 		self.userRequestType = userRequestType
 
@@ -39,12 +36,6 @@ struct UserMergeLoader: View {
 	}
 
 	private func loadMergeRequests() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			switch self.userRequestType {
 			case .assgined:
@@ -89,8 +80,7 @@ struct UserMergeLoader: View {
 
 				Task {
 					for try await response in responses {
-						if let mrs = response.data?.currentUser?.reviewRequestedMergeRequests?.nodes
-						{
+						if let mrs = response.data?.currentUser?.reviewRequestedMergeRequests?.nodes {
 							self.mergeRequests = .success(mrs)
 						} else if let errors = response.errors {
 							for error in errors {
@@ -147,13 +137,11 @@ struct UserMergeLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading merge requests")
-			} else if let mergeRequests {
+			if let mergeRequests {
 				switch mergeRequests {
 				case .success(let mergeRequests):
 					if mergeRequests.isEmpty {
-						ContentUnavailableView(
+						NoContentView(
 							"There are no merge requests", systemImage: "arrow.triangle.pull")
 					} else {
 						ForEach(mergeRequests, id: \.?.reference) {
@@ -166,6 +154,9 @@ struct UserMergeLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView(
+					"Loading Merge Requests", systemImage: "arrow.triangle.pull", color: .blue)
 			}
 		}.onAppear {
 			loadMergeRequests()
@@ -176,7 +167,7 @@ struct UserMergeLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		UserMergeLoader(.authored)
 	}
 }

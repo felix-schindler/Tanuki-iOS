@@ -54,23 +54,42 @@ struct SignatureLoader: View {
 				self.showDetails = false
 			}
 		) {
-			VStack(alignment: .leading) {
-				if let signature {
-					if signature.verificationStatus.starts(with: "verified") {
-						if signature.verificationStatus == "verified_system" {
-							Text(
-								"This commit was created in the GitLab UI, and signed with a GitLab-verified signature."
-							)
-						} else {
-							Text(
-								"This commit was signed using \(signature.signatureType) with a verified signature and the committer email was verified to belong to the same user."
-							)
+			if #available(iOS 16.0, *) {
+				VStack(alignment: .leading) {
+					if let signature {
+						if signature.verificationStatus.starts(with: "verified") {
+							if signature.verificationStatus == "verified_system" {
+								Text(
+									"This commit was created in the GitLab UI, and signed with a GitLab-verified signature."
+								)
+							} else {
+								Text(
+									"This commit was signed using \(signature.signatureType) with a verified signature and the committer email was verified to belong to the same user."
+								)
+							}
 						}
 					}
 				}
+				.padding()
+				.presentationDetents([.fraction(0.139712), .medium])
+			} else {
+				VStack(alignment: .leading) {
+					if let signature {
+						if signature.verificationStatus.starts(with: "verified") {
+							if signature.verificationStatus == "verified_system" {
+								Text(
+									"This commit was created in the GitLab UI, and signed with a GitLab-verified signature."
+								)
+							} else {
+								Text(
+									"This commit was signed using \(signature.signatureType) with a verified signature and the committer email was verified to belong to the same user."
+								)
+							}
+						}
+					}
+				}
+				.padding()
 			}
-			.padding()
-			.presentationDetents([.fraction(0.139712), .medium])
 		}
 	}
 }

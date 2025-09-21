@@ -26,25 +26,25 @@ struct NewIssueView: View {
 	}
 
 	var body: some View {
-		VStack {
-			Form {
-				TextField("Title", text: $title)
+		Form {
+			TextField("Title", text: $title)
 
-				Section("Description (Markdown supported)") {
-					HighlightedTextEditor(text: $description, highlightRules: .markdown)
-						.frame(minHeight: 200)
-				}
-			}.toolbar {
-				AsyncButton("Create issue", systemImage: "checkmark") {
-					await createIssue()
-				}.tint(.accentColor)
-			}.scrollDismissesKeyboard(.interactively)
-		}.navigationTitle("New Issue")
+			Section("Description (Markdown supported)") {
+				HighlightedTextEditor(text: $description, highlightRules: .markdown)
+					.frame(minHeight: 200)
+			}
+		}.toolbar {
+			AsyncButton("Create issue", systemImage: "checkmark") {
+				await createIssue()
+			}.tint(.accentColor)
+		}
+		.navigationTitle("New Issue")
+		.modifier(ScrollDismissIfAvailable())
 	}
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		NewIssueView()
 	}
 }

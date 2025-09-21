@@ -18,9 +18,6 @@ struct IssueLoader: View {
 	private var project: Result<GitLabAPI.IssueQuery.Data.Project, Error>? = nil
 
 	@State
-	private var isLoading = false
-
-	@State
 	private var newNoteContent = ""
 
 	@State var newNoteError = false
@@ -31,12 +28,6 @@ struct IssueLoader: View {
 	}
 
 	private func loadIssue() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: IssueQuery(fullPath: self.fullPath, iid: self.iid),
@@ -78,21 +69,9 @@ struct IssueLoader: View {
 		}
 	}
 
-	#if !os(macOS)
-		public var body: some View {
-			main.navigationBarTitleDisplayMode(.inline)
-		}
-	#else
-		public var body: some View {
-			main
-		}
-	#endif
-
-	var main: some View {
+	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading issue")
-			} else if let project {
+			if let project {
 				switch project {
 				case .success(let project):
 					if let issue = project.issue {
@@ -129,7 +108,7 @@ struct IssueLoader: View {
 											fgColor: .white,
 											cornerRadius: 5
 										)
-										.monospaced()
+										.font(.system(.body, design: .monospaced))
 										.textSelection(.enabled)
 									}
 
@@ -342,8 +321,7 @@ struct IssueLoader: View {
 									HStack {
 										TextField(
 											"New note",
-											text: $newNoteContent,
-											axis: .vertical
+											text: $newNoteContent
 										)
 										RoundIconButton("Comment", icon: "arrow.up") {
 											// TODO: Save note
@@ -369,12 +347,15 @@ struct IssueLoader: View {
 							}
 						}
 					} else {
-						ContentUnavailableView(
+						NoContentView(
 							"Issue was not found", systemImage: "smallcircle.circle")
 					}
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView(
+					"Loading Issue #\(self.iid)", systemImage: "smallcircle.circle", color: .green)
 			}
 		}.onAppear {
 			loadIssue()
@@ -403,12 +384,14 @@ struct IssueLoader: View {
 					EmptyView()
 				}
 			}
-		}.scrollDismissesKeyboard(.immediately)
+		}
+		.navigationBarTitleDisplayMode(.inline)
+		.modifier(ScrollDismissIfAvailable())
 	}
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		IssueLoader(fullPath: "felix-schindler/gitlab-ios", iid: "1")
 	}
 }

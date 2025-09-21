@@ -17,9 +17,6 @@ struct ProjectLoader: View {
 	@State
 	private var project: Result<ProjectQuery.Data.Project, Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	/// Selected special file (README, LICENSE, ...)
 	@State
 	private var selectedFile = 0
@@ -29,12 +26,6 @@ struct ProjectLoader: View {
 	}
 
 	private func loadProject() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: ProjectQuery(fullPath: fullPath),
@@ -81,9 +72,7 @@ struct ProjectLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading project")
-			} else if let project {
+			if let project {
 				switch project {
 				case .success(let project):
 					Section {
@@ -283,65 +272,69 @@ struct ProjectLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Project \(self.fullPath)", systemImage: "app.gift.fill")
 			}
 		}.onAppear {
 			loadProject()
 		}.refreshable {
 			await reloadProject()
 		}.toolbar {
-			if let project, case .success(let project) = project {
-				Menu("More", systemImage: "ellipsis") {
-					Section {
-						if let webUrl = project.webUrl,
-							let url = URL(string: webUrl)
-						{
-							ShareButton(url)
+			HStack {
+				if let project, case .success(let project) = project {
+					Menu("More", systemImage: "ellipsis") {
+						Section {
+							if let webUrl = project.webUrl,
+								let url = URL(string: webUrl)
+							{
+								ShareButton(url)
+							}
+
+							if project.userPermissions.requestAccess {
+								AsyncButton(
+									"Request access",
+									systemImage: "person.badge.plus"
+								) {
+									await requestAccess()
+								}
+							}
 						}
 
-						if project.userPermissions.requestAccess {
-							AsyncButton(
-								"Request access",
-								systemImage: "person.badge.plus"
-							) {
-								await requestAccess()
+						let showCloneSection =
+							(project.httpUrlToRepo != nil
+								|| project.sshUrlToRepo != nil)
+
+						if showCloneSection {
+							Section("Clone Code") {
+								if let httpUrl = project.httpUrlToRepo {
+									Button(
+										"Copy HTTP url",
+										systemImage: "doc.on.doc"
+									) {
+										httpUrl.copyToClipboard()
+									}
+								}
+
+								if let sshUrl = project.sshUrlToRepo {
+									Button(
+										"Copy SSH url",
+										systemImage: "doc.on.doc"
+									) {
+										sshUrl.copyToClipboard()
+									}
+								}
 							}
 						}
 					}
 
-					let showCloneSection =
-						(project.httpUrlToRepo != nil
-							|| project.sshUrlToRepo != nil)
-
-					if showCloneSection {
-						Section("Clone Code") {
-							if let httpUrl = project.httpUrlToRepo {
-								Button(
-									"Copy HTTP url",
-									systemImage: "doc.on.doc"
-								) {
-									httpUrl.copyToClipboard()
-								}
+					if project.userPermissions.createIssue {
+						NavigationLink(
+							destination: NewIssueView(),
+							label: {
+								Label("Create issue", systemImage: "plus")
 							}
-
-							if let sshUrl = project.sshUrlToRepo {
-								Button(
-									"Copy SSH url",
-									systemImage: "doc.on.doc"
-								) {
-									sshUrl.copyToClipboard()
-								}
-							}
-						}
+						).tint(.accentColor)
 					}
-				}.menuStyle(.button)
-
-				if project.userPermissions.createIssue {
-					NavigationLink(
-						destination: NewIssueView(),
-						label: {
-							Label("Create issue", systemImage: "plus")
-						}
-					).tint(.accentColor)
 				}
 			}
 		}
@@ -351,7 +344,7 @@ struct ProjectLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		ProjectLoader(fullPath: "felix-schindler/gitlab-ios")
 	}
 }

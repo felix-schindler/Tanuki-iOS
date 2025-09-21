@@ -19,9 +19,6 @@ struct SnippetLoader: View {
 	private var snippet: Result<SnippetQuery.Data.Snippets.Node, Error>? = nil
 
 	@State
-	private var isLoading = false
-
-	@State
 	private var newNoteContent = ""
 
 	@State
@@ -32,12 +29,6 @@ struct SnippetLoader: View {
 	}
 
 	private func loadSnippet() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: SnippetQuery(id: self.id),
@@ -81,9 +72,7 @@ struct SnippetLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading snippet")
-			} else if let snippet {
+			if let snippet {
 				switch snippet {
 				case .success(let snippet):
 					VStack(alignment: .leading) {
@@ -146,8 +135,7 @@ struct SnippetLoader: View {
 								HStack {
 									TextField(
 										"New note",
-										text: $newNoteContent,
-										axis: .vertical
+										text: $newNoteContent
 									)
 									RoundIconButton(
 										"Comment",
@@ -178,6 +166,8 @@ struct SnippetLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Snippet", systemImage: "scissors")
 			}
 		}.onAppear {
 			loadSnippet()
@@ -217,14 +207,14 @@ struct SnippetLoader: View {
 							}
 						}
 					}
-				}.menuStyle(.button)
+				}
 			}
-		}.scrollDismissesKeyboard(.immediately)
+		}.modifier(ScrollDismissIfAvailable())
 	}
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		SnippetLoader(id: "gid://gitlab/PersonalSnippet/3681071")
 	}
 }

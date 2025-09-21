@@ -26,7 +26,7 @@ struct NewLabelView: View {
 	@State var isError: Bool = false
 
 	var body: some View {
-		NavigationStack {
+		NavigationView {
 			List {
 				Section("Title") {
 					TextField("enhancement", text: $title)

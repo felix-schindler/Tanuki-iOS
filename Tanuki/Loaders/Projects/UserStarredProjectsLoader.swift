@@ -13,23 +13,14 @@ struct UserStarredProjectsLoader: View {
 	private let username: String
 
 	@State
-	private var projects:
-		Result<[UserStarredProjectsQuery.Data.User.StarredProjects.Node?], Error>? = nil
-
-	@State
-	private var isLoading = false
+	private var projects: Result<[UserStarredProjectsQuery.Data.User.StarredProjects.Node?], Error>? =
+		nil
 
 	init(username: String) {
 		self.username = username
 	}
 
 	private func loadProjects() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: UserStarredProjectsQuery(username: self.username),
@@ -73,13 +64,11 @@ struct UserStarredProjectsLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading starred projects")
-			} else if let projects {
+			if let projects {
 				switch projects {
 				case .success(let projects):
 					if projects.isEmpty {
-						ContentUnavailableView("There are no starred projects", systemImage: "star")
+						NoContentView("There are no starred projects", systemImage: "star")
 					} else {
 						ForEach(projects, id: \.self?.fullPath) { maybeProject in
 							if let project = maybeProject {
@@ -90,6 +79,8 @@ struct UserStarredProjectsLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading starred Projects", systemImage: "star")
 			}
 		}.onAppear {
 			loadProjects()
@@ -100,7 +91,7 @@ struct UserStarredProjectsLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		UserStarredProjectsLoader(username: "felix-schindler")
 	}
 }

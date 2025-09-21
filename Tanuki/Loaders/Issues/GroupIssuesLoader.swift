@@ -19,16 +19,7 @@ struct GroupIssuesLoader: View {
 	@State
 	private var issues: Result<[SmallIssue?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	private func loadIssues() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: GroupIssuesQuery(fullPath: self.fullPath),
@@ -72,9 +63,7 @@ struct GroupIssuesLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading issues")
-			} else if let issues {
+			if let issues {
 				switch issues {
 				case .success(let issues):
 					if issues.isEmpty {
@@ -89,6 +78,8 @@ struct GroupIssuesLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Issues", systemImage: "smallcircle.circle", color: .green)
 			}
 		}.onAppear {
 			loadIssues()
@@ -99,7 +90,7 @@ struct GroupIssuesLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		GroupIssuesLoader(fullPath: "gitlab-org")
 	}
 }

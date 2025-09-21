@@ -69,22 +69,20 @@ struct NewMemberView: View {
 
 	public var body: some View {
 		Form {
-			Section {
-				TextField("Username", text: $username)
-					.autocorrectionDisabled(true)
-				Picker("Role", selection: $accessLevel) {
-					Text("Guest").tag(ProjectRole.guest)
-					Text("Reporter").tag(ProjectRole.reporter)
-					Text("Developer").tag(ProjectRole.developer)
-					Text("Maintainer").tag(ProjectRole.maintainer)
-					Text("Owner").tag(ProjectRole.owner)
-				}
+			TextField("Username", text: $username)
+				.autocorrectionDisabled(true)
+			Picker("Role", selection: $accessLevel) {
+				Text("Guest").tag(ProjectRole.guest)
+				Text("Reporter").tag(ProjectRole.reporter)
+				Text("Developer").tag(ProjectRole.developer)
+				Text("Maintainer").tag(ProjectRole.maintainer)
+				Text("Owner").tag(ProjectRole.owner)
+			}
 
-				Toggle("Set expiration (optional)", isOn: $setExpDate)
-				if setExpDate {
-					DatePicker("Due Date", selection: $expDate)
-				}
-			}.presentationDetents([.large, .medium])
+			Toggle("Set expiration (optional)", isOn: $setExpDate)
+			if setExpDate {
+				DatePicker("Due Date", selection: $expDate)
+			}
 		}.toolbar {
 			AsyncButton("Add member", systemImage: "checkmark") {
 				await addMember()
@@ -94,7 +92,7 @@ struct NewMemberView: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		NewMemberView(id: 1, groupId: 1)
 	}
 }

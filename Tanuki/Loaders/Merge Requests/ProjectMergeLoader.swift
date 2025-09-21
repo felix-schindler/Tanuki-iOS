@@ -14,21 +14,12 @@ struct ProjectMergeLoader: View {
 	@State
 	private var project: Result<GitLabAPI.ProjectMergeRequestsQuery.Data.Project, Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(fullPath: String) {
 		self.fullPath = fullPath
 		self.project = nil
 	}
 
 	private func loadMergeRequests() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			let responses = try Network.shared.apollo.fetch(
 				query: ProjectMergeRequestsQuery(fullPath: self.fullPath),
@@ -70,32 +61,20 @@ struct ProjectMergeLoader: View {
 		}
 	}
 
-	#if !os(macOS)
-		public var body: some View {
-			main.navigationBarTitleDisplayMode(.large)
-		}
-	#else
-		public var body: some View {
-			main
-		}
-	#endif
-
-	var main: some View {
+	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading merge requests")
-			} else if let project {
+			if let project {
 				switch project {
 				case .success(let project):
 					if let mergeRequestsEnabled = project.mergeRequestsEnabled,
 						!mergeRequestsEnabled
 					{
-						ContentUnavailableView(
+						NoContentView(
 							"Merge requests are not enabled for this project",
 							systemImage: "arrow.triangle.pull")
 					} else if let mrs = project.mergeRequests?.nodes {
 						if mrs.count == 0 {
-							ContentUnavailableView(
+							NoContentView(
 								"There are no merge requests", systemImage: "arrow.triangle.pull")
 						} else {
 							ForEach(project.mergeRequests!.nodes!, id: \.self?.iid) {
@@ -109,17 +88,22 @@ struct ProjectMergeLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView(
+					"Loading Merge Requests", systemImage: "arrow.triangle.pull", color: .blue)
 			}
 		}.onAppear {
 			loadMergeRequests()
 		}.refreshable {
 			await reloadMergeRequests()
-		}.navigationTitle("Merge Requests")
+		}
+		.navigationBarTitleDisplayMode(.large)
+		.navigationTitle("Merge Requests")
 	}
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		ProjectMergeLoader(fullPath: "felix-schindler/gitlab-ios")
 	}
 }

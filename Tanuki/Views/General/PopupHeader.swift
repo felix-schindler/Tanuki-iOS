@@ -25,7 +25,7 @@ struct PopupHeader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 	}.sheet(isPresented: .constant(true)) {
 		VStack {
 			PopupHeader(title: "Test", onClose: {})
@@ -42,6 +42,5 @@ struct PopupHeader: View {
 			.controlSize(.large)
 		}
 		.padding()
-		.presentationDetents([.large, .medium])
 	}
 }

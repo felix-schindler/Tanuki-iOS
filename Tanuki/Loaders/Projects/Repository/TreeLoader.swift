@@ -25,9 +25,6 @@ struct TreeLoader: View {
 	@State
 	private var branches: [Branch]? = nil
 
-	@State
-	private var isLoading = false
-
 	init(projectId: Int, fullPath: String, refName: String, folderPath: String? = nil) {
 		self.projectId = projectId
 		self.fullPath = fullPath
@@ -36,12 +33,6 @@ struct TreeLoader: View {
 	}
 
 	private func loadTree() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		let ref: GraphQLNullable<String>
 		let path: GraphQLNullable<String>
 
@@ -135,7 +126,7 @@ struct TreeLoader: View {
 								}
 							}
 							.pickerStyle(.menu)
-							.onChange(of: refName) {
+							.onChange(of: refName) { _ in
 								loadTree()
 							}
 						}
@@ -144,9 +135,7 @@ struct TreeLoader: View {
 			}
 
 			Section("Tree") {
-				if isLoading {
-					ProgressView("Loading file tree")
-				} else if let tree {
+				if let tree {
 					switch tree {
 					case .success(let tree):
 						if let folders = tree.trees.nodes {
@@ -186,6 +175,8 @@ struct TreeLoader: View {
 					case .failure(let error):
 						FailedView(error)
 					}
+				} else {
+					LoadingView("Loading file tree", systemImage: "folder")
 				}
 			}
 		}.onAppear {
@@ -203,7 +194,7 @@ struct TreeLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		TreeLoader(
 			projectId: 33_025_310,
 			fullPath: "felix-schindler/gitlab-ios",

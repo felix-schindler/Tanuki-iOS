@@ -8,6 +8,7 @@
 import Charts
 import SwiftUI
 
+@available(iOS 16.0, *)
 struct ContributionsLoader: View {
 	private let username: String
 	private let height: CGFloat = 50
@@ -16,20 +17,11 @@ struct ContributionsLoader: View {
 	@State
 	private var contributions: Result<[String: Int], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(username: String) {
 		self.username = username
 	}
 
 	private func loadContributions() async {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			var temp = try await API.get(
 				type: [String: Int].self,
@@ -60,9 +52,7 @@ struct ContributionsLoader: View {
 
 	var body: some View {
 		VStack {
-			if isLoading {
-				ProgressView("Loading contributions")
-			} else if let contributions {
+			if let contributions {
 				switch contributions {
 				case .success(let contributions):
 					Chart {
@@ -82,6 +72,8 @@ struct ContributionsLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Contributions", systemImage: "calendar")
 			}
 		}.onAppear {
 			Task {
@@ -95,6 +87,10 @@ struct ContributionsLoader: View {
 
 #Preview {
 	List {
-		ContributionsLoader(username: "felix-schindler")
+		if #available(iOS 16.0, *) {
+			ContributionsLoader(username: "felix-schindler")
+		} else {
+			Text("Contributions available in iOS 16.0+")
+		}
 	}
 }

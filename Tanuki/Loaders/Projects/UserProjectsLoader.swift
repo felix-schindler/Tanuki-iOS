@@ -15,20 +15,11 @@ struct UserProjectsLoader: View {
 	@State
 	private var projectMemberships: Result<[ProjectMembership?], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	init(username: String? = nil) {
 		self.username = username
 	}
 
 	private func loadProjects() {
-		isLoading = true
-
-		defer {
-			isLoading = false
-		}
-
 		do {
 			if let username {
 				let responses = try Network.shared.apollo.fetch(
@@ -104,13 +95,11 @@ struct UserProjectsLoader: View {
 
 	public var body: some View {
 		List {
-			if isLoading {
-				ProgressView("Loading projects")
-			} else if let projectMemberships {
+			if let projectMemberships {
 				switch projectMemberships {
 				case .success(let projectMemberships):
 					if projectMemberships.isEmpty {
-						ContentUnavailableView(
+						NoContentView(
 							"There are no projects", systemImage: "app.gift.fill")
 					} else {
 						ForEach(projectMemberships, id: \.?._project?.fullPath) { memberShip in
@@ -122,6 +111,8 @@ struct UserProjectsLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Projects", systemImage: "app.gift.fill")
 			}
 		}.onAppear {
 			loadProjects()
@@ -132,7 +123,7 @@ struct UserProjectsLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		UserProjectsLoader(username: "felix-schindler")
 	}
 }

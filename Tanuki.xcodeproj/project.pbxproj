@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC08C9552E80014E005A1979 /* NoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08C9542E80014E005A1979 /* NoContentView.swift */; };
+		DC08C9572E80075F005A1979 /* ScrollDismissIfAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08C9562E800757005A1979 /* ScrollDismissIfAvailable.swift */; };
+		DC08C9592E800C2E005A1979 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08C9582E800C2E005A1979 /* LoadingView.swift */; };
 		DC0A6A392B8CE4FF00C53D56 /* PipelineStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0A6A382B8CE4FF00C53D56 /* PipelineStatus.swift */; };
 		DC0A6A3D2B8CF7D300C53D56 /* ProjectMergeRequests.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC0A6A3C2B8CF7D300C53D56 /* ProjectMergeRequests.graphql */; };
 		DC0A6A412B8D03EC00C53D56 /* StateIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0A6A402B8D03EC00C53D56 /* StateIcons.swift */; };
@@ -179,6 +182,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DC08C9542E80014E005A1979 /* NoContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoContentView.swift; sourceTree = "<group>"; };
+		DC08C9562E800757005A1979 /* ScrollDismissIfAvailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDismissIfAvailable.swift; sourceTree = "<group>"; };
+		DC08C9582E800C2E005A1979 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		DC0A6A382B8CE4FF00C53D56 /* PipelineStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineStatus.swift; sourceTree = "<group>"; };
 		DC0A6A3C2B8CF7D300C53D56 /* ProjectMergeRequests.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = ProjectMergeRequests.graphql; sourceTree = "<group>"; };
 		DC0A6A402B8D03EC00C53D56 /* StateIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateIcons.swift; sourceTree = "<group>"; };
@@ -583,6 +589,7 @@
 		DC3A24582B8C4C7C00DB0E3F /* General */ = {
 			isa = PBXGroup;
 			children = (
+				DC08C9562E800757005A1979 /* ScrollDismissIfAvailable.swift */,
 				DCD40E212BC2E5CC0055EE4C /* CodeTextView.swift */,
 				DC3A24502B8C3E1A00DB0E3F /* AvatarImage.swift */,
 				DC3A24552B8C4C2200DB0E3F /* PillView.swift */,
@@ -590,6 +597,8 @@
 				DC0A6A492B8D0ABE00C53D56 /* VisibilityIcon.swift */,
 				DC69F14F2B95703900F09269 /* PopupHeader.swift */,
 				DC2D65E62E7EFC74007A800C /* AsyncButton.swift */,
+				DC08C9542E80014E005A1979 /* NoContentView.swift */,
+				DC08C9582E800C2E005A1979 /* LoadingView.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -968,6 +977,7 @@
 				DC1D0FF52B99469900B6F5D7 /* LabelsLoader.swift in Sources */,
 				DC2704F92B8BC0F9003DAA84 /* TanukiApp.swift in Sources */,
 				DC2705112B8BC507003DAA84 /* Network.swift in Sources */,
+				DC08C9572E80075F005A1979 /* ScrollDismissIfAvailable.swift in Sources */,
 				DC69F1502B95703900F09269 /* PopupHeader.swift in Sources */,
 				DC4B42892BA5609A007A9DB1 /* FileLoader.swift in Sources */,
 				DC386A952B8D5FB2002E5F6D /* MergeRequestLoader.swift in Sources */,
@@ -981,6 +991,7 @@
 				DCB6B6372BB70CD8006C8437 /* MrCommitsLoader.swift in Sources */,
 				DC4B42962BA56968007A9DB1 /* BranchesLoader.swift in Sources */,
 				DC31F27E2E721686005F31A2 /* ProjectHeaderView.swift in Sources */,
+				DC08C9552E80014E005A1979 /* NoContentView.swift in Sources */,
 				DCC95E572BC5274B0040D657 /* ContributionsLoader.swift in Sources */,
 				DC4B428B2BA560B0007A9DB1 /* TreeLoader.swift in Sources */,
 				DC6C5DB32B8F8BBF00587850 /* Emojis.swift in Sources */,
@@ -992,6 +1003,7 @@
 				DC6C5DAD2B8F10D500587850 /* UserMergeLoader.swift in Sources */,
 				DC1D10002B995FD200B6F5D7 /* UserIssuesLoader.swift in Sources */,
 				DC3A245E2B8C557E00DB0E3F /* RoundIconButton.swift in Sources */,
+				DC08C9592E800C2E005A1979 /* LoadingView.swift in Sources */,
 				DC1D100A2B996FCE00B6F5D7 /* GroupIssuesLoader.swift in Sources */,
 				DC1C37F62B99BACC005B7D7A /* MilestonesLoader.swift in Sources */,
 				DCB5E0DA2B96CD33000F67FB /* GroupMergeLoader.swift in Sources */,
@@ -1268,11 +1280,11 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = "2.0.0-beta.4";
+				MARKETING_VERSION = "2.0.0-beta.5";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1317,11 +1329,11 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = "2.0.0-beta.4";
+				MARKETING_VERSION = "2.0.0-beta.5";
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.Tanuki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

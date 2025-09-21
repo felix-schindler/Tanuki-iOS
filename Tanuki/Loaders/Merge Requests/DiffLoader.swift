@@ -39,9 +39,6 @@ struct DiffLoader: View {
 	@State
 	private var diffs: Result<[Diff], Error>? = nil
 
-	@State
-	private var isLoading = false
-
 	@AppStorage("diff_unified")
 	private var unidiff = false
 
@@ -88,23 +85,19 @@ struct DiffLoader: View {
 		List {
 			Section {
 				Toggle("Unified diff", isOn: $unidiff)
-					.onChange(
-						of: unidiff,
-						{
-							Task {
-								await loadDiffs()
-								Haptics.shared.play(.soft)
-							}
-						})
+					.onChange(of: unidiff) { _ in
+						Task {
+							await loadDiffs()
+							Haptics.shared.play(.soft)
+						}
+					}
 			}
 
-			if isLoading {
-				ProgressView("Loading diffs")
-			} else if let diffs {
+			if let diffs {
 				switch diffs {
 				case .success(let diffs):
 					if diffs.isEmpty {
-						ContentUnavailableView("There are no changes", systemImage: "plusminus")
+						NoContentView("There are no changes", systemImage: "plusminus")
 					} else {
 						ForEach(diffs, id: \.oldPath) { diff in
 							Section(
@@ -157,15 +150,11 @@ struct DiffLoader: View {
 				case .failure(let error):
 					FailedView(error)
 				}
+			} else {
+				LoadingView("Loading Diffs", systemImage: "plusminus")
 			}
 		}.onAppear {
 			Task {
-				isLoading = true
-
-				defer {
-					isLoading = false
-				}
-
 				await loadDiffs()
 			}
 		}.refreshable {
@@ -178,7 +167,7 @@ struct DiffLoader: View {
 }
 
 #Preview {
-	NavigationStack {
+	NavigationView {
 		DiffLoader(
 			projectId: 33_025_310,
 			mrIid: 1

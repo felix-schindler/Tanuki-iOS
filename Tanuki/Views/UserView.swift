@@ -189,7 +189,11 @@ struct UserView: View {
 		}
 
 		Section("Contributions") {
-			ContributionsLoader(username: user.username)
+			if #available(iOS 16.0, *) {
+				ContributionsLoader(username: user.username)
+			} else {
+				Text("Contributions are available in iOS 16.0+")
+			}
 		}
 
 		NavigationLink(

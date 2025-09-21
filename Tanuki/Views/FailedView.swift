@@ -25,7 +25,7 @@ struct FailedView: View {
 	}
 
 	public var body: some View {
-		ContentUnavailableView(msg, systemImage: icon)
+		NoContentView(msg, systemImage: icon)
 			.foregroundStyle(.red)
 	}
 }

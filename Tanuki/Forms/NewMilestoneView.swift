@@ -62,7 +62,7 @@ struct NewMilestoneView: View {
 	}
 
 	public var body: some View {
-		NavigationStack {
+		NavigationView {
 			Form {
 				TextField("Title", text: $title)
 
