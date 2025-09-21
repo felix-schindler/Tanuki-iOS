@@ -234,9 +234,11 @@ struct MergeRequestLoader: View {
 								label: {
 									Label(
 										title: {
-											Text("Assignees")
-											Spacer()
-											Text(String(assgineeCount))
+											HStack {
+												Text("Assignees")
+												Spacer()
+												Text("\(assgineeCount)")
+											}
 										},
 										icon: {
 											Image(systemName: "person.crop.circle")
@@ -277,9 +279,11 @@ struct MergeRequestLoader: View {
 								label: {
 									Label(
 										title: {
-											Text("Reviewers")
-											Spacer()
-											Text(String(reviewerCount))
+											HStack {
+												Text("Reviewers")
+												Spacer()
+												Text("\(reviewerCount)")
+											}
 										},
 										icon: {
 											Image(
