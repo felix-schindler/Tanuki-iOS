@@ -87,7 +87,7 @@ struct ProjectMergeLoader: View {
 			} else if let project {
 				switch project {
 				case .success(let project):
-					if project.mergeRequestsEnabled ?? false {
+					if let mergeRequestsEnabled = project.mergeRequestsEnabled, !mergeRequestsEnabled {
 						ContentUnavailableView(
 							"Merge requests are not enabled for this project",
 							systemImage: "arrow.triangle.pull")
