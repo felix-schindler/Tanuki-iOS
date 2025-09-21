@@ -123,27 +123,31 @@ struct MilestonesLoader: View {
 					} else {
 						ForEach(milestones, id: \.?.iid) { milestone in
 							if let milestone {
-								if let description = milestone.description?.emojized(), description.isNotEmpty {
-									Section(content: {
-										Markdown(description)
-											.markdownTheme(.gitLab)
-									}, header: {
-										Label(
-											title: {
-												Text(milestone.title.emojized())
-											},
-											icon: {
-												Image(systemName: "flag.circle")
-													.foregroundStyle(
-														milestone.state == .closed
-														? .red
-														: (milestone.expired
-														   ? .orange
-														   : .green)
-													)
-											}
-										)
-									})
+								if let description = milestone.description?.emojized(),
+									description.isNotEmpty
+								{
+									Section(
+										content: {
+											Markdown(description)
+												.markdownTheme(.gitLab)
+										},
+										header: {
+											Label(
+												title: {
+													Text(milestone.title.emojized())
+												},
+												icon: {
+													Image(systemName: "flag.circle")
+														.foregroundStyle(
+															milestone.state == .closed
+																? .red
+																: (milestone.expired
+																	? .orange
+																	: .green)
+														)
+												}
+											)
+										})
 								} else {
 									Section {
 										Label(
@@ -154,10 +158,10 @@ struct MilestonesLoader: View {
 												Image(systemName: "flag.circle")
 													.foregroundStyle(
 														milestone.state == .closed
-														? .red
-														: (milestone.expired
-														   ? .orange
-														   : .green)
+															? .red
+															: (milestone.expired
+																? .orange
+																: .green)
 													)
 											}
 										)
@@ -175,9 +179,12 @@ struct MilestonesLoader: View {
 		}.refreshable {
 			await reloadMilestones()
 		}.toolbar {
-			NavigationLink(destination: NewMilestoneView(id: 1, groupId: 1), label: {
-				Label("Create new milestone", systemImage: "plus")
-			}).tint(.accentColor)
+			NavigationLink(
+				destination: NewMilestoneView(id: 1, groupId: 1),
+				label: {
+					Label("Create new milestone", systemImage: "plus")
+				}
+			).tint(.accentColor)
 		}.navigationTitle("Milestones")
 	}
 }
