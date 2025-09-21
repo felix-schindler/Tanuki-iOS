@@ -130,7 +130,7 @@ struct ProjectPipelinesLoader: View {
 		}.onAppear {
 			loadPipelines()
 		}.refreshable {
-			loadPipelines()
+			await reloadPipelines()
 		}.navigationTitle("Pipelines")
 	}
 }

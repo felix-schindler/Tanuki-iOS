@@ -161,7 +161,7 @@ struct UserSnippetsLoader: View {
 		}.onAppear {
 			loadSnippets()
 		}.refreshable {
-			loadSnippets()
+			await reloadSnippets()
 		}.navigationTitle("Snippets")
 	}
 }

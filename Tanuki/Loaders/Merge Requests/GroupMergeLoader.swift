@@ -92,7 +92,7 @@ struct GroupMergeLoader: View {
 		}.onAppear {
 			loadMergeRequests()
 		}.refreshable {
-			loadMergeRequests()
+			await reloadMergeRequests()
 		}.navigationTitle("Merge Requests")
 	}
 }

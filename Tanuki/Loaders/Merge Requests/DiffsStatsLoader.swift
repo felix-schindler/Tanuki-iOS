@@ -104,7 +104,7 @@ struct DiffsStatsLoader: View {
 		}.onAppear {
 			loadDiffs()
 		}.refreshable {
-			loadDiffs()
+			await reloadDiffs()
 		}.navigationTitle("Diffs")
 	}
 }

@@ -101,7 +101,7 @@ struct CustomEmojisLoader: View {
 		}.onAppear {
 			loadEmojis()
 		}.refreshable {
-			loadEmojis()
+			await reloadEmojis()
 		}.navigationTitle("Custom Emojis")
 	}
 }

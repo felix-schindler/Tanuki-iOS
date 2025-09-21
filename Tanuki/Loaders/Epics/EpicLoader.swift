@@ -357,17 +357,14 @@ struct EpicLoader: View {
 		}.onAppear {
 			loadEpic()
 		}.refreshable {
-			loadEpic()
+			await reloadEpic()
 		}.toolbar {
-			switch self.group {
-			case .success(let group):
+			if let group, case .success(let group) = group {
 				if let webUrl = group.epic?.webUrl,
-					let url = URL(string: webUrl)
+				   let url = URL(string: webUrl)
 				{
 					ShareButton(url)
 				}
-			default:
-				EmptyView()
 			}
 		}
 	}
