@@ -83,7 +83,7 @@ struct FileLoader: View {
 						AsyncImage(url: url) { phase in
 							switch phase {
 							case .empty:
-								ProgressView("Loading image")
+								ProgressView()
 							case .success(let image):
 								image
 									.resizable()

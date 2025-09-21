@@ -82,7 +82,10 @@ struct CommitsLoader: View {
 	var body: some View {
 		List {
 			if isLoading {
-				ProgressView("Loading branches and commits")
+				LoadingView(
+					"Loading branches and commits",
+					systemImage: "chevron.left.forwardslash.chevron.right"
+				)
 			} else if let commits {
 				switch commits {
 				case .success(let commits):
