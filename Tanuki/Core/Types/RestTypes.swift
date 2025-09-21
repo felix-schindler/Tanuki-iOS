@@ -63,3 +63,16 @@ struct Source: Codable {
 	let format: String
 	let url: String
 }
+
+// MARK: - Milestones
+struct RestAPIMilestone: Codable {
+	let id: Int
+	let iid: Int
+	let title: String
+	let description: String
+	let state: String
+	let startDate: String?
+	let dueDate: String?
+	let expired: Bool
+	let webUrl: String
+}

@@ -62,6 +62,7 @@
 		DC2705012B8BC0FB003DAA84 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC2705002B8BC0FB003DAA84 /* Preview Assets.xcassets */; };
 		DC27050D2B8BC351003DAA84 /* CurrentUserStarredProjects.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC27050C2B8BC351003DAA84 /* CurrentUserStarredProjects.graphql */; };
 		DC2705112B8BC507003DAA84 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2705102B8BC507003DAA84 /* Network.swift */; };
+		DC2973132E7FF3FF00CEFA0D /* NewMilestoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2973122E7FF3FF00CEFA0D /* NewMilestoneView.swift */; };
 		DC2D65E52E7EF510007A800C /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2D65E42E7EF510007A800C /* ExploreView.swift */; };
 		DC2D65E72E7EFC74007A800C /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2D65E62E7EFC74007A800C /* AsyncButton.swift */; };
 		DC2D65E92E7F03A6007A800C /* NewLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2D65E82E7F03A6007A800C /* NewLabelView.swift */; };
@@ -234,6 +235,7 @@
 		DC2705002B8BC0FB003DAA84 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DC27050C2B8BC351003DAA84 /* CurrentUserStarredProjects.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CurrentUserStarredProjects.graphql; sourceTree = "<group>"; };
 		DC2705102B8BC507003DAA84 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		DC2973122E7FF3FF00CEFA0D /* NewMilestoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMilestoneView.swift; sourceTree = "<group>"; };
 		DC2D65E42E7EF510007A800C /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		DC2D65E62E7EFC74007A800C /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
 		DC2D65E82E7F03A6007A800C /* NewLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLabelView.swift; sourceTree = "<group>"; };
@@ -504,6 +506,7 @@
 				DC2D65E82E7F03A6007A800C /* NewLabelView.swift */,
 				DC2D65EA2E7F0AEC007A800C /* NewMemberView.swift */,
 				DC2D65EC2E7F0DEA007A800C /* NewReleaseView.swift */,
+				DC2973122E7FF3FF00CEFA0D /* NewMilestoneView.swift */,
 			);
 			path = Forms;
 			sourceTree = "<group>";
@@ -973,6 +976,7 @@
 				DC3A24562B8C4C2200DB0E3F /* PillView.swift in Sources */,
 				DC217DD32B8FCC8A00F081BC /* Haptics.swift in Sources */,
 				DC21AA752B90385800976E64 /* CurrentUserLoader.swift in Sources */,
+				DC2973132E7FF3FF00CEFA0D /* NewMilestoneView.swift in Sources */,
 				DC33C27B2B9C22F200C99B85 /* MarkdownTheme.swift in Sources */,
 				DCB6B6372BB70CD8006C8437 /* MrCommitsLoader.swift in Sources */,
 				DC4B42962BA56968007A9DB1 /* BranchesLoader.swift in Sources */,

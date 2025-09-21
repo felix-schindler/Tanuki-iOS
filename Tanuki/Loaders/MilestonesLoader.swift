@@ -113,7 +113,7 @@ struct MilestonesLoader: View {
 	public var body: some View {
 		List {
 			if isLoading {
-
+				ProgressView("Loading Milestones")
 			} else if let milestones {
 				switch milestones {
 				case .success(let milestones):
@@ -121,30 +121,48 @@ struct MilestonesLoader: View {
 						ContentUnavailableView(
 							"There are no milestones", systemImage: "calendar.badge.checkmark")
 					} else {
-						ForEach(milestones, id: \.?.iid) { maybeStone in
-							if let milestone = maybeStone {
-								Label(
-									title: {
-										VStack {
-											Text(milestone.title.emojized())
-
-											if let description = milestone.description?.emojized() {
-												Markdown(description)
-													.markdownTheme(.gitLab)
+						ForEach(milestones, id: \.?.iid) { milestone in
+							if let milestone {
+								if let description = milestone.description?.emojized(), description.isNotEmpty {
+									Section(content: {
+										Markdown(description)
+											.markdownTheme(.gitLab)
+									}, header: {
+										Label(
+											title: {
+												Text(milestone.title.emojized())
+											},
+											icon: {
+												Image(systemName: "flag.circle")
+													.foregroundStyle(
+														milestone.state == .closed
+														? .red
+														: (milestone.expired
+														   ? .orange
+														   : .green)
+													)
 											}
-										}
-									},
-									icon: {
-										Image(systemName: "flag.circle")
-											.foregroundStyle(
-												milestone.state == .closed
-													? .red
-													: (milestone.expired
-														? .orange
-														: .green)
-											)
+										)
+									})
+								} else {
+									Section {
+										Label(
+											title: {
+												Text(milestone.title.emojized())
+											},
+											icon: {
+												Image(systemName: "flag.circle")
+													.foregroundStyle(
+														milestone.state == .closed
+														? .red
+														: (milestone.expired
+														   ? .orange
+														   : .green)
+													)
+											}
+										)
 									}
-								)
+								}
 							}
 						}
 					}
@@ -156,6 +174,10 @@ struct MilestonesLoader: View {
 			loadMilestones()
 		}.refreshable {
 			await reloadMilestones()
+		}.toolbar {
+			NavigationLink(destination: NewMilestoneView(id: 1, groupId: 1), label: {
+				Label("Create new milestone", systemImage: "plus")
+			}).tint(.accentColor)
 		}.navigationTitle("Milestones")
 	}
 }
