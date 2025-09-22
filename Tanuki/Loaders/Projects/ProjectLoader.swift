@@ -209,7 +209,8 @@ struct ProjectLoader: View {
 								)
 								NavigationLink(
 									"Releases",
-									destination: ProjectReleasesLoader(fullPath: self.fullPath)
+									destination: ProjectReleasesLoader(
+										fullPath: self.fullPath, projectId: project.id.toIntId())
 								)
 							},
 							label: {
@@ -327,13 +328,47 @@ struct ProjectLoader: View {
 						}
 					}
 
-					if project.userPermissions.createIssue {
-						NavigationLink(
-							destination: NewIssueView(),
-							label: {
-								Label("Create issue", systemImage: "plus")
+					if let projectId = project.id.toIntId() {
+						Menu("Create", systemImage: "plus") {
+							if project.userPermissions.createIssue {
+								NavigationLink(
+									destination: NewIssueView(id: projectId),
+									label: {
+										Label("Create Issue", systemImage: "smallcircle.circle")
+									}
+								)
 							}
-						).tint(.accentColor)
+
+							NavigationLink(
+								destination: NewLabelView(id: projectId, groupId: 0),
+								label: {
+									Label("Create Milestone", systemImage: "flag.circle")
+								}
+							)
+
+							NavigationLink(
+								destination: NewLabelView(id: projectId, groupId: 0),
+								label: {
+									Label("Create Release", systemImage: "flag")
+								}
+							)
+
+							NavigationLink(
+								destination: NewMemberView(id: projectId, groupId: 0),
+								label: {
+									Label("Add new member", systemImage: "person.badge.plus")
+								}
+							)
+
+							if project.userPermissions.createLabel {
+								NavigationLink(
+									destination: NewLabelView(id: projectId, groupId: 0),
+									label: {
+										Label("Create Label", systemImage: "tag")
+									}
+								)
+							}
+						}
 					}
 				}
 			}
