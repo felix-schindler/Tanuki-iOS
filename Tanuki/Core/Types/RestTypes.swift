@@ -29,50 +29,24 @@ struct PushData: Codable {
 // MARK: - Labels
 struct RestAPILabel: Codable {
 	let id: Int
-	let name: String
-	let description: String?
-	let color: String
-	let textColor: String
 }
 
 // MARK: - Users
 struct UserSmall: Codable {
 	let id: Int
-	let name: String
-	let username: String
-	let avatarUrl: String
 }
 
 // MARK: - Releases
 struct RestAPIRelease: Codable {
 	let name: String
-	let tagName: String
-	let description: String  // Empty string if not set
-	let releasedAt: Date
-	let author: UserSmall
-	let commit: Commit
-	let assets: Assets?
-}
-
-struct Assets: Codable {
-	let count: Int
-	let sources: [Source]
-}
-
-struct Source: Codable {
-	let format: String
-	let url: String
 }
 
 // MARK: - Milestones
 struct RestAPIMilestone: Codable {
-	let id: Int
 	let iid: Int
-	let title: String
-	let description: String
-	let state: String
-	let startDate: String?
-	let dueDate: String?
-	let expired: Bool
-	let webUrl: String
+}
+
+// MARK: - Issues
+struct RestAPIIssue: Codable {
+	let iid: Int
 }
