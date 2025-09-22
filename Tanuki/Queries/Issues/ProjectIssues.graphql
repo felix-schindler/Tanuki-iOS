@@ -1,10 +1,11 @@
 query ProjectIssues($fullPath: ID!) {
   project(fullPath: $fullPath) {
+    id
     issuesEnabled
     userPermissions {
       createIssue
     }
-    
+
     issues(state: opened) {
       nodes {
         iid
@@ -15,7 +16,7 @@ query ProjectIssues($fullPath: ID!) {
         downvotes
         userNotesCount
         author {
-		  avatarUrl
+          avatarUrl
           name
           username
         }

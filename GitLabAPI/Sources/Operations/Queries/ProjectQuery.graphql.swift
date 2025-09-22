@@ -8,7 +8,7 @@ public struct ProjectQuery: GraphQLQuery {
   public static let operationName: String = "Project"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename id avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt namespace { __typename id name fullPath } repository { __typename rootRef readme: blobs(paths: ["README.md", "README", "README.txt"], first: 1) { __typename nodes { __typename rawTextBlob } } license: blobs( paths: ["LICENSE", "LICENSE.txt", "LICENSE.md", "COPYING"] first: 1 ) { __typename nodes { __typename rawTextBlob } } contributing: blobs( paths: ["CONTRIBUTING", "CONTRIBUTING.txt", "CONTRIBUTING.md"] first: 1 ) { __typename nodes { __typename rawTextBlob } } tree { __typename lastCommit { __typename id title shortId authorName authoredDate webUrl signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue pushCode forkProject requestAccess } } }"#
+      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename id avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt namespace { __typename id name fullPath } repository { __typename rootRef readme: blobs(paths: ["README.md", "README", "README.txt"], first: 1) { __typename nodes { __typename rawTextBlob } } license: blobs( paths: ["LICENSE", "LICENSE.txt", "LICENSE.md", "COPYING"] first: 1 ) { __typename nodes { __typename rawTextBlob } } contributing: blobs( paths: ["CONTRIBUTING", "CONTRIBUTING.txt", "CONTRIBUTING.md"] first: 1 ) { __typename nodes { __typename rawTextBlob } } tree { __typename lastCommit { __typename id title shortId authorName authoredDate webUrl signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue createLabel pushCode forkProject requestAccess } } }"#
     ))
 
   public var fullPath: ID
@@ -458,6 +458,7 @@ public struct ProjectQuery: GraphQLQuery {
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("createIssue", Bool.self),
+          .field("createLabel", Bool.self),
           .field("pushCode", Bool.self),
           .field("forkProject", Bool.self),
           .field("requestAccess", Bool.self),
@@ -468,6 +469,8 @@ public struct ProjectQuery: GraphQLQuery {
 
         /// If `true`, the user can perform `create_issue` on this resource
         public var createIssue: Bool { __data["createIssue"] }
+        /// If `true`, the user can perform `create_label` on this resource
+        public var createLabel: Bool { __data["createLabel"] }
         /// If `true`, the user can perform `push_code` on this resource
         public var pushCode: Bool { __data["pushCode"] }
         /// If `true`, the user can perform `fork_project` on this resource

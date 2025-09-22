@@ -8,7 +8,7 @@ public struct ProjectIssuesQuery: GraphQLQuery {
   public static let operationName: String = "ProjectIssues"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query ProjectIssues($fullPath: ID!) { project(fullPath: $fullPath) { __typename issuesEnabled userPermissions { __typename createIssue } issues(state: opened) { __typename nodes { __typename iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename avatarUrl name username } createdAt webUrl } } } }"#
+      #"query ProjectIssues($fullPath: ID!) { project(fullPath: $fullPath) { __typename id issuesEnabled userPermissions { __typename createIssue } issues(state: opened) { __typename nodes { __typename iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename avatarUrl name username } createdAt webUrl } } } }"#
     ))
 
   public var fullPath: ID
@@ -44,6 +44,7 @@ public struct ProjectIssuesQuery: GraphQLQuery {
       @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
+        .field("id", GitLabAPI.ID.self),
         .field("issuesEnabled", Bool?.self),
         .field("userPermissions", UserPermissions.self),
         .field("issues", Issues?.self, arguments: ["state": "opened"]),
@@ -52,6 +53,8 @@ public struct ProjectIssuesQuery: GraphQLQuery {
         ProjectIssuesQuery.Data.Project.self
       ] }
 
+      /// ID of the project.
+      public var id: GitLabAPI.ID { __data["id"] }
       /// Indicates if Issues are enabled for the current user
       public var issuesEnabled: Bool? { __data["issuesEnabled"] }
       /// Permissions for the current user on the resource
