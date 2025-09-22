@@ -5,8 +5,8 @@
 //  Created by Felix Schindler on 22.04.24.
 //
 
-import Foundation
 import Toast
+import UIKit
 
 enum NotifyStatus: Int {
 	case success = 0
@@ -18,7 +18,8 @@ enum NotifyStatus: Int {
 
 class Notify {
 	public static func status(
-		_ feedbackType: NotifyStatus, _ title: String? = nil, _ subtitle: String? = nil
+		_ feedbackType: NotifyStatus, _ title: String? = nil, _ subtitle: String? = nil,
+		systemImage: String? = nil
 	) {
 		switch feedbackType {
 		case .success:
@@ -33,7 +34,17 @@ class Notify {
 		}
 
 		if let title {
-			let toast = Toast.text(title, subtitle: subtitle)
+			var toast: Toast
+
+			if let systemImage, let image = UIImage(systemName: systemImage) {
+				toast = Toast.default(
+					image: image,
+					title: title,
+					subtitle: subtitle
+				)
+			} else {
+				toast = Toast.text(title, subtitle: subtitle)
+			}
 			toast.show()
 		}
 	}
