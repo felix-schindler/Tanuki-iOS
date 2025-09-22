@@ -11,12 +11,14 @@ import SwiftUI
 
 struct ProjectReleasesLoader: View {
 	private var fullPath: String
+	private var projectId: Int?
 
 	@State
 	private var releases: Result<[ProjectReleasesQuery.Data.Project.Releases.Node?], Error>? = nil
 
-	init(fullPath: String) {
+	init(fullPath: String, projectId: Int? = nil) {
 		self.fullPath = fullPath
+		self.projectId = projectId
 	}
 
 	private func loadReleases() {
@@ -171,12 +173,14 @@ struct ProjectReleasesLoader: View {
 		}.refreshable {
 			await reloadReleases()
 		}.toolbar {
-			NavigationLink(
-				destination: NewReleaseView(id: 1),
-				label: {
-					Label("Create new release", systemImage: "plus")
-				}
-			).tint(.accentColor)
+			if let projectId {
+				NavigationLink(
+					destination: NewReleaseView(id: projectId, fullPath: self.fullPath),
+					label: {
+						Label("Create new release", systemImage: "plus")
+					}
+				).tint(.accentColor)
+			}
 		}
 		.headerProminence(.increased)
 		.navigationTitle("Releases")

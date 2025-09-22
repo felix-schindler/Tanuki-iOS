@@ -85,7 +85,8 @@ struct MilestonesLoader: View {
 			case .project:
 				let response = try await Network.shared.apollo.fetch(
 					query: ProjectMilestonesQuery(fullPath: self.fullPath),
-					cachePolicy: .networkOnly)
+					cachePolicy: .networkOnly
+				)
 
 				if let milestones = response.data?.project?.milestones?.nodes {
 					self.milestones = .success(milestones)
@@ -167,11 +168,7 @@ struct MilestonesLoader: View {
 					FailedView(error)
 				}
 			} else {
-				if #available(iOS 17.0, *) {
-					LoadingView("Loading Milestones", systemImage: "calendar.badge.checkmark")
-				} else {
-					LoadingView("Loading Milestones", systemImage: "calendar")
-				}
+				LoadingView("Loading Milestones", systemImage: "flag.circle")
 			}
 		}.onAppear {
 			loadMilestones()

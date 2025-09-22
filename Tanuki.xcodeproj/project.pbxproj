@@ -510,9 +510,9 @@
 				DC31F2782E71CD96005F31A2 /* NewProjectView.swift */,
 				DC31F2802E72221E005F31A2 /* NewIssueView.swift */,
 				DC2D65E82E7F03A6007A800C /* NewLabelView.swift */,
-				DC2D65EA2E7F0AEC007A800C /* NewMemberView.swift */,
-				DC2D65EC2E7F0DEA007A800C /* NewReleaseView.swift */,
 				DC2973122E7FF3FF00CEFA0D /* NewMilestoneView.swift */,
+				DC2D65EC2E7F0DEA007A800C /* NewReleaseView.swift */,
+				DC2D65EA2E7F0AEC007A800C /* NewMemberView.swift */,
 			);
 			path = Forms;
 			sourceTree = "<group>";

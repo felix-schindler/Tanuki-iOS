@@ -31,11 +31,20 @@ struct NewMilestoneView: View {
 	}
 
 	private func createMilestone() async {
+		if title.isEmpty {
+			Notify.status(
+				.error,
+				"Please enter a title.",
+				systemImage: "exclamationmark.triangle"
+			)
+			return
+		}
+		
 		var newMilestone = [
 			"title": title
 		]
 
-		if !desc.isEmpty {
+		if desc.isNotEmpty {
 			newMilestone["description"] = desc
 		}
 
@@ -57,24 +66,29 @@ struct NewMilestoneView: View {
 
 			self.dismiss()
 		} catch let error {
-			Notify.status(.error, error.localizedDescription)
+			Notify.status(
+				.error,
+				"Couldn't create new Milestone",
+				error.localizedDescription,
+				systemImage: "exclamationmark.triangle"
+			)
 		}
 	}
 
 	public var body: some View {
 		Form {
-			TextField("Title", text: $title)
+			TextField("Title (required)", text: $title)
 
 			Section("Dates") {
 				Toggle("Set dates", isOn: $setDates)
 
 				if setDates {
-					DatePicker("Start Date", selection: $startDate)
-					DatePicker("Due Date", selection: $dueDate)
+					DatePicker("Start Date", selection: $startDate, displayedComponents: .date)
+					DatePicker("Due Date", selection: $dueDate, displayedComponents: .date)
 				}
 			}
 
-			Section("Description (optional)") {
+			Section("Description (Markdown supported)") {
 				HighlightedTextEditor(text: $desc, highlightRules: .markdown)
 					.frame(minHeight: 100)
 			}

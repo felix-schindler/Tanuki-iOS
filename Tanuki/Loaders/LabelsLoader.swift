@@ -101,7 +101,7 @@ struct LabelsLoader: View {
 				switch labels {
 				case .success(let labels):
 					if labels.isEmpty {
-						NoContentView("There are no labels", systemImage: "person.2")
+						NoContentView("There are no labels", systemImage: "tag")
 					} else {
 						ForEach(labels, id: \.?.id) { maybeLabel in
 							if let label = maybeLabel {
@@ -128,7 +128,7 @@ struct LabelsLoader: View {
 					FailedView(error)
 				}
 			} else {
-				LoadingView("Loading Labels", systemImage: "person.2")
+				LoadingView("Loading Labels", systemImage: "tag")
 			}
 		}.onAppear {
 			loadLabels()

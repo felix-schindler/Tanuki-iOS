@@ -120,7 +120,7 @@ struct TreeLoader: View {
 				Section {
 					if let branches {
 						HStack {
-							Picker("Branch: ", selection: $refName) {
+							Picker("Branch", selection: $refName) {
 								ForEach(branches, id: \.name) { branch in
 									Text(branch.name).tag(branch.name)
 								}

@@ -18,7 +18,6 @@ struct ProjectIssuesLoader: View {
 
 	init(fullPath: String) {
 		self.fullPath = fullPath
-		self.project = nil
 	}
 
 	private func loadIssues() {
@@ -96,12 +95,17 @@ struct ProjectIssuesLoader: View {
 		}.refreshable {
 			await reloadIssues()
 		}.toolbar {
-			NavigationLink(
-				destination: NewIssueView(),
-				label: {
-					Label("New issue", systemImage: "plus")
-				}
-			).tint(.accentColor)
+			if let project,
+			   case .success(let project) = project,
+			   let projectId = project.id.toIntId()
+			{
+				NavigationLink(
+					destination: NewIssueView(id: projectId),
+					label: {
+						Label("New issue", systemImage: "plus")
+					}
+				).tint(.accentColor)
+			}
 		}.navigationTitle("Issues")
 	}
 }

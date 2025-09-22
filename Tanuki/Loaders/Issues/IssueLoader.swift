@@ -220,9 +220,11 @@ struct IssueLoader: View {
 								label: {
 									Label(
 										title: {
-											Text("Assignees")
-											Spacer()
-											Text(String(assgineeCount))
+											HStack {
+												Text("Assignees")
+												Spacer()
+												Text(String(assgineeCount))
+											}
 										},
 										icon: {
 											Image(systemName: "person.crop.circle")

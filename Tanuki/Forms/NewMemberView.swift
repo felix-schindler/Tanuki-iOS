@@ -9,16 +9,12 @@ import SwiftUI
 
 enum ProjectRole: Int {
 	case minimal = 5
-	case
-		guest = 10
-	case
-		reporter = 20
-	case
-		developer = 30
-	case
-		maintainer = 40
-	case
-		owner = 50
+	case guest = 10
+	case planner = 15
+	case reporter = 20
+	case developer = 30
+	case maintainer = 40
+	case owner = 50
 }
 
 struct NewMemberView: View {
@@ -26,16 +22,21 @@ struct NewMemberView: View {
 	var presentationMode: Binding<PresentationMode>
 
 	/// Project ID
-	@State public var id: Int
+	private let id: Int
 	/// Group ID
-	@State public var groupId: Int
+	private let groupId: Int
+	
+	init(id: Int, groupId: Int) {
+		self.id = id
+		self.groupId = groupId
+	}
 
 	@State private var username = ""
 	@State private var accessLevel: ProjectRole = .guest
 	@State private var setExpDate = false
 	@State private var expDate = Calendar.current.date(byAdding: .month, value: 1, to: Date())!
 
-	func addMember() async {
+	private func addMember() async {
 		do {
 			if let currentUser =
 				(try await API.get(
@@ -70,18 +71,24 @@ struct NewMemberView: View {
 	public var body: some View {
 		Form {
 			TextField("Username", text: $username)
-				.autocorrectionDisabled(true)
+				.textInputAutocapitalization(.never)
+				.autocorrectionDisabled()
+
 			Picker("Role", selection: $accessLevel) {
+				Text("Minimal").tag(ProjectRole.minimal)
 				Text("Guest").tag(ProjectRole.guest)
+				Text("Planner").tag(ProjectRole.planner)
 				Text("Reporter").tag(ProjectRole.reporter)
 				Text("Developer").tag(ProjectRole.developer)
 				Text("Maintainer").tag(ProjectRole.maintainer)
 				Text("Owner").tag(ProjectRole.owner)
 			}
 
-			Toggle("Set expiration (optional)", isOn: $setExpDate)
-			if setExpDate {
-				DatePicker("Due Date", selection: $expDate)
+			VStack(alignment: .leading) {
+				Toggle("Set expiration", isOn: $setExpDate)
+				if setExpDate {
+					DatePicker("Due Date", selection: $expDate, displayedComponents: .date)
+				}
 			}
 		}.toolbar {
 			AsyncButton("Add member", systemImage: "checkmark") {

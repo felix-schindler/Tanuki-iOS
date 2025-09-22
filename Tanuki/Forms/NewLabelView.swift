@@ -13,40 +13,19 @@ struct NewLabelView: View {
 	var presentationMode: Binding<PresentationMode>
 
 	/// Project ID
-	@State var id: Int
+	private let id: Int
 	/// Group ID
-	@State var groupId: Int
-
-	@State var title: String = ""
-	@State var description: String = ""
-	@State var color: Color = Color(.red)
-
-	@State var prio: Int = -1
-
-	@State var isError: Bool = false
-
-	var body: some View {
-		List {
-			Section("Title") {
-				TextField("enhancement", text: $title)
-			}
-
-			Section("Details") {
-				VStack(alignment: .leading) {
-					Text("Description (optional)")
-						.font(.callout)
-						.foregroundStyle(.secondary)
-					HighlightedTextEditor(text: $description, highlightRules: .markdown)
-				}
-				ColorPicker("Background color", selection: $color)
-				Stepper("Priority: \(prio < 0 ? "none" : String(prio))", value: $prio)
-			}
-		}.toolbar {
-			AsyncButton("Save", systemImage: "checkmark") {
-				await saveNewLabel()
-			}.tint(.accentColor)
-		}.navigationBarTitle("New Label")
+	private let groupId: Int
+	
+	init(id: Int, groupId: Int) {
+		self.id = id
+		self.groupId = groupId
 	}
+
+	@State private var title: String = ""
+	@State private var description: String = ""
+	@State private var color: Color = Color(.red)
+	@State private var prio: Int = -1
 
 	private func saveNewLabel() async {
 		var query: [String: String] = [
@@ -72,8 +51,35 @@ struct NewLabelView: View {
 
 			self.presentationMode.wrappedValue.dismiss()
 		} catch let error {
-			Notify.status(.error, error.localizedDescription)
+			Notify.status(
+				.error,
+				"Couldn't create Label",
+				error.localizedDescription,
+				systemImage: "exclamationmark.triangle"
+			)
 		}
+	}
+
+	public var body: some View {
+		List {
+			Section("Title") {
+				TextField("enhancement", text: $title)
+			}
+
+			Section("Description (optional)") {
+				HighlightedTextEditor(text: $description, highlightRules: .markdown)
+					.frame(minHeight: 100)
+			}
+			
+			Section {
+				ColorPicker("Background color", selection: $color)
+				Stepper("Priority: \(prio < 0 ? "none" : String(prio))", value: $prio)
+			}
+		}.toolbar {
+			AsyncButton("Save", systemImage: "checkmark") {
+				await saveNewLabel()
+			}.tint(.accentColor)
+		}.navigationBarTitle("New Label")
 	}
 }
 
