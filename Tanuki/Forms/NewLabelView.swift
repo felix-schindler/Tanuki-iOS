@@ -26,28 +26,26 @@ struct NewLabelView: View {
 	@State var isError: Bool = false
 
 	var body: some View {
-		NavigationView {
-			List {
-				Section("Title") {
-					TextField("enhancement", text: $title)
-				}
+		List {
+			Section("Title") {
+				TextField("enhancement", text: $title)
+			}
 
-				Section("Details") {
-					VStack(alignment: .leading) {
-						Text("Description (optional)")
-							.font(.callout)
-							.foregroundStyle(.secondary)
-						HighlightedTextEditor(text: $description, highlightRules: .markdown)
-					}
-					ColorPicker("Background color", selection: $color)
-					Stepper("Priority: \(prio < 0 ? "none" : String(prio))", value: $prio)
+			Section("Details") {
+				VStack(alignment: .leading) {
+					Text("Description (optional)")
+						.font(.callout)
+						.foregroundStyle(.secondary)
+					HighlightedTextEditor(text: $description, highlightRules: .markdown)
 				}
-			}.toolbar {
-				AsyncButton("Save", systemImage: "checkmark") {
-					await saveNewLabel()
-				}.tint(.accentColor)
-			}.navigationBarTitle("New Label")
-		}
+				ColorPicker("Background color", selection: $color)
+				Stepper("Priority: \(prio < 0 ? "none" : String(prio))", value: $prio)
+			}
+		}.toolbar {
+			AsyncButton("Save", systemImage: "checkmark") {
+				await saveNewLabel()
+			}.tint(.accentColor)
+		}.navigationBarTitle("New Label")
 	}
 
 	private func saveNewLabel() async {
@@ -80,5 +78,7 @@ struct NewLabelView: View {
 }
 
 #Preview {
-	NewLabelView(id: 33_025_310, groupId: 0)
+	NavigationView {
+		NewLabelView(id: 33_025_310, groupId: 0)
+	}
 }

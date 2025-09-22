@@ -62,32 +62,32 @@ struct NewMilestoneView: View {
 	}
 
 	public var body: some View {
-		NavigationView {
-			Form {
-				TextField("Title", text: $title)
+		Form {
+			TextField("Title", text: $title)
 
-				Section("Dates") {
-					Toggle("Set dates", isOn: $setDates)
+			Section("Dates") {
+				Toggle("Set dates", isOn: $setDates)
 
-					if setDates {
-						DatePicker("Start Date", selection: $startDate)
-						DatePicker("Due Date", selection: $dueDate)
-					}
+				if setDates {
+					DatePicker("Start Date", selection: $startDate)
+					DatePicker("Due Date", selection: $dueDate)
 				}
+			}
 
-				Section("Description (optional)") {
-					HighlightedTextEditor(text: $desc, highlightRules: .markdown)
-						.frame(minHeight: 100)
-				}
-			}.toolbar {
-				AsyncButton("Create milestone", systemImage: "checkmark") {
-					await createMilestone()
-				}.tint(.accentColor)
-			}.navigationTitle("New Milestone")
-		}
+			Section("Description (optional)") {
+				HighlightedTextEditor(text: $desc, highlightRules: .markdown)
+					.frame(minHeight: 100)
+			}
+		}.toolbar {
+			AsyncButton("Create milestone", systemImage: "checkmark") {
+				await createMilestone()
+			}.tint(.accentColor)
+		}.navigationTitle("New Milestone")
 	}
 }
 
 #Preview {
-	NewMilestoneView(id: 33_025_310, groupId: 0)
+	NavigationView {
+		NewMilestoneView(id: 33_025_310, groupId: 0)
+	}
 }

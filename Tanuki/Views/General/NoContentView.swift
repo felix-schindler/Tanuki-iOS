@@ -48,5 +48,9 @@ struct NoContentView: View {
 }
 
 #Preview {
-	NoContentView("All caught up!", systemImage: "checkmark.square", description: "There are no Todos")
+	NoContentView(
+		"All caught up!",
+		systemImage: "checkmark.square",
+		description: "There are no Todos"
+	)
 }
