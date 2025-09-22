@@ -22,7 +22,7 @@ struct UserView: View {
 				if let avatarUrl = URL.fromAvatar(user.avatarUrl) {
 					AvatarImage(avatarUrl, size: .medium)
 				}
-				VStack(alignment: .leading) {
+				VStack(alignment: .leading, spacing: 0) {
 					ScrollView(.horizontal) {
 						HStack {
 							if user.bot {
