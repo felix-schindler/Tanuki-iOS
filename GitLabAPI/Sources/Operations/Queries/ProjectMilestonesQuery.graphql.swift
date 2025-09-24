@@ -8,7 +8,7 @@ public struct ProjectMilestonesQuery: GraphQLQuery {
   public static let operationName: String = "ProjectMilestones"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query ProjectMilestones($fullPath: ID!) { project(fullPath: $fullPath) { __typename milestones(state: active, sort: CREATED_DESC) { __typename nodes { __typename iid state title description expired startDate dueDate stats { __typename closedIssuesCount totalIssuesCount } webPath } } } }"#
+      #"query ProjectMilestones($fullPath: ID!) { project(fullPath: $fullPath) { __typename milestones(state: active, sort: CREATED_DESC) { __typename nodes { __typename id iid state title description expired startDate dueDate stats { __typename closedIssuesCount totalIssuesCount } webPath } } } }"#
     ))
 
   public var fullPath: ID
@@ -85,6 +85,7 @@ public struct ProjectMilestonesQuery: GraphQLQuery {
           @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Milestone }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
+            .field("id", GitLabAPI.ID.self),
             .field("iid", GitLabAPI.ID.self),
             .field("state", GraphQLEnum<GitLabAPI.MilestoneStateEnum>.self),
             .field("title", String.self),
@@ -99,6 +100,8 @@ public struct ProjectMilestonesQuery: GraphQLQuery {
             ProjectMilestonesQuery.Data.Project.Milestones.Node.self
           ] }
 
+          /// ID of the milestone.
+          public var id: GitLabAPI.ID { __data["id"] }
           /// Internal ID of the milestone.
           public var iid: GitLabAPI.ID { __data["iid"] }
           /// State of the milestone.
