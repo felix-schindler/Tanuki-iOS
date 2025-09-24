@@ -65,8 +65,6 @@ query Project($fullPath: ID!) {
     }
     userPermissions {
       createIssue
-      createLabel
-      pushCode
       forkProject
       requestAccess
     }

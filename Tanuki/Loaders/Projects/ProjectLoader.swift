@@ -361,14 +361,12 @@ struct ProjectLoader: View {
 								}
 							)
 
-							if project.userPermissions.createLabel {
-								NavigationLink(
-									destination: NewLabelView(id: projectId, groupId: 0),
-									label: {
-										Label("Create Label", systemImage: "tag")
-									}
-								)
-							}
+							NavigationLink(
+								destination: NewLabelView(id: projectId, groupId: 0),
+								label: {
+									Label("Create Label", systemImage: "tag")
+								}
+							)
 						}
 					}
 				}

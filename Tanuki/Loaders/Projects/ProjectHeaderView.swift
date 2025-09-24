@@ -98,15 +98,19 @@ struct ProjectHeaderView: View {
 					) {
 					}
 
-					if let projectUrl = URL(
-						string:
-							"\(project.webUrl ?? "")/-/forks/new")
-					{
+					if project.userPermissions.forkProject,
+						let projectUrl = URL(string:"\(project.webUrl ?? "")/-/forks/new") {
 						Link(destination: projectUrl) {
 							Label(
 								String(project.forksCount),
-								systemImage: "tuningfork")
+								systemImage: "tuningfork"
+							)
 						}
+					} else {
+						PillView(
+							String(project.forksCount),
+							icon: "tuningfork"
+						)
 					}
 				}
 				.tint(.primary)
@@ -119,7 +123,7 @@ struct ProjectHeaderView: View {
 				languages.isNotEmpty
 			{
 				Chart {
-					ForEach(project.languages!, id: \.self) {
+					ForEach(languages, id: \.self) {
 						language in
 						BarMark(
 							x: .value(
@@ -131,7 +135,7 @@ struct ProjectHeaderView: View {
 				}
 				.chartXAxis(.hidden)
 				.chartForegroundStyleScale(
-					range: project.languages!.map {
+					range: languages.map {
 						Color(hex: $0.color) ?? .accentColor
 					}
 				)
