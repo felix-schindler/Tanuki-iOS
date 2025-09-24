@@ -103,7 +103,7 @@
 		DC4B42962BA56968007A9DB1 /* BranchesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4B42952BA56968007A9DB1 /* BranchesLoader.swift */; };
 		DC4B429A2BA56EA6007A9DB1 /* TagsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4B42992BA56EA6007A9DB1 /* TagsLoader.swift */; };
 		DC4D10122E72E78F0001B54E /* ConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4D10112E72E78F0001B54E /* ConfigView.swift */; };
-		DC4DBAF12E84114D00AE4C60 /* MultiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = DC4DBAF02E84114D00AE4C60 /* MultiPicker */; };
+		DC4DBAF32E841B5000AE4C60 /* EncodingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4DBAF22E841B4E00AE4C60 /* EncodingHelper.swift */; };
 		DC5AD7CF2E697E4B0031FC7B /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = DC5AD7CE2E697E4B0031FC7B /* Apollo */; };
 		DC5AD7D12E697E4B0031FC7B /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC5AD7D02E697E4B0031FC7B /* ApolloAPI */; };
 		DC5AD7D32E697E4B0031FC7B /* ApolloSQLite in Frameworks */ = {isa = PBXBuildFile; productRef = DC5AD7D22E697E4B0031FC7B /* ApolloSQLite */; };
@@ -277,6 +277,7 @@
 		DC4B42952BA56968007A9DB1 /* BranchesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchesLoader.swift; sourceTree = "<group>"; };
 		DC4B42992BA56EA6007A9DB1 /* TagsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsLoader.swift; sourceTree = "<group>"; };
 		DC4D10112E72E78F0001B54E /* ConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigView.swift; sourceTree = "<group>"; };
+		DC4DBAF22E841B4E00AE4C60 /* EncodingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodingHelper.swift; sourceTree = "<group>"; };
 		DC5AD7D92E69D40B0031FC7B /* FailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailedView.swift; sourceTree = "<group>"; };
 		DC5F37072B91A1D100BF7F9D /* AuthorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorView.swift; sourceTree = "<group>"; };
 		DC5F99DF2B9384CE001C88A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -345,7 +346,6 @@
 				DCD225042E696BC8002256F0 /* GitLabAPI in Frameworks */,
 				DC3A24542B8C3F5800DB0E3F /* NVMColor in Frameworks */,
 				DC0A6A552B8D148000C53D56 /* CachedAsyncImage in Frameworks */,
-				DC4DBAF12E84114D00AE4C60 /* MultiPicker in Frameworks */,
 				DC42A2112C62D36E00B1EA85 /* HighlightedTextEditor in Frameworks */,
 				DC5AD7D12E697E4B0031FC7B /* ApolloAPI in Frameworks */,
 				DC5AD7CF2E697E4B0031FC7B /* Apollo in Frameworks */,
@@ -615,6 +615,7 @@
 				DC6C5DB22B8F8BBF00587850 /* Emojis.swift */,
 				DCD40E172BC2B2960055EE4C /* FileExtensions.swift */,
 				DC33C27A2B9C22F200C99B85 /* MarkdownTheme.swift */,
+				DC4DBAF22E841B4E00AE4C60 /* EncodingHelper.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -838,7 +839,6 @@
 				DC5AD7D02E697E4B0031FC7B /* ApolloAPI */,
 				DC5AD7D22E697E4B0031FC7B /* ApolloSQLite */,
 				DC5AD7DC2E69D6E50031FC7B /* Toast */,
-				DC4DBAF02E84114D00AE4C60 /* MultiPicker */,
 			);
 			productName = Tanuki;
 			productReference = DC2704F52B8BC0F9003DAA84 /* Tanuki.app */;
@@ -881,7 +881,6 @@
 				DCD225022E696BC8002256F0 /* XCLocalSwiftPackageReference "GitLabAPI" */,
 				DC5AD7CD2E697E4B0031FC7B /* XCRemoteSwiftPackageReference "apollo-ios" */,
 				DC5AD7DB2E69D6E50031FC7B /* XCRemoteSwiftPackageReference "toast-swift" */,
-				DC4DBAEF2E84114D00AE4C60 /* XCRemoteSwiftPackageReference "MultiPicker" */,
 			);
 			productRefGroup = DC2704F62B8BC0F9003DAA84 /* Products */;
 			projectDirPath = "";
@@ -1053,6 +1052,7 @@
 				DC13E8A32B8DE32400994E8A /* IssueLoader.swift in Sources */,
 				DC69F14D2B956ED300F09269 /* MembersLoader.swift in Sources */,
 				DC21AA7F2B906FF400976E64 /* UserLoader.swift in Sources */,
+				DC4DBAF32E841B5000AE4C60 /* EncodingHelper.swift in Sources */,
 				DCB6B6352BB7063B006C8437 /* DiffsStatsLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1423,14 +1423,6 @@
 				minimumVersion = 2.1.2;
 			};
 		};
-		DC4DBAEF2E84114D00AE4C60 /* XCRemoteSwiftPackageReference "MultiPicker" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/toastersocks/MultiPicker";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.2;
-			};
-		};
 		DC5AD7CD2E697E4B0031FC7B /* XCRemoteSwiftPackageReference "apollo-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apollographql/apollo-ios";
@@ -1485,11 +1477,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DC42A20F2C62D36E00B1EA85 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */;
 			productName = HighlightedTextEditor;
-		};
-		DC4DBAF02E84114D00AE4C60 /* MultiPicker */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DC4DBAEF2E84114D00AE4C60 /* XCRemoteSwiftPackageReference "MultiPicker" */;
-			productName = MultiPicker;
 		};
 		DC5AD7CE2E697E4B0031FC7B /* Apollo */ = {
 			isa = XCSwiftPackageProductDependency;

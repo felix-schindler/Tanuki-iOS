@@ -44,10 +44,10 @@ class API {
 	public static func raw(
 		method: HttpMethod,
 		url: HttpUrl,
-		body: [String: String] = [:]
+		body: (any Encodable)? = nil
 	) async throws -> HttpResponse {
 		var reqBody: Data? = nil
-		if !body.isEmpty {
+		if let body {
 			reqBody = try JSONEncoder().encode(body)
 		}
 
@@ -72,7 +72,7 @@ class API {
 		resource: String? = nil,
 		suffix: String? = nil,
 		query: [String: String] = [:],
-		body: [String: String] = [:],
+		body: (any Encodable)? = nil,
 		useBase: Bool = true
 	) async throws -> T {
 		let httpUrl = HttpUrl(
