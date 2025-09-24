@@ -29,7 +29,7 @@ struct NewReleaseView: View {
 	@State private var newTagMessage = ""
 	@State private var newTagRef = ""
 	@State private var releaseName = ""
-	@State private var selectedMilestone = ""
+	@State private var selectedMilestones: Set<String> = []
 	@State private var setReleaseDate = false
 	@State private var releaseDate = Date()
 	@State private var description = ""
@@ -75,41 +75,41 @@ struct NewReleaseView: View {
 	}
 
 	private func createNewRelease() async {
-		var body: [String: String] = [:]
+		var body: [String: StringOrArray] = [:]
 
 		if tagName.isNotEmpty {
-			body["tag_name"] = tagName
+			body["tag_name"] = .string(tagName)
 		} else {
 			Notify.status(.error, "There is no tag name")
 			return
 		}
-		
+
 		if newTagName {
 			if newTagRef.isNotEmpty {
-				body["ref"] = newTagRef
+				body["ref"] = .string(newTagRef)
 			} else {
 				Notify.status(.error, "There is no ref name")
 			}
-			
+
 			if newTagMessage.isNotEmpty {
-				body["tag_message"] = newTagMessage
+				body["tag_message"] = .string(newTagMessage)
 			}
 		}
 
 		if releaseName.isNotEmpty {
-			body["name"] = releaseName
+			body["name"] = .string(releaseName)
 		}
 
 		if description.isNotEmpty {
-			body["description"] = description
+			body["description"] = .string(description)
 		}
 
-		if selectedMilestone.isNotEmpty {
-			body["milestones"] = "[\(selectedMilestone)]"
+		if !selectedMilestones.isEmpty {
+			body["milestones"] = .array(Array(selectedMilestones))
 		}
 
 		if setReleaseDate {
-			body["released_at"] = ISO8601DateFormatter().string(from: releaseDate)
+			body["released_at"] = .string(ISO8601DateFormatter().string(from: releaseDate))
 		}
 
 		do {
@@ -189,11 +189,22 @@ struct NewReleaseView: View {
 
 			Section("Milestone") {
 				if let milestones, milestones.isNotEmpty {
-					Picker("Milestone", selection: $selectedMilestone) {
+					Menu("Milestones") {
 						ForEach(milestones, id: \.?.iid) { milestone in
 							if let milestone {
-								Text(milestone.title)
-									.tag(milestone.iid)
+								Button {
+									if selectedMilestones.contains(milestone.title) {
+										selectedMilestones.remove(milestone.title)
+									} else {
+										selectedMilestones.insert(milestone.title)
+									}
+								} label: {
+									if selectedMilestones.contains(milestone.title) {
+										Label(milestone.title, systemImage: "checkmark")
+									} else {
+										Text(milestone.title)
+									}
+								}
 							}
 						}
 					}
