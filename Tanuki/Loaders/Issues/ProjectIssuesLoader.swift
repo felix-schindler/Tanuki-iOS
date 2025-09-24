@@ -96,11 +96,11 @@ struct ProjectIssuesLoader: View {
 			await reloadIssues()
 		}.toolbar {
 			if let project,
-			   case .success(let project) = project,
-			   let projectId = project.id.toIntId()
+				case .success(let project) = project,
+				let projectId = project.id.toIntId()
 			{
 				NavigationLink(
-					destination: NewIssueView(id: projectId),
+					destination: NewIssueView(id: projectId, fullPath: self.fullPath),
 					label: {
 						Label("New issue", systemImage: "plus")
 					}

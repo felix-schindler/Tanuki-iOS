@@ -16,7 +16,7 @@ struct NewLabelView: View {
 	private let id: Int
 	/// Group ID
 	private let groupId: Int
-	
+
 	init(id: Int, groupId: Int) {
 		self.id = id
 		self.groupId = groupId
@@ -70,7 +70,7 @@ struct NewLabelView: View {
 				HighlightedTextEditor(text: $description, highlightRules: .markdown)
 					.frame(minHeight: 100)
 			}
-			
+
 			Section {
 				ColorPicker("Background color", selection: $color)
 				Stepper("Priority: \(prio < 0 ? "none" : String(prio))", value: $prio)

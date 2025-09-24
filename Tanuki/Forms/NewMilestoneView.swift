@@ -39,7 +39,7 @@ struct NewMilestoneView: View {
 			)
 			return
 		}
-		
+
 		var newMilestone = [
 			"title": title
 		]

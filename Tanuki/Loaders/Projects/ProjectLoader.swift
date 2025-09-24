@@ -332,7 +332,8 @@ struct ProjectLoader: View {
 						Menu("Create", systemImage: "plus") {
 							if project.userPermissions.createIssue {
 								NavigationLink(
-									destination: NewIssueView(id: projectId),
+									destination: NewIssueView(
+										id: projectId, fullPath: self.fullPath),
 									label: {
 										Label("Create Issue", systemImage: "smallcircle.circle")
 									}

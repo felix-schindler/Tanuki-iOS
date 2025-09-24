@@ -25,7 +25,7 @@ struct NewMemberView: View {
 	private let id: Int
 	/// Group ID
 	private let groupId: Int
-	
+
 	init(id: Int, groupId: Int) {
 		self.id = id
 		self.groupId = groupId

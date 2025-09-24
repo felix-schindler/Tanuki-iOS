@@ -65,8 +65,8 @@ struct NewProjectView: View {
 				Text(
 					"Must start with a lowercase or uppercase letter, digit, emoji, or underscore. Can also contain dots, pluses, dashes, or spaces."
 				)
-					.foregroundStyle(.secondary)
-					.font(.footnote)
+				.foregroundStyle(.secondary)
+				.font(.footnote)
 			}
 
 			Picker("Visibility Level", selection: $visibility) {
