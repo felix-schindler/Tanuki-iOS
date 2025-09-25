@@ -139,7 +139,7 @@ struct CommitsLoader: View {
 													projectId: self.projectId, commitId: commit.id)
 												Text(commit.shortId)
 													.textSelection(.enabled)
-													.font(.system(.caption, design: .monospaced))
+													.font(.system(.footnote, design: .monospaced))
 											}
 										}.swipeActions {
 											ShareButton(URL(string: commit.webUrl)!)

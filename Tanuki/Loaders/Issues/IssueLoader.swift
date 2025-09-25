@@ -108,7 +108,7 @@ struct IssueLoader: View {
 											fgColor: .white,
 											cornerRadius: 5
 										)
-										.font(.system(.body, design: .monospaced))
+										.font(.system(.footnote, design: .monospaced))
 										.textSelection(.enabled)
 									}
 

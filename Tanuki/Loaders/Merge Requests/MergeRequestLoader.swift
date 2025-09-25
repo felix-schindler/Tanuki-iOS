@@ -115,7 +115,7 @@ struct MergeRequestLoader: View {
 											fgColor: .white,
 											cornerRadius: 5
 										)
-										.font(.system(.body, design: .monospaced))
+										.font(.system(.footnote, design: .monospaced))
 										.textSelection(.enabled)
 									} else {
 										NavigationLink(
@@ -128,7 +128,7 @@ struct MergeRequestLoader: View {
 													fgColor: .white,
 													cornerRadius: 5
 												)
-												.font(.system(.body, design: .monospaced))
+												.font(.system(.footnote, design: .monospaced))
 												.textSelection(.enabled)
 											})
 									}
@@ -141,7 +141,7 @@ struct MergeRequestLoader: View {
 										fgColor: .white,
 										cornerRadius: 5
 									)
-									.font(.system(.body, design: .monospaced))
+									.font(.system(.footnote, design: .monospaced))
 									.textSelection(.enabled)
 								}
 							}.font(.footnote)
