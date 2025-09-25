@@ -256,7 +256,8 @@ struct IssueLoader: View {
 							if let milestone = issue.milestone {
 								Label(
 									milestone.title.emojized(),
-									systemImage: "signpost.right.and.left")
+									systemImage: "diamond"
+								)
 							}
 
 							if issue.humanTimeEstimate != nil
@@ -375,6 +376,6 @@ struct IssueLoader: View {
 
 #Preview {
 	NavigationView {
-		IssueLoader(fullPath: "felix-schindler/gitlab-ios", iid: "1")
+		IssueLoader(fullPath: "felix-schindler/gitlab-ios", iid: "111")
 	}
 }

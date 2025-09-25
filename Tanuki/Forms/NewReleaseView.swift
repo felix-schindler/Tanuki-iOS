@@ -187,7 +187,7 @@ struct NewReleaseView: View {
 				}
 			}
 
-			Section("Milestone") {
+			Section("Milestones") {
 				if let milestones, milestones.isNotEmpty {
 					Menu("Milestones") {
 						ForEach(milestones, id: \.?.iid) { milestone in

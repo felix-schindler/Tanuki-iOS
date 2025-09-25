@@ -361,7 +361,7 @@ struct ProjectLoader: View {
 							}
 						}
 
-						Button("Create Milestone", systemImage: "flag.circle") {
+						Button("Create Milestone", systemImage: "diamond") {
 							navigationActive = true
 							navigationDestination = .milestone
 						}
@@ -371,7 +371,7 @@ struct ProjectLoader: View {
 							navigationDestination = .release
 						}
 
-						Button("Add new member", systemImage: "person.badge.plus") {
+						Button("Add new Member", systemImage: "person.badge.plus") {
 							navigationActive = true
 							navigationDestination = .member
 						}

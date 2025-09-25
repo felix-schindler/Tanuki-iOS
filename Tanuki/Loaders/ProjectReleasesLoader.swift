@@ -88,7 +88,7 @@ struct ProjectReleasesLoader: View {
 															if let milestone = maybeMilestone {
 																PillView(
 																	milestone.title,
-																	icon: "signpost.right.and.left"
+																	icon: "diamond"
 																)
 															}
 														}
@@ -97,12 +97,11 @@ struct ProjectReleasesLoader: View {
 													if let commit = release.commit?.shortId {
 														PillView(
 															commit,
-															icon:
-																"text.line.first.and.arrowtriangle.forward"
+															icon: "text.line.first.and.arrowtriangle.forward"
 														)
 														.textSelection(.enabled)
 														.font(
-															.system(.footnote, design: .monospaced))
+														.system(.footnote, design: .monospaced))
 													}
 												}.font(.footnote)
 											}

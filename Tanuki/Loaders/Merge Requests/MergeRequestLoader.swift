@@ -305,7 +305,8 @@ struct MergeRequestLoader: View {
 							if let milestone = mr.milestone {
 								Label(
 									milestone.title,
-									systemImage: "signpost.right.and.left")
+									systemImage: "diamond"
+								)
 							}
 
 							if mr.humanTimeEstimate != nil
@@ -314,18 +315,15 @@ struct MergeRequestLoader: View {
 								Label(
 									title: {
 										HStack {
-											Text(
-												"Estimate: \(mr.humanTimeEstimate ?? "none")"
-											)
+											Text("Estimate: \(mr.humanTimeEstimate ?? "none")")
 											Spacer()
-											Text(
-												"Spent: \(mr.humanTotalTimeSpent ?? "none")"
-											)
+											Text("Spent: \(mr.humanTotalTimeSpent ?? "none")")
 										}
 									},
 									icon: {
 										Image(systemName: "hourglass")
-									})
+									}
+								)
 							}
 						}
 

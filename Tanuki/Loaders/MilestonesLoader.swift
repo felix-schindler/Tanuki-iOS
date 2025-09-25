@@ -133,7 +133,7 @@ struct MilestonesLoader: View {
 													Text(milestone.title.emojized())
 												},
 												icon: {
-													Image(systemName: "flag.circle")
+													Image(systemName: "diamond")
 														.foregroundStyle(
 															milestone.state == .closed
 																? .red
@@ -151,7 +151,7 @@ struct MilestonesLoader: View {
 												Text(milestone.title.emojized())
 											},
 											icon: {
-												Image(systemName: "flag.circle")
+												Image(systemName: "diamond")
 													.foregroundStyle(
 														milestone.state == .closed
 															? .red
@@ -170,7 +170,7 @@ struct MilestonesLoader: View {
 					FailedView(error)
 				}
 			} else {
-				LoadingView("Loading Milestones", systemImage: "flag.circle")
+				LoadingView("Loading Milestones", systemImage: "diamond")
 			}
 		}.onAppear {
 			loadMilestones()

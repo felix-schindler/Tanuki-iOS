@@ -219,7 +219,7 @@ struct MembersLoader: View {
 					}
 				},
 				label: {
-					Label("Add new member", systemImage: "person.badge.plus")
+					Label("Add new Member", systemImage: "person.badge.plus")
 				}
 			).tint(.accentColor)
 		}.onAppear {
