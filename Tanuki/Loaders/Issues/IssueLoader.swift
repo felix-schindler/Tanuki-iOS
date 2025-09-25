@@ -353,15 +353,15 @@ struct IssueLoader: View {
 			   let issue = project.issue
 			{
 				HStack {
-					PillView(
+					Button(
 						issue.state.rawValue.firstCapitalized,
-						icon: IssueStateHelper.getIconByState(issue.state),
-						bgColor: IssueStateHelper.getColorByState(issue.state),
-						fgColor: .white,
-						cornerRadius: 5
-					)
+						systemImage: IssueStateHelper.getIconByState(issue.state),
+					) {}
+					.tint(IssueStateHelper.getColorByState(issue.state))
 					.labelStyle(.titleAndIcon)
-					.font(.footnote)
+					.buttonBorderShape(.roundedRectangle)
+					.buttonStyle(.borderedProminent)
+					.controlSize(.mini)
 
 					if let url = URL(string: issue.webUrl) {
 						ShareButton(url)

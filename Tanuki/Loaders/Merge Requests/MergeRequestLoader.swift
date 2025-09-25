@@ -555,15 +555,15 @@ struct MergeRequestLoader: View {
 			if let project, case .success(let project) = project {
 				if let mr = project.mergeRequest {
 					HStack {
-						PillView(
+						Button(
 							mr.state.rawValue.firstCapitalized,
-							icon: MergeStateHelper.getIconByState(mr.state),
-							bgColor: MergeStateHelper.getColorByState(mr.state),
-							fgColor: .white,
-							cornerRadius: 5
-						)
+							systemImage: MergeStateHelper.getIconByState(mr.state),
+						) {}
+						.tint(MergeStateHelper.getColorByState(mr.state))
 						.labelStyle(.titleAndIcon)
-						.font(.footnote)
+						.buttonBorderShape(.roundedRectangle)
+						.buttonStyle(.borderedProminent)
+						.controlSize(.mini)
 						
 						if let webUrl = mr.webUrl,
 						   let url = URL(string: webUrl)
