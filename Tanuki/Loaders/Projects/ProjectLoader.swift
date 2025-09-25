@@ -11,6 +11,14 @@ import MarkdownUI
 import NVMColor
 import SwiftUI
 
+enum NavDest {
+	case issue,
+		 milestone,
+		 release,
+		 member,
+		 label
+}
+
 struct ProjectLoader: View {
 	private let fullPath: String
 
@@ -20,6 +28,12 @@ struct ProjectLoader: View {
 	/// Selected special file (README, LICENSE, ...)
 	@State
 	private var selectedFile = 0
+	
+	@State
+	private var navigationActive = false
+	
+	@State
+	private var navigationDestination: NavDest? = nil
 
 	init(fullPath: String) {
 		self.fullPath = fullPath
@@ -331,45 +345,57 @@ struct ProjectLoader: View {
 					if let projectId = project.id.toIntId() {
 						Menu("Create", systemImage: "plus") {
 							if project.userPermissions.createIssue {
-								NavigationLink(
-									destination: NewIssueView(
-										id: projectId, fullPath: self.fullPath),
-									label: {
-										Label("Create Issue", systemImage: "smallcircle.circle")
-									}
-								)
+								Button("Create Issue", systemImage: "smallcircle.circle") {
+									navigationActive = true
+									navigationDestination = .issue
+								}
 							}
 
-							NavigationLink(
-								destination: NewLabelView(id: projectId, groupId: 0),
-								label: {
-									Label("Create Milestone", systemImage: "flag.circle")
-								}
-							)
+							Button("Create Milestone", systemImage: "flag.circle") {
+								navigationActive = true
+								navigationDestination = .milestone
+							}
+							
+							Button("Create Release", systemImage: "flag") {
+								navigationActive = true
+								navigationDestination = .release
+							}
 
-							NavigationLink(
-								destination: NewLabelView(id: projectId, groupId: 0),
-								label: {
-									Label("Create Release", systemImage: "flag")
-								}
-							)
+							Button("Add new member", systemImage: "person.badge.plus") {
+								navigationActive = true
+								navigationDestination = .member
+							}
 
-							NavigationLink(
-								destination: NewMemberView(id: projectId, groupId: 0),
-								label: {
-									Label("Add new member", systemImage: "person.badge.plus")
-								}
-							)
-
-							NavigationLink(
-								destination: NewLabelView(id: projectId, groupId: 0),
-								label: {
-									Label("Create Label", systemImage: "tag")
-								}
-							)
+							Button("Create Label", systemImage: "tag") {
+								navigationActive = true
+								navigationDestination = .label
+							}
 						}
 					}
 				}
+			}
+		}.background {
+			if let project, case .success(let project) = project, let projectId = project.id.toIntId() {
+				NavigationLink(isActive: $navigationActive, destination: {
+					if let navigationDestination {
+						switch navigationDestination {
+						case .issue:
+							NewIssueView(id: projectId, fullPath: self.fullPath)
+						case .milestone:
+							NewMilestoneView(id: projectId, groupId: 0)
+						case .release:
+							NewReleaseView(id: projectId, fullPath: self.fullPath)
+						case .member:
+							NewMemberView(id: projectId, groupId: 0)
+						case .label:
+							NewLabelView(id: projectId, groupId: 0)
+						}
+					} else {
+						EmptyView()
+					}
+				}, label: {
+					EmptyView()
+				})
 			}
 		}
 		.navigationTitle(self.fullPath)
