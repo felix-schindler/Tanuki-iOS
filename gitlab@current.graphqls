@@ -19472,16 +19472,18 @@ type CurrentUser implements Todoable & User {
     """
     confidential: Boolean
 
-    """Usernames of users assigned to the work item."""
+    """
+    Usernames of users assigned to the work item (maximum is 100 usernames).
+    """
     assigneeUsernames: [String!]
 
     """Filter by assignee wildcard. Incompatible with `assigneeUsernames`."""
     assigneeWildcardId: AssigneeWildcardId
 
-    """Labels applied to the work item."""
+    """Labels applied to the work item (maximum is 100 labels)."""
     labelName: [String!]
 
-    """Milestone applied to the work item."""
+    """Milestone applied to the work item (maximum is 100 milestones)."""
     milestoneTitle: [String!]
 
     """Filter by milestone ID wildcard. Incompatible with `milestoneTitle`."""
@@ -19492,7 +19494,9 @@ type CurrentUser implements Todoable & User {
     """
     myReactionEmoji: String
 
-    """List of IIDs of work items. For example, `["1", "2"]`."""
+    """
+    List of IIDs of work items. For example, `["1", "2"]` (maximum is 100 IIDs).
+    """
     iids: [String!]
 
     """Current state of the work item."""
@@ -19535,12 +19539,12 @@ type CurrentUser implements Todoable & User {
     or: UnionedWorkItemFilterInput
 
     """
-    Filter work items by global IDs of their parent items (maximum is 100 items).
+    Filter work items by global IDs of their parent items (maximum is 100 IDs).
     """
     parentIds: [WorkItemID!]
 
     """
-    Release tag associated with the work item's milestone. Ignored when parent is a group.
+    Release tag associated with the work item's milestone (maximum is 100 tags). Ignored when parent is a group.
     """
     releaseTag: [String!]
 
@@ -32417,16 +32421,18 @@ type Group implements GroupInterface & Todoable {
     """
     confidential: Boolean
 
-    """Usernames of users assigned to the work item."""
+    """
+    Usernames of users assigned to the work item (maximum is 100 usernames).
+    """
     assigneeUsernames: [String!]
 
     """Filter by assignee wildcard. Incompatible with `assigneeUsernames`."""
     assigneeWildcardId: AssigneeWildcardId
 
-    """Labels applied to the work item."""
+    """Labels applied to the work item (maximum is 100 labels)."""
     labelName: [String!]
 
-    """Milestone applied to the work item."""
+    """Milestone applied to the work item (maximum is 100 milestones)."""
     milestoneTitle: [String!]
 
     """Filter by milestone ID wildcard. Incompatible with `milestoneTitle`."""
@@ -32437,7 +32443,9 @@ type Group implements GroupInterface & Todoable {
     """
     myReactionEmoji: String
 
-    """List of IIDs of work items. For example, `["1", "2"]`."""
+    """
+    List of IIDs of work items. For example, `["1", "2"]` (maximum is 100 IIDs).
+    """
     iids: [String!]
 
     """Current state of the work item."""
@@ -32480,12 +32488,12 @@ type Group implements GroupInterface & Todoable {
     or: UnionedWorkItemFilterInput
 
     """
-    Filter work items by global IDs of their parent items (maximum is 100 items).
+    Filter work items by global IDs of their parent items (maximum is 100 IDs).
     """
     parentIds: [WorkItemID!]
 
     """
-    Release tag associated with the work item's milestone. Ignored when parent is a group.
+    Release tag associated with the work item's milestone (maximum is 100 tags). Ignored when parent is a group.
     """
     releaseTag: [String!]
 
@@ -32520,13 +32528,15 @@ type Group implements GroupInterface & Todoable {
     """Filter by weight ID wildcard. Incompatible with weight."""
     weightWildcardId: WeightWildcardId
 
-    """List of iteration Global IDs applied to the issue."""
+    """
+    List of iteration Global IDs applied to the issue (maximum is 100 IDs).
+    """
     iterationId: [ID]
 
     """Filter by iteration ID wildcard."""
     iterationWildcardId: IterationWildcardId
 
-    """Filter by a list of iteration cadence IDs."""
+    """Filter by a list of iteration cadence IDs (maximum is 100 IDs)."""
     iterationCadenceId: [IterationsCadenceID!]
 
     """
@@ -32583,16 +32593,18 @@ type Group implements GroupInterface & Todoable {
     """
     confidential: Boolean
 
-    """Usernames of users assigned to the work item."""
+    """
+    Usernames of users assigned to the work item (maximum is 100 usernames).
+    """
     assigneeUsernames: [String!]
 
     """Filter by assignee wildcard. Incompatible with `assigneeUsernames`."""
     assigneeWildcardId: AssigneeWildcardId
 
-    """Labels applied to the work item."""
+    """Labels applied to the work item (maximum is 100 labels)."""
     labelName: [String!]
 
-    """Milestone applied to the work item."""
+    """Milestone applied to the work item (maximum is 100 milestones)."""
     milestoneTitle: [String!]
 
     """Filter by milestone ID wildcard. Incompatible with `milestoneTitle`."""
@@ -32603,7 +32615,9 @@ type Group implements GroupInterface & Todoable {
     """
     myReactionEmoji: String
 
-    """List of IIDs of work items. For example, `["1", "2"]`."""
+    """
+    List of IIDs of work items. For example, `["1", "2"]` (maximum is 100 IIDs).
+    """
     iids: [String!]
 
     """Current state of the work item."""
@@ -32646,12 +32660,12 @@ type Group implements GroupInterface & Todoable {
     or: UnionedWorkItemFilterInput
 
     """
-    Filter work items by global IDs of their parent items (maximum is 100 items).
+    Filter work items by global IDs of their parent items (maximum is 100 IDs).
     """
     parentIds: [WorkItemID!]
 
     """
-    Release tag associated with the work item's milestone. Ignored when parent is a group.
+    Release tag associated with the work item's milestone (maximum is 100 tags). Ignored when parent is a group.
     """
     releaseTag: [String!]
 
@@ -32686,13 +32700,15 @@ type Group implements GroupInterface & Todoable {
     """Filter by weight ID wildcard. Incompatible with weight."""
     weightWildcardId: WeightWildcardId
 
-    """List of iteration Global IDs applied to the issue."""
+    """
+    List of iteration Global IDs applied to the issue (maximum is 100 IDs).
+    """
     iterationId: [ID]
 
     """Filter by iteration ID wildcard."""
     iterationWildcardId: IterationWildcardId
 
-    """Filter by a list of iteration cadence IDs."""
+    """Filter by a list of iteration cadence IDs (maximum is 100 IDs)."""
     iterationCadenceId: [IterationsCadenceID!]
 
     """
@@ -38797,11 +38813,6 @@ type MavenUpstream {
   name: String! @deprecated(reason: "**Status**: Experiment. Introduced in GitLab 18.1.")
 
   """
-  Password to sign in to the upstream registry. Introduced in GitLab 18.1: **Status**: Experiment.
-  """
-  password: String @deprecated(reason: "**Status**: Experiment. Introduced in GitLab 18.1.")
-
-  """
   Represents the virtual registries which use the upstream. Introduced in GitLab 18.4: **Status**: Experiment.
   """
   registries(
@@ -42475,6 +42486,36 @@ type MergeRequestAuthor implements Todoable & User {
     """Returns the last _n_ elements from the list."""
     last: Int
   ): WorkspaceConnection
+}
+
+"""Autogenerated input type of MergeRequestBypassSecurityPolicy"""
+input MergeRequestBypassSecurityPolicyInput {
+  """A unique identifier for the client performing the mutation."""
+  clientMutationId: String
+
+  """Project the merge request to mutate is in."""
+  projectPath: ID!
+
+  """IID of the merge request to mutate."""
+  iid: String!
+
+  """ID of the security policy to bypass."""
+  securityPolicyIds: [ID!]!
+
+  """Reason for bypassing the security policy."""
+  reason: String!
+}
+
+"""Autogenerated return type of MergeRequestBypassSecurityPolicy."""
+type MergeRequestBypassSecurityPolicyPayload {
+  """A unique identifier for the client performing the mutation."""
+  clientMutationId: String
+
+  """Errors encountered during the mutation."""
+  errors: [String!]!
+
+  """Merge request after mutation."""
+  mergeRequest: MergeRequest
 }
 
 """The connection type for MergeRequest."""
@@ -47771,6 +47812,14 @@ type Mutation {
     """Parameters for MergeRequestAccept"""
     input: MergeRequestAcceptInput!
   ): MergeRequestAcceptPayload
+
+  """
+  Bypasses security policies for a merge request. Introduced in GitLab 18.5: **Status**: Experiment.
+  """
+  mergeRequestBypassSecurityPolicy(
+    """Parameters for MergeRequestBypassSecurityPolicy"""
+    input: MergeRequestBypassSecurityPolicyInput!
+  ): MergeRequestBypassSecurityPolicyPayload @deprecated(reason: "**Status**: Experiment. Introduced in GitLab 18.5.")
   mergeRequestCreate(
     """Parameters for MergeRequestCreate"""
     input: MergeRequestCreateInput!
@@ -49664,16 +49713,18 @@ type Namespace implements Todoable {
     """
     confidential: Boolean
 
-    """Usernames of users assigned to the work item."""
+    """
+    Usernames of users assigned to the work item (maximum is 100 usernames).
+    """
     assigneeUsernames: [String!]
 
     """Filter by assignee wildcard. Incompatible with `assigneeUsernames`."""
     assigneeWildcardId: AssigneeWildcardId
 
-    """Labels applied to the work item."""
+    """Labels applied to the work item (maximum is 100 labels)."""
     labelName: [String!]
 
-    """Milestone applied to the work item."""
+    """Milestone applied to the work item (maximum is 100 milestones)."""
     milestoneTitle: [String!]
 
     """Filter by milestone ID wildcard. Incompatible with `milestoneTitle`."""
@@ -49684,7 +49735,9 @@ type Namespace implements Todoable {
     """
     myReactionEmoji: String
 
-    """List of IIDs of work items. For example, `["1", "2"]`."""
+    """
+    List of IIDs of work items. For example, `["1", "2"]` (maximum is 100 IIDs).
+    """
     iids: [String!]
 
     """Current state of the work item."""
@@ -49727,12 +49780,12 @@ type Namespace implements Todoable {
     or: UnionedWorkItemFilterInput
 
     """
-    Filter work items by global IDs of their parent items (maximum is 100 items).
+    Filter work items by global IDs of their parent items (maximum is 100 IDs).
     """
     parentIds: [WorkItemID!]
 
     """
-    Release tag associated with the work item's milestone. Ignored when parent is a group.
+    Release tag associated with the work item's milestone (maximum is 100 tags). Ignored when parent is a group.
     """
     releaseTag: [String!]
 
@@ -49767,13 +49820,15 @@ type Namespace implements Todoable {
     """Filter by weight ID wildcard. Incompatible with weight."""
     weightWildcardId: WeightWildcardId
 
-    """List of iteration Global IDs applied to the issue."""
+    """
+    List of iteration Global IDs applied to the issue (maximum is 100 IDs).
+    """
     iterationId: [ID]
 
     """Filter by iteration ID wildcard."""
     iterationWildcardId: IterationWildcardId
 
-    """Filter by a list of iteration cadence IDs."""
+    """Filter by a list of iteration cadence IDs (maximum is 100 IDs)."""
     iterationCadenceId: [IterationsCadenceID!]
 
     """
@@ -49832,16 +49887,18 @@ type Namespace implements Todoable {
     """
     confidential: Boolean
 
-    """Usernames of users assigned to the work item."""
+    """
+    Usernames of users assigned to the work item (maximum is 100 usernames).
+    """
     assigneeUsernames: [String!]
 
     """Filter by assignee wildcard. Incompatible with `assigneeUsernames`."""
     assigneeWildcardId: AssigneeWildcardId
 
-    """Labels applied to the work item."""
+    """Labels applied to the work item (maximum is 100 labels)."""
     labelName: [String!]
 
-    """Milestone applied to the work item."""
+    """Milestone applied to the work item (maximum is 100 milestones)."""
     milestoneTitle: [String!]
 
     """Filter by milestone ID wildcard. Incompatible with `milestoneTitle`."""
@@ -49852,7 +49909,9 @@ type Namespace implements Todoable {
     """
     myReactionEmoji: String
 
-    """List of IIDs of work items. For example, `["1", "2"]`."""
+    """
+    List of IIDs of work items. For example, `["1", "2"]` (maximum is 100 IIDs).
+    """
     iids: [String!]
 
     """Current state of the work item."""
@@ -49895,12 +49954,12 @@ type Namespace implements Todoable {
     or: UnionedWorkItemFilterInput
 
     """
-    Filter work items by global IDs of their parent items (maximum is 100 items).
+    Filter work items by global IDs of their parent items (maximum is 100 IDs).
     """
     parentIds: [WorkItemID!]
 
     """
-    Release tag associated with the work item's milestone. Ignored when parent is a group.
+    Release tag associated with the work item's milestone (maximum is 100 tags). Ignored when parent is a group.
     """
     releaseTag: [String!]
 
@@ -49935,13 +49994,15 @@ type Namespace implements Todoable {
     """Filter by weight ID wildcard. Incompatible with weight."""
     weightWildcardId: WeightWildcardId
 
-    """List of iteration Global IDs applied to the issue."""
+    """
+    List of iteration Global IDs applied to the issue (maximum is 100 IDs).
+    """
     iterationId: [ID]
 
     """Filter by iteration ID wildcard."""
     iterationWildcardId: IterationWildcardId
 
-    """Filter by a list of iteration cadence IDs."""
+    """Filter by a list of iteration cadence IDs (maximum is 100 IDs)."""
     iterationCadenceId: [IterationsCadenceID!]
 
     """
@@ -50796,16 +50857,20 @@ input NegatedValueStreamAnalyticsIssuableFilterInput {
 }
 
 input NegatedWorkItemFilterInput {
-  """Usernames of users not assigned to the work item."""
+  """
+  Usernames of users not assigned to the work item (maximum is 100 usernames).
+  """
   assigneeUsernames: [String!]
 
-  """Username of a user who didn't author the work item."""
+  """
+  Username of a user who didn't author the work item (maximum is 100 usernames).
+  """
   authorUsername: [String!]
 
-  """Labels not applied to the work item."""
+  """Labels not applied to the work item (maximum is 100 labels)."""
   labelName: [String!]
 
-  """Milestone not applied to the work item."""
+  """Milestone not applied to the work item (maximum is 100 milestones)."""
   milestoneTitle: [String!]
 
   """Filter by negated milestone wildcard values."""
@@ -50815,7 +50880,7 @@ input NegatedWorkItemFilterInput {
   myReactionEmoji: String
 
   """
-  Release tag not associated with the work items's milestone. Ignored when parent is a group.
+  Release tag not associated with the work items's milestone (maximum is 100 tags). Ignored when parent is a group .
   """
   releaseTag: [String!]
 
@@ -50831,7 +50896,9 @@ input NegatedWorkItemFilterInput {
   """Weight not applied to the work items."""
   weight: String
 
-  """List of iteration Global IDs not applied to the work items."""
+  """
+  List of iteration Global IDs not applied to the work items (maximum is 100 IDs).
+  """
   iterationId: [ID!]
 
   """Filter by negated iteration ID wildcard."""
@@ -60185,16 +60252,18 @@ type Project implements ProjectInterface & Todoable {
     """
     confidential: Boolean
 
-    """Usernames of users assigned to the work item."""
+    """
+    Usernames of users assigned to the work item (maximum is 100 usernames).
+    """
     assigneeUsernames: [String!]
 
     """Filter by assignee wildcard. Incompatible with `assigneeUsernames`."""
     assigneeWildcardId: AssigneeWildcardId
 
-    """Labels applied to the work item."""
+    """Labels applied to the work item (maximum is 100 labels)."""
     labelName: [String!]
 
-    """Milestone applied to the work item."""
+    """Milestone applied to the work item (maximum is 100 milestones)."""
     milestoneTitle: [String!]
 
     """Filter by milestone ID wildcard. Incompatible with `milestoneTitle`."""
@@ -60205,7 +60274,9 @@ type Project implements ProjectInterface & Todoable {
     """
     myReactionEmoji: String
 
-    """List of IIDs of work items. For example, `["1", "2"]`."""
+    """
+    List of IIDs of work items. For example, `["1", "2"]` (maximum is 100 IIDs).
+    """
     iids: [String!]
 
     """Current state of the work item."""
@@ -60248,12 +60319,12 @@ type Project implements ProjectInterface & Todoable {
     or: UnionedWorkItemFilterInput
 
     """
-    Filter work items by global IDs of their parent items (maximum is 100 items).
+    Filter work items by global IDs of their parent items (maximum is 100 IDs).
     """
     parentIds: [WorkItemID!]
 
     """
-    Release tag associated with the work item's milestone. Ignored when parent is a group.
+    Release tag associated with the work item's milestone (maximum is 100 tags). Ignored when parent is a group.
     """
     releaseTag: [String!]
 
@@ -60288,13 +60359,15 @@ type Project implements ProjectInterface & Todoable {
     """Filter by weight ID wildcard. Incompatible with weight."""
     weightWildcardId: WeightWildcardId
 
-    """List of iteration Global IDs applied to the issue."""
+    """
+    List of iteration Global IDs applied to the issue (maximum is 100 IDs).
+    """
     iterationId: [ID]
 
     """Filter by iteration ID wildcard."""
     iterationWildcardId: IterationWildcardId
 
-    """Filter by a list of iteration cadence IDs."""
+    """Filter by a list of iteration cadence IDs (maximum is 100 IDs)."""
     iterationCadenceId: [IterationsCadenceID!]
   ): WorkItemStateCountsType @deprecated(reason: "**Status**: Experiment. Introduced in GitLab 16.7.")
 
@@ -60336,16 +60409,18 @@ type Project implements ProjectInterface & Todoable {
     """
     confidential: Boolean
 
-    """Usernames of users assigned to the work item."""
+    """
+    Usernames of users assigned to the work item (maximum is 100 usernames).
+    """
     assigneeUsernames: [String!]
 
     """Filter by assignee wildcard. Incompatible with `assigneeUsernames`."""
     assigneeWildcardId: AssigneeWildcardId
 
-    """Labels applied to the work item."""
+    """Labels applied to the work item (maximum is 100 labels)."""
     labelName: [String!]
 
-    """Milestone applied to the work item."""
+    """Milestone applied to the work item (maximum is 100 milestones)."""
     milestoneTitle: [String!]
 
     """Filter by milestone ID wildcard. Incompatible with `milestoneTitle`."""
@@ -60356,7 +60431,9 @@ type Project implements ProjectInterface & Todoable {
     """
     myReactionEmoji: String
 
-    """List of IIDs of work items. For example, `["1", "2"]`."""
+    """
+    List of IIDs of work items. For example, `["1", "2"]` (maximum is 100 IIDs).
+    """
     iids: [String!]
 
     """Current state of the work item."""
@@ -60399,12 +60476,12 @@ type Project implements ProjectInterface & Todoable {
     or: UnionedWorkItemFilterInput
 
     """
-    Filter work items by global IDs of their parent items (maximum is 100 items).
+    Filter work items by global IDs of their parent items (maximum is 100 IDs).
     """
     parentIds: [WorkItemID!]
 
     """
-    Release tag associated with the work item's milestone. Ignored when parent is a group.
+    Release tag associated with the work item's milestone (maximum is 100 tags). Ignored when parent is a group.
     """
     releaseTag: [String!]
 
@@ -60439,13 +60516,15 @@ type Project implements ProjectInterface & Todoable {
     """Filter by weight ID wildcard. Incompatible with weight."""
     weightWildcardId: WeightWildcardId
 
-    """List of iteration Global IDs applied to the issue."""
+    """
+    List of iteration Global IDs applied to the issue (maximum is 100 IDs).
+    """
     iterationId: [ID]
 
     """Filter by iteration ID wildcard."""
     iterationWildcardId: IterationWildcardId
 
-    """Filter by a list of iteration cadence IDs."""
+    """Filter by a list of iteration cadence IDs (maximum is 100 IDs)."""
     iterationCadenceId: [IterationsCadenceID!]
 
     """Returns the elements in the list that come after the specified cursor."""
@@ -73235,14 +73314,18 @@ input UnionedMergeRequestFilterInput {
 
 input UnionedWorkItemFilterInput {
   """
-  Filters work items that are assigned to at least one of the given users.
+  Filters work items that are assigned to at least one of the given users (maximum is 100 usernames).
   """
   assigneeUsernames: [String!]
 
-  """Filters work items that are authored by one of the given users."""
+  """
+  Filters work items that are authored by one of the given users (maximum is 100 usernames).
+  """
   authorUsernames: [String!]
 
-  """Filters work items that have at least one of the given labels."""
+  """
+  Filters work items that have at least one of the given labels (maximum is 100 labels).
+  """
   labelNames: [String!]
 }
 
@@ -80957,16 +81040,18 @@ input WorkItemExportInput {
   """
   confidential: Boolean
 
-  """Usernames of users assigned to the work item."""
+  """
+  Usernames of users assigned to the work item (maximum is 100 usernames).
+  """
   assigneeUsernames: [String!]
 
   """Filter by assignee wildcard. Incompatible with `assigneeUsernames`."""
   assigneeWildcardId: AssigneeWildcardId
 
-  """Labels applied to the work item."""
+  """Labels applied to the work item (maximum is 100 labels)."""
   labelName: [String!]
 
-  """Milestone applied to the work item."""
+  """Milestone applied to the work item (maximum is 100 milestones)."""
   milestoneTitle: [String!]
 
   """Filter by milestone ID wildcard. Incompatible with `milestoneTitle`."""
@@ -80977,7 +81062,9 @@ input WorkItemExportInput {
   """
   myReactionEmoji: String
 
-  """List of IIDs of work items. For example, `["1", "2"]`."""
+  """
+  List of IIDs of work items. For example, `["1", "2"]` (maximum is 100 IIDs).
+  """
   iids: [String!]
 
   """Current state of the work item."""
@@ -81020,12 +81107,12 @@ input WorkItemExportInput {
   or: UnionedWorkItemFilterInput
 
   """
-  Filter work items by global IDs of their parent items (maximum is 100 items).
+  Filter work items by global IDs of their parent items (maximum is 100 IDs).
   """
   parentIds: [WorkItemID!]
 
   """
-  Release tag associated with the work item's milestone. Ignored when parent is a group.
+  Release tag associated with the work item's milestone (maximum is 100 tags). Ignored when parent is a group.
   """
   releaseTag: [String!]
 
@@ -82116,10 +82203,14 @@ input WorkItemWidgetCustomFieldFilterInputType {
   """Name of the custom field."""
   customFieldName: String
 
-  """Global IDs of the selected options for custom fields with select type."""
+  """
+  Global IDs of the selected options for custom fields with select type (maximum is 100 IDs).
+  """
   selectedOptionIds: [IssuablesCustomFieldSelectOptionID!]
 
-  """Values of the selected options for custom fields with select type."""
+  """
+  Values of the selected options for custom fields with select type (maximum is 100 values).
+  """
   selectedOptionValues: [String!]
 }
 
@@ -83174,16 +83265,18 @@ input WorkItemsCsvExportInput {
   """
   confidential: Boolean
 
-  """Usernames of users assigned to the work item."""
+  """
+  Usernames of users assigned to the work item (maximum is 100 usernames).
+  """
   assigneeUsernames: [String!]
 
   """Filter by assignee wildcard. Incompatible with `assigneeUsernames`."""
   assigneeWildcardId: AssigneeWildcardId
 
-  """Labels applied to the work item."""
+  """Labels applied to the work item (maximum is 100 labels)."""
   labelName: [String!]
 
-  """Milestone applied to the work item."""
+  """Milestone applied to the work item (maximum is 100 milestones)."""
   milestoneTitle: [String!]
 
   """Filter by milestone ID wildcard. Incompatible with `milestoneTitle`."""
@@ -83194,7 +83287,9 @@ input WorkItemsCsvExportInput {
   """
   myReactionEmoji: String
 
-  """List of IIDs of work items. For example, `["1", "2"]`."""
+  """
+  List of IIDs of work items. For example, `["1", "2"]` (maximum is 100 IIDs).
+  """
   iids: [String!]
 
   """Current state of the work item."""
@@ -83237,12 +83332,12 @@ input WorkItemsCsvExportInput {
   or: UnionedWorkItemFilterInput
 
   """
-  Filter work items by global IDs of their parent items (maximum is 100 items).
+  Filter work items by global IDs of their parent items (maximum is 100 IDs).
   """
   parentIds: [WorkItemID!]
 
   """
-  Release tag associated with the work item's milestone. Ignored when parent is a group.
+  Release tag associated with the work item's milestone (maximum is 100 tags). Ignored when parent is a group.
   """
   releaseTag: [String!]
 

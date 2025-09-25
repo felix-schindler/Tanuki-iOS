@@ -1,7 +1,8 @@
 query Issue($fullPath: ID!, $iid: String!) {
   project(fullPath: $fullPath) {
-	avatarUrl
-	
+    id
+    avatarUrl
+
     issue(iid: $iid) {
       iid
       title
@@ -31,14 +32,14 @@ query Issue($fullPath: ID!, $iid: String!) {
         updateIssue
         createNote
       }
-            
+
       assignees {
         nodes {
           avatarUrl
           username
         }
       }
-      
+
       labels {
         nodes {
           title
@@ -46,15 +47,15 @@ query Issue($fullPath: ID!, $iid: String!) {
           textColor
         }
       }
-      
+
       milestone {
         iid
         title
       }
-      
+
       humanTimeEstimate
       humanTotalTimeSpent
-      
+
       notes {
         nodes {
 		  id

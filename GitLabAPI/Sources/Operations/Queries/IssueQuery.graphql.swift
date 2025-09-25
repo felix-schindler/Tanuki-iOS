@@ -8,7 +8,7 @@ public struct IssueQuery: GraphQLQuery {
   public static let operationName: String = "Issue"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Issue($fullPath: ID!, $iid: String!) { project(fullPath: $fullPath) { __typename avatarUrl issue(iid: $iid) { __typename iid title description reference(full: true) state weight dueDate blockedByIssues { __typename nodes { __typename iid } } createdAt webUrl upvotes downvotes userNotesCount author { __typename avatarUrl name username } userPermissions { __typename updateIssue createNote } assignees { __typename nodes { __typename avatarUrl username } } labels { __typename nodes { __typename title color textColor } } milestone { __typename iid title } humanTimeEstimate humanTotalTimeSpent notes { __typename nodes { __typename id author { __typename avatarUrl name username } maxAccessLevelOfAuthor body system systemNoteIconName createdAt updatedAt } } } } }"#
+      #"query Issue($fullPath: ID!, $iid: String!) { project(fullPath: $fullPath) { __typename id avatarUrl issue(iid: $iid) { __typename iid title description reference(full: true) state weight dueDate blockedByIssues { __typename nodes { __typename iid } } createdAt webUrl upvotes downvotes userNotesCount author { __typename avatarUrl name username } userPermissions { __typename updateIssue createNote } assignees { __typename nodes { __typename avatarUrl username } } labels { __typename nodes { __typename title color textColor } } milestone { __typename iid title } humanTimeEstimate humanTotalTimeSpent notes { __typename nodes { __typename id author { __typename avatarUrl name username } maxAccessLevelOfAuthor body system systemNoteIconName createdAt updatedAt } } } } }"#
     ))
 
   public var fullPath: ID
@@ -52,6 +52,7 @@ public struct IssueQuery: GraphQLQuery {
       @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
+        .field("id", GitLabAPI.ID.self),
         .field("avatarUrl", String?.self),
         .field("issue", Issue?.self, arguments: ["iid": .variable("iid")]),
       ] }
@@ -59,6 +60,8 @@ public struct IssueQuery: GraphQLQuery {
         IssueQuery.Data.Project.self
       ] }
 
+      /// ID of the project.
+      public var id: GitLabAPI.ID { __data["id"] }
       /// Avatar URL of the project.
       public var avatarUrl: String? { __data["avatarUrl"] }
       /// A single issue of the project.

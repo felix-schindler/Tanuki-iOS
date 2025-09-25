@@ -10,10 +10,12 @@ import MarkdownUI
 import SwiftUI
 
 struct NoteView: View {
+	private let projectId: Int
 	private let note: Note
 
-	init(_ note: Note) {
+	init(_ note: Note, projectId: Int = 0) {
 		self.note = note
+		self.projectId = projectId
 	}
 
 	private func convertIconName(_ iconName: String?) -> String {
@@ -59,55 +61,50 @@ struct NoteView: View {
 		if let author = note._author {
 			if note.system {
 				Label(
-					title: {
-						Markdown(
-							"@\(author.username) \(note.body)", baseURL: API.url
-						)
-						.markdownTheme(.gitLab)
-					},
-					icon: {
-						Image(
-							systemName: convertIconName(note.systemNoteIconName)
-						)
-					}
-				).font(.footnote)
+					"@\(author.username) \(note.body)",
+					systemImage: convertIconName(note.systemNoteIconName)
+				)
+				.font(.footnote)
 			} else {
 				VStack(alignment: .leading) {
 					HStack {
 						ScrollView(.horizontal) {
-							AuthorView(author, showUsername: true)
-						}
+							HStack {
+								AuthorView(author, showUsername: true)
 
-						if let accessLevel = note.maxAccessLevelOfAuthor {
-							PillView(accessLevel)
-						}
+								if let accessLevel = note.maxAccessLevelOfAuthor {
+									PillView(accessLevel)
+								}
 
-						Spacer()
-
-						HStack {
-							if note.updatedAt != note.createdAt {
-								Image("pencil.and.scribble")
+								Spacer()
 							}
-							Text(
-								Date.fromToString(
-									note.createdAt,
-									dateStyle: .short,
-									timeStyle: .short
-								)
-							)
-						}.foregroundStyle(.secondary)
-					}
-					.padding(.vertical, -5)
-					.font(.footnote)
+						}
 
-					Markdown(note.body, baseURL: API.url)
-						.markdownTheme(.gitLab)
+						let date = Date.fromToString(
+							note.createdAt,
+							dateStyle: .short,
+							timeStyle: .short
+						)
+						if note.updatedAt != note.createdAt {
+							Label(date, systemImage: "pencil.and.scribble")
+								.foregroundStyle(.secondary)
+						} else {
+							Text(date)
+								.foregroundStyle(.secondary)
+						}
+					}.font(.footnote)
+
+					Markdown(
+						note.body.emojized(),
+						baseURL: API.url,
+						imageBaseURL: URL(string: "\(API.url.absoluteString)/-/project/\(self.projectId)")
+					).markdownTheme(.gitLab)
 				}
 			}
 		} else {
 			Label(
 				title: {
-					Markdown(note.body, baseURL: API.url)
+					Markdown(note.body.emojized(), baseURL: API.url)
 						.markdownTheme(.gitLab)
 				},
 				icon: {

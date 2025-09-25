@@ -33,15 +33,13 @@ struct ProjectHeaderView: View {
 				}
 			}
 
-			if let description = project.description {
-				Markdown(description.emojized())
+			if let description = project.description?.emojized() {
+				Markdown(description)
 					.markdownTheme(.gitLab)
 			}
 
 			HStack {
-				if project.topics != nil
-					&& project.topics!.count > 0
-				{
+				if let topics = project.topics, topics.isNotEmpty {
 					HStack(spacing: 5) {
 						Label("Tags", systemImage: "tag")
 							.labelStyle(.iconOnly)
@@ -53,7 +51,6 @@ struct ProjectHeaderView: View {
 							}
 						}
 					}
-					Spacer()
 				}
 
 				if let createdAt = project.createdAt {
@@ -79,6 +76,8 @@ struct ProjectHeaderView: View {
 									)
 								}
 							)
+							.tint(.accentColor)
+							.buttonStyle(.borderedProminent)
 						} else if namespace.id.contains("Group") {
 							NavigationLink(
 								destination: GroupLoader(fullPath: namespace.fullPath),
@@ -89,6 +88,10 @@ struct ProjectHeaderView: View {
 									)
 								}
 							)
+							.tint(.accentColor)
+							.buttonStyle(.borderedProminent)
+						} else {
+							PillView(namespace.name)
 						}
 					}
 
@@ -96,16 +99,20 @@ struct ProjectHeaderView: View {
 						String(project.starCount),
 						systemImage: "star"
 					) {
+						// TODO: Implement
+						Notify.status(.error, "Not yet implemented")
 					}
+					.tint(.accentColor)
+					.buttonStyle(.bordered)
 
 					if project.userPermissions.forkProject,
-						let projectUrl = URL(string:"\(project.webUrl ?? "")/-/forks/new") {
+						let projectUrl = URL(string: "\(project.webUrl ?? "")/-/forks/new")
+					{
 						Link(destination: projectUrl) {
-							Label(
-								String(project.forksCount),
-								systemImage: "tuningfork"
-							)
+							Label(String(project.forksCount), systemImage: "tuningfork")
 						}
+						.tint(.accentColor)
+						.buttonStyle(.bordered)
 					} else {
 						PillView(
 							String(project.forksCount),

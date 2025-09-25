@@ -29,25 +29,30 @@ struct AuthorView: View {
 						)
 					},
 					icon: {
-						if let url = URL.fromAvatar(
-							author.avatarUrl)
-						{
+						if let url = URL.fromAvatar(author.avatarUrl) {
 							AvatarImage(url, size: .tiny)
 						} else {
-							Image(
-								systemName: "person"
-							)
+							Image(systemName: "person")
 						}
 					}
 				)
 			}
 		)
-		.buttonStyle(.plain)
-		.tint(.primary)
-		.padding(.horizontal, 8)
-		.padding(.vertical, 3)
-		.background(Color(.systemGray5))
-		.foregroundStyle(.primary)
-		.cornerRadius(5)
+		.controlSize(.mini)
+		.buttonStyle(.borderedProminent)
+		.buttonBorderShape(.capsule)
+	}
+}
+
+#Preview {
+	NavigationView {
+		AuthorView(
+			MyAuthor(
+				avatarUrl: nil,
+				name: "Felix",
+				username: "felix-schindler"
+			),
+			showUsername: false
+		)
 	}
 }

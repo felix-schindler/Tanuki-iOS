@@ -361,6 +361,16 @@ struct MergeRequestLoader: View {
 							).disabled(projectId == nil || iid == 0)
 
 							NavigationLink(
+								destination: DiffsStatsLoader(
+									fullPath: self.fullPath,
+									iid: self.iid
+								),
+								label: {
+									Label("Changed files overview", systemImage: "plusminus")
+								}
+							)
+
+							NavigationLink(
 								destination: MrCommitsLoader(
 									fullPath: self.fullPath,
 									iid: self.iid
@@ -519,7 +529,7 @@ struct MergeRequestLoader: View {
 									ForEach(mr.notes.nodes!, id: \.self?.id) {
 										maybeNote in
 										if let note = maybeNote {
-											NoteView(note)
+											NoteView(note, projectId: project.id.toIntId() ?? 0)
 										}
 									}
 								}

@@ -86,8 +86,9 @@ struct IssueLoader: View {
 								}
 								Spacer()
 								Text(Date.fromToString(issue.createdAt))
-							}.font(.footnote)
-								.padding(.bottom, 1)
+							}
+							.font(.footnote)
+							.padding(.bottom, 1)
 
 							Text(issue.title.emojized())
 								.font(.title3)
@@ -95,11 +96,9 @@ struct IssueLoader: View {
 								.padding(.bottom, 1)
 
 							ScrollView(.horizontal) {
-								AuthorView(issue._author)
-							}.font(.footnote)
-
-							ScrollView(.horizontal) {
 								HStack(spacing: 5) {
+									AuthorView(issue._author)
+
 									if let weight = issue.weight {
 										PillView(
 											String(weight),
@@ -162,6 +161,7 @@ struct IssueLoader: View {
 								Button(
 									action: {
 										// TODO: Toggle like
+										Notify.status(.error, "Not yet implemented")
 									},
 									label: {
 										HStack(spacing: 5) {
@@ -171,7 +171,8 @@ struct IssueLoader: View {
 									})
 								Button(
 									action: {
-										// TODO: Toggle like
+										// TODO: Toggle dislike
+										Notify.status(.error, "Not yet implemented")
 									},
 									label: {
 										HStack(spacing: 5) {
@@ -289,30 +290,21 @@ struct IssueLoader: View {
 						if issue.userPermissions.updateIssue {
 							Section("Actions") {
 								if issue.state == .opened {
-									Button(
-										action: {
-											// TODO: Implement
-											Notify.status(.error, "Not yet implemented")
-										},
-										label: {
-											Label(
-												"Close issue",
-												systemImage: "smallcircle.circle")
-										}
-									).tint(.blue)
+									Button("Close issue", systemImage: "smallcircle.circle") {
+										// TODO: Implement
+										Notify.status(.error, "Not yet implemented")
+									}.tint(.blue)
 								} else if issue.state == .closed {
-									Button(
-										action: {
-											// TODO: Implement
-											Notify.status(.error, "Not yet implemented")
-										},
-										label: {
-											Label(
-												"Reopen issue",
-												systemImage: "arrow.triangle.swap")
-										}
-									).tint(.green)
+									Button("Reopen issue", systemImage: "arrow.triangle.swap") {
+										// TODO: Implement
+										Notify.status(.error, "Not yet implemented")
+									}.tint(.green)
 								}
+
+								Button("Delete issue", systemImage: "trash", role: .destructive) {
+									// TODO: Implement
+									Notify.status(.error, "Not yet implemented")
+								}.tint(.red)
 							}
 						}
 
@@ -339,10 +331,9 @@ struct IssueLoader: View {
 								}
 
 								if noteCount > 0 {
-									ForEach(issue.notes.nodes!, id: \.self?.id) {
-										maybeNote in
+									ForEach(issue.notes.nodes!, id: \.self?.id) { maybeNote in
 										if let note = maybeNote {
-											NoteView(note)
+											NoteView(note, projectId: project.id.toIntId() ?? 0)
 										}
 									}
 								}
