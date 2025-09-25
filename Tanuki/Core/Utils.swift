@@ -18,6 +18,13 @@ extension Array {
 	}
 }
 
+// MARK: - Set helpers
+extension Set {
+	var isNotEmpty: Bool {
+		return !self.isEmpty
+	}
+}
+
 // MARK: - String helpers
 extension String {
 	var isNotEmpty: Bool {

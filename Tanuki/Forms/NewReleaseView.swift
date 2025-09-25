@@ -104,7 +104,7 @@ struct NewReleaseView: View {
 			body["description"] = .string(description)
 		}
 
-		if !selectedMilestones.isEmpty {
+		if selectedMilestones.isNotEmpty {
 			body["milestones"] = .array(Array(selectedMilestones))
 		}
 

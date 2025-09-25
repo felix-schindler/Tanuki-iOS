@@ -14,14 +14,16 @@ enum MemberType {
 }
 
 struct MembersLoader: View {
+	private let id: Int
 	private let fullPath: String
 	private let queryType: MemberType
 
 	@State
 	private var memberships: Result<[Member?], Error>? = nil
 
-	init(fullPath: String, type: MemberType) {
+	init(fullPath: String, id: Int, type: MemberType) {
 		self.fullPath = fullPath
+		self.id = id
 		self.queryType = type
 	}
 
@@ -209,7 +211,13 @@ struct MembersLoader: View {
 			}
 		}.toolbar {
 			NavigationLink(
-				destination: NewMemberView(id: 1, groupId: 1),
+				destination: {
+					if self.queryType == .project {
+						NewMemberView(id: self.id, groupId: 0)
+					} else {
+						NewMemberView(id: 0, groupId: self.id)
+					}
+				},
 				label: {
 					Label("Add new member", systemImage: "person.badge.plus")
 				}
@@ -224,6 +232,6 @@ struct MembersLoader: View {
 
 #Preview {
 	NavigationView {
-		MembersLoader(fullPath: "gitlab-org/gitlab", type: .project)
+		MembersLoader(fullPath: "gitlab-org/gitlab", id: 278_964, type: .project)
 	}
 }

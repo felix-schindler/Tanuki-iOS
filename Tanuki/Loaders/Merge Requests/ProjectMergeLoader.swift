@@ -77,9 +77,8 @@ struct ProjectMergeLoader: View {
 							NoContentView(
 								"There are no merge requests", systemImage: "arrow.triangle.pull")
 						} else {
-							ForEach(project.mergeRequests!.nodes!, id: \.self?.iid) {
-								mergeRequest in
-								if let mr = mergeRequest {
+							ForEach(mrs, id: \.?.iid) { mr in
+								if let mr {
 									SmallMergeView(self.fullPath, mr)
 								}
 							}
@@ -96,9 +95,7 @@ struct ProjectMergeLoader: View {
 			loadMergeRequests()
 		}.refreshable {
 			await reloadMergeRequests()
-		}
-		.navigationBarTitleDisplayMode(.large)
-		.navigationTitle("Merge Requests")
+		}.navigationTitle("Merge Requests")
 	}
 }
 

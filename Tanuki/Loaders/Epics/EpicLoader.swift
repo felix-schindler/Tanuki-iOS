@@ -125,17 +125,14 @@ struct EpicLoader: View {
 									}
 								}
 							}
-
-							if (epic.blockedByEpics?.nodes?.count ?? 0)
-								> 0
+							
+							if let blockedBy = epic.blockedByEpics?.nodes,
+							   blockedBy.isNotEmpty
 							{
 								ScrollView(.horizontal) {
 									HStack(spacing: 5) {
-										ForEach(
-											epic.blockedByEpics!.nodes!,
-											id: \.self?.iid
-										) { maybeBlock in
-											if let block = maybeBlock {
+										ForEach(blockedBy, id: \.?.iid) { block in
+											if let block {
 												NavigationLink(
 													destination: EpicLoader(
 														fullPath: self.fullPath,
@@ -149,15 +146,18 @@ struct EpicLoader: View {
 															fgColor: .white,
 															cornerRadius: 5
 														)
-													})
+													}
+												)
 											}
 										}
 									}
 								}
 							}
-
-							if epic.description?.isNotEmpty ?? false {
-								Markdown(epic.description!.emojized())
+							
+							if let description = epic.description?.emojized(),
+								description.isNotEmpty
+							{
+								Markdown(description)
 									.markdownTheme(.gitLab)
 							}
 
@@ -206,15 +206,13 @@ struct EpicLoader: View {
 										})
 								})
 
-							if (epic.labels?.nodes?.count ?? 0) > 0 {
+							if let labels = epic.labels?.nodes, labels.isNotEmpty {
 								Label(
 									title: {
 										ScrollView(.horizontal) {
 											HStack {
-												ForEach(
-													epic.labels!.nodes!, id: \.self
-												) { maybeLabel in
-													if let label = maybeLabel {
+												ForEach(labels, id: \.self) { label in
+													if let label {
 														PillView(
 															label.title.emojized(),
 															bgColor: Color(hex: label.color),
@@ -227,53 +225,51 @@ struct EpicLoader: View {
 									},
 									icon: {
 										Image(systemName: "tag")
-									})
+									}
+								)
 							}
 
-							if !(epic.ancestors?.nodes?.isEmpty ?? false) {
+							if let ancestors = epic.ancestors?.nodes, ancestors.isNotEmpty {
 								DisclosureGroup(
 									content: {
-										ForEach(epic.ancestors!.nodes!, id: \.?.iid) {
-											maybeAncestor in
-											if let ancestor = maybeAncestor {
-												NavigationLink(
-													destination: EpicLoader(
+										ForEach(ancestors, id: \.?.iid) { ancestor in
+											if let ancestor {
+												NavigationLink("&\(ancestor.iid)", destination: {
+													EpicLoader(
 														fullPath: self.fullPath,
 														iid: ancestor.iid
-													),
-													label: {
-														Text("&\(ancestor.iid)")
-													})
+													)
+												})
 											}
 										}
 									},
 									label: {
 										Label(
 											"Ancestors",
-											systemImage: "figure.and.child.holdinghands")
-									})
+											systemImage: "figure.and.child.holdinghands"
+										)
+									}
+								)
 							}
 
-							if !(epic.children?.nodes?.isEmpty ?? false) {
+							if let children = epic.children?.nodes, children.isNotEmpty {
 								DisclosureGroup(
 									content: {
-										ForEach(epic.children!.nodes!, id: \.?.iid) { maybeChild in
-											if let child = maybeChild {
-												NavigationLink(
-													destination: EpicLoader(
+										ForEach(children, id: \.?.iid) { child in
+											if let child {
+												NavigationLink("&\(child.iid)", destination: {
+													EpicLoader(
 														fullPath: self.fullPath,
 														iid: child.iid
-													),
-													label: {
-														Text("&\(child.iid)")
-													}
-												)
+													)
+												})
 											}
 										}
 									},
 									label: {
 										Label("Children", systemImage: "figure.child")
-									})
+									}
+								)
 							}
 						}
 
@@ -349,12 +345,11 @@ struct EpicLoader: View {
 		}.refreshable {
 			await reloadEpic()
 		}.toolbar {
-			if let group, case .success(let group) = group {
-				if let webUrl = group.epic?.webUrl,
-					let url = URL(string: webUrl)
-				{
-					ShareButton(url)
-				}
+			if let group, case .success(let group) = group,
+			   let webUrl = group.epic?.webUrl,
+			   let url = URL(string: webUrl)
+			{
+				ShareButton(url)
 			}
 		}
 	}

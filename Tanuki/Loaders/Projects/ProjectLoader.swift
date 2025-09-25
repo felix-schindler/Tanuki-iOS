@@ -147,40 +147,48 @@ struct ProjectLoader: View {
 							)
 						}
 
-						DisclosureGroup(
-							content: {
-								if let projectId = project.id.toIntId() {
+						if let projectId = project.id.toIntId() {
+							DisclosureGroup(
+								content: {
 									NavigationLink(
 										destination: EventsLoader(projectId: projectId),
 										label: {
 											Text("Activity")
 										})
-								}
-								NavigationLink(
-									"Members",
-									destination: MembersLoader(
-										fullPath: self.fullPath, type: .project)
-								)
-								NavigationLink(
-									"Labels",
-									destination: LabelsLoader(
-										fullPath: self.fullPath, queryType: .project)
-								)
-								NavigationLink(
-									"Milestones",
-									destination: MilestonesLoader(
-										fullPath: self.fullPath,
-										queryType: .project
+									NavigationLink(
+										"Members",
+										destination: MembersLoader(
+											fullPath: self.fullPath,
+											id: projectId,
+											type: .project
+										)
 									)
-								)
-							},
-							label: {
-								Label("Manage", systemImage: "person.2")
-							})
+									NavigationLink(
+										"Labels",
+										destination: LabelsLoader(
+											fullPath: self.fullPath,
+											id: projectId,
+											queryType: .project
+										)
+									)
+									NavigationLink(
+										"Milestones",
+										destination: MilestonesLoader(
+											fullPath: self.fullPath,
+											id: projectId,
+											queryType: .project
+										)
+									)
+								},
+								label: {
+									Label("Manage", systemImage: "person.2")
+								}
+							)
+						}
 
-						DisclosureGroup(
-							content: {
-								if let projectId = project.id.toIntId() {
+						if let projectId = project.id.toIntId() {
+							DisclosureGroup(
+								content: {
 									if let ref = project.repository?.rootRef {
 										NavigationLink(
 											"Repository",
@@ -206,14 +214,15 @@ struct ProjectLoader: View {
 										"Tags",
 										destination: TagsLoader(projectId)
 									)
+								},
+								label: {
+									Label(
+										"Code",
+										systemImage: "chevron.left.forwardslash.chevron.right"
+									)
 								}
-							},
-							label: {
-								Label(
-									"Code",
-									systemImage:
-										"chevron.left.forwardslash.chevron.right")
-							})
+							)
+						}
 
 						DisclosureGroup(
 							content: {
@@ -295,8 +304,8 @@ struct ProjectLoader: View {
 		}.refreshable {
 			await reloadProject()
 		}.toolbar {
-			HStack {
-				if let project, case .success(let project) = project {
+			if let project, case .success(let project) = project {
+				HStack {
 					Menu("More", systemImage: "ellipsis") {
 						Section {
 							if let webUrl = project.webUrl,
@@ -304,8 +313,10 @@ struct ProjectLoader: View {
 							{
 								ShareButton(url)
 							}
-
-							if project.userPermissions.requestAccess {
+						}
+						
+						if project.userPermissions.requestAccess {
+							Section {
 								AsyncButton(
 									"Request access",
 									systemImage: "person.badge.plus"
@@ -342,34 +353,32 @@ struct ProjectLoader: View {
 						}
 					}
 
-					if let projectId = project.id.toIntId() {
-						Menu("Create", systemImage: "plus") {
-							if project.userPermissions.createIssue {
-								Button("Create Issue", systemImage: "smallcircle.circle") {
-									navigationActive = true
-									navigationDestination = .issue
-								}
-							}
-
-							Button("Create Milestone", systemImage: "flag.circle") {
+					Menu("Create", systemImage: "plus") {
+						if project.userPermissions.createIssue {
+							Button("Create Issue", systemImage: "smallcircle.circle") {
 								navigationActive = true
-								navigationDestination = .milestone
+								navigationDestination = .issue
 							}
+						}
 
-							Button("Create Release", systemImage: "flag") {
-								navigationActive = true
-								navigationDestination = .release
-							}
+						Button("Create Milestone", systemImage: "flag.circle") {
+							navigationActive = true
+							navigationDestination = .milestone
+						}
 
-							Button("Add new member", systemImage: "person.badge.plus") {
-								navigationActive = true
-								navigationDestination = .member
-							}
+						Button("Create Release", systemImage: "flag") {
+							navigationActive = true
+							navigationDestination = .release
+						}
 
-							Button("Create Label", systemImage: "tag") {
-								navigationActive = true
-								navigationDestination = .label
-							}
+						Button("Add new member", systemImage: "person.badge.plus") {
+							navigationActive = true
+							navigationDestination = .member
+						}
+
+						Button("Create Label", systemImage: "tag") {
+							navigationActive = true
+							navigationDestination = .label
 						}
 					}
 				}

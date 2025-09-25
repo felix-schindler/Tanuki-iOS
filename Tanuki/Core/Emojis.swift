@@ -30,7 +30,7 @@ class EmojiHelper {
 						if range.location != NSNotFound {
 							let code = (text as NSString).substring(with: range)
 							let unicode = EmojiHelper.emojiAliases(key: code)
-							if !unicode.isEmpty {
+							if unicode.isNotEmpty {
 								resultText = resultText.replacingOccurrences(
 									of: code, with: unicode)
 							}

@@ -105,10 +105,26 @@ struct MergeRequestLoader: View {
 											AuthorView(author)
 										}
 									}
-
-									if mr.sourceProject?.fullPath == self.fullPath
-										|| mr.sourceProject?.fullPath == nil
+									
+									if let sourceProject = mr.sourceProject,
+									   sourceProject.fullPath != self.fullPath
 									{
+										NavigationLink(
+											destination: ProjectLoader(
+												fullPath: sourceProject.fullPath
+											),
+											label: {
+												PillView(
+													"\(sourceProject.fullPath)/\(mr.sourceBranch)",
+													bgColor: .blue,
+													fgColor: .white,
+													cornerRadius: 5
+												)
+												.font(.system(.footnote, design: .monospaced))
+												.textSelection(.enabled)
+											}
+										)
+									} else {
 										PillView(
 											mr.sourceBranch,
 											bgColor: .blue,
@@ -117,20 +133,6 @@ struct MergeRequestLoader: View {
 										)
 										.font(.system(.footnote, design: .monospaced))
 										.textSelection(.enabled)
-									} else {
-										NavigationLink(
-											destination: ProjectLoader(
-												fullPath: mr.sourceProject!.fullPath),
-											label: {
-												PillView(
-													"\(mr.sourceProject!.fullPath)/\(mr.sourceBranch)",
-													bgColor: .blue,
-													fgColor: .white,
-													cornerRadius: 5
-												)
-												.font(.system(.footnote, design: .monospaced))
-												.textSelection(.enabled)
-											})
 									}
 
 									Image(systemName: "arrow.right")
@@ -145,9 +147,11 @@ struct MergeRequestLoader: View {
 									.textSelection(.enabled)
 								}
 							}.font(.footnote)
-
-							if mr.description?.isNotEmpty ?? false {
-								Markdown(mr.description!.emojized())
+							
+							if let description = mr.description?.emojized(),
+							   description.isNotEmpty
+							{
+								Markdown(description)
 									.markdownTheme(.gitLab)
 							}
 
@@ -155,6 +159,7 @@ struct MergeRequestLoader: View {
 								Button(
 									action: {
 										// TODO: Toggle like
+										Notify.status(.error, "Not yet implemented")
 									},
 									label: {
 										HStack(spacing: 5) {
@@ -165,6 +170,7 @@ struct MergeRequestLoader: View {
 								Button(
 									action: {
 										// TODO: Toggle like
+										Notify.status(.error, "Not yet implemented")
 									},
 									label: {
 										HStack(spacing: 5) {
@@ -272,23 +278,18 @@ struct MergeRequestLoader: View {
 										})
 								}
 							)
-
-							if (mr.labels?.nodes?.count ?? 0) > 0 {
+							
+							if let labels = mr.labels?.nodes, labels.isNotEmpty {
 								Label(
 									title: {
 										ScrollView(.horizontal) {
 											HStack {
-												ForEach(
-													mr.labels!.nodes!, id: \.self
-												) { maybeLabel in
-													if let label = maybeLabel {
+												ForEach(labels, id: \.?.title) { label in
+													if let label {
 														PillView(
 															label.title,
-															bgColor: Color(
-																hex: label.color),
-															fgColor: Color(
-																hex: label.textColor
-															)
+															bgColor: Color(hex: label.color),
+															fgColor: Color(hex: label.textColor)
 														)
 													}
 												}
@@ -297,7 +298,8 @@ struct MergeRequestLoader: View {
 									},
 									icon: {
 										Image(systemName: "tag")
-									})
+									}
+								)
 							}
 
 							if let milestone = mr.milestone {
@@ -552,10 +554,9 @@ struct MergeRequestLoader: View {
 		}.refreshable {
 			await reloadMergeRequest()
 		}.toolbar {
-			if let project {
-				switch project {
-				case .success(let project):
-					if let mr = project.mergeRequest {
+			if let project, case .success(let project) = project {
+				if let mr = project.mergeRequest {
+					HStack {
 						PillView(
 							mr.state.rawValue.firstCapitalized,
 							icon: MergeStateHelper.getIconByState(mr.state),
@@ -565,15 +566,13 @@ struct MergeRequestLoader: View {
 						)
 						.labelStyle(.titleAndIcon)
 						.font(.footnote)
-
+						
 						if let webUrl = mr.webUrl,
-							let url = URL(string: webUrl)
+						   let url = URL(string: webUrl)
 						{
 							ShareButton(url)
 						}
 					}
-				case .failure:
-					EmptyView()
 				}
 			}
 		}

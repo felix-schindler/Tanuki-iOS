@@ -15,14 +15,16 @@ enum MilestoneQueryType {
 }
 
 struct MilestonesLoader: View {
+	private let id: Int
 	private let fullPath: String
 	private let queryType: MilestoneQueryType
 
 	@State
 	private var milestones: Result<[Milestone?], Error>? = nil
 
-	init(fullPath: String, queryType: MilestoneQueryType) {
+	init(fullPath: String, id: Int, queryType: MilestoneQueryType) {
 		self.fullPath = fullPath
+		self.id = id
 		self.queryType = queryType
 	}
 
@@ -176,7 +178,13 @@ struct MilestonesLoader: View {
 			await reloadMilestones()
 		}.toolbar {
 			NavigationLink(
-				destination: NewMilestoneView(id: 1, groupId: 1),
+				destination: {
+					if self.queryType == .project {
+						NewMilestoneView(id: self.id, groupId: 0)
+					} else {
+						NewMilestoneView(id: 0, groupId: self.id)
+					}
+				},
 				label: {
 					Label("Create new milestone", systemImage: "plus")
 				}
@@ -187,6 +195,6 @@ struct MilestonesLoader: View {
 
 #Preview {
 	NavigationView {
-		MilestonesLoader(fullPath: "gitlab-org", queryType: .group)
+		MilestonesLoader(fullPath: "gitlab-org", id: 278_964, queryType: .group)
 	}
 }

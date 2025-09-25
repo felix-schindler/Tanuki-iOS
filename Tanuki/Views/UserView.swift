@@ -48,10 +48,10 @@ struct UserView: View {
 
 			ScrollView(.horizontal) {
 				HStack {
-					if user.location?.isNotEmpty ?? false {
+					if let location = user.location, location.isNotEmpty {
 						if let url = URL(
 							string:
-								"https://maps.apple.com/?q=\(user.location!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")"
+								"https://maps.apple.com/?q=\(location.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")"
 						) {
 							Link(
 								destination: url,

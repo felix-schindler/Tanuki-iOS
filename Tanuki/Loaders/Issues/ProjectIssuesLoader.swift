@@ -70,15 +70,15 @@ struct ProjectIssuesLoader: View {
 					if !(project.issuesEnabled ?? false) {
 						NoContentView(
 							"Issues are not enabled for this project",
-							systemImage: "smallcircle.circle")
+							systemImage: "smallcircle.circle"
+						)
 					} else if let issues = project.issues?.nodes {
 						if issues.isEmpty {
 							NoContentView(
 								"There are no issues", systemImage: "smallcircle.circle")
 						} else {
-							ForEach(project.issues!.nodes!, id: \.self?.iid) {
-								maybeIssue in
-								if let issue = maybeIssue {
+							ForEach(issues, id: \.?.iid) { issue in
+								if let issue {
 									SmallIssueView(self.fullPath, issue)
 								}
 							}

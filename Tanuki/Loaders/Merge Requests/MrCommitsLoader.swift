@@ -69,7 +69,7 @@ struct MrCommitsLoader: View {
 				case .success(let project):
 					if let projectId = project.id.toIntId(),
 						let commits = project.mergeRequest?.commits?.nodes,
-						!commits.isEmpty
+						commits.isNotEmpty
 					{
 						ForEach(commits, id: \.?.shortId) { maybeCommit in
 							if let commit = maybeCommit {

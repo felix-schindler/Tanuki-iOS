@@ -161,17 +161,24 @@ struct GroupLoader: View {
 							content: {
 								// TODO: There seems to be no way to get the activity events of a group
 								// Text("Activity")
-								NavigationLink(
-									"Members",
-									destination: MembersLoader(
-										fullPath: self.fullPath,
-										type: .group
-									))
-								NavigationLink(
-									"Labels",
-									destination: LabelsLoader(
-										fullPath: self.fullPath, queryType: .group)
-								)
+								if let groupId = group.id?.toIntId() {
+									NavigationLink(
+										"Members",
+										destination: MembersLoader(
+											fullPath: self.fullPath,
+											id: groupId,
+											type: .group
+										)
+									)
+									NavigationLink(
+										"Labels",
+										destination: LabelsLoader(
+											fullPath: self.fullPath,
+											id: groupId,
+											queryType: .group
+										)
+									)
+								}
 								NavigationLink(
 									"Timelogs",
 									destination: TimelogsLoader(
@@ -200,13 +207,16 @@ struct GroupLoader: View {
 									"Epics",
 									destination: GroupEpicsLoader(fullPath: self.fullPath)
 								)
-								NavigationLink(
-									"Milestones",
-									destination: MilestonesLoader(
-										fullPath: self.fullPath,
-										queryType: .group
+								if let groupId = group.id?.toIntId() {
+									NavigationLink(
+										"Milestones",
+										destination: MilestonesLoader(
+											fullPath: self.fullPath,
+											id: groupId,
+											queryType: .group
+										)
 									)
-								)
+								}
 							},
 							label: {
 								if #available(iOS 17.0, *) {
@@ -243,24 +253,28 @@ struct GroupLoader: View {
 			await reloadGroup()
 		}.toolbar {
 			if let group, case .success(let group) = group {
-				if let url = URL(string: group.webUrl) {
-					ShareButton(url)
-				}
-
-				if group.userPermissions.createProjects || group.requestAccessEnabled ?? false {
-					Menu("More", systemImage: "ellipsis") {
-						if group.userPermissions.createProjects {
-							Button("Create project", systemImage: "plus") {
-								// TODO: Implement
+				HStack {
+					if let url = URL(string: group.webUrl) {
+						ShareButton(url)
+					}
+					
+					if group.userPermissions.createProjects || group.requestAccessEnabled ?? false {
+						Menu("More", systemImage: "ellipsis") {
+							if group.userPermissions.createProjects {
+								Button("Create project", systemImage: "plus") {
+									// TODO: Implement
+									Notify.status(.error, "Not yet implemented")
+								}
 							}
-						}
-
-						if group.requestAccessEnabled ?? false {
-							Button(
-								"Request access",
-								systemImage: "person.badge.plus"
-							) {
-								// TODO: Implement
+							
+							if group.requestAccessEnabled ?? false {
+								Button(
+									"Request access",
+									systemImage: "person.badge.plus"
+								) {
+									// TODO: Implement
+									Notify.status(.error, "Not yet implemented")
+								}
 							}
 						}
 					}

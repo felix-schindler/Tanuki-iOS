@@ -15,14 +15,16 @@ enum LabelQueryType {
 }
 
 struct LabelsLoader: View {
+	private let id: Int
 	private let fullPath: String
 	private let queryType: LabelQueryType
 
 	@State
 	private var labels: Result<[MyLabel?], Error>? = nil
 
-	init(fullPath: String, queryType: LabelQueryType) {
+	init(fullPath: String, id: Int, queryType: LabelQueryType) {
 		self.fullPath = fullPath
+		self.id = id
 		self.queryType = queryType
 	}
 
@@ -137,7 +139,13 @@ struct LabelsLoader: View {
 		}.toolbar {
 			if let labels, case .success = labels {
 				NavigationLink(
-					destination: NewLabelView(id: 1, groupId: 1),
+					destination: {
+						if self.queryType == .project {
+							NewLabelView(id: self.id, groupId: 0)
+						} else {
+							NewLabelView(id: 0, groupId: self.id)
+						}
+					},
 					label: {
 						Label("New label", systemImage: "plus")
 					}
@@ -149,6 +157,6 @@ struct LabelsLoader: View {
 
 #Preview {
 	NavigationView {
-		LabelsLoader(fullPath: "gitlab-org", queryType: .group)
+		LabelsLoader(fullPath: "gitlab-org", id: 278_964, queryType: .group)
 	}
 }

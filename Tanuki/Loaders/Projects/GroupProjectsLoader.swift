@@ -88,9 +88,7 @@ struct GroupProjectsLoader: View {
 			loadProjects()
 		}.refreshable {
 			await reloadProjects()
-		}
-		.navigationBarTitleDisplayMode(.large)
-		.navigationTitle("Projects")
+		}.navigationTitle("Projects")
 	}
 }
 

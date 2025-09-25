@@ -764,8 +764,8 @@ extension ProjectQuery.Data.Project.Repository.Tree.LastCommit: NewCommit {
 	}
 
 	var _lastPipelineStatus: ApolloAPI.GraphQLEnum<GitLabAPI.PipelineStatusEnum>? {
-		if !(pipelines?.nodes?.isEmpty ?? true) {
-			return pipelines?.nodes?[0]?.status
+		if let pipelines = pipelines?.nodes, pipelines.isNotEmpty {
+			return pipelines[0]?.status
 		} else {
 			return nil
 		}
@@ -778,8 +778,8 @@ extension MergeRequestCommitsQuery.Data.Project.MergeRequest.Commits.Node: NewCo
 	}
 
 	var _lastPipelineStatus: ApolloAPI.GraphQLEnum<GitLabAPI.PipelineStatusEnum>? {
-		if !(pipelines?.nodes?.isEmpty ?? true) {
-			return pipelines?.nodes?[0]?.status
+		if let pipelines = pipelines?.nodes, pipelines.isNotEmpty {
+			return pipelines[0]?.status
 		} else {
 			return nil
 		}

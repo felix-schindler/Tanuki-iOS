@@ -141,9 +141,7 @@ struct DescendantGroupsLoader: View {
 			loadGroups()
 		}.refreshable {
 			await reloadGroups()
-		}
-		.navigationTitle("Groups")
-		.navigationBarTitleDisplayMode(.large)
+		}.navigationTitle("Groups")
 	}
 }
 

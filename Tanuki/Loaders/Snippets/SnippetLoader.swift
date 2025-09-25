@@ -175,19 +175,20 @@ struct SnippetLoader: View {
 			await reloadSnippet()
 		}.toolbar {
 			if let snippet, case .success(let snippet) = snippet {
-				Menu("More", systemImage: "ellipsis") {
+				HStack {
 					if let url = URL(string: snippet.webUrl) {
 						Section {
 							ShareButton(url)
 						}
 					}
 
-					let showCloneSection =
-						(snippet.httpUrlToRepo != nil
-							|| snippet.sshUrlToRepo != nil)
+					let showCloneSection = (
+						snippet.httpUrlToRepo != nil ||
+						snippet.sshUrlToRepo != nil
+					)
 
 					if showCloneSection {
-						Section("Clone Code") {
+						Menu("More", systemImage: "ellipsis") {
 							if let httpUrl = snippet.httpUrlToRepo {
 								Button(
 									"Copy HTTP url",
@@ -196,7 +197,7 @@ struct SnippetLoader: View {
 									httpUrl.copyToClipboard()
 								}
 							}
-
+							
 							if let sshUrl = snippet.sshUrlToRepo {
 								Button(
 									"Copy SSH url",

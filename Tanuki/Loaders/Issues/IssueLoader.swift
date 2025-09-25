@@ -121,19 +121,15 @@ struct IssueLoader: View {
 										)
 									}
 
-									if (issue.blockedByIssues?.nodes?.count ?? 0)
-										> 0
-									{
-										ForEach(
-											issue.blockedByIssues!.nodes!,
-											id: \.self?.iid
-										) { maybeParent in
-											if let parent = maybeParent {
+									if let blockedBy = issue.blockedByIssues?.nodes, blockedBy.isNotEmpty {
+										ForEach(blockedBy, id: \.?.iid) { parent in
+											if let parent {
 												NavigationLink(
 													destination: {
 														IssueLoader(
 															fullPath: self.fullPath,
-															iid: parent.iid)
+															iid: parent.iid
+														)
 													},
 													label: {
 														PillView(
@@ -143,7 +139,8 @@ struct IssueLoader: View {
 															fgColor: .white,
 															cornerRadius: 5
 														)
-													})
+													}
+												)
 											}
 										}
 									}
@@ -151,9 +148,9 @@ struct IssueLoader: View {
 								.font(.footnote)
 								.monospacedDigit()
 							}
-
-							if issue.description?.isNotEmpty ?? false {
-								Markdown(issue.description!.emojized())
+							
+							if let description = issue.description?.emojized(), description.isNotEmpty {
+								Markdown(description)
 									.markdownTheme(.gitLab)
 							}
 
@@ -233,22 +230,17 @@ struct IssueLoader: View {
 								}
 							)
 
-							if (issue.labels?.nodes?.count ?? 0) > 0 {
+							if let labels = issue.labels?.nodes, labels.isNotEmpty {
 								Label(
 									title: {
 										ScrollView(.horizontal) {
 											HStack {
-												ForEach(
-													issue.labels!.nodes!, id: \.self
-												) { maybeLabel in
-													if let label = maybeLabel {
+												ForEach(labels, id: \.?.title) { label in
+													if let label {
 														PillView(
 															label.title.emojized(),
-															bgColor: Color(
-																hex: label.color),
-															fgColor: Color(
-																hex: label.textColor
-															)
+															bgColor: Color(hex: label.color),
+															fgColor: Color(hex: label.textColor)
 														)
 													}
 												}
@@ -257,7 +249,8 @@ struct IssueLoader: View {
 									},
 									icon: {
 										Image(systemName: "tag")
-									})
+									}
+								)
 							}
 
 							if let milestone = issue.milestone {
@@ -355,26 +348,23 @@ struct IssueLoader: View {
 		}.refreshable {
 			await reloadIssue()
 		}.toolbar {
-			if let project {
-				switch project {
-				case .success(let project):
-					if let issue = project.issue {
-						PillView(
-							issue.state.rawValue.firstCapitalized,
-							icon: IssueStateHelper.getIconByState(issue.state),
-							bgColor: IssueStateHelper.getColorByState(issue.state),
-							fgColor: .white,
-							cornerRadius: 5
-						)
-						.labelStyle(.titleAndIcon)
-						.font(.footnote)
+			if let project, case .success(let project) = project,
+			   let issue = project.issue
+			{
+				HStack {
+					PillView(
+						issue.state.rawValue.firstCapitalized,
+						icon: IssueStateHelper.getIconByState(issue.state),
+						bgColor: IssueStateHelper.getColorByState(issue.state),
+						fgColor: .white,
+						cornerRadius: 5
+					)
+					.labelStyle(.titleAndIcon)
+					.font(.footnote)
 
-						if let url = URL(string: issue.webUrl) {
-							ShareButton(url)
-						}
+					if let url = URL(string: issue.webUrl) {
+						ShareButton(url)
 					}
-				case .failure:
-					EmptyView()
 				}
 			}
 		}

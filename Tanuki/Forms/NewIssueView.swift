@@ -117,7 +117,7 @@ struct NewIssueView: View {
 			body["description"] = .string(description)
 		}
 
-		if !selectedAssignees.isEmpty {
+		if selectedAssignees.isNotEmpty {
 			let ids =
 				selectedAssignees.map { id in
 					return id.toIntId()
@@ -140,7 +140,7 @@ struct NewIssueView: View {
 			body["due_date"] = .string(inputFormatter.string(from: dueDate))
 		}
 
-		if !selectedLabels.isEmpty {
+		if selectedLabels.isNotEmpty {
 			body["labels"] = .array(Array(selectedLabels))
 		}
 
