@@ -101,7 +101,8 @@ struct ProjectReleasesLoader: View {
 																"text.line.first.and.arrowtriangle.forward"
 														)
 														.textSelection(.enabled)
-														.font(.system(.footnote, design: .monospaced))
+														.font(
+															.system(.footnote, design: .monospaced))
 													}
 												}.font(.footnote)
 											}

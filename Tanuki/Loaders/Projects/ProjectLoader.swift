@@ -13,10 +13,10 @@ import SwiftUI
 
 enum NavDest {
 	case issue,
-		 milestone,
-		 release,
-		 member,
-		 label
+		milestone,
+		release,
+		member,
+		label
 }
 
 struct ProjectLoader: View {
@@ -28,10 +28,10 @@ struct ProjectLoader: View {
 	/// Selected special file (README, LICENSE, ...)
 	@State
 	private var selectedFile = 0
-	
+
 	@State
 	private var navigationActive = false
-	
+
 	@State
 	private var navigationDestination: NavDest? = nil
 
@@ -355,7 +355,7 @@ struct ProjectLoader: View {
 								navigationActive = true
 								navigationDestination = .milestone
 							}
-							
+
 							Button("Create Release", systemImage: "flag") {
 								navigationActive = true
 								navigationDestination = .release
@@ -375,27 +375,32 @@ struct ProjectLoader: View {
 				}
 			}
 		}.background {
-			if let project, case .success(let project) = project, let projectId = project.id.toIntId() {
-				NavigationLink(isActive: $navigationActive, destination: {
-					if let navigationDestination {
-						switch navigationDestination {
-						case .issue:
-							NewIssueView(id: projectId, fullPath: self.fullPath)
-						case .milestone:
-							NewMilestoneView(id: projectId, groupId: 0)
-						case .release:
-							NewReleaseView(id: projectId, fullPath: self.fullPath)
-						case .member:
-							NewMemberView(id: projectId, groupId: 0)
-						case .label:
-							NewLabelView(id: projectId, groupId: 0)
+			if let project, case .success(let project) = project,
+				let projectId = project.id.toIntId()
+			{
+				NavigationLink(
+					isActive: $navigationActive,
+					destination: {
+						if let navigationDestination {
+							switch navigationDestination {
+							case .issue:
+								NewIssueView(id: projectId, fullPath: self.fullPath)
+							case .milestone:
+								NewMilestoneView(id: projectId, groupId: 0)
+							case .release:
+								NewReleaseView(id: projectId, fullPath: self.fullPath)
+							case .member:
+								NewMemberView(id: projectId, groupId: 0)
+							case .label:
+								NewLabelView(id: projectId, groupId: 0)
+							}
+						} else {
+							EmptyView()
 						}
-					} else {
+					},
+					label: {
 						EmptyView()
-					}
-				}, label: {
-					EmptyView()
-				})
+					})
 			}
 		}
 		.navigationTitle(self.fullPath)
