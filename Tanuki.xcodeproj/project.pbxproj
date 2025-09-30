@@ -59,7 +59,7 @@
 		DC21AA772B903ECA00976E64 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC21AA762B903ECA00976E64 /* UserView.swift */; };
 		DC21AA7D2B906F8000976E64 /* User.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC21AA7C2B906F8000976E64 /* User.graphql */; };
 		DC21AA7F2B906FF400976E64 /* UserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC21AA7E2B906FF400976E64 /* UserLoader.swift */; };
-		DC2511E22E7F4C7E0021371C /* Tanuki Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = DC2511D82E7F4C7D0021371C /* Tanuki Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DC2511E22E7F4C7E0021371C /* Tanuki Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = DC2511D82E7F4C7D0021371C /* Tanuki Watch App.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		DC2704F92B8BC0F9003DAA84 /* TanukiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2704F82B8BC0F9003DAA84 /* TanukiApp.swift */; };
 		DC2704FD2B8BC0FB003DAA84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC2704FC2B8BC0FB003DAA84 /* Assets.xcassets */; };
 		DC2705012B8BC0FB003DAA84 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC2705002B8BC0FB003DAA84 /* Preview Assets.xcassets */; };
@@ -1062,6 +1062,7 @@
 /* Begin PBXTargetDependency section */
 		DC2511E12E7F4C7E0021371C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = DC2511D72E7F4C7D0021371C /* Tanuki Watch App */;
 			targetProxy = DC2511E02E7F4C7E0021371C /* PBXContainerItemProxy */;
 		};
@@ -1282,8 +1283,7 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -1298,7 +1298,7 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 			};
 			name = Debug;
@@ -1331,8 +1331,7 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -1346,7 +1345,7 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 			};
 			name = Release;
