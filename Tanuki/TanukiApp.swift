@@ -23,35 +23,27 @@ struct TanukiApp: App {
 	}
 
 	public var main: some View {
-		#if targetEnvironment(macCatalyst)
-			NavigationSplitView {
+		TabView {
+			NavigationView {
 				HomeView()
-			} detail: {
-				NoContentView("Welcome to Tanuki", systemImage: "house")
-			}
-		#else
-			TabView {
-				NavigationView {
-					HomeView()
-				}.tabItem {
-					Label("Home", systemImage: "house")
-				}.tag(0)
-				NavigationView {
-					EventsLoader()
-				}.tabItem {
-					Label("Activity", systemImage: "bell")
-				}.tag(1)
-				NavigationView {
-					ExploreView()
-				}.tabItem {
-					Label("Explore", systemImage: "sparkles")
-				}.tag(2)
-				NavigationView {
-					CurrentUserLoader()
-				}.tabItem {
-					Label("Profile", systemImage: "person")
-				}.tag(3)
-			}
-		#endif
+			}.tabItem {
+				Label("Home", systemImage: "house")
+			}.tag(0)
+			NavigationView {
+				EventsLoader()
+			}.tabItem {
+				Label("Activity", systemImage: "bell")
+			}.tag(1)
+			NavigationView {
+				ExploreView()
+			}.tabItem {
+				Label("Explore", systemImage: "sparkles")
+			}.tag(2)
+			NavigationView {
+				CurrentUserLoader()
+			}.tabItem {
+				Label("Profile", systemImage: "person")
+			}.tag(3)
+		}
 	}
 }
