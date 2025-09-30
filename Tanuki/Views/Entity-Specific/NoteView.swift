@@ -97,7 +97,8 @@ struct NoteView: View {
 					Markdown(
 						note.body.emojized(),
 						baseURL: API.url,
-						imageBaseURL: URL(string: "\(API.url.absoluteString)/-/project/\(self.projectId)")
+						imageBaseURL: URL(
+							string: "\(API.url.absoluteString)/-/project/\(self.projectId)")
 					).markdownTheme(.gitLab)
 				}
 			}

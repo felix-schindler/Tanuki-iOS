@@ -125,9 +125,9 @@ struct EpicLoader: View {
 									}
 								}
 							}
-							
+
 							if let blockedBy = epic.blockedByEpics?.nodes,
-							   blockedBy.isNotEmpty
+								blockedBy.isNotEmpty
 							{
 								ScrollView(.horizontal) {
 									HStack(spacing: 5) {
@@ -153,7 +153,7 @@ struct EpicLoader: View {
 									}
 								}
 							}
-							
+
 							if let description = epic.description?.emojized(),
 								description.isNotEmpty
 							{
@@ -234,12 +234,14 @@ struct EpicLoader: View {
 									content: {
 										ForEach(ancestors, id: \.?.iid) { ancestor in
 											if let ancestor {
-												NavigationLink("&\(ancestor.iid)", destination: {
-													EpicLoader(
-														fullPath: self.fullPath,
-														iid: ancestor.iid
-													)
-												})
+												NavigationLink(
+													"&\(ancestor.iid)",
+													destination: {
+														EpicLoader(
+															fullPath: self.fullPath,
+															iid: ancestor.iid
+														)
+													})
 											}
 										}
 									},
@@ -257,12 +259,14 @@ struct EpicLoader: View {
 									content: {
 										ForEach(children, id: \.?.iid) { child in
 											if let child {
-												NavigationLink("&\(child.iid)", destination: {
-													EpicLoader(
-														fullPath: self.fullPath,
-														iid: child.iid
-													)
-												})
+												NavigationLink(
+													"&\(child.iid)",
+													destination: {
+														EpicLoader(
+															fullPath: self.fullPath,
+															iid: child.iid
+														)
+													})
 											}
 										}
 									},
@@ -346,8 +350,8 @@ struct EpicLoader: View {
 			await reloadEpic()
 		}.toolbar {
 			if let group, case .success(let group) = group,
-			   let webUrl = group.epic?.webUrl,
-			   let url = URL(string: webUrl)
+				let webUrl = group.epic?.webUrl,
+				let url = URL(string: webUrl)
 			{
 				ShareButton(url)
 			}

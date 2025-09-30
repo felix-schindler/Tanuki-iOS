@@ -74,7 +74,7 @@ struct UserLoader: View {
 			await reloadUser()
 		}.toolbar {
 			if let user, case .success(let user) = user,
-			   let url = URL(string: user.webUrl)
+				let url = URL(string: user.webUrl)
 			{
 				ShareButton(url)
 			}

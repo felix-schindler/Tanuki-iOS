@@ -121,7 +121,9 @@ struct IssueLoader: View {
 										)
 									}
 
-									if let blockedBy = issue.blockedByIssues?.nodes, blockedBy.isNotEmpty {
+									if let blockedBy = issue.blockedByIssues?.nodes,
+										blockedBy.isNotEmpty
+									{
 										ForEach(blockedBy, id: \.?.iid) { parent in
 											if let parent {
 												NavigationLink(
@@ -148,8 +150,10 @@ struct IssueLoader: View {
 								.font(.footnote)
 								.monospacedDigit()
 							}
-							
-							if let description = issue.description?.emojized(), description.isNotEmpty {
+
+							if let description = issue.description?.emojized(),
+								description.isNotEmpty
+							{
 								Markdown(description)
 									.markdownTheme(.gitLab)
 							}
@@ -350,7 +354,7 @@ struct IssueLoader: View {
 			await reloadIssue()
 		}.toolbar {
 			if let project, case .success(let project) = project,
-			   let issue = project.issue
+				let issue = project.issue
 			{
 				HStack {
 					Button(

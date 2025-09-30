@@ -182,10 +182,8 @@ struct SnippetLoader: View {
 						}
 					}
 
-					let showCloneSection = (
-						snippet.httpUrlToRepo != nil ||
-						snippet.sshUrlToRepo != nil
-					)
+					let showCloneSection =
+						(snippet.httpUrlToRepo != nil || snippet.sshUrlToRepo != nil)
 
 					if showCloneSection {
 						Menu("More", systemImage: "ellipsis") {
@@ -197,7 +195,7 @@ struct SnippetLoader: View {
 									httpUrl.copyToClipboard()
 								}
 							}
-							
+
 							if let sshUrl = snippet.sshUrlToRepo {
 								Button(
 									"Copy SSH url",

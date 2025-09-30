@@ -257,7 +257,7 @@ struct GroupLoader: View {
 					if let url = URL(string: group.webUrl) {
 						ShareButton(url)
 					}
-					
+
 					if group.userPermissions.createProjects || group.requestAccessEnabled ?? false {
 						Menu("More", systemImage: "ellipsis") {
 							if group.userPermissions.createProjects {
@@ -266,7 +266,7 @@ struct GroupLoader: View {
 									Notify.status(.error, "Not yet implemented")
 								}
 							}
-							
+
 							if group.requestAccessEnabled ?? false {
 								Button(
 									"Request access",

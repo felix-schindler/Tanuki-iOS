@@ -105,9 +105,9 @@ struct MergeRequestLoader: View {
 											AuthorView(author)
 										}
 									}
-									
+
 									if let sourceProject = mr.sourceProject,
-									   sourceProject.fullPath != self.fullPath
+										sourceProject.fullPath != self.fullPath
 									{
 										NavigationLink(
 											destination: ProjectLoader(
@@ -147,9 +147,9 @@ struct MergeRequestLoader: View {
 									.textSelection(.enabled)
 								}
 							}.font(.footnote)
-							
+
 							if let description = mr.description?.emojized(),
-							   description.isNotEmpty
+								description.isNotEmpty
 							{
 								Markdown(description)
 									.markdownTheme(.gitLab)
@@ -278,7 +278,7 @@ struct MergeRequestLoader: View {
 										})
 								}
 							)
-							
+
 							if let labels = mr.labels?.nodes, labels.isNotEmpty {
 								Label(
 									title: {
@@ -564,9 +564,9 @@ struct MergeRequestLoader: View {
 						.buttonBorderShape(.roundedRectangle)
 						.buttonStyle(.borderedProminent)
 						.controlSize(.mini)
-						
+
 						if let webUrl = mr.webUrl,
-						   let url = URL(string: webUrl)
+							let url = URL(string: webUrl)
 						{
 							ShareButton(url)
 						}

@@ -314,7 +314,7 @@ struct ProjectLoader: View {
 								ShareButton(url)
 							}
 						}
-						
+
 						if project.userPermissions.requestAccess {
 							Section {
 								AsyncButton(
