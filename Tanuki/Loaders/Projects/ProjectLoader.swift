@@ -338,6 +338,9 @@ struct ProjectLoader: View {
 										systemImage: "doc.on.doc"
 									) {
 										httpUrl.copyToClipboard()
+										Notify.status(
+											.success, "Copied to clipboard",
+											systemImage: "checkmark")
 									}
 								}
 
@@ -347,6 +350,9 @@ struct ProjectLoader: View {
 										systemImage: "doc.on.doc"
 									) {
 										sshUrl.copyToClipboard()
+										Notify.status(
+											.success, "Copied to clipboard",
+											systemImage: "checkmark")
 									}
 								}
 							}
