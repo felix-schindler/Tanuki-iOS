@@ -62,12 +62,7 @@ struct GroupEpicsLoader: View {
 				switch epics {
 				case .success(let epics):
 					if epics.isEmpty {
-						if #available(iOS 17.0, *) {
-							NoContentView(
-								"There are no epics", systemImage: "calendar.badge.checkmark")
-						} else {
-							NoContentView("There are no epics", systemImage: "calendar")
-						}
+						NoContentView("There are no epics", systemImage: "calendar")
 					} else {
 						ForEach(epics, id: \.?.reference) { maybeEpic in
 							if let epic = maybeEpic {
