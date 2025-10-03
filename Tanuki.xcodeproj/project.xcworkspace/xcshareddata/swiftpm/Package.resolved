@@ -1,13 +1,13 @@
 {
-  "originHash" : "b680c12bdebc6a7d64c206c93cf8dbbf192f3aeca823688130f43c36988d8af6",
+  "originHash" : "c9047faecc4796f65ebc40e394afcd0b23236112ffae34182175f75233fe8dc1",
   "pins" : [
     {
       "identity" : "apollo-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apollographql/apollo-ios",
       "state" : {
-        "revision" : "e74f61dabd6518c01473163c3fa36cb5d1c08275",
-        "version" : "2.0.0-beta-3"
+        "revision" : "562ee4185a8ecc7fbdef285e868c56e2fa1aa9db",
+        "version" : "2.0.0"
       }
     },
     {
@@ -38,9 +38,9 @@
       }
     },
     {
-      "identity" : "nvmcolor_swift",
+      "identity" : "nvm-color",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/NVMNovem/NVMColor_swift",
+      "location" : "https://github.com/NVMNovem/nvm-color",
       "state" : {
         "revision" : "80cf6140a29a88197f9bee51918843d706dc6034",
         "version" : "1.2.5"

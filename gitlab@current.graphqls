@@ -1464,6 +1464,11 @@ type AddOnUser implements Todoable & User {
     """Search query."""
     search: String
 
+    """
+    Filters by projects that are not archived and not scheduled for deletion.
+    """
+    active: Boolean
+
     """List starred projects by sort order."""
     sort: ProjectSort = NAME_ASC
 
@@ -2370,7 +2375,10 @@ type AiCatalogAgent implements AiCatalogItem {
   itemType: AiCatalogItemType!
 
   """Latest version of the item."""
-  latestVersion: AiCatalogItemVersion
+  latestVersion(
+    """Return the latest released version."""
+    released: Boolean
+  ): AiCatalogItemVersion
 
   """Name of the item."""
   name: String!
@@ -2653,7 +2661,10 @@ type AiCatalogFlow implements AiCatalogItem {
   itemType: AiCatalogItemType!
 
   """Latest version of the item."""
-  latestVersion: AiCatalogItemVersion
+  latestVersion(
+    """Return the latest released version."""
+    released: Boolean
+  ): AiCatalogItemVersion
 
   """Name of the item."""
   name: String!
@@ -2915,7 +2926,10 @@ interface AiCatalogItem {
   itemType: AiCatalogItemType!
 
   """Latest version of the item."""
-  latestVersion: AiCatalogItemVersion
+  latestVersion(
+    """Return the latest released version."""
+    released: Boolean
+  ): AiCatalogItemVersion
 
   """Name of the item."""
   name: String!
@@ -4358,9 +4372,6 @@ type AiUsageEvent {
   """Type of the event."""
   event: AiUsageEventType!
 
-  """ID of the usage event."""
-  id: ID!
-
   """When the event happened."""
   timestamp: Time!
 
@@ -4420,6 +4431,12 @@ enum AiUsageEventType {
 
   """Agent platform session was finished."""
   AGENT_PLATFORM_SESSION_FINISHED
+
+  """Agent platform session was dropped."""
+  AGENT_PLATFORM_SESSION_DROPPED
+
+  """Agent platform session was stopped."""
+  AGENT_PLATFORM_SESSION_STOPPED
 
   """Duo Code Review encountered an error."""
   ENCOUNTER_DUO_CODE_REVIEW_ERROR_DURING_REVIEW
@@ -7608,6 +7625,11 @@ type AutocompletedUser implements Todoable & User {
     """Search query."""
     search: String
 
+    """
+    Filters by projects that are not archived and not scheduled for deletion.
+    """
+    active: Boolean
+
     """List starred projects by sort order."""
     sort: ProjectSort = NAME_ASC
 
@@ -9901,7 +9923,7 @@ type CiCatalogResource {
   id: ID!
 
   """
-  Number of projects that used a component from this catalog resource in a pipeline, by using `include:component`, in the last 30 days. Introduced in GitLab 17.0: **Status**: Experiment.
+  Number of projects that used a component fromthis catalog resource in a pipeline, by using `include:component` in the last 30 days. Introduced in GitLab 17.0: **Status**: Experiment.
   """
   last30DayUsageCount: Int! @deprecated(reason: "**Status**: Experiment. Introduced in GitLab 17.0.")
 
@@ -14561,9 +14583,6 @@ type CodeQualityReportSummary {
 type CodeSuggestionEvent {
   """Type of the event."""
   event: AiUsageEventType!
-
-  """ID of the usage event."""
-  id: ID!
 
   """Programming language in the context of the suggestion."""
   language: String
@@ -19299,6 +19318,11 @@ type CurrentUser implements Todoable & User {
   starredProjects(
     """Search query."""
     search: String
+
+    """
+    Filters by projects that are not archived and not scheduled for deletion.
+    """
+    active: Boolean
 
     """List starred projects by sort order."""
     sort: ProjectSort = NAME_ASC
@@ -28799,6 +28823,65 @@ type GitlabSubscriptionHistoryEdge {
   node: GitlabSubscriptionHistory
 }
 
+"""Describes the usage of consumables under the subscription"""
+type GitlabSubscriptionUsage {
+  """Consumption usage for users under the subscription."""
+  usersUsage: GitlabSubscriptionUsageUsersUsage
+}
+
+"""Describes the user with their usage data"""
+type GitlabSubscriptionUsageUsers {
+  """URL of the user's avatar."""
+  avatarUrl: String
+
+  """Global ID of the user."""
+  id: UserID!
+
+  """Human-readable name of the user."""
+  name: String!
+}
+
+"""The connection type for GitlabSubscriptionUsageUsers."""
+type GitlabSubscriptionUsageUsersConnection {
+  """A list of edges."""
+  edges: [GitlabSubscriptionUsageUsersEdge]
+
+  """A list of nodes."""
+  nodes: [GitlabSubscriptionUsageUsers]
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+}
+
+"""An edge in a connection."""
+type GitlabSubscriptionUsageUsersEdge {
+  """A cursor for use in pagination."""
+  cursor: String!
+
+  """The item at the end of the edge."""
+  node: GitlabSubscriptionUsageUsers
+}
+
+"""Describes the usage of consumables by users under the subscription"""
+type GitlabSubscriptionUsageUsersUsage {
+  """List of users with their usage data."""
+  users(
+    """Returns the elements in the list that come after the specified cursor."""
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """Returns the first _n_ elements from the list."""
+    first: Int
+
+    """Returns the last _n_ elements from the list."""
+    last: Int
+  ): GitlabSubscriptionUsageUsersConnection
+}
+
 """
 A `GitlabSubscriptionsAddOnPurchaseID` is a global ID. It is encoded as a string.
 
@@ -31173,6 +31256,9 @@ type Group implements GroupInterface & Todoable {
 
   """Name of the group."""
   name: String
+
+  """Namespace settings for the namespace."""
+  namespaceSettings: NamespaceSettings
 
   """
   Path for editing group at the organization level. Introduced in GitLab 17.1: **Status**: Experiment.
@@ -33704,6 +33790,9 @@ input GroupUpdateInput {
 
   """Shared runners availability for the namespace and its descendants."""
   sharedRunnersSetting: SharedRunnersSetting
+
+  """OAuth provider required for step-up authentication."""
+  stepUpAuthRequiredOauthProvider: String
 
   """Visibility of the namespace."""
   visibility: VisibilityLevelsEnum
@@ -39754,6 +39843,11 @@ type MemberRoleUpdatePayload {
 """Access level of a group or project member"""
 enum MemberRolesAccessLevel {
   """
+  The Minimal Access role is for users who need the least amount of access into groups and projects. You can assign this role as a default, before giving a user another role with more permissions.
+  """
+  MINIMAL_ACCESS
+
+  """
   The Guest role is for users who need visibility into a project or group but should not have the ability to make changes, such as external stakeholders.
   """
   GUEST
@@ -39777,11 +39871,6 @@ enum MemberRolesAccessLevel {
   The Maintainer role is primarily used for managing code reviews, approvals, and administrative settings for projects. This role can also manage project memberships.
   """
   MAINTAINER
-
-  """
-  The Minimal Access role is for users who need the least amount of access into groups and projects. You can assign this role as a default, before giving a user another role with more permissions.
-  """
-  MINIMAL_ACCESS
 }
 
 """Values for ordering member roles by a specific field"""
@@ -40402,6 +40491,11 @@ type MergeRequest implements CurrentUserTodos & NoteableInterface & Todoable {
   Approval settings that are overridden by the policies for the merge request.
   """
   policiesOverridingApprovalSettings: [PolicyApprovalSettingsOverride!]
+
+  """
+  List of bypass settings for security policies. Introduced in GitLab 18.5: **Status**: Experiment.
+  """
+  policyBypassStatuses: [PolicyBypassStatus!] @deprecated(reason: "**Status**: Experiment. Introduced in GitLab 18.5.")
 
   """Policy violations reported on the merge request. """
   policyViolations: PolicyViolationDetails
@@ -41377,6 +41471,11 @@ type MergeRequestAssignee implements Todoable & User {
     """Search query."""
     search: String
 
+    """
+    Filters by projects that are not archived and not scheduled for deletion.
+    """
+    active: Boolean
+
     """List starred projects by sort order."""
     sort: ProjectSort = NAME_ASC
 
@@ -42317,6 +42416,11 @@ type MergeRequestAuthor implements Todoable & User {
   starredProjects(
     """Search query."""
     search: String
+
+    """
+    Filters by projects that are not archived and not scheduled for deletion.
+    """
+    active: Boolean
 
     """List starred projects by sort order."""
     sort: ProjectSort = NAME_ASC
@@ -43525,6 +43629,11 @@ type MergeRequestParticipant implements Todoable & User {
     """Search query."""
     search: String
 
+    """
+    Filters by projects that are not archived and not scheduled for deletion.
+    """
+    active: Boolean
+
     """List starred projects by sort order."""
     sort: ProjectSort = NAME_ASC
 
@@ -44529,6 +44638,11 @@ type MergeRequestReviewer implements Todoable & User {
   starredProjects(
     """Search query."""
     search: String
+
+    """
+    Filters by projects that are not archived and not scheduled for deletion.
+    """
+    active: Boolean
 
     """List starred projects by sort order."""
     sort: ProjectSort = NAME_ASC
@@ -48357,6 +48471,10 @@ type Mutation {
     """Parameters for SecurityCategoryCreate"""
     input: SecurityCategoryCreateInput!
   ): SecurityCategoryCreatePayload
+  securityCategoryDestroy(
+    """Parameters for SecurityCategoryDestroy"""
+    input: SecurityCategoryDestroyInput!
+  ): SecurityCategoryDestroyPayload
   securityCategoryUpdate(
     """Parameters for SecurityCategoryUpdate"""
     input: SecurityCategoryUpdateInput!
@@ -48863,6 +48981,14 @@ type Mutation {
     """Parameters for VulnerabilityRevertToDetected"""
     input: VulnerabilityRevertToDetectedInput!
   ): VulnerabilityRevertToDetectedPayload
+
+  """
+  Unlink a merge request from a vulnerability Introduced in GitLab 18.5: **Status**: Experiment.
+  """
+  vulnerabilityUnlinkMergeRequest(
+    """Parameters for VulnerabilityUnlinkMergeRequest"""
+    input: VulnerabilityUnlinkMergeRequestInput!
+  ): VulnerabilityUnlinkMergeRequestPayload @deprecated(reason: "**Status**: Experiment. Introduced in GitLab 18.5.")
   wikiPageSubscribe(
     """Parameters for WikiPageSubscribe"""
     input: WikiPageSubscribeInput!
@@ -49308,6 +49434,9 @@ type Namespace implements Todoable {
 
   """Name of the namespace."""
   name: String!
+
+  """Namespace settings for the namespace."""
+  namespaceSettings: NamespaceSettings
 
   """Package settings for the namespace."""
   packageSettings: PackageSettings
@@ -50583,6 +50712,12 @@ type NamespaceProjectStatistics {
 
   """Wiki size of the project in bytes."""
   wikiSize: Float
+}
+
+"""Settings for the namespace"""
+type NamespaceSettings {
+  """OAuth provider required for step-up authentication."""
+  stepUpAuthRequiredOauthProvider: String
 }
 
 """Autogenerated input type of NamespaceSettingsUpdate"""
@@ -55882,6 +56017,21 @@ type PolicyApproversType {
 Represents specific policy types. Its fields depend on the policy type.
 """
 union PolicyAttributesUnion = ApprovalPolicyAttributesType | PipelineExecutionPolicyAttributesType | PipelineExecutionScheduledPolicyAttributesType | ScanExecutionPolicyAttributesType | VulnerabilityManagementPolicyAttributesType
+
+"""Represents bypass status of a merge request for a security policy"""
+type PolicyBypassStatus {
+  """Indicates if bypass is allowed for the policy."""
+  allowBypass: Boolean!
+
+  """Indicates if the policy has been bypassed."""
+  bypassed: Boolean!
+
+  """ID of the security policy."""
+  id: ID!
+
+  """Name of the security policy."""
+  name: String!
+}
 
 """
 Represents the source and target pipelines used for comparison in the policy evaluation.
@@ -64788,6 +64938,9 @@ type Query {
 
   """List organizations. Introduced in GitLab 16.8: **Status**: Experiment."""
   organizations(
+    """Search query, which can be for the organization name or a path."""
+    search: String
+
     """Returns the elements in the list that come after the specified cursor."""
     after: String
 
@@ -65310,6 +65463,16 @@ type Query {
     """Returns the last _n_ elements from the list."""
     last: Int
   ): SubscriptionFutureEntryConnection
+
+  """
+  Usage data of consumables under the subscription. Introduced in GitLab 18.5: **Status**: Experiment.
+  """
+  subscriptionUsage(
+    """
+    Path of the top-level namespace. Leave it blank if querying the instance subscription.
+    """
+    namespacePath: ID
+  ): GitlabSubscriptionUsage @deprecated(reason: "**Status**: Experiment. Introduced in GitLab 18.5.")
 
   """
   Find a synthetic note Introduced in GitLab 15.9: **Status**: Experiment.
@@ -66751,6 +66914,11 @@ type RepositoryBlob {
     Range starting from the line. Cannot be less than 1 or greater than `to_line`.
     """
     fromLine: Int = 1
+
+    """
+    Enable to ignore revisions in the `.git-ignore-revs-file` when fetching the blame.
+    """
+    ignoreRevs: Boolean = false
 
     """
     Range ending on the line. Cannot be smaller than `from_line` or greater than `from_line` + 100.
@@ -68887,6 +69055,30 @@ type SecurityCategoryCreatePayload {
   securityCategory: SecurityCategory
 }
 
+"""Autogenerated input type of SecurityCategoryDestroy"""
+input SecurityCategoryDestroyInput {
+  """A unique identifier for the client performing the mutation."""
+  clientMutationId: String
+
+  """Global ID of the security category to destroy."""
+  id: SecurityCategoryID!
+}
+
+"""Autogenerated return type of SecurityCategoryDestroy."""
+type SecurityCategoryDestroyPayload {
+  """A unique identifier for the client performing the mutation."""
+  clientMutationId: String
+
+  """Global IDs of the deleted security attributes."""
+  deletedAttributesGid: [SecurityAttributeID!]
+
+  """Global ID of the deleted security category."""
+  deletedCategoryGid: SecurityCategoryID
+
+  """Errors encountered during the mutation."""
+  errors: [String!]!
+}
+
 """Editable state for security categories and attributes"""
 enum SecurityCategoryEditableState {
   """Locked state."""
@@ -69164,7 +69356,9 @@ type SecurityMetrics {
     """Start date for the vulnerability metrics time range."""
     startDate: ISO8601Date!
 
-    """End date for the vulnerability metrics time range."""
+    """
+    End date for the vulnerability metrics time range. The end date should be within 31 days from the start date.
+    """
     endDate: ISO8601Date!
 
     """Filter vulnerabilities by severity."""
@@ -75450,6 +75644,11 @@ interface User implements Todoable {
     """Search query."""
     search: String
 
+    """
+    Filters by projects that are not archived and not scheduled for deletion.
+    """
+    active: Boolean
+
     """List starred projects by sort order."""
     sort: ProjectSort = NAME_ASC
 
@@ -76920,6 +77119,11 @@ type UserCore implements Todoable & User {
   starredProjects(
     """Search query."""
     search: String
+
+    """
+    Filters by projects that are not archived and not scheduled for deletion.
+    """
+    active: Boolean
 
     """List starred projects by sort order."""
     sort: ProjectSort = NAME_ASC
@@ -80437,6 +80641,30 @@ type VulnerabilityStatisticType implements VulnerabilityStatisticInterface {
 
   """Date that data was last updated."""
   updatedAt: Time
+}
+
+"""Autogenerated input type of VulnerabilityUnlinkMergeRequest"""
+input VulnerabilityUnlinkMergeRequestInput {
+  """A unique identifier for the client performing the mutation."""
+  clientMutationId: String
+
+  """ID of the vulnerability."""
+  vulnerabilityId: VulnerabilityID!
+
+  """ID of the merge request."""
+  mergeRequestId: MergeRequestID!
+}
+
+"""Autogenerated return type of VulnerabilityUnlinkMergeRequest."""
+type VulnerabilityUnlinkMergeRequestPayload {
+  """A unique identifier for the client performing the mutation."""
+  clientMutationId: String
+
+  """Errors encountered during the mutation."""
+  errors: [String!]!
+
+  """Updated vulnerability."""
+  vulnerability: Vulnerability
 }
 
 """
