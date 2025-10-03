@@ -99,7 +99,7 @@ struct UserView: View {
 					}
 				}
 				.frame(maxWidth: .infinity, alignment: .leading)
-				.font(.callout)
+				.font(.footnote)
 				.padding(.horizontal, 8)
 				.padding(.vertical, 6)
 				.background(Color(.systemGray5))
@@ -132,7 +132,7 @@ struct UserView: View {
 				}
 			}
 			.frame(maxWidth: .infinity, alignment: .leading)
-			.font(.callout)
+			.font(.footnote)
 			.padding(.horizontal, 8)
 			.padding(.vertical, 6)
 			.background(.orange)

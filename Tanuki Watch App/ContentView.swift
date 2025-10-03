@@ -26,7 +26,7 @@ struct ContentView: View {
 					.foregroundStyle(.accent)
 				Text("Hello, world!")
 				Text("More coming soon...")
-					.font(.callout)
+					.font(.footnote)
 					.foregroundStyle(.secondary)
 			}.padding()
 			.tag(1)
