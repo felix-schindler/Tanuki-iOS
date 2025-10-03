@@ -112,9 +112,9 @@ struct MilestonesLoader: View {
 					if milestones.isEmpty {
 						if #available(iOS 17.0, *) {
 							NoContentView(
-								"There are no milestones", systemImage: "calendar.badge.checkmark")
+								"There are no milestones", systemImage: "diamond")
 						} else {
-							NoContentView("There are no milestones", systemImage: "calendar")
+							NoContentView("There are no milestones", systemImage: "diamond")
 						}
 					} else {
 						ForEach(milestones, id: \.?.iid) { milestone in
