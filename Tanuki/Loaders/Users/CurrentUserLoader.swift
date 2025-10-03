@@ -69,21 +69,29 @@ struct CurrentUserLoader: View {
 		}.refreshable {
 			await reloadUser()
 		}.toolbar {
-			HStack {
-				if let user, case .success(let user) = user,
-					let url = URL(string: user.webUrl)
-				{
-					ShareButton(url)
-				}
+			ToolbarItem(placement: .topBarLeading) {
+				NavigationLink(destination: SettingsView(), label: {
+					Label("Settings", systemImage: "gear")
+				})
+			}
 
-				Button(
-					"Sign out", systemImage: "rectangle.portrait.and.arrow.right",
-					role: .destructive
-				) {
-					API.host = "gitlab.com"
-					API.token = ""
-					Notify.status(.success, "Logged out")
-				}.tint(.red)
+			ToolbarItem(placement: .topBarTrailing) {
+				HStack {
+					if let user, case .success(let user) = user,
+						let url = URL(string: user.webUrl)
+					{
+						ShareButton(url)
+					}
+
+					Button(
+						"Sign out", systemImage: "rectangle.portrait.and.arrow.right",
+						role: .destructive
+					) {
+						API.host = "gitlab.com"
+						API.token = ""
+						Notify.status(.success, "Logged out")
+					}.tint(.red)
+				}
 			}
 		}
 	}

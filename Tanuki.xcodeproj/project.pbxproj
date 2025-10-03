@@ -152,6 +152,7 @@
 		DCD40E1A2BC2C6600055EE4C /* DiffLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E192BC2C6600055EE4C /* DiffLoader.swift */; };
 		DCD40E222BC2E5CC0055EE4C /* CodeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E212BC2E5CC0055EE4C /* CodeTextView.swift */; };
 		DCEB20B42BD61A9A00393A44 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEB20B32BD61A9A00393A44 /* Notify.swift */; };
+		DCEF31932E907C4C00337458 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF31922E907C4C00337458 /* SettingsView.swift */; };
 		DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2662B94C29600F4B245 /* EventsLoader.swift */; };
 		DCEFB2692B94C2C100F4B245 /* RestTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2682B94C2C100F4B245 /* RestTypes.swift */; };
 		DCEFB26B2B94C37600F4B245 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB26A2B94C37600F4B245 /* API.swift */; };
@@ -317,6 +318,7 @@
 		DCD40E192BC2C6600055EE4C /* DiffLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffLoader.swift; sourceTree = "<group>"; };
 		DCD40E212BC2E5CC0055EE4C /* CodeTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeTextView.swift; sourceTree = "<group>"; };
 		DCEB20B32BD61A9A00393A44 /* Notify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
+		DCEF31922E907C4C00337458 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DCEFB2662B94C29600F4B245 /* EventsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsLoader.swift; sourceTree = "<group>"; };
 		DCEFB2682B94C2C100F4B245 /* RestTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTypes.swift; sourceTree = "<group>"; };
 		DCEFB26A2B94C37600F4B245 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -632,6 +634,7 @@
 				DC0A6A402B8D03EC00C53D56 /* StateIcons.swift */,
 				DC0A6A382B8CE4FF00C53D56 /* PipelineStatus.swift */,
 				DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */,
+				DC21AA762B903ECA00976E64 /* UserView.swift */,
 			);
 			path = "Entity-Specific";
 			sourceTree = "<group>";
@@ -654,6 +657,7 @@
 			children = (
 				DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */,
 				DC4D10112E72E78F0001B54E /* ConfigView.swift */,
+				DCEF31922E907C4C00337458 /* SettingsView.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -666,7 +670,6 @@
 				DC4B42842BA55C03007A9DB1 /* Entity-Specific */,
 				DC13E8A72B8E073300994E8A /* HomeView.swift */,
 				DC2D65E42E7EF510007A800C /* ExploreView.swift */,
-				DC21AA762B903ECA00976E64 /* UserView.swift */,
 				DC5AD7D92E69D40B0031FC7B /* FailedView.swift */,
 			);
 			path = Views;
@@ -872,7 +875,7 @@
 			);
 			mainGroup = DC2704EC2B8BC0F9003DAA84;
 			packageReferences = (
-				DC3A24522B8C3F5800DB0E3F /* XCRemoteSwiftPackageReference "NVMColor_swift" */,
+				DC3A24522B8C3F5800DB0E3F /* XCRemoteSwiftPackageReference "nvm-color" */,
 				DC3A245A2B8C513C00DB0E3F /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				DC0A6A532B8D148000C53D56 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 				DCEFB26C2B94C3FD00F4B245 /* XCRemoteSwiftPackageReference "swift-http" */,
@@ -1398,9 +1401,9 @@
 				minimumVersion = 2.1.1;
 			};
 		};
-		DC3A24522B8C3F5800DB0E3F /* XCRemoteSwiftPackageReference "NVMColor_swift" */ = {
+		DC3A24522B8C3F5800DB0E3F /* XCRemoteSwiftPackageReference "nvm-color" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/NVMNovem/NVMColor_swift";
+			repositoryURL = "https://github.com/NVMNovem/nvm-color";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.2.5;
@@ -1426,8 +1429,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apollographql/apollo-ios";
 			requirement = {
-				kind = exactVersion;
-				version = "2.0.0-beta-3";
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
 			};
 		};
 		DC5AD7DB2E69D6E50031FC7B /* XCRemoteSwiftPackageReference "toast-swift" */ = {
@@ -1464,7 +1467,7 @@
 		};
 		DC3A24532B8C3F5800DB0E3F /* NVMColor */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DC3A24522B8C3F5800DB0E3F /* XCRemoteSwiftPackageReference "NVMColor_swift" */;
+			package = DC3A24522B8C3F5800DB0E3F /* XCRemoteSwiftPackageReference "nvm-color" */;
 			productName = NVMColor;
 		};
 		DC3A245B2B8C513C00DB0E3F /* MarkdownUI */ = {
