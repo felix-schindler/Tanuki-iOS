@@ -11,6 +11,14 @@ import GitLabAPI
 import NVMColor
 import SwiftUI
 
+// MARK: - Cache helpers
+extension URLCache {
+	static let avatarCache = URLCache(
+		memoryCapacity: 100 * 1024 * 1024,   // 100 MB in RAM
+		diskCapacity: 300 * 1024 * 1024      // 300 MB on disk
+	)
+}
+
 // MARK: - Array helpers
 extension Array {
 	var isNotEmpty: Bool {

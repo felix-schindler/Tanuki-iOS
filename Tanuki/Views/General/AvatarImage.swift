@@ -16,13 +16,19 @@ enum AvatarSize {
 }
 
 struct AvatarImage: View {
-	let url: URL
+	private let url: URL
 
-	let radius: CGFloat
-	let width: CGFloat
-	let height: CGFloat
+	private let radius: CGFloat
+	private let width: CGFloat
+	private let height: CGFloat
+	
+	private var request: URLRequest {
+		var req = URLRequest(url: self.url)
+		req.setValue("Bearer \(API.token)", forHTTPHeaderField: "Authorization")
+		return req
+	}
 
-	init(
+	public init(
 		_ url: URL, radius: CGFloat = 10, width: CGFloat = 50,
 		height: CGFloat = 50
 	) {
@@ -32,37 +38,31 @@ struct AvatarImage: View {
 		self.height = height
 	}
 
-	init(_ url: URL, size: AvatarSize) {
+	public init(_ url: URL, size: AvatarSize) {
 		self.url = url
 
 		switch size {
 		case .tiny:
-			radius = 5
-			width = 17.5
-			height = 17.5
+			self.radius = 5
+			self.width = 17.5
+			self.height = 17.5
 		case .small:
-			radius = 5
-			width = 25
-			height = 25
+			self.radius = 5
+			self.width = 25
+			self.height = 25
 		case .medium:
-			radius = 7.5
-			width = 37.5
-			height = 37.5
-		default:
-			radius = 10
-			width = 50
-			height = 50
+			self.radius = 7.5
+			self.width = 37.5
+			self.height = 37.5
+		case .big:
+			self.radius = 10
+			self.width = 50
+			self.height = 50
 		}
 	}
 
-	var request: URLRequest {
-		var req = URLRequest(url: url)
-		req.setValue("Bearer \(API.token)", forHTTPHeaderField: "Authorization")
-		return req
-	}
-
 	public var body: some View {
-		CachedAsyncImage(urlRequest: self.request) { phase in
+		CachedAsyncImage(urlRequest: self.request, urlCache: .avatarCache) { phase in
 			switch phase {
 			case .empty:
 				ProgressView()
@@ -70,9 +70,9 @@ struct AvatarImage: View {
 				image
 					.resizable()
 					.scaledToFit()
-					.cornerRadius(radius)
+					.cornerRadius(self.radius)
 			case .failure:
-				Image(systemName: "photo.trianglebadge.exclamationmark")
+				Image(systemName: "exclamationmark.triangle")
 					.resizable()
 					.scaledToFit()
 			@unknown default:
