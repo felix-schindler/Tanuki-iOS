@@ -70,9 +70,11 @@ struct CurrentUserLoader: View {
 			await reloadUser()
 		}.toolbar {
 			ToolbarItem(placement: .topBarLeading) {
-				NavigationLink(destination: SettingsView(), label: {
-					Label("Settings", systemImage: "gear")
-				})
+				NavigationLink(
+					destination: SettingsView(),
+					label: {
+						Label("Settings", systemImage: "gear")
+					})
 			}
 
 			ToolbarItem(placement: .topBarTrailing) {

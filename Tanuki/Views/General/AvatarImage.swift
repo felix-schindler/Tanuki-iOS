@@ -21,7 +21,7 @@ struct AvatarImage: View {
 	private let radius: CGFloat
 	private let width: CGFloat
 	private let height: CGFloat
-	
+
 	private var request: URLRequest {
 		var req = URLRequest(url: self.url)
 		req.setValue("Bearer \(API.token)", forHTTPHeaderField: "Authorization")
