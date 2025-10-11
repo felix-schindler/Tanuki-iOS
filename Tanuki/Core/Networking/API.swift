@@ -21,11 +21,11 @@ enum ContentType: String {
 
 class API {
 	/// GitLab host
-	@AppStorage("domain", store: UserDefaults(suiteName: "de.schindlerfelix.Tanuki"))
+	@AppStorage("domain", store: UserDefaults(suiteName: "de.schindlerfelix.GitLab"))
 	public static var host: String = "gitlab.com"
 
 	/// GitLab token
-	@AppStorage("token", store: UserDefaults(suiteName: "de.schindlerfelix.Tanuki"))
+	@AppStorage("token", store: UserDefaults(suiteName: "de.schindlerfelix.GitLab"))
 	public static var token: String = ""
 
 	/// API endpoint (including version)
