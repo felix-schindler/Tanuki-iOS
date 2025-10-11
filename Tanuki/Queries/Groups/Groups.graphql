@@ -1,0 +1,23 @@
+query Groups($topLevelOnly: Boolean, $ownedOnly: Boolean, $search: String, $parentPath: ID, $allAvailable: Boolean, $markedForDeletionOn: Date, $active: Boolean) {
+  groups(
+    topLevelOnly: $topLevelOnly
+    ownedOnly: $ownedOnly
+    search: $search
+    parentPath: $parentPath
+    allAvailable: $allAvailable
+    markedForDeletionOn: $markedForDeletionOn
+    active: $active
+  ) {
+    nodes {
+      avatarUrl
+      name
+      fullPath
+      visibility
+      groupMembersCount
+      projectsCount
+      maxAccessLevel {
+        stringValue
+      }
+    }
+  }
+}
