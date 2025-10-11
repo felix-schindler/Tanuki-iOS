@@ -89,7 +89,7 @@ struct HomeView: View {
 					})
 
 				NavigationLink(
-					destination: UserProjectsLoader(),
+					destination: ProjectsLoader(membership: true),
 					label: {
 						Label(
 							title: {

@@ -117,8 +117,9 @@ struct GroupLoader: View {
 					Section {
 						HStack {
 							NavigationLink(
-								destination: GroupProjectsLoader(
-									fullPath: self.fullPath),
+								destination: ProjectsLoader(
+									namespacePath: self.fullPath
+								),
 								label: {
 									Label(
 										title: {

@@ -366,49 +366,10 @@ struct SmallProjectStruct: SmallProject {
 	let fullPath: String
 }
 
-protocol ProjectMembership {
-	var _project: SmallProject? { get }
+extension ProjectsQuery.Data.Projects.Node: SmallProject {
 }
 
-extension CurrentUserMembershipProjectsQuery.Data.CurrentUser.ProjectMemberships
-	.Node: ProjectMembership
-{
-	var _project: SmallProject? {
-		guard let projectData = project else { return nil }
-		return SmallProjectStruct(
-			avatarUrl: projectData.avatarUrl,
-			nameWithNamespace: projectData.nameWithNamespace,
-			visibility: projectData.visibility,
-			fullPath: projectData.fullPath
-		)
-	}
-}
-
-extension UserMembershipProjectsQuery.Data.User.ProjectMemberships.Node:
-	ProjectMembership
-{
-	var _project: SmallProject? {
-		guard let projectData = project else { return nil }
-		return SmallProjectStruct(
-			avatarUrl: projectData.avatarUrl,
-			nameWithNamespace: projectData.nameWithNamespace,
-			visibility: projectData.visibility,
-			fullPath: projectData.fullPath
-		)
-	}
-}
-
-extension UserMembershipProjectsQuery.Data.User.ProjectMemberships.Node
-	.Project: SmallProject
-{
-}
-
-extension GroupProjectsQuery.Data.Group.Projects.Node: SmallProject {
-}
-
-extension CurrentUserStarredProjectsQuery.Data.CurrentUser.StarredProjects.Node:
-	SmallProject
-{
+extension CurrentUserStarredProjectsQuery.Data.CurrentUser.StarredProjects.Node: SmallProject {
 }
 
 extension UserStarredProjectsQuery.Data.User.StarredProjects.Node: SmallProject {

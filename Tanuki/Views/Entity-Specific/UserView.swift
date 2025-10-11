@@ -227,7 +227,7 @@ struct UserView: View {
 					})
 			})
 		NavigationLink(
-			destination: UserProjectsLoader(username: user.username),
+			destination: ProjectsLoader(namespacePath: user.username),
 			label: {
 				Label(
 					title: {

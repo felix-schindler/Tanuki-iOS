@@ -10,13 +10,18 @@ import SwiftUI
 struct ExploreView: View {
 	var body: some View {
 		List {
-			Label(
-				title: {
-					Text("Projects")
-				},
-				icon: {
-					Image(systemName: "app.gift.fill")
-						.foregroundStyle(.gray)
+			NavigationLink(
+				destination: ProjectsLoader(),
+				label: {
+					Label(
+						title: {
+							Text("Projects")
+						},
+						icon: {
+							Image(systemName: "app.gift.fill")
+								.foregroundStyle(.gray)
+						}
+					)
 				})
 			Label(
 				title: {
