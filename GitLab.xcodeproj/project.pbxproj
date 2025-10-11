@@ -24,7 +24,6 @@
 		DC115A5F2A3903D00034CC00 /* SmallMergeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC115A5E2A3903D00034CC00 /* SmallMergeView.swift */; };
 		DC146E5D2B8530D200217A18 /* SwiftHttp in Frameworks */ = {isa = PBXBuildFile; productRef = DC146E5C2B8530D200217A18 /* SwiftHttp */; };
 		DC1F1BDF29CCC93A00AF7573 /* NewLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1F1BDE29CCC93A00AF7573 /* NewLabelView.swift */; };
-		DC1F1BE229CCCFA600AF7573 /* NVMColor in Frameworks */ = {isa = PBXBuildFile; productRef = DC1F1BE129CCCFA600AF7573 /* NVMColor */; };
 		DC2A243A29C8FC0600A9FED7 /* MergeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2A243929C8FC0600A9FED7 /* MergeFilter.swift */; };
 		DC2B2FFF29C0679B009ADC0D /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B2FFE29C0679B009ADC0D /* ProjectView.swift */; };
 		DC2B300129C09625009ADC0D /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B300029C09625009ADC0D /* InfoView.swift */; };
@@ -66,6 +65,8 @@
 		DC92BD2F29D09B35008E8581 /* MilestoneLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC92BD2E29D09B35008E8581 /* MilestoneLoader.swift */; };
 		DC92BD3529D0C68C008E8581 /* MilestoneFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC92BD3429D0C68C008E8581 /* MilestoneFilter.swift */; };
 		DCA61D012A0524C8005FCAA9 /* NewMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA61D002A0524C8005FCAA9 /* NewMember.swift */; };
+		DCAA7D7A2E9AF30C0078DB8E /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = DCAA7D792E9AF30C0078DB8E /* MarkdownUI */; };
+		DCAA7D7D2E9AF35F0078DB8E /* NVMColor in Frameworks */ = {isa = PBXBuildFile; productRef = DCAA7D7C2E9AF35F0078DB8E /* NVMColor */; };
 		DCAAC170279ED63800EC685F /* GroupsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC16F279ED63800EC685F /* GroupsLoader.swift */; };
 		DCAAC172279ED8B600EC685F /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAAC171279ED8B600EC685F /* GroupListView.swift */; };
 		DCC6DD2829C8E32500945D8C /* ProjectFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC6DD2729C8E32500945D8C /* ProjectFilter.swift */; };
@@ -84,7 +85,6 @@
 		DCF14E3F29C720E800D1F43B /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF14E3E29C720E800D1F43B /* AsyncButton.swift */; };
 		DCF27D192A04D4CF00C18EE5 /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF27D182A04D4CF00C18EE5 /* TagsView.swift */; };
 		DCF27D1B2A04FAA900C18EE5 /* ReleaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF27D1A2A04FAA900C18EE5 /* ReleaseView.swift */; };
-		DCFCB06E29B7C3D800F18CDC /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = DCFCB06D29B7C3D800F18CDC /* MarkdownUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -172,11 +172,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC1F1BE229CCCFA600AF7573 /* NVMColor in Frameworks */,
 				DC0A6A582B8D161600C53D56 /* CachedAsyncImage in Frameworks */,
+				DCAA7D7D2E9AF35F0078DB8E /* NVMColor in Frameworks */,
 				DCDD1E0F2B15FFBF00D0B6B9 /* Splash in Frameworks */,
 				DC146E5D2B8530D200217A18 /* SwiftHttp in Frameworks */,
-				DCFCB06E29B7C3D800F18CDC /* MarkdownUI in Frameworks */,
+				DCAA7D7A2E9AF30C0078DB8E /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,11 +412,11 @@
 			);
 			name = GitLab;
 			packageProductDependencies = (
-				DCFCB06D29B7C3D800F18CDC /* MarkdownUI */,
-				DC1F1BE129CCCFA600AF7573 /* NVMColor */,
 				DCDD1E0E2B15FFBF00D0B6B9 /* Splash */,
 				DC146E5C2B8530D200217A18 /* SwiftHttp */,
 				DC0A6A572B8D161600C53D56 /* CachedAsyncImage */,
+				DCAA7D792E9AF30C0078DB8E /* MarkdownUI */,
+				DCAA7D7C2E9AF35F0078DB8E /* NVMColor */,
 			);
 			productName = GitLab;
 			productReference = DC5EB8EF272D924D0015BF0D /* GitLab.app */;
@@ -447,11 +447,11 @@
 			);
 			mainGroup = DC5EB8E6272D924D0015BF0D;
 			packageReferences = (
-				DCFCB06C29B7C3D800F18CDC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
-				DC1F1BE029CCCFA600AF7573 /* XCRemoteSwiftPackageReference "NVMColor_swift" */,
 				DCDD1E0D2B15FFBF00D0B6B9 /* XCRemoteSwiftPackageReference "Splash" */,
 				DC146E5B2B8530D200217A18 /* XCRemoteSwiftPackageReference "swift-http" */,
 				DC0A6A562B8D161600C53D56 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
+				DCAA7D782E9AF30C0078DB8E /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+				DCAA7D7B2E9AF35F0078DB8E /* XCRemoteSwiftPackageReference "nvm-color" */,
 			);
 			productRefGroup = DC5EB8F0272D924D0015BF0D /* Products */;
 			projectDirPath = "";
@@ -699,7 +699,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.14;
+				MARKETING_VERSION = 1.2.15;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -734,7 +734,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.14;
+				MARKETING_VERSION = 1.2.15;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -783,12 +783,20 @@
 			repositoryURL = "https://github.com/felix-schindler/swift-http/";
 			requirement = {
 				kind = revision;
-				revision = 6b76b2d73dbba2f631f6abc8b6d72fb585bbbb53;
+				revision = 18133c39232a648d2c93ab42376bde84ee79f6cc;
 			};
 		};
-		DC1F1BE029CCCFA600AF7573 /* XCRemoteSwiftPackageReference "NVMColor_swift" */ = {
+		DCAA7D782E9AF30C0078DB8E /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/NVMNovem/NVMColor_swift";
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.1;
+			};
+		};
+		DCAA7D7B2E9AF35F0078DB8E /* XCRemoteSwiftPackageReference "nvm-color" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NVMNovem/nvm-color";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.2.5;
@@ -800,14 +808,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.16.0;
-			};
-		};
-		DCFCB06C29B7C3D800F18CDC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui/";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.3.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -823,20 +823,20 @@
 			package = DC146E5B2B8530D200217A18 /* XCRemoteSwiftPackageReference "swift-http" */;
 			productName = SwiftHttp;
 		};
-		DC1F1BE129CCCFA600AF7573 /* NVMColor */ = {
+		DCAA7D792E9AF30C0078DB8E /* MarkdownUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DC1F1BE029CCCFA600AF7573 /* XCRemoteSwiftPackageReference "NVMColor_swift" */;
+			package = DCAA7D782E9AF30C0078DB8E /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
+		DCAA7D7C2E9AF35F0078DB8E /* NVMColor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DCAA7D7B2E9AF35F0078DB8E /* XCRemoteSwiftPackageReference "nvm-color" */;
 			productName = NVMColor;
 		};
 		DCDD1E0E2B15FFBF00D0B6B9 /* Splash */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DCDD1E0D2B15FFBF00D0B6B9 /* XCRemoteSwiftPackageReference "Splash" */;
 			productName = Splash;
-		};
-		DCFCB06D29B7C3D800F18CDC /* MarkdownUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DCFCB06C29B7C3D800F18CDC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
-			productName = MarkdownUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

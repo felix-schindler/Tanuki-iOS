@@ -1,4 +1,5 @@
 {
+  "originHash" : "20000bf2a2d5b484042011c00b95e28cec88246e9fdc92b0560fd050ef8aa705",
   "pins" : [
     {
       "identity" : "networkimage",
@@ -10,9 +11,9 @@
       }
     },
     {
-      "identity" : "nvmcolor_swift",
+      "identity" : "nvm-color",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/NVMNovem/NVMColor_swift",
+      "location" : "https://github.com/NVMNovem/nvm-color",
       "state" : {
         "revision" : "80cf6140a29a88197f9bee51918843d706dc6034",
         "version" : "1.2.5"
@@ -28,11 +29,20 @@
       }
     },
     {
+      "identity" : "swift-cmark",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-cmark",
+      "state" : {
+        "revision" : "b97d09472e847a416629f026eceae0e2afcfad65",
+        "version" : "0.7.0"
+      }
+    },
+    {
       "identity" : "swift-http",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/felix-schindler/swift-http/",
       "state" : {
-        "revision" : "6b76b2d73dbba2f631f6abc8b6d72fb585bbbb53"
+        "revision" : "18133c39232a648d2c93ab42376bde84ee79f6cc"
       }
     },
     {
@@ -49,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gonzalezreal/swift-markdown-ui/",
       "state" : {
-        "revision" : "ae799d015a5374708f7b4c85f3294c05f2a564e2",
-        "version" : "2.3.0"
+        "revision" : "5f613358148239d0292c0cef674a3c2314737f9e",
+        "version" : "2.4.1"
       }
     },
     {
@@ -63,5 +73,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
