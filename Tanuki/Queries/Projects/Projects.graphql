@@ -1,0 +1,27 @@
+query Projects($membership: Boolean, $search: String, $personal: Boolean, $sort: String, $namespacePath: ID, $withIssuesEnabled: Boolean, $withMergeRequestsEnabled: Boolean, $archived: ProjectArchived, $minAccessLevel: AccessLevelEnum, $trending: Boolean, $aimedForDeletion: Boolean, $notAimedForDeletion: Boolean, $markedForDeletionOn: Date, $active: Boolean, $visibility: VisibilityLevelsEnum, $includeHidden: Boolean) {
+  projects(
+    membership: $membership
+    search: $search
+    personal: $personal
+    sort: $sort
+    namespacePath: $namespacePath
+    withIssuesEnabled: $withIssuesEnabled
+    withMergeRequestsEnabled: $withMergeRequestsEnabled
+    archived: $archived
+    minAccessLevel: $minAccessLevel
+    trending: $trending
+    aimedForDeletion: $aimedForDeletion
+    notAimedForDeletion: $notAimedForDeletion
+    markedForDeletionOn: $markedForDeletionOn
+    active: $active
+    visibilityLevel: $visibility
+    includeHidden: $includeHidden
+  ) {
+    nodes {
+      avatarUrl
+      nameWithNamespace
+      visibility
+      fullPath
+    }
+  }
+}
