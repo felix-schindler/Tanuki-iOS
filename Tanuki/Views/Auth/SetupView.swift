@@ -9,27 +9,66 @@ import MarkdownUI
 import SwiftUI
 
 struct SetupView: View {
-	var body: some View {
+	/// For CSRF protection
+	private let state: String
+	private let codeVerifier: String
+	private let codeChallenge: String
+
+	public init() {
+		self.state = UUID().uuidString
+		self.codeVerifier = Auth.generateCodeVerifier()
+		self.codeChallenge = Auth.generateCodeChallenge(codeVerifier: self.codeVerifier)
+	}
+
+	public var body: some View {
 		NavigationView {
 			VStack {
 				Spacer()
 
-				if let icon = UIImage(named: "AppIcon") {
-					Image(uiImage: icon)
-						.resizable()
-						.scaledToFit()
-						.cornerRadius(15)
-						.frame(maxWidth: 100, maxHeight: 100)
+				HStack {
+					if let icons = Bundle.main.infoDictionary?["CFBundleIcons"] as? [String: Any],
+						let primaryIcon = icons["CFBundlePrimaryIcon"] as? [String: Any],
+						let iconFiles = primaryIcon["CFBundleIconFiles"] as? [String],
+						let lastIcon = iconFiles.last,
+						let iconImage = UIImage(named: lastIcon)
+					{
+						Image(uiImage: iconImage)
+							.resizable()
+							.scaledToFit()
+							.cornerRadius(15)
+							.frame(maxWidth: 70, maxHeight: 70)
+					}
+					Text("Welcome to \n**Tanuki for GitLab**")
 				}
-				Text("Welcome to **Tanuki for GitLab**")
 
 				Spacer()
 
 				Button(
 					action: {
+						var components = URLComponents()
+						components.scheme = "https"
+						components.host = "gitlab.com"
+						components.path = "/oauth/authorize"
+
+						components.queryItems = [
+							URLQueryItem(name: "client_id", value: Auth.clientID),
+							URLQueryItem(name: "code_challenge", value: self.codeChallenge),
+							URLQueryItem(name: "code_challenge_method", value: "S256"),
+							URLQueryItem(name: "redirect_uri", value: Auth.redirectUri),
+							URLQueryItem(name: "response_type", value: "code"),
+							URLQueryItem(name: "scope", value: Auth.scope),
+							URLQueryItem(name: "state", value: self.state),
+						]
+
+						guard let authURL = components.url else {
+							Notify.status(.error, "Failed to create authorization URL")
+							return
+						}
+
+						UIApplication.shared.open(authURL)
 					},
 					label: {
-						Label("Login with GitLab.com", systemImage: "")
+						Text("Login with GitLab.com")
 							.frame(maxWidth: .infinity)
 					}
 				)
@@ -41,7 +80,7 @@ struct SetupView: View {
 				NavigationLink(
 					destination: ConfigView(),
 					label: {
-						Label("Self-Hosted instance", systemImage: "")
+						Text("Self-Hosted instance")
 							.frame(maxWidth: .infinity)
 					}
 				)
@@ -54,6 +93,81 @@ struct SetupView: View {
 			}
 			.padding()
 			.textFieldStyle(.roundedBorder)
+		}.onOpenURL { url in
+			switch url.relativePath {
+			case "/callback":
+				let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+				let queryItems = components?.queryItems
+
+				if let code = queryItems?.first(where: { $0.name == "code" })?.value,
+					let state = queryItems?.first(where: { $0.name == "state" })?.value
+				{
+					print(code, state)
+
+					if state == self.state {
+						Task {
+							do {
+								API.host = "gitlab.com"
+
+								let auth = try await API.req(
+									type: oAuthToken.self,
+									method: .post,
+									endpoint: "oauth/token",
+									body: [
+										"client_id": Auth.clientID,
+										"code": code,
+										"grant_type": "authorization_code",
+										"redirect_uri": Auth.redirectUri,
+										"code_verifier": self.codeVerifier,
+									],
+									contentType: .formUrlEncoded,
+									useBase: false
+								)
+
+								API.token = auth.accessToken
+
+								let user = try await API.get(
+									type: RestAPIUser.self,
+									endpoint: "user"
+								)
+
+								Notify.status(
+									.success,
+									"Welcome, \(user.username)",
+									systemImage: "checkmark"
+								)
+							} catch let error {
+								print(error)
+								Notify.status(
+									.error, "Failed to log in",
+									error.localizedDescription,
+									systemImage: "xmark"
+								)
+							}
+						}
+					} else {
+						Notify.status(
+							.error,
+							"Couldn't log in",
+							"State mismatch",
+							systemImage: "exclamationmark.triangle"
+						)
+					}
+				} else {
+					Notify.status(
+						.error,
+						"Couldn't log in",
+						"Malformed URL",
+						systemImage: "exclamationmark.triangle"
+					)
+				}
+			default:
+				Notify.status(
+					.warning,
+					"Can't handle URL", "You need to log in first",
+					systemImage: "exclamationmark.triangle"
+				)
+			}
 		}
 	}
 }

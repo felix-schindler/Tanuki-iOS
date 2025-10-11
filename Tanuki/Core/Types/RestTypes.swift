@@ -7,6 +7,23 @@
 
 import Foundation
 
+// MARK: - Authentication
+struct oAuthToken: Codable {
+	let accessToken: String
+	let tokenType: String
+	let expiresIn: Int
+	let refreshToken: String
+	let createdAt: Int
+}
+
+struct RestAPIUser: Codable {
+	let id: Int
+	let username: String
+	let name: String
+	let avatarUrl: String?
+	let webUrl: String
+}
+
 // MARK: - Events
 struct Event: Codable {
 	let id: Int

@@ -14,6 +14,11 @@ enum DateError: String, Error {
 	case invalidDate
 }
 
+enum ContentType: String {
+	case json = "application/json"
+	case formUrlEncoded = "application/x-www-form-urlencoded"
+}
+
 class API {
 	/// GitLab host
 	@AppStorage("domain", store: UserDefaults(suiteName: "de.schindlerfelix.Tanuki"))
@@ -30,6 +35,7 @@ class API {
 		session: .shared,
 		logLevel: .critical
 	)
+	private static let encoder = JSONEncoder()
 	private static let decoder = JSONDecoder()
 
 	public static var url: URL {
@@ -44,24 +50,40 @@ class API {
 	public static func raw(
 		method: HttpMethod,
 		url: HttpUrl,
-		body: (any Encodable)? = nil
+		body: (any Encodable)? = nil,
+		contentType: ContentType = .json
 	) async throws -> HttpResponse {
+		var headers: [HttpHeaderKey: String] = [:]
 		var reqBody: Data? = nil
+
+		print(method, url.url.absoluteString)
+
 		if let body {
-			reqBody = try JSONEncoder().encode(body)
+			headers[.contentType] = contentType.rawValue
+
+			switch contentType {
+			case .json:
+				reqBody = try encoder.encode(body)
+				break
+			case .formUrlEncoded:
+				reqBody = try FormURLEncoder.encode(body)
+				break
+			}
+
+			print(String(data: reqBody!, encoding: .utf8) ?? "Body coudn't be decoded")
+		}
+
+		if API.token.isNotEmpty {
+			headers[.authorization] = "Bearer \(API.token)"
 		}
 
 		let req = HttpRawRequest(
 			url: url,
 			method: method,
-			headers: [
-				.authorization: "Bearer \(API.token)",
-				.contentType: "application/json",
-			],
+			headers: headers,
 			body: reqBody
 		)
 
-		print(method, url.url.absoluteString)
 		return try await client.dataTask(req)
 	}
 
@@ -73,6 +95,7 @@ class API {
 		suffix: String? = nil,
 		query: [String: String] = [:],
 		body: (any Encodable)? = nil,
+		contentType: ContentType = .json,
 		useBase: Bool = true
 	) async throws -> T {
 		let httpUrl = HttpUrl(
@@ -86,8 +109,11 @@ class API {
 		let res = try await API.raw(
 			method: method,
 			url: httpUrl,
-			body: body
+			body: body,
+			contentType: contentType
 		)
+
+		print(res.statusCode)
 
 		decoder.keyDecodingStrategy = .convertFromSnakeCase
 

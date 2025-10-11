@@ -35,16 +35,46 @@ struct ConfigView: View {
 				Label("Requirements", systemImage: "checkmark.square")
 					.font(.headline)
 				Text("Access to the REST-API v4 and GraphQL API")
+
+				Text("Scopes")
+					.font(.subheadline)
+					.padding(.top, 1)
+				VStack(alignment: .leading) {
+					Label("`api`", systemImage: "checkmark.circle")
+					Label("`read_repository`", systemImage: "checkmark.circle")
+				}.font(.footnote)
 			}
 			.padding(.top)
 
 			Spacer()
 
-			Button(
+			AsyncButton(
 				action: {
-					API.host = self.newHost
-					API.token = self.newToken
-					Notify.status(.success)
+					do {
+						API.host = self.newHost
+						API.token = self.newToken
+
+						let user = try await API.get(
+							type: RestAPIUser.self,
+							endpoint: "user"
+						)
+
+						Notify.status(
+							.success,
+							"Welcome, \(user.username)",
+							systemImage: "checkmark"
+						)
+					} catch let error {
+						API.host = ""
+						API.token = ""
+
+						Notify.status(
+							.error,
+							"Failed to log in",
+							error.localizedDescription,
+							systemImage: "xmark"
+						)
+					}
 				},
 				label: {
 					Label("Save config", systemImage: "checkmark")

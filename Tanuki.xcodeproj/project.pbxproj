@@ -66,6 +66,7 @@
 		DC27050D2B8BC351003DAA84 /* CurrentUserStarredProjects.graphql in Resources */ = {isa = PBXBuildFile; fileRef = DC27050C2B8BC351003DAA84 /* CurrentUserStarredProjects.graphql */; };
 		DC2705112B8BC507003DAA84 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2705102B8BC507003DAA84 /* Network.swift */; };
 		DC2973132E7FF3FF00CEFA0D /* NewMilestoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2973122E7FF3FF00CEFA0D /* NewMilestoneView.swift */; };
+		DC2B87022E8FFE7D00A1BA29 /* FormUrlEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2B87012E8FFE7800A1BA29 /* FormUrlEncoder.swift */; };
 		DC2D65E52E7EF510007A800C /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2D65E42E7EF510007A800C /* ExploreView.swift */; };
 		DC2D65E72E7EFC74007A800C /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2D65E62E7EFC74007A800C /* AsyncButton.swift */; };
 		DC2D65E92E7F03A6007A800C /* NewLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2D65E82E7F03A6007A800C /* NewLabelView.swift */; };
@@ -151,6 +152,7 @@
 		DCD40E182BC2B2960055EE4C /* FileExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E172BC2B2960055EE4C /* FileExtensions.swift */; };
 		DCD40E1A2BC2C6600055EE4C /* DiffLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E192BC2C6600055EE4C /* DiffLoader.swift */; };
 		DCD40E222BC2E5CC0055EE4C /* CodeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E212BC2E5CC0055EE4C /* CodeTextView.swift */; };
+		DCD4BF722E8F31D200F153B6 /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD4BF712E8F31D000F153B6 /* Auth.swift */; };
 		DCEB20B42BD61A9A00393A44 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEB20B32BD61A9A00393A44 /* Notify.swift */; };
 		DCEF31932E907C4C00337458 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF31922E907C4C00337458 /* SettingsView.swift */; };
 		DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2662B94C29600F4B245 /* EventsLoader.swift */; };
@@ -244,6 +246,7 @@
 		DC27050C2B8BC351003DAA84 /* CurrentUserStarredProjects.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CurrentUserStarredProjects.graphql; sourceTree = "<group>"; };
 		DC2705102B8BC507003DAA84 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		DC2973122E7FF3FF00CEFA0D /* NewMilestoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMilestoneView.swift; sourceTree = "<group>"; };
+		DC2B87012E8FFE7800A1BA29 /* FormUrlEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormUrlEncoder.swift; sourceTree = "<group>"; };
 		DC2D65E42E7EF510007A800C /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		DC2D65E62E7EFC74007A800C /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
 		DC2D65E82E7F03A6007A800C /* NewLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLabelView.swift; sourceTree = "<group>"; };
@@ -317,6 +320,7 @@
 		DCD40E172BC2B2960055EE4C /* FileExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExtensions.swift; sourceTree = "<group>"; };
 		DCD40E192BC2C6600055EE4C /* DiffLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffLoader.swift; sourceTree = "<group>"; };
 		DCD40E212BC2E5CC0055EE4C /* CodeTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeTextView.swift; sourceTree = "<group>"; };
+		DCD4BF712E8F31D000F153B6 /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		DCEB20B32BD61A9A00393A44 /* Notify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
 		DCEF31922E907C4C00337458 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DCEFB2662B94C29600F4B245 /* EventsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsLoader.swift; sourceTree = "<group>"; };
@@ -533,6 +537,8 @@
 		DC31F27B2E71DC8E005F31A2 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				DC2B87012E8FFE7800A1BA29 /* FormUrlEncoder.swift */,
+				DCD4BF712E8F31D000F153B6 /* Auth.swift */,
 				DC2705102B8BC507003DAA84 /* Network.swift */,
 				DCEFB26A2B94C37600F4B245 /* API.swift */,
 			);
@@ -988,6 +994,7 @@
 				DC4B42892BA5609A007A9DB1 /* FileLoader.swift in Sources */,
 				DC386A952B8D5FB2002E5F6D /* MergeRequestLoader.swift in Sources */,
 				DCB6B6392BB70F9C006C8437 /* SmallCommitView.swift in Sources */,
+				DCEF31932E907C4C00337458 /* SettingsView.swift in Sources */,
 				DCD40E1A2BC2C6600055EE4C /* DiffLoader.swift in Sources */,
 				DC3A24562B8C4C2200DB0E3F /* PillView.swift in Sources */,
 				DC217DD32B8FCC8A00F081BC /* Haptics.swift in Sources */,
@@ -1012,6 +1019,7 @@
 				DC08C9592E800C2E005A1979 /* LoadingView.swift in Sources */,
 				DC1D100A2B996FCE00B6F5D7 /* GroupIssuesLoader.swift in Sources */,
 				DC1C37F62B99BACC005B7D7A /* MilestonesLoader.swift in Sources */,
+				DCD4BF722E8F31D200F153B6 /* Auth.swift in Sources */,
 				DCB5E0DA2B96CD33000F67FB /* GroupMergeLoader.swift in Sources */,
 				DC5F37082B91A1D100BF7F9D /* AuthorView.swift in Sources */,
 				DC0FF5B62B8C7AFB002B4FAE /* ProjectMergeLoader.swift in Sources */,
@@ -1024,6 +1032,7 @@
 				DC1D10062B996C5300B6F5D7 /* SmallIssueView.swift in Sources */,
 				DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */,
 				DC1D0FFE2B994FDD00B6F5D7 /* TimelogsLoader.swift in Sources */,
+				DC2B87022E8FFE7D00A1BA29 /* FormUrlEncoder.swift in Sources */,
 				DC6C5D9A2B8F089D00587850 /* GraphTypes.swift in Sources */,
 				DCD40E182BC2B2960055EE4C /* FileExtensions.swift in Sources */,
 				DC21AA772B903ECA00976E64 /* UserView.swift in Sources */,

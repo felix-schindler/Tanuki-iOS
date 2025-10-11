@@ -5,13 +5,15 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleIdentifier</key>
+			<string></string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>CFBundleURLName</key>
 			<string>de.schindlerfelix.tanuki</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>https://gitlab.com</string>
+				<string>tanuki</string>
 			</array>
 		</dict>
 	</array>
