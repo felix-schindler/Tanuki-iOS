@@ -26,7 +26,7 @@ struct EventsLoader: View {
 	}
 
 	private func getStupidText(event: Event) -> String {
-		var ret = event.actionName.firstCapitalized
+		var ret = event.actionName.capitalized
 		if let targetType = event.targetType {
 			ret += " \(targetType)"
 		}
@@ -42,7 +42,7 @@ struct EventsLoader: View {
 				ret += " with message '\(commitTitle)'"
 			}
 		}
-		if ret == event.actionName.firstCapitalized {
+		if ret == event.actionName.capitalized {
 			ret += " project \(event.projectId)"
 		}
 		return ret.trimmingCharacters(in: .whitespacesAndNewlines)

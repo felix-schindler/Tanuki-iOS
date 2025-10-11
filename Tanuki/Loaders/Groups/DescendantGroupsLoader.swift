@@ -119,11 +119,8 @@ struct DescendantGroupsLoader: View {
 												.rawValue
 											{
 												Spacer()
-												PillView(
-													accessLevel.lowercased()
-														.firstCapitalized
-												)
-												.font(.footnote)
+												PillView(accessLevel.lowercased().capitalized)
+													.font(.footnote)
 											}
 										}
 									})

@@ -138,11 +138,8 @@ struct UserGroupsLoader: View {
 
 											if let accessLevel = group._accessLevel {
 												Spacer()
-												PillView(
-													accessLevel.lowercased()
-														.firstCapitalized
-												)
-												.font(.footnote)
+												PillView(accessLevel.lowercased().capitalized)
+													.font(.footnote)
 											}
 										}
 									})

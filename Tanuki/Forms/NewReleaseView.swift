@@ -31,7 +31,7 @@ struct NewReleaseView: View {
 	@State private var releaseName = ""
 	@State private var selectedMilestones: Set<String> = []
 	@State private var setReleaseDate = false
-	@State private var releaseDate = Date()
+	@State private var releaseDate = SwiftUI.Date()
 	@State private var description = ""
 
 	private func dismiss() {

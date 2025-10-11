@@ -71,13 +71,6 @@ extension String {
 	}
 }
 
-extension StringProtocol {
-	/// Calipalize only the first character of a string
-	var firstCapitalized: String {
-		prefix(1).capitalized + dropFirst()
-	}
-}
-
 // MARK: - URL helpers
 extension URL {
 	public static func fromAvatar(_ avatarUrl: String?) -> URL? {
@@ -94,7 +87,7 @@ extension URL {
 }
 
 // MARK: - Date helpers
-extension Date {
+extension SwiftUI.Date {
 	static func fromToString(
 		_ date: String, dateStyle: DateFormatter.Style = .medium,
 		timeStyle: DateFormatter.Style = .none

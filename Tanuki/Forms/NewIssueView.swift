@@ -39,7 +39,7 @@ struct NewIssueView: View {
 	@State private var type = IssueType.issue
 	@State private var confidential = false
 	@State private var setDueDate = false
-	@State private var dueDate = Date()
+	@State private var dueDate = SwiftUI.Date()
 	@State private var selectedLabels: Set<String> = []
 	@State private var selectedMilestone = ""
 	@State private var weight = -1

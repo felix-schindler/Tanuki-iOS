@@ -556,7 +556,7 @@ struct MergeRequestLoader: View {
 				if let mr = project.mergeRequest {
 					HStack {
 						Button(
-							mr.state.rawValue.firstCapitalized,
+							mr.state.rawValue.capitalized,
 							systemImage: MergeStateHelper.getIconByState(mr.state),
 						) {}
 						.tint(MergeStateHelper.getColorByState(mr.state))

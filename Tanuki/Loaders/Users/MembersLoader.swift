@@ -143,7 +143,7 @@ struct MembersLoader: View {
 													if let accessLevel = member
 														._accessLevel?
 														.lowercased()
-														.firstCapitalized
+														.capitalized
 													{
 														Spacer()
 														PillView(accessLevel)

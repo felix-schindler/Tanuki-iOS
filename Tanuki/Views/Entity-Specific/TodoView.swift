@@ -48,12 +48,12 @@ struct TodoView: View {
 				ScrollView(.horizontal) {
 					HStack {
 						PillView(
-							todo.state.rawValue.firstCapitalized,
+							todo.state.rawValue.capitalized,
 							bgColor: (todo.state == .done ? .blue : .green),
 							fgColor: .white
 						)
 						PillView(
-							"\(todo.targetType.rawValue.lowercased().firstCapitalized) · \(todo.action.rawValue.replacing("_", with: " "))"
+							"\(todo.targetType.rawValue.lowercased().capitalized) · \(todo.action.rawValue.replacing("_", with: " "))"
 						)
 					}
 				}

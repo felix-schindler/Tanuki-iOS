@@ -34,10 +34,10 @@ struct VisibilityIcon: View {
 
 	public var body: some View {
 		if showText {
-			Label(self.visibility.firstCapitalized, systemImage: systemName)
+			Label(self.visibility.capitalized, systemImage: systemName)
 				.labelStyle(.titleAndIcon)
 		} else {
-			Label(self.visibility.firstCapitalized, systemImage: systemName)
+			Label(self.visibility.capitalized, systemImage: systemName)
 				.labelStyle(.iconOnly)
 		}
 	}

@@ -358,7 +358,7 @@ struct IssueLoader: View {
 			{
 				HStack {
 					Button(
-						issue.state.rawValue.firstCapitalized,
+						issue.state.rawValue.capitalized,
 						systemImage: IssueStateHelper.getIconByState(issue.state),
 					) {}
 					.tint(IssueStateHelper.getColorByState(issue.state))

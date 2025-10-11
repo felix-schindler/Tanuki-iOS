@@ -80,8 +80,7 @@ struct UserMergeLoader: View {
 
 				Task {
 					for try await response in responses {
-						if let mrs = response.data?.currentUser?.reviewRequestedMergeRequests?.nodes
-						{
+						if let mrs = response.data?.currentUser?.reviewRequestedMergeRequests?.nodes {
 							self.mergeRequests = .success(mrs)
 						} else if let errors = response.errors {
 							for error in errors {

@@ -98,7 +98,7 @@ struct EpicLoader: View {
 							ScrollView(.horizontal) {
 								HStack(spacing: 5) {
 									PillView(
-										epic.state.rawValue.firstCapitalized,
+										epic.state.rawValue.capitalized,
 										icon: IssueStateHelper.getIconByState(epic.state),
 										bgColor: IssueStateHelper.getColorByState(epic.state),
 										fgColor: .white,

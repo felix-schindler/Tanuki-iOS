@@ -220,7 +220,7 @@ struct MergeStatus: View {
 							.split(separator: "_")
 							.joined(separator: " ")
 							.lowercased()
-							.firstCapitalized
+							.capitalized
 					)
 					if self.msg.isNotEmpty {
 						Text(self.msg)
