@@ -49,6 +49,7 @@ struct ProjectsLoader: View {
 		}
 	}
 
+	/// Convert enum value to case and warp it in GraphQLNullable
 	private func toFilterEnum<T>(_ something: T?) -> GraphQLNullable<GraphQLEnum<T>> {
 		if let something {
 			.some(.case(something))

@@ -17,13 +17,19 @@ protocol MaybeHasAuthor {
 	var _author: MyAuthor? { get }
 }
 
-struct MyAuthor: Codable {
+struct MyAuthor: Codable, Author {
 	let avatarUrl: String?
 	let name: String
 	let username: String
 }
 
 // MARK: - USERS
+protocol Author {
+	var avatarUrl: String? { get }
+	var name: String { get }
+	var username: String { get }
+}
+
 protocol Member {
 	var id: String { get }
 	var createdAt: String? { get }
@@ -31,6 +37,9 @@ protocol Member {
 	var _accessLevel: String? { get }
 	var _user: MyAuthor? { get }
 	var _createdBy: MyAuthor? { get }
+}
+
+extension UsersQuery.Data.Users.Node: Author {
 }
 
 extension ProjectMembersQuery.Data.Project.ProjectMembers.Node: Member {
@@ -471,7 +480,7 @@ protocol Group {
 	var _accessLevel: String? { get }
 }
 
-extension UserGroupsQuery.Data.User.Groups.Node: Group {
+extension GroupsQuery.Data.Groups.Node: Group {
 	var _name: String? {
 		return self.name
 	}
@@ -481,7 +490,7 @@ extension UserGroupsQuery.Data.User.Groups.Node: Group {
 	}
 }
 
-extension CurrentUserGroupsQuery.Data.CurrentUser.Groups.Node: Group {
+extension UserGroupsQuery.Data.User.Groups.Node: Group {
 	var _name: String? {
 		return self.name
 	}

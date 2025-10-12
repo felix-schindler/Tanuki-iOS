@@ -9,44 +9,27 @@ import GitLabAPI
 import SwiftUI
 
 struct UserGroupsLoader: View {
-	private let username: String?
+	private let username: String
 
 	@State
 	private var groups: Result<[Group?], Error>? = nil
 
-	init(username: String? = nil) {
+	init(_ username: String) {
 		self.username = username
 	}
 
 	private func loadGroups() {
 		do {
-			if let username {
-				let responses = try Network.shared.apollo.fetch(
-					query: UserGroupsQuery(username: username), cachePolicy: .cacheAndNetwork)
+			let responses = try Network.shared.apollo.fetch(
+				query: UserGroupsQuery(username: username), cachePolicy: .cacheAndNetwork)
 
-				Task {
-					for try await response in responses {
-						if let groups = response.data?.user?.groups?.nodes {
-							self.groups = .success(groups)
-						} else if let errors = response.errors {
-							for error in errors {
-								Notify.status(.error, error.localizedDescription)
-							}
-						}
-					}
-				}
-			} else {
-				let responses = try Network.shared.apollo.fetch(
-					query: CurrentUserGroupsQuery(), cachePolicy: .cacheAndNetwork)
-
-				Task {
-					for try await response in responses {
-						if let groups = response.data?.currentUser?.groups?.nodes {
-							self.groups = .success(groups)
-						} else if let errors = response.errors {
-							for error in errors {
-								Notify.status(.error, error.localizedDescription)
-							}
+			Task {
+				for try await response in responses {
+					if let groups = response.data?.user?.groups?.nodes {
+						self.groups = .success(groups)
+					} else if let errors = response.errors {
+						for error in errors {
+							Notify.status(.error, error.localizedDescription)
 						}
 					}
 				}
@@ -59,20 +42,11 @@ struct UserGroupsLoader: View {
 
 	private func reloadGroups() async {
 		do {
-			if let username {
-				let response = try await Network.shared.apollo.fetch(
-					query: UserGroupsQuery(username: username), cachePolicy: .networkOnly)
+			let response = try await Network.shared.apollo.fetch(
+				query: UserGroupsQuery(username: username), cachePolicy: .networkOnly)
 
-				if let groups = response.data?.user?.groups?.nodes {
-					self.groups = .success(groups)
-				}
-			} else {
-				let response = try await Network.shared.apollo.fetch(
-					query: CurrentUserGroupsQuery(), cachePolicy: .networkOnly)
-
-				if let groups = response.data?.currentUser?.groups?.nodes {
-					self.groups = .success(groups)
-				}
+			if let groups = response.data?.user?.groups?.nodes {
+				self.groups = .success(groups)
 			}
 
 			Notify.status(.success)
@@ -92,57 +66,6 @@ struct UserGroupsLoader: View {
 					} else {
 						ForEach(groups, id: \.self?.fullPath) { maybeGroup in
 							if let group = maybeGroup {
-								NavigationLink(
-									destination: GroupLoader(
-										fullPath: group.fullPath),
-									label: {
-										HStack {
-											if let url = URL.fromAvatar(
-												group.avatarUrl ?? "")
-											{
-												AvatarImage(url, size: .medium)
-											}
-
-											VStack(alignment: .leading) {
-												HStack {
-													if let visibility = group.visibility {
-														VisibilityIcon(visibility)
-													}
-													if let groupName = group._name?.emojized() {
-														Text(groupName)
-													}
-												}
-
-												HStack(spacing: 10) {
-													HStack(spacing: 2) {
-														Image(
-															systemName: "person.2")
-														Text(
-															String(
-																group
-																	.groupMembersCount
-															))
-													}
-
-													HStack(spacing: 2) {
-														Image(
-															systemName:
-																"app.gift.fill")
-														Text(
-															String(
-																group.projectsCount)
-														)
-													}
-												}.font(.footnote)
-											}
-
-											if let accessLevel = group._accessLevel {
-												Spacer()
-												PillView(accessLevel.lowercased().capitalized)
-													.font(.footnote)
-											}
-										}
-									})
 							}
 						}
 					}
@@ -162,6 +85,6 @@ struct UserGroupsLoader: View {
 
 #Preview {
 	NavigationView {
-		UserGroupsLoader()
+		UserGroupsLoader("felix-schindler")
 	}
 }

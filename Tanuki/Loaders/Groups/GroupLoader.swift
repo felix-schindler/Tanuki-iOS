@@ -139,8 +139,7 @@ struct GroupLoader: View {
 						}
 						HStack {
 							NavigationLink(
-								destination: DescendantGroupsLoader(
-									fullPath: self.fullPath),
+								destination: GroupsLoader(parentPath: self.fullPath),
 								label: {
 									Label(
 										title: {

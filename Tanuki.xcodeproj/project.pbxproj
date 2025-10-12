@@ -33,7 +33,6 @@
 		DC217DD32B8FCC8A00F081BC /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC217DD22B8FCC8A00F081BC /* Haptics.swift */; };
 		DC217DDD2B8FD30700F081BC /* GroupLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC217DDC2B8FD30700F081BC /* GroupLoader.swift */; };
 		DC217DDF2B8FD34600F081BC /* UserGroupsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC217DDE2B8FD34600F081BC /* UserGroupsLoader.swift */; };
-		DC21AA6B2B902F8400976E64 /* DescendantGroupsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC21AA6A2B902F8400976E64 /* DescendantGroupsLoader.swift */; };
 		DC21AA752B90385800976E64 /* CurrentUserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC21AA742B90385800976E64 /* CurrentUserLoader.swift */; };
 		DC21AA772B903ECA00976E64 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC21AA762B903ECA00976E64 /* UserView.swift */; };
 		DC21AA7F2B906FF400976E64 /* UserLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC21AA7E2B906FF400976E64 /* UserLoader.swift */; };
@@ -93,6 +92,9 @@
 		DC8978242E7F515800D42E4C /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = DC8978232E7F515800D42E4C /* Apollo */; };
 		DC8978262E7F515800D42E4C /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC8978252E7F515800D42E4C /* ApolloAPI */; };
 		DC89783D2E7F558300D42E4C /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = DC89783C2E7F558300D42E4C /* CachedAsyncImage */; };
+		DCAA7E3A2E9B0C860078DB8E /* GroupsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA7E392E9B0C860078DB8E /* GroupsLoader.swift */; };
+		DCAA7E3C2E9B0F4F0078DB8E /* SmallGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA7E3B2E9B0F4F0078DB8E /* SmallGroupView.swift */; };
+		DCAA7E3E2E9B169F0078DB8E /* UsersLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA7E3D2E9B169F0078DB8E /* UsersLoader.swift */; };
 		DCAF9D9F2BC3755F001FF2E5 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = DCAF9D9E2BC3755F001FF2E5 /* Highlightr */; };
 		DCB5E0D62B96C63A000F67FB /* CustomEmojisLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5E0D52B96C63A000F67FB /* CustomEmojisLoader.swift */; };
 		DCB5E0DA2B96CD33000F67FB /* GroupMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5E0D92B96CD33000F67FB /* GroupMergeLoader.swift */; };
@@ -165,7 +167,6 @@
 		DC217DD22B8FCC8A00F081BC /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		DC217DDC2B8FD30700F081BC /* GroupLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupLoader.swift; sourceTree = "<group>"; };
 		DC217DDE2B8FD34600F081BC /* UserGroupsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserGroupsLoader.swift; sourceTree = "<group>"; };
-		DC21AA6A2B902F8400976E64 /* DescendantGroupsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescendantGroupsLoader.swift; sourceTree = "<group>"; };
 		DC21AA742B90385800976E64 /* CurrentUserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserLoader.swift; sourceTree = "<group>"; };
 		DC21AA762B903ECA00976E64 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		DC21AA7E2B906FF400976E64 /* UserLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoader.swift; sourceTree = "<group>"; };
@@ -217,6 +218,9 @@
 		DC6C5DAC2B8F10D500587850 /* UserMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMergeLoader.swift; sourceTree = "<group>"; };
 		DC6C5DB22B8F8BBF00587850 /* Emojis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emojis.swift; sourceTree = "<group>"; };
 		DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupView.swift; sourceTree = "<group>"; };
+		DCAA7E392E9B0C860078DB8E /* GroupsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsLoader.swift; sourceTree = "<group>"; };
+		DCAA7E3B2E9B0F4F0078DB8E /* SmallGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallGroupView.swift; sourceTree = "<group>"; };
+		DCAA7E3D2E9B169F0078DB8E /* UsersLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersLoader.swift; sourceTree = "<group>"; };
 		DCB5E0D52B96C63A000F67FB /* CustomEmojisLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEmojisLoader.swift; sourceTree = "<group>"; };
 		DCB5E0D92B96CD33000F67FB /* GroupMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMergeLoader.swift; sourceTree = "<group>"; };
 		DCB6B6342BB7063B006C8437 /* DiffsStatsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffsStatsLoader.swift; sourceTree = "<group>"; };
@@ -294,9 +298,9 @@
 		DC217DDB2B8FD2FB00F081BC /* Groups */ = {
 			isa = PBXGroup;
 			children = (
+				DCAA7E392E9B0C860078DB8E /* GroupsLoader.swift */,
 				DC217DDC2B8FD30700F081BC /* GroupLoader.swift */,
 				DC217DDE2B8FD34600F081BC /* UserGroupsLoader.swift */,
-				DC21AA6A2B902F8400976E64 /* DescendantGroupsLoader.swift */,
 			);
 			path = Groups;
 			sourceTree = "<group>";
@@ -304,6 +308,7 @@
 		DC21AA732B90384D00976E64 /* Users */ = {
 			isa = PBXGroup;
 			children = (
+				DCAA7E3D2E9B169F0078DB8E /* UsersLoader.swift */,
 				DC21AA7E2B906FF400976E64 /* UserLoader.swift */,
 				DC21AA742B90385800976E64 /* CurrentUserLoader.swift */,
 				DC69F14C2B956ED300F09269 /* MembersLoader.swift */,
@@ -448,6 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */,
+				DCAA7E3B2E9B0F4F0078DB8E /* SmallGroupView.swift */,
 				DC6C5D972B8F085A00587850 /* SmallProjectView.swift */,
 				DC6C5DA42B8F0A3300587850 /* SmallMergeView.swift */,
 				DC1D10052B996C5300B6F5D7 /* SmallIssueView.swift */,
@@ -753,6 +759,7 @@
 				DC1D10062B996C5300B6F5D7 /* SmallIssueView.swift in Sources */,
 				DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */,
 				DC1D0FFE2B994FDD00B6F5D7 /* TimelogsLoader.swift in Sources */,
+				DCAA7E3E2E9B169F0078DB8E /* UsersLoader.swift in Sources */,
 				DC2B87022E8FFE7D00A1BA29 /* FormUrlEncoder.swift in Sources */,
 				DC6C5D9A2B8F089D00587850 /* GraphTypes.swift in Sources */,
 				DCD40E182BC2B2960055EE4C /* FileExtensions.swift in Sources */,
@@ -764,6 +771,7 @@
 				DCEFB2692B94C2C100F4B245 /* RestTypes.swift in Sources */,
 				DC3A24512B8C3E1A00DB0E3F /* AvatarImage.swift in Sources */,
 				DC31F2812E72221E005F31A2 /* NewIssueView.swift in Sources */,
+				DCAA7E3A2E9B0C860078DB8E /* GroupsLoader.swift in Sources */,
 				DCCB5D8D2B9C0E8300D5D70A /* TodoView.swift in Sources */,
 				DC2D65EB2E7F0AEC007A800C /* NewMemberView.swift in Sources */,
 				DC463BBA2B941970005CA5FB /* UserStarredProjectsLoader.swift in Sources */,
@@ -772,8 +780,8 @@
 				DC3A244D2B8C37BF00DB0E3F /* ProjectLoader.swift in Sources */,
 				DC217DD12B8FBA2200F081BC /* SnippetLoader.swift in Sources */,
 				DC7A7FA72BA5D0D600E128B1 /* SetupView.swift in Sources */,
-				DC21AA6B2B902F8400976E64 /* DescendantGroupsLoader.swift in Sources */,
 				DC4B428D2BA561E7007A9DB1 /* CommitsLoader.swift in Sources */,
+				DCAA7E3C2E9B0F4F0078DB8E /* SmallGroupView.swift in Sources */,
 				DC217DDD2B8FD30700F081BC /* GroupLoader.swift in Sources */,
 				DCEB20B42BD61A9A00393A44 /* Notify.swift in Sources */,
 				DC4B428F2BA56213007A9DB1 /* CommitSignatureLoader.swift in Sources */,

@@ -117,7 +117,7 @@ struct HomeView: View {
 				)
 
 				NavigationLink(
-					destination: UserGroupsLoader(),
+					destination: GroupsLoader(allAvailable: false),
 					label: {
 						Label(
 							title: {

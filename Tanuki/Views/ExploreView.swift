@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ExploreView: View {
-	var body: some View {
+	public var body: some View {
 		List {
 			NavigationLink(
 				destination: ProjectsLoader(),
@@ -22,30 +22,33 @@ struct ExploreView: View {
 								.foregroundStyle(.gray)
 						}
 					)
+				}
+			)
+			NavigationLink(
+				destination: GroupsLoader(),
+				label: {
+					Label(
+						title: {
+							Text("Groups")
+						},
+						icon: {
+							Image(systemName: "scale.3d")
+								.foregroundStyle(.red)
+						}
+					)
 				})
-			Label(
-				title: {
-					Text("Snippets")
-				},
-				icon: {
-					Image(systemName: "scissors")
-						.foregroundStyle(.purple)
-				})
-			Label(
-				title: {
-					Text("Groups")
-				},
-				icon: {
-					Image(systemName: "scale.3d")
-						.foregroundStyle(.red)
-				})
-			Label(
-				title: {
-					Text("Users")
-				},
-				icon: {
-					Image(systemName: "person.2")
-						.foregroundStyle(.cyan)
+			NavigationLink(
+				destination: UsersLoader(),
+				label: {
+					Label(
+						title: {
+							Text("Users")
+						},
+						icon: {
+							Image(systemName: "person.2")
+								.foregroundStyle(.cyan)
+						}
+					)
 				})
 		}.navigationTitle("Explore")
 	}

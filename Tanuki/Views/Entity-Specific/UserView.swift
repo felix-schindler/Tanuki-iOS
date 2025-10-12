@@ -211,7 +211,7 @@ struct UserView: View {
 			}
 		)
 		NavigationLink(
-			destination: UserGroupsLoader(username: user.username),
+			destination: UserGroupsLoader(user.username),
 			label: {
 				Label(
 					title: {

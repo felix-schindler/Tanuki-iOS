@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct AuthorView: View {
-	private let author: MyAuthor
+	private let author: Author
 	private let showUsername: Bool
 
-	init(_ author: MyAuthor, showUsername: Bool = false) {
+	init(_ author: Author, showUsername: Bool = false) {
 		self.author = author
 		self.showUsername = showUsername
 	}

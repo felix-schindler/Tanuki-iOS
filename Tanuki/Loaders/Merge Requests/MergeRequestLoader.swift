@@ -243,13 +243,8 @@ struct MergeRequestLoader: View {
 														username: user.username),
 													label: {
 														HStack {
-															if let url =
-																URL.fromAvatar(
-																	user.avatarUrl)
-															{
-																AvatarImage(
-																	url,
-																	size: .small)
+															if let url = URL.fromAvatar(user.avatarUrl) {
+																AvatarImage(url, size: .small)
 															}
 															Text(user.username)
 														}
