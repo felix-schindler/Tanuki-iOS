@@ -66,7 +66,12 @@ struct NewIssueView: View {
 	private func loadMilestones() async {
 		do {
 			let response = try await Network.shared.apollo.fetch(
-				query: ProjectMilestonesQuery(fullPath: self.fullPath),
+				query: ProjectMilestonesQuery(
+					fullPath: self.fullPath,
+					state: .none,
+					searchTitle: .none,
+					includeAncestors: .some(false)
+				),
 				cachePolicy: .networkOnly
 			)
 

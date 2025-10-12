@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SetupView: View {
 	private var showSetup: Binding<Bool>
-	
+
 	/// For CSRF protection
 	private let state: String
 	private let codeVerifier: String

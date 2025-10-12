@@ -8,16 +8,32 @@ public struct ProjectMilestonesQuery: GraphQLQuery {
   public static let operationName: String = "ProjectMilestones"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query ProjectMilestones($fullPath: ID!) { project(fullPath: $fullPath) { __typename milestones(state: active, sort: CREATED_DESC) { __typename nodes { __typename id iid state title description expired startDate dueDate stats { __typename closedIssuesCount totalIssuesCount } webPath } } } }"#
+      #"query ProjectMilestones($fullPath: ID!, $state: MilestoneStateEnum, $searchTitle: String, $includeAncestors: Boolean) { project(fullPath: $fullPath) { __typename milestones( state: $state searchTitle: $searchTitle includeAncestors: $includeAncestors ) { __typename nodes { __typename id iid state title description expired startDate dueDate stats { __typename closedIssuesCount totalIssuesCount } webPath } } } }"#
     ))
 
   public var fullPath: ID
+  public var state: GraphQLNullable<GraphQLEnum<MilestoneStateEnum>>
+  public var searchTitle: GraphQLNullable<String>
+  public var includeAncestors: GraphQLNullable<Bool>
 
-  public init(fullPath: ID) {
+  public init(
+    fullPath: ID,
+    state: GraphQLNullable<GraphQLEnum<MilestoneStateEnum>>,
+    searchTitle: GraphQLNullable<String>,
+    includeAncestors: GraphQLNullable<Bool>
+  ) {
     self.fullPath = fullPath
+    self.state = state
+    self.searchTitle = searchTitle
+    self.includeAncestors = includeAncestors
   }
 
-  @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
+  @_spi(Unsafe) public var __variables: Variables? { [
+    "fullPath": fullPath,
+    "state": state,
+    "searchTitle": searchTitle,
+    "includeAncestors": includeAncestors
+  ] }
 
   public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
@@ -45,8 +61,9 @@ public struct ProjectMilestonesQuery: GraphQLQuery {
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("milestones", Milestones?.self, arguments: [
-          "state": "active",
-          "sort": "CREATED_DESC"
+          "state": .variable("state"),
+          "searchTitle": .variable("searchTitle"),
+          "includeAncestors": .variable("includeAncestors")
         ]),
       ] }
       @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [

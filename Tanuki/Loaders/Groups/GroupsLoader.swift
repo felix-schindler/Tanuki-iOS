@@ -24,33 +24,15 @@ struct GroupsLoader: View {
 	@State public private(set) var markedForDeletionOn: SwiftUI.Date? = nil
 	@State public private(set) var active: Bool? = nil
 
-	/// Wrap a value with GraphQLNullable
-	private func toFilter<T>(_ something: T?) -> GraphQLNullable<T> {
-		if let something {
-			.some(something)
-		} else {
-			.none
-		}
-	}
-
-	/// Convert date to correct string format (ISO 8601) and wrap it in GraphQLNullable
-	private func toFilterDate(_ something: SwiftUI.Date?) -> GraphQLNullable<GitLabAPI.Date> {
-		if let something {
-			.some(ISO8601DateFormatter().string(from: something))
-		} else {
-			.none
-		}
-	}
-
 	private var query: GroupsQuery {
 		return GroupsQuery(
 			topLevelOnly: .some(self.topLevelOnly),
 			ownedOnly: .some(self.ownedOnly),
-			search: toFilter(self.search),
-			parentPath: toFilter(self.parentPath),
-			allAvailable: toFilter(allAvailable),
-			markedForDeletionOn: toFilterDate(self.markedForDeletionOn),
-			active: toFilter(self.active)
+			search: GraphFilter.toFilter(self.search),
+			parentPath: GraphFilter.toFilter(self.parentPath),
+			allAvailable: GraphFilter.toFilter(allAvailable),
+			markedForDeletionOn: GraphFilter.toFilterDate(self.markedForDeletionOn),
+			active: GraphFilter.toFilter(self.active)
 		)
 	}
 

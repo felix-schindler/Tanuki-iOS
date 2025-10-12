@@ -21,6 +21,14 @@ struct MilestonesLoader: View {
 
 	@State
 	private var milestones: Result<[Milestone?], Error>? = nil
+	
+	@State
+	private var showFilters = false
+
+	// MARK: - Filter
+	@State private var searchTitle: String? = nil
+	@State private var state: MilestoneStateEnum? = .active
+	@State private var includeAncestors = false
 
 	init(fullPath: String, id: Int, queryType: MilestoneQueryType) {
 		self.fullPath = fullPath
@@ -28,12 +36,30 @@ struct MilestonesLoader: View {
 		self.queryType = queryType
 	}
 
+	private var groupQuery: GroupMilestonesQuery {
+		return GroupMilestonesQuery(
+			fullPath: self.fullPath,
+			state: GraphFilter.toFilterEnum(self.state),
+			searchTitle: GraphFilter.toFilter(self.searchTitle),
+			includeAncestors: .some(self.includeAncestors)
+		)
+	}
+
+	private var projectQuery: ProjectMilestonesQuery {
+		return ProjectMilestonesQuery(
+			fullPath: self.fullPath,
+			state: GraphFilter.toFilterEnum(self.state),
+			searchTitle: GraphFilter.toFilter(self.searchTitle),
+			includeAncestors: .some(self.includeAncestors)
+		)
+	}
+
 	private func loadMilestones() {
 		do {
 			switch self.queryType {
 			case .group:
 				let responses = try Network.shared.apollo.fetch(
-					query: GroupMilestonesQuery(fullPath: self.fullPath),
+					query: self.groupQuery,
 					cachePolicy: .cacheAndNetwork)
 
 				Task {
@@ -50,7 +76,7 @@ struct MilestonesLoader: View {
 				break
 			case .project:
 				let responses = try Network.shared.apollo.fetch(
-					query: ProjectMilestonesQuery(fullPath: self.fullPath),
+					query: self.projectQuery,
 					cachePolicy: .cacheAndNetwork)
 
 				Task {
@@ -77,7 +103,7 @@ struct MilestonesLoader: View {
 			switch self.queryType {
 			case .group:
 				let response = try await Network.shared.apollo.fetch(
-					query: GroupMilestonesQuery(fullPath: self.fullPath), cachePolicy: .networkOnly)
+					query: self.groupQuery, cachePolicy: .networkOnly)
 
 				if let milestones = response.data?.group?.milestones?.nodes {
 					self.milestones = .success(milestones)
@@ -86,7 +112,7 @@ struct MilestonesLoader: View {
 				break
 			case .project:
 				let response = try await Network.shared.apollo.fetch(
-					query: ProjectMilestonesQuery(fullPath: self.fullPath),
+					query: self.projectQuery,
 					cachePolicy: .networkOnly
 				)
 
@@ -110,12 +136,7 @@ struct MilestonesLoader: View {
 				switch milestones {
 				case .success(let milestones):
 					if milestones.isEmpty {
-						if #available(iOS 17.0, *) {
-							NoContentView(
-								"There are no milestones", systemImage: "diamond")
-						} else {
-							NoContentView("There are no milestones", systemImage: "diamond")
-						}
+						NoContentView("There are no milestones", systemImage: "diamond")
 					} else {
 						ForEach(milestones, id: \.?.iid) { milestone in
 							if let milestone {
@@ -176,19 +197,54 @@ struct MilestonesLoader: View {
 			loadMilestones()
 		}.refreshable {
 			await reloadMilestones()
+		}.searchable(
+			text: Binding(get: { self.searchTitle ?? "" }, set: { self.searchTitle = $0.isNotEmpty ? $0 : nil }),
+			prompt: "Title"
+		).onChange(of: searchTitle) { _ in
+			self.milestones = nil  // Show loading state
+			loadMilestones()
 		}.toolbar {
-			NavigationLink(
-				destination: {
-					if self.queryType == .project {
-						NewMilestoneView(id: self.id, groupId: 0)
-					} else {
-						NewMilestoneView(id: 0, groupId: self.id)
-					}
-				},
-				label: {
-					Label("Create new milestone", systemImage: "plus")
+			HStack {
+				Button("Filter", systemImage: "line.3.horizontal.decrease") {
+					showFilters = true
 				}
-			).tint(.accentColor)
+				NavigationLink(
+					destination: {
+						if self.queryType == .project {
+							NewMilestoneView(id: self.id, groupId: 0)
+						} else {
+							NewMilestoneView(id: 0, groupId: self.id)
+						}
+					},
+					label: {
+						Label("Create new milestone", systemImage: "plus")
+					}
+				).tint(.accentColor)
+			}
+		}.sheet(isPresented: $showFilters, onDismiss: { self.showFilters = false }) {
+			NavigationView {
+				Form {
+					Picker("State", selection: $state) {
+						Text("Any").tag(nil as MilestoneStateEnum?)
+						ForEach(MilestoneStateEnum.allCases, id: \.self) { state in
+							Text(state.rawValue.capitalized).tag(state)
+						}
+					}
+					VStack(alignment: .leading) {
+						Toggle("Include Ancestors", isOn: $includeAncestors)
+						Text("Also return milestones in the project's parent group and its ancestors.")
+							.foregroundStyle(.secondary)
+							.font(.footnote)
+					}
+				}.toolbar {
+					AsyncButton("Apply filter", systemImage: "checkmark") {
+						await reloadMilestones()
+						showFilters = false
+					}
+				}
+				.navigationBarTitleDisplayMode(.inline)
+				.navigationTitle("Milestones Filter")
+			}
 		}.navigationTitle("Milestones")
 	}
 }

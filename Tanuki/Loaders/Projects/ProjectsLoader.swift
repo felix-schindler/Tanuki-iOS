@@ -32,50 +32,23 @@ struct ProjectsLoader: View {
 	@State public private(set) var visibilityLevel: VisibilityLevelsEnum? = nil
 	@State public private(set) var includeHidden: Bool = false
 
-	/// Wrap a value with GraphQLNullable
-	private func toFilter<T>(_ something: T?) -> GraphQLNullable<T> {
-		if let something {
-			.some(something)
-		} else {
-			.none
-		}
-	}
-
-	/// Convert date to correct string format (ISO 8601) and wrap it in GraphQLNullable
-	private func toFilterDate(_ something: SwiftUI.Date?) -> GraphQLNullable<GitLabAPI.Date> {
-		if let something {
-			.some(ISO8601DateFormatter().string(from: something))
-		} else {
-			.none
-		}
-	}
-
-	/// Convert enum value to case and warp it in GraphQLNullable
-	private func toFilterEnum<T>(_ something: T?) -> GraphQLNullable<GraphQLEnum<T>> {
-		if let something {
-			.some(.case(something))
-		} else {
-			.none
-		}
-	}
-
 	private var query: ProjectsQuery {
 		return ProjectsQuery(
 			membership: .some(self.membership),
-			search: toFilter(self.search),
+			search: GraphFilter.toFilter(self.search),
 			personal: .some(self.personal),
 			sort: .none,
-			namespacePath: toFilter(self.namespacePath),
+			namespacePath: GraphFilter.toFilter(self.namespacePath),
 			withIssuesEnabled: .some(self.withIssuesEnabled),
 			withMergeRequestsEnabled: .some(self.withMergeRequestsEnabled),
 			archived: .some(.case(self.archived)),
-			minAccessLevel: toFilterEnum(self.accessLevel),
+			minAccessLevel: GraphFilter.toFilterEnum(self.accessLevel),
 			trending: .some(self.trending),
 			aimedForDeletion: .some(self.aimedForDeletion),
 			notAimedForDeletion: .some(self.notAimedForDeletion),
-			markedForDeletionOn: toFilterDate(self.markedForDeletionOn),
-			active: toFilter(self.active),
-			visibility: toFilterEnum(self.visibilityLevel),
+			markedForDeletionOn: GraphFilter.toFilterDate(self.markedForDeletionOn),
+			active: GraphFilter.toFilter(self.active),
+			visibility: GraphFilter.toFilterEnum(self.visibilityLevel),
 			includeHidden: .some(self.includeHidden)
 		)
 	}

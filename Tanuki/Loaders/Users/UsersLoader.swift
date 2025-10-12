@@ -21,22 +21,13 @@ struct UsersLoader: View {
 	@State public private(set) var active: Bool? = nil
 	@State public private(set) var humans: Bool? = nil
 
-	/// Wrap a value with GraphQLNullable
-	private func toFilter<T>(_ something: T?) -> GraphQLNullable<T> {
-		if let something {
-			.some(something)
-		} else {
-			.none
-		}
-	}
-
 	// MARK: - Data loading
 	private var query: UsersQuery {
 		return UsersQuery(
-			search: toFilter(self.search),
+			search: GraphFilter.toFilter(self.search),
 			admins: .some(self.admins),
-			active: toFilter(self.active),
-			humans: toFilter(self.humans)
+			active: GraphFilter.toFilter(self.active),
+			humans: GraphFilter.toFilter(self.humans)
 		)
 	}
 

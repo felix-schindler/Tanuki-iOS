@@ -1,22 +1,23 @@
-query ProjectMilestones($fullPath: ID!) {
+query ProjectMilestones($fullPath: ID!, $state: MilestoneStateEnum, $searchTitle: String, $includeAncestors: Boolean) {
   project(fullPath: $fullPath) {
-    milestones(state: active, sort: CREATED_DESC) {
+    milestones(
+      state: $state
+      searchTitle: $searchTitle
+      includeAncestors: $includeAncestors
+    ) {
       nodes {
         id
         iid
         state
         title
         description
-
         expired
         startDate
         dueDate
-
         stats {
           closedIssuesCount
           totalIssuesCount
         }
-
         webPath
       }
     }
