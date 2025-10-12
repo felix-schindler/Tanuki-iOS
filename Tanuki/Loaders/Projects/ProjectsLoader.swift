@@ -17,6 +17,7 @@ struct ProjectsLoader: View {
 
 	// MARK: - Filter
 	public private(set) var namespacePath: String? = nil
+	@State public private(set) var search: String? = nil
 	@State public private(set) var membership: Bool = false
 	@State public private(set) var personal: Bool = false
 	@State public private(set) var withIssuesEnabled: Bool = false
@@ -61,7 +62,7 @@ struct ProjectsLoader: View {
 	private var query: ProjectsQuery {
 		return ProjectsQuery(
 			membership: .some(self.membership),
-			search: .none,
+			search: toFilter(self.search),
 			personal: .some(self.personal),
 			sort: .none,
 			namespacePath: toFilter(self.namespacePath),
@@ -273,6 +274,12 @@ struct ProjectsLoader: View {
 				.navigationBarTitleDisplayMode(.inline)
 				.navigationTitle("Projects Filter")
 			}
+		}.searchable(
+			text: Binding(get: { self.search ?? "" }, set: { self.search = $0.isNotEmpty ? $0 : nil }),
+			prompt: "Name, path, or description"
+		).onChange(of: search) { _ in
+			self.projects = nil  // Show loading state
+			loadProjects()
 		}.navigationTitle("Projects")
 	}
 }

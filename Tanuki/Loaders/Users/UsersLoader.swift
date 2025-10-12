@@ -140,16 +140,13 @@ struct UsersLoader: View {
 				.navigationBarTitleDisplayMode(.inline)
 				.navigationTitle("Users Filter")
 			}
-		}
-		.searchable(
+		}.searchable(
 			text: Binding(get: { self.search ?? "" }, set: { self.search = $0.isNotEmpty ? $0 : nil }),
 			prompt: "Name, username, or primary email"
-		)
-		.onChange(of: search) { _ in
+		).onChange(of: search) { _ in
 			self.users = nil  // Show loading state
 			loadUsers()
-		}
-		.navigationTitle("Users")
+		}.navigationTitle("Users")
 	}
 }
 

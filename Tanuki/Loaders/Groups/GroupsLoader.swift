@@ -17,6 +17,7 @@ struct GroupsLoader: View {
 
 	// MARK: - Filter
 	public private(set) var parentPath: String? = nil
+	@State public private(set) var search: String? = nil
 	@State public private(set) var topLevelOnly: Bool = false
 	@State public private(set) var ownedOnly: Bool = false
 	@State public private(set) var allAvailable: Bool = true
@@ -45,7 +46,7 @@ struct GroupsLoader: View {
 		return GroupsQuery(
 			topLevelOnly: .some(self.topLevelOnly),
 			ownedOnly: .some(self.ownedOnly),
-			search: .none,
+			search: toFilter(self.search),
 			parentPath: toFilter(self.parentPath),
 			allAvailable: toFilter(allAvailable),
 			markedForDeletionOn: toFilterDate(self.markedForDeletionOn),
@@ -187,6 +188,12 @@ struct GroupsLoader: View {
 				.navigationBarTitleDisplayMode(.inline)
 				.navigationTitle("Groups Filter")
 			}
+		}.searchable(
+			text: Binding(get: { self.search ?? "" }, set: { self.search = $0.isNotEmpty ? $0 : nil }),
+			prompt: "Name or full path"
+		).onChange(of: search) { _ in
+			self.groups = nil  // Show loading state
+			loadGroups()
 		}.navigationTitle("Groups")
 	}
 }
