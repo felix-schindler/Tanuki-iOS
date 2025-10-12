@@ -64,8 +64,9 @@ struct UserGroupsLoader: View {
 					if groups.isEmpty {
 						NoContentView("There are no groups", systemImage: "scale.3d")
 					} else {
-						ForEach(groups, id: \.self?.fullPath) { maybeGroup in
-							if let group = maybeGroup {
+						ForEach(groups, id: \.self?.fullPath) { group in
+							if let group {
+								SmallGroupView(group: group)
 							}
 						}
 					}
