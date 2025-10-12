@@ -134,9 +134,7 @@ struct UserSnippetsLoader: View {
 												}
 											}
 										}.swipeActions {
-											if let url = URL(string: snippet.webUrl) {
-												ShareButton(url)
-											}
+											ShareButton(URL(string: snippet.webUrl)!)
 										}
 									}
 								)
