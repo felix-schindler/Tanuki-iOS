@@ -143,7 +143,7 @@ struct UsersLoader: View {
 		}
 		.searchable(
 			text: Binding(get: { self.search ?? "" }, set: { self.search = $0.isNotEmpty ? $0 : nil }),
-			prompt: "name, username, or primary email"
+			prompt: "Name, username, or primary email"
 		)
 		.onChange(of: search) { _ in
 			self.users = nil  // Show loading state
