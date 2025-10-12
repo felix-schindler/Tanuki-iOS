@@ -56,6 +56,8 @@
 		DC33C27B2B9C22F200C99B85 /* MarkdownTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC33C27A2B9C22F200C99B85 /* MarkdownTheme.swift */; };
 		DC386A952B8D5FB2002E5F6D /* MergeRequestLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC386A942B8D5FB2002E5F6D /* MergeRequestLoader.swift */; };
 		DC386A9A2B8D86C4002E5F6D /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC386A992B8D86C4002E5F6D /* NoteView.swift */; };
+		DC39B0FA2E9C39510036F8D7 /* TanukiIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = DC39B0F92E9C39510036F8D7 /* TanukiIcon.icon */; };
+		DC39B0FB2E9C39510036F8D7 /* TanukiIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = DC39B0F92E9C39510036F8D7 /* TanukiIcon.icon */; };
 		DC3A244D2B8C37BF00DB0E3F /* ProjectLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3A244C2B8C37BF00DB0E3F /* ProjectLoader.swift */; };
 		DC3A244F2B8C3B8100DB0E3F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3A244E2B8C3B8100DB0E3F /* Utils.swift */; };
 		DC3A24512B8C3E1A00DB0E3F /* AvatarImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3A24502B8C3E1A00DB0E3F /* AvatarImage.swift */; };
@@ -192,6 +194,7 @@
 		DC33C27A2B9C22F200C99B85 /* MarkdownTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTheme.swift; sourceTree = "<group>"; };
 		DC386A942B8D5FB2002E5F6D /* MergeRequestLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeRequestLoader.swift; sourceTree = "<group>"; };
 		DC386A992B8D86C4002E5F6D /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
+		DC39B0F92E9C39510036F8D7 /* TanukiIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = TanukiIcon.icon; sourceTree = "<group>"; };
 		DC3A244C2B8C37BF00DB0E3F /* ProjectLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLoader.swift; sourceTree = "<group>"; };
 		DC3A244E2B8C3B8100DB0E3F /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DC3A24502B8C3E1A00DB0E3F /* AvatarImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImage.swift; sourceTree = "<group>"; };
@@ -340,6 +343,7 @@
 			children = (
 				DC5F99DF2B9384CE001C88A3 /* Info.plist */,
 				DC2704FE2B8BC0FB003DAA84 /* Tanuki.entitlements */,
+				DC39B0F92E9C39510036F8D7 /* TanukiIcon.icon */,
 				DC2704FC2B8BC0FB003DAA84 /* Assets.xcassets */,
 				DC2704F82B8BC0F9003DAA84 /* TanukiApp.swift */,
 				DC3A24592B8C4C8F00DB0E3F /* Core */,
@@ -678,6 +682,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC39B0FA2E9C39510036F8D7 /* TanukiIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -685,6 +690,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC39B0FB2E9C39510036F8D7 /* TanukiIcon.icon in Resources */,
 				DC2705012B8BC0FB003DAA84 /* Preview Assets.xcassets in Resources */,
 				DC2704FD2B8BC0FB003DAA84 /* Assets.xcassets in Resources */,
 			);
@@ -812,7 +818,7 @@
 		DC2511E42E7F4C7E0021371C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = TanukiIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -845,7 +851,7 @@
 		DC2511E52E7F4C7E0021371C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = TanukiIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -998,7 +1004,7 @@
 		DC2705052B8BC0FB003DAA84 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = TanukiIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tanuki/Tanuki.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
@@ -1046,7 +1052,7 @@
 		DC2705062B8BC0FB003DAA84 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = TanukiIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Tanuki/Tanuki.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
