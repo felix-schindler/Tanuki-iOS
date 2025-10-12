@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ConfigView: View {
+	public private(set) var showSetup: Binding<Bool>
+
 	@State
 	private var newHost = API.host
 
@@ -64,6 +66,7 @@ struct ConfigView: View {
 							"Welcome, \(user.username)",
 							systemImage: "checkmark"
 						)
+						self.showSetup.wrappedValue = false
 					} catch let error {
 						API.host = ""
 						API.token = ""
@@ -95,6 +98,6 @@ struct ConfigView: View {
 
 #Preview {
 	NavigationView {
-		ConfigView()
+		ConfigView(showSetup: .constant(true))
 	}
 }

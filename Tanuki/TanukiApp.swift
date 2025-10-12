@@ -10,12 +10,13 @@ import SwiftUI
 
 @main
 struct TanukiApp: App {
+	@State
 	private var showSetup = API.host.isEmpty || API.token.isEmpty
 
 	public var body: some Scene {
 		WindowGroup {
 			if showSetup {
-				SetupView()
+				SetupView(showSetup: $showSetup)
 			} else {
 				main
 			}
@@ -40,7 +41,7 @@ struct TanukiApp: App {
 				Label("Explore", systemImage: "sparkles")
 			}.tag(2)
 			NavigationView {
-				CurrentUserLoader()
+				CurrentUserLoader(showSetup: $showSetup)
 			}.tabItem {
 				Label("Profile", systemImage: "person")
 			}.tag(3)

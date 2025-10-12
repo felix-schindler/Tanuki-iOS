@@ -9,12 +9,15 @@ import MarkdownUI
 import SwiftUI
 
 struct SetupView: View {
+	private var showSetup: Binding<Bool>
+	
 	/// For CSRF protection
 	private let state: String
 	private let codeVerifier: String
 	private let codeChallenge: String
 
-	public init() {
+	public init(showSetup: Binding<Bool>) {
+		self.showSetup = showSetup
 		self.state = UUID().uuidString
 		self.codeVerifier = Auth.generateCodeVerifier()
 		self.codeChallenge = Auth.generateCodeChallenge(codeVerifier: self.codeVerifier)
@@ -78,7 +81,7 @@ struct SetupView: View {
 				.controlSize(.large)
 
 				NavigationLink(
-					destination: ConfigView(),
+					destination: ConfigView(showSetup: showSetup),
 					label: {
 						Text("Self-Hosted instance")
 							.frame(maxWidth: .infinity)
@@ -136,6 +139,7 @@ struct SetupView: View {
 									"Welcome, \(user.username)",
 									systemImage: "checkmark"
 								)
+								self.showSetup.wrappedValue = false
 							} catch let error {
 								print(error)
 								Notify.status(
@@ -173,5 +177,5 @@ struct SetupView: View {
 }
 
 #Preview {
-	SetupView()
+	SetupView(showSetup: .constant(true))
 }
