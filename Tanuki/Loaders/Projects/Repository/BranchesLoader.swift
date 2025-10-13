@@ -40,30 +40,27 @@ struct BranchesLoader: View {
 					if branches.isEmpty {
 						NoContentView(
 							"You'll see your branches after you pushed them",
-							systemImage: "chevron.left.forwardslash.chevron.right")
+							systemImage: "chevron.left.forwardslash.chevron.right"
+						)
 					} else {
 						ForEach(branches, id: \.name) { branch in
-							HStack {
+							VStack(alignment: .leading) {
+								HStack {
+									if branch.protected {
+										Image(systemName: "lock")
+									}
+									Text(branch.name.emojized())
+										.font(.headline)
+								}
+
 								VStack(alignment: .leading) {
 									HStack {
-										if branch.protected {
-											Image(systemName: "lock")
-										}
-										Text(branch.name.emojized())
-											.font(.headline)
+										Text(branch.commit.shortId)
+											.font(.system(.footnote, design: .monospaced))
+										Text(branch.commit.authoredDate.toString())
 									}
-
-									VStack(alignment: .leading) {
-										HStack {
-											Text(branch.commit.shortId)
-												.font(.system(.footnote, design: .monospaced))
-											Text(branch.commit.authoredDate.toString())
-										}
-										Text(branch.commit.title.emojized())
-									}.font(.footnote)
-								}
-								Spacer()
-								// TODO: PipelineLoader(id: id, branch: branch.name)
+									Text(branch.commit.title.emojized())
+								}.font(.footnote)
 							}
 						}
 					}
@@ -72,7 +69,9 @@ struct BranchesLoader: View {
 				}
 			} else {
 				LoadingView(
-					"Loading Branches", systemImage: "chevron.left.forwardslash.chevron.right")
+					"Loading Branches",
+					systemImage: "chevron.left.forwardslash.chevron.right"
+				)
 			}
 		}.onAppear {
 			Task {
