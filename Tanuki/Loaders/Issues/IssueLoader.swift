@@ -19,7 +19,7 @@ struct IssueLoader: View {
 
 	@State
 	private var project: Result<GitLabAPI.IssueQuery.Data.Project, Error>? = nil
-	
+
 	@State
 	private var showDeleteConfirm = false
 
@@ -77,19 +77,20 @@ struct IssueLoader: View {
 			Notify.status(.error)
 		}
 	}
-	
+
 	// MARK: - Issue mutations
 	private func changeState(_ state: IssueStateEvent) async {
 		do {
 			_ = try await Network.shared.apollo.perform(
-				mutation: IssueStateMutation(projectPath: self.fullPath, iid: self.iid, stateEvent: GraphFilter.toFilterEnum(state))
+				mutation: IssueStateMutation(
+					projectPath: self.fullPath, iid: self.iid, stateEvent: GraphFilter.toFilterEnum(state))
 			)
 			await reloadIssue()
 		} catch let error {
 			Notify.status(.error, "Failed to change issue state", error.localizedDescription)
 		}
 	}
-	
+
 	private func deleteIssue(_ projectId: Int) async {
 		do {
 			try await API.delete(endpoint: "projects/\(projectId)/issues/\(self.iid)")
@@ -331,7 +332,10 @@ struct IssueLoader: View {
 								if let projectId = project.id.toIntId() {
 									Button("Delete issue", systemImage: "trash", role: .destructive) {
 										self.showDeleteConfirm = true
-									}.confirmationDialog("Are you sure you want to delete issue #\(self.iid)?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
+									}.confirmationDialog(
+										"Are you sure you want to delete issue #\(self.iid)?",
+										isPresented: $showDeleteConfirm, titleVisibility: .visible
+									) {
 										AsyncButton("Delete", role: .destructive) {
 											await self.deleteIssue(projectId)
 										}

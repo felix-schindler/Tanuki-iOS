@@ -69,11 +69,10 @@ struct SmallMergeView: View {
 						}
 					}.font(.footnote)
 				}.swipeActions {
-					Button("Close", systemImage: "minus.circle") {
-						// TODO: Add action
-					}.tint(.blue)
-					if let webUrl = URL(string: mr.webUrl ?? "") {
-						ShareButton(webUrl)
+					if let webUrl = mr.webUrl,
+						let url = URL(string: webUrl)
+					{
+						ShareButton(url)
 					}
 				}
 			}

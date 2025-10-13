@@ -93,7 +93,6 @@ struct SmallCommitView: View {
 		}.swipeActions {
 			if let url = URL(string: commit.webUrl) {
 				ShareButton(url)
-					.tint(.blue)
 			}
 		}
 	}

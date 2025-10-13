@@ -54,13 +54,6 @@ struct SmallIssueView: View {
 					}
 				}
 			}.font(.footnote)
-		}.swipeActions {
-			Button(
-				"Close",
-				systemImage: "minus.circle"
-			) {
-				// TODO: Add action
-			}.tint(.blue)
 		}
 	}
 }

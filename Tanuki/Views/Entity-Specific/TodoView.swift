@@ -87,15 +87,10 @@ struct TodoView: View {
 				}
 			}.font(.footnote)
 		}.swipeActions {
-			if let webUrl = URL(string: todo._webUrl ?? "") {
-				ShareButton(webUrl)
-					.tint(.blue)
-				Link(
-					destination: webUrl,
-					label: {
-						Label("open in Browser", systemImage: "safari")
-							.tint(.accentColor)
-					})
+			if let webUrl = todo._webUrl,
+				let url = URL(string: webUrl)
+			{
+				ShareButton(url)
 			}
 		}
 	}
