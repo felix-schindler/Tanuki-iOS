@@ -11,22 +11,31 @@ import MarkdownUI
 import SwiftUI
 
 struct IssueLoader: View {
+	@Environment(\.presentationMode)
+	var presentationMode: Binding<PresentationMode>
+
 	private let fullPath: String
 	private let iid: String
 
 	@State
 	private var project: Result<GitLabAPI.IssueQuery.Data.Project, Error>? = nil
+	
+	@State
+	private var showDeleteConfirm = false
 
 	@State
 	private var newNoteContent = ""
-
-	@State var newNoteError = false
 
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
 		self.iid = iid
 	}
 
+	private func dismiss() {
+		self.presentationMode.wrappedValue.dismiss()
+	}
+
+	// MARK: - Data loading
 	private func loadIssue() {
 		do {
 			let responses = try Network.shared.apollo.fetch(
@@ -66,6 +75,28 @@ struct IssueLoader: View {
 		} catch let error {
 			self.project = .failure(error)
 			Notify.status(.error)
+		}
+	}
+	
+	// MARK: - Issue mutations
+	private func changeState(_ state: IssueStateEvent) async {
+		do {
+			_ = try await Network.shared.apollo.perform(
+				mutation: IssueStateMutation(projectPath: self.fullPath, iid: self.iid, stateEvent: GraphFilter.toFilterEnum(state))
+			)
+			await reloadIssue()
+		} catch let error {
+			Notify.status(.error, "Failed to change issue state", error.localizedDescription)
+		}
+	}
+	
+	private func deleteIssue(_ projectId: Int) async {
+		do {
+			try await API.delete(endpoint: "projects/\(projectId)/issues/\(self.iid)")
+			Notify.status(.success, "Issue #\(self.iid) was deleted", systemImage: "trash")
+			self.dismiss()
+		} catch let error {
+			Notify.status(.error, "Failed to delete issue", error.localizedDescription)
 		}
 	}
 
@@ -288,21 +319,27 @@ struct IssueLoader: View {
 						if issue.userPermissions.updateIssue {
 							Section("Actions") {
 								if issue.state == .opened {
-									Button("Close issue", systemImage: "smallcircle.circle") {
-										// TODO: Implement
-										Notify.status(.error, "Not yet implemented")
+									AsyncButton("Close issue", systemImage: "smallcircle.circle") {
+										await self.changeState(.close)
 									}.tint(.blue)
 								} else if issue.state == .closed {
-									Button("Reopen issue", systemImage: "arrow.triangle.swap") {
-										// TODO: Implement
-										Notify.status(.error, "Not yet implemented")
+									AsyncButton("Reopen issue", systemImage: "arrow.triangle.swap") {
+										await self.changeState(.reopen)
 									}.tint(.green)
 								}
 
-								Button("Delete issue", systemImage: "trash", role: .destructive) {
-									// TODO: Implement
-									Notify.status(.error, "Not yet implemented")
-								}.tint(.red)
+								if let projectId = project.id.toIntId() {
+									Button("Delete issue", systemImage: "trash", role: .destructive) {
+										self.showDeleteConfirm = true
+									}.confirmationDialog("Are you sure you want to delete issue #\(self.iid)?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
+										AsyncButton("Delete", role: .destructive) {
+											await self.deleteIssue(projectId)
+										}
+										Button("Cancel", role: .cancel) {
+											showDeleteConfirm = false
+										}
+									}.tint(.red)
+								}
 							}
 						}
 
@@ -319,7 +356,6 @@ struct IssueLoader: View {
 											// TODO: Save note
 											if newNoteContent.isEmpty {
 												Notify.status(.error, "Please provide content")
-												newNoteError = true
 											} else {
 												Notify.status(.success)
 												newNoteContent = ""

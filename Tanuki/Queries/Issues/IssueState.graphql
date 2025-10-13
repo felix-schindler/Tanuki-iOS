@@ -1,0 +1,14 @@
+mutation IssueState($projectPath: ID!, $iid: String!, $stateEvent: IssueStateEvent) {
+  updateIssue(
+    input: {projectPath: $projectPath, iid: $iid, stateEvent: $stateEvent}
+  ) {
+    issue {
+      id
+      iid
+      title
+      state
+      webUrl
+    }
+    errors
+  }
+}

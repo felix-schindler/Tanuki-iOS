@@ -73,6 +73,7 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "Milestone": return GitLabAPI.Objects.Milestone
     case "MilestoneConnection": return GitLabAPI.Objects.MilestoneConnection
     case "MilestoneStats": return GitLabAPI.Objects.MilestoneStats
+    case "Mutation": return GitLabAPI.Objects.Mutation
     case "Namespace": return GitLabAPI.Objects.Namespace
     case "Note": return GitLabAPI.Objects.Note
     case "NoteConnection": return GitLabAPI.Objects.NoteConnection
@@ -114,6 +115,7 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "Tree": return GitLabAPI.Objects.Tree
     case "TreeEntry": return GitLabAPI.Objects.TreeEntry
     case "TreeEntryConnection": return GitLabAPI.Objects.TreeEntryConnection
+    case "UpdateIssuePayload": return GitLabAPI.Objects.UpdateIssuePayload
     case "UserCore": return GitLabAPI.Objects.UserCore
     case "UserCoreConnection": return GitLabAPI.Objects.UserCoreConnection
     case "UserStatus": return GitLabAPI.Objects.UserStatus

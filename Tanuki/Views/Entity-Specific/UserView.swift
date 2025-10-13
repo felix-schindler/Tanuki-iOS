@@ -188,11 +188,9 @@ struct UserView: View {
 			}
 		}
 
-		Section("Contributions") {
-			if #available(iOS 16.0, *) {
+		if #available(iOS 16.0, *) {
+			Section("Contributions") {
 				ContributionsLoader(username: user.username)
-			} else {
-				Text("Contributions are available in iOS 16.0+")
 			}
 		}
 
