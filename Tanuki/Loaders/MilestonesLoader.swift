@@ -21,7 +21,7 @@ struct MilestonesLoader: View {
 
 	@State
 	private var milestones: Result<[Milestone?], Error>? = nil
-	
+
 	@State
 	private var showFilters = false
 
@@ -140,48 +140,28 @@ struct MilestonesLoader: View {
 					} else {
 						ForEach(milestones, id: \.?.iid) { milestone in
 							if let milestone {
-								if let description = milestone.description?.emojized(),
-									description.isNotEmpty
-								{
-									Section(
-										content: {
-											Markdown(description)
-												.markdownTheme(.gitLab)
+								VStack(alignment: .leading, spacing: 10) {
+									Label(
+										title: {
+											Text(milestone.title.emojized())
 										},
-										header: {
-											Label(
-												title: {
-													Text(milestone.title.emojized())
-												},
-												icon: {
-													Image(systemName: "diamond")
-														.foregroundStyle(
-															milestone.state == .closed
-																? .red
-																: (milestone.expired
-																	? .orange
-																	: .green)
-														)
-												}
-											)
-										})
-								} else {
-									Section {
-										Label(
-											title: {
-												Text(milestone.title.emojized())
-											},
-											icon: {
-												Image(systemName: "diamond")
-													.foregroundStyle(
-														milestone.state == .closed
-															? .red
-															: (milestone.expired
-																? .orange
-																: .green)
-													)
-											}
-										)
+										icon: {
+											Image(systemName: "diamond")
+												.foregroundStyle(
+													milestone.state == .closed
+														? .red
+														: (milestone.expired
+															? .orange
+															: .green)
+												)
+										}
+									)
+
+									if let description = milestone.description?.emojized(),
+										description.isNotEmpty
+									{
+										Markdown(description)
+											.markdownTheme(.gitLab)
 									}
 								}
 							}
