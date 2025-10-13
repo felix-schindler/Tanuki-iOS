@@ -431,6 +431,7 @@ struct MergeRequestLoader: View {
 											}
 										}
 										.padding()
+										.modifier(PresentationDetendsIfAvailable())
 									}
 								}
 

@@ -59,30 +59,17 @@ struct PipelineStatus: View {
 			.tint(self.color)
 			.controlSize(.mini)
 		}.sheet(isPresented: $showInfo) {
-			if #available(iOS 16.0, *) {
-				VStack(alignment: .leading) {
-					PopupHeader(
-						title: "Pipeline status",
-						onClose: {
-							showInfo = false
-						})
-					Text("The current Pipeline status is \"\(state.rawValue)\"")
-					Spacer()
-				}
-				.padding()
-				.presentationDetents([.fraction(0.2)])
-			} else {
-				VStack(alignment: .leading) {
-					PopupHeader(
-						title: "Pipeline status",
-						onClose: {
-							showInfo = false
-						})
-					Text("The current Pipeline status is \"\(state.rawValue)\"")
-					Spacer()
-				}
-				.padding()
+			VStack(alignment: .leading) {
+				PopupHeader(
+					title: "Pipeline status",
+					onClose: {
+						showInfo = false
+					})
+				Text("The current Pipeline status is \"\(state.rawValue)\"")
+				Spacer()
 			}
+			.padding()
+			.modifier(PresentationDetendsIfAvailable())
 		}
 	}
 }

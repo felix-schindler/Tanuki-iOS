@@ -16,3 +16,13 @@ struct ScrollDismissIfAvailable: ViewModifier {
 		}
 	}
 }
+
+struct PresentationDetendsIfAvailable: ViewModifier {
+	func body(content: Content) -> some View {
+		if #available(iOS 16.0, *) {
+			content.presentationDetents([.fraction(0.2), .medium])
+		} else {
+			content
+		}
+	}
+}
