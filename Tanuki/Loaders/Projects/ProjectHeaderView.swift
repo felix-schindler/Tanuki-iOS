@@ -10,14 +10,33 @@ import GitLabAPI
 import MarkdownUI
 import SwiftUI
 
+struct ToggleStar: Codable {
+	let starCount: Int
+}
+
 struct ProjectHeaderView: View {
 	private let project: ProjectQuery.Data.Project
 
+	@State
+	private var starCount: Int
+
 	init(_ project: ProjectQuery.Data.Project) {
 		self.project = project
+		self.starCount = project.starCount
 	}
 
-	var body: some View {
+	private func star(_ fullPath: String) async {
+		do {
+			let toggle = try await API.req(
+				type: ToggleStar.self, method: .post, endpoint: "\(fullPath)/toggle_star.json", useBase: false)
+			self.starCount = toggle.starCount
+			Notify.status(.success, "Toggled star")
+		} catch let error {
+			Notify.status(.error, "Failed to toggle star", error.localizedDescription, systemImage: "star")
+		}
+	}
+
+	public var body: some View {
 		VStack(alignment: .leading) {
 			HStack {
 				if let avatarUrl = URL.fromAvatar(project.avatarUrl) {
@@ -58,7 +77,8 @@ struct ProjectHeaderView: View {
 					Text(
 						Date.fromToString(
 							createdAt,
-							dateStyle: .short)
+							dateStyle: .short
+						)
 					)
 				}
 			}.font(.footnote)
@@ -95,15 +115,21 @@ struct ProjectHeaderView: View {
 						}
 					}
 
-					Button(
-						String(project.starCount),
-						systemImage: "star"
-					) {
-						// TODO: Implement
-						Notify.status(.error, "Not yet implemented")
+					if let fullPath = project.namespace?.fullPath {
+						AsyncButton(
+							String(project.starCount),
+							systemImage: "star"
+						) {
+							await star(fullPath)
+						}
+						.tint(.accentColor)
+						.buttonStyle(.bordered)
+					} else {
+						PillView(
+							String(project.starCount),
+							icon: "star"
+						)
 					}
-					.tint(.accentColor)
-					.buttonStyle(.bordered)
 
 					if project.userPermissions.forkProject,
 						let projectUrl = URL(string: "\(project.webUrl ?? "")/-/forks/new")
