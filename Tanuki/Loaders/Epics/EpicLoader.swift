@@ -162,31 +162,11 @@ struct EpicLoader: View {
 							}
 
 							HStack {
-								Button(
-									action: {
-										// TODO: Toggle like
-									},
-									label: {
-										HStack(spacing: 5) {
-											Image(systemName: "hand.thumbsup")
-											Text(String(epic.upvotes))
-										}
-									})
-								Button(
-									action: {
-										// TODO: Toggle like
-									},
-									label: {
-										HStack(spacing: 5) {
-											Image(systemName: "hand.thumbsdown")
-											Text(String(epic.downvotes))
-										}
-									})
+								PillView(String(epic.upvotes), icon: "hand.thumbsup")
+								PillView(String(epic.downvotes), icon: "hand.thumbsdown")
 							}
-							.controlSize(.small)
-							.buttonStyle(.bordered)
+							.modifier(LabelSpacingIfAvailable())
 							.font(.footnote)
-							.foregroundStyle(.primary)
 						}.font(.footnote)
 
 						Section("Details") {

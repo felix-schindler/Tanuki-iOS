@@ -156,33 +156,11 @@ struct MergeRequestLoader: View {
 							}
 
 							HStack {
-								Button(
-									action: {
-										// TODO: Toggle like
-										Notify.status(.error, "Not yet implemented")
-									},
-									label: {
-										HStack(spacing: 5) {
-											Image(systemName: "hand.thumbsup")
-											Text(String(mr.upvotes))
-										}
-									})
-								Button(
-									action: {
-										// TODO: Toggle like
-										Notify.status(.error, "Not yet implemented")
-									},
-									label: {
-										HStack(spacing: 5) {
-											Image(systemName: "hand.thumbsdown")
-											Text(String(mr.downvotes))
-										}
-									})
+								PillView(String(mr.upvotes), icon: "hand.thumbsup")
+								PillView(String(mr.downvotes), icon: "hand.thumbsdown")
 							}
-							.controlSize(.small)
-							.buttonStyle(.bordered)
+							.modifier(LabelSpacingIfAvailable())
 							.font(.footnote)
-							.foregroundStyle(.primary)
 						}
 
 						Section("Details") {
