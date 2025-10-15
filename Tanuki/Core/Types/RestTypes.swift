@@ -67,3 +67,9 @@ struct RestAPIMilestone: Codable {
 struct RestAPIIssue: Codable {
 	let iid: Int
 }
+
+// MARK: - Merge Requests
+struct RestAPIMergeRequest: Codable {
+	let iid: Int
+	let state: String
+}

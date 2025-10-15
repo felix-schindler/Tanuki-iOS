@@ -22,9 +22,6 @@ struct MergeRequestLoader: View {
 	@State
 	private var newNoteError = false
 
-	@State
-	private var showMergeStatus = false
-
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
 		self.iid = iid
@@ -71,7 +68,7 @@ struct MergeRequestLoader: View {
 			Notify.status(.error)
 		}
 	}
-
+	
 	public var body: some View {
 		List {
 			if let project {
@@ -358,59 +355,23 @@ struct MergeRequestLoader: View {
 							(mr.userPermissions.canApprove
 								|| mr.userPermissions.canMerge
 								|| mr.userPermissions.updateMergeRequest)
-						if showMergeSection {
+						if showMergeSection,
+							let projectId = project.id.toIntId()
+						{
 							Section("Actions") {
-								if mr.userPermissions.canMerge
-									&& mr.mergeStatusEnum != nil
+								if mr.userPermissions.canMerge,
+									let mergeStatusEnum = mr.mergeStatusEnum
 								{
-									Button(
-										action: {
-											if mr.mergeStatusEnum != .canBeMerged {
-												showMergeStatus = true
-												Haptics.shared.play(.light)
-											} else {
-												// TODO: Show OPTIONS for merge
-											}
+									MergeButton(
+										iid: mr.iid,
+										projectId: projectId,
+										onMerge: {
+											await reloadMergeRequest()
 										},
-										label: {
-											MergeStatus(mr.mergeStatusEnum!)
-										}
-									).sheet(isPresented: $showMergeStatus) {
-										VStack(alignment: .leading) {
-											PopupHeader(
-												title: "Detailed merge status",
-												onClose: {
-													showMergeStatus = false
-												}
-											)
-
-											if mr.conflicts {
-												Label(
-													title: {
-														VStack {
-															Text(
-																"Merge conflicts must be resolved."
-															)
-
-														}
-													},
-													icon: {
-														Image(
-															systemName:
-																"minus.circle.fill"
-														)
-														.foregroundStyle(.red)
-													}
-												)
-											}
-
-											if let detailedMergeStatus = mr.detailedMergeStatus {
-												DetailedMergeStatusView(detailedMergeStatus)
-											}
-										}
-										.padding()
-										.modifier(PresentationDetendsIfAvailable())
-									}
+										hasConflicts: mr.conflicts,
+										mergeStatusEnum: mergeStatusEnum,
+										detailedMergeStatus: mr.detailedMergeStatus
+									)
 								}
 
 								if mr.userPermissions.canApprove {

@@ -95,6 +95,7 @@
 		DC8978242E7F515800D42E4C /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = DC8978232E7F515800D42E4C /* Apollo */; };
 		DC8978262E7F515800D42E4C /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC8978252E7F515800D42E4C /* ApolloAPI */; };
 		DC89783D2E7F558300D42E4C /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = DC89783C2E7F558300D42E4C /* CachedAsyncImage */; };
+		DC961C6F2E9E9BE80076D49F /* MergeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC961C6E2E9E9BE80076D49F /* MergeButton.swift */; };
 		DCAA7E3A2E9B0C860078DB8E /* GroupsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA7E392E9B0C860078DB8E /* GroupsLoader.swift */; };
 		DCAA7E3C2E9B0F4F0078DB8E /* SmallGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA7E3B2E9B0F4F0078DB8E /* SmallGroupView.swift */; };
 		DCAA7E3E2E9B169F0078DB8E /* UsersLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA7E3D2E9B169F0078DB8E /* UsersLoader.swift */; };
@@ -223,6 +224,7 @@
 		DC6C5DAC2B8F10D500587850 /* UserMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMergeLoader.swift; sourceTree = "<group>"; };
 		DC6C5DB22B8F8BBF00587850 /* Emojis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emojis.swift; sourceTree = "<group>"; };
 		DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupView.swift; sourceTree = "<group>"; };
+		DC961C6E2E9E9BE80076D49F /* MergeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeButton.swift; sourceTree = "<group>"; };
 		DCAA7E392E9B0C860078DB8E /* GroupsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsLoader.swift; sourceTree = "<group>"; };
 		DCAA7E3B2E9B0F4F0078DB8E /* SmallGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallGroupView.swift; sourceTree = "<group>"; };
 		DCAA7E3D2E9B169F0078DB8E /* UsersLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersLoader.swift; sourceTree = "<group>"; };
@@ -478,6 +480,7 @@
 				DC0A6A382B8CE4FF00C53D56 /* PipelineStatus.swift */,
 				DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */,
 				DC21AA762B903ECA00976E64 /* UserView.swift */,
+				DC961C6E2E9E9BE80076D49F /* MergeButton.swift */,
 			);
 			path = "Entity-Specific";
 			sourceTree = "<group>";
@@ -769,6 +772,7 @@
 				DC5F37082B91A1D100BF7F9D /* AuthorView.swift in Sources */,
 				DC0FF5B62B8C7AFB002B4FAE /* ProjectMergeLoader.swift in Sources */,
 				DC2D65E72E7EFC74007A800C /* AsyncButton.swift in Sources */,
+				DC961C6F2E9E9BE80076D49F /* MergeButton.swift in Sources */,
 				DC386A9A2B8D86C4002E5F6D /* NoteView.swift in Sources */,
 				DC69F1542B95A2DE00F09269 /* ProjectReleasesLoader.swift in Sources */,
 				DC3276652B9B503C00B51EEE /* UserTodosLoader.swift in Sources */,
