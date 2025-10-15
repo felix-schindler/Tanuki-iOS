@@ -159,8 +159,6 @@ struct GroupLoader: View {
 
 						DisclosureGroup(
 							content: {
-								// TODO: There seems to be no way to get the activity events of a group
-								// Text("Activity")
 								if let groupId = group.id?.toIntId() {
 									NavigationLink(
 										"Members",
