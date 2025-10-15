@@ -5,11 +5,12 @@
 //  Created by Felix Schindler on 24.09.25.
 //
 
-enum StringOrArray: Codable {
+enum EncodableValue: Codable {
 	case string(String)
 	case array([String])
 	case int(Int)
 	case intArray([Int])
+	case boolean(Bool)
 
 	// MARK: Codable conformance
 	init(from decoder: Decoder) throws {
@@ -24,7 +25,7 @@ enum StringOrArray: Codable {
 			self = .intArray(intArr)
 		} else {
 			throw DecodingError.typeMismatch(
-				StringOrArray.self,
+				EncodableValue.self,
 				DecodingError.Context(
 					codingPath: decoder.codingPath,
 					debugDescription: "Expected String or [String]")
@@ -43,6 +44,8 @@ enum StringOrArray: Codable {
 			try container.encode(int)
 		case .intArray(let intArr):
 			try container.encode(intArr)
+		case .boolean(let bool):
+			try container.encode(bool)
 		}
 	}
 }

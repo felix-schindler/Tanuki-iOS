@@ -107,7 +107,7 @@ struct NewIssueView: View {
 	}
 
 	private func createIssue() async {
-		var body: [String: StringOrArray] = [:]
+		var body: Dictionary<String,EncodableValue> = [:]
 
 		if title.isEmpty {
 			Notify.status(.error, "Please enter a title.")

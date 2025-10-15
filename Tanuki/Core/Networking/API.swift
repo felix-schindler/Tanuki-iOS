@@ -53,7 +53,7 @@ class API {
 		body: (any Encodable)? = nil,
 		contentType: ContentType = .json
 	) async throws -> HttpResponse {
-		var headers: [HttpHeaderKey: String] = [:]
+		var headers: Dictionary<HttpHeaderKey,String> = [:]
 		var reqBody: Data? = nil
 
 		print(method, url.url.absoluteString)
@@ -93,7 +93,7 @@ class API {
 		endpoint: String,
 		resource: String? = nil,
 		suffix: String? = nil,
-		query: [String: String] = [:],
+		query: Dictionary<String,String> = [:],
 		body: (any Encodable)? = nil,
 		contentType: ContentType = .json,
 		useBase: Bool = true
@@ -139,7 +139,7 @@ class API {
 	public static func get<T: Codable>(
 		type: T.Type,
 		endpoint: String,
-		query: [String: String] = [:],
+		query: Dictionary<String,String> = [:],
 		useBase: Bool = true
 	) async throws -> T {
 		return try await API.req(
@@ -153,7 +153,7 @@ class API {
 
 	public static func delete(
 		endpoint: String,
-		query: [String: String] = [:]
+		query: Dictionary<String,String> = [:]
 	) async throws {
 		_ = try await API.raw(
 			method: .delete,
