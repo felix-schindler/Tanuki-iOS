@@ -108,12 +108,6 @@ struct ProjectPipelinesLoader: View {
 									}
 									Spacer()
 									PipelineStatus(pipeline.status)
-								}.swipeActions {
-									if pipeline.cancelable {
-										Button("Cancel", systemImage: "slash.circle") {
-											// TODO: Implement
-										}
-									}
 								}
 							}
 						}

@@ -415,7 +415,8 @@ struct ProjectLoader: View {
 					},
 					label: {
 						EmptyView()
-					})
+					}
+				)
 			}
 		}
 		.navigationTitle(self.fullPath)

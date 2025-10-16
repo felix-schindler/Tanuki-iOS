@@ -8,7 +8,7 @@ public struct EpicQuery: GraphQLQuery {
   public static let operationName: String = "Epic"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Epic($fullPath: ID!, $iid: ID!) { group(fullPath: $fullPath) { __typename avatarUrl epic(iid: $iid) { __typename iid title description reference(full: true) state dueDate createdAt webUrl startDate dueDate color textColor upvotes downvotes userNotesCount author { __typename avatarUrl name username } ancestors { __typename nodes { __typename iid } } blockedByEpics { __typename nodes { __typename iid } } children { __typename nodes { __typename iid } } userPermissions { __typename updateEpic createNote } labels { __typename nodes { __typename title color textColor } } notes { __typename nodes { __typename id author { __typename avatarUrl name username } maxAccessLevelOfAuthor body system systemNoteIconName createdAt updatedAt } } } } }"#
+      #"query Epic($fullPath: ID!, $iid: ID!) { group(fullPath: $fullPath) { __typename id avatarUrl epic(iid: $iid) { __typename iid title description reference(full: true) state dueDate createdAt webUrl startDate dueDate color textColor upvotes downvotes userNotesCount author { __typename avatarUrl name username } ancestors { __typename nodes { __typename iid } } blockedByEpics { __typename nodes { __typename iid } } children { __typename nodes { __typename iid } } userPermissions { __typename updateEpic createNote } labels { __typename nodes { __typename title color textColor } } notes { __typename nodes { __typename id author { __typename avatarUrl name username } maxAccessLevelOfAuthor body system systemNoteIconName createdAt updatedAt } } } } }"#
     ))
 
   public var fullPath: ID
@@ -52,6 +52,7 @@ public struct EpicQuery: GraphQLQuery {
       @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
+        .field("id", GitLabAPI.ID?.self),
         .field("avatarUrl", String?.self),
         .field("epic", Epic?.self, arguments: ["iid": .variable("iid")]),
       ] }
@@ -59,6 +60,8 @@ public struct EpicQuery: GraphQLQuery {
         EpicQuery.Data.Group.self
       ] }
 
+      /// ID of the group.
+      public var id: GitLabAPI.ID? { __data["id"] }
       /// Avatar URL of the group.
       public var avatarUrl: String? { __data["avatarUrl"] }
       /// Find a single epic. Deprecated in GitLab 17.5: Replaced by `WorkItem` type. For more information, see [migration guide](https://docs.gitlab.com/api/graphql/epic_work_items_api_migration_guide/).

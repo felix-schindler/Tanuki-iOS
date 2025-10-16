@@ -10,6 +10,9 @@ import MarkdownUI
 import SwiftUI
 
 struct MergeRequestLoader: View {
+	@Environment(\.presentationMode)
+	var presentationMode: Binding<PresentationMode>
+
 	private let fullPath: String
 	private let iid: String
 
@@ -69,6 +72,50 @@ struct MergeRequestLoader: View {
 		}
 	}
 	
+	private func approve(_ projectId: Int) async {
+		do {
+			_ = try await API.req(type: RestAPIMergeRequest.self, method: .post, endpoint: "projects/\(projectId)/merge_requests/\(self.iid)/approve")
+			await reloadMergeRequest()
+		} catch let error {
+			Notify.status(.error, "Failed to approve", error.localizedDescription)
+		}
+	}
+	
+	private func unapprove(_ projectId: Int) async {
+		do {
+			_ = try await API.req(type: RestAPIMergeRequest.self, method: .post, endpoint: "projects/\(projectId)/merge_requests/\(self.iid)/unapprove")
+			await reloadMergeRequest()
+		} catch let error {
+			Notify.status(.error, "Failed to unapprove", error.localizedDescription)
+		}
+	}
+	
+	private func changeState(_ projectId: Int, state: String) async {
+		var body: Dictionary<String,EncodableValue> = [:]
+		body["state_event"] = .string(state)
+		
+		do {
+			_ = try await API.req(
+				type: RestAPIMergeRequest.self,
+				method: .put,
+				endpoint: "projects/\(projectId)/merge_requests/\(self.iid)",
+				body: body
+			)
+			await reloadMergeRequest()
+		} catch let error {
+			Notify.status(.error, "Failed to change state", error.localizedDescription)
+		}
+	}
+
+	private func remove(_ projectId: Int) async {
+		do {
+			_ = try await API.delete(endpoint: "projects/\(projectId)/merge_requests/\(self.iid)")
+			self.presentationMode.wrappedValue.dismiss()
+		} catch let error {
+			Notify.status(.error, "Failed to delete MR", error.localizedDescription)
+		}
+	}
+
 	public var body: some View {
 		List {
 			if let project {
@@ -376,56 +423,51 @@ struct MergeRequestLoader: View {
 
 								if mr.userPermissions.canApprove {
 									if mr.approved {
-										Button(
+										AsyncButton(
 											"Revoke approval",
 											systemImage: "person.fill.xmark"
 										) {
-											// TODO: Implement
-											Notify.status(.error, "Not yet implemented")
+											await unapprove(projectId)
 										}.tint(.red)
 									} else {
-										Button(
+										AsyncButton(
 											"Approve",
 											systemImage: "person.fill.checkmark"
 										) {
-											// TODO: Implement
-											Notify.status(.error, "Not yet implemented")
+											await approve(projectId)
 										}.tint(.green)
 									}
 								}
 
 								if mr.userPermissions.updateMergeRequest {
 									if mr.state == .opened {
-										Button(
+										AsyncButton(
 											action: {
-												// TODO: Implement
-												Notify.status(.error, "Not yet implemented")
+												await changeState(projectId, state: "close")
 											},
 											label: {
 												Label(
 													"Close MR",
-													systemImage:
-														"arrow.triangle.swap")
+													systemImage: "arrow.triangle.swap"
+												)
 											}
 										).tint(.blue)
 									} else if mr.state == .closed {
-										Button(
+										AsyncButton(
 											action: {
-												// TODO: Implement
-												Notify.status(.error, "Not yet implemented")
+												await changeState(projectId, state: "reopen")
 											},
 											label: {
 												Label(
 													"Reopen MR",
-													systemImage:
-														"arrow.triangle.swap")
+													systemImage: "arrow.triangle.swap"
+												)
 											}
 										).tint(.green)
 									}
 
-									Button("Delete MR", systemImage: "trash") {
-										// TODO: Implement
-										Notify.status(.error, "Not yet implemented")
+									AsyncButton("Delete MR", systemImage: "trash") {
+										await remove(projectId)
 									}.tint(.red)
 								}
 							}

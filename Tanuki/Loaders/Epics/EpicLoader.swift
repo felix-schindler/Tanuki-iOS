@@ -66,6 +66,21 @@ struct EpicLoader: View {
 			Notify.status(.error)
 		}
 	}
+	
+	private func changeState(_ groupId: Int, _ state: String) async {
+		var body = ["state_event": state]
+		
+		do {
+			_ = try await API.req(
+				type: UserSmall.self,
+				method: .put,
+				endpoint: "groups/\(groupId)/epics/\(self.iid)"
+			)
+			await reloadEpic()
+		} catch let error {
+			Notify.status(.error, "Failed to change state", error.localizedDescription)
+		}
+	}
 
 	public var body: some View {
 		List {
@@ -257,28 +272,31 @@ struct EpicLoader: View {
 							}
 						}
 
-						if epic.userPermissions.updateEpic {
+						if epic.userPermissions.updateEpic,
+						   let groupId = group.id?.toIntId() {
 							Section("Actions") {
 								if epic.state == .opened {
-									Button(
+									AsyncButton(
 										action: {
-											// TODO: Implement
+											await changeState(groupId, "close")
 										},
 										label: {
 											Label(
-												"Close issue",
-												systemImage: "smallcircle.circle")
+												"Close epic",
+												systemImage: "smallcircle.circle"
+											)
 										}
 									).tint(.blue)
 								} else if epic.state == .closed {
-									Button(
+									AsyncButton(
 										action: {
-											// TODO: Implement
+											await changeState(groupId, "reopen")
 										},
 										label: {
 											Label(
-												"Reopen issue",
-												systemImage: "arrow.triangle.swap")
+												"Reopen epic",
+												systemImage: "arrow.triangle.swap"
+											)
 										}
 									).tint(.green)
 								}

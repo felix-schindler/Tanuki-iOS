@@ -135,7 +135,7 @@ struct NewIssueView: View {
 		}
 
 		if confidential {
-			body["confidential"] = .string("true")
+			body["confidential"] = .boolean(true)
 		}
 
 		if setDueDate {

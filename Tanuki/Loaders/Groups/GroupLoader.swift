@@ -14,6 +14,9 @@ struct GroupLoader: View {
 
 	@State
 	private var group: Result<GroupQuery.Data.Group, Error>? = nil
+	
+	@State
+	private var navigationActive = false
 
 	init(fullPath: String) {
 		self.fullPath = fullPath
@@ -54,6 +57,15 @@ struct GroupLoader: View {
 		} catch let error {
 			self.group = .failure(error)
 			Notify.status(.error)
+		}
+	}
+	
+	private func requestAccess(_ groupId: Int) async {
+		do {
+			_ = try await API.req(type: UserSmall.self, method: .post, endpoint: "groups/\(groupId)/access_requests")
+			Notify.status(.success, "Access request sent")
+		} catch let error {
+			Notify.status(.error, "Failed to request access", error.localizedDescription)
 		}
 	}
 
@@ -260,24 +272,38 @@ struct GroupLoader: View {
 						Menu("More", systemImage: "ellipsis") {
 							if group.userPermissions.createProjects {
 								Button("Create project", systemImage: "plus") {
-									// TODO: Implement
-									Notify.status(.error, "Not yet implemented")
+									navigationActive = true
 								}
 							}
 
-							if group.requestAccessEnabled ?? false {
-								Button(
+							if group.requestAccessEnabled ?? false,
+							   let groupId = group.id?.toIntId() {
+								AsyncButton(
 									"Request access",
 									systemImage: "person.badge.plus"
 								) {
-									// TODO: Implement
-									Notify.status(.error, "Not yet implemented")
+									await requestAccess(groupId)
 								}
 							}
 						}
 					}
 				}
 			}
+		}.background {
+			NavigationLink(
+				isActive: $navigationActive,
+				destination: {
+					if let group, case .success(let group) = group,
+					   let groupId = group.id?.toIntId() {
+						NewProjectView(groupId)
+					} else {
+						FailedView("Form couldn't be opened because the namespace ID is not defined")
+					}
+				},
+				label: {
+					EmptyView()
+				}
+			)
 		}
 		.navigationTitle(fullPath)
 		.navigationBarTitleDisplayMode(.inline)
