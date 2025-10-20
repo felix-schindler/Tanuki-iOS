@@ -71,29 +71,33 @@ struct MergeRequestLoader: View {
 			Notify.status(.error)
 		}
 	}
-	
+
 	private func approve(_ projectId: Int) async {
 		do {
-			_ = try await API.req(type: RestAPIMergeRequest.self, method: .post, endpoint: "projects/\(projectId)/merge_requests/\(self.iid)/approve")
+			_ = try await API.req(
+				type: RestAPIMergeRequest.self, method: .post,
+				endpoint: "projects/\(projectId)/merge_requests/\(self.iid)/approve")
 			await reloadMergeRequest()
 		} catch let error {
 			Notify.status(.error, "Failed to approve", error.localizedDescription)
 		}
 	}
-	
+
 	private func unapprove(_ projectId: Int) async {
 		do {
-			_ = try await API.req(type: RestAPIMergeRequest.self, method: .post, endpoint: "projects/\(projectId)/merge_requests/\(self.iid)/unapprove")
+			_ = try await API.req(
+				type: RestAPIMergeRequest.self, method: .post,
+				endpoint: "projects/\(projectId)/merge_requests/\(self.iid)/unapprove")
 			await reloadMergeRequest()
 		} catch let error {
 			Notify.status(.error, "Failed to unapprove", error.localizedDescription)
 		}
 	}
-	
+
 	private func changeState(_ projectId: Int, state: String) async {
-		var body: Dictionary<String,EncodableValue> = [:]
+		var body: [String: EncodableValue] = [:]
 		body["state_event"] = .string(state)
-		
+
 		do {
 			_ = try await API.req(
 				type: RestAPIMergeRequest.self,

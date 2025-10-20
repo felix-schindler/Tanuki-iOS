@@ -19,7 +19,7 @@ struct MergeButton: View {
 	// MARK: - Sheets
 	@State private var showMergeStatus = false
 	@State private var showMergeOptions = false
-	
+
 	// MARK: - Form
 	@State private var autoMerge = false
 	@State private var commitMessage = ""
@@ -43,44 +43,44 @@ struct MergeButton: View {
 		self.mergeStatusEnum = mergeStatusEnum
 		self.detailedMergeStatus = detailedMergeStatus
 	}
-	
+
 	private func merge() async {
 		do {
-			var body: Dictionary<String,EncodableValue> = [:]
-			
+			var body: [String: EncodableValue] = [:]
+
 			if autoMerge {
 				body["auto_merge"] = .boolean(true)
 			}
-			
+
 			if commitMessage.isNotEmpty {
 				body["merge_commit_message"] = .string(commitMessage)
 			}
-			
+
 			if sha.isNotEmpty {
 				body["sha"] = .string(sha)
 			}
-			
+
 			if removeSourceBranch {
 				body["should_remove_source_branch"] = .boolean(true)
 			}
-			
+
 			if squash {
 				body["squash"] = .boolean(true)
-				
+
 				if squashMessage.isNotEmpty {
 					body["squash_commit_message"] = .string(squashMessage)
 				}
 			}
-			
+
 			_ = try await API.req(
 				type: RestAPIMergeRequest.self,
 				method: .put,
 				endpoint: "projects/\(self.projectId)/merge_requests/\(self.iid)/merge",
 				body: body
 			)
-			
+
 			Notify.status(.success, "Merged request #\(self.iid)")
-			
+
 			await onMerge()
 		} catch let error {
 			Notify.status(.error, "Failed to merge", error.localizedDescription)
@@ -136,9 +136,11 @@ struct MergeButton: View {
 					TextField("Custom merge commit message", text: $commitMessage)
 					VStack(alignment: .leading) {
 						TextField("SHA", text: $sha)
-						Text("If present, then this SHA must match the HEAD of the source branch, otherwise the merge fails.")
-							.foregroundStyle(.secondary)
-							.font(.footnote)
+						Text(
+							"If present, then this SHA must match the HEAD of the source branch, otherwise the merge fails."
+						)
+						.foregroundStyle(.secondary)
+						.font(.footnote)
 					}
 					Toggle("Remove source branch", isOn: $removeSourceBranch)
 					Toggle("Squash all commits into a single commit on merge", isOn: $squash)

@@ -66,10 +66,10 @@ struct EpicLoader: View {
 			Notify.status(.error)
 		}
 	}
-	
+
 	private func changeState(_ groupId: Int, _ state: String) async {
 		var body = ["state_event": state]
-		
+
 		do {
 			_ = try await API.req(
 				type: UserSmall.self,
@@ -273,7 +273,8 @@ struct EpicLoader: View {
 						}
 
 						if epic.userPermissions.updateEpic,
-						   let groupId = group.id?.toIntId() {
+							let groupId = group.id?.toIntId()
+						{
 							Section("Actions") {
 								if epic.state == .opened {
 									AsyncButton(

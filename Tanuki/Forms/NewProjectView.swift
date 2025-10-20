@@ -22,14 +22,14 @@ enum ProjectVisibility: String {
 struct NewProjectView: View {
 	@Environment(\.presentationMode)
 	var presentationMode: Binding<PresentationMode>
-	
+
 	private let namespaceId: Int?
 
 	@State private var projectName = ""
 	@State private var visibility = ProjectVisibility.private
 	@State private var readme = false
 	@State private var defaultBranch = "main"
-	
+
 	init(_ namespaceId: Int? = nil) {
 		self.namespaceId = namespaceId
 	}
@@ -39,7 +39,7 @@ struct NewProjectView: View {
 	}
 
 	private func createProject() async {
-		var body: Dictionary<String,EncodableValue> = [
+		var body: [String: EncodableValue] = [
 			"name": .string(projectName),
 			"visibility": .string(visibility.rawValue),
 		]
@@ -48,7 +48,7 @@ struct NewProjectView: View {
 			body["initialize_with_readme"] = .boolean(true)
 			body["default_branch"] = .string(defaultBranch)
 		}
-		
+
 		if let namespaceId {
 			body["namespace_id"] = .int(namespaceId)
 		}

@@ -14,7 +14,7 @@ struct GroupLoader: View {
 
 	@State
 	private var group: Result<GroupQuery.Data.Group, Error>? = nil
-	
+
 	@State
 	private var navigationActive = false
 
@@ -59,7 +59,7 @@ struct GroupLoader: View {
 			Notify.status(.error)
 		}
 	}
-	
+
 	private func requestAccess(_ groupId: Int) async {
 		do {
 			_ = try await API.req(type: UserSmall.self, method: .post, endpoint: "groups/\(groupId)/access_requests")
@@ -277,7 +277,8 @@ struct GroupLoader: View {
 							}
 
 							if group.requestAccessEnabled ?? false,
-							   let groupId = group.id?.toIntId() {
+								let groupId = group.id?.toIntId()
+							{
 								AsyncButton(
 									"Request access",
 									systemImage: "person.badge.plus"
@@ -294,7 +295,8 @@ struct GroupLoader: View {
 				isActive: $navigationActive,
 				destination: {
 					if let group, case .success(let group) = group,
-					   let groupId = group.id?.toIntId() {
+						let groupId = group.id?.toIntId()
+					{
 						NewProjectView(groupId)
 					} else {
 						FailedView("Form couldn't be opened because the namespace ID is not defined")

@@ -76,7 +76,7 @@ struct NewReleaseView: View {
 	}
 
 	private func createNewRelease() async {
-		var body: Dictionary<String,EncodableValue> = [:]
+		var body: [String: EncodableValue] = [:]
 
 		if tagName.isNotEmpty {
 			body["tag_name"] = .string(tagName)
