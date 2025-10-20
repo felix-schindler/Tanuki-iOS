@@ -1,8 +1,8 @@
 query MergeRequest($fullPath: ID!, $iid: String!) {
   project(fullPath: $fullPath) {
-	id
-	avatarUrl
-	
+  id
+  avatarUrl
+
     mergeRequest(iid: $iid) {
       iid
       title
@@ -35,26 +35,26 @@ query MergeRequest($fullPath: ID!, $iid: String!) {
       }
       createdAt
       webUrl
-      
+
       approved
       mergeStatusEnum
       conflicts
       detailedMergeStatus
-      
+
       assignees {
         nodes {
           avatarUrl
           username
         }
       }
-      
+
       reviewers {
         nodes {
           avatarUrl
           username
         }
       }
-      
+
       labels {
         nodes {
           title
@@ -62,18 +62,18 @@ query MergeRequest($fullPath: ID!, $iid: String!) {
           textColor
         }
       }
-      
+
       milestone {
         iid
         title
       }
-      
+
       humanTimeEstimate
       humanTotalTimeSpent
-      
+
       notes {
         nodes {
-		  id
+          id
           author {
             avatarUrl
             name

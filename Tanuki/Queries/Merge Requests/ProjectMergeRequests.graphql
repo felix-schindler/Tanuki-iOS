@@ -1,7 +1,7 @@
 query ProjectMergeRequests($fullPath: ID!) {
   project(fullPath: $fullPath) {
     mergeRequestsEnabled
-    
+
     mergeRequests(state: opened) {
       nodes {
         iid
@@ -14,7 +14,7 @@ query ProjectMergeRequests($fullPath: ID!) {
         author {
           avatarUrl
           name
-		  username
+          username
         }
         createdAt
         webUrl

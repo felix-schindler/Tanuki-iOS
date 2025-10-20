@@ -24,21 +24,21 @@ query Project($fullPath: ID!) {
     }
     repository {
       rootRef
-	  readme: blobs(paths: ["README.md", "README", "README.txt"], first: 1) {
-		nodes {
-		  rawTextBlob
-	    }
-	  }
-	  license: blobs(paths: ["LICENSE", "LICENSE.txt", "LICENSE.md", "COPYING"], first: 1) {
-	    nodes {
-		  rawTextBlob
-	    }
-	  }
-	  contributing: blobs(paths: ["CONTRIBUTING", "CONTRIBUTING.txt", "CONTRIBUTING.md"], first: 1) {
-	    nodes {
-		  rawTextBlob
-	    }
-	  }
+      readme: blobs(paths: ["README.md", "README", "README.txt"], first: 1) {
+        nodes {
+          rawTextBlob
+        }
+      }
+      license: blobs(paths: ["LICENSE", "LICENSE.txt", "LICENSE.md", "COPYING"], first: 1) {
+        nodes {
+          rawTextBlob
+        }
+      }
+      contributing: blobs(paths: ["CONTRIBUTING", "CONTRIBUTING.txt", "CONTRIBUTING.md"], first: 1) {
+        nodes {
+          rawTextBlob
+        }
+      }
       tree {
         lastCommit {
           id
@@ -46,7 +46,7 @@ query Project($fullPath: ID!) {
           shortId
           authorName
           authoredDate
-		  webUrl
+          webUrl
           signature {
             verificationStatus
           }

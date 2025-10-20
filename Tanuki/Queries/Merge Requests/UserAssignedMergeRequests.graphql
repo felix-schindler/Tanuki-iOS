@@ -20,6 +20,6 @@ query UserAssignedMergeRequests {
         createdAt
         webUrl
       }
-	}
+    }
   }
 }

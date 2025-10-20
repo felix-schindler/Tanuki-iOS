@@ -14,7 +14,7 @@ query UserIssues($username: String!) {
               downvotes
               userNotesCount
               author {
-				avatarUrl
+                avatarUrl
                 name
                 username
               }

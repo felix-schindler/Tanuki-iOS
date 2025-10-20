@@ -58,8 +58,8 @@ query Issue($fullPath: ID!, $iid: String!) {
 
       notes {
         nodes {
-		  id
-		  author {
+          id
+          author {
             avatarUrl
             name
             username

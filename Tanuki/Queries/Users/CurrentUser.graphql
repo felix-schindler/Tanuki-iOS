@@ -17,7 +17,7 @@ query CurrentUser {
     jobTitle
     organization
     createdAt
-    
+
     # Contact
     discord
     twitter
@@ -25,7 +25,7 @@ query CurrentUser {
     publicEmail
 
     groupCount
-	
+
     webUrl
   }
 }

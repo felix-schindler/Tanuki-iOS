@@ -7,24 +7,24 @@ query ProjectReleasesQuery($fullPath: ID!) {
         description
         tagName
         releasedAt
-        
+
         author {
           avatarUrl
           name
           username
         }
-        
+
         commit {
           shortId
         }
-        
+
         milestones {
           nodes {
             id
             title
           }
         }
-        
+
         assets {
           count
           links {

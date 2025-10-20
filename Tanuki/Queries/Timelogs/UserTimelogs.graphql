@@ -2,7 +2,7 @@ query UserTimelogs($username: String!) {
   user(username: $username) {
     timelogs(sort: SPENT_AT_DESC) {
       nodes {
-		id
+        id
         user {
           avatarUrl
           name

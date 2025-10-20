@@ -14,7 +14,7 @@ query CurrentUserIssues {
               downvotes
               userNotesCount
               author {
-				avatarUrl
+                avatarUrl
                 name
                 username
               }

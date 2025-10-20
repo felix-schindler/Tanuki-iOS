@@ -1,29 +1,29 @@
 query Group($fullPath: ID!) {
   group(fullPath:$fullPath) {
     id
-    
+
     avatarUrl
     name
     path
     fullName
     visibility
     description
-    
+
     descendantGroupsCount
     groupMembersCount
     projectsCount
-	
-	requestAccessEnabled
+
+    requestAccessEnabled
     webUrl
-    
+
     maxAccessLevel {
       stringValue
     }
-    
+
     userPermissions {
       createProjects
     }
-    
+
     parent {
       name
       fullPath
