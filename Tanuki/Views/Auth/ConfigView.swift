@@ -53,6 +53,16 @@ struct ConfigView: View {
 			AsyncButton(
 				action: {
 					do {
+						if newHost.contains("/"),
+							let tempUrl = URL(string: newHost),
+							let _newHost = tempUrl.host
+						{
+							newHost = _newHost
+						} else {
+							Notify.status(.error, "Please only provide the host, not a URI")
+							return
+						}
+
 						API.host = self.newHost
 						API.token = self.newToken
 
@@ -68,7 +78,7 @@ struct ConfigView: View {
 						)
 						self.showSetup.wrappedValue = false
 					} catch let error {
-						API.host = ""
+						API.host = "gitlab.com"
 						API.token = ""
 
 						Notify.status(
