@@ -8,16 +8,40 @@ public struct GroupIssuesQuery: GraphQLQuery {
   public static let operationName: String = "GroupIssues"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query GroupIssues($fullPath: ID!) { group(fullPath: $fullPath) { __typename issues(state: opened) { __typename nodes { __typename iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename avatarUrl name username } createdAt webUrl } } } }"#
+      #"query GroupIssues($fullPath: ID!, $state: IssuableState, $search: String, $confidential: Boolean, $subscribed: SubscriptionStatus, $types: [IssueType!]) { group(fullPath: $fullPath) { __typename issues( state: $state search: $search confidential: $confidential subscribed: $subscribed types: $types ) { __typename nodes { __typename iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename avatarUrl name username } createdAt webUrl } } } }"#
     ))
 
   public var fullPath: ID
+  public var state: GraphQLNullable<GraphQLEnum<IssuableState>>
+  public var search: GraphQLNullable<String>
+  public var confidential: GraphQLNullable<Bool>
+  public var subscribed: GraphQLNullable<GraphQLEnum<SubscriptionStatus>>
+  public var types: GraphQLNullable<[GraphQLEnum<IssueType>]>
 
-  public init(fullPath: ID) {
+  public init(
+    fullPath: ID,
+    state: GraphQLNullable<GraphQLEnum<IssuableState>>,
+    search: GraphQLNullable<String>,
+    confidential: GraphQLNullable<Bool>,
+    subscribed: GraphQLNullable<GraphQLEnum<SubscriptionStatus>>,
+    types: GraphQLNullable<[GraphQLEnum<IssueType>]>
+  ) {
     self.fullPath = fullPath
+    self.state = state
+    self.search = search
+    self.confidential = confidential
+    self.subscribed = subscribed
+    self.types = types
   }
 
-  @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
+  @_spi(Unsafe) public var __variables: Variables? { [
+    "fullPath": fullPath,
+    "state": state,
+    "search": search,
+    "confidential": confidential,
+    "subscribed": subscribed,
+    "types": types
+  ] }
 
   public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
@@ -44,7 +68,13 @@ public struct GroupIssuesQuery: GraphQLQuery {
       @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
-        .field("issues", Issues?.self, arguments: ["state": "opened"]),
+        .field("issues", Issues?.self, arguments: [
+          "state": .variable("state"),
+          "search": .variable("search"),
+          "confidential": .variable("confidential"),
+          "subscribed": .variable("subscribed"),
+          "types": .variable("types")
+        ]),
       ] }
       @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
         GroupIssuesQuery.Data.Group.self

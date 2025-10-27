@@ -1,6 +1,12 @@
-query GroupIssues($fullPath: ID!) {
+query GroupIssues($fullPath: ID!, $state: IssuableState, $search: String, $confidential: Boolean, $subscribed: SubscriptionStatus, $types: [IssueType!]) {
   group(fullPath: $fullPath) {
-    issues(state: opened) {
+    issues(
+      state: $state
+      search: $search
+      confidential: $confidential
+      subscribed: $subscribed
+      types: $types
+    ) {
       nodes {
         iid
         title

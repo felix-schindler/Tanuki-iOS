@@ -1,10 +1,18 @@
-query UserIssues($username: String!) {
+query UserIssues($username: String!, $state: IssuableState, $search: String, $confidential: Boolean, $subscribed: SubscriptionStatus, $types: [IssueType!]) {
   user(username: $username) {
     projectMemberships {
       nodes {
         project {
           fullPath
-          issues(state: opened, assigneeUsernames: [$username], authorUsername: $username) {
+          issues(
+            state: $state
+            search: $search
+            confidential: $confidential
+            subscribed: $subscribed
+            types: $types
+            assigneeUsernames: [$username]
+            authorUsername: $username
+          ) {
             nodes {
               iid
               title

@@ -1,12 +1,17 @@
-query ProjectIssues($fullPath: ID!) {
+query ProjectIssues($fullPath: ID!, $state: IssuableState, $search: String, $confidential: Boolean, $subscribed: SubscriptionStatus, $types: [IssueType!]) {
   project(fullPath: $fullPath) {
     id
     issuesEnabled
     userPermissions {
       createIssue
     }
-
-    issues(state: opened) {
+    issues(
+      state: $state
+      search: $search
+      confidential: $confidential
+      subscribed: $subscribed
+      types: $types
+    ) {
       nodes {
         iid
         title

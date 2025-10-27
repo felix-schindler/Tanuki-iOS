@@ -8,16 +8,40 @@ public struct ProjectIssuesQuery: GraphQLQuery {
   public static let operationName: String = "ProjectIssues"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query ProjectIssues($fullPath: ID!) { project(fullPath: $fullPath) { __typename id issuesEnabled userPermissions { __typename createIssue } issues(state: opened) { __typename nodes { __typename iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename avatarUrl name username } createdAt webUrl } } } }"#
+      #"query ProjectIssues($fullPath: ID!, $state: IssuableState, $search: String, $confidential: Boolean, $subscribed: SubscriptionStatus, $types: [IssueType!]) { project(fullPath: $fullPath) { __typename id issuesEnabled userPermissions { __typename createIssue } issues( state: $state search: $search confidential: $confidential subscribed: $subscribed types: $types ) { __typename nodes { __typename iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename avatarUrl name username } createdAt webUrl } } } }"#
     ))
 
   public var fullPath: ID
+  public var state: GraphQLNullable<GraphQLEnum<IssuableState>>
+  public var search: GraphQLNullable<String>
+  public var confidential: GraphQLNullable<Bool>
+  public var subscribed: GraphQLNullable<GraphQLEnum<SubscriptionStatus>>
+  public var types: GraphQLNullable<[GraphQLEnum<IssueType>]>
 
-  public init(fullPath: ID) {
+  public init(
+    fullPath: ID,
+    state: GraphQLNullable<GraphQLEnum<IssuableState>>,
+    search: GraphQLNullable<String>,
+    confidential: GraphQLNullable<Bool>,
+    subscribed: GraphQLNullable<GraphQLEnum<SubscriptionStatus>>,
+    types: GraphQLNullable<[GraphQLEnum<IssueType>]>
+  ) {
     self.fullPath = fullPath
+    self.state = state
+    self.search = search
+    self.confidential = confidential
+    self.subscribed = subscribed
+    self.types = types
   }
 
-  @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
+  @_spi(Unsafe) public var __variables: Variables? { [
+    "fullPath": fullPath,
+    "state": state,
+    "search": search,
+    "confidential": confidential,
+    "subscribed": subscribed,
+    "types": types
+  ] }
 
   public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
@@ -47,7 +71,13 @@ public struct ProjectIssuesQuery: GraphQLQuery {
         .field("id", GitLabAPI.ID.self),
         .field("issuesEnabled", Bool?.self),
         .field("userPermissions", UserPermissions.self),
-        .field("issues", Issues?.self, arguments: ["state": "opened"]),
+        .field("issues", Issues?.self, arguments: [
+          "state": .variable("state"),
+          "search": .variable("search"),
+          "confidential": .variable("confidential"),
+          "subscribed": .variable("subscribed"),
+          "types": .variable("types")
+        ]),
       ] }
       @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
         ProjectIssuesQuery.Data.Project.self

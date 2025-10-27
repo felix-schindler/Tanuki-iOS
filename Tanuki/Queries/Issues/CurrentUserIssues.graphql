@@ -1,10 +1,16 @@
-query CurrentUserIssues {
+query CurrentUserIssues($state: IssuableState, $search: String, $confidential: Boolean, $subscribed: SubscriptionStatus, $types: [IssueType!]) {
   currentUser {
     projectMemberships {
       nodes {
         project {
           fullPath
-          issues(state: opened) {
+          issues(
+            state: $state
+            search: $search
+            confidential: $confidential
+            subscribed: $subscribed
+            types: $types
+          ) {
             nodes {
               iid
               title
