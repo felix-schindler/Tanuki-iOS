@@ -13,11 +13,19 @@ import SwiftUI
 struct UserIssuesLoader: View {
 	@State
 	private var projectMemberships: Result<[IssueProjectMembership?], Error>? = nil
-
+	
 	private func loadIssues() {
 		do {
 			let responses = try Network.shared.apollo.fetch(
-				query: CurrentUserIssuesQuery(), cachePolicy: .cacheAndNetwork)
+				query: CurrentUserIssuesQuery(
+					state: .some(.case(.opened)),
+					search: .none,
+					confidential: .none,
+					subscribed: .none,
+					types: .none
+				),
+				cachePolicy: .cacheAndNetwork
+			)
 
 			Task {
 				for try await response in responses {
@@ -36,7 +44,15 @@ struct UserIssuesLoader: View {
 	func reloadIssues() async {
 		do {
 			let response = try await Network.shared.apollo.fetch(
-				query: CurrentUserIssuesQuery(), cachePolicy: .networkOnly)
+				query: CurrentUserIssuesQuery(
+					state: .some(.case(.opened)),
+					search: .none,
+					confidential: .none,
+					subscribed: .none,
+					types: .none
+				),
+				cachePolicy: .networkOnly
+			)
 
 			if let projectMemberships = response.data?.currentUser?.projectMemberships?.nodes {
 				self.projectMemberships = .success(projectMemberships)

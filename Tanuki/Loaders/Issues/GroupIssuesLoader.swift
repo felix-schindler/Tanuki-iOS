@@ -12,6 +12,12 @@ import SwiftUI
 struct GroupIssuesLoader: View {
 	private let fullPath: String
 
+	@State
+	public var filter = IssueFilter()
+
+	@State
+	private var showFilters = false
+
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
@@ -22,7 +28,14 @@ struct GroupIssuesLoader: View {
 	private func loadIssues() {
 		do {
 			let responses = try Network.shared.apollo.fetch(
-				query: GroupIssuesQuery(fullPath: self.fullPath),
+				query: GroupIssuesQuery(
+					fullPath: self.fullPath,
+					state: GraphFilter.toFilterEnum(self.filter.state),
+					search: GraphFilter.toFilter(self.filter.search),
+					confidential: GraphFilter.toFilter(self.filter.confidential),
+					subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
+					types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
+				),
 				cachePolicy: .cacheAndNetwork
 			)
 
@@ -46,7 +59,14 @@ struct GroupIssuesLoader: View {
 	private func reloadIssues() async {
 		do {
 			let response = try await Network.shared.apollo.fetch(
-				query: GroupIssuesQuery(fullPath: self.fullPath),
+				query: GroupIssuesQuery(
+					fullPath: self.fullPath,
+					state: GraphFilter.toFilterEnum(self.filter.state),
+					search: GraphFilter.toFilter(self.filter.search),
+					confidential: GraphFilter.toFilter(self.filter.confidential),
+					subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
+					types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
+				),
 				cachePolicy: .networkOnly
 			)
 
@@ -85,6 +105,20 @@ struct GroupIssuesLoader: View {
 			loadIssues()
 		}.refreshable {
 			await reloadIssues()
+		}.toolbar {
+			Button("Filter", systemImage: "line.3.horizontal.decrease") {
+				showFilters = true
+			}
+		}.sheet(isPresented: $showFilters, onDismiss: { self.showFilters = false }) {
+			NavigationView {
+				IssueFilterView(filter: $filter)
+					.toolbar {
+						AsyncButton("Apply filter", systemImage: "checkmark") {
+							await reloadIssues()
+							showFilters = false
+						}
+					}
+			}
 		}.navigationTitle("Issues")
 	}
 }

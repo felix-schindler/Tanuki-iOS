@@ -105,6 +105,7 @@
 		DCB6B6352BB7063B006C8437 /* DiffsStatsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6342BB7063B006C8437 /* DiffsStatsLoader.swift */; };
 		DCB6B6372BB70CD8006C8437 /* MrCommitsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6362BB70CD8006C8437 /* MrCommitsLoader.swift */; };
 		DCB6B6392BB70F9C006C8437 /* SmallCommitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */; };
+		DCB9660B2EAEC535004D3CFA /* IssueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB9660A2EAEC535004D3CFA /* IssueFilter.swift */; };
 		DCC54EBF2E9AB16E005B9CE3 /* ProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC54EBE2E9AB16E005B9CE3 /* ProjectsLoader.swift */; };
 		DCC95E572BC5274B0040D657 /* ContributionsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC95E562BC5274B0040D657 /* ContributionsLoader.swift */; };
 		DCCB5D8D2B9C0E8300D5D70A /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */; };
@@ -233,6 +234,7 @@
 		DCB6B6342BB7063B006C8437 /* DiffsStatsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffsStatsLoader.swift; sourceTree = "<group>"; };
 		DCB6B6362BB70CD8006C8437 /* MrCommitsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MrCommitsLoader.swift; sourceTree = "<group>"; };
 		DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCommitView.swift; sourceTree = "<group>"; };
+		DCB9660A2EAEC535004D3CFA /* IssueFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilter.swift; sourceTree = "<group>"; };
 		DCC54EBE2E9AB16E005B9CE3 /* ProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsLoader.swift; sourceTree = "<group>"; };
 		DCC95E562BC5274B0040D657 /* ContributionsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributionsLoader.swift; sourceTree = "<group>"; };
 		DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoView.swift; sourceTree = "<group>"; };
@@ -481,6 +483,7 @@
 				DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */,
 				DC21AA762B903ECA00976E64 /* UserView.swift */,
 				DC961C6E2E9E9BE80076D49F /* MergeButton.swift */,
+				DCB9660A2EAEC535004D3CFA /* IssueFilter.swift */,
 			);
 			path = "Entity-Specific";
 			sourceTree = "<group>";
@@ -809,6 +812,7 @@
 				DC4B428F2BA56213007A9DB1 /* CommitSignatureLoader.swift in Sources */,
 				DC0A6A412B8D03EC00C53D56 /* StateIcons.swift in Sources */,
 				DC1C37EE2B99B18A005B7D7A /* EpicIssuesLoader.swift in Sources */,
+				DCB9660B2EAEC535004D3CFA /* IssueFilter.swift in Sources */,
 				DC0FF5B42B8C7892002B4FAE /* ProjectIssuesLoader.swift in Sources */,
 				DC1D100E2B9975E000B6F5D7 /* ProjectPipelinesLoader.swift in Sources */,
 				DC13E8A32B8DE32400994E8A /* IssueLoader.swift in Sources */,

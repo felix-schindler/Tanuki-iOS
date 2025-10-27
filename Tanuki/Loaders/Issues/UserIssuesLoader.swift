@@ -12,6 +12,12 @@ import SwiftUI
 struct UserIssuesLoader: View {
 	private let username: String?
 
+	@State
+	public var filter = IssueFilter()
+
+	@State
+	private var showFilters = false
+
 	init(username: String? = nil) {
 		self.username = username
 	}
@@ -23,7 +29,14 @@ struct UserIssuesLoader: View {
 		do {
 			if let username {
 				let responses = try Network.shared.apollo.fetch(
-					query: UserIssuesQuery(username: username), cachePolicy: .cacheAndNetwork)
+					query: UserIssuesQuery(
+						username: username,
+						state: GraphFilter.toFilterEnum(self.filter.state),
+						search: GraphFilter.toFilter(self.filter.search),
+						confidential: GraphFilter.toFilter(self.filter.confidential),
+						subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
+						types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
+					), cachePolicy: .cacheAndNetwork)
 
 				Task {
 					for try await response in responses {
@@ -38,7 +51,13 @@ struct UserIssuesLoader: View {
 				}
 			} else {
 				let responses = try Network.shared.apollo.fetch(
-					query: CurrentUserIssuesQuery(), cachePolicy: .cacheAndNetwork)
+					query: CurrentUserIssuesQuery(
+						state: GraphFilter.toFilterEnum(self.filter.state),
+						search: GraphFilter.toFilter(self.filter.search),
+						confidential: GraphFilter.toFilter(self.filter.confidential),
+						subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
+						types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
+					), cachePolicy: .cacheAndNetwork)
 
 				Task {
 					for try await response in responses {
@@ -64,14 +83,27 @@ struct UserIssuesLoader: View {
 		do {
 			if let username {
 				let response = try await Network.shared.apollo.fetch(
-					query: UserIssuesQuery(username: username), cachePolicy: .networkOnly)
+					query: UserIssuesQuery(
+						username: username,
+						state: GraphFilter.toFilterEnum(self.filter.state),
+						search: GraphFilter.toFilter(self.filter.search),
+						confidential: GraphFilter.toFilter(self.filter.confidential),
+						subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
+						types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
+					), cachePolicy: .networkOnly)
 
 				if let projectMemberships = response.data?.user?.projectMemberships?.nodes {
 					self.projectMemberships = .success(projectMemberships)
 				}
 			} else {
 				let response = try await Network.shared.apollo.fetch(
-					query: CurrentUserIssuesQuery(), cachePolicy: .networkOnly)
+					query: CurrentUserIssuesQuery(
+						state: GraphFilter.toFilterEnum(self.filter.state),
+						search: GraphFilter.toFilter(self.filter.search),
+						confidential: GraphFilter.toFilter(self.filter.confidential),
+						subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
+						types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
+					), cachePolicy: .networkOnly)
 
 				if let projectMemberships = response.data?.currentUser?.projectMemberships?.nodes {
 					self.projectMemberships = .success(projectMemberships)
@@ -120,11 +152,23 @@ struct UserIssuesLoader: View {
 				LoadingView("Loading Issues", systemImage: "smallcircle.circle", color: .green)
 			}
 		}.onAppear {
-			Task {
-				loadIssues()
-			}
+			loadIssues()
 		}.refreshable {
 			await reloadIssues()
+		}.toolbar {
+			Button("Filter", systemImage: "line.3.horizontal.decrease") {
+				showFilters = true
+			}
+		}.sheet(isPresented: $showFilters, onDismiss: { self.showFilters = false }) {
+			NavigationView {
+				IssueFilterView(filter: $filter)
+					.toolbar {
+						AsyncButton("Apply filter", systemImage: "checkmark") {
+							await reloadIssues()
+							showFilters = false
+						}
+					}
+			}
 		}.navigationTitle("Issues")
 	}
 }

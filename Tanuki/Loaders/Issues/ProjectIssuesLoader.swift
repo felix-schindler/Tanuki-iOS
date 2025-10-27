@@ -14,6 +14,12 @@ struct ProjectIssuesLoader: View {
 	private let fullPath: String
 
 	@State
+	public var filter = IssueFilter()
+
+	@State
+	private var showFilters = false
+
+	@State
 	private var project: Result<GitLabAPI.ProjectIssuesQuery.Data.Project, Error>? = nil
 
 	init(fullPath: String) {
@@ -23,7 +29,14 @@ struct ProjectIssuesLoader: View {
 	private func loadIssues() {
 		do {
 			let responses = try Network.shared.apollo.fetch(
-				query: ProjectIssuesQuery(fullPath: self.fullPath),
+				query: ProjectIssuesQuery(
+					fullPath: self.fullPath,
+					state: GraphFilter.toFilterEnum(self.filter.state),
+					search: GraphFilter.toFilter(self.filter.search),
+					confidential: GraphFilter.toFilter(self.filter.confidential),
+					subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
+					types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
+				),
 				cachePolicy: .cacheAndNetwork
 			)
 
@@ -47,7 +60,14 @@ struct ProjectIssuesLoader: View {
 	private func reloadIssues() async {
 		do {
 			let response = try await Network.shared.apollo.fetch(
-				query: ProjectIssuesQuery(fullPath: self.fullPath),
+				query: ProjectIssuesQuery(
+					fullPath: self.fullPath,
+					state: GraphFilter.toFilterEnum(self.filter.state),
+					search: GraphFilter.toFilter(self.filter.search),
+					confidential: GraphFilter.toFilter(self.filter.confidential),
+					subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
+					types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
+				),
 				cachePolicy: .networkOnly
 			)
 
@@ -95,16 +115,32 @@ struct ProjectIssuesLoader: View {
 		}.refreshable {
 			await reloadIssues()
 		}.toolbar {
-			if let project,
-				case .success(let project) = project,
-				let projectId = project.id.toIntId()
-			{
-				NavigationLink(
-					destination: NewIssueView(id: projectId, fullPath: self.fullPath),
-					label: {
-						Label("New issue", systemImage: "plus")
+			HStack {
+				if let project,
+					case .success(let project) = project,
+					let projectId = project.id.toIntId()
+				{
+					NavigationLink(
+						destination: NewIssueView(id: projectId, fullPath: self.fullPath),
+						label: {
+							Label("New issue", systemImage: "plus")
+						}
+					).tint(.accentColor)
+				}
+
+				Button("Filter", systemImage: "line.3.horizontal.decrease") {
+					showFilters = true
+				}
+			}
+		}.sheet(isPresented: $showFilters, onDismiss: { self.showFilters = false }) {
+			NavigationView {
+				IssueFilterView(filter: $filter)
+					.toolbar {
+						AsyncButton("Apply filter", systemImage: "checkmark") {
+							await reloadIssues()
+							showFilters = false
+						}
 					}
-				).tint(.accentColor)
 			}
 		}.navigationTitle("Issues")
 	}
