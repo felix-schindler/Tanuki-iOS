@@ -53,14 +53,15 @@ struct ConfigView: View {
 			AsyncButton(
 				action: {
 					do {
-						if newHost.contains("/"),
-							let tempUrl = URL(string: newHost),
-							let _newHost = tempUrl.host
-						{
-							newHost = _newHost
-						} else {
-							Notify.status(.error, "Please only provide the host, not a URI")
-							return
+						if newHost.contains("/") {
+							if let tempUrl = URL(string: newHost),
+								let _newHost = tempUrl.host
+							{
+								newHost = _newHost
+							} else {
+								Notify.status(.error, "Please only provide the host, not a URI")
+								return
+							}
 						}
 
 						API.host = self.newHost
