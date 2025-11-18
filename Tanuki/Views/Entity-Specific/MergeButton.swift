@@ -80,8 +80,8 @@ struct MergeButton: View {
 			)
 
 			Notify.status(.success, "Merged request #\(self.iid)")
-
 			await onMerge()
+			showMergeOptions = false
 		} catch let error {
 			Notify.status(.error, "Failed to merge", error.localizedDescription)
 		}
@@ -154,9 +154,9 @@ struct MergeButton: View {
 						}
 					}
 					ToolbarItem(placement: .topBarTrailing) {
-						AsyncButton("Merge this request", systemImage: "checkmark") {
-							await onMerge()
-						}
+						AsyncButton("Merge", systemImage: "checkmark") {
+							await merge()
+						}.labelStyle(.titleAndIcon)
 					}
 				}
 				.navigationBarTitleDisplayMode(.inline)
