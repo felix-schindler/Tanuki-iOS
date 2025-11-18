@@ -46,7 +46,8 @@ struct NewLabelView: View {
 				type: RestAPILabel.self,
 				method: .post,
 				endpoint: (id != 0 ? "projects/\(id)/labels" : "groups/\(id)/labels"),
-				query: query
+				body: query,
+				contentType: .formUrlEncoded
 			)
 
 			self.presentationMode.wrappedValue.dismiss()
