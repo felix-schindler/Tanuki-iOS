@@ -55,20 +55,24 @@ struct ContributionsLoader: View {
 			if let contributions {
 				switch contributions {
 				case .success(let contributions):
-					Chart {
-						ForEach(contributions.sorted(by: { $0.key < $1.key }), id: \.key) {
-							key, value in
-							BarMark(
-								x: .value("Date", key),
-								y: .value("Contributions", value)
-							)
+					if contributions.filter({ $0.value > 0 }).isEmpty {
+						Text("\(self.username) has no contributions within the last year")
+					} else {
+						Chart {
+							ForEach(contributions.sorted(by: { $0.key < $1.key }), id: \.key) {
+								key, value in
+								BarMark(
+									x: .value("Date", key),
+									y: .value("Contributions", value)
+								)
+							}
 						}
+						.chartYAxis {
+							AxisMarks(values: .automatic(desiredCount: 3))
+						}
+						.chartXAxis(.hidden)
+						.frame(height: self.height)
 					}
-					.chartYAxis {
-						AxisMarks(values: .automatic(desiredCount: 3))
-					}
-					.chartXAxis(.hidden)
-					.frame(height: self.height)
 				case .failure(let error):
 					FailedView(error)
 				}
