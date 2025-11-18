@@ -46,11 +46,15 @@ struct NewReleaseView: View {
 			)
 
 			self.tags = temp
-			self.tagName = temp[0].name
+			if temp.isNotEmpty {
+				self.tagName = temp[0].name
+			}
 		} catch let error {
 			Notify.status(
-				.error, "Couldn't load tags", error.localizedDescription,
-				systemImage: "exclamationmark.triangle")
+				.error, "Couldn't load tags",
+				error.localizedDescription,
+				systemImage: "exclamationmark.triangle"
+			)
 		}
 	}
 
