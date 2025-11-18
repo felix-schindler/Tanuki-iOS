@@ -46,47 +46,51 @@ struct UserView: View {
 				}
 			}
 
-			ScrollView(.horizontal) {
-				HStack {
-					if let location = user.location, location.isNotEmpty {
-						if let url = URL(
-							string:
-								"https://maps.apple.com/?q=\(location.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")"
-						) {
-							Link(
-								destination: url,
-								label: {
-									PillView(
-										user.location!,
-										icon: "mappin.and.ellipse",
-										bgColor: .accentColor,
-										fgColor: .white,
-										cornerRadius: 5
-									)
-								}
-							)
-						} else {
-							PillView(
-								user.location!, icon: "mappin.and.ellipse",
-								cornerRadius: 5)
-						}
-					}
+			let location = user.location
+			let hasJob = user.jobTitle?.isNotEmpty ?? false
+			let hasOrg = user.organization?.isNotEmpty ?? false
 
-					let hasJob = user.jobTitle?.isNotEmpty ?? false
-					let hasOrg = user.organization?.isNotEmpty ?? false
-					if hasJob || hasOrg {
-						let workInfo =
-							hasJob && hasOrg
-							? "\(user.jobTitle!) at \(user.organization!)"
-							: "\(user.jobTitle ?? "") \(user.organization ?? "")"
-								.trimmingCharacters(in: .whitespaces)
-						PillView(
-							workInfo,
-							icon: "briefcase",
-							cornerRadius: 5
-						)
-					}
-				}.font(.footnote)
+			if hasJob || hasOrg || location != nil, location!.isNotEmpty {
+				ScrollView(.horizontal) {
+					HStack {
+						if let location, location.isNotEmpty {
+							if let url = URL(
+								string:
+									"https://maps.apple.com/?q=\(location.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")"
+							) {
+								Link(
+									destination: url,
+									label: {
+										PillView(
+											user.location!,
+											icon: "mappin.and.ellipse",
+											bgColor: .accentColor,
+											fgColor: .white,
+											cornerRadius: 5
+										)
+									}
+								)
+							} else {
+								PillView(
+									user.location!, icon: "mappin.and.ellipse",
+									cornerRadius: 5)
+							}
+						}
+
+						if hasJob || hasOrg {
+							let workInfo =
+								hasJob && hasOrg
+								? "\(user.jobTitle!) at \(user.organization!)"
+								: "\(user.jobTitle ?? "") \(user.organization ?? "")"
+									.trimmingCharacters(in: .whitespaces)
+							PillView(
+								workInfo,
+								icon: "briefcase",
+								cornerRadius: 5
+							)
+						}
+					}.font(.footnote)
+				}
 			}
 
 			if let status = user._status {
@@ -194,95 +198,97 @@ struct UserView: View {
 			}
 		}
 
-		NavigationLink(
-			destination: UserIssuesLoader(username: user.username),
-			label: {
-				Label(
-					title: {
-						Text("Issues")
-					},
-					icon: {
-						Image(systemName: "smallcircle.circle")
-							.foregroundStyle(.green)
+		Section {
+			NavigationLink(
+				destination: UserIssuesLoader(username: user.username),
+				label: {
+					Label(
+						title: {
+							Text("Issues")
+						},
+						icon: {
+							Image(systemName: "smallcircle.circle")
+								.foregroundStyle(.green)
+						}
+					)
+				}
+			)
+			NavigationLink(
+				destination: UserGroupsLoader(user.username),
+				label: {
+					Label(
+						title: {
+							HStack {
+								Text("Groups")
+								Spacer()
+								Text(String(user.groupCount ?? 0))
+							}
+						},
+						icon: {
+							Image(systemName: "scale.3d")
+								.foregroundStyle(.red)
+						})
+				})
+			NavigationLink(
+				destination: ProjectsLoader(namespacePath: user.username),
+				label: {
+					Label(
+						title: {
+							Text("Projects")
+						},
+						icon: {
+							Image(systemName: "app.gift.fill")
+								.foregroundStyle(.gray)
+						})
+				})
+			NavigationLink(
+				destination: UserStarredProjectsLoader(username: user.username),
+				label: {
+					Label(
+						title: {
+							Text("Starred projects")
+						},
+						icon: {
+							Image(systemName: "star.fill")
+								.foregroundStyle(.yellow)
+						})
+				})
+			NavigationLink(
+				destination: UserSnippetsLoader(username: user.username),
+				label: {
+					Label(
+						title: {
+							Text("Snippets")
+						},
+						icon: {
+							Image(systemName: "scissors")
+								.foregroundStyle(.purple)
+						}
+					)
+				})
+			if let id = user.id.toIntId() {
+				NavigationLink(
+					destination: EventsLoader(userId: id),
+					label: {
+						Label("Activity", systemImage: "clock.arrow.circlepath")
 					}
 				)
 			}
-		)
-		NavigationLink(
-			destination: UserGroupsLoader(user.username),
-			label: {
-				Label(
-					title: {
-						HStack {
-							Text("Groups")
-							Spacer()
-							Text(String(user.groupCount ?? 0))
-						}
-					},
-					icon: {
-						Image(systemName: "scale.3d")
-							.foregroundStyle(.red)
-					})
-			})
-		NavigationLink(
-			destination: ProjectsLoader(namespacePath: user.username),
-			label: {
-				Label(
-					title: {
-						Text("Projects")
-					},
-					icon: {
-						Image(systemName: "app.gift.fill")
-							.foregroundStyle(.gray)
-					})
-			})
-		NavigationLink(
-			destination: UserStarredProjectsLoader(username: user.username),
-			label: {
-				Label(
-					title: {
-						Text("Starred projects")
-					},
-					icon: {
-						Image(systemName: "star.fill")
-							.foregroundStyle(.yellow)
-					})
-			})
-		NavigationLink(
-			destination: UserSnippetsLoader(username: user.username),
-			label: {
-				Label(
-					title: {
-						Text("Snippets")
-					},
-					icon: {
-						Image(systemName: "scissors")
-							.foregroundStyle(.purple)
-					}
-				)
-			})
-		if let id = user.id.toIntId() {
 			NavigationLink(
-				destination: EventsLoader(userId: id),
+				destination: TimelogsLoader(
+					fullPath: user.username,
+					queryType: .group
+				),
 				label: {
-					Label("Activity", systemImage: "clock.arrow.circlepath")
+					Label("Timelogs", systemImage: "hourglass")
+				}
+			)
+			NavigationLink(
+				destination: UserTodosLoader(username: user.username),
+				label: {
+					Label("Todos", systemImage: "checkmark.square")
 				}
 			)
 		}
-		NavigationLink(
-			destination: TimelogsLoader(
-				fullPath: user.username,
-				queryType: .group
-			),
-			label: {
-				Label("Timelogs", systemImage: "hourglass")
-			}
-		)
-		NavigationLink(
-			destination: UserTodosLoader(username: user.username),
-			label: {
-				Label("Todos", systemImage: "checkmark.square")
-			}
-		)
 	}
 }
