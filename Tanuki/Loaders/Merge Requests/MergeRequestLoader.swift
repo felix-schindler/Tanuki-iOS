@@ -410,9 +410,7 @@ struct MergeRequestLoader: View {
 							let projectId = project.id.toIntId()
 						{
 							Section("Actions") {
-								if mr.userPermissions.canMerge,
-									let mergeStatusEnum = mr.mergeStatusEnum
-								{
+								if mr.userPermissions.canMerge {
 									MergeButton(
 										iid: mr.iid,
 										projectId: projectId,
@@ -420,7 +418,7 @@ struct MergeRequestLoader: View {
 											await reloadMergeRequest()
 										},
 										hasConflicts: mr.conflicts,
-										mergeStatusEnum: mergeStatusEnum,
+										mergeStatusEnum: mr.mergeStatusEnum ?? .case(.canBeMerged),
 										detailedMergeStatus: mr.detailedMergeStatus
 									)
 								}
