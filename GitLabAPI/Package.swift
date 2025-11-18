@@ -15,7 +15,7 @@ let package = Package(
     .library(name: "GitLabAPI", targets: ["GitLabAPI"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/apollographql/apollo-ios", exact: "2.0.1"),
+    .package(url: "https://github.com/apollographql/apollo-ios", exact: "2.0.3"),
   ],
   targets: [
     .target(

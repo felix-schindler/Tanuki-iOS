@@ -7,9 +7,6 @@ public extension Interfaces {
   static let BaseNoteInterface = ApolloAPI.Interface(
     name: "BaseNoteInterface",
     keyFields: nil,
-    implementingObjects: [
-      "AbuseReportNote",
-      "Note"
-    ]
+    implementingObjects: ["Note"]
   )
 }

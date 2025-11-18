@@ -8,8 +8,6 @@ public extension Interfaces {
     name: "ResolvableInterface",
     keyFields: nil,
     implementingObjects: [
-      "AbuseReportDiscussion",
-      "AbuseReportNote",
       "Discussion",
       "Note"
     ]

@@ -20,9 +20,6 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
 
   @_spi(Execution) public static func objectType(forTypename typename: String) -> ApolloAPI.Object? {
     switch typename {
-    case "AbuseReportDiscussion": return GitLabAPI.Objects.AbuseReportDiscussion
-    case "AbuseReportLabel": return GitLabAPI.Objects.AbuseReportLabel
-    case "AbuseReportNote": return GitLabAPI.Objects.AbuseReportNote
     case "AccessLevel": return GitLabAPI.Objects.AccessLevel
     case "AddOnUser": return GitLabAPI.Objects.AddOnUser
     case "AlertManagementAlert": return GitLabAPI.Objects.AlertManagementAlert
