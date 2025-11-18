@@ -426,21 +426,19 @@ struct MergeRequestLoader: View {
 								}
 
 								if mr.userPermissions.canApprove {
-									if mr.approved {
-										AsyncButton(
-											"Revoke approval",
-											systemImage: "person.fill.xmark"
-										) {
-											await unapprove(projectId)
-										}.tint(.red)
-									} else {
-										AsyncButton(
-											"Approve",
-											systemImage: "person.fill.checkmark"
-										) {
-											await approve(projectId)
-										}.tint(.green)
-									}
+									AsyncButton(
+										"Approve",
+										systemImage: "person.fill.checkmark"
+									) {
+										await approve(projectId)
+									}.tint(.green)
+								} else if mr.approved {
+									AsyncButton(
+										"Revoke approval",
+										systemImage: "person.fill.xmark"
+									) {
+										await unapprove(projectId)
+									}.tint(.red)
 								}
 
 								if mr.userPermissions.updateMergeRequest {
