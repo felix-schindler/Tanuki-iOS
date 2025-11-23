@@ -15,17 +15,12 @@ struct FeedbackView: View {
 	private var email = ""
 
 	@State
-	private var desc = ""
+	private var desc = "\n"
 
 	@State
 	private var accepted = false
 
 	private func submit() async {
-		if !accepted {
-			Notify.status(.error, "Failed to submit feedback", "You need to accept the privacy information")
-			return
-		}
-
 		do {
 			let url = HttpUrl(
 				host: "pb.schindlerfelix.de",
@@ -52,23 +47,29 @@ struct FeedbackView: View {
 	}
 
 	public var body: some View {
-		List {
-			TextField("Email address (optional)", text: $email)
-				.keyboardType(.emailAddress)
-				.autocorrectionDisabled()
-				.textInputAutocapitalization(.never)
-			VStack(alignment: .leading) {
-				Text("Description")
-					.foregroundStyle(.secondary)
-					.font(.footnote)
-				TextEditor(text: $desc)
-					.foregroundColor(.black)
+		VStack {
+			List {
+				TextField("Email address (optional)", text: $email)
+					.keyboardType(.emailAddress)
+					.autocorrectionDisabled()
+					.textInputAutocapitalization(.never)
+				VStack(alignment: .leading) {
+					Text("Description")
+						.foregroundStyle(.secondary)
+						.font(.footnote)
+					TextEditor(text: $desc)
+				}
+				Toggle("I have read and accept the privacy information", isOn: $accepted)
+			}.toolbar {
+				AsyncButton("Submit", systemImage: "checkmark") {
+					await submit()
+				}
+				.disabled(!accepted)
+				.tint(.accentColor)
 			}
-			Toggle("I have read and accept the privacy information", isOn: $accepted)
-		}.toolbar {
-			AsyncButton("Submit", systemImage: "checkmark") {
-				await submit()
-			}.tint(.accentColor)
+			
+			Link("Privacy information ↗", destination: URL(string: "https://schindlerfelix.de/projects/tanuki/privacy")!)
+				.padding()
 		}.navigationTitle("Feedback")
 	}
 }
