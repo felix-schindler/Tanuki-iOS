@@ -23,6 +23,7 @@ struct ConfigView: View {
 			Label("GitLab URL", systemImage: "link")
 				.font(.headline)
 			TextField("gitlab.com", text: self.$newHost)
+				.keyboardType(.URL)
 				.textInputAutocapitalization(.never)
 				.autocorrectionDisabled()
 
