@@ -46,12 +46,13 @@ class API {
 		return URL(string: "https://\(host)/api/graphql")!
 	}
 
-	/// This is only `public` because it's used by the File loader
+	/// This is only `public` because it's used by `FileLoader` and `FeedbackView`
 	public static func raw(
 		method: HttpMethod,
 		url: HttpUrl,
 		body: (any Encodable)? = nil,
-		contentType: ContentType = .json
+		contentType: ContentType = .json,
+		auth: Bool = true
 	) async throws -> HttpResponse {
 		var headers: [HttpHeaderKey: String] = [:]
 		var reqBody: Data? = nil
@@ -73,7 +74,7 @@ class API {
 			print(String(data: reqBody!, encoding: .utf8) ?? "Body coudn't be decoded")
 		}
 
-		if API.token.isNotEmpty {
+		if auth && API.token.isNotEmpty {
 			headers[.authorization] = "Bearer \(API.token)"
 		}
 
