@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SettingsView: View {
+struct CacheView: View {
 	private let formatter: ByteCountFormatter
 
 	@State private var urlMemoryUsage = URLCache.shared.currentMemoryUsage
@@ -64,7 +64,7 @@ struct SettingsView: View {
 					}
 				}
 			}
-		}.navigationTitle("Settings")
+		}.navigationTitle("Caches")
 	}
 }
 
