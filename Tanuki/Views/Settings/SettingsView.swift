@@ -20,7 +20,7 @@ struct SettingsView: View {
 						.frame(width: 50, height: 50)
 						.padding(5)
 						.background(.gray)
-						.clipShape(RoundedRectangle(cornerRadius: 10.0))
+						.clipShape(RoundedRectangle(cornerRadius: 15.0))
 						.padding(.bottom, 10)
 					Text("Settings")
 						.font(.title2.bold())

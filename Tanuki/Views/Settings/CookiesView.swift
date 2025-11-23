@@ -19,11 +19,20 @@ struct CookiesView: View {
 		List {
 			if cookies.isEmpty {
 				Section {
+					Text(
+						"If you want to see profile pictures or contribution charts of users or groups that have a non-public visibility you'll need to also authenticate with cookies since personal access tokens are not sufficient to load that data."
+					)
+				}
+
+				Section {
 					VStack(alignment: .leading, spacing: 5) {
 						Label("Click on the button below", systemImage: "1.circle.fill")
 						Label("Make sure to check \"Remember me\"", systemImage: "2.circle.fill")
 						Label("Log in to your GitLab account", systemImage: "3.circle.fill")
-						Label("Dismiss the browser window", systemImage: "4.circle.fill")
+						Label("Dismiss the browser window when you finished logging in", systemImage: "4.circle.fill")
+						Label(
+							"If you start observing loading errors again repeat this process",
+							systemImage: "5.circle.fill")
 					}
 					Button("Log In (Set Cookies)") {
 						showingWebView = true
@@ -99,6 +108,12 @@ struct CookiesView: View {
 			cookies.removeAll()
 			UserDefaults.standard.removeObject(forKey: "persistedCookies")
 		}
+	}
+}
+
+#Preview {
+	NavigationView {
+		CookiesView()
 	}
 }
 

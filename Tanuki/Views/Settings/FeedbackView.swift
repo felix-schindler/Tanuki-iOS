@@ -67,9 +67,11 @@ struct FeedbackView: View {
 				.disabled(!accepted)
 				.tint(.accentColor)
 			}
-			
-			Link("Privacy information ↗", destination: URL(string: "https://schindlerfelix.de/projects/tanuki/privacy")!)
-				.padding()
+
+			Link(
+				"Privacy information ↗", destination: URL(string: "https://schindlerfelix.de/projects/tanuki/privacy")!
+			)
+			.padding()
 		}.navigationTitle("Feedback")
 	}
 }
