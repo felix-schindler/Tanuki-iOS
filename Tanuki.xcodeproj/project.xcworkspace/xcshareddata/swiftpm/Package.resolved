@@ -1,5 +1,5 @@
 {
-  "originHash" : "c9047faecc4796f65ebc40e394afcd0b23236112ffae34182175f75233fe8dc1",
+  "originHash" : "73c165305581b61384fac575dba8cd889b03c860b55308648176936c841419db",
   "pins" : [
     {
       "identity" : "apollo-ios",
@@ -44,6 +44,15 @@
       "state" : {
         "revision" : "80cf6140a29a88197f9bee51918843d706dc6034",
         "version" : "1.2.5"
+      }
+    },
+    {
+      "identity" : "swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/phosphor-icons/swift",
+      "state" : {
+        "revision" : "9a9467181782bbe319ad4935d0993c77cd8a5fbc",
+        "version" : "2.1.0"
       }
     },
     {
