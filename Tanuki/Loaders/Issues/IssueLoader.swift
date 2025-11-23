@@ -11,8 +11,7 @@ import MarkdownUI
 import SwiftUI
 
 struct IssueLoader: View {
-	@Environment(\.presentationMode)
-	var presentationMode: Binding<PresentationMode>
+	@Environment(\.dismiss) private var dismiss
 
 	private let fullPath: String
 	private let iid: String
@@ -29,10 +28,6 @@ struct IssueLoader: View {
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
 		self.iid = iid
-	}
-
-	private func dismiss() {
-		self.presentationMode.wrappedValue.dismiss()
 	}
 
 	// MARK: - Data loading

@@ -9,8 +9,7 @@ import HighlightedTextEditor
 import SwiftUI
 
 struct NewMilestoneView: View {
-	@Environment(\.presentationMode)
-	var presentationMode: Binding<PresentationMode>
+	@Environment(\.dismiss) private var dismiss
 
 	/// Project ID
 	@State var id: Int
@@ -25,10 +24,6 @@ struct NewMilestoneView: View {
 	@State var dueDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: Date())!
 
 	@State var showError = false
-
-	private func dismiss() {
-		self.presentationMode.wrappedValue.dismiss()
-	}
 
 	private func createMilestone() async {
 		if title.isEmpty {

@@ -10,8 +10,7 @@ import MarkdownUI
 import SwiftUI
 
 struct MergeRequestLoader: View {
-	@Environment(\.presentationMode)
-	var presentationMode: Binding<PresentationMode>
+	@Environment(\.dismiss) private var dismiss
 
 	private let fullPath: String
 	private let iid: String
@@ -114,7 +113,7 @@ struct MergeRequestLoader: View {
 	private func remove(_ projectId: Int) async {
 		do {
 			_ = try await API.delete(endpoint: "projects/\(projectId)/merge_requests/\(self.iid)")
-			self.presentationMode.wrappedValue.dismiss()
+			dismiss()
 		} catch let error {
 			Notify.status(.error, "Failed to delete MR", error.localizedDescription)
 		}

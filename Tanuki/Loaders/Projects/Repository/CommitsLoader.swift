@@ -28,9 +28,6 @@ struct Branch: Codable {
 }
 
 struct CommitsLoader: View {
-	@Environment(\.presentationMode)
-	private var presentationMode: Binding<PresentationMode>
-
 	// MARK: - Load config
 	/// Project ID
 	private var projectId: Int

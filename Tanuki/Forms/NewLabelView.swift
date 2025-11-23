@@ -9,8 +9,7 @@ import HighlightedTextEditor
 import SwiftUI
 
 struct NewLabelView: View {
-	@Environment(\.presentationMode)
-	var presentationMode: Binding<PresentationMode>
+	@Environment(\.dismiss) private var dismiss
 
 	/// Project ID
 	private let id: Int
@@ -50,7 +49,7 @@ struct NewLabelView: View {
 				contentType: .formUrlEncoded
 			)
 
-			self.presentationMode.wrappedValue.dismiss()
+			dismiss()
 		} catch let error {
 			Notify.status(
 				.error,

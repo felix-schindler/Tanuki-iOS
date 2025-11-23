@@ -20,8 +20,7 @@ enum ProjectVisibility: String {
 }
 
 struct NewProjectView: View {
-	@Environment(\.presentationMode)
-	var presentationMode: Binding<PresentationMode>
+	@Environment(\.dismiss) private var dismiss
 
 	private let namespaceId: Int?
 
@@ -32,10 +31,6 @@ struct NewProjectView: View {
 
 	init(_ namespaceId: Int? = nil) {
 		self.namespaceId = namespaceId
-	}
-
-	private func dismiss() {
-		self.presentationMode.wrappedValue.dismiss()
 	}
 
 	private func createProject() async {

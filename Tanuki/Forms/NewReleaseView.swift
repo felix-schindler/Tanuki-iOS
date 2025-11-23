@@ -10,8 +10,7 @@ import HighlightedTextEditor
 import SwiftUI
 
 struct NewReleaseView: View {
-	@Environment(\.presentationMode)
-	var presentationMode: Binding<PresentationMode>
+	@Environment(\.dismiss) private var dismiss
 
 	private let id: Int
 	private let fullPath: String
@@ -33,10 +32,6 @@ struct NewReleaseView: View {
 	@State private var setReleaseDate = false
 	@State private var releaseDate = SwiftUI.Date()
 	@State private var description = ""
-
-	private func dismiss() {
-		self.presentationMode.wrappedValue.dismiss()
-	}
 
 	private func loadTags() async {
 		do {

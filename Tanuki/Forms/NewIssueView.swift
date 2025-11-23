@@ -17,8 +17,7 @@ enum IssueType: String, CaseIterable {
 }
 
 struct NewIssueView: View {
-	@Environment(\.presentationMode)
-	var presentationMode: Binding<PresentationMode>
+	@Environment(\.dismiss) private var dismiss
 
 	private let id: Int
 	private let fullPath: String
@@ -43,10 +42,6 @@ struct NewIssueView: View {
 	@State private var selectedLabels: Set<String> = []
 	@State private var selectedMilestone = ""
 	@State private var weight = -1
-
-	private func dismiss() {
-		self.presentationMode.wrappedValue.dismiss()
-	}
 
 	private func loadMembers() async {
 		do {

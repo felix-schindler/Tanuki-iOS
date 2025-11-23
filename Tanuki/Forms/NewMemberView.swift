@@ -18,8 +18,7 @@ enum ProjectRole: Int {
 }
 
 struct NewMemberView: View {
-	@Environment(\.presentationMode)
-	var presentationMode: Binding<PresentationMode>
+	@Environment(\.dismiss) private var dismiss
 
 	/// Project ID
 	private let id: Int
@@ -62,10 +61,6 @@ struct NewMemberView: View {
 		} catch let error {
 			Notify.status(.error, error.localizedDescription)
 		}
-	}
-
-	private func dismiss() {
-		self.presentationMode.wrappedValue.dismiss()
 	}
 
 	public var body: some View {

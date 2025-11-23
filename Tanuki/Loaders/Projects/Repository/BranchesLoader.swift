@@ -10,9 +10,6 @@ import SwiftUI
 struct BranchesLoader: View {
 	private var projectId: Int
 
-	@Environment(\.presentationMode)
-	private var presentationMode: Binding<PresentationMode>
-
 	@State
 	private var branches: Result<[Branch], Error>? = nil
 

@@ -9,8 +9,7 @@ import SwiftHttp
 import SwiftUI
 
 struct FeedbackView: View {
-	@Environment(\.presentationMode)
-	public var presentationMode: Binding<PresentationMode>
+	@Environment(\.dismiss) private var dismiss
 
 	@State
 	private var email = ""
@@ -20,10 +19,6 @@ struct FeedbackView: View {
 
 	@State
 	private var accepted = false
-
-	private func dismiss() {
-		self.presentationMode.wrappedValue.dismiss()
-	}
 
 	private func submit() async {
 		if !accepted {
