@@ -6,9 +6,11 @@
 //
 
 import MarkdownUI
+import SwiftHttp
 import SwiftUI
 
 struct SetupView: View {
+	@Environment(\.openURL) private var openURL
 	private var showSetup: Binding<Bool>
 
 	/// For CSRF protection
@@ -48,27 +50,21 @@ struct SetupView: View {
 
 				Button(
 					action: {
-						var components = URLComponents()
-						components.scheme = "https"
-						components.host = "gitlab.com"
-						components.path = "/oauth/authorize"
+						let authURL = HttpUrl(
+							host: "gitlab.com",
+							path: ["oauth", "authorize"],
+							query: [
+								"client_id": Auth.clientID,
+								"code_challenge": self.codeChallenge,
+								"code_challenge_method": "S256",
+								"redirect_uri": Auth.redirectUri,
+								"response_type": "code",
+								"scope": Auth.scope,
+								"state": self.state,
+							]
+						)
 
-						components.queryItems = [
-							URLQueryItem(name: "client_id", value: Auth.clientID),
-							URLQueryItem(name: "code_challenge", value: self.codeChallenge),
-							URLQueryItem(name: "code_challenge_method", value: "S256"),
-							URLQueryItem(name: "redirect_uri", value: Auth.redirectUri),
-							URLQueryItem(name: "response_type", value: "code"),
-							URLQueryItem(name: "scope", value: Auth.scope),
-							URLQueryItem(name: "state", value: self.state),
-						]
-
-						guard let authURL = components.url else {
-							Notify.status(.error, "Failed to create authorization URL")
-							return
-						}
-
-						UIApplication.shared.open(authURL)
+						openURL(authURL.url)
 					},
 					label: {
 						Text("Login with GitLab.com")
