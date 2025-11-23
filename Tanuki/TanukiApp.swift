@@ -7,11 +7,41 @@
 //
 
 import SwiftUI
+import WebKit
 
 @main
 struct TanukiApp: App {
 	@State
 	private var showSetup = API.host.isEmpty || API.token.isEmpty
+
+	private func restorePersistedCookies() {
+		guard
+			let data = UserDefaults.standard.data(forKey: "persistedCookies"),
+			let storedCookieDicts = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data)
+				as? [[HTTPCookiePropertyKey: Any]],
+			!storedCookieDicts.isEmpty
+		else {
+			Notify.status(.error, "No persisted cookies")
+			return
+		}
+
+		let webStore = WKWebsiteDataStore.default().httpCookieStore
+		var restoredCookies: [HTTPCookie] = []
+		for dict in storedCookieDicts {
+			if let cookie = HTTPCookie(properties: dict) {
+				restoredCookies.append(cookie)
+				webStore.setCookie(cookie)
+				HTTPCookieStorage.shared.setCookie(cookie)  // sync to URLSession
+			}
+		}
+
+		let highlight =
+			restoredCookies
+			.filter { $0.name.starts(with: "_") }
+			.map(\.name)
+			.joined(separator: ", ")
+		Notify.status(.success, highlight.isEmpty ? "Cookies restored" : "Cookies: \(highlight)")
+	}
 
 	public var body: some Scene {
 		WindowGroup {
@@ -45,6 +75,8 @@ struct TanukiApp: App {
 			}.tabItem {
 				Label("Profile", systemImage: "person")
 			}.tag(3)
+		}.onAppear {
+			restorePersistedCookies()
 		}
 	}
 }

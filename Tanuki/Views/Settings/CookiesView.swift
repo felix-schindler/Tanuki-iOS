@@ -31,7 +31,7 @@ struct CookiesView: View {
 				}
 			} else {
 				Section("Saved Cookies") {
-					ForEach(cookies, id: \.name) { cookie in
+					ForEach(cookies, id: \.identifier) { cookie in
 						VStack(alignment: .leading) {
 							Text(cookie.name).bold()
 							Text(cookie.value)
@@ -49,16 +49,44 @@ struct CookiesView: View {
 					}
 				}
 			}
-		}.sheet(isPresented: $showingWebView, onDismiss: loadCookies) {
+		}
+		.sheet(isPresented: $showingWebView, onDismiss: loadCookies) {
 			WebLoginView(url: loginUrl)
-		}.onAppear {
+		}
+		.onAppear {
 			loadCookies()
-		}.navigationTitle("Cookies")
+		}
+		.navigationTitle("Cookies")
 	}
 
+	// Load cookies from WKWebsiteDataStore and persist them as property dictionaries
 	private func loadCookies() {
-		WKWebsiteDataStore.default().httpCookieStore.getAllCookies { newCookies in
-			cookies = newCookies
+		WKWebsiteDataStore.default().httpCookieStore.getAllCookies { all in
+			let host = API.host.lowercased()
+			let filtered = all.filter { $0.domain.lowercased().contains(host) }
+			cookies = filtered
+			persistCookies(filtered)
+			syncToSharedCookieStorage(filtered)
+		}
+	}
+
+	private func syncToSharedCookieStorage(_ cookies: [HTTPCookie]) {
+		let shared = HTTPCookieStorage.shared
+		for cookie in cookies {
+			shared.setCookie(cookie)
+		}
+	}
+
+	// Persist cookies as array of property dictionaries ([[HTTPCookiePropertyKey: Any]])
+	// to match TanukiApp.restorePersistedCookies() expectations.
+	private func persistCookies(_ cookies: [HTTPCookie]) {
+		guard !cookies.isEmpty else { return }
+		let propertyDicts: [[HTTPCookiePropertyKey: Any]] = cookies.compactMap { $0.properties }
+		// Use legacy (non-secure) archiver; HTTPCookiePropertyKey dictionaries are property list safe.
+		if let data = try? NSKeyedArchiver.archivedData(
+			withRootObject: propertyDicts, requiringSecureCoding: false)
+		{
+			UserDefaults.standard.set(data, forKey: "persistedCookies")
 		}
 	}
 
@@ -69,6 +97,7 @@ struct CookiesView: View {
 				store.delete(cookie)
 			}
 			cookies.removeAll()
+			UserDefaults.standard.removeObject(forKey: "persistedCookies")
 		}
 	}
 }
@@ -94,21 +123,64 @@ struct WebLoginView: View {
 struct WebViewInternal: UIViewRepresentable {
 	let url: URL
 
-	func makeCoordinator() -> Coordinator { Coordinator() }
+	func makeCoordinator() -> Coordinator {
+		Coordinator()
+	}
 
 	func makeUIView(context: Context) -> WKWebView {
 		let config = WKWebViewConfiguration()
 		config.websiteDataStore = .default()
 		let webView = WKWebView(frame: .zero, configuration: config)
+		webView.navigationDelegate = context.coordinator
+
 		let request = URLRequest(url: url)
-		webView.load(request)
-		context.coordinator.webView = webView
+		// Inject persisted cookies BEFORE first load
+		syncPersistedCookies(into: webView) {
+			webView.load(request)
+		}
+
 		return webView
+	}
+
+	// Read persisted cookie property dictionaries and set them on the web view's store
+	private func syncPersistedCookies(into webView: WKWebView, completion: @escaping () -> Void) {
+		guard
+			let data = UserDefaults.standard.data(forKey: "persistedCookies"),
+			let storedDicts = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data)
+				as? [[HTTPCookiePropertyKey: Any]],
+			!storedDicts.isEmpty
+		else {
+			completion()
+			return
+		}
+
+		let store = webView.configuration.websiteDataStore.httpCookieStore
+		let cookies = storedDicts.compactMap { HTTPCookie(properties: $0) }
+		guard !cookies.isEmpty else {
+			completion()
+			return
+		}
+
+		var remaining = cookies.count
+		for cookie in cookies {
+			store.setCookie(cookie) {
+				remaining -= 1
+				if remaining == 0 {
+					completion()
+				}
+			}
+		}
 	}
 
 	func updateUIView(_ uiView: WKWebView, context: Context) {}
 
 	class Coordinator: NSObject, WKNavigationDelegate {
-		weak var webView: WKWebView?
+		override init() { super.init() }
 	}
+}
+
+// MARK: - Helpers
+
+extension HTTPCookie {
+	fileprivate var identifier: String { "\(name)|\(domain)|\(path)" }
 }
