@@ -1,3 +1,10 @@
+//
+//  CookiesView.swift
+//  Tanuki
+//
+//  Created by Felix Schindler on 03.10.25.
+//
+
 import SwiftHttp
 import SwiftUI
 import WebKit
@@ -12,7 +19,7 @@ struct CookiesView: View {
 		List {
 			if cookies.isEmpty {
 				Section {
-					VStack(alignment: .leading) {
+					VStack(alignment: .leading, spacing: 5) {
 						Label("Click on the button below", systemImage: "1.circle.fill")
 						Label("Make sure to check \"Remember me\"", systemImage: "2.circle.fill")
 						Label("Log in to your GitLab account", systemImage: "3.circle.fill")
@@ -66,7 +73,25 @@ struct CookiesView: View {
 	}
 }
 
-struct WebLoginView: UIViewRepresentable {
+struct WebLoginView: View {
+	@Environment(\.dismiss) private var dismiss
+	let url: URL
+
+	var body: some View {
+		NavigationView {
+			WebViewInternal(url: url)
+				.navigationTitle("Login")
+				.navigationBarTitleDisplayMode(.inline)
+				.toolbar {
+					ToolbarItem(placement: .topBarTrailing) {
+						Button("Done") { dismiss() }
+					}
+				}
+		}
+	}
+}
+
+struct WebViewInternal: UIViewRepresentable {
 	let url: URL
 
 	func makeCoordinator() -> Coordinator { Coordinator() }
