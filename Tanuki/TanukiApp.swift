@@ -21,7 +21,6 @@ struct TanukiApp: App {
 				as? [[HTTPCookiePropertyKey: Any]],
 			!storedCookieDicts.isEmpty
 		else {
-			Notify.status(.error, "No persisted cookies")
 			return
 		}
 
@@ -34,13 +33,6 @@ struct TanukiApp: App {
 				HTTPCookieStorage.shared.setCookie(cookie)  // sync to URLSession
 			}
 		}
-
-		let highlight =
-			restoredCookies
-			.filter { $0.name.starts(with: "_") }
-			.map(\.name)
-			.joined(separator: ", ")
-		Notify.status(.success, highlight.isEmpty ? "Cookies restored" : "Cookies: \(highlight)")
 	}
 
 	public var body: some Scene {
