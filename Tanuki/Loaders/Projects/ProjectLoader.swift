@@ -139,7 +139,9 @@ struct ProjectLoader: View {
 											}
 										},
 										icon: {
-											Image(systemName: "arrow.triangle.pull")
+											Image("git-mr.symbols")
+												.resizable()
+												.scaledToFit()
 												.foregroundStyle(.blue)
 										}
 									)

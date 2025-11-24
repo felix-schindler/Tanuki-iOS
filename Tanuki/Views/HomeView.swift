@@ -83,7 +83,9 @@ struct HomeView: View {
 								Text("Merge Requests")
 							},
 							icon: {
-								Image(systemName: "arrow.triangle.pull")
+								Image("git-mr.symbols")
+									.resizable()
+									.scaledToFit()
 									.foregroundStyle(.blue)
 							})
 					})

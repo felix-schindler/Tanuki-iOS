@@ -71,11 +71,11 @@ struct ProjectMergeLoader: View {
 					{
 						NoContentView(
 							"Merge requests are not enabled for this project",
-							systemImage: "arrow.triangle.pull")
+							image: "git-mr.symbols"
+						)
 					} else if let mrs = project.mergeRequests?.nodes {
 						if mrs.count == 0 {
-							NoContentView(
-								"There are no merge requests", systemImage: "arrow.triangle.pull")
+							NoContentView("There are no merge requests", image: "git-mr.symbols")
 						} else {
 							ForEach(mrs, id: \.?.iid) { mr in
 								if let mr {
@@ -88,8 +88,7 @@ struct ProjectMergeLoader: View {
 					FailedView(error)
 				}
 			} else {
-				LoadingView(
-					"Loading Merge Requests", systemImage: "arrow.triangle.pull", color: .blue)
+				LoadingView("Loading Merge Requests", image: "git-mr.symbols", color: .blue)
 			}
 		}.onAppear {
 			loadMergeRequests()

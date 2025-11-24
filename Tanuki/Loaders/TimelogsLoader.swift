@@ -158,7 +158,7 @@ struct TimelogsLoader: View {
 													),
 													label: {
 														PillView(
-															"#\(mergeIid)",
+															"!\(mergeIid)",
 															icon: "arrow.triangle.pull",
 															bgColor: .blue,
 															fgColor: .white,

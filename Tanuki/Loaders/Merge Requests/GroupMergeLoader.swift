@@ -66,8 +66,7 @@ struct GroupMergeLoader: View {
 				switch mergeRequests {
 				case .success(let mrs):
 					if mrs.isEmpty {
-						NoContentView(
-							"There are no Merge Requests", systemImage: "arrow.triangle.pull")
+						NoContentView("There are no Merge Requests", image: "git-mr.symbols")
 					} else {
 						ForEach(mrs, id: \.?.reference) { maybeMerge in
 							if let mr = maybeMerge {
@@ -80,7 +79,7 @@ struct GroupMergeLoader: View {
 				}
 			} else {
 				LoadingView(
-					"Loading Merge Requests", systemImage: "arrow.triangle.pull", color: .blue)
+					"Loading Merge Requests", image: "git-mr.symbols", color: .blue)
 			}
 		}.onAppear {
 			loadMergeRequests()

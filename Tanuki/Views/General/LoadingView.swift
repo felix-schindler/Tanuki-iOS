@@ -9,12 +9,18 @@ import SwiftUI
 
 struct LoadingView: View {
 	private let msg: String
-	private let icon: String
+	private let icon: Image
 	private let color: Color
 
 	init(_ message: String, systemImage: String, color: Color = .secondary) {
 		self.msg = message
-		self.icon = systemImage
+		self.icon = Image(systemName: systemImage)
+		self.color = color
+	}
+
+	init(_ message: String, image: String, color: Color = .secondary) {
+		self.msg = message
+		self.icon = Image(image)
 		self.color = color
 	}
 
@@ -26,7 +32,7 @@ struct LoadingView: View {
 						Text(self.msg)
 					},
 					icon: {
-						Image(systemName: self.icon)
+						self.icon
 							.foregroundStyle(self.color)
 					})
 			})
@@ -35,5 +41,8 @@ struct LoadingView: View {
 }
 
 #Preview {
-	LoadingView("Loading Project", systemImage: "app.gift.fill")
+	List {
+		LoadingView("Loading Project", systemImage: "app.gift.fill")
+		LoadingView("Loading MR", image: "git-mr.symbols")
+	}
 }

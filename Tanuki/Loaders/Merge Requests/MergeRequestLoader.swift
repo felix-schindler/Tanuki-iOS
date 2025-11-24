@@ -446,9 +446,14 @@ struct MergeRequestLoader: View {
 											},
 											label: {
 												Label(
-													"Close MR",
-													systemImage: "arrow.triangle.swap"
-												)
+													title: {
+														Text("Close MR")
+													},
+													icon: {
+														Image("git-mr-closed.symbols")
+															.resizable()
+															.scaledToFit()
+													})
 											}
 										).tint(.blue)
 									} else if mr.state == .closed {
@@ -458,9 +463,14 @@ struct MergeRequestLoader: View {
 											},
 											label: {
 												Label(
-													"Reopen MR",
-													systemImage: "arrow.triangle.swap"
-												)
+													title: {
+														Text("Reopen MR")
+													},
+													icon: {
+														Image("git-mr.symbols")
+															.resizable()
+															.scaledToFit()
+													})
 											}
 										).tint(.green)
 									}
@@ -512,16 +522,13 @@ struct MergeRequestLoader: View {
 							}
 						}
 					} else {
-						NoContentView(
-							"Can't find merge request", systemImage: "arrow.triangle.pull")
+						NoContentView("Can't find merge request", image: "git-mr.symbols")
 					}
 				case .failure(let error):
 					FailedView(error)
 				}
 			} else {
-				LoadingView(
-					"Loading Merge Request !\(self.iid)", systemImage: "arrow.triangle.pull",
-					color: .blue)
+				LoadingView("Loading Merge Request !\(self.iid)", image: "git-mr.symbols", color: .blue)
 			}
 		}.onAppear {
 			loadMergeRequest()
@@ -532,9 +539,19 @@ struct MergeRequestLoader: View {
 				if let mr = project.mergeRequest {
 					HStack {
 						Button(
-							mr.state.rawValue.capitalized,
-							systemImage: MergeStateHelper.getIconByState(mr.state),
-						) {}
+							action: {},
+							label: {
+								Label(
+									title: {
+										Text(mr.state.rawValue.capitalized)
+									},
+									icon: {
+										MergeStateHelper.getIconByState(mr.state)
+											.resizable()
+											.scaledToFit()
+									})
+							}
+						)
 						.tint(MergeStateHelper.getColorByState(mr.state))
 						.labelStyle(.titleAndIcon)
 						.buttonBorderShape(.roundedRectangle)

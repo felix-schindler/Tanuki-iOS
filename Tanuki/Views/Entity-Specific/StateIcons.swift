@@ -140,25 +140,25 @@ struct MergeStateHelper {
 
 	public static func getIconByState(
 		_ state: GraphQLEnum<GitLabAPI.MergeRequestState>
-	) -> String {
+	) -> Image {
 		switch state {
 		case .opened:
-			return "arrow.triangle.pull"
+			return Image("git-mr.symbols")
 		case .merged:
-			return "arrow.triangle.merge"
+			return Image("git-mr-merged.symbols")
 		case .closed:
-			return "arrow.triangle.swap"
+			return Image("git-mr-closed.symbols")
 		case .locked:
-			return "lock"
+			return Image(systemName: "lock")
 		default:
-			return "arrow.triangle.pull"
+			return Image("git-mr.symbols")
 		}
 	}
 }
 
 struct MergeStateIcon: View {
 	private let state: GraphQLEnum<GitLabAPI.MergeRequestState>
-	private let icon: String
+	private let icon: Image
 	private let color: SwiftUI.Color
 
 	init(_ state: GraphQLEnum<GitLabAPI.MergeRequestState>) {
@@ -168,9 +168,13 @@ struct MergeStateIcon: View {
 	}
 
 	public var body: some View {
-		Label(self.state.rawValue, systemImage: self.icon)
-			.foregroundStyle(self.color)
-			.labelStyle(.iconOnly)
+		Label(title: {
+			Text(self.state.rawValue)
+		}, icon: {
+			self.icon
+		})
+		.foregroundStyle(self.color)
+		.labelStyle(.iconOnly)
 	}
 }
 
