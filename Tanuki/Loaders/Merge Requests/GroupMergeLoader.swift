@@ -69,8 +69,9 @@ struct GroupMergeLoader: View {
 						NoContentView("There are no Merge Requests", image: "git-mr.symbols")
 					} else {
 						ForEach(mrs, id: \.?.reference) { maybeMerge in
-							if let mr = maybeMerge {
-								SmallMergeView(self.fullPath, mr)
+							if let mr = maybeMerge,
+							   let fullPath = mr.reference.split(separator: "!").first {
+								SmallMergeView(String(fullPath), mr)
 							}
 						}
 					}
