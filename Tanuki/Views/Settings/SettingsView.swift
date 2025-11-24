@@ -5,7 +5,6 @@
 //  Created by Felix Schindler on 23.11.25.
 //
 
-import PhosphorSwift
 import SwiftUI
 
 struct SettingsView: View {
@@ -39,7 +38,7 @@ struct SettingsView: View {
 					Label(
 						title: { Text("Cookies") },
 						icon: {
-							Ph.cookie.regular
+							Image("cookie.symbols")
 								.resizable()
 								.scaledToFill()
 						})

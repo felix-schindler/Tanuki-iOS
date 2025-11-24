@@ -93,7 +93,6 @@
 		DC7A7FA72BA5D0D600E128B1 /* SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */; };
 		DC867DF02ED3255600D4B03C /* CookiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC867DEF2ED3255600D4B03C /* CookiesView.swift */; };
 		DC867DF22ED3258F00D4B03C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC867DF12ED3258F00D4B03C /* SettingsView.swift */; };
-		DC867DF52ED32AC300D4B03C /* PhosphorSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DC867DF42ED32AC300D4B03C /* PhosphorSwift */; };
 		DC867DF72ED330FA00D4B03C /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC867DF62ED330FA00D4B03C /* FeedbackView.swift */; };
 		DC867DF92ED3346E00D4B03C /* ClipboardAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC867DF82ED3346E00D4B03C /* ClipboardAccess.swift */; };
 		DC8978222E7F514200D42E4C /* GitLabAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC8978212E7F514200D42E4C /* GitLabAPI */; };
@@ -283,7 +282,6 @@
 				DC3A24542B8C3F5800DB0E3F /* NVMColor in Frameworks */,
 				DC0A6A552B8D148000C53D56 /* CachedAsyncImage in Frameworks */,
 				DC42A2112C62D36E00B1EA85 /* HighlightedTextEditor in Frameworks */,
-				DC867DF52ED32AC300D4B03C /* PhosphorSwift in Frameworks */,
 				DC5AD7D12E697E4B0031FC7B /* ApolloAPI in Frameworks */,
 				DC5AD7CF2E697E4B0031FC7B /* Apollo in Frameworks */,
 				DCEFB26E2B94C3FD00F4B245 /* SwiftHttp in Frameworks */,
@@ -663,7 +661,6 @@
 				DC5AD7D02E697E4B0031FC7B /* ApolloAPI */,
 				DC5AD7D22E697E4B0031FC7B /* ApolloSQLite */,
 				DC5AD7DC2E69D6E50031FC7B /* Toast */,
-				DC867DF42ED32AC300D4B03C /* PhosphorSwift */,
 			);
 			productName = Tanuki;
 			productReference = DC2704F52B8BC0F9003DAA84 /* Tanuki.app */;
@@ -706,7 +703,6 @@
 				DCD225022E696BC8002256F0 /* XCLocalSwiftPackageReference "GitLabAPI" */,
 				DC5AD7CD2E697E4B0031FC7B /* XCRemoteSwiftPackageReference "apollo-ios" */,
 				DC5AD7DB2E69D6E50031FC7B /* XCRemoteSwiftPackageReference "toast-swift" */,
-				DC867DF32ED32AC300D4B03C /* XCRemoteSwiftPackageReference "swift" */,
 			);
 			productRefGroup = DC2704F62B8BC0F9003DAA84 /* Products */;
 			projectDirPath = "";
@@ -1232,14 +1228,6 @@
 				minimumVersion = 2.1.3;
 			};
 		};
-		DC867DF32ED32AC300D4B03C /* XCRemoteSwiftPackageReference "swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/phosphor-icons/swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.1.0;
-			};
-		};
 		DCAF9D9D2BC3755F001FF2E5 /* XCRemoteSwiftPackageReference "Highlightr" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/raspu/Highlightr";
@@ -1298,11 +1286,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DC5AD7DB2E69D6E50031FC7B /* XCRemoteSwiftPackageReference "toast-swift" */;
 			productName = Toast;
-		};
-		DC867DF42ED32AC300D4B03C /* PhosphorSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DC867DF32ED32AC300D4B03C /* XCRemoteSwiftPackageReference "swift" */;
-			productName = PhosphorSwift;
 		};
 		DC8978212E7F514200D42E4C /* GitLabAPI */ = {
 			isa = XCSwiftPackageProductDependency;
