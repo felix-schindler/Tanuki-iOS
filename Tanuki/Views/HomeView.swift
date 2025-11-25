@@ -50,6 +50,18 @@ struct HomeView: View {
 			Notify.status(.error)
 		}
 	}
+	
+	private func jumpTo() {
+		Notify.status(.warning, "Not yet implemented")
+	}
+	
+	private func getIconName() -> String {
+		if #available(iOS 18.0, *) {
+			"arrow.right.page.on.clipboard"
+		} else {
+			"arrow.right"
+		}
+	}
 
 	public var body: some View {
 		List {
@@ -161,6 +173,11 @@ struct HomeView: View {
 		}.refreshable {
 			await reloadStarredProjects()
 		}.toolbar {
+			ToolbarItem(placement: .topBarLeading) {
+				Button("Jump", systemImage: getIconName()) {
+					jumpTo()
+				}.tint(.accentColor)
+			}
 			ToolbarItemGroup(placement: .topBarTrailing) {
 				NavigationLink(destination: EventsLoader()) {
 					Label("Activity", systemImage: "bell")
