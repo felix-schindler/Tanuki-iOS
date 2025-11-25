@@ -53,9 +53,9 @@ struct TanukiApp: App {
 				Label("Home", systemImage: "house")
 			}.tag(0)
 			NavigationView {
-				EventsLoader()
+				CurrentUserTodosLoader()
 			}.tabItem {
-				Label("Activity", systemImage: "bell")
+				Label("Todos", systemImage: "checkmark.square")
 			}.tag(1)
 			NavigationView {
 				ExploreView()

@@ -131,13 +131,6 @@ struct HomeView: View {
 							})
 					}
 				)
-
-				NavigationLink(
-					destination: CurrentUserTodosLoader(),
-					label: {
-						Label("Todos", systemImage: "checkmark.square")
-					}
-				)
 			}
 
 			Section("Starred projects") {
@@ -168,9 +161,14 @@ struct HomeView: View {
 		}.refreshable {
 			await reloadStarredProjects()
 		}.toolbar {
-			NavigationLink(destination: NewProjectView()) {
-				Label("New project", systemImage: "plus")
-			}.tint(.accentColor)
+			ToolbarItemGroup(placement: .topBarTrailing) {
+				NavigationLink(destination: EventsLoader()) {
+					Label("Activity", systemImage: "bell")
+				}.tint(.accentColor)
+				NavigationLink(destination: NewProjectView()) {
+					Label("New project", systemImage: "plus")
+				}.tint(.accentColor)
+			}
 		}
 		.listStyle(.sidebar)
 		.headerProminence(.increased)
