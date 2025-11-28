@@ -35,7 +35,7 @@ To fetch the latest schema and generate the API code, run:
 | Feature                          | Tanuki | Gitblur | Gitblur Pro |
 | -------------------------------- | ------ | ------- | ----------- |
 | Price                            | 0,99€  | Free    | 69,99€      |
-| Projects                         |        |         |             |
+| **Projects**                     |        |         |             |
 | Browsing                         | ✅     | ✅      | ✅          |
 | Search and Filtering             | ✅     | ✅      | ✅          |
 | Star and Fork                    | ❌     | ✅      | ✅          |
@@ -49,14 +49,14 @@ To fetch the latest schema and generate the API code, run:
 | Invite Group                     | ❌     | ❌      | ✅          |
 | Wiki Management                  | ❌     | ❌      | ✅          |
 | Create Snippet                   | ❌     | ❌      | ✅          |
-| Repository                       |        |         |             |
+| **Repository**                   |        |         |             |
 | Tree Browsing                    | ✅     | ✅      | ✅          |
 | Showing Changed Files            | ✅     | ✅      | ✅          |
 | Source Code Browsing             | ?      | ❌      | ✅          |
 | Code Editor                      | ❌     | ❌      | ✅          |
 | Create File, Branch, Tag         | ❌     | ❌      | ✅          |
 | Import, Export Files             | ❌     | ❌      | ✅          |
-| Merge Requests                   |        |         |             |
+| **Merge Requests**               |        |         |             |
 | Browsing                         | ✅     | ✅      | ✅          |
 | Search and Filter                | ❌     | ✅      | ✅          |
 | Emoji Reaction                   | ❌     | ✅      | ✅          |
@@ -64,18 +64,18 @@ To fetch the latest schema and generate the API code, run:
 | Merge Action                     | ✅     | ❌      | ✅          |
 | Mark as Draft                    | ❌     | ❌      | ✅          |
 | Add Comments (supports Markdown) | ✅     | ❌      | ✅          |
-| Issues                           |        |         |             |
+| **Issues**                       |        |         |             |
 | Browsing                         | ✅     | ✅      | ✅          |
 | Search and Filter                | ✅     | ✅      | ✅          |
 | Create, Delete, Close, Edit      | ⚠️     | ❌      | ✅          |
 | Add Comments (supports Markdown) | ✅     | ❌      | ✅          |
-| Groups                           |        |         |             |
+| **Groups**                       |        |         |             |
 | Browsing                         | ✅     | ✅      | ✅          |
 | Create Group                     | ❌     | ❌      | ✅          |
 | Create Project                   | ❌     | ❌      | ✅          |
 | Create Subgroup                  | ❌     | ❌      | ✅          |
 | Group Settings                   | ❌     | ❌      | ✅          |
-| Others                           |        |         |             |
+| **Others**                       |        |         |             |
 | Todo Browsing                    | ✅     | ✅      | ✅          |
 | Keys Browsing                    | ❌     | ✅      | ✅          |
 | Email Management                 | ❌     | ✅      | ✅          |
