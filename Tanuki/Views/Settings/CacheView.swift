@@ -51,7 +51,7 @@ struct CacheView: View {
 
 			Section("GraphQL cache") {
 				Text(
-					"Due to GraphQL limitations, the actual size of the cache is unknown. If you feel this app is taking up too much storage, consider clearing this cache."
+					"Due to apollo-ios limitations, the actual size of the cache is unknown. If you feel this app is taking up too much storage, consider clearing this cache."
 				)
 				AsyncButton("Clear cache", systemImage: "trash", role: .destructive) {
 					do {
