@@ -168,11 +168,14 @@ struct MergeStateIcon: View {
 	}
 
 	public var body: some View {
-		Label(title: {
-			Text(self.state.rawValue)
-		}, icon: {
-			self.icon
-		})
+		Label(
+			title: {
+				Text(self.state.rawValue)
+			},
+			icon: {
+				self.icon
+			}
+		)
 		.foregroundStyle(self.color)
 		.labelStyle(.iconOnly)
 	}

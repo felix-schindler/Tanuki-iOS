@@ -70,7 +70,8 @@ struct GroupMergeLoader: View {
 					} else {
 						ForEach(mrs, id: \.?.reference) { maybeMerge in
 							if let mr = maybeMerge,
-							   let fullPath = mr.reference.split(separator: "!").first {
+								let fullPath = mr.reference.split(separator: "!").first
+							{
 								SmallMergeView(String(fullPath), mr)
 							}
 						}
