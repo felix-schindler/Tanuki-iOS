@@ -57,7 +57,7 @@ struct CurrentUserLoader: View {
 			if let user {
 				switch user {
 				case .success(let user):
-					UserView(user)
+					UserView(user, isSelf: true)
 				case .failure(let error):
 					FailedView(error)
 				}

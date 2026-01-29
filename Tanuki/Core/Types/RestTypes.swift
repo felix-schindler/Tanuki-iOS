@@ -53,6 +53,10 @@ struct UserSmall: Codable {
 	let id: Int
 }
 
+struct RestAPIStatus: Codable {
+	let message: String?
+}
+
 // MARK: - Releases
 struct RestAPIRelease: Codable {
 	let name: String

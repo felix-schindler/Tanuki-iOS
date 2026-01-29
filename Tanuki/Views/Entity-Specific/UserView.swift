@@ -11,9 +11,11 @@ import SwiftUI
 
 struct UserView: View {
 	private let user: User
+	private let isSelf: Bool
 
-	init(_ user: User) {
+	init(_ user: User, isSelf: Bool) {
 		self.user = user
+		self.isSelf = isSelf
 	}
 
 	public var body: some View {
@@ -93,23 +95,6 @@ struct UserView: View {
 				}
 			}
 
-			if let status = user._status {
-				HStack {
-					if let emoji = status.emoji {
-						Text(":\(emoji):".emojized())
-					}
-					if let message = status.message {
-						Text(message.emojized())
-					}
-				}
-				.frame(maxWidth: .infinity, alignment: .leading)
-				.font(.footnote)
-				.padding(.horizontal, 8)
-				.padding(.vertical, 6)
-				.background(Color(.systemGray5))
-				.cornerRadius(5)
-			}
-
 			if user.bio?.isNotEmpty ?? false {
 				Markdown(user.bio!)
 					.markdownTheme(.gitLab)
@@ -141,6 +126,32 @@ struct UserView: View {
 			.padding(.vertical, 6)
 			.background(.orange)
 			.cornerRadius(5)
+		}
+
+		if let status = user._status {
+			Section {
+				NavigationLink(
+					destination: UpdateStatusView(),
+					label: {
+						HStack {
+							if let emoji = status.emoji {
+								Text(":\(emoji):".emojized())
+							}
+							if let message = status.message {
+								Text(message.emojized())
+							}
+						}
+					}
+				).disabled(!self.isSelf)
+			}
+		} else if isSelf {
+			Section {
+				NavigationLink(
+					destination: UpdateStatusView(),
+					label: {
+						Label("Create status", systemImage: "pencil")
+					})
+			}
 		}
 
 		let showMail = user.publicEmail?.isNotEmpty ?? false
