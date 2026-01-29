@@ -43,9 +43,9 @@ struct SettingsView: View {
 								.scaledToFill()
 						})
 				}
-				NavigationLink(destination: ClipboardAccess()) {
+				/*NavigationLink(destination: ClipboardAccess()) {
 					Label("Clipboard URL", systemImage: "arrow.right.page.on.clipboard")
-				}
+				}*/
 			}
 
 			Section {
