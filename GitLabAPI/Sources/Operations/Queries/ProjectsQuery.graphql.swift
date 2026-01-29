@@ -8,7 +8,7 @@ public struct ProjectsQuery: GraphQLQuery {
   public static let operationName: String = "Projects"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Projects($membership: Boolean, $search: String, $personal: Boolean, $sort: String, $namespacePath: ID, $withIssuesEnabled: Boolean, $withMergeRequestsEnabled: Boolean, $archived: ProjectArchived, $minAccessLevel: AccessLevelEnum, $trending: Boolean, $aimedForDeletion: Boolean, $notAimedForDeletion: Boolean, $markedForDeletionOn: Date, $active: Boolean, $visibility: VisibilityLevelsEnum, $includeHidden: Boolean) { projects( membership: $membership search: $search personal: $personal sort: $sort namespacePath: $namespacePath withIssuesEnabled: $withIssuesEnabled withMergeRequestsEnabled: $withMergeRequestsEnabled archived: $archived minAccessLevel: $minAccessLevel trending: $trending aimedForDeletion: $aimedForDeletion notAimedForDeletion: $notAimedForDeletion markedForDeletionOn: $markedForDeletionOn active: $active visibilityLevel: $visibility includeHidden: $includeHidden ) { __typename nodes { __typename avatarUrl nameWithNamespace visibility fullPath } } }"#
+      #"query Projects($membership: Boolean, $search: String, $personal: Boolean, $sort: String, $namespacePath: ID, $withIssuesEnabled: Boolean, $withMergeRequestsEnabled: Boolean, $archived: ProjectArchived, $minAccessLevel: AccessLevelEnum, $aimedForDeletion: Boolean, $notAimedForDeletion: Boolean, $markedForDeletionOn: Date, $active: Boolean, $visibility: VisibilityLevelsEnum, $includeHidden: Boolean) { projects( membership: $membership search: $search personal: $personal sort: $sort namespacePath: $namespacePath withIssuesEnabled: $withIssuesEnabled withMergeRequestsEnabled: $withMergeRequestsEnabled archived: $archived minAccessLevel: $minAccessLevel aimedForDeletion: $aimedForDeletion notAimedForDeletion: $notAimedForDeletion markedForDeletionOn: $markedForDeletionOn active: $active visibilityLevel: $visibility includeHidden: $includeHidden ) { __typename nodes { __typename avatarUrl nameWithNamespace visibility fullPath } } }"#
     ))
 
   public var membership: GraphQLNullable<Bool>
@@ -20,7 +20,6 @@ public struct ProjectsQuery: GraphQLQuery {
   public var withMergeRequestsEnabled: GraphQLNullable<Bool>
   public var archived: GraphQLNullable<GraphQLEnum<ProjectArchived>>
   public var minAccessLevel: GraphQLNullable<GraphQLEnum<AccessLevelEnum>>
-  public var trending: GraphQLNullable<Bool>
   public var aimedForDeletion: GraphQLNullable<Bool>
   public var notAimedForDeletion: GraphQLNullable<Bool>
   public var markedForDeletionOn: GraphQLNullable<Date>
@@ -38,7 +37,6 @@ public struct ProjectsQuery: GraphQLQuery {
     withMergeRequestsEnabled: GraphQLNullable<Bool>,
     archived: GraphQLNullable<GraphQLEnum<ProjectArchived>>,
     minAccessLevel: GraphQLNullable<GraphQLEnum<AccessLevelEnum>>,
-    trending: GraphQLNullable<Bool>,
     aimedForDeletion: GraphQLNullable<Bool>,
     notAimedForDeletion: GraphQLNullable<Bool>,
     markedForDeletionOn: GraphQLNullable<Date>,
@@ -55,7 +53,6 @@ public struct ProjectsQuery: GraphQLQuery {
     self.withMergeRequestsEnabled = withMergeRequestsEnabled
     self.archived = archived
     self.minAccessLevel = minAccessLevel
-    self.trending = trending
     self.aimedForDeletion = aimedForDeletion
     self.notAimedForDeletion = notAimedForDeletion
     self.markedForDeletionOn = markedForDeletionOn
@@ -74,7 +71,6 @@ public struct ProjectsQuery: GraphQLQuery {
     "withMergeRequestsEnabled": withMergeRequestsEnabled,
     "archived": archived,
     "minAccessLevel": minAccessLevel,
-    "trending": trending,
     "aimedForDeletion": aimedForDeletion,
     "notAimedForDeletion": notAimedForDeletion,
     "markedForDeletionOn": markedForDeletionOn,
@@ -99,7 +95,6 @@ public struct ProjectsQuery: GraphQLQuery {
         "withMergeRequestsEnabled": .variable("withMergeRequestsEnabled"),
         "archived": .variable("archived"),
         "minAccessLevel": .variable("minAccessLevel"),
-        "trending": .variable("trending"),
         "aimedForDeletion": .variable("aimedForDeletion"),
         "notAimedForDeletion": .variable("notAimedForDeletion"),
         "markedForDeletionOn": .variable("markedForDeletionOn"),

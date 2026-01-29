@@ -24,7 +24,6 @@ struct ProjectsLoader: View {
 	@State public private(set) var withMergeRequestsEnabled: Bool = false
 	@State public private(set) var archived: ProjectArchived = .include
 	@State public private(set) var accessLevel: AccessLevelEnum? = nil
-	@State public private(set) var trending: Bool = false
 	@State public private(set) var aimedForDeletion: Bool = false
 	@State public private(set) var notAimedForDeletion: Bool = true
 	@State public private(set) var markedForDeletionOn: SwiftUI.Date? = nil
@@ -43,7 +42,6 @@ struct ProjectsLoader: View {
 			withMergeRequestsEnabled: .some(self.withMergeRequestsEnabled),
 			archived: .some(.case(self.archived)),
 			minAccessLevel: GraphFilter.toFilterEnum(self.accessLevel),
-			trending: .some(self.trending),
 			aimedForDeletion: .some(self.aimedForDeletion),
 			notAimedForDeletion: .some(self.notAimedForDeletion),
 			markedForDeletionOn: GraphFilter.toFilterDate(self.markedForDeletionOn),
@@ -137,12 +135,6 @@ struct ProjectsLoader: View {
 						VStack(alignment: .leading) {
 							Toggle("Owner", isOn: $personal)
 							Text("Return only personal projects.")
-								.foregroundStyle(.secondary)
-								.font(.footnote)
-						}
-						VStack(alignment: .leading) {
-							Toggle("Trending", isOn: $trending)
-							Text("Return only projects that are trending.")
 								.foregroundStyle(.secondary)
 								.font(.footnote)
 						}

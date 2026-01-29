@@ -64,7 +64,7 @@ public struct UserReviewRequestedMergeRequestsQuery: GraphQLQuery {
           UserReviewRequestedMergeRequestsQuery.Data.CurrentUser.ReviewRequestedMergeRequests.self
         ] }
 
-        /// Total count of collection.
+        /// Total count of collection. Returns limit + 1 for counts greater than the limit.
         public var count: Int { __data["count"] }
         /// A list of nodes.
         public var nodes: [Node?]? { __data["nodes"] }
