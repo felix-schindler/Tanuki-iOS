@@ -110,6 +110,8 @@
 		DCB6B6372BB70CD8006C8437 /* MrCommitsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6362BB70CD8006C8437 /* MrCommitsLoader.swift */; };
 		DCB6B6392BB70F9C006C8437 /* SmallCommitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */; };
 		DCB9660B2EAEC535004D3CFA /* IssueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB9660A2EAEC535004D3CFA /* IssueFilter.swift */; };
+		DCBC8B402F2C01DD00700380 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DCBC8B3F2F2C01DD00700380 /* Settings.bundle */; };
+		DCBC8B412F2C01DD00700380 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DCBC8B3F2F2C01DD00700380 /* Settings.bundle */; };
 		DCC54EBF2E9AB16E005B9CE3 /* ProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC54EBE2E9AB16E005B9CE3 /* ProjectsLoader.swift */; };
 		DCC95E572BC5274B0040D657 /* ContributionsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC95E562BC5274B0040D657 /* ContributionsLoader.swift */; };
 		DCCB5D8D2B9C0E8300D5D70A /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */; };
@@ -243,6 +245,7 @@
 		DCB6B6362BB70CD8006C8437 /* MrCommitsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MrCommitsLoader.swift; sourceTree = "<group>"; };
 		DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCommitView.swift; sourceTree = "<group>"; };
 		DCB9660A2EAEC535004D3CFA /* IssueFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilter.swift; sourceTree = "<group>"; };
+		DCBC8B3F2F2C01DD00700380 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		DCC54EBE2E9AB16E005B9CE3 /* ProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsLoader.swift; sourceTree = "<group>"; };
 		DCC95E562BC5274B0040D657 /* ContributionsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributionsLoader.swift; sourceTree = "<group>"; };
 		DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoView.swift; sourceTree = "<group>"; };
@@ -337,6 +340,7 @@
 			isa = PBXGroup;
 			children = (
 				DC2704F72B8BC0F9003DAA84 /* Tanuki */,
+				DCBC8B3F2F2C01DD00700380 /* Settings.bundle */,
 				DC2511D92E7F4C7D0021371C /* Tanuki Watch App */,
 				DC2704F62B8BC0F9003DAA84 /* Products */,
 				DC3013102B8BC78300D33B23 /* Frameworks */,
@@ -719,6 +723,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCBC8B402F2C01DD00700380 /* Settings.bundle in Resources */,
 				DC39B0FA2E9C39510036F8D7 /* TanukiIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -727,6 +732,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCBC8B412F2C01DD00700380 /* Settings.bundle in Resources */,
 				DC39B0FB2E9C39510036F8D7 /* TanukiIcon.icon in Resources */,
 				DC2705012B8BC0FB003DAA84 /* Preview Assets.xcassets in Resources */,
 				DC2704FD2B8BC0FB003DAA84 /* Assets.xcassets in Resources */,
@@ -1217,7 +1223,7 @@
 			repositoryURL = "https://github.com/apollographql/apollo-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.3;
+				minimumVersion = 2.0.5;
 			};
 		};
 		DC5AD7DB2E69D6E50031FC7B /* XCRemoteSwiftPackageReference "toast-swift" */ = {
