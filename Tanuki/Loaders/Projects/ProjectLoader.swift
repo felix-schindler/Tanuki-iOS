@@ -81,7 +81,14 @@ struct ProjectLoader: View {
 		}
 	}
 
-	private func requestAccess() async {
+	private func requestAccess(_ projectId: Int) async {
+		do {
+			_ = try await API.req(
+				type: RestAPIProject.self, method: .post, endpoint: "projects/\(projectId)/access_requests")
+			Notify.status(.success, "Access request sent", systemImage: "checkmark")
+		} catch {
+			Notify.status(.error, "Access request failed", error.localizedDescription, systemImage: "xmark")
+		}
 	}
 
 	public var body: some View {
@@ -317,13 +324,15 @@ struct ProjectLoader: View {
 							}
 						}
 
-						if project.userPermissions.requestAccess {
+						if project.userPermissions.requestAccess,
+							let projectId = project.id.toIntId()
+						{
 							Section {
 								AsyncButton(
 									"Request access",
 									systemImage: "person.badge.plus"
 								) {
-									await requestAccess()
+									await requestAccess(projectId)
 								}
 							}
 						}

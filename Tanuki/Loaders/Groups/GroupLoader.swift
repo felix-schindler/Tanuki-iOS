@@ -63,9 +63,9 @@ struct GroupLoader: View {
 	private func requestAccess(_ groupId: Int) async {
 		do {
 			_ = try await API.req(type: UserSmall.self, method: .post, endpoint: "groups/\(groupId)/access_requests")
-			Notify.status(.success, "Access request sent")
+			Notify.status(.success, "Access request sent", systemImage: "checkmark")
 		} catch let error {
-			Notify.status(.error, "Failed to request access", error.localizedDescription)
+			Notify.status(.error, "Access request failed", error.localizedDescription, systemImage: "xmark")
 		}
 	}
 

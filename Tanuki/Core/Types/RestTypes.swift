@@ -43,6 +43,11 @@ struct PushData: Codable {
 	let commitTitle: String?
 }
 
+// MARK: - Projects
+struct RestAPIProject: Codable {
+	let id: Int
+}
+
 // MARK: - Labels
 struct RestAPILabel: Codable {
 	let id: Int
