@@ -25,14 +25,12 @@ struct ProjectHeaderView: View {
 		self.starCount = project.starCount
 	}
 
-	private func star(_ fullPath: String) async {
+	private func star() async {
 		do {
-			let toggle = try await API.req(
-				type: ToggleStar.self, method: .post, endpoint: "\(fullPath)/toggle_star.json", useBase: false)
-			self.starCount = toggle.starCount
-			Notify.status(.success, "Toggled star")
+			_ = try await Network.shared.apollo.perform(mutation: StarProjectMutation(projectId: project.id, starred: true))
+			Notify.status(.success, "Project starred", systemImage: "star")
 		} catch let error {
-			Notify.status(.error, "Failed to toggle star", error.localizedDescription, systemImage: "star")
+			Notify.status(.error, "Starring project failed", error.localizedDescription, systemImage: "xmark")
 		}
 	}
 
@@ -115,21 +113,14 @@ struct ProjectHeaderView: View {
 						}
 					}
 
-					if let fullPath = project.namespace?.fullPath {
-						AsyncButton(
-							String(project.starCount),
-							systemImage: "star"
-						) {
-							await star(fullPath)
-						}
-						.tint(.accentColor)
-						.buttonStyle(.bordered)
-					} else {
-						PillView(
-							String(project.starCount),
-							icon: "star"
-						)
+					AsyncButton(
+						String(project.starCount),
+						systemImage: "star"
+					) {
+						await star()
 					}
+					.tint(.accentColor)
+					.buttonStyle(.bordered)
 
 					if project.userPermissions.forkProject,
 						let projectUrl = URL(string: "\(project.webUrl ?? "")/-/forks/new")

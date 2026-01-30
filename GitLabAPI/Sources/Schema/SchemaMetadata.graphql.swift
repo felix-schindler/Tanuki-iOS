@@ -104,6 +104,7 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
     case "SnippetConnection": return GitLabAPI.Objects.SnippetConnection
     case "SnippetPermissions": return GitLabAPI.Objects.SnippetPermissions
     case "SshSignature": return GitLabAPI.Objects.SshSignature
+    case "StarProjectPayload": return GitLabAPI.Objects.StarProjectPayload
     case "Submodule": return GitLabAPI.Objects.Submodule
     case "Timelog": return GitLabAPI.Objects.Timelog
     case "TimelogConnection": return GitLabAPI.Objects.TimelogConnection
