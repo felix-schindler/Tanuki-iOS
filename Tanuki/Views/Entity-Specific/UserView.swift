@@ -288,7 +288,7 @@ struct UserView: View {
 			NavigationLink(
 				destination: TimelogsLoader(
 					fullPath: user.username,
-					queryType: .group
+					queryType: .user
 				),
 				label: {
 					Label("Timelogs", systemImage: "hourglass")
