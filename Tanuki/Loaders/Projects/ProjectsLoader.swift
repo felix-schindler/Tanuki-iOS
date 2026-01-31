@@ -29,7 +29,6 @@ struct ProjectsLoader: View {
 	@State public private(set) var markedForDeletionOn: SwiftUI.Date? = nil
 	@State public private(set) var active: Bool? = nil
 	@State public private(set) var visibilityLevel: VisibilityLevelsEnum? = nil
-	@State public private(set) var includeHidden: Bool = false
 
 	private var query: ProjectsQuery {
 		return ProjectsQuery(
@@ -47,7 +46,6 @@ struct ProjectsLoader: View {
 			markedForDeletionOn: GraphFilter.toFilterDate(self.markedForDeletionOn),
 			active: GraphFilter.toFilter(self.active),
 			visibility: GraphFilter.toFilterEnum(self.visibilityLevel),
-			includeHidden: .some(self.includeHidden)
 		)
 	}
 
@@ -159,12 +157,6 @@ struct ProjectsLoader: View {
 								}
 							}
 							Text("Filter projects by visibility level.")
-								.foregroundStyle(.secondary)
-								.font(.footnote)
-						}
-						VStack(alignment: .leading) {
-							Toggle("Include Hidden", isOn: $includeHidden)
-							Text("Include hidden projects.")
 								.foregroundStyle(.secondary)
 								.font(.footnote)
 						}

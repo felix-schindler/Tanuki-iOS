@@ -8,7 +8,7 @@ public struct ProjectsQuery: GraphQLQuery {
   public static let operationName: String = "Projects"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Projects($membership: Boolean, $search: String, $personal: Boolean, $sort: String, $namespacePath: ID, $withIssuesEnabled: Boolean, $withMergeRequestsEnabled: Boolean, $archived: ProjectArchived, $minAccessLevel: AccessLevelEnum, $aimedForDeletion: Boolean, $notAimedForDeletion: Boolean, $markedForDeletionOn: Date, $active: Boolean, $visibility: VisibilityLevelsEnum, $includeHidden: Boolean) { projects( membership: $membership search: $search personal: $personal sort: $sort namespacePath: $namespacePath withIssuesEnabled: $withIssuesEnabled withMergeRequestsEnabled: $withMergeRequestsEnabled archived: $archived minAccessLevel: $minAccessLevel aimedForDeletion: $aimedForDeletion notAimedForDeletion: $notAimedForDeletion markedForDeletionOn: $markedForDeletionOn active: $active visibilityLevel: $visibility includeHidden: $includeHidden ) { __typename nodes { __typename avatarUrl nameWithNamespace visibility fullPath } } }"#
+      #"query Projects($membership: Boolean, $search: String, $personal: Boolean, $sort: String, $namespacePath: ID, $withIssuesEnabled: Boolean, $withMergeRequestsEnabled: Boolean, $archived: ProjectArchived, $minAccessLevel: AccessLevelEnum, $aimedForDeletion: Boolean, $notAimedForDeletion: Boolean, $markedForDeletionOn: Date, $active: Boolean, $visibility: VisibilityLevelsEnum) { projects( membership: $membership search: $search personal: $personal sort: $sort namespacePath: $namespacePath withIssuesEnabled: $withIssuesEnabled withMergeRequestsEnabled: $withMergeRequestsEnabled archived: $archived minAccessLevel: $minAccessLevel aimedForDeletion: $aimedForDeletion notAimedForDeletion: $notAimedForDeletion markedForDeletionOn: $markedForDeletionOn active: $active visibilityLevel: $visibility ) { __typename nodes { __typename avatarUrl nameWithNamespace visibility fullPath } } }"#
     ))
 
   public var membership: GraphQLNullable<Bool>
@@ -25,7 +25,6 @@ public struct ProjectsQuery: GraphQLQuery {
   public var markedForDeletionOn: GraphQLNullable<Date>
   public var active: GraphQLNullable<Bool>
   public var visibility: GraphQLNullable<GraphQLEnum<VisibilityLevelsEnum>>
-  public var includeHidden: GraphQLNullable<Bool>
 
   public init(
     membership: GraphQLNullable<Bool>,
@@ -41,8 +40,7 @@ public struct ProjectsQuery: GraphQLQuery {
     notAimedForDeletion: GraphQLNullable<Bool>,
     markedForDeletionOn: GraphQLNullable<Date>,
     active: GraphQLNullable<Bool>,
-    visibility: GraphQLNullable<GraphQLEnum<VisibilityLevelsEnum>>,
-    includeHidden: GraphQLNullable<Bool>
+    visibility: GraphQLNullable<GraphQLEnum<VisibilityLevelsEnum>>
   ) {
     self.membership = membership
     self.search = search
@@ -58,7 +56,6 @@ public struct ProjectsQuery: GraphQLQuery {
     self.markedForDeletionOn = markedForDeletionOn
     self.active = active
     self.visibility = visibility
-    self.includeHidden = includeHidden
   }
 
   @_spi(Unsafe) public var __variables: Variables? { [
@@ -75,8 +72,7 @@ public struct ProjectsQuery: GraphQLQuery {
     "notAimedForDeletion": notAimedForDeletion,
     "markedForDeletionOn": markedForDeletionOn,
     "active": active,
-    "visibility": visibility,
-    "includeHidden": includeHidden
+    "visibility": visibility
   ] }
 
   public struct Data: GitLabAPI.SelectionSet {
@@ -99,8 +95,7 @@ public struct ProjectsQuery: GraphQLQuery {
         "notAimedForDeletion": .variable("notAimedForDeletion"),
         "markedForDeletionOn": .variable("markedForDeletionOn"),
         "active": .variable("active"),
-        "visibilityLevel": .variable("visibility"),
-        "includeHidden": .variable("includeHidden")
+        "visibilityLevel": .variable("visibility")
       ]),
     ] }
     @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [

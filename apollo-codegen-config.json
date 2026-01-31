@@ -1,43 +1,36 @@
 {
-  "schemaNamespace" : "GitLabAPI",
-  "schemaDownload": {
-	  "downloadMethod": {
-	    "introspection": {
-	      "endpointURL": "https://gitlab.com/api/graphql",
-	      "httpMethod": {
-	        "POST": {}
-	      },
-	      "includeDeprecatedInputValues": false,
-	      "outputFormat": "SDL"
-	    }
-	  },
-	  "downloadTimeout": 60,
-	  "headers": [],
-	  "outputPath": "./gitlab@current.graphqls"
-  },
-  "input" : {
-    "operationSearchPaths" : [
-      "**/*.graphql"
-    ],
-    "schemaSearchPaths" : [
-      "**/*.graphqls"
-    ]
-  },
-  "output" : {
-    "testMocks" : {
-      "none" : {
-      }
-    },
-    "schemaTypes" : {
-      "path" : "./GitLabAPI",
-      "moduleType" : {
-        "swiftPackage" : {
-        }
-      }
-    },
-    "operations" : {
-      "inSchemaModule" : {
-      }
-    }
-  }
+	"schemaNamespace": "GitLabAPI",
+	"schemaDownload": {
+		"downloadMethod": {
+			"introspection": {
+				"endpointURL": "https://gitlab.com/api/graphql",
+				"httpMethod": {
+					"POST": {}
+				},
+				"includeDeprecatedInputValues": false,
+				"outputFormat": "SDL"
+			}
+		},
+		"downloadTimeout": 60,
+		"headers": [],
+		"outputPath": "./gitlab@current.graphqls"
+	},
+	"input": {
+		"operationSearchPaths": ["**/*.graphql"],
+		"schemaSearchPaths": ["**/*.graphqls"]
+	},
+	"output": {
+		"testMocks": {
+			"none": {}
+		},
+		"schemaTypes": {
+			"path": "./GitLabAPI",
+			"moduleType": {
+				"swiftPackage": {}
+			}
+		},
+		"operations": {
+			"inSchemaModule": {}
+		}
+	}
 }
