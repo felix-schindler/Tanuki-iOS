@@ -52,6 +52,9 @@ struct SettingsView: View {
 				NavigationLink(destination: FeedbackView()) {
 					Label("Feedback", systemImage: "exclamationmark.bubble")
 				}
+				if #available(iOS 16.0, *) {
+					AppStoreReview()
+				}
 			}
 		}
 	}

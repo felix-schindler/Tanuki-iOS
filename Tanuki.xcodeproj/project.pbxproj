@@ -100,6 +100,7 @@
 		DC8978262E7F515800D42E4C /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC8978252E7F515800D42E4C /* ApolloAPI */; };
 		DC89783D2E7F558300D42E4C /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = DC89783C2E7F558300D42E4C /* CachedAsyncImage */; };
 		DC961C6F2E9E9BE80076D49F /* MergeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC961C6E2E9E9BE80076D49F /* MergeButton.swift */; };
+		DCA43B2D2F462F6B00481922 /* AppStoreReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA43B2C2F462F6B00481922 /* AppStoreReview.swift */; };
 		DCAA7E3A2E9B0C860078DB8E /* GroupsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA7E392E9B0C860078DB8E /* GroupsLoader.swift */; };
 		DCAA7E3C2E9B0F4F0078DB8E /* SmallGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA7E3B2E9B0F4F0078DB8E /* SmallGroupView.swift */; };
 		DCAA7E3E2E9B169F0078DB8E /* UsersLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA7E3D2E9B169F0078DB8E /* UsersLoader.swift */; };
@@ -237,6 +238,7 @@
 		DC867DF62ED330FA00D4B03C /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		DC867DF82ED3346E00D4B03C /* ClipboardAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardAccess.swift; sourceTree = "<group>"; };
 		DC961C6E2E9E9BE80076D49F /* MergeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeButton.swift; sourceTree = "<group>"; };
+		DCA43B2C2F462F6B00481922 /* AppStoreReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreReview.swift; sourceTree = "<group>"; };
 		DCAA7E392E9B0C860078DB8E /* GroupsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsLoader.swift; sourceTree = "<group>"; };
 		DCAA7E3B2E9B0F4F0078DB8E /* SmallGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallGroupView.swift; sourceTree = "<group>"; };
 		DCAA7E3D2E9B169F0078DB8E /* UsersLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersLoader.swift; sourceTree = "<group>"; };
@@ -608,6 +610,7 @@
 				DC867DEF2ED3255600D4B03C /* CookiesView.swift */,
 				DC867DF62ED330FA00D4B03C /* FeedbackView.swift */,
 				DC867DF82ED3346E00D4B03C /* ClipboardAccess.swift */,
+				DCA43B2C2F462F6B00481922 /* AppStoreReview.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -762,6 +765,7 @@
 				DC3A244F2B8C3B8100DB0E3F /* Utils.swift in Sources */,
 				DC1C37EA2B999F87005B7D7A /* EpicLoader.swift in Sources */,
 				DC2D65E92E7F03A6007A800C /* NewLabelView.swift in Sources */,
+				DCA43B2D2F462F6B00481922 /* AppStoreReview.swift in Sources */,
 				DC6C5DA52B8F0A3300587850 /* SmallMergeView.swift in Sources */,
 				DC0A6A4A2B8D0ABE00C53D56 /* VisibilityIcon.swift in Sources */,
 				DC1D0FF52B99469900B6F5D7 /* LabelsLoader.swift in Sources */,
