@@ -22,9 +22,6 @@ struct IssueLoader: View {
 	@State
 	private var showDeleteConfirm = false
 
-	@State
-	private var newNoteContent = ""
-
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
 		self.iid = iid
@@ -323,22 +320,9 @@ struct IssueLoader: View {
 						let noteCount = issue.notes.nodes?.count ?? 0
 						if issue.userPermissions.createNote || noteCount > 0 {
 							Section("Notes (\(issue.userNotesCount))") {
-								if issue.userPermissions.createNote {
-									HStack {
-										TextField(
-											"New note",
-											text: $newNoteContent
-										)
-										RoundIconButton("Comment", icon: "arrow.up") {
-											// TODO: Save note
-											if newNoteContent.isEmpty {
-												Notify.status(.error, "Please provide content")
-											} else {
-												Notify.status(.success)
-												newNoteContent = ""
-											}
-										}
-									}
+								if let projectId = project.id.toIntId(),
+								   issue.userPermissions.createNote {
+									NewNoteView(projectId, iid: issue.iid, type: .issue)
 								}
 
 								if noteCount > 0 {

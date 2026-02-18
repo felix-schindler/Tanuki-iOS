@@ -18,12 +18,6 @@ struct MergeRequestLoader: View {
 	@State
 	private var project: Result<GitLabAPI.MergeRequestQuery.Data.Project, Error>? = nil
 
-	@State
-	private var newNoteContent = ""
-
-	@State
-	private var newNoteError = false
-
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
 		self.iid = iid
@@ -485,30 +479,9 @@ struct MergeRequestLoader: View {
 						let noteCount = mr.notes.nodes?.count ?? 0
 						if mr.userPermissions.createNote || noteCount > 0 {
 							Section("Notes (\(mr.userNotesCount ?? 0))") {
-								if mr.userPermissions.createNote {
-									HStack {
-										TextField(
-											"New note",
-											text: $newNoteContent
-										)
-										RoundIconButton("Comment", icon: "arrow.up") {
-											// TODO: Save note
-											if newNoteContent.isEmpty {
-												Notify.status(.error, "Please provide content")
-												newNoteError = true
-											} else {
-												Notify.status(.success)
-												newNoteContent = ""
-											}
-										}.alert(
-											"Failed to create new note",
-											isPresented: $newNoteError,
-											actions: {
-												Button("OK") {
-													newNoteError = false
-												}
-											})
-									}
+								if let projectId = project.id.toIntId(),
+								   mr.userPermissions.createNote {
+									NewNoteView(projectId, iid: mr.iid, type: .mergeRequest)
 								}
 
 								if noteCount > 0 {

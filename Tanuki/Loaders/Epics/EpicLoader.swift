@@ -16,13 +16,6 @@ struct EpicLoader: View {
 	@State
 	private var group: Result<EpicQuery.Data.Group, Error>? = nil
 
-	// MARK: New note
-	@State
-	private var newNoteContent = ""
-
-	@State
-	private var newNoteError = false
-
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
 		self.iid = iid
@@ -307,22 +300,9 @@ struct EpicLoader: View {
 						let noteCount = epic.notes.nodes?.count ?? 0
 						if epic.userPermissions.createNote || noteCount > 0 {
 							Section("Notes (\(epic.userNotesCount))") {
-								if epic.userPermissions.createNote {
-									HStack {
-										TextField(
-											"New note",
-											text: $newNoteContent
-										)
-										RoundIconButton("Comment", icon: "arrow.up") {
-											// TODO: Save note
-											if newNoteContent.isEmpty {
-												Notify.status(.error, "Please provide content")
-											} else {
-												Notify.status(.success)
-												newNoteContent = ""
-											}
-										}
-									}
+								if let groupId = group.id?.toIntId(),
+								   epic.userPermissions.createNote {
+									NewNoteView(groupId, iid: epic.iid, type: .epic)
 								}
 
 								if noteCount > 0 {

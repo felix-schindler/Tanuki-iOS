@@ -18,12 +18,6 @@ struct SnippetLoader: View {
 	@State
 	private var snippet: Result<SnippetQuery.Data.Snippets.Node, Error>? = nil
 
-	@State
-	private var newNoteContent = ""
-
-	@State
-	private var newNoteError = false
-
 	init(id: String) {
 		self.id = id
 	}
@@ -131,30 +125,9 @@ struct SnippetLoader: View {
 
 					if let notes = snippet.notes.nodes {
 						Section("Notes") {
-							if snippet.userPermissions.createNote {
-								HStack {
-									TextField(
-										"New note",
-										text: $newNoteContent
-									)
-									RoundIconButton(
-										"Comment",
-										icon: "arrow.up"
-									) {
-										// TODO: Save note
-										if newNoteContent.isEmpty {
-											Notify
-												.status(
-													.error,
-													"Please provide content"
-												)
-										} else {
-											Notify.status(.success)
-											newNoteContent = ""
-										}
-									}
-								}
-							}
+							/* if snippet.userPermissions.createNote {
+								NewNoteView()
+							} */
 
 							ForEach(notes, id: \.self?.id) { maybeNote in
 								if let note = maybeNote {
