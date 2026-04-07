@@ -52,7 +52,7 @@ To fetch the latest schema and generate the API code, run:
 | **Repository**                   |        |         |             |
 | Tree Browsing                    | ✅     | ✅      | ✅          |
 | Showing Changed Files            | ✅     | ✅      | ✅          |
-| Source Code Browsing             | ?      | ❌      | ✅          |
+| Source Code Browsing             | ✅     | ❌      | ✅          |
 | Code Editor                      | ❌     | ❌      | ✅          |
 | Create File, Branch, Tag         | ❌     | ❌      | ✅          |
 | Import, Export Files             | ❌     | ❌      | ✅          |
@@ -63,16 +63,16 @@ To fetch the latest schema and generate the API code, run:
 | Create, Delete, Close, Edit      | ⚠️     | ❌      | ✅          |
 | Merge Action                     | ✅     | ❌      | ✅          |
 | Mark as Draft                    | ❌     | ❌      | ✅          |
-| Add Comments (supports Markdown) | ✅     | ❌      | ✅          |
+| Add Comments (supports Markdown) | ❌     | ❌      | ✅          |
 | **Issues**                       |        |         |             |
 | Browsing                         | ✅     | ✅      | ✅          |
 | Search and Filter                | ✅     | ✅      | ✅          |
 | Create, Delete, Close, Edit      | ⚠️     | ❌      | ✅          |
-| Add Comments (supports Markdown) | ✅     | ❌      | ✅          |
+| Add Comments (supports Markdown) | ❌     | ❌      | ✅          |
 | **Groups**                       |        |         |             |
 | Browsing                         | ✅     | ✅      | ✅          |
 | Create Group                     | ❌     | ❌      | ✅          |
-| Create Project                   | ❌     | ❌      | ✅          |
+| Create Project                   | ✅     | ❌      | ✅          |
 | Create Subgroup                  | ❌     | ❌      | ✅          |
 | Group Settings                   | ❌     | ❌      | ✅          |
 | **Others**                       |        |         |             |
