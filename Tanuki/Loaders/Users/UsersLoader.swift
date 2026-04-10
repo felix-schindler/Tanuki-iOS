@@ -15,6 +15,9 @@ struct UsersLoader: View {
 	@State
 	private var showFilters = false
 
+	@State
+	private var loadTask: Task<Void, Never>?
+
 	// MARK: - Filters
 	@State public private(set) var search: String? = nil
 	@State public private(set) var admins = false
@@ -32,14 +35,16 @@ struct UsersLoader: View {
 	}
 
 	private func loadUsers() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: self.query,
-				cachePolicy: .cacheAndNetwork
-			)
+		self.loadTask?.cancel()
+		self.loadTask = Task {
+			do {
+				let responses = try await Network.shared.apollo.fetch(
+					query: self.query,
+					cachePolicy: .cacheAndNetwork
+				)
 
-			Task {
 				for try await response in responses {
+					if Task.isCancelled { return }
 					if let users = response.data?.users?.nodes {
 						self.users = .success(users)
 					} else if let errors = response.errors {
@@ -48,10 +53,12 @@ struct UsersLoader: View {
 						}
 					}
 				}
+			} catch {
+				if !Task.isCancelled {
+					self.users = .failure(error)
+					Notify.status(.error)
+				}
 			}
-		} catch let error {
-			self.users = .failure(error)
-			Notify.status(.error)
 		}
 	}
 

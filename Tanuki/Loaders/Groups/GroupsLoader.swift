@@ -15,6 +15,9 @@ struct GroupsLoader: View {
 	@State
 	private var showFilters = false
 
+	@State
+	private var loadTask: Task<Void, Never>?
+
 	// MARK: - Filter
 	public private(set) var parentPath: String? = nil
 	@State public private(set) var search: String? = nil
@@ -38,14 +41,16 @@ struct GroupsLoader: View {
 
 	// MARK: - Data loading
 	private func loadGroups() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: self.query,
-				cachePolicy: .cacheAndNetwork
-			)
+		self.loadTask?.cancel()
+		self.loadTask = Task {
+			do {
+				let responses = try await Network.shared.apollo.fetch(
+					query: self.query,
+					cachePolicy: .cacheAndNetwork
+				)
 
-			Task {
 				for try await response in responses {
+					if Task.isCancelled { return }
 					if let groups = response.data?.groups?.nodes {
 						self.groups = .success(groups)
 					} else if let errors = response.errors {
@@ -54,10 +59,12 @@ struct GroupsLoader: View {
 						}
 					}
 				}
+			} catch {
+				if !Task.isCancelled {
+					self.groups = .failure(error)
+					Notify.status(.error)
+				}
 			}
-		} catch let error {
-			self.groups = .failure(error)
-			Notify.status(.error)
 		}
 	}
 

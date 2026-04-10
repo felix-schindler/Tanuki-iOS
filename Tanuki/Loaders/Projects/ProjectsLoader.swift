@@ -15,6 +15,9 @@ struct ProjectsLoader: View {
 	@State
 	private var showFilters = false
 
+	@State
+	private var loadTask: Task<Void, Never>?
+
 	// MARK: - Filter
 	public private(set) var namespacePath: String? = nil
 	@State public private(set) var search: String? = nil
@@ -51,14 +54,16 @@ struct ProjectsLoader: View {
 
 	// MARK: - Data loading
 	private func loadProjects() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: self.query,
-				cachePolicy: .cacheAndNetwork
-			)
+		self.loadTask?.cancel()
+		self.loadTask = Task {
+			do {
+				let responses = try await Network.shared.apollo.fetch(
+					query: self.query,
+					cachePolicy: .cacheAndNetwork
+				)
 
-			Task {
 				for try await response in responses {
+					if Task.isCancelled { return }
 					if let projects = response.data?.projects?.nodes {
 						self.projects = .success(projects)
 					} else if let errors = response.errors {
@@ -67,10 +72,12 @@ struct ProjectsLoader: View {
 						}
 					}
 				}
+			} catch {
+				if !Task.isCancelled {
+					self.projects = .failure(error)
+					Notify.status(.error)
+				}
 			}
-		} catch let error {
-			self.projects = .failure(error)
-			Notify.status(.error)
 		}
 	}
 

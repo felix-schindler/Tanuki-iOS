@@ -16,20 +16,25 @@ struct EpicIssuesLoader: View {
 	@State
 	private var issues: Result<[SmallIssue?], Error>? = nil
 
+	@State
+	private var loadTask: Task<Void, Never>?
+
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
 		self.iid = iid
 	}
 
 	private func loadIssues() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: EpicIssuesQuery(fullPath: self.fullPath, iid: self.iid),
-				cachePolicy: .cacheAndNetwork
-			)
+		self.loadTask?.cancel()
+		self.loadTask = Task {
+			do {
+				let responses = try await Network.shared.apollo.fetch(
+					query: EpicIssuesQuery(fullPath: self.fullPath, iid: self.iid),
+					cachePolicy: .cacheAndNetwork
+				)
 
-			Task {
 				for try await response in responses {
+					if Task.isCancelled { return }
 					if let issues = response.data?.group?.epic?.issues?.nodes {
 						self.issues = .success(issues)
 					} else if let errors = response.errors {
@@ -38,10 +43,12 @@ struct EpicIssuesLoader: View {
 						}
 					}
 				}
+			} catch {
+				if !Task.isCancelled {
+					self.issues = .failure(error)
+					Notify.status(.error)
+				}
 			}
-		} catch let error {
-			self.issues = .failure(error)
-			Notify.status(.error)
 		}
 	}
 

@@ -18,6 +18,9 @@ struct GroupIssuesLoader: View {
 	@State
 	private var showFilters = false
 
+	@State
+	private var loadTask: Task<Void, Never>?
+
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
@@ -26,21 +29,23 @@ struct GroupIssuesLoader: View {
 	private var issues: Result<[SmallIssue?], Error>? = nil
 
 	private func loadIssues() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: GroupIssuesQuery(
-					fullPath: self.fullPath,
-					state: GraphFilter.toFilterEnum(self.filter.state),
-					search: GraphFilter.toFilter(self.filter.search),
-					confidential: GraphFilter.toFilter(self.filter.confidential),
-					subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
-					types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
-				),
-				cachePolicy: .cacheAndNetwork
-			)
+		self.loadTask?.cancel()
+		self.loadTask = Task {
+			do {
+				let responses = try await Network.shared.apollo.fetch(
+					query: GroupIssuesQuery(
+						fullPath: self.fullPath,
+						state: GraphFilter.toFilterEnum(self.filter.state),
+						search: GraphFilter.toFilter(self.filter.search),
+						confidential: GraphFilter.toFilter(self.filter.confidential),
+						subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
+						types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
+					),
+					cachePolicy: .cacheAndNetwork
+				)
 
-			Task {
 				for try await response in responses {
+					if Task.isCancelled { return }
 					if let issues = response.data?.group?.issues?.nodes {
 						self.issues = .success(issues)
 					} else if let errors = response.errors {
@@ -49,10 +54,12 @@ struct GroupIssuesLoader: View {
 						}
 					}
 				}
+			} catch {
+				if !Task.isCancelled {
+					self.issues = .failure(error)
+					Notify.status(.error)
+				}
 			}
-		} catch let error {
-			self.issues = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
