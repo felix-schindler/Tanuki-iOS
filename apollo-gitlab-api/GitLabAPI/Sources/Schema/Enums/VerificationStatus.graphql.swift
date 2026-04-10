@@ -4,7 +4,7 @@
 @_spi(Internal) import ApolloAPI
 
 /// Verification status of a GPG, X.509 or SSH signature for a commit.
-public enum VerificationStatus: String, EnumType {
+nonisolated public enum VerificationStatus: String, EnumType {
   /// unverified verification status.
   case unverified = "UNVERIFIED"
   /// verified verification status.

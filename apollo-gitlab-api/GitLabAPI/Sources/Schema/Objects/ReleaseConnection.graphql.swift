@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// The connection type for Release.
-  static let ReleaseConnection = ApolloAPI.Object(
+  nonisolated static let ReleaseConnection = ApolloAPI.Object(
     typename: "ReleaseConnection",
     implementedInterfaces: [],
     keyFields: nil

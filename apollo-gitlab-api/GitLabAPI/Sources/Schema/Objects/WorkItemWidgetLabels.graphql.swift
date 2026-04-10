@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents the labels widget
-  static let WorkItemWidgetLabels = ApolloAPI.Object(
+  nonisolated static let WorkItemWidgetLabels = ApolloAPI.Object(
     typename: "WorkItemWidgetLabels",
     implementedInterfaces: [Interfaces.WorkItemWidget.self],
     keyFields: nil

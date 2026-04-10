@@ -4,7 +4,7 @@
 @_spi(Internal) import ApolloAPI
 
 /// Issue type
-public enum IssueType: String, EnumType {
+nonisolated public enum IssueType: String, EnumType {
   /// Issue issue type
   case issue = "ISSUE"
   /// Incident issue type

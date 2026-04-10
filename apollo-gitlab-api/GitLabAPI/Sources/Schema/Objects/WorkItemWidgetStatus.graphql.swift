@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents status widget
-  static let WorkItemWidgetStatus = ApolloAPI.Object(
+  nonisolated static let WorkItemWidgetStatus = ApolloAPI.Object(
     typename: "WorkItemWidgetStatus",
     implementedInterfaces: [Interfaces.WorkItemWidget.self],
     keyFields: nil

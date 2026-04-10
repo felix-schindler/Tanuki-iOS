@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents an epic
-  static let Epic = ApolloAPI.Object(
+  nonisolated static let Epic = ApolloAPI.Object(
     typename: "Epic",
     implementedInterfaces: [
       Interfaces.CurrentUserTodos.self,

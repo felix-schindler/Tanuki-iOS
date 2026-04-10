@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// The connection type for Note.
-  static let NoteConnection = ApolloAPI.Object(
+  nonisolated static let NoteConnection = ApolloAPI.Object(
     typename: "NoteConnection",
     implementedInterfaces: [],
     keyFields: nil

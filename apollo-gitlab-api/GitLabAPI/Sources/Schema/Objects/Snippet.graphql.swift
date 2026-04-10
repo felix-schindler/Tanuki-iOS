@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents a snippet entry
-  static let Snippet = ApolloAPI.Object(
+  nonisolated static let Snippet = ApolloAPI.Object(
     typename: "Snippet",
     implementedInterfaces: [Interfaces.NoteableInterface.self],
     keyFields: nil

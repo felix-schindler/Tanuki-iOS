@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents a verification status widget
-  static let WorkItemWidgetVerificationStatus = ApolloAPI.Object(
+  nonisolated static let WorkItemWidgetVerificationStatus = ApolloAPI.Object(
     typename: "WorkItemWidgetVerificationStatus",
     implementedInterfaces: [Interfaces.WorkItemWidget.self],
     keyFields: nil

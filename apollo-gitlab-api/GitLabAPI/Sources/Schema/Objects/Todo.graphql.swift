@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Representing a to-do entry
-  static let Todo = ApolloAPI.Object(
+  nonisolated static let Todo = ApolloAPI.Object(
     typename: "Todo",
     implementedInterfaces: [],
     keyFields: nil

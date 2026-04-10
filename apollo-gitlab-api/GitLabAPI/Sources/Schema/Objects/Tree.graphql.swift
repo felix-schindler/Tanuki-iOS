@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Objects {
-  static let Tree = ApolloAPI.Object(
+  nonisolated static let Tree = ApolloAPI.Object(
     typename: "Tree",
     implementedInterfaces: [],
     keyFields: nil

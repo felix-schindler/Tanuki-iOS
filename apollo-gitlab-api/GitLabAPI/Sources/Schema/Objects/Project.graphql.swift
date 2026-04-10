@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Objects {
-  static let Project = ApolloAPI.Object(
+  nonisolated static let Project = ApolloAPI.Object(
     typename: "Project",
     implementedInterfaces: [
       Interfaces.ProjectInterface.self,

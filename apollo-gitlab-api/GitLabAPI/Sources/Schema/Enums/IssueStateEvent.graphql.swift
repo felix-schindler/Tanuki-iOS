@@ -4,7 +4,7 @@
 @_spi(Internal) import ApolloAPI
 
 /// Values for issue state events
-public enum IssueStateEvent: String, EnumType {
+nonisolated public enum IssueStateEvent: String, EnumType {
   /// Reopens the issue.
   case reopen = "REOPEN"
   /// Closes the issue.

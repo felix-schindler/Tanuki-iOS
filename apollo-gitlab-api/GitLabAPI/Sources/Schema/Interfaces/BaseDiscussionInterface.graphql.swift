@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let BaseDiscussionInterface = ApolloAPI.Interface(
+  nonisolated static let BaseDiscussionInterface = ApolloAPI.Interface(
     name: "BaseDiscussionInterface",
     keyFields: nil,
     implementingObjects: ["Discussion"]

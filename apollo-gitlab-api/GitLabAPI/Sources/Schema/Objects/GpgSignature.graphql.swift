@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// GPG signature for a signed commit
-  static let GpgSignature = ApolloAPI.Object(
+  nonisolated static let GpgSignature = ApolloAPI.Object(
     typename: "GpgSignature",
     implementedInterfaces: [Interfaces.CommitSignature.self],
     keyFields: nil

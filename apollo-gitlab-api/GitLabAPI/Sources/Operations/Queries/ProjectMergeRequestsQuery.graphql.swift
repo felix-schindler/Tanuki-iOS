@@ -4,7 +4,7 @@
 @_exported import ApolloAPI
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public struct ProjectMergeRequestsQuery: GraphQLQuery {
+nonisolated public struct ProjectMergeRequestsQuery: GraphQLQuery {
   public static let operationName: String = "ProjectMergeRequests"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -19,7 +19,7 @@ public struct ProjectMergeRequestsQuery: GraphQLQuery {
 
   @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
 
-  public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -37,7 +37,7 @@ public struct ProjectMergeRequestsQuery: GraphQLQuery {
     /// Project
     ///
     /// Parent Type: `Project`
-    public struct Project: GitLabAPI.SelectionSet {
+    nonisolated public struct Project: GitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -59,7 +59,7 @@ public struct ProjectMergeRequestsQuery: GraphQLQuery {
       /// Project.MergeRequests
       ///
       /// Parent Type: `MergeRequestConnection`
-      public struct MergeRequests: GitLabAPI.SelectionSet {
+      nonisolated public struct MergeRequests: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -78,7 +78,7 @@ public struct ProjectMergeRequestsQuery: GraphQLQuery {
         /// Project.MergeRequests.Node
         ///
         /// Parent Type: `MergeRequest`
-        public struct Node: GitLabAPI.SelectionSet {
+        nonisolated public struct Node: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -124,7 +124,7 @@ public struct ProjectMergeRequestsQuery: GraphQLQuery {
           /// Project.MergeRequests.Node.Author
           ///
           /// Parent Type: `MergeRequestAuthor`
-          public struct Author: GitLabAPI.SelectionSet {
+          nonisolated public struct Author: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 

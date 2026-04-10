@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Interfaces {
   /// Returns either a "Group" type for users with :read_group permission, or a "GroupMinimalAccess" type for users with only :read_group_metadata permission.
-  static let GroupInterface = ApolloAPI.Interface(
+  nonisolated static let GroupInterface = ApolloAPI.Interface(
     name: "GroupInterface",
     keyFields: nil,
     implementingObjects: [

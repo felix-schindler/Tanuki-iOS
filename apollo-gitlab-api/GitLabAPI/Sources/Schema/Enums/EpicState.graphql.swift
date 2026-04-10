@@ -4,7 +4,7 @@
 @_spi(Internal) import ApolloAPI
 
 /// State of an epic
-public enum EpicState: String, EnumType {
+nonisolated public enum EpicState: String, EnumType {
   /// All epics.
   case all = "all"
   /// Open epics.

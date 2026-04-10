@@ -4,7 +4,7 @@
 @_spi(Internal) import ApolloAPI
 
 /// Access level to a resource
-public enum AccessLevelEnum: String, EnumType {
+nonisolated public enum AccessLevelEnum: String, EnumType {
   /// No access.
   case noAccess = "NO_ACCESS"
   /// Minimal access.

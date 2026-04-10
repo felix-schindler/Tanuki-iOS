@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents a progress widget
-  static let WorkItemWidgetProgress = ApolloAPI.Object(
+  nonisolated static let WorkItemWidgetProgress = ApolloAPI.Object(
     typename: "WorkItemWidgetProgress",
     implementedInterfaces: [Interfaces.WorkItemWidget.self],
     keyFields: nil

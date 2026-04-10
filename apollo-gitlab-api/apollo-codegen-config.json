@@ -16,8 +16,8 @@
 		"outputPath": "./gitlab@current.graphqls"
 	},
 	"input": {
-		"operationSearchPaths": ["**/*.graphql"],
-		"schemaSearchPaths": ["**/*.graphqls"]
+		"operationSearchPaths": ["./Queries/**/*.graphql"],
+		"schemaSearchPaths": ["./*.graphqls"]
 	},
 	"output": {
 		"testMocks": {

@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// The connection type for ProjectMember.
-  static let ProjectMemberConnection = ApolloAPI.Object(
+  nonisolated static let ProjectMemberConnection = ApolloAPI.Object(
     typename: "ProjectMemberConnection",
     implementedInterfaces: [],
     keyFields: nil

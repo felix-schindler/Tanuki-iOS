@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents an epic on an issue board
-  static let BoardEpic = ApolloAPI.Object(
+  nonisolated static let BoardEpic = ApolloAPI.Object(
     typename: "BoardEpic",
     implementedInterfaces: [
       Interfaces.CurrentUserTodos.self,

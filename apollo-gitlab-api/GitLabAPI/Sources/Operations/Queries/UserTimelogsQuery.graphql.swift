@@ -4,7 +4,7 @@
 @_exported import ApolloAPI
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public struct UserTimelogsQuery: GraphQLQuery {
+nonisolated public struct UserTimelogsQuery: GraphQLQuery {
   public static let operationName: String = "UserTimelogs"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -19,7 +19,7 @@ public struct UserTimelogsQuery: GraphQLQuery {
 
   @_spi(Unsafe) public var __variables: Variables? { ["username": username] }
 
-  public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -37,7 +37,7 @@ public struct UserTimelogsQuery: GraphQLQuery {
     /// User
     ///
     /// Parent Type: `UserCore`
-    public struct User: GitLabAPI.SelectionSet {
+    nonisolated public struct User: GitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -56,7 +56,7 @@ public struct UserTimelogsQuery: GraphQLQuery {
       /// User.Timelogs
       ///
       /// Parent Type: `TimelogConnection`
-      public struct Timelogs: GitLabAPI.SelectionSet {
+      nonisolated public struct Timelogs: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -75,7 +75,7 @@ public struct UserTimelogsQuery: GraphQLQuery {
         /// User.Timelogs.Node
         ///
         /// Parent Type: `Timelog`
-        public struct Node: GitLabAPI.SelectionSet {
+        nonisolated public struct Node: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -115,7 +115,7 @@ public struct UserTimelogsQuery: GraphQLQuery {
           /// User.Timelogs.Node.User
           ///
           /// Parent Type: `UserCore`
-          public struct User: GitLabAPI.SelectionSet {
+          nonisolated public struct User: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -141,7 +141,7 @@ public struct UserTimelogsQuery: GraphQLQuery {
           /// User.Timelogs.Node.Project
           ///
           /// Parent Type: `Project`
-          public struct Project: GitLabAPI.SelectionSet {
+          nonisolated public struct Project: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -164,7 +164,7 @@ public struct UserTimelogsQuery: GraphQLQuery {
           /// User.Timelogs.Node.Issue
           ///
           /// Parent Type: `Issue`
-          public struct Issue: GitLabAPI.SelectionSet {
+          nonisolated public struct Issue: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -184,7 +184,7 @@ public struct UserTimelogsQuery: GraphQLQuery {
           /// User.Timelogs.Node.MergeRequest
           ///
           /// Parent Type: `MergeRequest`
-          public struct MergeRequest: GitLabAPI.SelectionSet {
+          nonisolated public struct MergeRequest: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 

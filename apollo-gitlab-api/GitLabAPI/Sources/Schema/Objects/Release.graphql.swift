@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents a release
-  static let Release = ApolloAPI.Object(
+  nonisolated static let Release = ApolloAPI.Object(
     typename: "Release",
     implementedInterfaces: [],
     keyFields: nil

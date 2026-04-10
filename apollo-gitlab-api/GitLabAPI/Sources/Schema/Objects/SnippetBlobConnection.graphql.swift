@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// The connection type for SnippetBlob.
-  static let SnippetBlobConnection = ApolloAPI.Object(
+  nonisolated static let SnippetBlobConnection = ApolloAPI.Object(
     typename: "SnippetBlobConnection",
     implementedInterfaces: [],
     keyFields: nil

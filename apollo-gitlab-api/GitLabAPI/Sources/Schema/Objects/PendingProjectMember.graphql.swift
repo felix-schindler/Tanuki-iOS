@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents a Pending Project Membership
-  static let PendingProjectMember = ApolloAPI.Object(
+  nonisolated static let PendingProjectMember = ApolloAPI.Object(
     typename: "PendingProjectMember",
     implementedInterfaces: [
       Interfaces.MemberInterface.self,

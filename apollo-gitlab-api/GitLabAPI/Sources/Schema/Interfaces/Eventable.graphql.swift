@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let Eventable = ApolloAPI.Interface(
+  nonisolated static let Eventable = ApolloAPI.Interface(
     name: "Eventable",
     keyFields: nil,
     implementingObjects: [

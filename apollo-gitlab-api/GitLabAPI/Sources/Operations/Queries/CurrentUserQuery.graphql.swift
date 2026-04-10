@@ -4,7 +4,7 @@
 @_exported import ApolloAPI
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public struct CurrentUserQuery: GraphQLQuery {
+nonisolated public struct CurrentUserQuery: GraphQLQuery {
   public static let operationName: String = "CurrentUser"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -13,7 +13,7 @@ public struct CurrentUserQuery: GraphQLQuery {
 
   public init() {}
 
-  public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -31,7 +31,7 @@ public struct CurrentUserQuery: GraphQLQuery {
     /// CurrentUser
     ///
     /// Parent Type: `CurrentUser`
-    public struct CurrentUser: GitLabAPI.SelectionSet {
+    nonisolated public struct CurrentUser: GitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -104,7 +104,7 @@ public struct CurrentUserQuery: GraphQLQuery {
       /// CurrentUser.Status
       ///
       /// Parent Type: `UserStatus`
-      public struct Status: GitLabAPI.SelectionSet {
+      nonisolated public struct Status: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 

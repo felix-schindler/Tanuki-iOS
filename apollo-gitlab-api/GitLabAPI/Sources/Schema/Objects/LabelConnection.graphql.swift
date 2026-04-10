@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// The connection type for Label.
-  static let LabelConnection = ApolloAPI.Object(
+  nonisolated static let LabelConnection = ApolloAPI.Object(
     typename: "LabelConnection",
     implementedInterfaces: [],
     keyFields: nil

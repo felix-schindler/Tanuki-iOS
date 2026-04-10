@@ -4,7 +4,7 @@
 @_exported import ApolloAPI
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public struct RepoTreeQuery: GraphQLQuery {
+nonisolated public struct RepoTreeQuery: GraphQLQuery {
   public static let operationName: String = "RepoTree"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -31,7 +31,7 @@ public struct RepoTreeQuery: GraphQLQuery {
     "path": path
   ] }
 
-  public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -49,7 +49,7 @@ public struct RepoTreeQuery: GraphQLQuery {
     /// Project
     ///
     /// Parent Type: `Project`
-    public struct Project: GitLabAPI.SelectionSet {
+    nonisolated public struct Project: GitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -68,7 +68,7 @@ public struct RepoTreeQuery: GraphQLQuery {
       /// Project.Repository
       ///
       /// Parent Type: `Repository`
-      public struct Repository: GitLabAPI.SelectionSet {
+      nonisolated public struct Repository: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -93,7 +93,7 @@ public struct RepoTreeQuery: GraphQLQuery {
         /// Project.Repository.Tree
         ///
         /// Parent Type: `Tree`
-        public struct Tree: GitLabAPI.SelectionSet {
+        nonisolated public struct Tree: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -115,7 +115,7 @@ public struct RepoTreeQuery: GraphQLQuery {
           /// Project.Repository.Tree.Blobs
           ///
           /// Parent Type: `BlobConnection`
-          public struct Blobs: GitLabAPI.SelectionSet {
+          nonisolated public struct Blobs: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -134,7 +134,7 @@ public struct RepoTreeQuery: GraphQLQuery {
             /// Project.Repository.Tree.Blobs.Node
             ///
             /// Parent Type: `Blob`
-            public struct Node: GitLabAPI.SelectionSet {
+            nonisolated public struct Node: GitLabAPI.SelectionSet {
               @_spi(Unsafe) public let __data: DataDict
               @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -158,7 +158,7 @@ public struct RepoTreeQuery: GraphQLQuery {
           /// Project.Repository.Tree.Trees
           ///
           /// Parent Type: `TreeEntryConnection`
-          public struct Trees: GitLabAPI.SelectionSet {
+          nonisolated public struct Trees: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -177,7 +177,7 @@ public struct RepoTreeQuery: GraphQLQuery {
             /// Project.Repository.Tree.Trees.Node
             ///
             /// Parent Type: `TreeEntry`
-            public struct Node: GitLabAPI.SelectionSet {
+            nonisolated public struct Node: GitLabAPI.SelectionSet {
               @_spi(Unsafe) public let __data: DataDict
               @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 

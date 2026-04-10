@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents a Project Membership
-  static let ProjectMember = ApolloAPI.Object(
+  nonisolated static let ProjectMember = ApolloAPI.Object(
     typename: "ProjectMember",
     implementedInterfaces: [Interfaces.MemberInterface.self],
     keyFields: nil

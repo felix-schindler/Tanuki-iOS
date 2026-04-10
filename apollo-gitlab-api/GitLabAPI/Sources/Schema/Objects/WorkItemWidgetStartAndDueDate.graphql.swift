@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents a start and due date widget
-  static let WorkItemWidgetStartAndDueDate = ApolloAPI.Object(
+  nonisolated static let WorkItemWidgetStartAndDueDate = ApolloAPI.Object(
     typename: "WorkItemWidgetStartAndDueDate",
     implementedInterfaces: [Interfaces.WorkItemWidget.self],
     keyFields: nil

@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Objects {
-  static let RepositoryLanguage = ApolloAPI.Object(
+  nonisolated static let RepositoryLanguage = ApolloAPI.Object(
     typename: "RepositoryLanguage",
     implementedInterfaces: [],
     keyFields: nil

@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents an iteration widget
-  static let WorkItemWidgetIteration = ApolloAPI.Object(
+  nonisolated static let WorkItemWidgetIteration = ApolloAPI.Object(
     typename: "WorkItemWidgetIteration",
     implementedInterfaces: [Interfaces.WorkItemWidget.self],
     keyFields: nil

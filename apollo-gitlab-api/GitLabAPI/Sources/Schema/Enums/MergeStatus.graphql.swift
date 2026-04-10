@@ -4,7 +4,7 @@
 @_spi(Internal) import ApolloAPI
 
 /// Representation of whether a GitLab merge request can be merged.
-public enum MergeStatus: String, EnumType {
+nonisolated public enum MergeStatus: String, EnumType {
   /// Merge status has not been checked.
   case unchecked = "UNCHECKED"
   /// Currently checking for mergeability.

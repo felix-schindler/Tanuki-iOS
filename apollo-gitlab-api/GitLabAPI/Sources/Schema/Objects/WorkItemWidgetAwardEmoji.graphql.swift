@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents the emoji reactions widget
-  static let WorkItemWidgetAwardEmoji = ApolloAPI.Object(
+  nonisolated static let WorkItemWidgetAwardEmoji = ApolloAPI.Object(
     typename: "WorkItemWidgetAwardEmoji",
     implementedInterfaces: [Interfaces.WorkItemWidget.self],
     keyFields: nil

@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents the linked resources widget
-  static let WorkItemWidgetLinkedResources = ApolloAPI.Object(
+  nonisolated static let WorkItemWidgetLinkedResources = ApolloAPI.Object(
     typename: "WorkItemWidgetLinkedResources",
     implementedInterfaces: [Interfaces.WorkItemWidget.self],
     keyFields: nil

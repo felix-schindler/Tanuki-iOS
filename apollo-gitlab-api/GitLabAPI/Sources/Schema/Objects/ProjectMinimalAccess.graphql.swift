@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Objects {
-  static let ProjectMinimalAccess = ApolloAPI.Object(
+  nonisolated static let ProjectMinimalAccess = ApolloAPI.Object(
     typename: "ProjectMinimalAccess",
     implementedInterfaces: [Interfaces.ProjectInterface.self],
     keyFields: nil

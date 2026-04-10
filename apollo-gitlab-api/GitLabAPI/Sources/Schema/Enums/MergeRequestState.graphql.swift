@@ -4,7 +4,7 @@
 @_spi(Internal) import ApolloAPI
 
 /// State of a GitLab merge request
-public enum MergeRequestState: String, EnumType {
+nonisolated public enum MergeRequestState: String, EnumType {
   /// Merge request has been merged.
   case merged = "merged"
   /// Opened merge request.

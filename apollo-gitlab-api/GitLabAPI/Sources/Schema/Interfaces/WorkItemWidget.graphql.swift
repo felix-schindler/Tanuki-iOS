@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let WorkItemWidget = ApolloAPI.Interface(
+  nonisolated static let WorkItemWidget = ApolloAPI.Interface(
     name: "WorkItemWidget",
     keyFields: nil,
     implementingObjects: [

@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// The currently authenticated GitLab user.
-  static let CurrentUser = ApolloAPI.Object(
+  nonisolated static let CurrentUser = ApolloAPI.Object(
     typename: "CurrentUser",
     implementedInterfaces: [
       Interfaces.Todoable.self,

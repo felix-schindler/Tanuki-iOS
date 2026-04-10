@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Relationship between an epic and an issue
-  static let EpicIssue = ApolloAPI.Object(
+  nonisolated static let EpicIssue = ApolloAPI.Object(
     typename: "EpicIssue",
     implementedInterfaces: [
       Interfaces.CurrentUserTodos.self,

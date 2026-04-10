@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Interfaces {
   /// Represents signing information for a commit
-  static let CommitSignature = ApolloAPI.Interface(
+  nonisolated static let CommitSignature = ApolloAPI.Interface(
     name: "CommitSignature",
     keyFields: nil,
     implementingObjects: [

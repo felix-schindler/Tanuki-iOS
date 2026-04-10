@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Compliance violation for a project.
-  static let ProjectComplianceViolation = ApolloAPI.Object(
+  nonisolated static let ProjectComplianceViolation = ApolloAPI.Object(
     typename: "ProjectComplianceViolation",
     implementedInterfaces: [
       Interfaces.NoteableInterface.self,

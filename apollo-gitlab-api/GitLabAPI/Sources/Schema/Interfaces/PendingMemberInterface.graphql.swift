@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let PendingMemberInterface = ApolloAPI.Interface(
+  nonisolated static let PendingMemberInterface = ApolloAPI.Interface(
     name: "PendingMemberInterface",
     keyFields: nil,
     implementingObjects: [

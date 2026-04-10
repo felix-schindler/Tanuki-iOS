@@ -4,7 +4,7 @@
 @_spi(Internal) import ApolloAPI
 
 /// Current state of milestone
-public enum MilestoneStateEnum: String, EnumType {
+nonisolated public enum MilestoneStateEnum: String, EnumType {
   /// Milestone is currently active.
   case active = "active"
   /// Milestone is closed.

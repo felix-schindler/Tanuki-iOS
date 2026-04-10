@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Objects {
-  static let GroupPermissions = ApolloAPI.Object(
+  nonisolated static let GroupPermissions = ApolloAPI.Object(
     typename: "GroupPermissions",
     implementedInterfaces: [],
     keyFields: nil

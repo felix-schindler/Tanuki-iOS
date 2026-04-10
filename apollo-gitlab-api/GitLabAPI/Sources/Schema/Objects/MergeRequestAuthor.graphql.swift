@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// The author of the merge request.
-  static let MergeRequestAuthor = ApolloAPI.Object(
+  nonisolated static let MergeRequestAuthor = ApolloAPI.Object(
     typename: "MergeRequestAuthor",
     implementedInterfaces: [
       Interfaces.Todoable.self,

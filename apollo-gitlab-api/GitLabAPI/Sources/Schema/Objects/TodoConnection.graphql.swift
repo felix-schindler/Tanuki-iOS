@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// The connection type for Todo.
-  static let TodoConnection = ApolloAPI.Object(
+  nonisolated static let TodoConnection = ApolloAPI.Object(
     typename: "TodoConnection",
     implementedInterfaces: [],
     keyFields: nil

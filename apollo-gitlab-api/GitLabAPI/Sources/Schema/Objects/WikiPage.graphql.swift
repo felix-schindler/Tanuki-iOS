@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// A wiki page
-  static let WikiPage = ApolloAPI.Object(
+  nonisolated static let WikiPage = ApolloAPI.Object(
     typename: "WikiPage",
     implementedInterfaces: [
       Interfaces.NoteableInterface.self,

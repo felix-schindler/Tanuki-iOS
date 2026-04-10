@@ -4,7 +4,7 @@
 @_exported import ApolloAPI
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public struct GroupMembersQuery: GraphQLQuery {
+nonisolated public struct GroupMembersQuery: GraphQLQuery {
   public static let operationName: String = "GroupMembers"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -19,7 +19,7 @@ public struct GroupMembersQuery: GraphQLQuery {
 
   @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
 
-  public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -37,7 +37,7 @@ public struct GroupMembersQuery: GraphQLQuery {
     /// Group
     ///
     /// Parent Type: `Group`
-    public struct Group: GitLabAPI.SelectionSet {
+    nonisolated public struct Group: GitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -56,7 +56,7 @@ public struct GroupMembersQuery: GraphQLQuery {
       /// Group.GroupMembers
       ///
       /// Parent Type: `GroupMemberConnection`
-      public struct GroupMembers: GitLabAPI.SelectionSet {
+      nonisolated public struct GroupMembers: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -75,7 +75,7 @@ public struct GroupMembersQuery: GraphQLQuery {
         /// Group.GroupMembers.Node
         ///
         /// Parent Type: `GroupMember`
-        public struct Node: GitLabAPI.SelectionSet {
+        nonisolated public struct Node: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -109,7 +109,7 @@ public struct GroupMembersQuery: GraphQLQuery {
           /// Group.GroupMembers.Node.CreatedBy
           ///
           /// Parent Type: `UserCore`
-          public struct CreatedBy: GitLabAPI.SelectionSet {
+          nonisolated public struct CreatedBy: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -135,7 +135,7 @@ public struct GroupMembersQuery: GraphQLQuery {
           /// Group.GroupMembers.Node.AccessLevel
           ///
           /// Parent Type: `AccessLevel`
-          public struct AccessLevel: GitLabAPI.SelectionSet {
+          nonisolated public struct AccessLevel: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -155,7 +155,7 @@ public struct GroupMembersQuery: GraphQLQuery {
           /// Group.GroupMembers.Node.User
           ///
           /// Parent Type: `UserCore`
-          public struct User: GitLabAPI.SelectionSet {
+          nonisolated public struct User: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 

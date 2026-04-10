@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Objects {
-  static let ProjectPermissions = ApolloAPI.Object(
+  nonisolated static let ProjectPermissions = ApolloAPI.Object(
     typename: "ProjectPermissions",
     implementedInterfaces: [],
     keyFields: nil

@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents a custom fields widget
-  static let WorkItemWidgetCustomFields = ApolloAPI.Object(
+  nonisolated static let WorkItemWidgetCustomFields = ApolloAPI.Object(
     typename: "WorkItemWidgetCustomFields",
     implementedInterfaces: [Interfaces.WorkItemWidget.self],
     keyFields: nil

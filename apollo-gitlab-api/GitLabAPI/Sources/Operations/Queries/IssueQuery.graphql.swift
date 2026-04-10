@@ -4,7 +4,7 @@
 @_exported import ApolloAPI
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public struct IssueQuery: GraphQLQuery {
+nonisolated public struct IssueQuery: GraphQLQuery {
   public static let operationName: String = "Issue"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -27,7 +27,7 @@ public struct IssueQuery: GraphQLQuery {
     "iid": iid
   ] }
 
-  public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -45,7 +45,7 @@ public struct IssueQuery: GraphQLQuery {
     /// Project
     ///
     /// Parent Type: `Project`
-    public struct Project: GitLabAPI.SelectionSet {
+    nonisolated public struct Project: GitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -70,7 +70,7 @@ public struct IssueQuery: GraphQLQuery {
       /// Project.Issue
       ///
       /// Parent Type: `Issue`
-      public struct Issue: GitLabAPI.SelectionSet {
+      nonisolated public struct Issue: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -149,7 +149,7 @@ public struct IssueQuery: GraphQLQuery {
         /// Project.Issue.BlockedByIssues
         ///
         /// Parent Type: `IssueConnection`
-        public struct BlockedByIssues: GitLabAPI.SelectionSet {
+        nonisolated public struct BlockedByIssues: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -168,7 +168,7 @@ public struct IssueQuery: GraphQLQuery {
           /// Project.Issue.BlockedByIssues.Node
           ///
           /// Parent Type: `Issue`
-          public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -189,7 +189,7 @@ public struct IssueQuery: GraphQLQuery {
         /// Project.Issue.Author
         ///
         /// Parent Type: `UserCore`
-        public struct Author: GitLabAPI.SelectionSet {
+        nonisolated public struct Author: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -215,7 +215,7 @@ public struct IssueQuery: GraphQLQuery {
         /// Project.Issue.UserPermissions
         ///
         /// Parent Type: `IssuePermissions`
-        public struct UserPermissions: GitLabAPI.SelectionSet {
+        nonisolated public struct UserPermissions: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -238,7 +238,7 @@ public struct IssueQuery: GraphQLQuery {
         /// Project.Issue.Assignees
         ///
         /// Parent Type: `UserCoreConnection`
-        public struct Assignees: GitLabAPI.SelectionSet {
+        nonisolated public struct Assignees: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -257,7 +257,7 @@ public struct IssueQuery: GraphQLQuery {
           /// Project.Issue.Assignees.Node
           ///
           /// Parent Type: `UserCore`
-          public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -281,7 +281,7 @@ public struct IssueQuery: GraphQLQuery {
         /// Project.Issue.Labels
         ///
         /// Parent Type: `LabelConnection`
-        public struct Labels: GitLabAPI.SelectionSet {
+        nonisolated public struct Labels: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -300,7 +300,7 @@ public struct IssueQuery: GraphQLQuery {
           /// Project.Issue.Labels.Node
           ///
           /// Parent Type: `Label`
-          public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -327,7 +327,7 @@ public struct IssueQuery: GraphQLQuery {
         /// Project.Issue.Milestone
         ///
         /// Parent Type: `Milestone`
-        public struct Milestone: GitLabAPI.SelectionSet {
+        nonisolated public struct Milestone: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -350,7 +350,7 @@ public struct IssueQuery: GraphQLQuery {
         /// Project.Issue.Notes
         ///
         /// Parent Type: `NoteConnection`
-        public struct Notes: GitLabAPI.SelectionSet {
+        nonisolated public struct Notes: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -369,7 +369,7 @@ public struct IssueQuery: GraphQLQuery {
           /// Project.Issue.Notes.Node
           ///
           /// Parent Type: `Note`
-          public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -409,7 +409,7 @@ public struct IssueQuery: GraphQLQuery {
             /// Project.Issue.Notes.Node.Author
             ///
             /// Parent Type: `UserCore`
-            public struct Author: GitLabAPI.SelectionSet {
+            nonisolated public struct Author: GitLabAPI.SelectionSet {
               @_spi(Unsafe) public let __data: DataDict
               @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 

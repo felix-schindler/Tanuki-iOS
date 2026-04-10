@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents CRM contacts widget
-  static let WorkItemWidgetCrmContacts = ApolloAPI.Object(
+  nonisolated static let WorkItemWidgetCrmContacts = ApolloAPI.Object(
     typename: "WorkItemWidgetCrmContacts",
     implementedInterfaces: [Interfaces.WorkItemWidget.self],
     keyFields: nil

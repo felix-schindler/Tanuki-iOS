@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents a weight widget
-  static let WorkItemWidgetWeight = ApolloAPI.Object(
+  nonisolated static let WorkItemWidgetWeight = ApolloAPI.Object(
     typename: "WorkItemWidgetWeight",
     implementedInterfaces: [Interfaces.WorkItemWidget.self],
     keyFields: nil

@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let TimeboxReportInterface = ApolloAPI.Interface(
+  nonisolated static let TimeboxReportInterface = ApolloAPI.Interface(
     name: "TimeboxReportInterface",
     keyFields: nil,
     implementingObjects: [

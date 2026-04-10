@@ -4,7 +4,7 @@
 @_spi(Internal) import ApolloAPI
 
 /// State of a GitLab issue
-public enum IssueState: String, EnumType {
+nonisolated public enum IssueState: String, EnumType {
   /// In open state.
   case opened = "opened"
   /// In closed state.

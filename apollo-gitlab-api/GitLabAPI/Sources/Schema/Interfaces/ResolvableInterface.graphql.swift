@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let ResolvableInterface = ApolloAPI.Interface(
+  nonisolated static let ResolvableInterface = ApolloAPI.Interface(
     name: "ResolvableInterface",
     keyFields: nil,
     implementingObjects: [

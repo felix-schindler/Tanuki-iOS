@@ -4,7 +4,7 @@
 @_exported import ApolloAPI
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public struct EpicQuery: GraphQLQuery {
+nonisolated public struct EpicQuery: GraphQLQuery {
   public static let operationName: String = "Epic"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -27,7 +27,7 @@ public struct EpicQuery: GraphQLQuery {
     "iid": iid
   ] }
 
-  public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -45,7 +45,7 @@ public struct EpicQuery: GraphQLQuery {
     /// Group
     ///
     /// Parent Type: `Group`
-    public struct Group: GitLabAPI.SelectionSet {
+    nonisolated public struct Group: GitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -71,7 +71,7 @@ public struct EpicQuery: GraphQLQuery {
       /// Group.Epic
       ///
       /// Parent Type: `Epic`
-      public struct Epic: GitLabAPI.SelectionSet {
+      nonisolated public struct Epic: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -150,7 +150,7 @@ public struct EpicQuery: GraphQLQuery {
         /// Group.Epic.Author
         ///
         /// Parent Type: `UserCore`
-        public struct Author: GitLabAPI.SelectionSet {
+        nonisolated public struct Author: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -176,7 +176,7 @@ public struct EpicQuery: GraphQLQuery {
         /// Group.Epic.Ancestors
         ///
         /// Parent Type: `EpicConnection`
-        public struct Ancestors: GitLabAPI.SelectionSet {
+        nonisolated public struct Ancestors: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -195,7 +195,7 @@ public struct EpicQuery: GraphQLQuery {
           /// Group.Epic.Ancestors.Node
           ///
           /// Parent Type: `Epic`
-          public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -216,7 +216,7 @@ public struct EpicQuery: GraphQLQuery {
         /// Group.Epic.BlockedByEpics
         ///
         /// Parent Type: `EpicConnection`
-        public struct BlockedByEpics: GitLabAPI.SelectionSet {
+        nonisolated public struct BlockedByEpics: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -235,7 +235,7 @@ public struct EpicQuery: GraphQLQuery {
           /// Group.Epic.BlockedByEpics.Node
           ///
           /// Parent Type: `Epic`
-          public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -256,7 +256,7 @@ public struct EpicQuery: GraphQLQuery {
         /// Group.Epic.Children
         ///
         /// Parent Type: `EpicConnection`
-        public struct Children: GitLabAPI.SelectionSet {
+        nonisolated public struct Children: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -275,7 +275,7 @@ public struct EpicQuery: GraphQLQuery {
           /// Group.Epic.Children.Node
           ///
           /// Parent Type: `Epic`
-          public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -296,7 +296,7 @@ public struct EpicQuery: GraphQLQuery {
         /// Group.Epic.UserPermissions
         ///
         /// Parent Type: `EpicPermissions`
-        public struct UserPermissions: GitLabAPI.SelectionSet {
+        nonisolated public struct UserPermissions: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -319,7 +319,7 @@ public struct EpicQuery: GraphQLQuery {
         /// Group.Epic.Labels
         ///
         /// Parent Type: `LabelConnection`
-        public struct Labels: GitLabAPI.SelectionSet {
+        nonisolated public struct Labels: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -338,7 +338,7 @@ public struct EpicQuery: GraphQLQuery {
           /// Group.Epic.Labels.Node
           ///
           /// Parent Type: `Label`
-          public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -365,7 +365,7 @@ public struct EpicQuery: GraphQLQuery {
         /// Group.Epic.Notes
         ///
         /// Parent Type: `NoteConnection`
-        public struct Notes: GitLabAPI.SelectionSet {
+        nonisolated public struct Notes: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -384,7 +384,7 @@ public struct EpicQuery: GraphQLQuery {
           /// Group.Epic.Notes.Node
           ///
           /// Parent Type: `Note`
-          public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -424,7 +424,7 @@ public struct EpicQuery: GraphQLQuery {
             /// Group.Epic.Notes.Node.Author
             ///
             /// Parent Type: `UserCore`
-            public struct Author: GitLabAPI.SelectionSet {
+            nonisolated public struct Author: GitLabAPI.SelectionSet {
               @_spi(Unsafe) public let __data: DataDict
               @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 

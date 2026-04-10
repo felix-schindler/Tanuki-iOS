@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Objects {
-  static let PipelineMinimalAccess = ApolloAPI.Object(
+  nonisolated static let PipelineMinimalAccess = ApolloAPI.Object(
     typename: "PipelineMinimalAccess",
     implementedInterfaces: [Interfaces.PipelineInterface.self],
     keyFields: nil

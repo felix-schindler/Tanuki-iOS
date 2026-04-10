@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Objects {
-  static let MergeRequest = ApolloAPI.Object(
+  nonisolated static let MergeRequest = ApolloAPI.Object(
     typename: "MergeRequest",
     implementedInterfaces: [
       Interfaces.CurrentUserTodos.self,

@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents an iteration object
-  static let Iteration = ApolloAPI.Object(
+  nonisolated static let Iteration = ApolloAPI.Object(
     typename: "Iteration",
     implementedInterfaces: [Interfaces.TimeboxReportInterface.self],
     keyFields: nil
