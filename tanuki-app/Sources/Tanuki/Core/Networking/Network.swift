@@ -10,7 +10,7 @@ import ApolloAPI
 import ApolloSQLite
 import Foundation
 
-class Network {
+final class Network {
 	static let shared = Network()
 
 	private(set) lazy var apollo: ApolloClient = {
