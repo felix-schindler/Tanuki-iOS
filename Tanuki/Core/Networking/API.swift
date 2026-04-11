@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import SwiftHttp
+@preconcurrency import SwiftHttp
 import SwiftUI
 
 enum DateError: String, Error {
@@ -19,6 +19,7 @@ enum ContentType: String {
 	case formUrlEncoded = "application/x-www-form-urlencoded"
 }
 
+@MainActor
 class API {
 	/// GitLab host
 	@AppStorage("domain", store: UserDefaults(suiteName: "de.schindlerfelix.GitLab"))
@@ -31,7 +32,7 @@ class API {
 	/// API endpoint (including version)
 	public static var base: String = "api/v4"
 
-	private static let client: HttpClient = UrlSessionHttpClient(
+	private nonisolated(unsafe) static let client: HttpClient = UrlSessionHttpClient(
 		session: .shared,
 		logLevel: .critical
 	)
