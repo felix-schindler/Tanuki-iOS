@@ -1,3 +1,12 @@
+//
+//  TanukiApp.swift (GitLabApp.swift)
+//  Tanuki (GitLab)
+//
+//  Created by Felix Schindler on 30.10.21.
+//  Rewritten by Felix Schindler on 26.02.24.
+//  Rewritten by Felix Schindler again on 11.04.26 when moving to Skip.
+//
+
 import Foundation
 import SkipFuse
 import SwiftUI
@@ -9,14 +18,19 @@ let logger: Logger = Logger(subsystem: "de.schindlerfelix.GitLab", category: "Ta
 ///
 /// The default implementation merely loads the `ContentView` for the app and logs a message.
 /* SKIP @bridge */public struct TanukiRootView : View {
+	@State
+	private var showSetup = API.host.isEmpty || API.token.isEmpty
+
     /* SKIP @bridge */public init() {
+		logger.info("Skip app logs are viewable in the Xcode console for iOS; Android logs can be viewed in Studio or using adb logcat")
     }
 
     public var body: some View {
-        ContentView()
-            .task {
-                logger.info("Skip app logs are viewable in the Xcode console for iOS; Android logs can be viewed in Studio or using adb logcat")
-            }
+		if showSetup {
+			SetupView(showSetup: $showSetup)
+		} else {
+			ContentView(showSetup: $showSetup)
+		}
     }
 }
 
