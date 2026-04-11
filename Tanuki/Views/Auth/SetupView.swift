@@ -106,8 +106,6 @@ struct SetupView: View {
 					if state == self.state {
 						Task {
 							do {
-								API.host = "gitlab.com"
-
 								let auth = try await API.req(
 									type: oAuthToken.self,
 									method: .post,
@@ -123,7 +121,12 @@ struct SetupView: View {
 									useBase: false
 								)
 
-								API.token = auth.accessToken
+								let instance = GitLabInstance(
+									host: "gitlab.com",
+									token: auth.accessToken,
+									isOAuth: true
+								)
+								InstanceManager.add(instance)
 
 								let user = try await API.get(
 									type: RestAPIUser.self,

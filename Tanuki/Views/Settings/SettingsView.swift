@@ -43,6 +43,9 @@ struct SettingsView: View {
 								.scaledToFill()
 						})
 				}
+				NavigationLink(destination: InstancesView()) {
+					Label("Instances", systemImage: "server.rack")
+				}
 				/*NavigationLink(destination: ClipboardAccess()) {
 					Label("Clipboard URL", systemImage: "arrow.right.page.on.clipboard")
 				}*/

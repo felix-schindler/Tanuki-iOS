@@ -92,14 +92,19 @@ struct CurrentUserLoader: View {
 						systemImage: "rectangle.portrait.and.arrow.right",
 						role: .destructive
 					) {
-						API.host = "gitlab.com"
-						API.token = ""
+						if let current = InstanceManager.selected {
+							InstanceManager.remove(current)
+						}
+
 						Notify.status(.success, "Logged out")
 						do {
 							URLCache.shared.removeAllCachedResponses()
 							URLCache.avatarCache.removeAllCachedResponses()
 							try await Network.shared.apollo.store.clearCache()
-							self.showSetup.wrappedValue = true
+
+							if InstanceManager.selected == nil {
+								self.showSetup.wrappedValue = true
+							}
 						} catch let error {
 							Notify.status(
 								.error,

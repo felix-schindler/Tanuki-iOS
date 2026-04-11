@@ -19,16 +19,111 @@ enum ContentType: String {
 	case formUrlEncoded = "application/x-www-form-urlencoded"
 }
 
+struct GitLabInstance: Codable, Identifiable, Equatable {
+	var id: String { host }
+	let host: String
+	let token: String
+	let isOAuth: Bool
+
+	init(host: String, token: String, isOAuth: Bool = false) {
+		self.host = host
+		self.token = token
+		self.isOAuth = isOAuth
+	}
+}
+
+@MainActor
+class InstanceManager {
+	private static let userDefaults = UserDefaults(suiteName: "de.schindlerfelix.GitLab")!
+	private static let instancesKey = "instances"
+	private static let selectedKey = "selectedInstance"
+	private static let legacyHostKey = "domain"
+	private static let legacyTokenKey = "token"
+	private static let migrationDoneKey = "migration_done"
+
+	static var instances: [GitLabInstance] {
+		get {
+			guard let data = userDefaults.data(forKey: instancesKey),
+				  let instances = try? JSONDecoder().decode([GitLabInstance].self, from: data)
+			else {
+				return []
+			}
+			return instances
+		}
+		set {
+			if let data = try? JSONEncoder().encode(newValue) {
+				userDefaults.set(data, forKey: instancesKey)
+			}
+		}
+	}
+
+	static var selectedId: String? {
+		get {
+			userDefaults.string(forKey: selectedKey)
+		}
+		set {
+			userDefaults.set(newValue, forKey: selectedKey)
+		}
+	}
+
+	static var selected: GitLabInstance? {
+		guard let id = selectedId else { return nil }
+		return instances.first { $0.id == id }
+	}
+
+	static func migrate() {
+		guard !userDefaults.bool(forKey: migrationDoneKey) else { return }
+
+		let oldHost = userDefaults.string(forKey: legacyHostKey) ?? "gitlab.com"
+		let oldToken = userDefaults.string(forKey: legacyTokenKey) ?? ""
+
+		guard oldHost.isNotEmpty || oldToken.isNotEmpty else {
+			userDefaults.set(true, forKey: migrationDoneKey)
+			return
+		}
+
+		let instance = GitLabInstance(
+			host: oldHost,
+			token: oldToken,
+			isOAuth: oldHost == "gitlab.com" && oldToken.isNotEmpty
+		)
+		add(instance)
+
+		userDefaults.removeObject(forKey: legacyHostKey)
+		userDefaults.removeObject(forKey: legacyTokenKey)
+		userDefaults.set(true, forKey: migrationDoneKey)
+	}
+
+	static func add(_ instance: GitLabInstance) {
+		var current = instances
+		current.removeAll { $0.id == instance.id }
+		current.append(instance)
+		instances = current
+		selectedId = instance.id
+	}
+
+	static func remove(_ instance: GitLabInstance) {
+		var current = instances
+		current.removeAll { $0.id == instance.id }
+		instances = current
+
+		if selectedId == instance.id {
+			selectedId = current.last?.id
+		}
+	}
+
+	static func select(_ instance: GitLabInstance) {
+		selectedId = instance.id
+	}
+
+	static func update(_ instance: GitLabInstance) {
+		remove(instance)
+		add(instance)
+	}
+}
+
 @MainActor
 class API {
-	/// GitLab host
-	@AppStorage("domain", store: UserDefaults(suiteName: "de.schindlerfelix.GitLab"))
-	public static var host: String = "gitlab.com"
-
-	/// GitLab token
-	@AppStorage("token", store: UserDefaults(suiteName: "de.schindlerfelix.GitLab"))
-	public static var token: String = ""
-
 	/// API endpoint (including version)
 	public static var base: String = "api/v4"
 
@@ -38,6 +133,36 @@ class API {
 	)
 	private static let encoder = JSONEncoder()
 	private static let decoder = JSONDecoder()
+
+	public static var host: String {
+		get {
+			InstanceManager.selected?.host ?? "gitlab.com"
+		}
+		set {
+			var instance = InstanceManager.selected ?? GitLabInstance(host: "gitlab.com", token: "")
+			instance = GitLabInstance(host: newValue, token: instance.token, isOAuth: instance.isOAuth)
+			InstanceManager.add(instance)
+		}
+	}
+
+	public static var token: String {
+		get {
+			InstanceManager.selected?.token ?? ""
+		}
+		set {
+			var instance = InstanceManager.selected ?? GitLabInstance(host: "gitlab.com", token: "")
+			instance = GitLabInstance(host: instance.host, token: newValue, isOAuth: instance.isOAuth)
+			InstanceManager.add(instance)
+		}
+	}
+
+	public static var isOAuth: Bool {
+		InstanceManager.selected?.isOAuth ?? false
+	}
+
+	public static var currentInstance: GitLabInstance? {
+		InstanceManager.selected
+	}
 
 	public static var url: URL {
 		return URL(string: "https://\(host)")!

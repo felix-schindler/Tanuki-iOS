@@ -65,8 +65,12 @@ struct ConfigView: View {
 							}
 						}
 
-						API.host = self.newHost
-						API.token = self.newToken
+						let instance = GitLabInstance(
+							host: self.newHost,
+							token: self.newToken,
+							isOAuth: false
+						)
+						InstanceManager.add(instance)
 
 						let user = try await API.get(
 							type: RestAPIUser.self,
@@ -80,9 +84,6 @@ struct ConfigView: View {
 						)
 						self.showSetup.wrappedValue = false
 					} catch let error {
-						API.host = "gitlab.com"
-						API.token = ""
-
 						Notify.status(
 							.error,
 							"Failed to log in",

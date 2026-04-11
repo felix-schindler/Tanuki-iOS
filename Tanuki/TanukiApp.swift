@@ -12,7 +12,12 @@ import WebKit
 @main
 struct TanukiApp: App {
 	@State
-	private var showSetup = API.host.isEmpty || API.token.isEmpty
+	private var showSetup = false
+
+	init() {
+		InstanceManager.migrate()
+		showSetup = InstanceManager.selected == nil
+	}
 
 	private func restorePersistedCookies() {
 		guard
