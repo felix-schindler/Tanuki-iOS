@@ -5,7 +5,7 @@
 //  Created by Felix Schindler on 23.11.25.
 //
 
-import SwiftHttp
+import Alamofire
 import SwiftUI
 
 struct FeedbackView: View {
@@ -22,26 +22,24 @@ struct FeedbackView: View {
 
 	private func submit() async {
 		do {
-			let url = HttpUrl(
-				host: "pb.schindlerfelix.de",
-				path: ["api", "collections", "tanuki_feedback", "records"]
-			)
 			let res = try await API.raw(
 				method: .post,
-				url: url,
+				endpoint: "api/collections/tanuki_feedback/records",
 				body: [
 					"from": email,
 					"text": desc,
 				],
 				contentType: .json,
-				auth: false
+				auth: false,
+				useBase: false,
+				host: "pb.schindlerfelix.de"
 			)
 
-			if res.statusCode == .ok || res.statusCode == .created {
+			if let statusCode = res.response?.statusCode, statusCode == 200 || statusCode == 201 {
 				Notify.status(.success, "Thank you!", "Your feedback has been submitted")
 				dismiss()
 			}
-		} catch (let error) {
+		} catch let error {
 			Notify.status(.error, "Failed to submit feedback", error.localizedDescription)
 		}
 	}

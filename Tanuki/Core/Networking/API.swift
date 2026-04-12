@@ -6,8 +6,8 @@
 //  Rewritten by Felix Schindler on 07.03.24.
 //
 
+import Alamofire
 import Foundation
-@preconcurrency import SwiftHttp
 import SwiftUI
 
 enum DateError: String, Error {
@@ -32,66 +32,67 @@ class API {
 	/// API endpoint (including version)
 	public static var base: String = "api/v4"
 
-	private nonisolated(unsafe) static let client: HttpClient = UrlSessionHttpClient(
-		session: .shared,
-		logLevel: .critical
-	)
 	private static let encoder = JSONEncoder()
 	private static let decoder = JSONDecoder()
+	private static let session: Session = .default
 
 	public static var url: URL {
-		return URL(string: "https://\(host)")!
+		URL(string: "https://\(host)")!
 	}
 
 	public static var graphUrl: URL {
-		return URL(string: "https://\(host)/api/graphql")!
+		URL(string: "https://\(host)/api/graphql")!
 	}
 
 	/// This is only `public` because it's used by `FileLoader` and `FeedbackView`
 	public static func raw(
-		method: HttpMethod,
-		url: HttpUrl,
+		method: HTTPMethod,
+		endpoint: String,
+		resource: String? = nil,
+		suffix: String? = nil,
+		query: [String: String] = [:],
 		body: (any Encodable)? = nil,
 		contentType: ContentType = .json,
-		auth: Bool = true
-	) async throws -> HttpResponse {
-		var headers: [HttpHeaderKey: String] = [:]
-		var reqBody: Data? = nil
+		auth: Bool = true,
+		useBase: Bool = true,
+		host: String? = nil
+	) async throws -> AFDataResponse<Data> {
+		let targetHost = host ?? API.host
 
-		print(method, url.url.absoluteString)
+		var path = useBase ? [base, endpoint] : [endpoint]
+		if let resource {
+			path.append(resource)
+		}
+		if let suffix {
+			path.append(suffix)
+		}
 
+		let url = "https://\(targetHost)/" + path.joined(separator: "/")
+
+		var headers: HTTPHeaders = [.contentType(contentType.rawValue)]
+		if auth && token.isNotEmpty {
+			headers.add(.authorization(bearerToken: token))
+		}
+
+		var parameters: Parameters?
 		if let body {
-			headers[.contentType] = contentType.rawValue
-
-			switch contentType {
-			case .json:
-				reqBody = try encoder.encode(body)
-				break
-			case .formUrlEncoded:
-				reqBody = try FormURLEncoder.encode(body)
-				break
-			}
-
-			print(String(data: reqBody!, encoding: .utf8) ?? "Body coudn't be decoded")
+			parameters = try JSONSerialization.jsonObject(with: encoder.encode(body)) as? Parameters
 		}
 
-		if auth && API.token.isNotEmpty {
-			headers[.authorization] = "Bearer \(API.token)"
-		}
+		let encoding: ParameterEncoding = (contentType == .json) ? JSONEncoding.default : URLEncoding.default
 
-		let req = HttpRawRequest(
-			url: url,
+		return await session.request(
+			url,
 			method: method,
-			headers: headers,
-			body: reqBody
-		)
-
-		return try await client.dataTask(req)
+			parameters: parameters,
+			encoding: encoding,
+			headers: headers
+		).serializingData().response
 	}
 
 	public static func req<T: Codable>(
 		type: T.Type,
-		method: HttpMethod,
+		method: HTTPMethod,
 		endpoint: String,
 		resource: String? = nil,
 		suffix: String? = nil,
@@ -100,22 +101,21 @@ class API {
 		contentType: ContentType = .json,
 		useBase: Bool = true
 	) async throws -> T {
-		let httpUrl = HttpUrl(
-			host: host,
-			path: useBase ? [base, endpoint] : [endpoint],
+		let response = try await API.raw(
+			method: method,
+			endpoint: endpoint,
 			resource: resource,
 			suffix: suffix,
-			query: query
-		)
-
-		let res = try await API.raw(
-			method: method,
-			url: httpUrl,
+			query: query,
 			body: body,
-			contentType: contentType
+			contentType: contentType,
+			auth: true,
+			useBase: useBase
 		)
 
-		print(res.statusCode)
+		guard let data = response.data else {
+			throw AFError.responseValidationFailed(reason: .dataFileNil)
+		}
 
 		decoder.keyDecodingStrategy = .convertFromSnakeCase
 
@@ -125,8 +125,7 @@ class API {
 				.withInternetDateTime, .withFractionalSeconds,
 			]
 
-			let dateStr = try decoder.singleValueContainer().decode(
-				String.self)
+			let dateStr = try decoder.singleValueContainer().decode(String.self)
 
 			if let date = formatter.date(from: dateStr) {
 				return date
@@ -135,7 +134,7 @@ class API {
 			throw DateError.invalidDate
 		})
 
-		return try decoder.decode(T.self, from: res.data)
+		return try decoder.decode(T.self, from: data)
 	}
 
 	public static func get<T: Codable>(
@@ -144,7 +143,7 @@ class API {
 		query: [String: String] = [:],
 		useBase: Bool = true
 	) async throws -> T {
-		return try await API.req(
+		try await API.req(
 			type: type,
 			method: .get,
 			endpoint: endpoint,
@@ -159,11 +158,9 @@ class API {
 	) async throws {
 		_ = try await API.raw(
 			method: .delete,
-			url: HttpUrl(
-				host: host,
-				path: [base, endpoint],
-				query: query
-			)
+			endpoint: endpoint,
+			query: query,
+			auth: true
 		)
 	}
 }
