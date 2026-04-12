@@ -63,7 +63,7 @@ struct MilestonesLoader: View {
 			do {
 				switch self.queryType {
 				case .group:
-					let responses = try await Network.shared.apollo.fetch(
+					let responses = try Network.shared.apollo.fetch(
 						query: self.groupQuery,
 						cachePolicy: .cacheAndNetwork)
 
@@ -78,7 +78,7 @@ struct MilestonesLoader: View {
 						}
 					}
 				case .project:
-					let responses = try await Network.shared.apollo.fetch(
+					let responses = try Network.shared.apollo.fetch(
 						query: self.projectQuery,
 						cachePolicy: .cacheAndNetwork)
 

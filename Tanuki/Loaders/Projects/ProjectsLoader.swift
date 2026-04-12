@@ -57,7 +57,7 @@ struct ProjectsLoader: View {
 		self.loadTask?.cancel()
 		self.loadTask = Task {
 			do {
-				let responses = try await Network.shared.apollo.fetch(
+				let responses = try Network.shared.apollo.fetch(
 					query: self.query,
 					cachePolicy: .cacheAndNetwork
 				)

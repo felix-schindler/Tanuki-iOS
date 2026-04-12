@@ -28,7 +28,7 @@ struct EpicIssuesLoader: View {
 		self.loadTask?.cancel()
 		self.loadTask = Task {
 			do {
-				let responses = try await Network.shared.apollo.fetch(
+				let responses = try Network.shared.apollo.fetch(
 					query: EpicIssuesQuery(fullPath: self.fullPath, iid: self.iid),
 					cachePolicy: .cacheAndNetwork
 				)

@@ -33,7 +33,7 @@ struct UserIssuesLoader: View {
 		self.loadTask = Task {
 			do {
 				if let username {
-					let responses = try await Network.shared.apollo.fetch(
+					let responses = try Network.shared.apollo.fetch(
 						query: UserIssuesQuery(
 							username: username,
 							state: GraphFilter.toFilterEnum(self.filter.state),
@@ -54,7 +54,7 @@ struct UserIssuesLoader: View {
 						}
 					}
 				} else {
-					let responses = try await Network.shared.apollo.fetch(
+					let responses = try Network.shared.apollo.fetch(
 						query: CurrentUserIssuesQuery(
 							state: GraphFilter.toFilterEnum(self.filter.state),
 							search: GraphFilter.toFilter(self.filter.search),

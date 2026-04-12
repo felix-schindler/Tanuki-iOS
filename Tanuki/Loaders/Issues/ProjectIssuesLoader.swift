@@ -33,7 +33,7 @@ struct ProjectIssuesLoader: View {
 		self.loadTask?.cancel()
 		self.loadTask = Task {
 			do {
-				let responses = try await Network.shared.apollo.fetch(
+				let responses = try Network.shared.apollo.fetch(
 					query: ProjectIssuesQuery(
 						fullPath: self.fullPath,
 						state: GraphFilter.toFilterEnum(self.filter.state),

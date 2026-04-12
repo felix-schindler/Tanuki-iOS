@@ -32,7 +32,7 @@ struct GroupIssuesLoader: View {
 		self.loadTask?.cancel()
 		self.loadTask = Task {
 			do {
-				let responses = try await Network.shared.apollo.fetch(
+				let responses = try Network.shared.apollo.fetch(
 					query: GroupIssuesQuery(
 						fullPath: self.fullPath,
 						state: GraphFilter.toFilterEnum(self.filter.state),
