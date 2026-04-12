@@ -10,11 +10,11 @@ import SwiftUI
 struct CacheView: View {
 	private let formatter: ByteCountFormatter
 
-	@State private var urlMemoryUsage = URLCache.shared.currentMemoryUsage
-	@State private var urlDiskUsage = URLCache.shared.currentMemoryUsage
+	@State var urlMemoryUsage = URLCache.shared.currentMemoryUsage
+	@State var urlDiskUsage = URLCache.shared.currentMemoryUsage
 
-	@State private var avatarMemoryUsage = URLCache.avatarCache.currentMemoryUsage
-	@State private var avatarDiskUsage = URLCache.avatarCache.currentMemoryUsage
+	@State var avatarMemoryUsage = URLCache.avatarCache.currentMemoryUsage
+	@State var avatarDiskUsage = URLCache.avatarCache.currentMemoryUsage
 
 	public init() {
 		self.formatter = ByteCountFormatter()

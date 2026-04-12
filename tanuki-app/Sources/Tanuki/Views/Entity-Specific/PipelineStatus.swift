@@ -13,8 +13,7 @@ struct PipelineStatus: View {
 	private let icon: String
 	private let color: SwiftUI.Color
 
-	@State
-	private var showInfo = false
+	@State var showInfo = false
 
 	init(_ state: GraphQLEnum<GitLabAPI.PipelineStatusEnum>) {
 		self.state = state

@@ -15,18 +15,15 @@ struct UserIssuesLoader: View {
 	@State
 	public var filter = IssueFilter()
 
-	@State
-	private var showFilters = false
+	@State var showFilters = false
 
-	@State
-	private var loadTask: Task<Void, Never>?
+	@State var loadTask: Task<Void, Never>?
 
 	init(username: String? = nil) {
 		self.username = username
 	}
 
-	@State
-	private var projectMemberships: Result<[IssueProjectMembership?], Error>? = nil
+	@State var projectMemberships: Result<[IssueProjectMembership?], Error>? = nil
 
 	private func loadIssues() {
 		self.loadTask?.cancel()

@@ -36,8 +36,7 @@ struct DiffLoader: View {
 	@Environment(\.colorScheme)
 	private var colorScheme: ColorScheme
 
-	@State
-	private var diffs: Result<[Diff], Error>? = nil
+	@State var diffs: Result<[Diff], Error>? = nil
 
 	@AppStorage("diff_unified")
 	private var unidiff = false

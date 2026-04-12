@@ -16,11 +16,9 @@ struct IssueLoader: View {
 	private let fullPath: String
 	private let iid: String
 
-	@State
-	private var project: Result<GitLabAPI.IssueQuery.Data.Project, Error>? = nil
+	@State var project: Result<GitLabAPI.IssueQuery.Data.Project, Error>? = nil
 
-	@State
-	private var showDeleteConfirm = false
+	@State var showDeleteConfirm = false
 
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath

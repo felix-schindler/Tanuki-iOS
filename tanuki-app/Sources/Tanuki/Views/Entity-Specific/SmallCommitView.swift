@@ -12,8 +12,7 @@ struct SmallCommitView: View {
 	private let projectId: Int?
 	private let commit: NewCommit
 
-	@State
-	private var showVerified = false
+	@State var showVerified = false
 
 	init(_ commit: NewCommit, _ projectId: Int? = nil) {
 		self.commit = commit

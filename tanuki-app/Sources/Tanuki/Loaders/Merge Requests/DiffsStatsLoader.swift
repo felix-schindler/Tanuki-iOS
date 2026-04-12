@@ -12,8 +12,7 @@ struct DiffsStatsLoader: View {
 	private let fullPath: String
 	private let iid: String
 
-	@State
-	private var diffs: Result<[MergeRequestDiffsQuery.Data.Project.MergeRequest.DiffStat], Error>? =
+	@State var diffs: Result<[MergeRequestDiffsQuery.Data.Project.MergeRequest.DiffStat], Error>? =
 		nil
 
 	init(fullPath: String, iid: String) {

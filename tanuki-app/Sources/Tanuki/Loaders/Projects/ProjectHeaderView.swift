@@ -17,8 +17,7 @@ struct ToggleStar: Codable {
 struct ProjectHeaderView: View {
 	private let project: ProjectQuery.Data.Project
 
-	@State
-	private var starCount: Int
+	@State var starCount: Int
 
 	init(_ project: ProjectQuery.Data.Project) {
 		self.project = project

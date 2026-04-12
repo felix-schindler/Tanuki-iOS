@@ -30,10 +30,10 @@ struct NewMemberView: View {
 		self.groupId = groupId
 	}
 
-	@State private var username = ""
-	@State private var accessLevel: ProjectRole = .guest
-	@State private var setExpDate = false
-	@State private var expDate = Calendar.current.date(byAdding: .month, value: 1, to: Date())!
+	@State var username = ""
+	@State var accessLevel: ProjectRole = .guest
+	@State var setExpDate = false
+	@State var expDate = Calendar.current.date(byAdding: .month, value: 1, to: Date())!
 
 	private func addMember() async {
 		do {

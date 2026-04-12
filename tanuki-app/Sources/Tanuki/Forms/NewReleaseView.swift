@@ -20,18 +20,18 @@ struct NewReleaseView: View {
 		self.fullPath = fullPath
 	}
 
-	@State private var tags: [Tag]? = nil
-	@State private var milestones: [ProjectMilestonesQuery.Data.Project.Milestones.Node?]? = nil
+	@State var tags: [Tag]? = nil
+	@State var milestones: [ProjectMilestonesQuery.Data.Project.Milestones.Node?]? = nil
 
-	@State private var tagName = ""
-	@State private var newTagName = false
-	@State private var newTagMessage = ""
-	@State private var newTagRef = ""
-	@State private var releaseName = ""
-	@State private var selectedMilestones: Set<String> = []
-	@State private var setReleaseDate = false
-	@State private var releaseDate = SwiftUI.Date()
-	@State private var description = ""
+	@State var tagName = ""
+	@State var newTagName = false
+	@State var newTagMessage = ""
+	@State var newTagRef = ""
+	@State var releaseName = ""
+	@State var selectedMilestones: Set<String> = []
+	@State var setReleaseDate = false
+	@State var releaseDate = SwiftUI.Date()
+	@State var description = ""
 
 	private func loadTags() async {
 		do {

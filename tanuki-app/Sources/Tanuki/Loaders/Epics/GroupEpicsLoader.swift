@@ -15,8 +15,7 @@ struct GroupEpicsLoader: View {
 		self.fullPath = fullPath
 	}
 
-	@State
-	private var epics: Result<[GroupEpicsQuery.Data.Group.Epics.Node?], Error>? = nil
+	@State var epics: Result<[GroupEpicsQuery.Data.Group.Epics.Node?], Error>? = nil
 
 	private func loadIssues() {
 		do {

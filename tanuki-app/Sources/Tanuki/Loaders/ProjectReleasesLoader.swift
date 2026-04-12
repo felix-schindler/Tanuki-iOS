@@ -13,8 +13,7 @@ struct ProjectReleasesLoader: View {
 	private var fullPath: String
 	private var projectId: Int?
 
-	@State
-	private var releases: Result<[ProjectReleasesQuery.Data.Project.Releases.Node?], Error>? = nil
+	@State var releases: Result<[ProjectReleasesQuery.Data.Project.Releases.Node?], Error>? = nil
 
 	init(fullPath: String, projectId: Int? = nil) {
 		self.fullPath = fullPath

@@ -22,18 +22,14 @@ enum NavDest {
 struct ProjectLoader: View {
 	private let fullPath: String
 
-	@State
-	private var project: Result<ProjectQuery.Data.Project, Error>? = nil
+	@State var project: Result<ProjectQuery.Data.Project, Error>? = nil
 
 	/// Selected special file (README, LICENSE, ...)
-	@State
-	private var selectedFile = 0
+	@State var selectedFile = 0
 
-	@State
-	private var navigationActive = false
+	@State var navigationActive = false
 
-	@State
-	private var navigationDestination: NavDest? = nil
+	@State var navigationDestination: NavDest? = nil
 
 	init(fullPath: String) {
 		self.fullPath = fullPath

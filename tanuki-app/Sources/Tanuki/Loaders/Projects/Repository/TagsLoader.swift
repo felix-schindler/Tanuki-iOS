@@ -19,8 +19,7 @@ struct Tag: Codable {
 struct TagsLoader: View {
 	private let projectId: Int
 
-	@State
-	private var tags: Result<[Tag], Error>? = nil
+	@State var tags: Result<[Tag], Error>? = nil
 
 	init(_ projectId: Int) {
 		self.projectId = projectId

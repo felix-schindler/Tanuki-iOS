@@ -32,8 +32,7 @@ struct CommitsLoader: View {
 	/// Project ID
 	private var projectId: Int
 	/// Branch name
-	@State
-	private var refName: String
+	@State var refName: String
 
 	init(_ projectId: Int, refName: String) {
 		self.projectId = projectId
@@ -41,14 +40,11 @@ struct CommitsLoader: View {
 	}
 
 	// MARK: - Load data
-	@State
-	private var branches: [Branch]? = nil
+	@State var branches: [Branch]? = nil
 
-	@State
-	private var commits: Result<[Commit], Error>? = nil
+	@State var commits: Result<[Commit], Error>? = nil
 
-	@State
-	private var isLoading = false
+	@State var isLoading = false
 
 	private func loadCommits() async {
 		do {

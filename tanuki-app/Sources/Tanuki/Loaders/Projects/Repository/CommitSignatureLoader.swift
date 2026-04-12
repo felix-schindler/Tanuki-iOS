@@ -21,8 +21,8 @@ struct SignatureLoader: View {
 		self.commitId = commitId
 	}
 
-	@State private var signature: CommitSignature? = nil
-	@State private var showDetails = false
+	@State var signature: CommitSignature? = nil
+	@State var showDetails = false
 
 	public var body: some View {
 		VStack {

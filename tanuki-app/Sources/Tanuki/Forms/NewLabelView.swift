@@ -21,10 +21,10 @@ struct NewLabelView: View {
 		self.groupId = groupId
 	}
 
-	@State private var title: String = ""
-	@State private var description: String = ""
-	@State private var color: Color = Color(.red)
-	@State private var prio: Int = -1
+	@State var title: String = ""
+	@State var description: String = ""
+	@State var color: Color = Color(.red)
+	@State var prio: Int = -1
 
 	private func saveNewLabel() async {
 		var query: [String: String] = [

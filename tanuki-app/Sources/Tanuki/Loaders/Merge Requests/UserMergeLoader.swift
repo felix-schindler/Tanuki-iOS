@@ -18,8 +18,7 @@ struct UserMergeLoader: View {
 	private var userRequestType: UserMergeRequestType
 	private var navTitle: String
 
-	@State
-	private var mergeRequests: Result<[UserSmallMergeRequest?], Error>? = nil
+	@State var mergeRequests: Result<[UserSmallMergeRequest?], Error>? = nil
 
 	init(_ userRequestType: UserMergeRequestType) {
 		self.userRequestType = userRequestType

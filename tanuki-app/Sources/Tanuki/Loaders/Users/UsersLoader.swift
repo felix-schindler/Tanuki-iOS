@@ -9,14 +9,11 @@ import GitLabAPI
 import SwiftUI
 
 struct UsersLoader: View {
-	@State
-	private var users: Result<[Author?], Error>? = nil
+	@State var users: Result<[Author?], Error>? = nil
 
-	@State
-	private var showFilters = false
+	@State var showFilters = false
 
-	@State
-	private var loadTask: Task<Void, Never>?
+	@State var loadTask: Task<Void, Never>?
 
 	// MARK: - Filters
 	@State public private(set) var search: String? = nil

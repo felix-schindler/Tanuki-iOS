@@ -11,8 +11,7 @@ import SwiftUI
 struct ProjectMergeLoader: View {
 	private let fullPath: String
 
-	@State
-	private var project: Result<GitLabAPI.ProjectMergeRequestsQuery.Data.Project, Error>? = nil
+	@State var project: Result<GitLabAPI.ProjectMergeRequestsQuery.Data.Project, Error>? = nil
 
 	init(fullPath: String) {
 		self.fullPath = fullPath

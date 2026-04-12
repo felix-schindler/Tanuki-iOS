@@ -24,9 +24,9 @@ struct NewNoteView: View {
 	private let iid: String
 	private let type: NoteType
 	
-	@State private var show = false
-	@State private var content: String = ""
-	@State private var `internal` = false
+	@State var show = false
+	@State var content: String = ""
+	@State var `internal` = false
 	
 	init(_ id: Int, iid: String, type: NoteType) {
 		self.id = id

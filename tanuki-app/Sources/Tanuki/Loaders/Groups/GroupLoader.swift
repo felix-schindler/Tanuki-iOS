@@ -12,11 +12,9 @@ import SwiftUI
 struct GroupLoader: View {
 	private let fullPath: String
 
-	@State
-	private var group: Result<GroupQuery.Data.Group, Error>? = nil
+	@State var group: Result<GroupQuery.Data.Group, Error>? = nil
 
-	@State
-	private var navigationActive = false
+	@State var navigationActive = false
 
 	init(fullPath: String) {
 		self.fullPath = fullPath

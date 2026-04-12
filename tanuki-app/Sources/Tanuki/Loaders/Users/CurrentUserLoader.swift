@@ -11,8 +11,7 @@ import SwiftUI
 struct CurrentUserLoader: View {
 	public private(set) var showSetup: Binding<Bool>
 
-	@State
-	private var user: Result<CurrentUserQuery.Data.CurrentUser, Error>? = nil
+	@State var user: Result<CurrentUserQuery.Data.CurrentUser, Error>? = nil
 
 	private func loadUser() async {
 		do {

@@ -14,8 +14,7 @@ struct ContributionsLoader: View {
 	private let height: CGFloat = 50
 
 	/// User contributions in format ["YYYY-MM-DD" → intCount]
-	@State
-	private var contributions: Result<[String: Int], Error>? = nil
+	@State var contributions: Result<[String: Int], Error>? = nil
 
 	init(username: String) {
 		self.username = username

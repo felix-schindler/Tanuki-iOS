@@ -10,11 +10,9 @@ import SwiftUI
 struct ConfigView: View {
 	public private(set) var showSetup: Binding<Bool>
 
-	@State
-	private var newHost = API.host
+	@State var newHost = API.host
 
-	@State
-	private var newToken = API.token
+	@State var newToken = API.token
 
 	var body: some View {
 		VStack {

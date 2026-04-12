@@ -11,8 +11,7 @@ import SwiftUI
 struct UserSnippetsLoader: View {
 	private let username: String?
 
-	@State
-	private var snippets: Result<[Snippet?], Error>? = nil
+	@State var snippets: Result<[Snippet?], Error>? = nil
 
 	init(username: String? = nil) {
 		self.username = username

@@ -10,8 +10,7 @@ import SwiftUI
 struct BranchesLoader: View {
 	private var projectId: Int
 
-	@State
-	private var branches: Result<[Branch], Error>? = nil
+	@State var branches: Result<[Branch], Error>? = nil
 
 	init(_ projectId: Int) {
 		self.projectId = projectId

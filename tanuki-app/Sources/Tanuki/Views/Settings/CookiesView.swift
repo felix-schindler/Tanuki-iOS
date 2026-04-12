@@ -9,8 +9,8 @@ import SwiftUI
 import WebKit
 
 struct CookiesView: View {
-	@State private var cookies: [HTTPCookie] = []
-	@State private var showingWebView = false
+	@State var cookies: [HTTPCookie] = []
+	@State var showingWebView = false
 
 	private var loginUrl: URL {
 		URL(string: "https://\(API.host)/users/sign_in")!

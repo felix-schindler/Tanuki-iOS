@@ -9,14 +9,11 @@ import GitLabAPI
 import SwiftUI
 
 struct ProjectsLoader: View {
-	@State
-	private var projects: Result<[SmallProject?], Error>? = nil
+	@State var projects: Result<[SmallProject?], Error>? = nil
 
-	@State
-	private var showFilters = false
+	@State var showFilters = false
 
-	@State
-	private var loadTask: Task<Void, Never>?
+	@State var loadTask: Task<Void, Never>?
 
 	// MARK: - Filter
 	public private(set) var namespacePath: String? = nil

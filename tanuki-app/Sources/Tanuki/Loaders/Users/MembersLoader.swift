@@ -18,8 +18,7 @@ struct MembersLoader: View {
 	private let fullPath: String
 	private let queryType: MemberType
 
-	@State
-	private var memberships: Result<[Member?], Error>? = nil
+	@State var memberships: Result<[Member?], Error>? = nil
 
 	init(fullPath: String, id: Int, type: MemberType) {
 		self.fullPath = fullPath

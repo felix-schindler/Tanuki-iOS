@@ -11,8 +11,7 @@ import SwiftUI
 struct GroupMergeLoader: View {
 	private let fullPath: String
 
-	@State
-	private var mergeRequests: Result<[SmallMergeRequest?], Error>? = nil
+	@State var mergeRequests: Result<[SmallMergeRequest?], Error>? = nil
 
 	init(fullPath: String) {
 		self.fullPath = fullPath

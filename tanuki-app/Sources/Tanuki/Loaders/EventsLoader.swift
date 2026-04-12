@@ -11,8 +11,7 @@ struct EventsLoader: View {
 	private var projectId = 0
 	private var userId = 0
 
-	@State
-	private var events: Result<[Event], Error>? = nil
+	@State var events: Result<[Event], Error>? = nil
 
 	init() {
 	}

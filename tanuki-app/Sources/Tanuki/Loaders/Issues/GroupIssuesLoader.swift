@@ -15,18 +15,15 @@ struct GroupIssuesLoader: View {
 	@State
 	public var filter = IssueFilter()
 
-	@State
-	private var showFilters = false
+	@State var showFilters = false
 
-	@State
-	private var loadTask: Task<Void, Never>?
+	@State var loadTask: Task<Void, Never>?
 
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
 
-	@State
-	private var issues: Result<[SmallIssue?], Error>? = nil
+	@State var issues: Result<[SmallIssue?], Error>? = nil
 
 	private func loadIssues() {
 		self.loadTask?.cancel()

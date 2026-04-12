@@ -16,14 +16,11 @@ struct ProjectIssuesLoader: View {
 	@State
 	public var filter = IssueFilter()
 
-	@State
-	private var showFilters = false
+	@State var showFilters = false
 
-	@State
-	private var loadTask: Task<Void, Never>?
+	@State var loadTask: Task<Void, Never>?
 
-	@State
-	private var project: Result<GitLabAPI.ProjectIssuesQuery.Data.Project, Error>? = nil
+	@State var project: Result<GitLabAPI.ProjectIssuesQuery.Data.Project, Error>? = nil
 
 	init(fullPath: String) {
 		self.fullPath = fullPath

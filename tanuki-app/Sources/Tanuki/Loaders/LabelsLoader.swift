@@ -19,8 +19,7 @@ struct LabelsLoader: View {
 	private let fullPath: String
 	private let queryType: LabelQueryType
 
-	@State
-	private var labels: Result<[MyLabel?], Error>? = nil
+	@State var labels: Result<[MyLabel?], Error>? = nil
 
 	init(fullPath: String, id: Int, queryType: LabelQueryType) {
 		self.fullPath = fullPath

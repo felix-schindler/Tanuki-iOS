@@ -11,8 +11,7 @@ import SwiftUI
 struct UserGroupsLoader: View {
 	private let username: String
 
-	@State
-	private var groups: Result<[Group?], Error>? = nil
+	@State var groups: Result<[Group?], Error>? = nil
 
 	init(_ username: String) {
 		self.username = username

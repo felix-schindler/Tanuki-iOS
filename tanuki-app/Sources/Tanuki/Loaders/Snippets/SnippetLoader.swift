@@ -15,8 +15,7 @@ struct SnippetLoader: View {
 
 	private let id: String
 
-	@State
-	private var snippet: Result<SnippetQuery.Data.Snippets.Node, Error>? = nil
+	@State var snippet: Result<SnippetQuery.Data.Snippets.Node, Error>? = nil
 
 	init(id: String) {
 		self.id = id

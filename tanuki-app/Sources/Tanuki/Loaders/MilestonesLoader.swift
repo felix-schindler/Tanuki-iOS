@@ -19,19 +19,16 @@ struct MilestonesLoader: View {
 	private let fullPath: String
 	private let queryType: MilestoneQueryType
 
-	@State
-	private var milestones: Result<[Milestone?], Error>? = nil
+	@State var milestones: Result<[Milestone?], Error>? = nil
 
-	@State
-	private var showFilters = false
+	@State var showFilters = false
 
-	@State
-	private var loadTask: Task<Void, Never>?
+	@State var loadTask: Task<Void, Never>?
 
 	// MARK: - Filter
-	@State private var searchTitle: String? = nil
-	@State private var state: MilestoneStateEnum? = .active
-	@State private var includeAncestors = false
+	@State var searchTitle: String? = nil
+	@State var state: MilestoneStateEnum? = .active
+	@State var includeAncestors = false
 
 	init(fullPath: String, id: Int, queryType: MilestoneQueryType) {
 		self.fullPath = fullPath

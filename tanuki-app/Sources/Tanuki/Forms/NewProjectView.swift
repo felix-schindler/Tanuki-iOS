@@ -24,10 +24,10 @@ struct NewProjectView: View {
 
 	private let namespaceId: Int?
 
-	@State private var projectName = ""
-	@State private var visibility = ProjectVisibility.private
-	@State private var readme = false
-	@State private var defaultBranch = "main"
+	@State var projectName = ""
+	@State var visibility = ProjectVisibility.private
+	@State var readme = false
+	@State var defaultBranch = "main"
 
 	init(_ namespaceId: Int? = nil) {
 		self.namespaceId = namespaceId

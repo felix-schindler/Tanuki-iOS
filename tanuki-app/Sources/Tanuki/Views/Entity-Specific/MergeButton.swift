@@ -17,16 +17,16 @@ struct MergeButton: View {
 	private let detailedMergeStatus: GraphQLEnum<GitLabAPI.DetailedMergeStatus>?
 
 	// MARK: - Sheets
-	@State private var showMergeStatus = false
-	@State private var showMergeOptions = false
+	@State var showMergeStatus = false
+	@State var showMergeOptions = false
 
 	// MARK: - Form
-	@State private var autoMerge = false
-	@State private var commitMessage = ""
-	@State private var sha = ""
-	@State private var removeSourceBranch = false
-	@State private var squash = false
-	@State private var squashMessage = ""
+	@State var autoMerge = false
+	@State var commitMessage = ""
+	@State var sha = ""
+	@State var removeSourceBranch = false
+	@State var squash = false
+	@State var squashMessage = ""
 
 	init(
 		iid: String,

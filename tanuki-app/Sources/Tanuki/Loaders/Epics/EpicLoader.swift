@@ -13,8 +13,7 @@ struct EpicLoader: View {
 	private let fullPath: String
 	private let iid: String
 
-	@State
-	private var group: Result<EpicQuery.Data.Group, Error>? = nil
+	@State var group: Result<EpicQuery.Data.Group, Error>? = nil
 
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath

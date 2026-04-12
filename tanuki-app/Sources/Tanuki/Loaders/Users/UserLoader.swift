@@ -11,8 +11,7 @@ import SwiftUI
 struct UserLoader: View {
 	private let username: String
 
-	@State
-	private var user: Result<UserQuery.Data.User, Error>? = nil
+	@State var user: Result<UserQuery.Data.User, Error>? = nil
 
 	init(username: String) {
 		self.username = username

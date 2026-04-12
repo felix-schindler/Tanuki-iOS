@@ -11,8 +11,7 @@ import SwiftUI
 struct ProjectPipelinesLoader: View {
 	private var fullPath: String
 
-	@State
-	private var pipelines: Result<[ProjectPipelinesQuery.Data.Project.Pipelines.Node?], Error>? =
+	@State var pipelines: Result<[ProjectPipelinesQuery.Data.Project.Pipelines.Node?], Error>? =
 		nil
 
 	init(fullPath: String) {

@@ -9,14 +9,11 @@ import GitLabAPI
 import SwiftUI
 
 struct GroupsLoader: View {
-	@State
-	private var groups: Result<[Group?], Error>? = nil
+	@State var groups: Result<[Group?], Error>? = nil
 
-	@State
-	private var showFilters = false
+	@State var showFilters = false
 
-	@State
-	private var loadTask: Task<Void, Never>?
+	@State var loadTask: Task<Void, Never>?
 
 	// MARK: - Filter
 	public private(set) var parentPath: String? = nil

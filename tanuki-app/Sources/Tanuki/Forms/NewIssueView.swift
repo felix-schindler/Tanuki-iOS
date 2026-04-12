@@ -27,21 +27,21 @@ struct NewIssueView: View {
 		self.fullPath = fullPath
 	}
 
-	@State private var tags: [Tag]? = nil
-	@State private var memberships: Result<[Member?], Error>? = nil
-	@State private var milestones: [ProjectMilestonesQuery.Data.Project.Milestones.Node?]? = nil
-	@State private var labels: [MyLabel?]? = nil
+	@State var tags: [Tag]? = nil
+	@State var memberships: Result<[Member?], Error>? = nil
+	@State var milestones: [ProjectMilestonesQuery.Data.Project.Milestones.Node?]? = nil
+	@State var labels: [MyLabel?]? = nil
 
-	@State private var title = ""
-	@State private var description = ""
-	@State private var selectedAssignees: Set<String> = []
-	@State private var type = IssueType.issue
-	@State private var confidential = false
-	@State private var setDueDate = false
-	@State private var dueDate = SwiftUI.Date()
-	@State private var selectedLabels: Set<String> = []
-	@State private var selectedMilestone = ""
-	@State private var weight = -1
+	@State var title = ""
+	@State var description = ""
+	@State var selectedAssignees: Set<String> = []
+	@State var type = IssueType.issue
+	@State var confidential = false
+	@State var setDueDate = false
+	@State var dueDate = SwiftUI.Date()
+	@State var selectedLabels: Set<String> = []
+	@State var selectedMilestone = ""
+	@State var weight = -1
 
 	private func loadMembers() async {
 		do {

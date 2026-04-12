@@ -11,8 +11,7 @@ import SwiftUI
 struct CustomEmojisLoader: View {
 	private var fullPath: String
 
-	@State
-	private var emojis: Result<[GroupCustomEmojiQuery.Data.Group.CustomEmoji.Node?], Error>? = nil
+	@State var emojis: Result<[GroupCustomEmojiQuery.Data.Group.CustomEmoji.Node?], Error>? = nil
 
 	init(fullPath: String) {
 		self.fullPath = fullPath

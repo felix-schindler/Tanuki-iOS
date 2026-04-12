@@ -18,8 +18,7 @@ struct TimelogsLoader: View {
 	private let fullPath: String
 	private let queryType: TimelogsQueryType
 
-	@State
-	private var timelogs: Result<[Timelog?], Error>? = nil
+	@State var timelogs: Result<[Timelog?], Error>? = nil
 
 	init(fullPath: String, queryType: TimelogsQueryType) {
 		self.fullPath = fullPath

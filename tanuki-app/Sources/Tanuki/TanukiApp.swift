@@ -18,8 +18,7 @@ let logger: Logger = Logger(subsystem: "de.schindlerfelix.GitLab", category: "Ta
 ///
 /// The default implementation merely loads the `ContentView` for the app and logs a message.
 /* SKIP @bridge */public struct TanukiRootView : View {
-	@State
-	private var showSetup = API.host.isEmpty || API.token.isEmpty
+	@State var showSetup = API.host.isEmpty || API.token.isEmpty
 
     /* SKIP @bridge */public init() {
 		logger.info("Skip app logs are viewable in the Xcode console for iOS; Android logs can be viewed in Studio or using adb logcat")

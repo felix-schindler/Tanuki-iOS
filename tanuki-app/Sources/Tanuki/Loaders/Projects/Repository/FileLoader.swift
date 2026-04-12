@@ -18,8 +18,7 @@ struct FileLoader: View {
 	@Environment(\.colorScheme)
 	private var colorScheme: ColorScheme
 
-	@State
-	private var content: Result<String, Error>? = nil
+	@State var content: Result<String, Error>? = nil
 
 	init(
 		id: Int,

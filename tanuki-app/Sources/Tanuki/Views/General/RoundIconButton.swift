@@ -41,8 +41,7 @@ struct ShareSheet: UIViewControllerRepresentable {
 struct ShareButton: View {
 	private let url: URL
 
-	@State
-	private var isSharePresented = false
+	@State var isSharePresented = false
 
 	init(_ url: URL) {
 		self.url = url

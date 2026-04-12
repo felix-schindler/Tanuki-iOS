@@ -12,8 +12,7 @@ struct MrCommitsLoader: View {
 	private let fullPath: String
 	private let iid: String
 
-	@State
-	private var project: Result<MergeRequestCommitsQuery.Data.Project, Error>? = nil
+	@State var project: Result<MergeRequestCommitsQuery.Data.Project, Error>? = nil
 
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath

@@ -9,8 +9,7 @@ import GitLabAPI
 import SwiftUI
 
 struct CurrentUserTodosLoader: View {
-	@State
-	private var todos: Result<[Todo?], Error>? = nil
+	@State var todos: Result<[Todo?], Error>? = nil
 
 	private func loadTodos() {
 		do {

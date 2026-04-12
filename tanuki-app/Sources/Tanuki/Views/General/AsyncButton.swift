@@ -12,7 +12,7 @@ struct AsyncButton<Label: View>: View {
 	var role: ButtonRole?
 	@ViewBuilder var label: () -> Label
 
-	@State private var isPerformingTask = false
+	@State var isPerformingTask = false
 
 	var body: some View {
 		Button(

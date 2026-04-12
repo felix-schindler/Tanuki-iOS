@@ -15,15 +15,12 @@ struct TreeLoader: View {
 
 	private let folderPath: String?
 
-	@State
-	private var refName: String
+	@State var refName: String
 
 	// MARK: - Loaded by API
-	@State
-	private var tree: Result<RepoTreeQuery.Data.Project.Repository.Tree, Error>? = nil
+	@State var tree: Result<RepoTreeQuery.Data.Project.Repository.Tree, Error>? = nil
 
-	@State
-	private var branches: [Branch]? = nil
+	@State var branches: [Branch]? = nil
 
 	init(projectId: Int, fullPath: String, refName: String, folderPath: String? = nil) {
 		self.projectId = projectId

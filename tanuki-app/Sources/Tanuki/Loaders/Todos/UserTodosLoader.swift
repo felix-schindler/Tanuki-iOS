@@ -11,8 +11,7 @@ import SwiftUI
 struct UserTodosLoader: View {
 	private let username: String
 
-	@State
-	private var todos: Result<[Todo?], Error>? = nil
+	@State var todos: Result<[Todo?], Error>? = nil
 
 	init(username: String) {
 		self.username = username

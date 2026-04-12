@@ -12,8 +12,7 @@ import SwiftUI
 struct UserStarredProjectsLoader: View {
 	private let username: String
 
-	@State
-	private var projects: Result<[UserStarredProjectsQuery.Data.User.StarredProjects.Node?], Error>? =
+	@State var projects: Result<[UserStarredProjectsQuery.Data.User.StarredProjects.Node?], Error>? =
 		nil
 
 	init(username: String) {

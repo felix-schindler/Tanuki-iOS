@@ -11,14 +11,11 @@ import SwiftUI
 struct FeedbackView: View {
 	@Environment(\.dismiss) private var dismiss
 
-	@State
-	private var email = ""
+	@State var email = ""
 
-	@State
-	private var desc = "\n"
+	@State var desc = "\n"
 
-	@State
-	private var accepted = false
+	@State var accepted = false
 
 	private func submit() async {
 		do {

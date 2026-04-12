@@ -10,8 +10,7 @@ import SwiftUI
 import Toast
 
 struct HomeView: View {
-	@State
-	private var starredProjects: Result<[SmallProject?], Error>?
+	@State var starredProjects: Result<[SmallProject?], Error>?
 
 	private func loadStarredProjects() {
 		do {
