@@ -25,6 +25,9 @@ struct MilestonesLoader: View {
 	@State
 	private var showFilters = false
 
+	@State
+	private var loadTask: Task<Void, Never>?
+
 	// MARK: - Filter
 	@State private var searchTitle: String? = nil
 	@State private var state: MilestoneStateEnum? = .active
@@ -55,15 +58,17 @@ struct MilestonesLoader: View {
 	}
 
 	private func loadMilestones() {
-		do {
-			switch self.queryType {
-			case .group:
-				let responses = try Network.shared.apollo.fetch(
-					query: self.groupQuery,
-					cachePolicy: .cacheAndNetwork)
+		self.loadTask?.cancel()
+		self.loadTask = Task {
+			do {
+				switch self.queryType {
+				case .group:
+					let responses = try Network.shared.apollo.fetch(
+						query: self.groupQuery,
+						cachePolicy: .cacheAndNetwork)
 
-				Task {
 					for try await response in responses {
+						if Task.isCancelled { return }
 						if let milestones = response.data?.group?.milestones?.nodes {
 							self.milestones = .success(milestones)
 						} else if let errors = response.errors {
@@ -72,15 +77,13 @@ struct MilestonesLoader: View {
 							}
 						}
 					}
-				}
-				break
-			case .project:
-				let responses = try Network.shared.apollo.fetch(
-					query: self.projectQuery,
-					cachePolicy: .cacheAndNetwork)
+				case .project:
+					let responses = try Network.shared.apollo.fetch(
+						query: self.projectQuery,
+						cachePolicy: .cacheAndNetwork)
 
-				Task {
 					for try await response in responses {
+						if Task.isCancelled { return }
 						if let milestones = response.data?.project?.milestones?.nodes {
 							self.milestones = .success(milestones)
 						} else if let errors = response.errors {
@@ -90,11 +93,12 @@ struct MilestonesLoader: View {
 						}
 					}
 				}
-				break
+			} catch {
+				if !Task.isCancelled {
+					self.milestones = .failure(error)
+					Notify.status(.error)
+				}
 			}
-		} catch let error {
-			self.milestones = .failure(error)
-			Notify.status(.error)
 		}
 	}
 

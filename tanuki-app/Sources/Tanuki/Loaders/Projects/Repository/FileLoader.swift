@@ -7,21 +7,17 @@
 
 import AVKit
 import MarkdownUI
-import SwiftHttp
 import SwiftUI
 
 struct FileLoader: View {
-	// MARK: - Config
-	private let url: HttpUrl
+	private let projectId: Int
 	private let filePath: String
-
 	private let fileExtension: String
 	private let refName: String
 
 	@Environment(\.colorScheme)
 	private var colorScheme: ColorScheme
 
-	// MARK: - State
 	@State
 	private var content: Result<String, Error>? = nil
 
@@ -30,30 +26,22 @@ struct FileLoader: View {
 		filePath: String,
 		refName: String
 	) {
-		self.url = HttpUrl(
-			host: API.host,
-			path: [
-				"api",
-				"v4",
-				"projects",
-				String(id),
-				"repository",
-				"files",
-			],
-			resource: filePath,
-			suffix: "/raw",
-			query: ["ref": refName]
-		)
-
-		self.refName = refName
+		self.projectId = id
 		self.filePath = filePath
+		self.refName = refName
 		self.fileExtension = filePath.components(separatedBy: ".").last?.lowercased() ?? ""
 	}
 
 	private func loadFile() async {
 		do {
-			let res = try await API.raw(method: .get, url: self.url)
-			if let content = res.utf8String {
+			let res = try await API.raw(
+				method: .get,
+				endpoint: "projects/\(projectId)/repository/files",
+				resource: filePath,
+				suffix: "/raw",
+				query: ["ref": refName]
+			)
+			if let data = res.data, let content = String(data: data, encoding: .utf8) {
 				self.content = .success(content)
 			}
 		} catch let error {

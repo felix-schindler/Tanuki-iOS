@@ -73,6 +73,7 @@ extension String {
 
 // MARK: - URL helpers
 extension URL {
+	@MainActor
 	public static func fromAvatar(_ avatarUrl: String?) -> URL? {
 		if var urlStr = avatarUrl {
 			if !urlStr.contains("://") {

@@ -6,7 +6,6 @@
 //
 
 import MarkdownUI
-import SwiftHttp
 import SwiftUI
 
 struct SetupView: View {
@@ -50,21 +49,23 @@ struct SetupView: View {
 
 				Button(
 					action: {
-						let authURL = HttpUrl(
-							host: "gitlab.com",
-							path: ["oauth", "authorize"],
-							query: [
-								"client_id": Auth.clientID,
-								"code_challenge": self.codeChallenge,
-								"code_challenge_method": "S256",
-								"redirect_uri": Auth.redirectUri,
-								"response_type": "code",
-								"scope": Auth.scope,
-								"state": self.state,
-							]
-						)
+						var components = URLComponents()
+						components.scheme = "https"
+						components.host = "gitlab.com"
+						components.path = "/oauth/authorize"
+						components.queryItems = [
+							URLQueryItem(name: "client_id", value: Auth.clientID),
+							URLQueryItem(name: "code_challenge", value: self.codeChallenge),
+							URLQueryItem(name: "code_challenge_method", value: "S256"),
+							URLQueryItem(name: "redirect_uri", value: Auth.redirectUri),
+							URLQueryItem(name: "response_type", value: "code"),
+							URLQueryItem(name: "scope", value: Auth.scope),
+							URLQueryItem(name: "state", value: self.state),
+						]
 
-						openURL(authURL.url)
+						if let authURL = components.url {
+							openURL(authURL)
+						}
 					},
 					label: {
 						Text("Login with GitLab.com")

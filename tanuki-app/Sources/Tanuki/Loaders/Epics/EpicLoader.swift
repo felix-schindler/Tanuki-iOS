@@ -67,7 +67,8 @@ struct EpicLoader: View {
 			_ = try await API.req(
 				type: UserSmall.self,
 				method: .put,
-				endpoint: "groups/\(groupId)/epics/\(self.iid)"
+				endpoint: "groups/\(groupId)/epics/\(self.iid)",
+				body: body
 			)
 			await reloadEpic()
 		} catch let error {
