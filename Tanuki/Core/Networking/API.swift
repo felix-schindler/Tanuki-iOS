@@ -34,7 +34,7 @@ struct GitLabInstance: Codable, Identifiable, Equatable {
 
 @MainActor
 class InstanceManager {
-	private static let userDefaults = UserDefaults(suiteName: "de.schindlerfelix.GitLab")!
+	private static let userDefaults = UserDefaults(suiteName: "group.de.schindlerfelix.GitLab")!
 	private static let instancesKey = "instances"
 	private static let selectedKey = "selectedInstance"
 	private static let legacyHostKey = "domain"

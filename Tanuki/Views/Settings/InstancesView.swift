@@ -14,10 +14,10 @@ struct InstancesView: View {
 	var body: some View {
 		List {
 			if InstanceManager.instances.isEmpty {
-				ContentUnavailableView(
+				NoContentView(
 					"No Instances",
 					systemImage: "server.rack",
-					description: Text("Add a GitLab instance to get started")
+					description: "Add a GitLab instance to get started"
 				)
 			} else {
 				Section {
@@ -35,7 +35,7 @@ struct InstancesView: View {
 
 							if instance.id == InstanceManager.selectedId {
 								Image(systemName: "checkmark.circle.fill")
-									.foregroundStyle(.accentColor)
+									.foregroundStyle(.accent)
 							}
 						}
 						.contentShape(.rect)

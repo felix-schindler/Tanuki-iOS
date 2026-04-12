@@ -106,6 +106,7 @@
 		DCAA7E3C2E9B0F4F0078DB8E /* SmallGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA7E3B2E9B0F4F0078DB8E /* SmallGroupView.swift */; };
 		DCAA7E3E2E9B169F0078DB8E /* UsersLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA7E3D2E9B169F0078DB8E /* UsersLoader.swift */; };
 		DCAF9D9F2BC3755F001FF2E5 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = DCAF9D9E2BC3755F001FF2E5 /* Highlightr */; };
+		DCB24D132F8C0C9E00C38FEF /* InstancesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB24D122F8C0C9E00C38FEF /* InstancesView.swift */; };
 		DCB5E0D62B96C63A000F67FB /* CustomEmojisLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5E0D52B96C63A000F67FB /* CustomEmojisLoader.swift */; };
 		DCB5E0DA2B96CD33000F67FB /* GroupMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5E0D92B96CD33000F67FB /* GroupMergeLoader.swift */; };
 		DCB6B6352BB7063B006C8437 /* DiffsStatsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6342BB7063B006C8437 /* DiffsStatsLoader.swift */; };
@@ -244,6 +245,7 @@
 		DCAA7E392E9B0C860078DB8E /* GroupsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsLoader.swift; sourceTree = "<group>"; };
 		DCAA7E3B2E9B0F4F0078DB8E /* SmallGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallGroupView.swift; sourceTree = "<group>"; };
 		DCAA7E3D2E9B169F0078DB8E /* UsersLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersLoader.swift; sourceTree = "<group>"; };
+		DCB24D122F8C0C9E00C38FEF /* InstancesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstancesView.swift; sourceTree = "<group>"; };
 		DCB5E0D52B96C63A000F67FB /* CustomEmojisLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEmojisLoader.swift; sourceTree = "<group>"; };
 		DCB5E0D92B96CD33000F67FB /* GroupMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMergeLoader.swift; sourceTree = "<group>"; };
 		DCB6B6342BB7063B006C8437 /* DiffsStatsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffsStatsLoader.swift; sourceTree = "<group>"; };
@@ -608,6 +610,7 @@
 		DC867DEE2ED3253E00D4B03C /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				DCB24D122F8C0C9E00C38FEF /* InstancesView.swift */,
 				DC867DF12ED3258F00D4B03C /* SettingsView.swift */,
 				DCEF31922E907C4C00337458 /* CacheView.swift */,
 				DC867DEF2ED3255600D4B03C /* CookiesView.swift */,
@@ -823,6 +826,7 @@
 				DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */,
 				DC1D0FFE2B994FDD00B6F5D7 /* TimelogsLoader.swift in Sources */,
 				DCAA7E3E2E9B169F0078DB8E /* UsersLoader.swift in Sources */,
+				DCB24D132F8C0C9E00C38FEF /* InstancesView.swift in Sources */,
 				DC2B87022E8FFE7D00A1BA29 /* FormUrlEncoder.swift in Sources */,
 				DC6C5D9A2B8F089D00587850 /* GraphTypes.swift in Sources */,
 				DCD40E182BC2B2960055EE4C /* FileExtensions.swift in Sources */,
