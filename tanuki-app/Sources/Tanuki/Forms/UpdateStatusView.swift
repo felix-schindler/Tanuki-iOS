@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-private enum Time: String, CaseIterable {
+enum TimeSpan: String, CaseIterable {
 	case minutes_30 = "30_minutes"
 	case hours_3 = "3_hours"
 	case hours_8 = "8_hours"
@@ -20,7 +20,10 @@ private enum Time: String, CaseIterable {
 struct UpdateStatusView: View {
 	@Environment(\.dismiss) var dismiss
 
-	@State var time: Time? = nil
+	@State var emoji = ""
+	@State var message = ""
+	@State var busy = false
+	@State var time: TimeSpan? = nil
 
 	private func updateStatus() async {
 		var body: [String: String] = [:]
@@ -64,8 +67,8 @@ struct UpdateStatusView: View {
 			TextField("Message", text: $message)
 			Toggle("Busy", isOn: $busy)
 			Picker("Clear after", selection: $time) {
-				Text("Never").tag(nil as Time?)
-				ForEach(Time.allCases, id: \.self) { time in
+				Text("Never").tag(nil as TimeSpan?)
+				ForEach(TimeSpan.allCases, id: \.self) { time in
 					Text(time.rawValue.replacing("_", with: " ")).tag(time)
 				}
 			}

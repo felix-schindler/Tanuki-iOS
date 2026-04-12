@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-private struct CommitSignature: Codable {
+struct CommitSignature: Codable {
 	let signatureType: String
 	let verificationStatus: String
 }
