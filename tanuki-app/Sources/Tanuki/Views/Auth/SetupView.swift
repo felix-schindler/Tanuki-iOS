@@ -9,7 +9,7 @@ import MarkdownUI
 import SwiftUI
 
 struct SetupView: View {
-	@Environment(\.openURL) private var openURL
+	@Environment(\.openURL) var openURL
 	private var showSetup: Binding<Bool>
 
 	/// For CSRF protection

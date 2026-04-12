@@ -11,7 +11,7 @@ import MarkdownUI
 import SwiftUI
 
 struct IssueLoader: View {
-	@Environment(\.dismiss) private var dismiss
+	@Environment(\.dismiss) var dismiss
 
 	private let fullPath: String
 	private let iid: String

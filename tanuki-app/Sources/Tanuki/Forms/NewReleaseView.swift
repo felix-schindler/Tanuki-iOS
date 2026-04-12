@@ -10,7 +10,7 @@ import HighlightedTextEditor
 import SwiftUI
 
 struct NewReleaseView: View {
-	@Environment(\.dismiss) private var dismiss
+	@Environment(\.dismiss) var dismiss
 
 	private let id: Int
 	private let fullPath: String

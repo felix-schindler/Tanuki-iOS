@@ -33,8 +33,7 @@ struct DiffLoader: View {
 	private let mrIid: Int?
 	private let commitSha: String?
 
-	@Environment(\.colorScheme)
-	private var colorScheme: ColorScheme
+	@Environment(\.colorScheme) var colorScheme: ColorScheme
 
 	@State var diffs: Result<[Diff], Error>? = nil
 

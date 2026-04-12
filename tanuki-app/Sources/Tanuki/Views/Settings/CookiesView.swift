@@ -119,7 +119,7 @@ struct CookiesView: View {
 }
 
 struct WebLoginView: View {
-	@Environment(\.dismiss) private var dismiss
+	@Environment(\.dismiss) var dismiss
 	let url: URL
 
 	var body: some View {

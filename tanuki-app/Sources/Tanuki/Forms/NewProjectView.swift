@@ -20,7 +20,7 @@ enum ProjectVisibility: String {
 }
 
 struct NewProjectView: View {
-	@Environment(\.dismiss) private var dismiss
+	@Environment(\.dismiss) var dismiss
 
 	private let namespaceId: Int?
 

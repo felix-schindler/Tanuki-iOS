@@ -9,7 +9,7 @@ import HighlightedTextEditor
 import SwiftUI
 
 struct NewLabelView: View {
-	@Environment(\.dismiss) private var dismiss
+	@Environment(\.dismiss) var dismiss
 
 	/// Project ID
 	private let id: Int

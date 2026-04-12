@@ -18,7 +18,7 @@ enum ProjectRole: Int {
 }
 
 struct NewMemberView: View {
-	@Environment(\.dismiss) private var dismiss
+	@Environment(\.dismiss) var dismiss
 
 	/// Project ID
 	private let id: Int

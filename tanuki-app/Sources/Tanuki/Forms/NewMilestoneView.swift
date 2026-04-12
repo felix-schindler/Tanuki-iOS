@@ -9,7 +9,7 @@ import HighlightedTextEditor
 import SwiftUI
 
 struct NewMilestoneView: View {
-	@Environment(\.dismiss) private var dismiss
+	@Environment(\.dismiss) var dismiss
 
 	/// Project ID
 	@State var id: Int

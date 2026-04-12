@@ -9,7 +9,7 @@ import Alamofire
 import SwiftUI
 
 struct FeedbackView: View {
-	@Environment(\.dismiss) private var dismiss
+	@Environment(\.dismiss) var dismiss
 
 	@State var email = ""
 

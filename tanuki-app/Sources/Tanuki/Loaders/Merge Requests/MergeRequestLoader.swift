@@ -10,7 +10,7 @@ import MarkdownUI
 import SwiftUI
 
 struct MergeRequestLoader: View {
-	@Environment(\.dismiss) private var dismiss
+	@Environment(\.dismiss) var dismiss
 
 	private let fullPath: String
 	private let iid: String

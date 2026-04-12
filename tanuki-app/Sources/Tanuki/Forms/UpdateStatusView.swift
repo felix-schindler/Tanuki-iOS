@@ -18,7 +18,7 @@ private enum Time: String, CaseIterable {
 }
 
 struct UpdateStatusView: View {
-	@Environment(\.dismiss) private var dismiss
+	@Environment(\.dismiss) var dismiss
 
 	@State var time: Time? = nil
 

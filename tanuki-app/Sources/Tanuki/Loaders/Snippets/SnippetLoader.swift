@@ -10,8 +10,7 @@ import MarkdownUI
 import SwiftUI
 
 struct SnippetLoader: View {
-	@Environment(\.colorScheme)
-	private var colorScheme: ColorScheme
+	@Environment(\.colorScheme) var colorScheme: ColorScheme
 
 	private let id: String
 

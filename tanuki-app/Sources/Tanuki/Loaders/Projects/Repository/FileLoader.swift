@@ -15,8 +15,7 @@ struct FileLoader: View {
 	private let fileExtension: String
 	private let refName: String
 
-	@Environment(\.colorScheme)
-	private var colorScheme: ColorScheme
+	@Environment(\.colorScheme) var colorScheme: ColorScheme
 
 	@State var content: Result<String, Error>? = nil
 
