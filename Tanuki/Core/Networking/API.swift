@@ -44,6 +44,7 @@ class API {
 		URL(string: "https://\(host)/api/graphql")!
 	}
 
+	/// This is only `public` because it's used by `FileLoader` and `FeedbackView`
 	public static func raw(
 		method: HTTPMethod,
 		endpoint: String,
@@ -69,18 +70,13 @@ class API {
 		let url = "https://\(targetHost)/" + path.joined(separator: "/")
 
 		var headers: HTTPHeaders = [.contentType(contentType.rawValue)]
-		if auth && !token.isEmpty {
+		if auth && token.isNotEmpty {
 			headers.add(.authorization(bearerToken: token))
 		}
 
 		var parameters: Parameters?
 		if let body {
-			switch contentType {
-			case .json:
-				parameters = try JSONSerialization.jsonObject(with: encoder.encode(body)) as? Parameters
-			case .formUrlEncoded:
-				parameters = try JSONSerialization.jsonObject(with: encoder.encode(body)) as? Parameters
-			}
+			parameters = try JSONSerialization.jsonObject(with: encoder.encode(body)) as? Parameters
 		}
 
 		let encoding: ParameterEncoding = (contentType == .json) ? JSONEncoding.default : URLEncoding.default
@@ -129,8 +125,7 @@ class API {
 				.withInternetDateTime, .withFractionalSeconds,
 			]
 
-			let dateStr = try decoder.singleValueContainer().decode(
-				String.self)
+			let dateStr = try decoder.singleValueContainer().decode(String.self)
 
 			if let date = formatter.date(from: dateStr) {
 				return date
