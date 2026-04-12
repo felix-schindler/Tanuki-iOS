@@ -37,8 +37,7 @@ struct DiffLoader: View {
 
 	@State var diffs: Result<[Diff], Error>? = nil
 
-	@AppStorage("diff_unified")
-	private var unidiff = false
+	@AppStorage("diff_unified") var unidiff = false
 
 	init(projectId: Int, mrIid: Int? = nil, commitSha: String? = nil) {
 		self.projectId = projectId
