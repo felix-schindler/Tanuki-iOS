@@ -119,6 +119,7 @@
 		DCC95E572BC5274B0040D657 /* ContributionsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC95E562BC5274B0040D657 /* ContributionsLoader.swift */; };
 		DCCB5D8D2B9C0E8300D5D70A /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */; };
 		DCD225042E696BC8002256F0 /* GitLabAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DCD225032E696BC8002256F0 /* GitLabAPI */; };
+		DCD2F7032F8AF9740049850E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = DCD2F7022F8AF9740049850E /* Alamofire */; };
 		DCD40E182BC2B2960055EE4C /* FileExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E172BC2B2960055EE4C /* FileExtensions.swift */; };
 		DCD40E1A2BC2C6600055EE4C /* DiffLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E192BC2C6600055EE4C /* DiffLoader.swift */; };
 		DCD40E222BC2E5CC0055EE4C /* CodeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E212BC2E5CC0055EE4C /* CodeTextView.swift */; };
@@ -128,7 +129,6 @@
 		DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2662B94C29600F4B245 /* EventsLoader.swift */; };
 		DCEFB2692B94C2C100F4B245 /* RestTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2682B94C2C100F4B245 /* RestTypes.swift */; };
 		DCEFB26B2B94C37600F4B245 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB26A2B94C37600F4B245 /* API.swift */; };
-		DCEFB26E2B94C3FD00F4B245 /* SwiftHttp in Frameworks */ = {isa = PBXBuildFile; productRef = DCEFB26D2B94C3FD00F4B245 /* SwiftHttp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -293,8 +293,8 @@
 				DC42A2112C62D36E00B1EA85 /* HighlightedTextEditor in Frameworks */,
 				DC5AD7D12E697E4B0031FC7B /* ApolloAPI in Frameworks */,
 				DC5AD7CF2E697E4B0031FC7B /* Apollo in Frameworks */,
-				DCEFB26E2B94C3FD00F4B245 /* SwiftHttp in Frameworks */,
 				DCAF9D9F2BC3755F001FF2E5 /* Highlightr in Frameworks */,
+				DCD2F7032F8AF9740049850E /* Alamofire in Frameworks */,
 				DC5AD7D32E697E4B0031FC7B /* ApolloSQLite in Frameworks */,
 				DC3A245C2B8C513C00DB0E3F /* MarkdownUI in Frameworks */,
 			);
@@ -473,6 +473,7 @@
 				DC2D65E62E7EFC74007A800C /* AsyncButton.swift */,
 				DC08C9542E80014E005A1979 /* NoContentView.swift */,
 				DC08C9582E800C2E005A1979 /* LoadingView.swift */,
+				DC5AD7D92E69D40B0031FC7B /* FailedView.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -539,7 +540,6 @@
 				DC4B42842BA55C03007A9DB1 /* Entity-Specific */,
 				DC13E8A72B8E073300994E8A /* HomeView.swift */,
 				DC2D65E42E7EF510007A800C /* ExploreView.swift */,
-				DC5AD7D92E69D40B0031FC7B /* FailedView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -666,7 +666,6 @@
 				DC3A24532B8C3F5800DB0E3F /* NVMColor */,
 				DC3A245B2B8C513C00DB0E3F /* MarkdownUI */,
 				DC0A6A542B8D148000C53D56 /* CachedAsyncImage */,
-				DCEFB26D2B94C3FD00F4B245 /* SwiftHttp */,
 				DCAF9D9E2BC3755F001FF2E5 /* Highlightr */,
 				DC42A2102C62D36E00B1EA85 /* HighlightedTextEditor */,
 				DCD225032E696BC8002256F0 /* GitLabAPI */,
@@ -674,6 +673,7 @@
 				DC5AD7D02E697E4B0031FC7B /* ApolloAPI */,
 				DC5AD7D22E697E4B0031FC7B /* ApolloSQLite */,
 				DC5AD7DC2E69D6E50031FC7B /* Toast */,
+				DCD2F7022F8AF9740049850E /* Alamofire */,
 			);
 			productName = Tanuki;
 			productReference = DC2704F52B8BC0F9003DAA84 /* Tanuki.app */;
@@ -710,12 +710,12 @@
 				DC3A24522B8C3F5800DB0E3F /* XCRemoteSwiftPackageReference "nvm-color" */,
 				DC3A245A2B8C513C00DB0E3F /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				DC0A6A532B8D148000C53D56 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
-				DCEFB26C2B94C3FD00F4B245 /* XCRemoteSwiftPackageReference "swift-http" */,
 				DCAF9D9D2BC3755F001FF2E5 /* XCRemoteSwiftPackageReference "Highlightr" */,
 				DC42A20F2C62D36E00B1EA85 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */,
 				DCD225022E696BC8002256F0 /* XCLocalSwiftPackageReference "GitLabAPI" */,
 				DC5AD7CD2E697E4B0031FC7B /* XCRemoteSwiftPackageReference "apollo-ios" */,
 				DC5AD7DB2E69D6E50031FC7B /* XCRemoteSwiftPackageReference "toast-swift" */,
+				DCD2F7012F8AF9740049850E /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = DC2704F62B8BC0F9003DAA84 /* Products */;
 			projectDirPath = "";
@@ -1106,7 +1106,7 @@
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 			};
@@ -1154,7 +1154,7 @@
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
 				TVOS_DEPLOYMENT_TARGET = 17.0;
 			};
@@ -1256,12 +1256,12 @@
 				minimumVersion = 2.3.0;
 			};
 		};
-		DCEFB26C2B94C3FD00F4B245 /* XCRemoteSwiftPackageReference "swift-http" */ = {
+		DCD2F7012F8AF9740049850E /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/felix-schindler/swift-http/";
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.11.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1336,10 +1336,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = GitLabAPI;
 		};
-		DCEFB26D2B94C3FD00F4B245 /* SwiftHttp */ = {
+		DCD2F7022F8AF9740049850E /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = DCEFB26C2B94C3FD00F4B245 /* XCRemoteSwiftPackageReference "swift-http" */;
-			productName = SwiftHttp;
+			package = DCD2F7012F8AF9740049850E /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

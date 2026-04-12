@@ -16,6 +16,7 @@ enum NotifyStatus: Int {
 		error = 2
 }
 
+@MainActor
 class Notify {
 	public static func status(
 		_ feedbackType: NotifyStatus, _ title: String? = nil, _ subtitle: String? = nil,

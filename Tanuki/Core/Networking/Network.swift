@@ -10,7 +10,8 @@ import ApolloAPI
 import ApolloSQLite
 import Foundation
 
-class Network {
+@MainActor
+final class Network {
 	static let shared = Network()
 
 	private(set) lazy var apollo: ApolloClient = {
@@ -44,6 +45,7 @@ class Network {
 	}()
 }
 
+@MainActor
 final class AuthorizationInterceptor: GraphQLInterceptor {
 	func intercept<Request: GraphQLRequest>(
 		request: Request,
@@ -57,7 +59,7 @@ final class AuthorizationInterceptor: GraphQLInterceptor {
 }
 
 final class NetworkInterceptorProvider: InterceptorProvider {
-	func graphQLInterceptors<Operation: GraphQLOperation>(for operation: Operation)
+	nonisolated func graphQLInterceptors<Operation: GraphQLOperation>(for operation: Operation)
 		-> [any GraphQLInterceptor]
 	{
 		return [
