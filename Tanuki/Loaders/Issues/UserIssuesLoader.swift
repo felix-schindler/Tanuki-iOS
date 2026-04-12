@@ -18,6 +18,9 @@ struct UserIssuesLoader: View {
 	@State
 	private var showFilters = false
 
+	@State
+	private var loadTask: Task<Void, Never>?
+
 	init(username: String? = nil) {
 		self.username = username
 	}
@@ -26,20 +29,22 @@ struct UserIssuesLoader: View {
 	private var projectMemberships: Result<[IssueProjectMembership?], Error>? = nil
 
 	private func loadIssues() {
-		do {
-			if let username {
-				let responses = try Network.shared.apollo.fetch(
-					query: UserIssuesQuery(
-						username: username,
-						state: GraphFilter.toFilterEnum(self.filter.state),
-						search: GraphFilter.toFilter(self.filter.search),
-						confidential: GraphFilter.toFilter(self.filter.confidential),
-						subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
-						types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
-					), cachePolicy: .cacheAndNetwork)
+		self.loadTask?.cancel()
+		self.loadTask = Task {
+			do {
+				if let username {
+					let responses = try Network.shared.apollo.fetch(
+						query: UserIssuesQuery(
+							username: username,
+							state: GraphFilter.toFilterEnum(self.filter.state),
+							search: GraphFilter.toFilter(self.filter.search),
+							confidential: GraphFilter.toFilter(self.filter.confidential),
+							subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
+							types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
+						), cachePolicy: .cacheAndNetwork)
 
-				Task {
 					for try await response in responses {
+						if Task.isCancelled { return }
 						if let projectMemberships = response.data?.user?.projectMemberships?.nodes {
 							self.projectMemberships = .success(projectMemberships)
 						} else if let errors = response.errors {
@@ -48,19 +53,18 @@ struct UserIssuesLoader: View {
 							}
 						}
 					}
-				}
-			} else {
-				let responses = try Network.shared.apollo.fetch(
-					query: CurrentUserIssuesQuery(
-						state: GraphFilter.toFilterEnum(self.filter.state),
-						search: GraphFilter.toFilter(self.filter.search),
-						confidential: GraphFilter.toFilter(self.filter.confidential),
-						subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
-						types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
-					), cachePolicy: .cacheAndNetwork)
+				} else {
+					let responses = try Network.shared.apollo.fetch(
+						query: CurrentUserIssuesQuery(
+							state: GraphFilter.toFilterEnum(self.filter.state),
+							search: GraphFilter.toFilter(self.filter.search),
+							confidential: GraphFilter.toFilter(self.filter.confidential),
+							subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
+							types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
+						), cachePolicy: .cacheAndNetwork)
 
-				Task {
 					for try await response in responses {
+						if Task.isCancelled { return }
 						if let projectMemberships = response.data?.currentUser?.projectMemberships?
 							.nodes
 						{
@@ -72,10 +76,12 @@ struct UserIssuesLoader: View {
 						}
 					}
 				}
+			} catch {
+				if !Task.isCancelled {
+					self.projectMemberships = .failure(error)
+					Notify.status(.error)
+				}
 			}
-		} catch let error {
-			self.projectMemberships = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
@@ -169,6 +175,12 @@ struct UserIssuesLoader: View {
 						}
 					}
 			}
+		}.searchable(
+			text: Binding(get: { self.filter.search ?? "" }, set: { self.filter.search = $0.isNotEmpty ? $0 : nil }),
+			prompt: "Search issues"
+		).onChange(of: filter.search) { _ in
+			self.projectMemberships = nil  // Show loading state
+			loadIssues()
 		}.navigationTitle("Issues")
 	}
 }

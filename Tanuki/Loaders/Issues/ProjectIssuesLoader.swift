@@ -20,6 +20,9 @@ struct ProjectIssuesLoader: View {
 	private var showFilters = false
 
 	@State
+	private var loadTask: Task<Void, Never>?
+
+	@State
 	private var project: Result<GitLabAPI.ProjectIssuesQuery.Data.Project, Error>? = nil
 
 	init(fullPath: String) {
@@ -27,21 +30,23 @@ struct ProjectIssuesLoader: View {
 	}
 
 	private func loadIssues() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: ProjectIssuesQuery(
-					fullPath: self.fullPath,
-					state: GraphFilter.toFilterEnum(self.filter.state),
-					search: GraphFilter.toFilter(self.filter.search),
-					confidential: GraphFilter.toFilter(self.filter.confidential),
-					subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
-					types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
-				),
-				cachePolicy: .cacheAndNetwork
-			)
+		self.loadTask?.cancel()
+		self.loadTask = Task {
+			do {
+				let responses = try Network.shared.apollo.fetch(
+					query: ProjectIssuesQuery(
+						fullPath: self.fullPath,
+						state: GraphFilter.toFilterEnum(self.filter.state),
+						search: GraphFilter.toFilter(self.filter.search),
+						confidential: GraphFilter.toFilter(self.filter.confidential),
+						subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
+						types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
+					),
+					cachePolicy: .cacheAndNetwork
+				)
 
-			Task {
 				for try await response in responses {
+					if Task.isCancelled { return }
 					if let project = response.data?.project {
 						self.project = .success(project)
 					} else if let errors = response.errors {
@@ -50,10 +55,12 @@ struct ProjectIssuesLoader: View {
 						}
 					}
 				}
+			} catch {
+				if !Task.isCancelled {
+					self.project = .failure(error)
+					Notify.status(.error)
+				}
 			}
-		} catch let error {
-			self.project = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
@@ -142,6 +149,12 @@ struct ProjectIssuesLoader: View {
 						}
 					}
 			}
+		}.searchable(
+			text: Binding(get: { self.filter.search ?? "" }, set: { self.filter.search = $0.isNotEmpty ? $0 : nil }),
+			prompt: "Search issues"
+		).onChange(of: filter.search) { _ in
+			self.project = nil  // Show loading state
+			loadIssues()
 		}.navigationTitle("Issues")
 	}
 }
