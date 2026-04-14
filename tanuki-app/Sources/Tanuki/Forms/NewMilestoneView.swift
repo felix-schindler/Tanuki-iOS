@@ -5,7 +5,6 @@
 //  Created by Felix Schindler on 21.09.25.
 //
 
-import HighlightedTextEditor
 import SwiftUI
 
 struct NewMilestoneView: View {
@@ -84,7 +83,7 @@ struct NewMilestoneView: View {
 			}
 
 			Section("Description (Markdown supported)") {
-				HighlightedTextEditor(text: $desc, highlightRules: .markdown)
+				TextEditor(text: $desc)
 					.frame(minHeight: 100)
 			}
 		}.toolbar {

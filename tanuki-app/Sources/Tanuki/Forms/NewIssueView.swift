@@ -6,7 +6,6 @@
 //
 
 import GitLabAPI
-import HighlightedTextEditor
 import SwiftUI
 
 enum IssueType: String, CaseIterable {
@@ -172,7 +171,7 @@ struct NewIssueView: View {
 			TextField("Title (required)", text: $title)
 
 			Section("Description (Markdown supported)") {
-				HighlightedTextEditor(text: $description, highlightRules: .markdown)
+				TextEditor(text: $description)
 					.frame(minHeight: 100)
 			}
 

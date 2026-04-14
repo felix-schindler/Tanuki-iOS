@@ -5,7 +5,6 @@
 //  Created by Felix Schindler on 20.09.25.
 //
 
-import HighlightedTextEditor
 import SwiftUI
 
 struct NewLabelView: View {
@@ -67,7 +66,7 @@ struct NewLabelView: View {
 			}
 
 			Section("Description (optional)") {
-				HighlightedTextEditor(text: $description, highlightRules: .markdown)
+				TextEditor(text: $description)
 					.frame(minHeight: 100)
 			}
 

@@ -6,7 +6,6 @@
 //
 
 import GitLabAPI
-import HighlightedTextEditor
 import SwiftUI
 
 struct NewReleaseView: View {
@@ -229,7 +228,7 @@ struct NewReleaseView: View {
 			}
 
 			Section("Release notes (Markdown supported)") {
-				HighlightedTextEditor(text: $description, highlightRules: .markdown)
+				TextEditor(text: $description)
 					.frame(minHeight: 100)
 			}
 		}.toolbar {

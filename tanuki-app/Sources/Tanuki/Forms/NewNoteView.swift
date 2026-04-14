@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import HighlightedTextEditor
 
 fileprivate struct _Note: Codable {
 	let id: Int
@@ -64,7 +63,7 @@ struct NewNoteView: View {
 			NavigationView {
 				Form {
 					Section("Description (Markdown supported)") {
-						HighlightedTextEditor(text: $content, highlightRules: .markdown)
+						TextEditor(text: $content)
 							.frame(minHeight: 100)
 					}
 					
