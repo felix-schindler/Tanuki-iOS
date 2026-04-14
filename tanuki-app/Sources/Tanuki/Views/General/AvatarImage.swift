@@ -5,7 +5,6 @@
 //  Created by Felix Schindler on 10.06.23.
 //
 
-import CachedAsyncImage
 import SwiftUI
 
 enum AvatarSize {
@@ -21,12 +20,6 @@ struct AvatarImage: View {
 	private let radius: CGFloat
 	private let width: CGFloat
 	private let height: CGFloat
-
-	private var request: URLRequest {
-		var req = URLRequest(url: self.url)
-		req.setValue("Bearer \(API.token)", forHTTPHeaderField: "Authorization")
-		return req
-	}
 
 	public init(
 		_ url: URL, radius: CGFloat = 10, width: CGFloat = 50,
@@ -62,7 +55,7 @@ struct AvatarImage: View {
 	}
 
 	public var body: some View {
-		CachedAsyncImage(urlRequest: self.request, urlCache: .avatarCache) { phase in
+		AsyncImage(url: self.url) { phase in
 			switch phase {
 			case .empty:
 				ProgressView()
