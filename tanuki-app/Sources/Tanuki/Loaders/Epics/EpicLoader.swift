@@ -113,11 +113,11 @@ struct EpicLoader: View {
 										cornerRadius: 5
 									)
 
-									if let color = epic.color {
+									if let color = epic.color, let textColor = epic.textColor {
 										PillView(
 											"Color",
 											bgColor: Color(hex: color),
-											fgColor: Color(hex: epic.textColor),
+											fgColor: Color(hex: textColor),
 											cornerRadius: 5
 										)
 									}

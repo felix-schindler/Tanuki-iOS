@@ -159,7 +159,7 @@ struct ProjectHeaderView: View {
 				.chartXAxis(.hidden)
 				.chartForegroundStyleScale(
 					range: languages.map {
-						Color(hex: $0.color) ?? .accentColor
+						Color(hex: $0.color ?? Color.accentColor.hex)
 					}
 				)
 				.frame(height: 30)

@@ -28,7 +28,7 @@ struct NewLabelView: View {
 	private func saveNewLabel() async {
 		var query: [String: String] = [
 			"name": title,
-			"color": "#\(color.hex!.dropLast(2))",
+			"color": "#\(color.hex.dropLast(2))",
 		]
 
 		if description != "" {

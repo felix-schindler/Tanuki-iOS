@@ -20,7 +20,7 @@ let package = Package(
 		.package(url: "https://github.com/gonzalezreal/swift-markdown-ui.git", from: "2.4.1"),
 		.package(url: "https://github.com/BastiaanJansen/toast-swift.git", from: "2.1.3"),
 		//.package(url: "https://github.com/lorenzofiamingo/swiftui-cached-async-image.git", from: "2.1.1"),
-		.package(url: "https://github.com/NVMNovem/nvm-color.git", from: "1.2.5")
+		//.package(url: "https://github.com/NVMNovem/nvm-color.git", from: "1.2.5")
     ],
     targets: [
         .target(name: "Tanuki", dependencies: [
@@ -35,7 +35,7 @@ let package = Package(
 			.product(name: "MarkdownUI", package: "swift-markdown-ui"),
 			//.product(name: "CachedAsyncImage", package: "swiftui-cached-async-image"),
 			.product(name: "Toast", package: "toast-swift"),
-			.product(name: "NVMColor", package: "nvm-color")
+			//.product(name: "NVMColor", package: "nvm-color")
         ], resources: [.process("Resources")], plugins: [.plugin(name: "skipstone", package: "skip")]),
     ]
 )

@@ -8,7 +8,6 @@
 
 import GitLabAPI
 import MarkdownUI
-import NVMColor
 import SwiftUI
 
 enum NavDest {
