@@ -5,7 +5,7 @@
 //  Created by Felix Schindler on 05.05.23.
 //
 
-import MarkdownUI
+//import MarkdownUI
 import SwiftUI
 
 struct Tag: Codable {

@@ -5,7 +5,7 @@
 //  Created by Felix Schindler on 16.03.24.
 //
 
-import MarkdownUI
+//import MarkdownUI
 import SwiftUI
 
 struct SetupView: View {

@@ -7,7 +7,7 @@
 
 import Charts
 import GitLabAPI
-import MarkdownUI
+//import MarkdownUI
 import SwiftUI
 
 struct ToggleStar: Codable {

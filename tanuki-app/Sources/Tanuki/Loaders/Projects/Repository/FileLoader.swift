@@ -6,7 +6,7 @@
 //
 
 import AVKit
-import MarkdownUI
+//import MarkdownUI
 import SwiftUI
 
 struct FileLoader: View {

@@ -7,7 +7,7 @@
 //
 
 import GitLabAPI
-import MarkdownUI
+//import MarkdownUI
 import SwiftUI
 
 enum NavDest {

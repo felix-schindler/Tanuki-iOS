@@ -5,9 +5,32 @@
 //  Created by Felix Schindler on 09.03.24.
 //
 
-import MarkdownUI
+//import MarkdownUI
 import SwiftUI
 
+struct MarkdownTheme {
+	public static let gitLab = MarkdownTheme()
+}
+
+struct Markdown: View {
+	private let contents: String
+
+	init(_ contents: String, baseURL: URL? = nil, imageBaseURL: URL? = nil) {
+		self.contents = contents
+	}
+	
+	var body: some View {
+		Text(contents)
+	}
+}
+
+extension Markdown {
+	func markdownTheme(_ theme: MarkdownTheme) -> Markdown {
+		self
+	}
+}
+
+/*
 @MainActor
 extension MarkdownUI.Theme {
 	/// A theme that mimics the GitHub style.
@@ -200,3 +223,4 @@ extension Color {
 	fileprivate static let checkbox = Color(rgba: 0xb9b9_bbff)
 	fileprivate static let checkboxBackground = Color(rgba: 0xeeee_efff)
 }
+*/
