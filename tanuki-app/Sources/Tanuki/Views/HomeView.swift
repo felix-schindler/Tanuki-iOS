@@ -7,7 +7,6 @@
 
 import GitLabAPI
 import SwiftUI
-import Toast
 
 struct HomeView: View {
 	@State var starredProjects: Result<[SmallProject?], Error>?

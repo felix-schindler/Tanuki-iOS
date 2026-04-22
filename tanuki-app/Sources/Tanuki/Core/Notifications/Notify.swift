@@ -5,7 +5,7 @@
 //  Created by Felix Schindler on 22.04.24.
 //
 
-import Toast
+//import Toast
 import UIKit
 
 enum NotifyStatus: Int {
@@ -14,6 +14,22 @@ enum NotifyStatus: Int {
 		warning = 1
 	case
 		error = 2
+}
+
+struct Toast {
+	private init() {
+	}
+	
+	static func `default`(image: UIImage, title: String?, subtitle: String?) -> Toast {
+		Toast()
+	}
+	
+	static func text(_ title: String?, subtitle: String?) -> Toast {
+		Toast()
+	}
+	
+	func show() {
+	}
 }
 
 @MainActor
