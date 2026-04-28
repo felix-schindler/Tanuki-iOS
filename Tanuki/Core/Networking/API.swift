@@ -35,6 +35,7 @@ struct GitLabInstance: Codable, Identifiable, Equatable {
 @MainActor
 class InstanceManager {
 	private static let userDefaults = UserDefaults(suiteName: "group.de.schindlerfelix.GitLab")!
+	private static let legacyUserDefaults = UserDefaults(suiteName: "de.schindlerfelix.GitLab")
 	private static let instancesKey = "instances"
 	private static let selectedKey = "selectedInstance"
 	private static let legacyHostKey = "domain"
@@ -74,8 +75,13 @@ class InstanceManager {
 	static func migrate() {
 		guard !userDefaults.bool(forKey: migrationDoneKey) else { return }
 
-		let oldHost = userDefaults.string(forKey: legacyHostKey) ?? "gitlab.com"
-		let oldToken = userDefaults.string(forKey: legacyTokenKey) ?? ""
+		let legacyStore = legacyUserDefaults
+		let oldHost = legacyStore?.string(forKey: legacyHostKey)
+			?? userDefaults.string(forKey: legacyHostKey)
+			?? "gitlab.com"
+		let oldToken = legacyStore?.string(forKey: legacyTokenKey)
+			?? userDefaults.string(forKey: legacyTokenKey)
+			?? ""
 
 		guard oldHost.isNotEmpty || oldToken.isNotEmpty else {
 			userDefaults.set(true, forKey: migrationDoneKey)
@@ -91,6 +97,8 @@ class InstanceManager {
 
 		userDefaults.removeObject(forKey: legacyHostKey)
 		userDefaults.removeObject(forKey: legacyTokenKey)
+		legacyStore?.removeObject(forKey: legacyHostKey)
+		legacyStore?.removeObject(forKey: legacyTokenKey)
 		userDefaults.set(true, forKey: migrationDoneKey)
 	}
 
