@@ -9,7 +9,6 @@ import SwiftUI
 
 struct InstancesView: View {
 	@State
-	private var showAddInstance = false
 
 	var body: some View {
 		List {

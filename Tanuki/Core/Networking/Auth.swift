@@ -41,6 +41,7 @@ class Auth {
 	public static func login(
 		instance: GitLabInstance,
 		showSetup: Binding<Bool>? = nil,
+		dismiss: DismissAction? = nil
 	) async throws {
 		InstanceManager.add(instance)
 		try await resetSessionCaches()
@@ -56,6 +57,7 @@ class Auth {
 			systemImage: "checkmark"
 		)
 		showSetup?.wrappedValue = false
+		dismiss?()
 	}
 
 	@MainActor

@@ -75,6 +75,7 @@ struct ConfigView: View {
 						try await Auth.login(
 							instance: instance,
 							showSetup: showSetup,
+							dismiss: dismiss
 						)
 					} catch let error {
 						Notify.status(
