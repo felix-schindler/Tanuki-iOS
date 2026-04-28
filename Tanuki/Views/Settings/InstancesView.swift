@@ -78,12 +78,14 @@ struct InstancesView: View {
 					Label("Add Instance", systemImage: "plus.circle")
 				}
 			}
-		}
-		.navigationTitle("Instances")
-		.onAppear {
+		}.onAppear {
 			instances = InstanceManager.instances
 			selectedId = InstanceManager.selectedId
-		}
+		}.toolbar {
+			NavigationLink(destination: ConfigView(showSetup: nil)) {
+				Label("Add Instance", systemImage: "plus")
+			}
+		}.navigationTitle("Instances")
 	}
 }
 

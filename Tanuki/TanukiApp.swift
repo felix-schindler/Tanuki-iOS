@@ -16,6 +16,7 @@ struct TanukiApp: App {
 
 	init() {
 		InstanceManager.migrate()
+		WatchSync.shared.activate()
 	}
 
 	private func restorePersistedCookies() {

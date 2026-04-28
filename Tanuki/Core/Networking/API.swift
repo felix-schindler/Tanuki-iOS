@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if canImport(WatchConnectivity)
+import WatchConnectivity
+#endif
 @preconcurrency import SwiftHttp
 import SwiftUI
 
@@ -100,6 +103,7 @@ class InstanceManager {
 		legacyStore?.removeObject(forKey: legacyHostKey)
 		legacyStore?.removeObject(forKey: legacyTokenKey)
 		userDefaults.set(true, forKey: migrationDoneKey)
+		WatchSync.shared.pushInstances()
 	}
 
 	static func add(_ instance: GitLabInstance) {
@@ -108,6 +112,7 @@ class InstanceManager {
 		current.append(instance)
 		instances = current
 		selectedId = instance.id
+		WatchSync.shared.pushInstances()
 	}
 
 	static func remove(_ instance: GitLabInstance) {
@@ -118,15 +123,69 @@ class InstanceManager {
 		if selectedId == instance.id {
 			selectedId = current.last?.id
 		}
+		WatchSync.shared.pushInstances()
 	}
 
 	static func select(_ instance: GitLabInstance) {
 		selectedId = instance.id
+		WatchSync.shared.pushInstances()
 	}
 
 	static func update(_ instance: GitLabInstance) {
 		remove(instance)
 		add(instance)
+		WatchSync.shared.pushInstances()
+	}
+}
+
+@MainActor
+final class WatchSync: NSObject, WCSessionDelegate {
+	static let shared = WatchSync()
+	private let encoder = JSONEncoder()
+	private var didActivate = false
+
+	func activate() {
+		guard WCSession.isSupported() else { return }
+		let session = WCSession.default
+		session.delegate = self
+		session.activate()
+	}
+
+	func pushInstances() {
+		guard WCSession.isSupported() else { return }
+		let session = WCSession.default
+		if !didActivate {
+			activate()
+		}
+
+		guard let data = try? encoder.encode(InstanceManager.instances) else { return }
+		var context: [String: Any] = [
+			"instances": data,
+		]
+		if let selectedId = InstanceManager.selectedId {
+			context["selectedId"] = selectedId
+		}
+
+		try? session.updateApplicationContext(context)
+	}
+
+	nonisolated func session(
+		_ session: WCSession,
+		activationDidCompleteWith activationState: WCSessionActivationState,
+		error: Error?
+	) {
+		Task { @MainActor in
+			didActivate = activationState == .activated
+			if didActivate {
+				pushInstances()
+			}
+		}
+	}
+
+	nonisolated func sessionDidBecomeInactive(_ session: WCSession) {}
+
+	nonisolated func sessionDidDeactivate(_ session: WCSession) {
+		session.activate()
 	}
 }
 
