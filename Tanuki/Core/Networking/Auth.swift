@@ -61,7 +61,7 @@ class Auth {
 	}
 
 	@MainActor
-	public static func logout(showSetup: Binding<Bool>) async {
+	public static func logout(showSetup: Binding<Bool>? = nil) async {
 		if let current = InstanceManager.selected {
 			InstanceManager.remove(current)
 		}
@@ -71,7 +71,7 @@ class Auth {
 			Notify.status(.success, "Logged out")
 
 			if InstanceManager.selected == nil {
-				showSetup.wrappedValue = true
+				showSetup?.wrappedValue = true
 			}
 		} catch let error {
 			Notify.status(

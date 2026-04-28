@@ -50,9 +50,19 @@ struct InstancesView: View {
 						}
 						.swipeActions(edge: .trailing) {
 							Button(role: .destructive) {
+								let wasSelected = instance.id == InstanceManager.selectedId
 								InstanceManager.remove(instance)
 								instances = InstanceManager.instances
 								selectedId = InstanceManager.selectedId
+								if wasSelected {
+									Task {
+										if let next = InstanceManager.selected {
+											await Auth.switchInstance(to: next)
+										} else {
+											await Auth.logout()
+										}
+									}
+								}
 							} label: {
 								Label("Delete", systemImage: "trash").labelStyle(.iconOnly)
 							}
