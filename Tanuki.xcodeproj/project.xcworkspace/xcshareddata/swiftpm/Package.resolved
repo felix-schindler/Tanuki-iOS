@@ -1,6 +1,15 @@
 {
-  "originHash" : "c9047faecc4796f65ebc40e394afcd0b23236112ffae34182175f75233fe8dc1",
+  "originHash" : "49870e0367d8e2c555f8b7900180534ac922e2e06efd537d8885050b6fd56929",
   "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire",
+      "state" : {
+        "revision" : "e938f8c66708e7352fc7e3512647fa54255b267a",
+        "version" : "5.11.2"
+      }
+    },
     {
       "identity" : "apollo-ios",
       "kind" : "remoteSourceControl",
@@ -53,24 +62,6 @@
       "state" : {
         "revision" : "b022b08312decdc46585e0b3440d97f6f22ef703",
         "version" : "0.6.0"
-      }
-    },
-    {
-      "identity" : "swift-http",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/felix-schindler/swift-http/",
-      "state" : {
-        "branch" : "main",
-        "revision" : "18133c39232a648d2c93ab42376bde84ee79f6cc"
-      }
-    },
-    {
-      "identity" : "swift-log",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-log",
-      "state" : {
-        "revision" : "ce592ae52f982c847a4efc0dd881cc9eb32d29f2",
-        "version" : "1.6.4"
       }
     },
     {

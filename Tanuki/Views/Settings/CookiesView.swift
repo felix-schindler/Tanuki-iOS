@@ -5,7 +5,6 @@
 //  Created by Felix Schindler on 03.10.25.
 //
 
-import SwiftHttp
 import SwiftUI
 import WebKit
 
@@ -13,7 +12,9 @@ struct CookiesView: View {
 	@State private var cookies: [HTTPCookie] = []
 	@State private var showingWebView = false
 
-	private let loginUrl = HttpUrl(host: API.host, path: ["users", "sign_in"]).url
+	private var loginUrl: URL {
+		URL(string: "https://\(API.host)/users/sign_in")!
+	}
 
 	var body: some View {
 		List {
