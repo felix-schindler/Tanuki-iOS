@@ -9,10 +9,13 @@ import SwiftUI
 
 struct InstancesView: View {
 	@State
+	private var instances: [GitLabInstance] = InstanceManager.instances
+	@State
+	private var selectedId: String? = InstanceManager.selectedId
 
 	var body: some View {
 		List {
-			if InstanceManager.instances.isEmpty {
+			if instances.isEmpty {
 				NoContentView(
 					"No Instances",
 					systemImage: "server.rack",
@@ -20,7 +23,7 @@ struct InstancesView: View {
 				)
 			} else {
 				Section {
-					ForEach(InstanceManager.instances) { instance in
+					ForEach(instances) { instance in
 						HStack {
 							VStack(alignment: .leading) {
 								Text(instance.host)
@@ -32,20 +35,26 @@ struct InstancesView: View {
 
 							Spacer()
 
-							if instance.id == InstanceManager.selectedId {
+							if instance.id == selectedId {
 								Image(systemName: "checkmark.circle.fill")
 									.foregroundStyle(.accent)
 							}
 						}
 						.contentShape(.rect)
 						.onTapGesture {
-							InstanceManager.select(instance)
+							Task {
+								await Auth.switchInstance(to: instance)
+								instances = InstanceManager.instances
+								selectedId = InstanceManager.selectedId
+							}
 						}
 						.swipeActions(edge: .trailing) {
 							Button(role: .destructive) {
 								InstanceManager.remove(instance)
+								instances = InstanceManager.instances
+								selectedId = InstanceManager.selectedId
 							} label: {
-								Label("Delete", systemImage: "trash")
+								Label("Delete", systemImage: "trash").labelStyle(.iconOnly)
 							}
 						}
 					}
@@ -55,12 +64,16 @@ struct InstancesView: View {
 			}
 
 			Section {
-				NavigationLink(destination: ConfigView(showSetup: .constant(false))) {
+				NavigationLink(destination: ConfigView(showSetup: nil)) {
 					Label("Add Instance", systemImage: "plus.circle")
 				}
 			}
 		}
 		.navigationTitle("Instances")
+		.onAppear {
+			instances = InstanceManager.instances
+			selectedId = InstanceManager.selectedId
+		}
 	}
 }
 
