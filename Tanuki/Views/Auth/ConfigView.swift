@@ -13,10 +13,10 @@ struct ConfigView: View {
 	public private(set) var showSetup: Binding<Bool>? = nil
 
 	@State
-	private var newHost = API.host
+	private var newHost = "gitlab.com"
 
 	@State
-	private var newToken = API.token
+	private var newToken = ""
 
 	var body: some View {
 		VStack {
