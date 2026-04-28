@@ -11,12 +11,11 @@ import WebKit
 
 @main
 struct TanukiApp: App {
-	@State
-	private var showSetup = false
+	@StateObject
+	private var sessionStore = SessionStore.shared
 
 	init() {
 		InstanceManager.migrate()
-		showSetup = InstanceManager.selected == nil
 	}
 
 	private func restorePersistedCookies() {
@@ -42,11 +41,19 @@ struct TanukiApp: App {
 
 	public var body: some Scene {
 		WindowGroup {
-			if showSetup {
-				SetupView(showSetup: $showSetup)
-			} else {
-				main
-			}
+			main
+				.fullScreenCover(
+					isPresented: Binding(
+						get: { sessionStore.needsSetup },
+						set: { newValue in
+							if !newValue {
+								sessionStore.setNeedsSetup(false)
+							}
+						}
+					)
+				) {
+					SetupView()
+				}
 		}
 	}
 
@@ -68,11 +75,12 @@ struct TanukiApp: App {
 				Label("Explore", systemImage: "sparkles")
 			}.tag(2)
 			NavigationView {
-				CurrentUserLoader(showSetup: $showSetup)
+				CurrentUserLoader()
 			}.tabItem {
 				Label("Profile", systemImage: "person")
 			}.tag(3)
 		}.onAppear {
+			sessionStore.refresh()
 			restorePersistedCookies()
 		}
 	}

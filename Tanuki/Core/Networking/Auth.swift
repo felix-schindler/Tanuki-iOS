@@ -58,6 +58,7 @@ class Auth {
 		)
 		showSetup?.wrappedValue = false
 		dismiss?()
+		SessionStore.shared.refresh()
 	}
 
 	@MainActor
@@ -73,6 +74,7 @@ class Auth {
 			if InstanceManager.selected == nil {
 				showSetup?.wrappedValue = true
 			}
+			SessionStore.shared.refresh()
 		} catch let error {
 			Notify.status(
 				.error,
@@ -97,6 +99,7 @@ class Auth {
 				"Switched to \(user.username)",
 				systemImage: "checkmark"
 			)
+			SessionStore.shared.refresh()
 		} catch let error {
 			Notify.status(
 				.error,

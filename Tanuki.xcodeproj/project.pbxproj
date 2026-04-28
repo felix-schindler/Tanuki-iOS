@@ -105,6 +105,7 @@
 		DCAA7E3A2E9B0C860078DB8E /* GroupsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA7E392E9B0C860078DB8E /* GroupsLoader.swift */; };
 		DCAA7E3C2E9B0F4F0078DB8E /* SmallGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA7E3B2E9B0F4F0078DB8E /* SmallGroupView.swift */; };
 		DCAA7E3E2E9B169F0078DB8E /* UsersLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAA7E3D2E9B169F0078DB8E /* UsersLoader.swift */; };
+		DCAE85642FA0D1F700F64C2B /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAE85632FA0D1F700F64C2B /* SessionStore.swift */; };
 		DCAF9D9F2BC3755F001FF2E5 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = DCAF9D9E2BC3755F001FF2E5 /* Highlightr */; };
 		DCB24D132F8C0C9E00C38FEF /* InstancesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB24D122F8C0C9E00C38FEF /* InstancesView.swift */; };
 		DCB5E0D62B96C63A000F67FB /* CustomEmojisLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB5E0D52B96C63A000F67FB /* CustomEmojisLoader.swift */; };
@@ -245,6 +246,7 @@
 		DCAA7E392E9B0C860078DB8E /* GroupsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsLoader.swift; sourceTree = "<group>"; };
 		DCAA7E3B2E9B0F4F0078DB8E /* SmallGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallGroupView.swift; sourceTree = "<group>"; };
 		DCAA7E3D2E9B169F0078DB8E /* UsersLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersLoader.swift; sourceTree = "<group>"; };
+		DCAE85632FA0D1F700F64C2B /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
 		DCB24D122F8C0C9E00C38FEF /* InstancesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstancesView.swift; sourceTree = "<group>"; };
 		DCB5E0D52B96C63A000F67FB /* CustomEmojisLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEmojisLoader.swift; sourceTree = "<group>"; };
 		DCB5E0D92B96CD33000F67FB /* GroupMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMergeLoader.swift; sourceTree = "<group>"; };
@@ -423,6 +425,7 @@
 		DC31F27B2E71DC8E005F31A2 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				DCAE85632FA0D1F700F64C2B /* SessionStore.swift */,
 				DC2B87012E8FFE7800A1BA29 /* FormUrlEncoder.swift */,
 				DCD4BF712E8F31D000F153B6 /* Auth.swift */,
 				DC2705102B8BC507003DAA84 /* Network.swift */,
@@ -845,6 +848,7 @@
 				DC4D10122E72E78F0001B54E /* ConfigView.swift in Sources */,
 				DC867DF02ED3255600D4B03C /* CookiesView.swift in Sources */,
 				DC867DF22ED3258F00D4B03C /* SettingsView.swift in Sources */,
+				DCAE85642FA0D1F700F64C2B /* SessionStore.swift in Sources */,
 				DC3276632B9B503500B51EEE /* CurrentUserTodosLoader.swift in Sources */,
 				DC867DF92ED3346E00D4B03C /* ClipboardAccess.swift in Sources */,
 				DC867DF72ED330FA00D4B03C /* FeedbackView.swift in Sources */,

@@ -11,15 +11,13 @@ import SwiftUI
 
 struct SetupView: View {
 	@Environment(\.openURL) private var openURL
-	private var showSetup: Binding<Bool>
 
 	/// For CSRF protection
 	private let state: String
 	private let codeVerifier: String
 	private let codeChallenge: String
 
-	public init(showSetup: Binding<Bool>) {
-		self.showSetup = showSetup
+	public init() {
 		self.state = UUID().uuidString
 		self.codeVerifier = Auth.generateCodeVerifier()
 		self.codeChallenge = Auth.generateCodeChallenge(codeVerifier: self.codeVerifier)
@@ -77,7 +75,7 @@ struct SetupView: View {
 				.controlSize(.large)
 
 				NavigationLink(
-					destination: ConfigView(showSetup: showSetup),
+					destination: ConfigView(showSetup: nil),
 					label: {
 						Text("Self-Hosted instance")
 							.frame(maxWidth: .infinity)
@@ -127,8 +125,7 @@ struct SetupView: View {
 									isOAuth: true
 								)
 								try await Auth.login(
-									instance: instance,
-									showSetup: showSetup
+									instance: instance
 								)
 							} catch let error {
 								print(error)
@@ -167,5 +164,5 @@ struct SetupView: View {
 }
 
 #Preview {
-	SetupView(showSetup: .constant(true))
+	SetupView()
 }

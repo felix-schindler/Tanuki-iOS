@@ -9,7 +9,6 @@ import GitLabAPI
 import SwiftUI
 
 struct CurrentUserLoader: View {
-	public private(set) var showSetup: Binding<Bool>
 
 	@State
 	private var user: Result<CurrentUserQuery.Data.CurrentUser, Error>? = nil
@@ -92,7 +91,7 @@ struct CurrentUserLoader: View {
 						systemImage: "rectangle.portrait.and.arrow.right",
 						role: .destructive
 					) {
-						await Auth.logout(showSetup: showSetup)
+						await Auth.logout()
 					}.tint(.red)
 				}
 			}
@@ -102,6 +101,6 @@ struct CurrentUserLoader: View {
 
 #Preview {
 	NavigationView {
-		CurrentUserLoader(showSetup: .constant(false))
+		CurrentUserLoader()
 	}
 }
