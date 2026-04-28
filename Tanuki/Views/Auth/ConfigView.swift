@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct ConfigView: View {
-	public private(set) var showSetup: Binding<Bool>
+	@Environment(\.dismiss) var dismiss
+	
+	public private(set) var showSetup: Binding<Bool>? = nil
 
 	@State
 	private var newHost = API.host
@@ -70,19 +72,10 @@ struct ConfigView: View {
 							token: self.newToken,
 							isOAuth: false
 						)
-						InstanceManager.add(instance)
-
-						let user = try await API.get(
-							type: RestAPIUser.self,
-							endpoint: "user"
+						try await Auth.login(
+							instance: instance,
+							showSetup: showSetup,
 						)
-
-						Notify.status(
-							.success,
-							"Welcome, \(user.username)",
-							systemImage: "checkmark"
-						)
-						self.showSetup.wrappedValue = false
 					} catch let error {
 						Notify.status(
 							.error,

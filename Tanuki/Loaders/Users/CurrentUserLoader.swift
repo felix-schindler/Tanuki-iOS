@@ -92,26 +92,7 @@ struct CurrentUserLoader: View {
 						systemImage: "rectangle.portrait.and.arrow.right",
 						role: .destructive
 					) {
-						if let current = InstanceManager.selected {
-							InstanceManager.remove(current)
-						}
-
-						Notify.status(.success, "Logged out")
-						do {
-							URLCache.shared.removeAllCachedResponses()
-							URLCache.avatarCache.removeAllCachedResponses()
-							try await Network.shared.apollo.store.clearCache()
-
-							if InstanceManager.selected == nil {
-								self.showSetup.wrappedValue = true
-							}
-						} catch let error {
-							Notify.status(
-								.error,
-								"Failed to log out",
-								error.localizedDescription
-							)
-						}
+						await Auth.logout(showSetup: showSetup)
 					}.tint(.red)
 				}
 			}

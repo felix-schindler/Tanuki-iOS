@@ -126,19 +126,10 @@ struct SetupView: View {
 									token: auth.accessToken,
 									isOAuth: true
 								)
-								InstanceManager.add(instance)
-
-								let user = try await API.get(
-									type: RestAPIUser.self,
-									endpoint: "user"
+								try await Auth.login(
+									instance: instance,
+									showSetup: showSetup
 								)
-
-								Notify.status(
-									.success,
-									"Welcome, \(user.username)",
-									systemImage: "checkmark"
-								)
-								self.showSetup.wrappedValue = false
 							} catch let error {
 								print(error)
 								Notify.status(
