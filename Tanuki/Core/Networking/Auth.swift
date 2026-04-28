@@ -43,22 +43,33 @@ class Auth {
 		showSetup: Binding<Bool>? = nil,
 		dismiss: DismissAction? = nil
 	) async throws {
+		let previousInstance = InstanceManager.selected
 		InstanceManager.add(instance)
 		try await resetSessionCaches()
 
-		let user = try await API.get(
-			type: RestAPIUser.self,
-			endpoint: "user"
-		)
+		do {
+			let user = try await API.get(
+				type: RestAPIUser.self,
+				endpoint: "user"
+			)
 
-		Notify.status(
-			.success,
-			"Welcome, \(user.username)",
-			systemImage: "checkmark"
-		)
-		showSetup?.wrappedValue = false
-		dismiss?()
-		SessionStore.shared.refresh()
+			Notify.status(
+				.success,
+				"Welcome, \(user.username)",
+				systemImage: "checkmark"
+			)
+			showSetup?.wrappedValue = false
+			dismiss?()
+			SessionStore.shared.refresh()
+		} catch {
+			InstanceManager.remove(instance)
+			if let previousInstance {
+				InstanceManager.select(previousInstance)
+				try await resetSessionCaches()
+			}
+			SessionStore.shared.refresh()
+			throw error
+		}
 	}
 
 	@MainActor
