@@ -79,20 +79,10 @@ struct CurrentUserLoader: View {
 			}
 
 			ToolbarItem(placement: .topBarTrailing) {
-				HStack {
-					if let user, case .success(let user) = user,
-						let url = URL(string: user.webUrl)
-					{
-						ShareButton(url)
-					}
-
-					AsyncButton(
-						"Sign out",
-						systemImage: "rectangle.portrait.and.arrow.right",
-						role: .destructive
-					) {
-						await Auth.logout()
-					}.tint(.red)
+				if let user, case .success(let user) = user,
+					let url = URL(string: user.webUrl)
+				{
+					ShareButton(url)
 				}
 			}
 		}
