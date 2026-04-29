@@ -19,15 +19,15 @@ enum NotifyStatus: Int {
 struct Toast {
 	private init() {
 	}
-	
+
 	static func `default`(image: UIImage, title: String?, subtitle: String?) -> Toast {
 		Toast()
 	}
-	
+
 	static func text(_ title: String?, subtitle: String?) -> Toast {
 		Toast()
 	}
-	
+
 	func show() {
 	}
 }

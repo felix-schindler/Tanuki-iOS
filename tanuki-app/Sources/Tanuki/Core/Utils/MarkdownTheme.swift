@@ -18,7 +18,7 @@ struct Markdown: View {
 	init(_ contents: String, baseURL: URL? = nil, imageBaseURL: URL? = nil) {
 		self.contents = contents
 	}
-	
+
 	var body: some View {
 		Text(contents)
 	}

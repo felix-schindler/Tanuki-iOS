@@ -11,18 +11,18 @@ import SwiftUI
 class Highlightr {
 	init?() {
 	}
-	
+
 	func supportedLanguages() -> [String] {
 		[]
 	}
-	
+
 	func availableThemes() -> [String] {
 		[]
 	}
-	
+
 	func setTheme(to: String) {
 	}
-	
+
 	func highlight(_ content: String, as: String) -> NSAttributedString? {
 		NSAttributedString()
 	}
