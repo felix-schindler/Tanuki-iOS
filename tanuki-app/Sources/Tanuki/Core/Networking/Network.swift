@@ -14,7 +14,17 @@ import Foundation
 final class Network {
 	static let shared = Network()
 
-	private(set) lazy var apollo: ApolloClient = {
+	private(set) var apollo: ApolloClient
+
+	init() {
+		self.apollo = Network.buildApolloClient()
+	}
+
+	func resetApolloClient() {
+		self.apollo = Network.buildApolloClient()
+	}
+
+	private static func buildApolloClient() -> ApolloClient {
 		let documentsPath = NSSearchPathForDirectoriesInDomains(
 			.documentDirectory,
 			.userDomainMask,
@@ -42,7 +52,7 @@ final class Network {
 		)
 
 		return ApolloClient(networkTransport: transport, store: store)
-	}()
+	}
 }
 
 @MainActor

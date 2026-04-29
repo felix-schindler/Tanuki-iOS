@@ -8,28 +8,38 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
+	var body: some View {
 		TabView {
+			if #available(watchOS 9.0, *) {
+				NavigationView {
+					InstancesListView()
+						.navigationTitle("Instances")
+				}
+				.tag(0)
+			} else {
+				InstancesListView()
+					.tag(0)
+			}
 			if #available(watchOS 9.0, *) {
 				NavigationView {
 					UserIssuesLoader()
 						.navigationTitle("Issues")
 				}
-				.tag(0)
+				.tag(1)
 			} else {
 				UserIssuesLoader()
-					.tag(0)
+					.tag(1)
 			}
-			VStack {
-				Image(systemName: "globe")
-					.imageScale(.large)
-					.foregroundStyle(.accent)
-				Text("Hello, world!")
-				Text("More coming soon...")
-					.font(.footnote)
-					.foregroundStyle(.secondary)
-			}.padding()
-			.tag(1)
+			if #available(watchOS 9.0, *) {
+				NavigationView {
+					MergeRequestsHomeView()
+						.navigationTitle("Merge Requests")
+				}
+				.tag(2)
+			} else {
+				MergeRequestsHomeView()
+					.tag(2)
+			}
 		}
     }
 }

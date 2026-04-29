@@ -10,15 +10,13 @@ import SwiftUI
 
 struct SetupView: View {
 	@Environment(\.openURL) var openURL
-	private var showSetup: Binding<Bool>
 
 	/// For CSRF protection
 	private let state: String
 	private let codeVerifier: String
 	private let codeChallenge: String
 
-	public init(showSetup: Binding<Bool>) {
-		self.showSetup = showSetup
+	public init() {
 		self.state = UUID().uuidString
 		self.codeVerifier = Auth.generateCodeVerifier()
 		self.codeChallenge = Auth.generateCodeChallenge(codeVerifier: self.codeVerifier)
@@ -78,7 +76,7 @@ struct SetupView: View {
 				.controlSize(.large)
 
 				NavigationLink(
-					destination: ConfigView(showSetup: showSetup),
+					destination: ConfigView(showSetup: nil),
 					label: {
 						Text("Self-Hosted instance")
 							.frame(maxWidth: .infinity)
@@ -107,8 +105,6 @@ struct SetupView: View {
 					if state == self.state {
 						Task {
 							do {
-								API.host = "gitlab.com"
-
 								let auth = try await API.req(
 									type: oAuthToken.self,
 									method: .post,
@@ -124,19 +120,14 @@ struct SetupView: View {
 									useBase: false
 								)
 
-								API.token = auth.accessToken
-
-								let user = try await API.get(
-									type: RestAPIUser.self,
-									endpoint: "user"
+								let instance = GitLabInstance(
+									host: "gitlab.com",
+									token: auth.accessToken,
+									isOAuth: true
 								)
-
-								Notify.status(
-									.success,
-									"Welcome, \(user.username)",
-									systemImage: "checkmark"
+								try await Auth.login(
+									instance: instance
 								)
-								self.showSetup.wrappedValue = false
 							} catch let error {
 								print(error)
 								Notify.status(
@@ -174,5 +165,5 @@ struct SetupView: View {
 }
 
 #Preview {
-	SetupView(showSetup: .constant(true))
+	SetupView()
 }

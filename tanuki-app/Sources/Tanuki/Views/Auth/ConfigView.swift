@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct ConfigView: View {
-	public private(set) var showSetup: Binding<Bool>
+	@Environment(\.dismiss) var dismiss
 
-	@State var newHost = API.host
+	public private(set) var showSetup: Binding<Bool>? = nil
 
-	@State var newToken = API.token
+	@State var newHost = "gitlab.com"
+
+	@State var newToken = ""
 
 	var body: some View {
 		VStack {
@@ -63,24 +65,17 @@ struct ConfigView: View {
 							}
 						}
 
-						API.host = self.newHost
-						API.token = self.newToken
-
-						let user = try await API.get(
-							type: RestAPIUser.self,
-							endpoint: "user"
+						let instance = GitLabInstance(
+							host: self.newHost,
+							token: self.newToken,
+							isOAuth: false
 						)
-
-						Notify.status(
-							.success,
-							"Welcome, \(user.username)",
-							systemImage: "checkmark"
+						try await Auth.login(
+							instance: instance,
+							showSetup: showSetup,
+							dismiss: dismiss
 						)
-						self.showSetup.wrappedValue = false
 					} catch let error {
-						API.host = "gitlab.com"
-						API.token = ""
-
 						Notify.status(
 							.error,
 							"Failed to log in",

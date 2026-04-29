@@ -10,6 +10,10 @@ import Alamofire
 import Foundation
 import SwiftUI
 
+#if canImport(WatchConnectivity)
+	import WatchConnectivity
+#endif
+
 enum DateError: String, Error {
 	case invalidDate
 }
@@ -19,22 +23,213 @@ enum ContentType: String {
 	case formUrlEncoded = "application/x-www-form-urlencoded"
 }
 
+struct GitLabInstance: Codable, Identifiable, Equatable {
+	var id: String { host }
+	let host: String
+	let token: String
+	let isOAuth: Bool
+
+	init(host: String, token: String, isOAuth: Bool = false) {
+		self.host = host
+		self.token = token
+		self.isOAuth = isOAuth
+	}
+}
+
+@MainActor
+class InstanceManager {
+	private static let userDefaults = UserDefaults(suiteName: "group.de.schindlerfelix.GitLab")!
+	private static let legacyUserDefaults = UserDefaults(suiteName: "de.schindlerfelix.GitLab")
+	private static let instancesKey = "instances"
+	private static let selectedKey = "selectedInstance"
+	private static let legacyHostKey = "domain"
+	private static let legacyTokenKey = "token"
+	private static let migrationDoneKey = "migration_done"
+
+	static var instances: [GitLabInstance] {
+		get {
+			guard let data = userDefaults.data(forKey: instancesKey),
+				let instances = try? JSONDecoder().decode([GitLabInstance].self, from: data)
+			else {
+				return []
+			}
+			return instances
+		}
+		set {
+			if let data = try? JSONEncoder().encode(newValue) {
+				userDefaults.set(data, forKey: instancesKey)
+			}
+		}
+	}
+
+	static var selectedId: String? {
+		get {
+			userDefaults.string(forKey: selectedKey)
+		}
+		set {
+			userDefaults.set(newValue, forKey: selectedKey)
+		}
+	}
+
+	static var selected: GitLabInstance? {
+		guard let id = selectedId else { return nil }
+		return instances.first { $0.id == id }
+	}
+
+	static func migrate() {
+		guard !userDefaults.bool(forKey: migrationDoneKey) else { return }
+
+		let legacyStore = legacyUserDefaults
+		let oldHost =
+			legacyStore?.string(forKey: legacyHostKey)
+			?? userDefaults.string(forKey: legacyHostKey)
+			?? "gitlab.com"
+		let oldToken =
+			legacyStore?.string(forKey: legacyTokenKey)
+			?? userDefaults.string(forKey: legacyTokenKey)
+			?? ""
+
+		guard oldHost.isNotEmpty || oldToken.isNotEmpty else {
+			userDefaults.set(true, forKey: migrationDoneKey)
+			return
+		}
+
+		let instance = GitLabInstance(
+			host: oldHost,
+			token: oldToken,
+			isOAuth: oldHost == "gitlab.com" && oldToken.isNotEmpty
+		)
+		add(instance)
+
+		userDefaults.removeObject(forKey: legacyHostKey)
+		userDefaults.removeObject(forKey: legacyTokenKey)
+		legacyStore?.removeObject(forKey: legacyHostKey)
+		legacyStore?.removeObject(forKey: legacyTokenKey)
+		userDefaults.set(true, forKey: migrationDoneKey)
+		WatchSync.shared.pushInstances()
+	}
+
+	static func add(_ instance: GitLabInstance) {
+		var current = instances
+		current.removeAll { $0.id == instance.id }
+		current.append(instance)
+		instances = current
+		selectedId = instance.id
+		WatchSync.shared.pushInstances()
+	}
+
+	static func remove(_ instance: GitLabInstance) {
+		var current = instances
+		current.removeAll { $0.id == instance.id }
+		instances = current
+
+		if selectedId == instance.id {
+			selectedId = current.last?.id
+		}
+		WatchSync.shared.pushInstances()
+	}
+
+	static func select(_ instance: GitLabInstance) {
+		selectedId = instance.id
+		WatchSync.shared.pushInstances()
+	}
+
+	static func update(_ instance: GitLabInstance) {
+		remove(instance)
+		add(instance)
+		WatchSync.shared.pushInstances()
+	}
+}
+
+@MainActor
+final class WatchSync: NSObject, WCSessionDelegate {
+	static let shared = WatchSync()
+	private let encoder = JSONEncoder()
+	private var didActivate = false
+
+	func activate() {
+		guard WCSession.isSupported() else { return }
+		let session = WCSession.default
+		session.delegate = self
+		session.activate()
+	}
+
+	func pushInstances() {
+		guard WCSession.isSupported() else { return }
+		let session = WCSession.default
+		if !didActivate {
+			activate()
+		}
+
+		guard let data = try? encoder.encode(InstanceManager.instances) else { return }
+		var context: [String: Any] = [
+			"instances": data
+		]
+		if let selectedId = InstanceManager.selectedId {
+			context["selectedId"] = selectedId
+		}
+
+		try? session.updateApplicationContext(context)
+	}
+
+	nonisolated func session(
+		_ session: WCSession,
+		activationDidCompleteWith activationState: WCSessionActivationState,
+		error: Error?
+	) {
+		Task { @MainActor in
+			didActivate = activationState == .activated
+			if didActivate {
+				pushInstances()
+			}
+		}
+	}
+
+	nonisolated func sessionDidBecomeInactive(_ session: WCSession) {}
+
+	nonisolated func sessionDidDeactivate(_ session: WCSession) {
+		session.activate()
+	}
+}
+
 @MainActor
 class API {
-	/// GitLab host
-	@AppStorage("domain", store: UserDefaults(suiteName: "de.schindlerfelix.GitLab"))
-	public static var host: String = "gitlab.com"
-
-	/// GitLab token
-	@AppStorage("token", store: UserDefaults(suiteName: "de.schindlerfelix.GitLab"))
-	public static var token: String = ""
-
 	/// API endpoint (including version)
 	public static var base: String = "api/v4"
 
 	private static let encoder = JSONEncoder()
 	private static let decoder = JSONDecoder()
 	private static let session: Session = .default
+
+	public static var host: String {
+		get {
+			InstanceManager.selected?.host ?? "gitlab.com"
+		}
+		set {
+			var instance = InstanceManager.selected ?? GitLabInstance(host: "gitlab.com", token: "")
+			instance = GitLabInstance(host: newValue, token: instance.token, isOAuth: instance.isOAuth)
+			InstanceManager.add(instance)
+		}
+	}
+
+	public static var token: String {
+		get {
+			InstanceManager.selected?.token ?? ""
+		}
+		set {
+			var instance = InstanceManager.selected ?? GitLabInstance(host: "gitlab.com", token: "")
+			instance = GitLabInstance(host: instance.host, token: newValue, isOAuth: instance.isOAuth)
+			InstanceManager.add(instance)
+		}
+	}
+
+	public static var isOAuth: Bool {
+		InstanceManager.selected?.isOAuth ?? false
+	}
+
+	public static var currentInstance: GitLabInstance? {
+		InstanceManager.selected
+	}
 
 	public static var url: URL {
 		URL(string: "https://\(host)")!
@@ -79,7 +274,8 @@ class API {
 			parameters = try JSONSerialization.jsonObject(with: encoder.encode(body)) as? Parameters
 		}
 
-		let encoding: ParameterEncoding = (contentType == .json) ? JSONEncoding.default : URLEncoding.default
+		let encoding: ParameterEncoding =
+			(contentType == .json) ? JSONEncoding.default : URLEncoding.default
 
 		return await session.request(
 			url,

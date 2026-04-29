@@ -48,3 +48,61 @@ extension CurrentUserIssuesQuery.Data.CurrentUser.ProjectMemberships.Node: Issue
 		return project?.issues?.nodes
 	}
 }
+
+// MARK: - Merge Requests
+protocol SmallMergeRequest {
+	var iid: String { get }
+	var title: String { get }
+	var reference: String { get }
+	var state: GraphQLEnum<GitLabAPI.MergeRequestState> { get }
+	var upvotes: Int { get }
+	var downvotes: Int { get }
+	var userNotesCount: Int? { get }
+	var _author: MyAuthor? { get }
+	var createdAt: String { get }
+	var webUrl: String? { get }
+	var _project: MergeRequestProject { get }
+}
+
+protocol MergeRequestProject {
+	var fullPath: String { get }
+}
+
+extension UserAssignedMergeRequestsQuery.Data.CurrentUser.AssignedMergeRequests.Node: SmallMergeRequest {
+	var _author: MyAuthor? {
+		guard let author else { return nil }
+		return MyAuthor(avatarUrl: author.avatarUrl, name: author.name, username: author.username)
+	}
+
+	var _project: MergeRequestProject {
+		return project
+	}
+}
+
+extension UserAuthoredMergeRequestsQuery.Data.CurrentUser.AuthoredMergeRequests.Node: SmallMergeRequest {
+	var _author: MyAuthor? {
+		guard let author else { return nil }
+		return MyAuthor(avatarUrl: author.avatarUrl, name: author.name, username: author.username)
+	}
+
+	var _project: MergeRequestProject {
+		return project
+	}
+}
+
+extension UserReviewRequestedMergeRequestsQuery.Data.CurrentUser.ReviewRequestedMergeRequests.Node: SmallMergeRequest {
+	var _author: MyAuthor? {
+		guard let author else { return nil }
+		return MyAuthor(avatarUrl: author.avatarUrl, name: author.name, username: author.username)
+	}
+
+	var _project: MergeRequestProject {
+		return project
+	}
+}
+
+extension UserAssignedMergeRequestsQuery.Data.CurrentUser.AssignedMergeRequests.Node.Project: MergeRequestProject {}
+
+extension UserAuthoredMergeRequestsQuery.Data.CurrentUser.AuthoredMergeRequests.Node.Project: MergeRequestProject {}
+
+extension UserReviewRequestedMergeRequestsQuery.Data.CurrentUser.ReviewRequestedMergeRequests.Node.Project: MergeRequestProject {}
