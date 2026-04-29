@@ -17,56 +17,67 @@ let logger: Logger = Logger(subsystem: "de.schindlerfelix.GitLab", category: "Ta
 /// The shared top-level view for the app, loaded from the platform-specific App delegates below.
 ///
 /// The default implementation merely loads the `ContentView` for the app and logs a message.
-/* SKIP @bridge */public struct TanukiRootView : View {
-	@State var showSetup = API.host.isEmpty || API.token.isEmpty
+/* SKIP @bridge */public struct TanukiRootView: View {
+	@StateObject var sessionStore = SessionStore.shared
 
-    /* SKIP @bridge */public init() {
+	/* SKIP @bridge */public init() {
 		logger.info("Skip app logs are viewable in the Xcode console for iOS; Android logs can be viewed in Studio or using adb logcat")
-    }
 
-    public var body: some View {
-		if showSetup {
-			SetupView(showSetup: $showSetup)
-		} else {
-			ContentView(showSetup: $showSetup)
-		}
-    }
+		InstanceManager.migrate()
+		WatchSync.shared.activate()
+	}
+
+	public var body: some View {
+		ContentView()
+			.fullScreenCover(
+				isPresented: Binding(
+					get: { sessionStore.needsSetup },
+					set: { newValue in
+						if !newValue {
+							sessionStore.setNeedsSetup(false)
+						}
+					}
+				)
+			) {
+				SetupView()
+			}
+	}
 }
 
 /// Global application delegate functions.
 ///
 /// These functions can update a shared observable object to communicate app state changes to interested views.
-/* SKIP @bridge */public final class TanukiAppDelegate : Sendable {
-    /* SKIP @bridge */public static let shared = TanukiAppDelegate()
+/* SKIP @bridge */public final class TanukiAppDelegate: Sendable {
+	/* SKIP @bridge */public static let shared = TanukiAppDelegate()
 
-    private init() {
-    }
+	private init() {
+	}
 
-    /* SKIP @bridge */public func onInit() {
-        logger.debug("onInit")
-    }
+	/* SKIP @bridge */public func onInit() {
+		logger.debug("onInit")
+	}
 
-    /* SKIP @bridge */public func onLaunch() {
-        logger.debug("onLaunch")
-    }
+	/* SKIP @bridge */public func onLaunch() {
+		logger.debug("onLaunch")
+	}
 
-    /* SKIP @bridge */public func onResume() {
-        logger.debug("onResume")
-    }
+	/* SKIP @bridge */public func onResume() {
+		logger.debug("onResume")
+	}
 
-    /* SKIP @bridge */public func onPause() {
-        logger.debug("onPause")
-    }
+	/* SKIP @bridge */public func onPause() {
+		logger.debug("onPause")
+	}
 
-    /* SKIP @bridge */public func onStop() {
-        logger.debug("onStop")
-    }
+	/* SKIP @bridge */public func onStop() {
+		logger.debug("onStop")
+	}
 
-    /* SKIP @bridge */public func onDestroy() {
-        logger.debug("onDestroy")
-    }
+	/* SKIP @bridge */public func onDestroy() {
+		logger.debug("onDestroy")
+	}
 
-    /* SKIP @bridge */public func onLowMemory() {
-        logger.debug("onLowMemory")
-    }
+	/* SKIP @bridge */public func onLowMemory() {
+		logger.debug("onLowMemory")
+	}
 }

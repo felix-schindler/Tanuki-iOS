@@ -11,11 +11,11 @@ import SwiftUI
 import WebKit
 
 enum ContentTab: String, Hashable {
-    case home, todos, explore, profile
+	case home, todos, explore, profile
 }
 
 struct ContentView: View {
-    @AppStorage("tab") var tab = ContentTab.home
+	@AppStorage("tab") var tab = ContentTab.home
 	public var showSetup: Binding<Bool>
 
 	private func restorePersistedCookies() {
@@ -57,7 +57,7 @@ struct ContentView: View {
 				Label("Explore", systemImage: "sparkles")
 			}.tag(ContentTab.explore)
 			NavigationView {
-				CurrentUserLoader(showSetup: showSetup)
+				CurrentUserLoader()
 			}.tabItem {
 				Label("Profile", systemImage: "person")
 			}.tag(ContentTab.profile)
