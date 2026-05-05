@@ -1,0 +1,15 @@
+# Skip configuration for GitLabAPI module
+#
+# Kotlin dependencies and Gradle build options for this module can be configured here
+# build:
+#   contents:
+#     - block: 'dependencies'
+#       contents:
+#         - 'implementation("org.example.lib")'
+
+# this is a natively-compiled Skip Fuse module
+skip:
+  mode: "native"
+  bridging:
+    enabled: true
+    options: "kotlincompat"
