@@ -32,4 +32,6 @@ nonisolated public enum TodoTargetEnum: String, EnumType {
   case vulnerability = "VULNERABILITY"
   /// Project Compliance Violation.
   case complianceViolation = "COMPLIANCE_VIOLATION"
+  /// Duo Workflow session.
+  case duoWorkflow = "DUO_WORKFLOW"
 }

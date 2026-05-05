@@ -8,6 +8,7 @@ public extension Interfaces {
     name: "WorkItemWidget",
     keyFields: nil,
     implementingObjects: [
+      "WorkItemWidgetAiSession",
       "WorkItemWidgetAssignees",
       "WorkItemWidgetAwardEmoji",
       "WorkItemWidgetColor",

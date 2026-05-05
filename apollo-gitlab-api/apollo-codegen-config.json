@@ -13,11 +13,11 @@
 		},
 		"downloadTimeout": 60,
 		"headers": [],
-		"outputPath": "./gitlab@current.graphqls"
+		"outputPath": "./config/schema.graphqls"
 	},
 	"input": {
-		"operationSearchPaths": ["./Queries/**/*.graphql"],
-		"schemaSearchPaths": ["./*.graphqls"]
+		"operationSearchPaths": ["./config/**/*.graphql"],
+		"schemaSearchPaths": ["./config/*.graphqls"]
 	},
 	"output": {
 		"testMocks": {

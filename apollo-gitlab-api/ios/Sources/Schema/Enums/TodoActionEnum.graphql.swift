@@ -40,4 +40,6 @@ nonisolated public enum TodoActionEnum: String, EnumType {
   case duoEnterpriseAccessGranted = "duo_enterprise_access_granted"
   /// Todo action name for duo_core_access_granted.
   case duoCoreAccessGranted = "duo_core_access_granted"
+  /// Todo action name for duo_workflow_input_required.
+  case duoWorkflowInputRequired = "duo_workflow_input_required"
 }

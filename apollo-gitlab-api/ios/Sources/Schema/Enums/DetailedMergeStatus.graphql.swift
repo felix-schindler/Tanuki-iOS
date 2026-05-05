@@ -51,4 +51,6 @@ nonisolated public enum DetailedMergeStatus: String, EnumType {
   case titleNotMatching = "TITLE_NOT_MATCHING"
   /// Indicates a reviewer has requested changes.
   case requestedChanges = "REQUESTED_CHANGES"
+  /// All security policy pipelines must succeed.
+  case securityPolicyPipelineCheck = "SECURITY_POLICY_PIPELINE_CHECK"
 }

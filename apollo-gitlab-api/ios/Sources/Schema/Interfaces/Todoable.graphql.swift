@@ -16,6 +16,7 @@ public extension Interfaces {
       "CountableVulnerability",
       "CurrentUser",
       "Design",
+      "DuoWorkflow",
       "Epic",
       "EpicIssue",
       "Group",

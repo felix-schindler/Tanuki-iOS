@@ -25,6 +25,8 @@ nonisolated public enum VerificationStatus: String, EnumType {
   case verifiedSystem = "VERIFIED_SYSTEM"
   /// unverified_author_email verification status.
   case unverifiedAuthorEmail = "UNVERIFIED_AUTHOR_EMAIL"
+  /// expired_key verification status.
+  case expiredKey = "EXPIRED_KEY"
   /// verified_ca verification status.
   case verifiedCa = "VERIFIED_CA"
 }
