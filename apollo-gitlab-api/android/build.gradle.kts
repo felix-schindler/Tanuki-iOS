@@ -5,12 +5,17 @@
  * Learn more about Gradle by exploring our Samples at https://docs.gradle.org/9.5.0/samples
  */
 plugins {
+	`java-library`
 	kotlin("jvm") version "2.3.21"
 	id("com.apollographql.apollo") version "4.4.3"
 }
 
 repositories {
 	mavenCentral()
+}
+
+dependencies {
+	api("com.apollographql.apollo:apollo-runtime:4.4.3")
 }
 
 apollo {

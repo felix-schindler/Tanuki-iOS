@@ -13,3 +13,22 @@ skip:
   bridging:
     enabled: true
     options: "kotlincompat"
+
+build:
+  contents:
+    - block: 'dependencies'
+      contents:
+        - 'implementation("com.apollographql.apollo:apollo-api:4.4.3")'
+        - 'implementation("com.apollographql.apollo:apollo-runtime:4.4.3")'
+
+    - block: 'android'
+      contents:
+        - block: 'sourceSets'
+          contents:
+            - block: 'getByName("main")'
+              contents:
+                # The Swift source folder (src/main/swift) is symlinked to
+                # Sources/GitLabAPI/ by Skip. We navigate through it to
+                # include the Kotlin adapter sources at:
+                #   Sources/GitLabAPI/Wrapper/Android/src/main/kotlin
+                - 'kotlin.srcDirs("${projectDir}/src/main/swift/Wrapper/Android/src/main/kotlin")'
