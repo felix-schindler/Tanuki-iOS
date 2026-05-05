@@ -19,11 +19,11 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
 
   @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
 
-  nonisolated public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: IOSGitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Query }
     @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -37,14 +37,14 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
     /// Project
     ///
     /// Parent Type: `Project`
-    nonisolated public struct Project: GitLabAPI.SelectionSet {
+    nonisolated public struct Project: IOSGitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Project }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
-        .field("id", GitLabAPI.ID.self),
+        .field("id", IOSGitLabAPI.ID.self),
         .field("avatarUrl", String?.self),
         .field("name", String.self),
         .field("visibility", String?.self),
@@ -60,7 +60,7 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
         .field("webUrl", String?.self),
         .field("httpUrlToRepo", String?.self),
         .field("sshUrlToRepo", String?.self),
-        .field("createdAt", GitLabAPI.Time?.self),
+        .field("createdAt", IOSGitLabAPI.Time?.self),
         .field("namespace", Namespace?.self),
         .field("repository", Repository?.self),
         .field("languages", [Language]?.self),
@@ -71,7 +71,7 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
       ] }
 
       /// ID of the project.
-      public var id: GitLabAPI.ID { __data["id"] }
+      public var id: IOSGitLabAPI.ID { __data["id"] }
       /// Avatar URL of the project.
       public var avatarUrl: String? { __data["avatarUrl"] }
       /// Name of the project without the namespace.
@@ -103,7 +103,7 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
       /// URL to connect to the project via SSH.
       public var sshUrlToRepo: String? { __data["sshUrlToRepo"] }
       /// Timestamp of the project creation.
-      public var createdAt: GitLabAPI.Time? { __data["createdAt"] }
+      public var createdAt: IOSGitLabAPI.Time? { __data["createdAt"] }
       /// Namespace of the project.
       public var namespace: Namespace? { __data["namespace"] }
       /// Git repository of the project.
@@ -116,37 +116,37 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
       /// Project.Namespace
       ///
       /// Parent Type: `Namespace`
-      nonisolated public struct Namespace: GitLabAPI.SelectionSet {
+      nonisolated public struct Namespace: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Namespace }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Namespace }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
-          .field("id", GitLabAPI.ID.self),
+          .field("id", IOSGitLabAPI.ID.self),
           .field("name", String.self),
-          .field("fullPath", GitLabAPI.ID.self),
+          .field("fullPath", IOSGitLabAPI.ID.self),
         ] }
         @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
           ProjectQuery.Data.Project.Namespace.self
         ] }
 
         /// ID of the namespace.
-        public var id: GitLabAPI.ID { __data["id"] }
+        public var id: IOSGitLabAPI.ID { __data["id"] }
         /// Name of the namespace.
         public var name: String { __data["name"] }
         /// Full path of the namespace.
-        public var fullPath: GitLabAPI.ID { __data["fullPath"] }
+        public var fullPath: IOSGitLabAPI.ID { __data["fullPath"] }
       }
 
       /// Project.Repository
       ///
       /// Parent Type: `Repository`
-      nonisolated public struct Repository: GitLabAPI.SelectionSet {
+      nonisolated public struct Repository: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Repository }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Repository }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("rootRef", String?.self),
@@ -182,11 +182,11 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
         /// Project.Repository.Readme
         ///
         /// Parent Type: `RepositoryBlobConnection`
-        nonisolated public struct Readme: GitLabAPI.SelectionSet {
+        nonisolated public struct Readme: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.RepositoryBlobConnection }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -201,11 +201,11 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
           /// Project.Repository.Readme.Node
           ///
           /// Parent Type: `RepositoryBlob`
-          nonisolated public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.RepositoryBlob }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("rawTextBlob", String?.self),
@@ -222,11 +222,11 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
         /// Project.Repository.License
         ///
         /// Parent Type: `RepositoryBlobConnection`
-        nonisolated public struct License: GitLabAPI.SelectionSet {
+        nonisolated public struct License: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.RepositoryBlobConnection }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -241,11 +241,11 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
           /// Project.Repository.License.Node
           ///
           /// Parent Type: `RepositoryBlob`
-          nonisolated public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.RepositoryBlob }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("rawTextBlob", String?.self),
@@ -262,11 +262,11 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
         /// Project.Repository.Contributing
         ///
         /// Parent Type: `RepositoryBlobConnection`
-        nonisolated public struct Contributing: GitLabAPI.SelectionSet {
+        nonisolated public struct Contributing: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlobConnection }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.RepositoryBlobConnection }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -281,11 +281,11 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
           /// Project.Repository.Contributing.Node
           ///
           /// Parent Type: `RepositoryBlob`
-          nonisolated public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryBlob }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.RepositoryBlob }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("rawTextBlob", String?.self),
@@ -302,11 +302,11 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
         /// Project.Repository.Tree
         ///
         /// Parent Type: `Tree`
-        nonisolated public struct Tree: GitLabAPI.SelectionSet {
+        nonisolated public struct Tree: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Tree }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Tree }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("lastCommit", LastCommit?.self),
@@ -321,18 +321,18 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
           /// Project.Repository.Tree.LastCommit
           ///
           /// Parent Type: `Commit`
-          nonisolated public struct LastCommit: GitLabAPI.SelectionSet {
+          nonisolated public struct LastCommit: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Commit }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Commit }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
-              .field("id", GitLabAPI.ID.self),
+              .field("id", IOSGitLabAPI.ID.self),
               .field("title", String?.self),
               .field("shortId", String.self),
               .field("authorName", String?.self),
-              .field("authoredDate", GitLabAPI.Time?.self),
+              .field("authoredDate", IOSGitLabAPI.Time?.self),
               .field("webUrl", String.self),
               .field("signature", Signature?.self),
               .field("pipelines", Pipelines?.self),
@@ -342,7 +342,7 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
             ] }
 
             /// ID (global ID) of the commit.
-            public var id: GitLabAPI.ID { __data["id"] }
+            public var id: IOSGitLabAPI.ID { __data["id"] }
             /// Title of the commit message.
             public var title: String? { __data["title"] }
             /// Short SHA1 ID of the commit.
@@ -350,7 +350,7 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
             /// Commit authors name.
             public var authorName: String? { __data["authorName"] }
             /// Timestamp of when the commit was authored.
-            public var authoredDate: GitLabAPI.Time? { __data["authoredDate"] }
+            public var authoredDate: IOSGitLabAPI.Time? { __data["authoredDate"] }
             /// Web URL of the commit.
             public var webUrl: String { __data["webUrl"] }
             /// Signature of the commit.
@@ -361,31 +361,31 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
             /// Project.Repository.Tree.LastCommit.Signature
             ///
             /// Parent Type: `CommitSignature`
-            nonisolated public struct Signature: GitLabAPI.SelectionSet {
+            nonisolated public struct Signature: IOSGitLabAPI.SelectionSet {
               @_spi(Unsafe) public let __data: DataDict
               @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Interfaces.CommitSignature }
+              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Interfaces.CommitSignature }
               @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
-                .field("verificationStatus", GraphQLEnum<GitLabAPI.VerificationStatus>?.self),
+                .field("verificationStatus", GraphQLEnum<IOSGitLabAPI.VerificationStatus>?.self),
               ] }
               @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
                 ProjectQuery.Data.Project.Repository.Tree.LastCommit.Signature.self
               ] }
 
               /// Indicates verification status of the associated key or certificate.
-              public var verificationStatus: GraphQLEnum<GitLabAPI.VerificationStatus>? { __data["verificationStatus"] }
+              public var verificationStatus: GraphQLEnum<IOSGitLabAPI.VerificationStatus>? { __data["verificationStatus"] }
             }
 
             /// Project.Repository.Tree.LastCommit.Pipelines
             ///
             /// Parent Type: `PipelineConnection`
-            nonisolated public struct Pipelines: GitLabAPI.SelectionSet {
+            nonisolated public struct Pipelines: IOSGitLabAPI.SelectionSet {
               @_spi(Unsafe) public let __data: DataDict
               @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.PipelineConnection }
+              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.PipelineConnection }
               @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("nodes", [Node?]?.self),
@@ -400,21 +400,21 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
               /// Project.Repository.Tree.LastCommit.Pipelines.Node
               ///
               /// Parent Type: `Pipeline`
-              nonisolated public struct Node: GitLabAPI.SelectionSet {
+              nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
                 @_spi(Unsafe) public let __data: DataDict
                 @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-                @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Pipeline }
+                @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Pipeline }
                 @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                   .field("__typename", String.self),
-                  .field("status", GraphQLEnum<GitLabAPI.PipelineStatusEnum>.self),
+                  .field("status", GraphQLEnum<IOSGitLabAPI.PipelineStatusEnum>.self),
                 ] }
                 @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
                   ProjectQuery.Data.Project.Repository.Tree.LastCommit.Pipelines.Node.self
                 ] }
 
                 /// Status of the pipeline (CREATED, WAITING_FOR_RESOURCE, PREPARING, WAITING_FOR_CALLBACK, PENDING, RUNNING, FAILED, SUCCESS, CANCELED, CANCELING, SKIPPED, MANUAL, SCHEDULED)
-                public var status: GraphQLEnum<GitLabAPI.PipelineStatusEnum> { __data["status"] }
+                public var status: GraphQLEnum<IOSGitLabAPI.PipelineStatusEnum> { __data["status"] }
               }
             }
           }
@@ -424,16 +424,16 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
       /// Project.Language
       ///
       /// Parent Type: `RepositoryLanguage`
-      nonisolated public struct Language: GitLabAPI.SelectionSet {
+      nonisolated public struct Language: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.RepositoryLanguage }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.RepositoryLanguage }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("name", String.self),
           .field("share", Double?.self),
-          .field("color", GitLabAPI.Color?.self),
+          .field("color", IOSGitLabAPI.Color?.self),
         ] }
         @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
           ProjectQuery.Data.Project.Language.self
@@ -444,17 +444,17 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
         /// Percentage of the repository's languages.
         public var share: Double? { __data["share"] }
         /// Color to visualize the repository language.
-        public var color: GitLabAPI.Color? { __data["color"] }
+        public var color: IOSGitLabAPI.Color? { __data["color"] }
       }
 
       /// Project.UserPermissions
       ///
       /// Parent Type: `ProjectPermissions`
-      nonisolated public struct UserPermissions: GitLabAPI.SelectionSet {
+      nonisolated public struct UserPermissions: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ProjectPermissions }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.ProjectPermissions }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("createIssue", Bool.self),

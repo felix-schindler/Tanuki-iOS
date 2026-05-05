@@ -35,11 +35,11 @@ nonisolated public struct ProjectMilestonesQuery: GraphQLQuery {
     "includeAncestors": includeAncestors
   ] }
 
-  nonisolated public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: IOSGitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Query }
     @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -53,11 +53,11 @@ nonisolated public struct ProjectMilestonesQuery: GraphQLQuery {
     /// Project
     ///
     /// Parent Type: `Project`
-    nonisolated public struct Project: GitLabAPI.SelectionSet {
+    nonisolated public struct Project: IOSGitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Project }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("milestones", Milestones?.self, arguments: [
@@ -76,11 +76,11 @@ nonisolated public struct ProjectMilestonesQuery: GraphQLQuery {
       /// Project.Milestones
       ///
       /// Parent Type: `MilestoneConnection`
-      nonisolated public struct Milestones: GitLabAPI.SelectionSet {
+      nonisolated public struct Milestones: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MilestoneConnection }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.MilestoneConnection }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -95,21 +95,21 @@ nonisolated public struct ProjectMilestonesQuery: GraphQLQuery {
         /// Project.Milestones.Node
         ///
         /// Parent Type: `Milestone`
-        nonisolated public struct Node: GitLabAPI.SelectionSet {
+        nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Milestone }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Milestone }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
-            .field("id", GitLabAPI.ID.self),
-            .field("iid", GitLabAPI.ID.self),
-            .field("state", GraphQLEnum<GitLabAPI.MilestoneStateEnum>.self),
+            .field("id", IOSGitLabAPI.ID.self),
+            .field("iid", IOSGitLabAPI.ID.self),
+            .field("state", GraphQLEnum<IOSGitLabAPI.MilestoneStateEnum>.self),
             .field("title", String.self),
             .field("description", String?.self),
             .field("expired", Bool.self),
-            .field("startDate", GitLabAPI.Time?.self),
-            .field("dueDate", GitLabAPI.Time?.self),
+            .field("startDate", IOSGitLabAPI.Time?.self),
+            .field("dueDate", IOSGitLabAPI.Time?.self),
             .field("stats", Stats?.self),
             .field("webPath", String.self),
           ] }
@@ -118,11 +118,11 @@ nonisolated public struct ProjectMilestonesQuery: GraphQLQuery {
           ] }
 
           /// ID of the milestone.
-          public var id: GitLabAPI.ID { __data["id"] }
+          public var id: IOSGitLabAPI.ID { __data["id"] }
           /// Internal ID of the milestone.
-          public var iid: GitLabAPI.ID { __data["iid"] }
+          public var iid: IOSGitLabAPI.ID { __data["iid"] }
           /// State of the milestone.
-          public var state: GraphQLEnum<GitLabAPI.MilestoneStateEnum> { __data["state"] }
+          public var state: GraphQLEnum<IOSGitLabAPI.MilestoneStateEnum> { __data["state"] }
           /// Title of the milestone.
           public var title: String { __data["title"] }
           /// Description of the milestone.
@@ -130,9 +130,9 @@ nonisolated public struct ProjectMilestonesQuery: GraphQLQuery {
           /// Expired state of the milestone (a milestone is expired when the due date is past the current date). Defaults to `false` when due date has not been set.
           public var expired: Bool { __data["expired"] }
           /// Timestamp of the milestone start date.
-          public var startDate: GitLabAPI.Time? { __data["startDate"] }
+          public var startDate: IOSGitLabAPI.Time? { __data["startDate"] }
           /// Timestamp of the milestone due date.
-          public var dueDate: GitLabAPI.Time? { __data["dueDate"] }
+          public var dueDate: IOSGitLabAPI.Time? { __data["dueDate"] }
           /// Milestone statistics.
           public var stats: Stats? { __data["stats"] }
           /// Web path of the milestone.
@@ -141,11 +141,11 @@ nonisolated public struct ProjectMilestonesQuery: GraphQLQuery {
           /// Project.Milestones.Node.Stats
           ///
           /// Parent Type: `MilestoneStats`
-          nonisolated public struct Stats: GitLabAPI.SelectionSet {
+          nonisolated public struct Stats: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MilestoneStats }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.MilestoneStats }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("closedIssuesCount", Int?.self),

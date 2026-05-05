@@ -13930,7 +13930,7 @@ type CiInputsCondition {
   operator: String!
 
   """Expected value for comparison nodes."""
-  value: String
+  value: CiInputsValue
 }
 
 """CI input saved for a pipeline schedule"""

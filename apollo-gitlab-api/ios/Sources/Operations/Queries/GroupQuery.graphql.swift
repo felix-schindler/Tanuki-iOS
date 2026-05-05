@@ -19,11 +19,11 @@ nonisolated public struct GroupQuery: GraphQLQuery {
 
   @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
 
-  nonisolated public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: IOSGitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Query }
     @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("group", Group?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -37,14 +37,14 @@ nonisolated public struct GroupQuery: GraphQLQuery {
     /// Group
     ///
     /// Parent Type: `Group`
-    nonisolated public struct Group: GitLabAPI.SelectionSet {
+    nonisolated public struct Group: IOSGitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Group }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
-        .field("id", GitLabAPI.ID?.self),
+        .field("id", IOSGitLabAPI.ID?.self),
         .field("avatarUrl", String?.self),
         .field("name", String?.self),
         .field("path", String.self),
@@ -65,7 +65,7 @@ nonisolated public struct GroupQuery: GraphQLQuery {
       ] }
 
       /// ID of the group.
-      public var id: GitLabAPI.ID? { __data["id"] }
+      public var id: IOSGitLabAPI.ID? { __data["id"] }
       /// Avatar URL of the group.
       public var avatarUrl: String? { __data["avatarUrl"] }
       /// Name of the group.
@@ -98,31 +98,31 @@ nonisolated public struct GroupQuery: GraphQLQuery {
       /// Group.MaxAccessLevel
       ///
       /// Parent Type: `AccessLevel`
-      nonisolated public struct MaxAccessLevel: GitLabAPI.SelectionSet {
+      nonisolated public struct MaxAccessLevel: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.AccessLevel }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.AccessLevel }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
-          .field("stringValue", GraphQLEnum<GitLabAPI.AccessLevelEnum>?.self),
+          .field("stringValue", GraphQLEnum<IOSGitLabAPI.AccessLevelEnum>?.self),
         ] }
         @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
           GroupQuery.Data.Group.MaxAccessLevel.self
         ] }
 
         /// Enum string of the the access level.
-        public var stringValue: GraphQLEnum<GitLabAPI.AccessLevelEnum>? { __data["stringValue"] }
+        public var stringValue: GraphQLEnum<IOSGitLabAPI.AccessLevelEnum>? { __data["stringValue"] }
       }
 
       /// Group.UserPermissions
       ///
       /// Parent Type: `GroupPermissions`
-      nonisolated public struct UserPermissions: GitLabAPI.SelectionSet {
+      nonisolated public struct UserPermissions: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.GroupPermissions }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.GroupPermissions }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("createProjects", Bool.self),
@@ -138,15 +138,15 @@ nonisolated public struct GroupQuery: GraphQLQuery {
       /// Group.Parent
       ///
       /// Parent Type: `Group`
-      nonisolated public struct Parent: GitLabAPI.SelectionSet {
+      nonisolated public struct Parent: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Group }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("name", String?.self),
-          .field("fullPath", GitLabAPI.ID.self),
+          .field("fullPath", IOSGitLabAPI.ID.self),
         ] }
         @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
           GroupQuery.Data.Group.Parent.self
@@ -155,7 +155,7 @@ nonisolated public struct GroupQuery: GraphQLQuery {
         /// Name of the group.
         public var name: String? { __data["name"] }
         /// Full path of the group.
-        public var fullPath: GitLabAPI.ID { __data["fullPath"] }
+        public var fullPath: IOSGitLabAPI.ID { __data["fullPath"] }
       }
     }
   }

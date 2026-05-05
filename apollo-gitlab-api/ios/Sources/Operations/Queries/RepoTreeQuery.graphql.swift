@@ -31,11 +31,11 @@ nonisolated public struct RepoTreeQuery: GraphQLQuery {
     "path": path
   ] }
 
-  nonisolated public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: IOSGitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Query }
     @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -49,11 +49,11 @@ nonisolated public struct RepoTreeQuery: GraphQLQuery {
     /// Project
     ///
     /// Parent Type: `Project`
-    nonisolated public struct Project: GitLabAPI.SelectionSet {
+    nonisolated public struct Project: IOSGitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Project }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("repository", Repository?.self),
@@ -68,11 +68,11 @@ nonisolated public struct RepoTreeQuery: GraphQLQuery {
       /// Project.Repository
       ///
       /// Parent Type: `Repository`
-      nonisolated public struct Repository: GitLabAPI.SelectionSet {
+      nonisolated public struct Repository: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Repository }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Repository }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("rootRef", String?.self),
@@ -93,11 +93,11 @@ nonisolated public struct RepoTreeQuery: GraphQLQuery {
         /// Project.Repository.Tree
         ///
         /// Parent Type: `Tree`
-        nonisolated public struct Tree: GitLabAPI.SelectionSet {
+        nonisolated public struct Tree: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Tree }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Tree }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("blobs", Blobs.self),
@@ -115,11 +115,11 @@ nonisolated public struct RepoTreeQuery: GraphQLQuery {
           /// Project.Repository.Tree.Blobs
           ///
           /// Parent Type: `BlobConnection`
-          nonisolated public struct Blobs: GitLabAPI.SelectionSet {
+          nonisolated public struct Blobs: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.BlobConnection }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.BlobConnection }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("nodes", [Node?]?.self),
@@ -134,11 +134,11 @@ nonisolated public struct RepoTreeQuery: GraphQLQuery {
             /// Project.Repository.Tree.Blobs.Node
             ///
             /// Parent Type: `Blob`
-            nonisolated public struct Node: GitLabAPI.SelectionSet {
+            nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
               @_spi(Unsafe) public let __data: DataDict
               @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Blob }
+              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Blob }
               @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("name", String.self),
@@ -158,11 +158,11 @@ nonisolated public struct RepoTreeQuery: GraphQLQuery {
           /// Project.Repository.Tree.Trees
           ///
           /// Parent Type: `TreeEntryConnection`
-          nonisolated public struct Trees: GitLabAPI.SelectionSet {
+          nonisolated public struct Trees: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.TreeEntryConnection }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.TreeEntryConnection }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("nodes", [Node?]?.self),
@@ -177,11 +177,11 @@ nonisolated public struct RepoTreeQuery: GraphQLQuery {
             /// Project.Repository.Tree.Trees.Node
             ///
             /// Parent Type: `TreeEntry`
-            nonisolated public struct Node: GitLabAPI.SelectionSet {
+            nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
               @_spi(Unsafe) public let __data: DataDict
               @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.TreeEntry }
+              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.TreeEntry }
               @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("name", String.self),

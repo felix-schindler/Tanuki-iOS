@@ -19,11 +19,11 @@ nonisolated public struct GroupEpicsQuery: GraphQLQuery {
 
   @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
 
-  nonisolated public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: IOSGitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Query }
     @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("group", Group?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -37,11 +37,11 @@ nonisolated public struct GroupEpicsQuery: GraphQLQuery {
     /// Group
     ///
     /// Parent Type: `Group`
-    nonisolated public struct Group: GitLabAPI.SelectionSet {
+    nonisolated public struct Group: IOSGitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Group }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("epics", Epics?.self, arguments: ["state": "opened"]),
@@ -57,11 +57,11 @@ nonisolated public struct GroupEpicsQuery: GraphQLQuery {
       /// Group.Epics
       ///
       /// Parent Type: `EpicConnection`
-      nonisolated public struct Epics: GitLabAPI.SelectionSet {
+      nonisolated public struct Epics: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.EpicConnection }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.EpicConnection }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -76,22 +76,22 @@ nonisolated public struct GroupEpicsQuery: GraphQLQuery {
         /// Group.Epics.Node
         ///
         /// Parent Type: `Epic`
-        nonisolated public struct Node: GitLabAPI.SelectionSet {
+        nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Epic }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Epic }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("iid", String.self),
             .field("title", String?.self),
             .field("reference", String.self, arguments: ["full": true]),
-            .field("state", GraphQLEnum<GitLabAPI.EpicState>.self),
+            .field("state", GraphQLEnum<IOSGitLabAPI.EpicState>.self),
             .field("upvotes", Int.self),
             .field("downvotes", Int.self),
             .field("userNotesCount", Int.self),
             .field("author", Author.self),
-            .field("createdAt", GitLabAPI.Time?.self),
+            .field("createdAt", IOSGitLabAPI.Time?.self),
             .field("webUrl", String.self),
           ] }
           @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
@@ -105,7 +105,7 @@ nonisolated public struct GroupEpicsQuery: GraphQLQuery {
           /// Internal reference of the epic. Returned in shortened format by default.
           public var reference: String { __data["reference"] }
           /// State of the epic.
-          public var state: GraphQLEnum<GitLabAPI.EpicState> { __data["state"] }
+          public var state: GraphQLEnum<IOSGitLabAPI.EpicState> { __data["state"] }
           /// Number of upvotes the epic has received.
           public var upvotes: Int { __data["upvotes"] }
           /// Number of downvotes the epic has received.
@@ -115,18 +115,18 @@ nonisolated public struct GroupEpicsQuery: GraphQLQuery {
           /// Author of the epic.
           public var author: Author { __data["author"] }
           /// Timestamp of when the epic was created.
-          public var createdAt: GitLabAPI.Time? { __data["createdAt"] }
+          public var createdAt: IOSGitLabAPI.Time? { __data["createdAt"] }
           /// Web URL of the epic.
           public var webUrl: String { __data["webUrl"] }
 
           /// Group.Epics.Node.Author
           ///
           /// Parent Type: `UserCore`
-          nonisolated public struct Author: GitLabAPI.SelectionSet {
+          nonisolated public struct Author: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.UserCore }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),

@@ -27,11 +27,11 @@ nonisolated public struct StarProjectMutation: GraphQLMutation {
     "starred": starred
   ] }
 
-  nonisolated public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: IOSGitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Mutation }
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Mutation }
     @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("starProject", StarProject?.self, arguments: ["input": [
         "projectId": .variable("projectId"),
@@ -48,11 +48,11 @@ nonisolated public struct StarProjectMutation: GraphQLMutation {
     /// StarProject
     ///
     /// Parent Type: `StarProjectPayload`
-    nonisolated public struct StarProject: GitLabAPI.SelectionSet {
+    nonisolated public struct StarProject: IOSGitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.StarProjectPayload }
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.StarProjectPayload }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("count", String.self),

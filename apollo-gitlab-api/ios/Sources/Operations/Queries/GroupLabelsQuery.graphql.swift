@@ -19,11 +19,11 @@ nonisolated public struct GroupLabelsQuery: GraphQLQuery {
 
   @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
 
-  nonisolated public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: IOSGitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Query }
     @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("group", Group?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -37,11 +37,11 @@ nonisolated public struct GroupLabelsQuery: GraphQLQuery {
     /// Group
     ///
     /// Parent Type: `Group`
-    nonisolated public struct Group: GitLabAPI.SelectionSet {
+    nonisolated public struct Group: IOSGitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Group }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("labels", Labels?.self),
@@ -56,11 +56,11 @@ nonisolated public struct GroupLabelsQuery: GraphQLQuery {
       /// Group.Labels
       ///
       /// Parent Type: `LabelConnection`
-      nonisolated public struct Labels: GitLabAPI.SelectionSet {
+      nonisolated public struct Labels: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.LabelConnection }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.LabelConnection }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -75,14 +75,14 @@ nonisolated public struct GroupLabelsQuery: GraphQLQuery {
         /// Group.Labels.Node
         ///
         /// Parent Type: `Label`
-        nonisolated public struct Node: GitLabAPI.SelectionSet {
+        nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Label }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Label }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
-            .field("id", GitLabAPI.LabelID.self),
+            .field("id", IOSGitLabAPI.LabelID.self),
             .field("title", String.self),
             .field("description", String?.self),
             .field("color", String.self),
@@ -93,7 +93,7 @@ nonisolated public struct GroupLabelsQuery: GraphQLQuery {
           ] }
 
           /// Global ID of the label.
-          public var id: GitLabAPI.LabelID { __data["id"] }
+          public var id: IOSGitLabAPI.LabelID { __data["id"] }
           /// Content of the label.
           public var title: String { __data["title"] }
           /// Description of the label (Markdown rendered as HTML for caching).

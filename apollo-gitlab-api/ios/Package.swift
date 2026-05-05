@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-  name: "GitLabAPI",
+  name: "IOSGitLabAPI",
   platforms: [
     .iOS(.v15),
     .macOS(.v12),
@@ -12,14 +12,14 @@ let package = Package(
     .visionOS(.v1),
   ],
   products: [
-    .library(name: "GitLabAPI", targets: ["GitLabAPI"]),
+    .library(name: "IOSGitLabAPI", targets: ["IOSGitLabAPI"]),
   ],
   dependencies: [
     .package(url: "https://github.com/apollographql/apollo-ios", exact: "2.1.1"),
   ],
   targets: [
     .target(
-      name: "GitLabAPI",
+      name: "IOSGitLabAPI",
       dependencies: [
         .product(name: "ApolloAPI", package: "apollo-ios"),
       ],
