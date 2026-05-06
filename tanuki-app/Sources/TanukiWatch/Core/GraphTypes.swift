@@ -5,7 +5,7 @@
 //  Created by Felix Schindler on 20.09.25.
 //
 
-import GitLabAPI
+import IOSGitLabAPI
 
 // MARK: - Global
 struct MyAuthor: Codable {

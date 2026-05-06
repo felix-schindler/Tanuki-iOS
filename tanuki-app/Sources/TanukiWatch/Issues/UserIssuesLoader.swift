@@ -7,7 +7,7 @@
 //
 
 import Apollo
-import GitLabAPI
+import IOSGitLabAPI
 import SwiftUI
 
 struct UserIssuesLoader: View {

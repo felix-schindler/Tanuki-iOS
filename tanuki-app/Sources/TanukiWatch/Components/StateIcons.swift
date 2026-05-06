@@ -5,7 +5,7 @@
 //  Created by Felix Schindler on 27.02.24.
 //
 
-import GitLabAPI
+import IOSGitLabAPI
 import SwiftUI
 
 struct IssueStateHelper {

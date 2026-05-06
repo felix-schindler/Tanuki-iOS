@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,7 +13,6 @@
 		499CD43B2AC5B799001AE8D8 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F90C2B2A52156200F06D93 /* Main.swift */; };
 		499CD4402AC5B799001AE8D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49F90C2F2A52156300F06D93 /* Assets.xcassets */; };
 		DCB2F5BB2FA170E000533B2D /* Tanuki Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = DCB2F5B12FA170DF00533B2D /* Tanuki Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		DCB2F5FE2FA171D700533B2D /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = DCB2F5FD2FA171D700533B2D /* CachedAsyncImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,10 +65,6 @@
 		DCB2F5B12FA170DF00533B2D /* Tanuki Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tanuki Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		DCB2F5B22FA170DF00533B2D /* Tanuki Watch App */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Tanuki Watch App"; sourceTree = "<group>"; };
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
 		499CD43C2AC5B799001AE8D8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -83,7 +78,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCB2F5FE2FA171D700533B2D /* CachedAsyncImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +111,6 @@
 				493609562A6B7EAE00C401E2 /* Tanuki */,
 				49F90C2A2A52156200F06D93 /* App */,
 				49AB54462B066A7E007B79B2 /* SkipStone */,
-				DCB2F5B22FA170DF00533B2D /* Tanuki Watch App */,
 				496BDBEC2B89A47800C09264 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -172,12 +165,8 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				DCB2F5B22FA170DF00533B2D /* Tanuki Watch App */,
-			);
 			name = "Tanuki Watch App";
 			packageProductDependencies = (
-				DCB2F5FD2FA171D700533B2D /* CachedAsyncImage */,
 			);
 			productName = "GitLab Watch App";
 			productReference = DCB2F5B12FA170DF00533B2D /* Tanuki Watch App.app */;
@@ -209,7 +198,6 @@
 			);
 			mainGroup = 49F90C1F2A52156200F06D93;
 			packageReferences = (
-				DCB2F5FC2FA171D700533B2D /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			productRefGroup = 496BDBEC2B89A47800C09264 /* Products */;
 			projectDirPath = "";
@@ -558,26 +546,10 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		DCB2F5FC2FA171D700533B2D /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.1.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
 		491F27812DA55B72004926EE /* Tanuki */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Tanuki;
-		};
-		DCB2F5FD2FA171D700533B2D /* CachedAsyncImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DCB2F5FC2FA171D700533B2D /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
-			productName = CachedAsyncImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
