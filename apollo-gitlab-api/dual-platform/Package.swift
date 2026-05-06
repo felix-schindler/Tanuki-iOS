@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "gitlab-api",
     defaultLocalization: "en",
-    platforms: [.iOS(.v17), .macOS(.v14)],
+	platforms: [.iOS(.v16), .macOS(.v13), .watchOS(.v9)],
     products: [
         .library(name: "GitLabAPI", type: .dynamic, targets: ["GitLabAPI"]),
     ],
