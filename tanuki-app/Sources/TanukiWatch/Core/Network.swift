@@ -33,7 +33,7 @@ class InstanceManager {
 	static var instances: [GitLabInstance] {
 		get {
 			guard let data = userDefaults.data(forKey: instancesKey),
-				  let instances = try? JSONDecoder().decode([GitLabInstance].self, from: data)
+				let instances = try? JSONDecoder().decode([GitLabInstance].self, from: data)
 			else {
 				return []
 			}
@@ -68,7 +68,6 @@ class InstanceManager {
 		guard let id = selectedId else { return nil }
 		return instances.first { $0.id == id }
 	}
-
 
 	static func add(_ instance: GitLabInstance) {
 		var current = instances
@@ -120,14 +119,14 @@ final class WatchSync: NSObject, WCSessionDelegate {
 	static let shared = WatchSync()
 	private let decoder = JSONDecoder()
 	private var didActivate = false
-	
+
 	func activate() {
 		guard WCSession.isSupported() else { return }
 		let session = WCSession.default
 		session.delegate = self
 		session.activate()
 	}
-	
+
 	func requestContextRefresh() {
 		guard WCSession.isSupported() else { return }
 		let session = WCSession.default
@@ -136,7 +135,7 @@ final class WatchSync: NSObject, WCSessionDelegate {
 		}
 		apply(session.receivedApplicationContext)
 	}
-	
+
 	private func apply(_ context: [String: Any]) {
 		let data = context["instances"] as? Data
 		let selectedId = context["selectedId"] as? String
@@ -145,14 +144,14 @@ final class WatchSync: NSObject, WCSessionDelegate {
 
 	private func apply(instancesData: Data?, selectedId: String?) {
 		guard let data = instancesData,
-			  let instances = try? decoder.decode([GitLabInstance].self, from: data)
+			let instances = try? decoder.decode([GitLabInstance].self, from: data)
 		else {
 			return
 		}
 		InstanceManager.overwrite(instances: instances, selectedId: selectedId)
 		Network.shared.resetApolloClient()
 	}
-	
+
 	nonisolated func session(
 		_ session: WCSession,
 		activationDidCompleteWith activationState: WCSessionActivationState,
@@ -165,7 +164,7 @@ final class WatchSync: NSObject, WCSessionDelegate {
 			}
 		}
 	}
-	
+
 	nonisolated func session(
 		_ session: WCSession,
 		didReceiveApplicationContext applicationContext: [String: Any]
@@ -191,7 +190,7 @@ class API {
 			InstanceManager.add(instance)
 		}
 	}
-	
+
 	/// GitLab token
 	public static var token: String {
 		get {
@@ -203,11 +202,11 @@ class API {
 			InstanceManager.add(instance)
 		}
 	}
-	
+
 	public static var url: URL {
 		return URL(string: "https://\(host)")!
 	}
-	
+
 	public static var graphUrl: URL {
 		return URL(string: "https://\(host)/api/graphql")!
 	}

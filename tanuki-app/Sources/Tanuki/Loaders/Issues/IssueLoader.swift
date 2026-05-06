@@ -319,7 +319,8 @@ struct IssueLoader: View {
 						if issue.userPermissions.createNote || noteCount > 0 {
 							Section("Notes (\(issue.userNotesCount))") {
 								if let projectId = project.id.toIntId(),
-								   issue.userPermissions.createNote {
+									issue.userPermissions.createNote
+								{
 									NewNoteView(projectId, iid: issue.iid, type: .issue)
 								}
 

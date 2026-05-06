@@ -301,7 +301,8 @@ struct EpicLoader: View {
 						if epic.userPermissions.createNote || noteCount > 0 {
 							Section("Notes (\(epic.userNotesCount))") {
 								if let groupId = group.id?.toIntId(),
-								   epic.userPermissions.createNote {
+									epic.userPermissions.createNote
+								{
 									NewNoteView(groupId, iid: epic.iid, type: .epic)
 								}
 

@@ -479,7 +479,8 @@ struct MergeRequestLoader: View {
 						if mr.userPermissions.createNote || noteCount > 0 {
 							Section("Notes (\(mr.userNotesCount ?? 0))") {
 								if let projectId = project.id.toIntId(),
-								   mr.userPermissions.createNote {
+									mr.userPermissions.createNote
+								{
 									NewNoteView(projectId, iid: mr.iid, type: .mergeRequest)
 								}
 

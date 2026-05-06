@@ -27,7 +27,7 @@ extension String {
 	var isNotEmpty: Bool {
 		return !self.isEmpty
 	}
-	
+
 	func emojized() -> String {
 		return EmojiHelper.emojizedStringWithString(text: self)
 	}

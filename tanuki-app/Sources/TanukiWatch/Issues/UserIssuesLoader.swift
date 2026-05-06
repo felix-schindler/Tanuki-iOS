@@ -13,7 +13,7 @@ import SwiftUI
 struct UserIssuesLoader: View {
 	@State
 	private var projectMemberships: Result<[IssueProjectMembership?], Error>? = nil
-	
+
 	private func loadIssues() {
 		do {
 			let responses = try Network.shared.apollo.fetch(

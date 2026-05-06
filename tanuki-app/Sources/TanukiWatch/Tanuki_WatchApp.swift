@@ -13,9 +13,9 @@ struct Tanuki_Watch_Watch_AppApp: App {
 		WatchSync.shared.activate()
 	}
 
-    var body: some Scene {
+	var body: some Scene {
 		WindowGroup {
 			ContentView()
-        }
-    }
+		}
+	}
 }

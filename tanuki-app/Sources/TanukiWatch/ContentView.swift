@@ -41,9 +41,9 @@ struct ContentView: View {
 					.tag(2)
 			}
 		}
-    }
+	}
 }
 
 #Preview {
-    ContentView()
+	ContentView()
 }
