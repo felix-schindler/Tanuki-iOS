@@ -9,7 +9,7 @@ public protocol SmallMergeRequest {
     var iid: String { get }
     var title: String { get }
     var reference: String { get }
-    var stateRawValue: String { get }
+    var state: GraphQLEnum<MergeRequestState> { get }
     var upvotes: Int { get }
     var downvotes: Int { get }
     var userNotesCount: Int? { get }

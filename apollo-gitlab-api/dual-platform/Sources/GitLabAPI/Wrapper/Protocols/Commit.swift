@@ -8,5 +8,5 @@ public protocol NewCommit {
     var authoredDate: String? { get }
     var webUrl: String { get }
     var _signatureVerificationStatus: String? { get }
-    var _lastPipelineStatusRawValue: String? { get }
+    var _lastPipelineStatus: GraphQLEnum<PipelineStatusEnum>? { get }
 }

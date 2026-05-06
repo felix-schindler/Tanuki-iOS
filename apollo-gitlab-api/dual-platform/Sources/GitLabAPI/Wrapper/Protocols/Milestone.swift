@@ -11,7 +11,7 @@ public struct MyStats: Codable {
 
 public protocol Milestone {
     var iid: String { get }
-    var stateRawValue: String { get }
+    var state: GraphQLEnum<MilestoneStateEnum> { get }
     var title: String { get }
     var description: String? { get }
     var expired: Bool { get }

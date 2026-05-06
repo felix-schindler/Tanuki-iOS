@@ -1,6 +1,5 @@
 #if !os(Android)
 import IOSGitLabAPI
-import ApolloAPI
 
 // MARK: - Author
 extension IOSGitLabAPI.UsersQuery.Data.Users.Node: Author {}
@@ -72,14 +71,12 @@ extension IOSGitLabAPI.EpicQuery.Data.Group.Epic.Notes.Node: Note {
 
 // MARK: - SmallMergeRequest
 extension IOSGitLabAPI.ProjectMergeRequestsQuery.Data.Project.MergeRequests.Node: SmallMergeRequest {
-    public var stateRawValue: String { state.rawValue }
     public var _author: MyAuthor? {
         guard let a = author else { return nil }
         return MyAuthor(avatarUrl: a.avatarUrl, name: a.name, username: a.username)
     }
 }
 extension IOSGitLabAPI.GroupMergeRequestsQuery.Data.Group.MergeRequests.Node: SmallMergeRequest {
-    public var stateRawValue: String { state.rawValue }
     public var _author: MyAuthor? {
         guard let a = author else { return nil }
         return MyAuthor(avatarUrl: a.avatarUrl, name: a.name, username: a.username)
@@ -93,13 +90,7 @@ extension IOSGitLabAPI.MergeRequestQuery.Data.Project.MergeRequest: MergeRequest
 }
 
 // MARK: - UserSmallMergeRequest
-fileprivate func _authorFromMR<T: AnyObject>(_ author: T?) -> MyAuthor? {
-    // Assumes the author has avatarUrl, name, username
-    return nil // Placeholder — actual mapping done in per-type extensions
-}
-
 extension IOSGitLabAPI.UserAssignedMergeRequestsQuery.Data.CurrentUser.AssignedMergeRequests.Node: UserSmallMergeRequest {
-    public var stateRawValue: String { state.rawValue }
     public var _project: ProjectPath { ProjectPath(fullPath: project.fullPath) }
     public var _author: MyAuthor? {
         guard let a = author else { return nil }
@@ -107,7 +98,6 @@ extension IOSGitLabAPI.UserAssignedMergeRequestsQuery.Data.CurrentUser.AssignedM
     }
 }
 extension IOSGitLabAPI.UserAuthoredMergeRequestsQuery.Data.CurrentUser.AuthoredMergeRequests.Node: UserSmallMergeRequest {
-    public var stateRawValue: String { state.rawValue }
     public var _project: ProjectPath { ProjectPath(fullPath: project.fullPath) }
     public var _author: MyAuthor? {
         guard let a = author else { return nil }
@@ -115,7 +105,6 @@ extension IOSGitLabAPI.UserAuthoredMergeRequestsQuery.Data.CurrentUser.AuthoredM
     }
 }
 extension IOSGitLabAPI.UserReviewRequestedMergeRequestsQuery.Data.CurrentUser.ReviewRequestedMergeRequests.Node: UserSmallMergeRequest {
-    public var stateRawValue: String { state.rawValue }
     public var _project: ProjectPath { ProjectPath(fullPath: project.fullPath) }
     public var _author: MyAuthor? {
         guard let a = author else { return nil }
@@ -130,31 +119,26 @@ extension IOSGitLabAPI.IssueQuery.Data.Project.Issue: HasAuthor {
     }
 }
 extension IOSGitLabAPI.ProjectIssuesQuery.Data.Project.Issues.Node: SmallIssue {
-    public var stateRawValue: String { state.rawValue }
     public var _author: MyAuthor {
         MyAuthor(avatarUrl: author.avatarUrl, name: author.name, username: author.username)
     }
 }
 extension IOSGitLabAPI.GroupIssuesQuery.Data.Group.Issues.Node: SmallIssue {
-    public var stateRawValue: String { state.rawValue }
     public var _author: MyAuthor {
         MyAuthor(avatarUrl: author.avatarUrl, name: author.name, username: author.username)
     }
 }
 extension IOSGitLabAPI.EpicIssuesQuery.Data.Group.Epic.Issues.Node: SmallIssue {
-    public var stateRawValue: String { state.rawValue }
     public var _author: MyAuthor {
         MyAuthor(avatarUrl: author.avatarUrl, name: author.name, username: author.username)
     }
 }
 extension IOSGitLabAPI.UserIssuesQuery.Data.User.ProjectMemberships.Node.Project.Issues.Node: SmallIssue {
-    public var stateRawValue: String { state.rawValue }
     public var _author: MyAuthor {
         MyAuthor(avatarUrl: author.avatarUrl, name: author.name, username: author.username)
     }
 }
 extension IOSGitLabAPI.CurrentUserIssuesQuery.Data.CurrentUser.ProjectMemberships.Node.Project.Issues.Node: SmallIssue {
-    public var stateRawValue: String { state.rawValue }
     public var _author: MyAuthor {
         MyAuthor(avatarUrl: author.avatarUrl, name: author.name, username: author.username)
     }
@@ -172,14 +156,12 @@ extension IOSGitLabAPI.CurrentUserIssuesQuery.Data.CurrentUser.ProjectMembership
 
 // MARK: - User
 extension IOSGitLabAPI.CurrentUserQuery.Data.CurrentUser: User {
-    public var stateRawValue: String { state.rawValue }
     public var _status: UserStatus? {
         guard let s = status else { return nil }
         return UserStatus(emoji: s.emoji, message: s.message)
     }
 }
 extension IOSGitLabAPI.UserQuery.Data.User: User {
-    public var stateRawValue: String { state.rawValue }
     public var _status: UserStatus? {
         guard let s = status else { return nil }
         return UserStatus(emoji: s.emoji, message: s.message)
@@ -188,21 +170,18 @@ extension IOSGitLabAPI.UserQuery.Data.User: User {
 
 // MARK: - Snippet
 extension IOSGitLabAPI.SnippetQuery.Data.Snippets.Node: Snippet {
-    public var visibilityLevelRawValue: String { visibilityLevel.rawValue }
     public var _author: MyAuthor? {
         guard let a = author else { return nil }
         return MyAuthor(avatarUrl: a.avatarUrl, name: a.name, username: a.username)
     }
 }
 extension IOSGitLabAPI.CurrentUserSnippetsQuery.Data.CurrentUser.Snippets.Node: Snippet {
-    public var visibilityLevelRawValue: String { visibilityLevel.rawValue }
     public var _author: MyAuthor? {
         guard let a = author else { return nil }
         return MyAuthor(avatarUrl: a.avatarUrl, name: a.name, username: a.username)
     }
 }
 extension IOSGitLabAPI.UserSnippetsQuery.Data.User.Snippets.Node: Snippet {
-    public var visibilityLevelRawValue: String { visibilityLevel.rawValue }
     public var _author: MyAuthor? {
         guard let a = author else { return nil }
         return MyAuthor(avatarUrl: a.avatarUrl, name: a.name, username: a.username)
@@ -223,14 +202,12 @@ extension IOSGitLabAPI.ProjectLabelsQuery.Data.Project.Labels.Node: MyLabel {}
 
 // MARK: - Milestone
 extension IOSGitLabAPI.GroupMilestonesQuery.Data.Group.Milestones.Node: Milestone {
-    public var stateRawValue: String { state.rawValue }
     public var _stats: MyStats? {
         guard let s = stats else { return nil }
         return MyStats(closedIssuesCount: s.closedIssuesCount, totalIssuesCount: s.totalIssuesCount)
     }
 }
 extension IOSGitLabAPI.ProjectMilestonesQuery.Data.Project.Milestones.Node: Milestone {
-    public var stateRawValue: String { state.rawValue }
     public var _stats: MyStats? {
         guard let s = stats else { return nil }
         return MyStats(closedIssuesCount: s.closedIssuesCount, totalIssuesCount: s.totalIssuesCount)
@@ -273,9 +250,6 @@ extension IOSGitLabAPI.UserTimelogsQuery.Data.User.Timelogs.Node: Timelog {
 
 // MARK: - Todo
 extension IOSGitLabAPI.UserTodosQuery.Data.User.Todos.Node: Todo {
-    public var stateRawValue: String { state.rawValue }
-    public var actionRawValue: String { action.rawValue }
-    public var targetTypeRawValue: String { targetType.rawValue }
     public var _project: SmallProject? {
         guard let p = project else { return nil }
         return SmallProjectStruct(avatarUrl: p.avatarUrl, nameWithNamespace: p.nameWithNamespace, visibility: p.visibility, fullPath: p.fullPath)
@@ -287,9 +261,6 @@ extension IOSGitLabAPI.UserTodosQuery.Data.User.Todos.Node: Todo {
     public var _webUrl: String? { targetEntity?.webUrl }
 }
 extension IOSGitLabAPI.CurrentUserTodosQuery.Data.CurrentUser.Todos.Node: Todo {
-    public var stateRawValue: String { state.rawValue }
-    public var actionRawValue: String { action.rawValue }
-    public var targetTypeRawValue: String { targetType.rawValue }
     public var _project: SmallProject? {
         guard let p = project else { return nil }
         return SmallProjectStruct(avatarUrl: p.avatarUrl, nameWithNamespace: p.nameWithNamespace, visibility: p.visibility, fullPath: p.fullPath)
@@ -304,18 +275,18 @@ extension IOSGitLabAPI.CurrentUserTodosQuery.Data.CurrentUser.Todos.Node: Todo {
 // MARK: - NewCommit
 extension IOSGitLabAPI.ProjectQuery.Data.Project.Repository.Tree.LastCommit: NewCommit {
     public var _signatureVerificationStatus: String? { signature?.verificationStatus?.rawValue }
-    public var _lastPipelineStatusRawValue: String? {
+    public var _lastPipelineStatus: GraphQLEnum<PipelineStatusEnum>? {
         if let pipelines = pipelines?.nodes, !pipelines.isEmpty {
-            return pipelines[0]?.status.rawValue
+            return pipelines[0]?.status
         }
         return nil
     }
 }
 extension IOSGitLabAPI.MergeRequestCommitsQuery.Data.Project.MergeRequest.Commits.Node: NewCommit {
     public var _signatureVerificationStatus: String? { signature?.verificationStatus?.rawValue }
-    public var _lastPipelineStatusRawValue: String? {
+    public var _lastPipelineStatus: GraphQLEnum<PipelineStatusEnum>? {
         if let pipelines = pipelines?.nodes, !pipelines.isEmpty {
-            return pipelines[0]?.status.rawValue
+            return pipelines[0]?.status
         }
         return nil
     }

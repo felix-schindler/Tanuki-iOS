@@ -6,5 +6,5 @@ public protocol Snippet {
     var _author: MyAuthor? { get }
     var createdAt: String { get }
     var webUrl: String { get }
-    var visibilityLevelRawValue: String { get }
+    var visibilityLevel: GraphQLEnum<VisibilityLevelsEnum> { get }
 }

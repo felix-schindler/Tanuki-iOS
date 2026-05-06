@@ -7,7 +7,7 @@ public protocol User {
     var username: String { get }
     var bot: Bool { get }
     var pronouns: String? { get }
-    var stateRawValue: String { get }
+    var state: GraphQLEnum<UserState> { get }
     var _status: UserStatus? { get }
     var bio: String? { get }
     var location: String? { get }
