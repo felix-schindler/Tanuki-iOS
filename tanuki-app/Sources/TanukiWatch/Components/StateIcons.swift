@@ -10,7 +10,7 @@ import SwiftUI
 
 struct IssueStateHelper {
 	public static func getColorByState(
-		_ state: GraphQLEnum<GitLabAPI.IssueState>
+		_ state: GraphQLEnum<IOSGitLabAPI.IssueState>
 	) -> SwiftUI.Color {
 		switch state {
 		case .opened:
@@ -25,7 +25,7 @@ struct IssueStateHelper {
 	}
 
 	public static func getIconByState(
-		_ state: GraphQLEnum<GitLabAPI.IssueState>
+		_ state: GraphQLEnum<IOSGitLabAPI.IssueState>
 	) -> String {
 		switch state {
 		case .opened:
@@ -40,7 +40,7 @@ struct IssueStateHelper {
 	}
 
 	public static func getIconByState(
-		_ state: GraphQLEnum<GitLabAPI.EpicState>
+		_ state: GraphQLEnum<IOSGitLabAPI.EpicState>
 	) -> String {
 		switch state {
 		case .opened:
@@ -53,7 +53,7 @@ struct IssueStateHelper {
 	}
 
 	public static func getColorByState(
-		_ state: GraphQLEnum<GitLabAPI.EpicState>
+		_ state: GraphQLEnum<IOSGitLabAPI.EpicState>
 	) -> SwiftUI.Color {
 		switch state {
 		case .opened:
@@ -71,7 +71,7 @@ struct IssueStateIcon: View {
 	private let icon: String
 	private let color: SwiftUI.Color
 
-	init(_ state: GraphQLEnum<GitLabAPI.IssueState>) {
+	init(_ state: GraphQLEnum<IOSGitLabAPI.IssueState>) {
 		self.state = state.rawValue
 
 		switch state {
@@ -94,7 +94,7 @@ struct IssueStateIcon: View {
 		}
 	}
 
-	init(_ state: GraphQLEnum<GitLabAPI.EpicState>) {
+	init(_ state: GraphQLEnum<IOSGitLabAPI.EpicState>) {
 		self.state = state.rawValue
 
 		switch state {
@@ -122,7 +122,7 @@ struct IssueStateIcon: View {
 
 struct MergeStateHelper {
 	public static func getColorByState(
-		_ state: GraphQLEnum<GitLabAPI.MergeRequestState>
+		_ state: GraphQLEnum<IOSGitLabAPI.MergeRequestState>
 	) -> SwiftUI.Color {
 		switch state {
 		case .opened:
@@ -139,7 +139,7 @@ struct MergeStateHelper {
 	}
 
 	public static func getIconByState(
-		_ state: GraphQLEnum<GitLabAPI.MergeRequestState>
+		_ state: GraphQLEnum<IOSGitLabAPI.MergeRequestState>
 	) -> Image {
 		switch state {
 		case .opened:
@@ -157,11 +157,11 @@ struct MergeStateHelper {
 }
 
 struct MergeStateIcon: View {
-	private let state: GraphQLEnum<GitLabAPI.MergeRequestState>
+	private let state: GraphQLEnum<IOSGitLabAPI.MergeRequestState>
 	private let icon: Image
 	private let color: SwiftUI.Color
 
-	init(_ state: GraphQLEnum<GitLabAPI.MergeRequestState>) {
+	init(_ state: GraphQLEnum<IOSGitLabAPI.MergeRequestState>) {
 		self.state = state
 		self.icon = MergeStateHelper.getIconByState(state)
 		self.color = MergeStateHelper.getColorByState(state)
@@ -184,11 +184,11 @@ struct MergeStateIcon: View {
 #Preview {
 	ScrollView {
 		VStack {
-			ForEach(GraphQLEnum<GitLabAPI.IssueState>.allCases, id: \.self) {
+			ForEach(GraphQLEnum<IOSGitLabAPI.IssueState>.allCases, id: \.self) {
 				state in
 				IssueStateIcon(state)
 			}
-			ForEach(GraphQLEnum<GitLabAPI.MergeRequestState>.allCases, id: \.self) {
+			ForEach(GraphQLEnum<IOSGitLabAPI.MergeRequestState>.allCases, id: \.self) {
 				state in
 				MergeStateIcon(state)
 			}

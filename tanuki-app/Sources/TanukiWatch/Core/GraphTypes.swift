@@ -19,7 +19,7 @@ protocol SmallIssue {
 	var iid: String { get }
 	var title: String { get }
 	var reference: String { get }
-	var state: GraphQLEnum<GitLabAPI.IssueState> { get }
+	var state: GraphQLEnum<IOSGitLabAPI.IssueState> { get }
 	var upvotes: Int { get }
 	var downvotes: Int { get }
 	var userNotesCount: Int { get }
@@ -54,7 +54,7 @@ protocol SmallMergeRequest {
 	var iid: String { get }
 	var title: String { get }
 	var reference: String { get }
-	var state: GraphQLEnum<GitLabAPI.MergeRequestState> { get }
+	var state: GraphQLEnum<IOSGitLabAPI.MergeRequestState> { get }
 	var upvotes: Int { get }
 	var downvotes: Int { get }
 	var userNotesCount: Int? { get }

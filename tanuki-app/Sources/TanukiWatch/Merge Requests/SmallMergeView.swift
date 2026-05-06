@@ -67,7 +67,7 @@ private struct MockMergeRequest: SmallMergeRequest {
 	let iid: String = "1"
 	let title: String = "Add watch support"
 	let reference: String = "!1"
-	let state: GraphQLEnum<GitLabAPI.MergeRequestState> = .case(.opened)
+	let state: GraphQLEnum<IOSGitLabAPI.MergeRequestState> = .case(.opened)
 	let upvotes: Int = 3
 	let downvotes: Int = 0
 	let userNotesCount: Int? = 2
