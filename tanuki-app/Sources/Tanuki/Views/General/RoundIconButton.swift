@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 struct CloseButton: View {
 	private var action: () -> Void

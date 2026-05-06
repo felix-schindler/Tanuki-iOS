@@ -5,6 +5,7 @@
 //  Created by Felix Schindler on 01.03.24.
 //
 
+import GitLabAPI
 import SwiftUI
 
 struct AuthorView: View {
