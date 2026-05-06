@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SkipKit
 
 struct SettingsView: View {
 	public var body: some View {
@@ -57,6 +58,12 @@ struct SettingsView: View {
 				}
 				if #available(iOS 16.0, *) {
 					AppStoreReview()
+				}
+			}
+			
+			Section {
+				NavigationLink("Bill of Material") {
+					SBOMView(bundle: .module)
 				}
 			}
 		}
