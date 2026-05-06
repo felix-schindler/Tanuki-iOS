@@ -13,6 +13,7 @@
 		499CD43B2AC5B799001AE8D8 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F90C2B2A52156200F06D93 /* Main.swift */; };
 		499CD4402AC5B799001AE8D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49F90C2F2A52156300F06D93 /* Assets.xcassets */; };
 		DCB2F5BB2FA170E000533B2D /* Tanuki Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = DCB2F5B12FA170DF00533B2D /* Tanuki Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DCCDC0312FAB525F00A5A813 /* TanukiWatch in Frameworks */ = {isa = PBXBuildFile; productRef = DCCDC0302FAB525F00A5A813 /* TanukiWatch */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCCDC0312FAB525F00A5A813 /* TanukiWatch in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +113,7 @@
 				493609562A6B7EAE00C401E2 /* Tanuki */,
 				49F90C2A2A52156200F06D93 /* App */,
 				49AB54462B066A7E007B79B2 /* SkipStone */,
+				DCCDC02F2FAB525F00A5A813 /* Frameworks */,
 				496BDBEC2B89A47800C09264 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -124,6 +127,13 @@
 				4900101C2BACEA710000DE33 /* Info.plist */,
 			);
 			name = App;
+			sourceTree = "<group>";
+		};
+		DCCDC02F2FAB525F00A5A813 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,6 +177,7 @@
 			);
 			name = "Tanuki Watch App";
 			packageProductDependencies = (
+				DCCDC0302FAB525F00A5A813 /* TanukiWatch */,
 			);
 			productName = "GitLab Watch App";
 			productReference = DCB2F5B12FA170DF00533B2D /* Tanuki Watch App.app */;
@@ -550,6 +561,10 @@
 		491F27812DA55B72004926EE /* Tanuki */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Tanuki;
+		};
+		DCCDC0302FAB525F00A5A813 /* TanukiWatch */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TanukiWatch;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
