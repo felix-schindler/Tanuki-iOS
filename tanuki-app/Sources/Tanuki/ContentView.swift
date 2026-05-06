@@ -16,7 +16,6 @@ enum ContentTab: String, Hashable {
 
 struct ContentView: View {
 	@AppStorage("tab") var tab = ContentTab.home
-	public var showSetup: Binding<Bool>
 
 	private func restorePersistedCookies() {
 		guard
