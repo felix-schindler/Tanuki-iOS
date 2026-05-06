@@ -8,10 +8,8 @@
 import SwiftUI
 
 struct InstancesView: View {
-	@State
-	private var instances: [GitLabInstance] = InstanceManager.instances
-	@State
-	private var selectedId: String? = InstanceManager.selectedId
+	@State var instances: [GitLabInstance] = InstanceManager.instances
+	@State var selectedId: String? = InstanceManager.selectedId
 
 	var body: some View {
 		List {
