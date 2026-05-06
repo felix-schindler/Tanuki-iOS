@@ -12,6 +12,7 @@ let package = Package(
 	dependencies: [
 		.package(url: "https://source.skip.tools/skip.git", from: "1.8.6"),
 		.package(url: "https://source.skip.tools/skip-fuse-ui.git", from: "1.0.0"),
+		.package(url: "https://source.skip.dev/skip-kit.git", from: "1.0.0"),
 		.package(url: "https://github.com/apollographql/apollo-ios.git", from: "2.0.5"),
 		.package(path: "../apollo-gitlab-api/dual-platform"),
 		.package(path: "../apollo-gitlab-api/ios"),
@@ -28,6 +29,7 @@ let package = Package(
 			name: "Tanuki",
 			dependencies: [
 				.product(name: "SkipFuseUI", package: "skip-fuse-ui"),
+				.product(name: "SkipKit", package: "skip-kit"),
 				.product(name: "Apollo", package: "apollo-ios"),
 				.product(name: "ApolloAPI", package: "apollo-ios"),
 				.product(name: "ApolloSQLite", package: "apollo-ios"),
