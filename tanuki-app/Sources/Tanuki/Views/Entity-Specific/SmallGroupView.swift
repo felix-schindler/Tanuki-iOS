@@ -5,9 +5,10 @@
 //  Created by Felix Schindler on 12.10.25.
 //
 
+import GitLabAPI
 import SwiftUI
 
-private struct _Group: Group {
+private struct _Group: GitLabAPI.Group {
 	var avatarUrl: String?
 	var _name: String?
 	var fullPath: String
@@ -18,7 +19,7 @@ private struct _Group: Group {
 }
 
 struct SmallGroupView: View {
-	public let group: Group
+	public let group: GitLabAPI.Group
 
 	public var body: some View {
 		NavigationLink(

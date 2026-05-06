@@ -7,6 +7,7 @@
 
 import GitLabAPI
 import SwiftUI
+import SkipKit
 
 struct PipelineStatus: View {
 	private let state: GraphQLEnum<GitLabAPI.PipelineStatusEnum>
@@ -52,7 +53,7 @@ struct PipelineStatus: View {
 	public var body: some View {
 		VStack {
 			RoundIconButton("Pipeline status", icon: icon) {
-				Haptics.shared.play(.light)
+				HapticFeedback.play(.pick)
 				showInfo = true
 			}
 			.tint(self.color)

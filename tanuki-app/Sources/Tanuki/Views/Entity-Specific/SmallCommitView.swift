@@ -6,7 +6,9 @@
 //
 
 //import MarkdownUI
+import GitLabAPI
 import SwiftUI
+import SkipKit
 
 struct SmallCommitView: View {
 	private let projectId: Int?
@@ -64,7 +66,7 @@ struct SmallCommitView: View {
 						RoundIconButton(
 							"Verified", icon: "checkmark.seal"
 						) {
-							Haptics.shared.play(.light)
+							HapticFeedback.play(.pick)
 							showVerified = true
 						}
 						.tint(.green)

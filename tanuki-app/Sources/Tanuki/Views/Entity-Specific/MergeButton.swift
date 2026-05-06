@@ -7,6 +7,7 @@
 
 import GitLabAPI
 import SwiftUI
+import SkipKit
 
 struct MergeButton: View {
 	private let iid: String
@@ -95,7 +96,7 @@ struct MergeButton: View {
 				} else {
 					showMergeOptions = true
 				}
-				Haptics.shared.play(.light)
+				HapticFeedback.play(.pick)
 			},
 			label: {
 				MergeStatus(mergeStatusEnum)

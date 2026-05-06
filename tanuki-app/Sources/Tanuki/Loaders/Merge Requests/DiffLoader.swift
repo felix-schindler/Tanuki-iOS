@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SkipKit
 
 struct Diff: Codable {
 	/// Old path of the file.
@@ -85,7 +86,7 @@ struct DiffLoader: View {
 					.onChange(of: unidiff) { _ in
 						Task {
 							await loadDiffs()
-							Haptics.shared.play(.soft)
+							HapticFeedback.play(.success)
 						}
 					}
 			}

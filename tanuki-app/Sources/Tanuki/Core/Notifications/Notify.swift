@@ -6,7 +6,7 @@
 //
 
 //import Toast
-import UIKit
+import SkipKit
 
 enum NotifyStatus: Int {
 	case success = 0
@@ -18,10 +18,6 @@ enum NotifyStatus: Int {
 
 struct Toast {
 	private init() {
-	}
-
-	static func `default`(image: UIImage, title: String?, subtitle: String?) -> Toast {
-		Toast()
 	}
 
 	static func text(_ title: String?, subtitle: String?) -> Toast {
@@ -40,17 +36,17 @@ class Notify {
 	) {
 		switch feedbackType {
 		case .success:
-			Haptics.shared.notify(.success)
+			HapticFeedback.play(.success)
 			break
 		case .warning:
-			Haptics.shared.notify(.warning)
+			HapticFeedback.play(.warning)
 			break
 		case .error:
-			Haptics.shared.notify(.error)
+			HapticFeedback.play(.error)
 			break
 		}
 
-		if let title {
+		/*if let title {
 			var toast: Toast
 
 			if let systemImage, let image = UIImage(systemName: systemImage) {
@@ -63,6 +59,6 @@ class Notify {
 				toast = Toast.text(title, subtitle: subtitle)
 			}
 			toast.show()
-		}
+		}*/
 	}
 }
