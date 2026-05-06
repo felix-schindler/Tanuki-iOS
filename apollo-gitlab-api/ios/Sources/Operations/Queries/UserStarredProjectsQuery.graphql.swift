@@ -19,11 +19,11 @@ nonisolated public struct UserStarredProjectsQuery: GraphQLQuery {
 
   @_spi(Unsafe) public var __variables: Variables? { ["username": username] }
 
-  nonisolated public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: IOSGitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Query }
     @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("user", User?.self, arguments: ["username": .variable("username")]),
     ] }
@@ -37,11 +37,11 @@ nonisolated public struct UserStarredProjectsQuery: GraphQLQuery {
     /// User
     ///
     /// Parent Type: `UserCore`
-    nonisolated public struct User: GitLabAPI.SelectionSet {
+    nonisolated public struct User: IOSGitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.UserCore }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("starredProjects", StarredProjects?.self),
@@ -56,11 +56,11 @@ nonisolated public struct UserStarredProjectsQuery: GraphQLQuery {
       /// User.StarredProjects
       ///
       /// Parent Type: `ProjectConnection`
-      nonisolated public struct StarredProjects: GitLabAPI.SelectionSet {
+      nonisolated public struct StarredProjects: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ProjectConnection }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.ProjectConnection }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -75,17 +75,17 @@ nonisolated public struct UserStarredProjectsQuery: GraphQLQuery {
         /// User.StarredProjects.Node
         ///
         /// Parent Type: `Project`
-        nonisolated public struct Node: GitLabAPI.SelectionSet {
+        nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Project }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("avatarUrl", String?.self),
             .field("nameWithNamespace", String.self),
             .field("visibility", String?.self),
-            .field("fullPath", GitLabAPI.ID.self),
+            .field("fullPath", IOSGitLabAPI.ID.self),
           ] }
           @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
             UserStarredProjectsQuery.Data.User.StarredProjects.Node.self
@@ -98,7 +98,7 @@ nonisolated public struct UserStarredProjectsQuery: GraphQLQuery {
           /// Visibility of the project.
           public var visibility: String? { __data["visibility"] }
           /// Full path of the project.
-          public var fullPath: GitLabAPI.ID { __data["fullPath"] }
+          public var fullPath: IOSGitLabAPI.ID { __data["fullPath"] }
         }
       }
     }

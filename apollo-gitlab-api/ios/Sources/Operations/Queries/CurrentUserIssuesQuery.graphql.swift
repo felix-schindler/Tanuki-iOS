@@ -39,11 +39,11 @@ nonisolated public struct CurrentUserIssuesQuery: GraphQLQuery {
     "types": types
   ] }
 
-  nonisolated public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: IOSGitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Query }
     @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("currentUser", CurrentUser?.self),
     ] }
@@ -57,11 +57,11 @@ nonisolated public struct CurrentUserIssuesQuery: GraphQLQuery {
     /// CurrentUser
     ///
     /// Parent Type: `CurrentUser`
-    nonisolated public struct CurrentUser: GitLabAPI.SelectionSet {
+    nonisolated public struct CurrentUser: IOSGitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.CurrentUser }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("projectMemberships", ProjectMemberships?.self),
@@ -76,11 +76,11 @@ nonisolated public struct CurrentUserIssuesQuery: GraphQLQuery {
       /// CurrentUser.ProjectMemberships
       ///
       /// Parent Type: `ProjectMemberConnection`
-      nonisolated public struct ProjectMemberships: GitLabAPI.SelectionSet {
+      nonisolated public struct ProjectMemberships: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ProjectMemberConnection }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.ProjectMemberConnection }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -95,11 +95,11 @@ nonisolated public struct CurrentUserIssuesQuery: GraphQLQuery {
         /// CurrentUser.ProjectMemberships.Node
         ///
         /// Parent Type: `ProjectMember`
-        nonisolated public struct Node: GitLabAPI.SelectionSet {
+        nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ProjectMember }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.ProjectMember }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("project", Project?.self),
@@ -114,14 +114,14 @@ nonisolated public struct CurrentUserIssuesQuery: GraphQLQuery {
           /// CurrentUser.ProjectMemberships.Node.Project
           ///
           /// Parent Type: `Project`
-          nonisolated public struct Project: GitLabAPI.SelectionSet {
+          nonisolated public struct Project: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Project }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
-              .field("fullPath", GitLabAPI.ID.self),
+              .field("fullPath", IOSGitLabAPI.ID.self),
               .field("issues", Issues?.self, arguments: [
                 "state": .variable("state"),
                 "search": .variable("search"),
@@ -135,18 +135,18 @@ nonisolated public struct CurrentUserIssuesQuery: GraphQLQuery {
             ] }
 
             /// Full path of the project.
-            public var fullPath: GitLabAPI.ID { __data["fullPath"] }
+            public var fullPath: IOSGitLabAPI.ID { __data["fullPath"] }
             /// Issues of the project.
             public var issues: Issues? { __data["issues"] }
 
             /// CurrentUser.ProjectMemberships.Node.Project.Issues
             ///
             /// Parent Type: `IssueConnection`
-            nonisolated public struct Issues: GitLabAPI.SelectionSet {
+            nonisolated public struct Issues: IOSGitLabAPI.SelectionSet {
               @_spi(Unsafe) public let __data: DataDict
               @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.IssueConnection }
+              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.IssueConnection }
               @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("nodes", [Node?]?.self),
@@ -161,22 +161,22 @@ nonisolated public struct CurrentUserIssuesQuery: GraphQLQuery {
               /// CurrentUser.ProjectMemberships.Node.Project.Issues.Node
               ///
               /// Parent Type: `Issue`
-              nonisolated public struct Node: GitLabAPI.SelectionSet {
+              nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
                 @_spi(Unsafe) public let __data: DataDict
                 @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-                @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Issue }
+                @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Issue }
                 @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                   .field("__typename", String.self),
                   .field("iid", String.self),
                   .field("title", String.self),
                   .field("reference", String.self, arguments: ["full": true]),
-                  .field("state", GraphQLEnum<GitLabAPI.IssueState>.self),
+                  .field("state", GraphQLEnum<IOSGitLabAPI.IssueState>.self),
                   .field("upvotes", Int.self),
                   .field("downvotes", Int.self),
                   .field("userNotesCount", Int.self),
                   .field("author", Author.self),
-                  .field("createdAt", GitLabAPI.Time.self),
+                  .field("createdAt", IOSGitLabAPI.Time.self),
                   .field("webUrl", String.self),
                 ] }
                 @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
@@ -190,7 +190,7 @@ nonisolated public struct CurrentUserIssuesQuery: GraphQLQuery {
                 /// Internal reference of the issue. Returned in shortened format by default.
                 public var reference: String { __data["reference"] }
                 /// State of the issue.
-                public var state: GraphQLEnum<GitLabAPI.IssueState> { __data["state"] }
+                public var state: GraphQLEnum<IOSGitLabAPI.IssueState> { __data["state"] }
                 /// Number of upvotes the issue has received.
                 public var upvotes: Int { __data["upvotes"] }
                 /// Number of downvotes the issue has received.
@@ -200,18 +200,18 @@ nonisolated public struct CurrentUserIssuesQuery: GraphQLQuery {
                 /// User that created the issue.
                 public var author: Author { __data["author"] }
                 /// Timestamp of when the issue was created.
-                public var createdAt: GitLabAPI.Time { __data["createdAt"] }
+                public var createdAt: IOSGitLabAPI.Time { __data["createdAt"] }
                 /// Web URL of the issue.
                 public var webUrl: String { __data["webUrl"] }
 
                 /// CurrentUser.ProjectMemberships.Node.Project.Issues.Node.Author
                 ///
                 /// Parent Type: `UserCore`
-                nonisolated public struct Author: GitLabAPI.SelectionSet {
+                nonisolated public struct Author: IOSGitLabAPI.SelectionSet {
                   @_spi(Unsafe) public let __data: DataDict
                   @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-                  @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+                  @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.UserCore }
                   @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                     .field("__typename", String.self),
                     .field("avatarUrl", String?.self),

@@ -19,11 +19,11 @@ nonisolated public struct GroupCustomEmojiQuery: GraphQLQuery {
 
   @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
 
-  nonisolated public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: IOSGitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Query }
     @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("group", Group?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -37,11 +37,11 @@ nonisolated public struct GroupCustomEmojiQuery: GraphQLQuery {
     /// Group
     ///
     /// Parent Type: `Group`
-    nonisolated public struct Group: GitLabAPI.SelectionSet {
+    nonisolated public struct Group: IOSGitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Group }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("customEmoji", CustomEmoji?.self),
@@ -56,11 +56,11 @@ nonisolated public struct GroupCustomEmojiQuery: GraphQLQuery {
       /// Group.CustomEmoji
       ///
       /// Parent Type: `CustomEmojiConnection`
-      nonisolated public struct CustomEmoji: GitLabAPI.SelectionSet {
+      nonisolated public struct CustomEmoji: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CustomEmojiConnection }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.CustomEmojiConnection }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -75,30 +75,30 @@ nonisolated public struct GroupCustomEmojiQuery: GraphQLQuery {
         /// Group.CustomEmoji.Node
         ///
         /// Parent Type: `CustomEmoji`
-        nonisolated public struct Node: GitLabAPI.SelectionSet {
+        nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CustomEmoji }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.CustomEmoji }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
-            .field("id", GitLabAPI.CustomEmojiID.self),
+            .field("id", IOSGitLabAPI.CustomEmojiID.self),
             .field("url", String.self),
             .field("name", String.self),
-            .field("createdAt", GitLabAPI.Time.self),
+            .field("createdAt", IOSGitLabAPI.Time.self),
           ] }
           @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
             GroupCustomEmojiQuery.Data.Group.CustomEmoji.Node.self
           ] }
 
           /// ID of the emoji.
-          public var id: GitLabAPI.CustomEmojiID { __data["id"] }
+          public var id: IOSGitLabAPI.CustomEmojiID { __data["id"] }
           /// Link to file of the emoji.
           public var url: String { __data["url"] }
           /// Name of the emoji.
           public var name: String { __data["name"] }
           /// Timestamp of when the custom emoji was created.
-          public var createdAt: GitLabAPI.Time { __data["createdAt"] }
+          public var createdAt: IOSGitLabAPI.Time { __data["createdAt"] }
         }
       }
     }

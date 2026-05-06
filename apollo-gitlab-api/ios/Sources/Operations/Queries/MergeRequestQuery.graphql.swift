@@ -27,11 +27,11 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
     "iid": iid
   ] }
 
-  nonisolated public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: IOSGitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Query }
     @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
@@ -45,14 +45,14 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
     /// Project
     ///
     /// Parent Type: `Project`
-    nonisolated public struct Project: GitLabAPI.SelectionSet {
+    nonisolated public struct Project: IOSGitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Project }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
-        .field("id", GitLabAPI.ID.self),
+        .field("id", IOSGitLabAPI.ID.self),
         .field("avatarUrl", String?.self),
         .field("mergeRequest", MergeRequest?.self, arguments: ["iid": .variable("iid")]),
       ] }
@@ -61,7 +61,7 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
       ] }
 
       /// ID of the project.
-      public var id: GitLabAPI.ID { __data["id"] }
+      public var id: IOSGitLabAPI.ID { __data["id"] }
       /// Avatar URL of the project.
       public var avatarUrl: String? { __data["avatarUrl"] }
       /// A single merge request of the project.
@@ -70,18 +70,18 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
       /// Project.MergeRequest
       ///
       /// Parent Type: `MergeRequest`
-      nonisolated public struct MergeRequest: GitLabAPI.SelectionSet {
+      nonisolated public struct MergeRequest: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequest }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.MergeRequest }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("iid", String.self),
           .field("title", String.self),
           .field("description", String?.self),
           .field("reference", String.self, arguments: ["full": true]),
-          .field("state", GraphQLEnum<GitLabAPI.MergeRequestState>.self),
+          .field("state", GraphQLEnum<IOSGitLabAPI.MergeRequestState>.self),
           .field("sourceBranch", String.self),
           .field("targetBranch", String.self),
           .field("sourceProject", SourceProject?.self),
@@ -91,12 +91,12 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
           .field("userNotesCount", Int?.self),
           .field("author", Author?.self),
           .field("userPermissions", UserPermissions.self),
-          .field("createdAt", GitLabAPI.Time.self),
+          .field("createdAt", IOSGitLabAPI.Time.self),
           .field("webUrl", String?.self),
           .field("approved", Bool.self),
-          .field("mergeStatusEnum", GraphQLEnum<GitLabAPI.MergeStatus>?.self),
+          .field("mergeStatusEnum", GraphQLEnum<IOSGitLabAPI.MergeStatus>?.self),
           .field("conflicts", Bool.self),
-          .field("detailedMergeStatus", GraphQLEnum<GitLabAPI.DetailedMergeStatus>?.self),
+          .field("detailedMergeStatus", GraphQLEnum<IOSGitLabAPI.DetailedMergeStatus>?.self),
           .field("assignees", Assignees?.self),
           .field("reviewers", Reviewers?.self),
           .field("labels", Labels?.self),
@@ -118,7 +118,7 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
         /// Internal reference of the merge request. Returned in shortened format by default.
         public var reference: String { __data["reference"] }
         /// State of the merge request.
-        public var state: GraphQLEnum<GitLabAPI.MergeRequestState> { __data["state"] }
+        public var state: GraphQLEnum<IOSGitLabAPI.MergeRequestState> { __data["state"] }
         /// Source branch of the merge request.
         public var sourceBranch: String { __data["sourceBranch"] }
         /// Target branch of the merge request.
@@ -138,17 +138,17 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
         /// Permissions for the current user on the resource
         public var userPermissions: UserPermissions { __data["userPermissions"] }
         /// Timestamp of when the merge request was created.
-        public var createdAt: GitLabAPI.Time { __data["createdAt"] }
+        public var createdAt: IOSGitLabAPI.Time { __data["createdAt"] }
         /// Web URL of the merge request.
         public var webUrl: String? { __data["webUrl"] }
         /// Indicates if the merge request has all the required approvals.
         public var approved: Bool { __data["approved"] }
         /// Merge status of the merge request.
-        public var mergeStatusEnum: GraphQLEnum<GitLabAPI.MergeStatus>? { __data["mergeStatusEnum"] }
+        public var mergeStatusEnum: GraphQLEnum<IOSGitLabAPI.MergeStatus>? { __data["mergeStatusEnum"] }
         /// Indicates if the merge request has conflicts.
         public var conflicts: Bool { __data["conflicts"] }
         /// Detailed merge status of the merge request.
-        public var detailedMergeStatus: GraphQLEnum<GitLabAPI.DetailedMergeStatus>? { __data["detailedMergeStatus"] }
+        public var detailedMergeStatus: GraphQLEnum<IOSGitLabAPI.DetailedMergeStatus>? { __data["detailedMergeStatus"] }
         /// Assignees of the merge request.
         public var assignees: Assignees? { __data["assignees"] }
         /// Users from whom a review has been requested.
@@ -167,31 +167,31 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
         /// Project.MergeRequest.SourceProject
         ///
         /// Parent Type: `Project`
-        nonisolated public struct SourceProject: GitLabAPI.SelectionSet {
+        nonisolated public struct SourceProject: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Project }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
-            .field("fullPath", GitLabAPI.ID.self),
+            .field("fullPath", IOSGitLabAPI.ID.self),
           ] }
           @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
             MergeRequestQuery.Data.Project.MergeRequest.SourceProject.self
           ] }
 
           /// Full path of the project.
-          public var fullPath: GitLabAPI.ID { __data["fullPath"] }
+          public var fullPath: IOSGitLabAPI.ID { __data["fullPath"] }
         }
 
         /// Project.MergeRequest.DiffStatsSummary
         ///
         /// Parent Type: `DiffStatsSummary`
-        nonisolated public struct DiffStatsSummary: GitLabAPI.SelectionSet {
+        nonisolated public struct DiffStatsSummary: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.DiffStatsSummary }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.DiffStatsSummary }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("additions", Int.self),
@@ -213,11 +213,11 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
         /// Project.MergeRequest.Author
         ///
         /// Parent Type: `MergeRequestAuthor`
-        nonisolated public struct Author: GitLabAPI.SelectionSet {
+        nonisolated public struct Author: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAuthor }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.MergeRequestAuthor }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("avatarUrl", String?.self),
@@ -239,11 +239,11 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
         /// Project.MergeRequest.UserPermissions
         ///
         /// Parent Type: `MergeRequestPermissions`
-        nonisolated public struct UserPermissions: GitLabAPI.SelectionSet {
+        nonisolated public struct UserPermissions: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestPermissions }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.MergeRequestPermissions }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("canApprove", Bool.self),
@@ -268,11 +268,11 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
         /// Project.MergeRequest.Assignees
         ///
         /// Parent Type: `MergeRequestAssigneeConnection`
-        nonisolated public struct Assignees: GitLabAPI.SelectionSet {
+        nonisolated public struct Assignees: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAssigneeConnection }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.MergeRequestAssigneeConnection }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -287,11 +287,11 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
           /// Project.MergeRequest.Assignees.Node
           ///
           /// Parent Type: `MergeRequestAssignee`
-          nonisolated public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestAssignee }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.MergeRequestAssignee }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
@@ -311,11 +311,11 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
         /// Project.MergeRequest.Reviewers
         ///
         /// Parent Type: `MergeRequestReviewerConnection`
-        nonisolated public struct Reviewers: GitLabAPI.SelectionSet {
+        nonisolated public struct Reviewers: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestReviewerConnection }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.MergeRequestReviewerConnection }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -330,11 +330,11 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
           /// Project.MergeRequest.Reviewers.Node
           ///
           /// Parent Type: `MergeRequestReviewer`
-          nonisolated public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.MergeRequestReviewer }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.MergeRequestReviewer }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
@@ -354,11 +354,11 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
         /// Project.MergeRequest.Labels
         ///
         /// Parent Type: `LabelConnection`
-        nonisolated public struct Labels: GitLabAPI.SelectionSet {
+        nonisolated public struct Labels: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.LabelConnection }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.LabelConnection }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -373,11 +373,11 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
           /// Project.MergeRequest.Labels.Node
           ///
           /// Parent Type: `Label`
-          nonisolated public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Label }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Label }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("title", String.self),
@@ -400,14 +400,14 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
         /// Project.MergeRequest.Milestone
         ///
         /// Parent Type: `Milestone`
-        nonisolated public struct Milestone: GitLabAPI.SelectionSet {
+        nonisolated public struct Milestone: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Milestone }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Milestone }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
-            .field("iid", GitLabAPI.ID.self),
+            .field("iid", IOSGitLabAPI.ID.self),
             .field("title", String.self),
           ] }
           @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
@@ -415,7 +415,7 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
           ] }
 
           /// Internal ID of the milestone.
-          public var iid: GitLabAPI.ID { __data["iid"] }
+          public var iid: IOSGitLabAPI.ID { __data["iid"] }
           /// Title of the milestone.
           public var title: String { __data["title"] }
         }
@@ -423,11 +423,11 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
         /// Project.MergeRequest.Notes
         ///
         /// Parent Type: `NoteConnection`
-        nonisolated public struct Notes: GitLabAPI.SelectionSet {
+        nonisolated public struct Notes: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.NoteConnection }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.NoteConnection }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
             .field("nodes", [Node?]?.self),
@@ -442,28 +442,28 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
           /// Project.MergeRequest.Notes.Node
           ///
           /// Parent Type: `Note`
-          nonisolated public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Note }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Note }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
-              .field("id", GitLabAPI.NoteID.self),
+              .field("id", IOSGitLabAPI.NoteID.self),
               .field("author", Author?.self),
               .field("maxAccessLevelOfAuthor", String?.self),
               .field("body", String.self),
               .field("system", Bool.self),
               .field("systemNoteIconName", String?.self),
-              .field("createdAt", GitLabAPI.Time.self),
-              .field("updatedAt", GitLabAPI.Time.self),
+              .field("createdAt", IOSGitLabAPI.Time.self),
+              .field("updatedAt", IOSGitLabAPI.Time.self),
             ] }
             @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
               MergeRequestQuery.Data.Project.MergeRequest.Notes.Node.self
             ] }
 
             /// ID of the note.
-            public var id: GitLabAPI.NoteID { __data["id"] }
+            public var id: IOSGitLabAPI.NoteID { __data["id"] }
             /// User who wrote the note.
             public var author: Author? { __data["author"] }
             /// Max access level of the note author in the project.
@@ -475,18 +475,18 @@ nonisolated public struct MergeRequestQuery: GraphQLQuery {
             /// Name of the icon corresponding to a system note.
             public var systemNoteIconName: String? { __data["systemNoteIconName"] }
             /// Timestamp of the note creation.
-            public var createdAt: GitLabAPI.Time { __data["createdAt"] }
+            public var createdAt: IOSGitLabAPI.Time { __data["createdAt"] }
             /// Timestamp of the note's last activity.
-            public var updatedAt: GitLabAPI.Time { __data["updatedAt"] }
+            public var updatedAt: IOSGitLabAPI.Time { __data["updatedAt"] }
 
             /// Project.MergeRequest.Notes.Node.Author
             ///
             /// Parent Type: `UserCore`
-            nonisolated public struct Author: GitLabAPI.SelectionSet {
+            nonisolated public struct Author: IOSGitLabAPI.SelectionSet {
               @_spi(Unsafe) public let __data: DataDict
               @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.UserCore }
               @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
                 .field("__typename", String.self),
                 .field("avatarUrl", String?.self),

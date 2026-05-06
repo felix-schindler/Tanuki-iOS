@@ -13,11 +13,11 @@ nonisolated public struct CurrentUserTodosQuery: GraphQLQuery {
 
   public init() {}
 
-  nonisolated public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: IOSGitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Query }
     @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("currentUser", CurrentUser?.self),
     ] }
@@ -31,11 +31,11 @@ nonisolated public struct CurrentUserTodosQuery: GraphQLQuery {
     /// CurrentUser
     ///
     /// Parent Type: `CurrentUser`
-    nonisolated public struct CurrentUser: GitLabAPI.SelectionSet {
+    nonisolated public struct CurrentUser: IOSGitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.CurrentUser }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
         .field("todos", Todos?.self),
@@ -50,11 +50,11 @@ nonisolated public struct CurrentUserTodosQuery: GraphQLQuery {
       /// CurrentUser.Todos
       ///
       /// Parent Type: `TodoConnection`
-      nonisolated public struct Todos: GitLabAPI.SelectionSet {
+      nonisolated public struct Todos: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.TodoConnection }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.TodoConnection }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
@@ -69,38 +69,38 @@ nonisolated public struct CurrentUserTodosQuery: GraphQLQuery {
         /// CurrentUser.Todos.Node
         ///
         /// Parent Type: `Todo`
-        nonisolated public struct Node: GitLabAPI.SelectionSet {
+        nonisolated public struct Node: IOSGitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Todo }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Todo }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
-            .field("id", GitLabAPI.ID.self),
+            .field("id", IOSGitLabAPI.ID.self),
             .field("body", String.self),
             .field("group", Group?.self),
-            .field("state", GraphQLEnum<GitLabAPI.TodoStateEnum>.self),
-            .field("action", GraphQLEnum<GitLabAPI.TodoActionEnum>.self),
+            .field("state", GraphQLEnum<IOSGitLabAPI.TodoStateEnum>.self),
+            .field("action", GraphQLEnum<IOSGitLabAPI.TodoActionEnum>.self),
             .field("author", Author.self),
             .field("targetEntity", TargetEntity?.self),
             .field("project", Project?.self),
-            .field("createdAt", GitLabAPI.Time.self),
-            .field("targetType", GraphQLEnum<GitLabAPI.TodoTargetEnum>.self),
+            .field("createdAt", IOSGitLabAPI.Time.self),
+            .field("targetType", GraphQLEnum<IOSGitLabAPI.TodoTargetEnum>.self),
           ] }
           @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
             CurrentUserTodosQuery.Data.CurrentUser.Todos.Node.self
           ] }
 
           /// ID of the to-do item.
-          public var id: GitLabAPI.ID { __data["id"] }
+          public var id: IOSGitLabAPI.ID { __data["id"] }
           /// Body of the to-do item.
           public var body: String { __data["body"] }
           /// Group the to-do item is associated with.
           public var group: Group? { __data["group"] }
           /// State of the to-do item.
-          public var state: GraphQLEnum<GitLabAPI.TodoStateEnum> { __data["state"] }
+          public var state: GraphQLEnum<IOSGitLabAPI.TodoStateEnum> { __data["state"] }
           /// Action of the to-do item.
-          public var action: GraphQLEnum<GitLabAPI.TodoActionEnum> { __data["action"] }
+          public var action: GraphQLEnum<IOSGitLabAPI.TodoActionEnum> { __data["action"] }
           /// Author of the to-do item.
           public var author: Author { __data["author"] }
           /// Target of the to-do item.
@@ -108,38 +108,38 @@ nonisolated public struct CurrentUserTodosQuery: GraphQLQuery {
           /// Project the to-do item is associated with.
           public var project: Project? { __data["project"] }
           /// Timestamp the to-do item was created.
-          public var createdAt: GitLabAPI.Time { __data["createdAt"] }
+          public var createdAt: IOSGitLabAPI.Time { __data["createdAt"] }
           /// Target type of the to-do item.
-          public var targetType: GraphQLEnum<GitLabAPI.TodoTargetEnum> { __data["targetType"] }
+          public var targetType: GraphQLEnum<IOSGitLabAPI.TodoTargetEnum> { __data["targetType"] }
 
           /// CurrentUser.Todos.Node.Group
           ///
           /// Parent Type: `Group`
-          nonisolated public struct Group: GitLabAPI.SelectionSet {
+          nonisolated public struct Group: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Group }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
-              .field("id", GitLabAPI.ID?.self),
+              .field("id", IOSGitLabAPI.ID?.self),
             ] }
             @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
               CurrentUserTodosQuery.Data.CurrentUser.Todos.Node.Group.self
             ] }
 
             /// ID of the group.
-            public var id: GitLabAPI.ID? { __data["id"] }
+            public var id: IOSGitLabAPI.ID? { __data["id"] }
           }
 
           /// CurrentUser.Todos.Node.Author
           ///
           /// Parent Type: `UserCore`
-          nonisolated public struct Author: GitLabAPI.SelectionSet {
+          nonisolated public struct Author: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.UserCore }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
@@ -161,11 +161,11 @@ nonisolated public struct CurrentUserTodosQuery: GraphQLQuery {
           /// CurrentUser.Todos.Node.TargetEntity
           ///
           /// Parent Type: `Todoable`
-          nonisolated public struct TargetEntity: GitLabAPI.SelectionSet {
+          nonisolated public struct TargetEntity: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Interfaces.Todoable }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Interfaces.Todoable }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("webUrl", String?.self),
@@ -181,15 +181,15 @@ nonisolated public struct CurrentUserTodosQuery: GraphQLQuery {
           /// CurrentUser.Todos.Node.Project
           ///
           /// Parent Type: `Project`
-          nonisolated public struct Project: GitLabAPI.SelectionSet {
+          nonisolated public struct Project: IOSGitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Project }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
               .field("avatarUrl", String?.self),
-              .field("fullPath", GitLabAPI.ID.self),
+              .field("fullPath", IOSGitLabAPI.ID.self),
               .field("nameWithNamespace", String.self),
               .field("visibility", String?.self),
             ] }
@@ -200,7 +200,7 @@ nonisolated public struct CurrentUserTodosQuery: GraphQLQuery {
             /// Avatar URL of the project.
             public var avatarUrl: String? { __data["avatarUrl"] }
             /// Full path of the project.
-            public var fullPath: GitLabAPI.ID { __data["fullPath"] }
+            public var fullPath: IOSGitLabAPI.ID { __data["fullPath"] }
             /// Name of the project including the namespace.
             public var nameWithNamespace: String { __data["nameWithNamespace"] }
             /// Visibility of the project.

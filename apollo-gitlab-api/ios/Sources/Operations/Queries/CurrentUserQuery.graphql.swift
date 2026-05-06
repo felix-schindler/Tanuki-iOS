@@ -13,11 +13,11 @@ nonisolated public struct CurrentUserQuery: GraphQLQuery {
 
   public init() {}
 
-  nonisolated public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: IOSGitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.Query }
     @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
       .field("currentUser", CurrentUser?.self),
     ] }
@@ -31,26 +31,26 @@ nonisolated public struct CurrentUserQuery: GraphQLQuery {
     /// CurrentUser
     ///
     /// Parent Type: `CurrentUser`
-    nonisolated public struct CurrentUser: GitLabAPI.SelectionSet {
+    nonisolated public struct CurrentUser: IOSGitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.CurrentUser }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
-        .field("id", GitLabAPI.UserID.self),
+        .field("id", IOSGitLabAPI.UserID.self),
         .field("avatarUrl", String?.self),
         .field("name", String.self),
         .field("username", String.self),
         .field("bot", Bool.self),
         .field("pronouns", String?.self),
-        .field("state", GraphQLEnum<GitLabAPI.UserState>.self),
+        .field("state", GraphQLEnum<IOSGitLabAPI.UserState>.self),
         .field("status", Status?.self),
         .field("bio", String?.self),
         .field("location", String?.self),
         .field("jobTitle", String?.self),
         .field("organization", String?.self),
-        .field("createdAt", GitLabAPI.Time?.self),
+        .field("createdAt", IOSGitLabAPI.Time?.self),
         .field("discord", String?.self),
         .field("twitter", String?.self),
         .field("linkedin", String?.self),
@@ -63,7 +63,7 @@ nonisolated public struct CurrentUserQuery: GraphQLQuery {
       ] }
 
       /// Global ID of the user.
-      public var id: GitLabAPI.UserID { __data["id"] }
+      public var id: IOSGitLabAPI.UserID { __data["id"] }
       /// URL of the user's avatar.
       public var avatarUrl: String? { __data["avatarUrl"] }
       /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
@@ -75,7 +75,7 @@ nonisolated public struct CurrentUserQuery: GraphQLQuery {
       /// Pronouns of the user.
       public var pronouns: String? { __data["pronouns"] }
       /// State of the user.
-      public var state: GraphQLEnum<GitLabAPI.UserState> { __data["state"] }
+      public var state: GraphQLEnum<IOSGitLabAPI.UserState> { __data["state"] }
       /// User status.
       public var status: Status? { __data["status"] }
       /// Bio of the user.
@@ -87,7 +87,7 @@ nonisolated public struct CurrentUserQuery: GraphQLQuery {
       /// Who the user represents or works for.
       public var organization: String? { __data["organization"] }
       /// Timestamp of when the user was created.
-      public var createdAt: GitLabAPI.Time? { __data["createdAt"] }
+      public var createdAt: IOSGitLabAPI.Time? { __data["createdAt"] }
       /// Discord ID of the user.
       public var discord: String? { __data["discord"] }
       /// X (formerly Twitter) username of the user.
@@ -104,11 +104,11 @@ nonisolated public struct CurrentUserQuery: GraphQLQuery {
       /// CurrentUser.Status
       ///
       /// Parent Type: `UserStatus`
-      nonisolated public struct Status: GitLabAPI.SelectionSet {
+      nonisolated public struct Status: IOSGitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserStatus }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { IOSGitLabAPI.Objects.UserStatus }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("emoji", String?.self),
