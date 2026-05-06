@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
 	name: "tanuki-app",
 	defaultLocalization: "en",
-	platforms: [.iOS(.v17), .macOS(.v14)],
+	platforms: [.iOS(.v16), .macOS(.v14)],
 	products: [
 		.library(name: "Tanuki", type: .dynamic, targets: ["Tanuki"]),
 	],
@@ -15,13 +15,13 @@ let package = Package(
 		.package(url: "https://source.skip.dev/skip-kit.git", from: "1.0.0"),
 		.package(url: "https://github.com/apollographql/apollo-ios.git", from: "2.0.5"),
 		.package(path: "../apollo-gitlab-api/dual-platform"),
-		.package(path: "../apollo-gitlab-api/ios"),
+		//.package(path: "../apollo-gitlab-api/ios"),
 		//.package(url: "https://github.com/kyle-n/HighlightedTextEditor.git", from: "2.1.0"),
 		//.package(url: "https://github.com/raspu/Highlightr.git", from: "2.3.0"),
 		.package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.11.0")),
 		//.package(url: "https://github.com/gonzalezreal/swift-markdown-ui.git", from: "2.4.1"),
 		//.package(url: "https://github.com/BastiaanJansen/toast-swift.git", from: "2.1.3"),
-		.package(url: "https://github.com/lorenzofiamingo/swiftui-cached-async-image.git", exact: "2.1.1"),
+		//.package(url: "https://github.com/lorenzofiamingo/swiftui-cached-async-image.git", exact: "2.1.1"),
 		//.package(url: "https://github.com/NVMNovem/nvm-color.git", from: "1.2.5")
 	],
 	targets: [
