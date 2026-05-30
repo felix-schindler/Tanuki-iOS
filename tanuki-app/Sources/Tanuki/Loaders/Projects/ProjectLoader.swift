@@ -21,7 +21,7 @@ enum NavDest {
 struct ProjectLoader: View {
 	private let fullPath: String
 
-	@State var project: Result<ProjectQuery.Data.Project, Error>? = nil
+	@State var project: Result<Project_Project, Error>? = nil
 
 	/// Selected special file (README, LICENSE, ...)
 	@State var selectedFile = 0
@@ -35,40 +35,21 @@ struct ProjectLoader: View {
 	}
 
 	private func loadProject() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: ProjectQuery(fullPath: fullPath),
-				cachePolicy: .cacheAndNetwork
-			)
-
-			Task {
-				for try await response in responses {
-					if let project = response.data?.project {
-						self.project = .success(project)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+		Task {
+			do {
+				let project = try await Network.shared.service.fetchProject(fullPath: fullPath)
+				self.project = .success(project)
+			} catch let error {
+				self.project = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.project = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadProject() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: ProjectQuery(fullPath: fullPath),
-				cachePolicy: .networkOnly
-			)
-
-			if let project = response.data?.project {
-				self.project = .success(project)
-			}
-
+			let project = try await Network.shared.service.fetchProject(fullPath: fullPath, strategy: .networkOnly)
+			self.project = .success(project)
 			Notify.status(.success)
 		} catch let error {
 			self.project = .failure(error)
@@ -96,15 +77,29 @@ struct ProjectLoader: View {
 					}
 
 					if let lastCommit = project.repository?.tree?.lastCommit,
-						let projectId = project.id.toIntId()
+						let projectId = project.id?.toIntId()
 					{
 						Section("Last commit") {
-							SmallCommitView(lastCommit, projectId)
+							VStack(alignment: .leading) {
+								if let title = lastCommit.title?.emojized() {
+									Text(title)
+								}
+								if let authorName = lastCommit.authorName,
+									let authoredDate = lastCommit.authoredDate
+								{
+									Text("\(authorName) authored at \(Date.fromToString(authoredDate))")
+										.font(.footnote)
+								}
+								if let shortId = lastCommit.shortId {
+									Text(shortId)
+										.font(.system(.footnote, design: .monospaced))
+								}
+							}
 						}
 					}
 
 					Section("Actions") {
-						if project.issuesEnabled ?? true {
+						if project.issuesEnabled == "true" {
 							NavigationLink(
 								destination: ProjectIssuesLoader(
 									fullPath: self.fullPath
@@ -115,7 +110,7 @@ struct ProjectLoader: View {
 											HStack {
 												Text("Issues")
 												Spacer()
-												Text("\(project.openIssuesCount ?? 0)")
+												Text("\(Int(project.openIssuesCount ?? "0") ?? 0)")
 											}
 										},
 										icon: {
@@ -126,7 +121,7 @@ struct ProjectLoader: View {
 							)
 						}
 
-						if project.mergeRequestsEnabled ?? true {
+						if project.mergeRequestsEnabled == "true" {
 							NavigationLink(
 								destination: ProjectMergeLoader(fullPath: self.fullPath),
 								label: {
@@ -136,7 +131,7 @@ struct ProjectLoader: View {
 												Text("Merge Requests")
 												Spacer()
 												Text(
-													"\(project.openMergeRequestsCount ?? 0)"
+													"\(Int(project.openMergeRequestsCount ?? "0") ?? 0)"
 												)
 											}
 										},
@@ -151,7 +146,7 @@ struct ProjectLoader: View {
 							)
 						}
 
-						if let projectId = project.id.toIntId() {
+						if let projectId = project.id?.toIntId() {
 							DisclosureGroup(
 								content: {
 									NavigationLink(
@@ -190,7 +185,7 @@ struct ProjectLoader: View {
 							)
 						}
 
-						if let projectId = project.id.toIntId() {
+						if let projectId = project.id?.toIntId() {
 							DisclosureGroup(
 								content: {
 									if let ref = project.repository?.rootRef {
@@ -237,7 +232,7 @@ struct ProjectLoader: View {
 								NavigationLink(
 									"Releases",
 									destination: ProjectReleasesLoader(
-										fullPath: self.fullPath, projectId: project.id.toIntId())
+										fullPath: self.fullPath, projectId: project.id?.toIntId() ?? 0)
 								)
 							},
 							label: {
@@ -245,15 +240,9 @@ struct ProjectLoader: View {
 							})
 					}
 
-					let readme = project.repository?.readme?.nodes?.first??
-						.rawTextBlob?
-						.emojized()
-					let license = project.repository?.license?.nodes?.first??
-						.rawTextBlob?
-						.emojized()
-					let contributing = project.repository?.contributing?.nodes?.first??
-						.rawTextBlob?
-						.emojized()
+					let readme = project.repository?.readme?.nodes?.first?.rawTextBlob?.emojized()
+					let license = project.repository?.license?.nodes?.first?.rawTextBlob?.emojized()
+					let contributing = project.repository?.contributing?.nodes?.first?.rawTextBlob?.emojized()
 
 					let baseUrl = URL(string: project.webUrl ?? "")
 					let imgUrl = URL(
@@ -319,8 +308,8 @@ struct ProjectLoader: View {
 							}
 						}
 
-						if project.userPermissions.requestAccess,
-							let projectId = project.id.toIntId()
+						if project.userPermissions?.requestAccess == "true",
+							let projectId = project.id?.toIntId()
 						{
 							Section {
 								AsyncButton(
@@ -366,7 +355,7 @@ struct ProjectLoader: View {
 					}
 
 					Menu("Create", systemImage: "plus") {
-						if project.userPermissions.createIssue {
+						if project.userPermissions?.createIssue == "true" {
 							Button("Create Issue", systemImage: "smallcircle.circle") {
 								navigationActive = true
 								navigationDestination = .issue
@@ -397,7 +386,7 @@ struct ProjectLoader: View {
 			}
 		}.background {
 			if let project, case .success(let project) = project,
-				let projectId = project.id.toIntId()
+				let projectId = project.id?.toIntId()
 			{
 				NavigationLink(
 					isActive: $navigationActive,

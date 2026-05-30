@@ -14,8 +14,8 @@ struct MergeButton: View {
 	private let projectId: Int
 	private let onMerge: () async -> Void
 	private let hasConflicts: Bool
-	private let mergeStatusEnum: GraphQLEnum<GitLabAPI.MergeStatus>
-	private let detailedMergeStatus: GraphQLEnum<GitLabAPI.DetailedMergeStatus>?
+	private let mergeStatusEnum: MergeStatus
+	private let detailedMergeStatus: DetailedMergeStatus?
 
 	// MARK: - Sheets
 	@State var showMergeStatus = false
@@ -34,8 +34,8 @@ struct MergeButton: View {
 		projectId: Int,
 		onMerge: @escaping () async -> Void,
 		hasConflicts: Bool,
-		mergeStatusEnum: GraphQLEnum<GitLabAPI.MergeStatus>,
-		detailedMergeStatus: GraphQLEnum<GitLabAPI.DetailedMergeStatus>?
+		mergeStatusEnum: MergeStatus,
+		detailedMergeStatus: DetailedMergeStatus?
 	) {
 		self.iid = iid
 		self.projectId = projectId
@@ -99,7 +99,7 @@ struct MergeButton: View {
 				HapticFeedback.play(.pick)
 			},
 			label: {
-				MergeStatus(mergeStatusEnum)
+				MergeStatusView(mergeStatusEnum)
 			}
 		).sheet(isPresented: $showMergeStatus, onDismiss: { showMergeStatus = false }) {
 			VStack(alignment: .leading) {
@@ -175,7 +175,7 @@ struct MergeButton: View {
 			print("MERGE")
 		},
 		hasConflicts: false,
-		mergeStatusEnum: .case(.canBeMerged),
+		mergeStatusEnum: .canBeMerged,
 		detailedMergeStatus: nil
 	)
 }

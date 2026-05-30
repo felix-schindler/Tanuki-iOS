@@ -9,49 +9,76 @@ import GitLabAPI
 //import MarkdownUI
 import SwiftUI
 
+private extension Epic_Group_Epic_Author {
+	var toMyAuthor: MyAuthor {
+		MyAuthor(avatarUrl: avatarUrl, name: name ?? username ?? "", username: username ?? "")
+	}
+}
+
+private extension Epic_Group_Epic_Notes_Nodes_Author {
+	var toMyAuthor: MyAuthor {
+		MyAuthor(avatarUrl: avatarUrl, name: name ?? username ?? "", username: username ?? "")
+	}
+}
+
+private struct NoteWrapper: Note {
+	let note: Epic_Group_Epic_Notes_Nodes
+
+	var system: Bool { note.system == "true" }
+	var systemNoteIconName: String? { note.systemNoteIconName }
+	var body: String { note.body ?? "" }
+	var _author: MyAuthor? {
+		guard let author = note.author else { return nil }
+		return author.toMyAuthor
+	}
+	var createdAt: String { note.createdAt ?? "" }
+	var updatedAt: String { note.updatedAt ?? "" }
+	var maxAccessLevelOfAuthor: String? { note.maxAccessLevelOfAuthor }
+}
+
 struct EpicLoader: View {
 	private let fullPath: String
 	private let iid: String
 
-	@State var group: Result<EpicQuery.Data.Group, Error>? = nil
+	@State var group: Result<Epic_Group, Error>? = nil
 
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
 		self.iid = iid
 	}
 
-	private func loadEpic() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: EpicQuery(fullPath: self.fullPath, iid: self.iid),
-				cachePolicy: .cacheAndNetwork)
+	private static func stateIcon(_ state: String?) -> String {
+		switch state?.lowercased() {
+		case "opened": "smallcircle.circle"
+		case "closed": "minus.circle"
+		default: "smallcircle.circle"
+		}
+	}
 
-			Task {
-				for try await response in responses {
-					if let group = response.data?.group {
-						self.group = .success(group)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+	private static func stateColor(_ state: String?) -> Color {
+		switch state?.lowercased() {
+		case "opened": .green
+		case "closed": .blue
+		default: .primary
+		}
+	}
+
+	private func loadEpic() {
+		Task {
+			do {
+				let group = try await Network.shared.service.fetchEpic(fullPath: fullPath, iid: iid)
+				self.group = .success(group)
+			} catch let error {
+				self.group = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.group = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadEpic() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: EpicQuery(fullPath: self.fullPath, iid: self.iid), cachePolicy: .networkOnly)
-
-			if let group = response.data?.group {
-				self.group = .success(group)
-			}
-
+			let group = try await Network.shared.service.fetchEpic(fullPath: fullPath, iid: iid, strategy: .networkOnly)
+			self.group = .success(group)
 			Notify.status(.success)
 		} catch let error {
 			self.group = .failure(error)
@@ -87,7 +114,7 @@ struct EpicLoader: View {
 									AvatarImage(url, size: .tiny)
 								}
 								ScrollView(.horizontal) {
-									Text(epic.reference)
+									Text(epic.reference ?? "")
 										.foregroundStyle(.secondary)
 								}
 								if let createdAt = epic.createdAt {
@@ -106,9 +133,9 @@ struct EpicLoader: View {
 							ScrollView(.horizontal) {
 								HStack(spacing: 5) {
 									PillView(
-										epic.state.rawValue.capitalized,
-										icon: IssueStateHelper.getIconByState(epic.state),
-										bgColor: IssueStateHelper.getColorByState(epic.state),
+										epic.state?.capitalized ?? "",
+										icon: Self.stateIcon(epic.state),
+										bgColor: Self.stateColor(epic.state),
 										fgColor: .white,
 										cornerRadius: 5
 									)
@@ -122,7 +149,9 @@ struct EpicLoader: View {
 										)
 									}
 
-									AuthorView(epic._author)
+									if let author = epic.author {
+										AuthorView(author.toMyAuthor)
+									}
 
 									if let startDate = epic.startDate {
 										PillView(startDate, icon: "clock")
@@ -139,24 +168,22 @@ struct EpicLoader: View {
 							{
 								ScrollView(.horizontal) {
 									HStack(spacing: 5) {
-										ForEach(blockedBy, id: \.?.iid) { block in
-											if let block {
-												NavigationLink(
-													destination: EpicLoader(
-														fullPath: self.fullPath,
-														iid: block.iid
-													),
-													label: {
-														PillView(
-															"&\(block.iid)",
-															icon: "hand.raised",
-															bgColor: .orange,
-															fgColor: .white,
-															cornerRadius: 5
-														)
-													}
-												)
-											}
+										ForEach(blockedBy, id: \.iid) { block in
+											NavigationLink(
+												destination: EpicLoader(
+													fullPath: self.fullPath,
+													iid: block.iid ?? ""
+												),
+												label: {
+													PillView(
+														"&\(block.iid ?? "")",
+														icon: "hand.raised",
+														bgColor: .orange,
+														fgColor: .white,
+														cornerRadius: 5
+													)
+												}
+											)
 										}
 									}
 								}
@@ -170,8 +197,8 @@ struct EpicLoader: View {
 							}
 
 							HStack {
-								PillView(String(epic.upvotes), icon: "hand.thumbsup")
-								PillView(String(epic.downvotes), icon: "hand.thumbsdown")
+								PillView(String(Int(epic.upvotes ?? "0") ?? 0), icon: "hand.thumbsup")
+								PillView(String(Int(epic.downvotes ?? "0") ?? 0), icon: "hand.thumbsdown")
 							}
 							.modifier(LabelSpacingIfAvailable())
 							.font(.footnote)
@@ -199,14 +226,12 @@ struct EpicLoader: View {
 									title: {
 										ScrollView(.horizontal) {
 											HStack {
-												ForEach(labels, id: \.self) { label in
-													if let label {
-														PillView(
-															label.title.emojized(),
-															bgColor: Color(hex: label.color),
-															fgColor: Color(hex: label.textColor)
-														)
-													}
+												ForEach(labels, id: \.title) { label in
+													PillView(
+														(label.title ?? "").emojized(),
+														bgColor: Color(hex: label.color ?? ""),
+														fgColor: Color(hex: label.textColor ?? "")
+													)
 												}
 											}
 										}
@@ -220,17 +245,15 @@ struct EpicLoader: View {
 							if let ancestors = epic.ancestors?.nodes, ancestors.isNotEmpty {
 								DisclosureGroup(
 									content: {
-										ForEach(ancestors, id: \.?.iid) { ancestor in
-											if let ancestor {
-												NavigationLink(
-													"&\(ancestor.iid)",
-													destination: {
-														EpicLoader(
-															fullPath: self.fullPath,
-															iid: ancestor.iid
-														)
-													})
-											}
+										ForEach(ancestors, id: \.iid) { ancestor in
+											NavigationLink(
+												"&\(ancestor.iid ?? "")",
+												destination: {
+													EpicLoader(
+														fullPath: self.fullPath,
+														iid: ancestor.iid ?? ""
+													)
+												})
 										}
 									},
 									label: {
@@ -245,17 +268,15 @@ struct EpicLoader: View {
 							if let children = epic.children?.nodes, children.isNotEmpty {
 								DisclosureGroup(
 									content: {
-										ForEach(children, id: \.?.iid) { child in
-											if let child {
-												NavigationLink(
-													"&\(child.iid)",
-													destination: {
-														EpicLoader(
-															fullPath: self.fullPath,
-															iid: child.iid
-														)
-													})
-											}
+										ForEach(children, id: \.iid) { child in
+											NavigationLink(
+												"&\(child.iid ?? "")",
+												destination: {
+													EpicLoader(
+														fullPath: self.fullPath,
+														iid: child.iid ?? ""
+													)
+												})
 										}
 									},
 									label: {
@@ -265,11 +286,11 @@ struct EpicLoader: View {
 							}
 						}
 
-						if epic.userPermissions.updateEpic,
+						if epic.userPermissions?.updateEpic == "true",
 							let groupId = group.id?.toIntId()
 						{
 							Section("Actions") {
-								if epic.state == .opened {
+								if epic.state == "opened" {
 									AsyncButton(
 										action: {
 											await changeState(groupId, "close")
@@ -281,7 +302,7 @@ struct EpicLoader: View {
 											)
 										}
 									).tint(.blue)
-								} else if epic.state == .closed {
+								} else if epic.state == "closed" {
 									AsyncButton(
 										action: {
 											await changeState(groupId, "reopen")
@@ -297,20 +318,18 @@ struct EpicLoader: View {
 							}
 						}
 
-						let noteCount = epic.notes.nodes?.count ?? 0
-						if epic.userPermissions.createNote || noteCount > 0 {
-							Section("Notes (\(epic.userNotesCount))") {
+						let noteCount = epic.notes?.nodes?.count ?? 0
+						if epic.userPermissions?.createNote == "true" || noteCount > 0 {
+							Section("Notes (\(epic.userNotesCount ?? "0"))") {
 								if let groupId = group.id?.toIntId(),
-									epic.userPermissions.createNote
+									epic.userPermissions?.createNote == "true"
 								{
-									NewNoteView(groupId, iid: epic.iid, type: .epic)
+									NewNoteView(groupId, iid: epic.iid ?? "", type: .epic)
 								}
 
-								if noteCount > 0 {
-									ForEach(epic.notes.nodes!, id: \.self?.id) { maybeNote in
-										if let note = maybeNote {
-											NoteView(note)
-										}
+								if let notes = epic.notes?.nodes, notes.isNotEmpty {
+									ForEach(notes, id: \.id) { note in
+										NoteView(NoteWrapper(note: note))
 									}
 								}
 							}

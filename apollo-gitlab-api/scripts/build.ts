@@ -41,7 +41,7 @@ const T1_MAP: Record<string, ListSpec> = {
   snippets:                    { proto: "Snippet",               struct: "SnippetStruct" },
   releases:                    { proto: "Release",               struct: "ReleaseStruct" },
   users:                       { proto: "Author",                struct: "MyAuthor" },
-  projectMemberships:          { proto: "Member",                struct: "MemberStruct" },
+  // projectMemberships:      { proto: "Member",                struct: "MemberStruct" },
 };
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -279,8 +279,8 @@ function parseSelection(body: string): SelNode[] {
 /** Parse one .graphql file into QueryDef objects. */
 
 /** Find a list connection in the selection tree. A query is a "list query" if
- *  the deepest connection has a field name in T1_MAP and its nodes contain
- *  only scalar children.  Returns the root field, connection field, and spec. */
+ *  the deepest connection has a field name in T1_MAP.  Returns the root field,
+ *  connection field, and spec. */
 function findListConnection(sel: SelNode[]): { rootField: string; connField: string; spec: ListSpec } | null {
   if (sel.length !== 1) return null;
   const root = sel[0];
@@ -290,7 +290,7 @@ function findListConnection(sel: SelNode[]): { rootField: string; connField: str
     const spec = T1_MAP[root.name];
     if (spec) {
       const nodesKid = root.children.find(c => c.name === "nodes");
-      if (nodesKid && nodesKid.children.length > 0 && nodesKid.children.every(c => c.children.length === 0))
+      if (nodesKid && nodesKid.children.length > 0)
         return { rootField: root.name, connField: root.name, spec };
     }
   }
@@ -299,7 +299,7 @@ function findListConnection(sel: SelNode[]): { rootField: string; connField: str
   for (const child of root.children) {
     if (child.isConnection && T1_MAP[child.name]) {
       const nodesKid = child.children.find(c => c.name === "nodes");
-      if (nodesKid && nodesKid.children.length > 0 && nodesKid.children.every(c => c.children.length === 0))
+      if (nodesKid && nodesKid.children.length > 0)
         return { rootField: root.name, connField: child.name, spec: T1_MAP[child.name] };
     }
   }

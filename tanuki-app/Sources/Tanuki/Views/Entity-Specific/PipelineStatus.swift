@@ -10,38 +10,38 @@ import SwiftUI
 import SkipKit
 
 struct PipelineStatus: View {
-	private let state: GraphQLEnum<GitLabAPI.PipelineStatusEnum>
+	private let state: String
 	private let icon: String
 	private let color: SwiftUI.Color
 
 	@State var showInfo = false
 
-	init(_ state: GraphQLEnum<GitLabAPI.PipelineStatusEnum>) {
-		self.state = state
+	init(_ state: String?) {
+		self.state = state ?? "unknown"
 
-		switch state {
-		case .created:
+		switch state?.lowercased() {
+		case "created":
 			self.icon = "plus.circle"
 			self.color = Color.orange
-		case .waitingForResource, .waitingForCallback:
+		case "waiting_for_resource", "waiting_for_callback":
 			self.icon = "pause.circle"
 			self.color = Color.orange
-		case .success:
+		case "success":
 			self.icon = "checkmark.circle"
 			self.color = Color.green
-		case .failed:
+		case "failed":
 			self.icon = "minus.circle"
 			self.color = Color.red
-		case .canceled:
+		case "canceled":
 			self.icon = "slash.circle"
 			self.color = Color.gray
-		case .skipped:
+		case "skipped":
 			self.icon = "chevron.right.circle"
 			self.color = Color.gray
-		case .manual:
+		case "manual":
 			self.icon = "person.crop.circle"
 			self.color = Color.primary
-		case .scheduled:
+		case "scheduled":
 			self.icon = "hourglass.circle"
 			self.color = Color.primary
 		default:
@@ -65,7 +65,7 @@ struct PipelineStatus: View {
 					onClose: {
 						showInfo = false
 					})
-				Text("The current Pipeline status is \"\(state.rawValue)\"")
+				Text("The current Pipeline status is \"\(state)\"")
 				Spacer()
 			}
 			.padding()
@@ -76,8 +76,8 @@ struct PipelineStatus: View {
 
 #Preview {
 	VStack {
-		ForEach(GraphQLEnum<GitLabAPI.PipelineStatusEnum>.allCases, id: \.self) { state in
-			PipelineStatus(state)
-		}
+		PipelineStatus("success")
+		PipelineStatus("failed")
+		PipelineStatus("canceled")
 	}
 }

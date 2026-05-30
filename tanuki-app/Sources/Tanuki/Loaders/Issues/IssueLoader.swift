@@ -10,13 +10,40 @@ import GitLabAPI
 //import MarkdownUI
 import SwiftUI
 
+private extension Issue_Project_Issue_Author {
+	var toMyAuthor: MyAuthor {
+		MyAuthor(avatarUrl: avatarUrl, name: name ?? username ?? "", username: username ?? "")
+	}
+}
+
+private extension Issue_Project_Issue_Notes_Nodes_Author {
+	var toMyAuthor: MyAuthor {
+		MyAuthor(avatarUrl: avatarUrl, name: name ?? username ?? "", username: username ?? "")
+	}
+}
+
+private struct NoteWrapper: Note {
+	let note: Issue_Project_Issue_Notes_Nodes
+
+	var system: Bool { note.system == "true" }
+	var systemNoteIconName: String? { note.systemNoteIconName }
+	var body: String { note.body ?? "" }
+	var _author: MyAuthor? {
+		guard let author = note.author else { return nil }
+		return author.toMyAuthor
+	}
+	var createdAt: String { note.createdAt ?? "" }
+	var updatedAt: String { note.updatedAt ?? "" }
+	var maxAccessLevelOfAuthor: String? { note.maxAccessLevelOfAuthor }
+}
+
 struct IssueLoader: View {
 	@Environment(\.dismiss) var dismiss
 
 	private let fullPath: String
 	private let iid: String
 
-	@State var project: Result<GitLabAPI.IssueQuery.Data.Project, Error>? = nil
+	@State var project: Result<GitLabAPI.Issue_Project, Error>? = nil
 
 	@State var showDeleteConfirm = false
 
@@ -27,40 +54,21 @@ struct IssueLoader: View {
 
 	// MARK: - Data loading
 	private func loadIssue() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: IssueQuery(fullPath: self.fullPath, iid: self.iid),
-				cachePolicy: .cacheAndNetwork
-			)
-
-			Task {
-				for try await response in responses {
-					if let project = response.data?.project {
-						self.project = .success(project)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+		Task {
+			do {
+				let project = try await Network.shared.service.fetchIssue(fullPath: fullPath, iid: iid)
+				self.project = .success(project)
+			} catch let error {
+				self.project = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.project = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadIssue() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: IssueQuery(fullPath: self.fullPath, iid: self.iid),
-				cachePolicy: .networkOnly
-			)
-
-			if let project = response.data?.project {
-				self.project = .success(project)
-			}
-
+			let project = try await Network.shared.service.fetchIssue(fullPath: fullPath, iid: iid, strategy: .networkOnly)
+			self.project = .success(project)
 			Notify.status(.success)
 		} catch let error {
 			self.project = .failure(error)
@@ -71,9 +79,8 @@ struct IssueLoader: View {
 	// MARK: - Issue mutations
 	private func changeState(_ state: IssueStateEvent) async {
 		do {
-			_ = try await Network.shared.apollo.perform(
-				mutation: IssueStateMutation(
-					projectPath: self.fullPath, iid: self.iid, stateEvent: GraphFilter.toFilterEnum(state))
+			_ = try await Network.shared.service.fetchIssueState(
+				projectPath: fullPath, iid: iid, filter: IssueStateFilter(stateEvent: state)
 			)
 			await reloadIssue()
 		} catch let error {
@@ -103,27 +110,29 @@ struct IssueLoader: View {
 									AvatarImage(url, size: .tiny)
 								}
 								ScrollView(.horizontal) {
-									Text(issue.reference)
+									Text(issue.reference ?? "")
 										.foregroundStyle(.secondary)
 								}
 								Spacer()
-								Text(Date.fromToString(issue.createdAt))
+								Text(Date.fromToString(issue.createdAt ?? ""))
 							}
 							.font(.footnote)
 							.padding(.bottom, 1)
 
-							Text(issue.title.emojized())
+							Text(issue.title?.emojized() ?? "")
 								.font(.title3)
 								.fontWeight(.medium)
 								.padding(.bottom, 1)
 
 							ScrollView(.horizontal) {
 								HStack(spacing: 5) {
-									AuthorView(issue._author)
+									if let author = issue.author {
+										AuthorView(author.toMyAuthor)
+									}
 
 									if let weight = issue.weight {
 										PillView(
-											String(weight),
+											weight,
 											icon: "scalemass",
 											bgColor: .red,
 											fgColor: .white,
@@ -143,21 +152,21 @@ struct IssueLoader: View {
 										)
 									}
 
-									if let blockedBy = issue.blockedByIssues?.nodes,
-										blockedBy.isNotEmpty
-									{
-										ForEach(blockedBy, id: \.?.iid) { parent in
+								if let blockedBy = issue.blockedByIssues?.nodes,
+									blockedBy.isNotEmpty
+								{
+									ForEach(blockedBy, id: \.iid) { parent in
 											if let parent {
 												NavigationLink(
 													destination: {
 														IssueLoader(
 															fullPath: self.fullPath,
-															iid: parent.iid
+															iid: parent.iid ?? ""
 														)
 													},
 													label: {
 														PillView(
-															"#\(parent.iid)",
+															"#\(parent.iid ?? "")",
 															icon: "hand.raised",
 															bgColor: .orange,
 															fgColor: .white,
@@ -181,8 +190,8 @@ struct IssueLoader: View {
 							}
 
 							HStack {
-								PillView(String(issue.upvotes), icon: "hand.thumbsup")
-								PillView(String(issue.downvotes), icon: "hand.thumbsdown")
+								PillView(issue.upvotes ?? "0", icon: "hand.thumbsup")
+								PillView(issue.downvotes ?? "0", icon: "hand.thumbsdown")
 							}
 							.modifier(LabelSpacingIfAvailable())
 							.font(.footnote)
@@ -193,11 +202,10 @@ struct IssueLoader: View {
 							DisclosureGroup(
 								content: {
 									if assgineeCount > 0 {
-										ForEach(issue.assignees!.nodes!, id: \.self) { maybeUser in
-											if let user = maybeUser {
+										ForEach(issue.assignees!.nodes!, id: \.username) { user in
 												NavigationLink(
 													destination: UserLoader(
-														username: user.username
+														username: user.username ?? ""
 													),
 													label: {
 														HStack {
@@ -209,7 +217,7 @@ struct IssueLoader: View {
 																	url,
 																	size: .small)
 															}
-															Text(user.username)
+															Text(user.username ?? "")
 														}
 													}
 												)
@@ -239,15 +247,13 @@ struct IssueLoader: View {
 									title: {
 										ScrollView(.horizontal) {
 											HStack {
-												ForEach(labels, id: \.?.title) { label in
-													if let label {
-														PillView(
-															label.title.emojized(),
-															bgColor: Color(hex: label.color),
-															fgColor: Color(hex: label.textColor)
-														)
-													}
-												}
+											ForEach(labels, id: \.title) { label in
+												PillView(
+													label.title?.emojized() ?? "",
+													bgColor: Color(hex: label.color ?? ""),
+													fgColor: Color(hex: label.textColor ?? "")
+												)
+											}
 											}
 										}
 									},
@@ -259,7 +265,7 @@ struct IssueLoader: View {
 
 							if let milestone = issue.milestone {
 								Label(
-									milestone.title.emojized(),
+									milestone.title?.emojized() ?? "",
 									systemImage: "diamond"
 								)
 							}
@@ -285,19 +291,19 @@ struct IssueLoader: View {
 							}
 						}
 
-						if issue.userPermissions.updateIssue {
+						if issue.userPermissions?.updateIssue == "true" {
 							Section("Actions") {
-								if issue.state == .opened {
+								if issue.state == "opened" {
 									AsyncButton("Close issue", systemImage: "smallcircle.circle") {
 										await self.changeState(.close)
 									}.tint(.blue)
-								} else if issue.state == .closed {
+								} else if issue.state == "closed" {
 									AsyncButton("Reopen issue", systemImage: "arrow.triangle.swap") {
 										await self.changeState(.reopen)
 									}.tint(.green)
 								}
 
-								if let projectId = project.id.toIntId() {
+								if let projectId = project.id?.toIntId() {
 									Button("Delete issue", systemImage: "trash", role: .destructive) {
 										self.showDeleteConfirm = true
 									}.confirmationDialog(
@@ -315,20 +321,18 @@ struct IssueLoader: View {
 							}
 						}
 
-						let noteCount = issue.notes.nodes?.count ?? 0
-						if issue.userPermissions.createNote || noteCount > 0 {
-							Section("Notes (\(issue.userNotesCount))") {
-								if let projectId = project.id.toIntId(),
-									issue.userPermissions.createNote
+						let noteCount = issue.notes?.nodes?.count ?? 0
+						if issue.userPermissions?.createNote == "true" || noteCount > 0 {
+							Section("Notes (\(issue.userNotesCount ?? "0"))") {
+								if let projectId = project.id?.toIntId(),
+									issue.userPermissions?.createNote == "true"
 								{
-									NewNoteView(projectId, iid: issue.iid, type: .issue)
+									NewNoteView(projectId, iid: issue.iid ?? "", type: .issue)
 								}
 
 								if noteCount > 0 {
-									ForEach(issue.notes.nodes!, id: \.self?.id) { maybeNote in
-										if let note = maybeNote {
-											NoteView(note, projectId: project.id.toIntId() ?? 0)
-										}
+									ForEach(issue.notes!.nodes!, id: \.id) { note in
+										NoteView(NoteWrapper(note: note), projectId: project.id?.toIntId() ?? 0)
 									}
 								}
 							}
@@ -353,17 +357,9 @@ struct IssueLoader: View {
 				let issue = project.issue
 			{
 				HStack {
-					Button(
-						issue.state.rawValue.capitalized,
-						systemImage: IssueStateHelper.getIconByState(issue.state),
-					) {}
-					.tint(IssueStateHelper.getColorByState(issue.state))
-					.labelStyle(.titleAndIcon)
-					.buttonBorderShape(.roundedRectangle)
-					.buttonStyle(.borderedProminent)
-					.controlSize(.mini)
+					IssueStateIcon(issue.state)
 
-					if let url = URL(string: issue.webUrl) {
+					if let url = URL(string: issue.webUrl ?? "") {
 						ShareButton(url)
 					}
 				}

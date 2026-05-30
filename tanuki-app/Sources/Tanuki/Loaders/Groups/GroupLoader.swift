@@ -12,7 +12,7 @@ import SwiftUI
 struct GroupLoader: View {
 	private let fullPath: String
 
-	@State var group: Result<GroupQuery.Data.Group, Error>? = nil
+	@State var group: Result<Group_Group, Error>? = nil
 
 	@State var navigationActive = false
 
@@ -21,36 +21,21 @@ struct GroupLoader: View {
 	}
 
 	private func loadGroup() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: GroupQuery(fullPath: self.fullPath), cachePolicy: .cacheAndNetwork)
-
-			Task {
-				for try await response in responses {
-					if let group = response.data?.group {
-						self.group = .success(group)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+		Task {
+			do {
+				let payload = try await Network.shared.service.fetchGroup(fullPath: self.fullPath)
+				self.group = .success(payload)
+			} catch let error {
+				self.group = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.group = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadGroup() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: GroupQuery(fullPath: self.fullPath), cachePolicy: .networkOnly)
-
-			if let group = response.data?.group {
-				self.group = .success(group)
-			}
-
+			let payload = try await Network.shared.service.fetchGroup(fullPath: self.fullPath, strategy: .networkOnly)
+			self.group = .success(payload)
 			Notify.status(.success)
 		} catch let error {
 			self.group = .failure(error)
@@ -91,19 +76,21 @@ struct GroupLoader: View {
 
 						ScrollView(.horizontal) {
 							HStack {
-								PillView(
-									String(group.groupMembersCount),
-									icon: "person.2",
-									cornerRadius: 5
-								)
+								if let groupMembersCount = group.groupMembersCount {
+									PillView(
+										groupMembersCount,
+										icon: "person.2",
+										cornerRadius: 5
+									)
+								}
 
 								if let parent = group.parent {
 									NavigationLink(
 										destination: GroupLoader(
-											fullPath: parent.fullPath),
+											fullPath: parent.fullPath ?? ""),
 										label: {
 											PillView(
-												parent.name ?? parent.fullPath,
+												parent.name ?? parent.fullPath ?? "",
 												icon:
 													"figure.and.child.holdinghands",
 												cornerRadius: 5
@@ -112,8 +99,10 @@ struct GroupLoader: View {
 									)
 								}
 
-								if group.name != group.fullName {
-									PillView(group.fullName ?? group.path, cornerRadius: 5)
+								if let fullName = group.fullName, group.name != fullName {
+									PillView(fullName, cornerRadius: 5)
+								} else if let path = group.path, group.name != path {
+									PillView(path, cornerRadius: 5)
 								}
 							}.font(.footnote)
 						}
@@ -136,7 +125,9 @@ struct GroupLoader: View {
 											HStack {
 												Text("Projects")
 												Spacer()
-												Text("\(group.projectsCount)")
+												if let projectsCount = group.projectsCount {
+													Text(projectsCount)
+												}
 											}
 										},
 										icon: {
@@ -156,7 +147,9 @@ struct GroupLoader: View {
 											HStack {
 												Text("Descendant groups")
 												Spacer()
-												Text("\(group.descendantGroupsCount)")
+												if let descendantGroupsCount = group.descendantGroupsCount {
+													Text(descendantGroupsCount)
+												}
 											}
 										},
 										icon: {
@@ -248,7 +241,7 @@ struct GroupLoader: View {
 										"chevron.left.forwardslash.chevron.right")
 							}
 						)
-					}.navigationTitle(group.path)
+					}.navigationTitle(group.path ?? group.fullPath ?? group.name ?? "")
 				case .failure(let error):
 					FailedView(error.localizedDescription, icon: "scale.3d")
 				}
@@ -262,19 +255,19 @@ struct GroupLoader: View {
 		}.toolbar {
 			if let group, case .success(let group) = group {
 				HStack {
-					if let url = URL(string: group.webUrl) {
+					if let url = URL(string: group.webUrl ?? "") {
 						ShareButton(url)
 					}
 
-					if group.userPermissions.createProjects || group.requestAccessEnabled ?? false {
+					if group.userPermissions?.createProjects == "true" || group.requestAccessEnabled == "true" {
 						Menu("More", systemImage: "ellipsis") {
-							if group.userPermissions.createProjects {
+							if group.userPermissions?.createProjects == "true" {
 								Button("Create project", systemImage: "plus") {
 									navigationActive = true
 								}
 							}
 
-							if group.requestAccessEnabled ?? false,
+							if group.requestAccessEnabled == "true",
 								let groupId = group.id?.toIntId()
 							{
 								AsyncButton(

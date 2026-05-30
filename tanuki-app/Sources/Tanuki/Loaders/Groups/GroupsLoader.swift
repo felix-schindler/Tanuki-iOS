@@ -9,7 +9,7 @@ import GitLabAPI
 import SwiftUI
 
 struct GroupsLoader: View {
-	@State var groups: Result<[Group], Error>? = nil
+	@State var groups: Result<[GitLabAPI.Group], Error>? = nil
 
 	@State var showFilters = false
 

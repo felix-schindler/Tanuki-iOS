@@ -20,7 +20,7 @@ struct ProjectIssuesLoader: View {
 
 	@State var loadTask: Task<Void, Never>?
 
-	@State var project: Result<GitLabAPI.ProjectIssuesQuery.Data.Project, Error>? = nil
+	@State var issues: Result<[SmallIssue], Error>? = nil
 
 	init(fullPath: String) {
 		self.fullPath = fullPath
@@ -30,31 +30,21 @@ struct ProjectIssuesLoader: View {
 		self.loadTask?.cancel()
 		self.loadTask = Task {
 			do {
-				let responses = try Network.shared.apollo.fetch(
-					query: ProjectIssuesQuery(
-						fullPath: self.fullPath,
+				let issues = try await Network.shared.service.fetchProjectIssues(
+					fullPath: self.fullPath,
+					filter: ProjectIssuesFilter(
 						state: GraphFilter.toFilterEnum(self.filter.state),
 						search: GraphFilter.toFilter(self.filter.search),
 						confidential: GraphFilter.toFilter(self.filter.confidential),
 						subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
-						types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
-					),
-					cachePolicy: .cacheAndNetwork
+						types: self.filter.types
+					)
 				)
-
-				for try await response in responses {
-					if Task.isCancelled { return }
-					if let project = response.data?.project {
-						self.project = .success(project)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+				if Task.isCancelled { return }
+				self.issues = .success(issues)
 			} catch {
 				if !Task.isCancelled {
-					self.project = .failure(error)
+					self.issues = .failure(error)
 					Notify.status(.error)
 				}
 			}
@@ -63,49 +53,36 @@ struct ProjectIssuesLoader: View {
 
 	private func reloadIssues() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: ProjectIssuesQuery(
-					fullPath: self.fullPath,
+			let issues = try await Network.shared.service.fetchProjectIssues(
+				fullPath: self.fullPath,
+				filter: ProjectIssuesFilter(
 					state: GraphFilter.toFilterEnum(self.filter.state),
 					search: GraphFilter.toFilter(self.filter.search),
 					confidential: GraphFilter.toFilter(self.filter.confidential),
 					subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
-					types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
+					types: self.filter.types
 				),
-				cachePolicy: .networkOnly
+				strategy: .networkOnly
 			)
-
-			if let project = response.data?.project {
-				self.project = .success(project)
-			}
-
+			self.issues = .success(issues)
 			Notify.status(.success)
 		} catch let error {
-			self.project = .failure(error)
+			self.issues = .failure(error)
 			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let project {
-				switch project {
-				case .success(let project):
-					if !(project.issuesEnabled ?? false) {
+			if let issues {
+				switch issues {
+				case .success(let issues):
+					if issues.isEmpty {
 						NoContentView(
-							"Issues are not enabled for this project",
-							systemImage: "smallcircle.circle"
-						)
-					} else if let issues = project.issues?.nodes {
-						if issues.isEmpty {
-							NoContentView(
-								"There are no issues", systemImage: "smallcircle.circle")
-						} else {
-							ForEach(issues, id: \.?.iid) { issue in
-								if let issue {
-									SmallIssueView(self.fullPath, issue)
-								}
-							}
+							"There are no issues", systemImage: "smallcircle.circle")
+					} else {
+						ForEach(issues, id: \.iid) { issue in
+							SmallIssueView(self.fullPath, issue)
 						}
 					}
 				case .failure(let error):
@@ -120,17 +97,12 @@ struct ProjectIssuesLoader: View {
 			await reloadIssues()
 		}.toolbar {
 			HStack {
-				if let project,
-					case .success(let project) = project,
-					let projectId = project.id.toIntId()
-				{
-					NavigationLink(
-						destination: NewIssueView(id: projectId, fullPath: self.fullPath),
-						label: {
-							Label("New issue", systemImage: "plus")
-						}
-					).tint(.accentColor)
-				}
+				NavigationLink(
+					destination: NewIssueView(id: 0, fullPath: self.fullPath),
+					label: {
+						Label("New issue", systemImage: "plus")
+					}
+				).tint(.accentColor)
 
 				Button("Filter", systemImage: "line.3.horizontal.decrease") {
 					showFilters = true
@@ -150,7 +122,7 @@ struct ProjectIssuesLoader: View {
 			text: Binding(get: { self.filter.search ?? "" }, set: { self.filter.search = $0.isNotEmpty ? $0 : nil }),
 			prompt: "Search issues"
 		).onChange(of: filter.search) { _ in
-			self.project = nil  // Show loading state
+			self.issues = nil  // Show loading state
 			loadIssues()
 		}.navigationTitle("Issues")
 	}

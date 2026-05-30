@@ -2197,21 +2197,7 @@ public struct GroupsResponse: Decodable, Sendable {
 }
 
 public struct Groups_Groups: Decodable, Sendable {
-	public let nodes: Groups_Groups_Nodes?
-}
-
-public struct Groups_Groups_Nodes_MaxAccessLevel: Decodable, Sendable {
-	public let stringValue: String?
-}
-
-public struct Groups_Groups_Nodes: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let fullPath: String?
-	public let visibility: String?
-	public let groupMembersCount: String?
-	public let projectsCount: String?
-	public let maxAccessLevel: Groups_Groups_Nodes_MaxAccessLevel?
+	public let nodes: [GroupStruct]?
 }
 
 public struct UserGroupsResponse: Decodable, Sendable {
@@ -2219,25 +2205,11 @@ public struct UserGroupsResponse: Decodable, Sendable {
 }
 
 public struct UserGroups_User: Decodable, Sendable {
-	public let groups: UserGroups_User_Groups?
+	public let groups: UserGroups_Groups?
 }
 
-public struct UserGroups_User_Groups_Nodes_MaxAccessLevel: Decodable, Sendable {
-	public let stringValue: String?
-}
-
-public struct UserGroups_User_Groups_Nodes: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let fullPath: String?
-	public let visibility: String?
-	public let groupMembersCount: String?
-	public let projectsCount: String?
-	public let maxAccessLevel: UserGroups_User_Groups_Nodes_MaxAccessLevel?
-}
-
-public struct UserGroups_User_Groups: Decodable, Sendable {
-	public let nodes: [UserGroups_User_Groups_Nodes]?
+public struct UserGroups_Groups: Decodable, Sendable {
+	public let nodes: [GroupStruct]?
 }
 
 public struct CurrentUserIssuesResponse: Decodable, Sendable {
@@ -2324,30 +2296,11 @@ public struct GroupIssuesResponse: Decodable, Sendable {
 }
 
 public struct GroupIssues_Group: Decodable, Sendable {
-	public let issues: GroupIssues_Group_Issues?
+	public let issues: GroupIssues_Issues?
 }
 
-public struct GroupIssues_Group_Issues_Nodes_Author: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let username: String?
-}
-
-public struct GroupIssues_Group_Issues_Nodes: Decodable, Sendable {
-	public let iid: String?
-	public let title: String?
-	public let reference: String?
-	public let state: String?
-	public let upvotes: String?
-	public let downvotes: String?
-	public let userNotesCount: String?
-	public let author: GroupIssues_Group_Issues_Nodes_Author?
-	public let createdAt: String?
-	public let webUrl: String?
-}
-
-public struct GroupIssues_Group_Issues: Decodable, Sendable {
-	public let nodes: [GroupIssues_Group_Issues_Nodes]?
+public struct GroupIssues_Issues: Decodable, Sendable {
+	public let nodes: [SmallIssueStruct]?
 }
 
 public struct IssueResponse: Decodable, Sendable {
@@ -2470,37 +2423,11 @@ public struct ProjectIssuesResponse: Decodable, Sendable {
 }
 
 public struct ProjectIssues_Project: Decodable, Sendable {
-	public let id: String?
-	public let issuesEnabled: String?
-	public let userPermissions: ProjectIssues_Project_UserPermissions?
-	public let issues: ProjectIssues_Project_Issues?
+	public let issues: ProjectIssues_Issues?
 }
 
-public struct ProjectIssues_Project_UserPermissions: Decodable, Sendable {
-	public let createIssue: String?
-}
-
-public struct ProjectIssues_Project_Issues_Nodes_Author: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let username: String?
-}
-
-public struct ProjectIssues_Project_Issues_Nodes: Decodable, Sendable {
-	public let iid: String?
-	public let title: String?
-	public let reference: String?
-	public let state: String?
-	public let upvotes: String?
-	public let downvotes: String?
-	public let userNotesCount: String?
-	public let author: ProjectIssues_Project_Issues_Nodes_Author?
-	public let createdAt: String?
-	public let webUrl: String?
-}
-
-public struct ProjectIssues_Project_Issues: Decodable, Sendable {
-	public let nodes: [ProjectIssues_Project_Issues_Nodes]?
+public struct ProjectIssues_Issues: Decodable, Sendable {
+	public let nodes: [SmallIssueStruct]?
 }
 
 public struct UserIssuesResponse: Decodable, Sendable {
@@ -2576,30 +2503,11 @@ public struct GroupMergeRequestsResponse: Decodable, Sendable {
 }
 
 public struct GroupMergeRequests_Group: Decodable, Sendable {
-	public let mergeRequests: GroupMergeRequests_Group_MergeRequests?
+	public let mergeRequests: GroupMergeRequests_MergeRequests?
 }
 
-public struct GroupMergeRequests_Group_MergeRequests_Nodes_Author: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let username: String?
-}
-
-public struct GroupMergeRequests_Group_MergeRequests_Nodes: Decodable, Sendable {
-	public let iid: String?
-	public let title: String?
-	public let reference: String?
-	public let state: String?
-	public let upvotes: String?
-	public let downvotes: String?
-	public let userNotesCount: String?
-	public let author: GroupMergeRequests_Group_MergeRequests_Nodes_Author?
-	public let createdAt: String?
-	public let webUrl: String?
-}
-
-public struct GroupMergeRequests_Group_MergeRequests: Decodable, Sendable {
-	public let nodes: [GroupMergeRequests_Group_MergeRequests_Nodes]?
+public struct GroupMergeRequests_MergeRequests: Decodable, Sendable {
+	public let nodes: [SmallMergeRequestStruct]?
 }
 
 public struct MergeRequestResponse: Decodable, Sendable {
@@ -2724,31 +2632,11 @@ public struct ProjectMergeRequestsResponse: Decodable, Sendable {
 }
 
 public struct ProjectMergeRequests_Project: Decodable, Sendable {
-	public let mergeRequestsEnabled: String?
-	public let mergeRequests: ProjectMergeRequests_Project_MergeRequests?
+	public let mergeRequests: ProjectMergeRequests_MergeRequests?
 }
 
-public struct ProjectMergeRequests_Project_MergeRequests_Nodes_Author: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let username: String?
-}
-
-public struct ProjectMergeRequests_Project_MergeRequests_Nodes: Decodable, Sendable {
-	public let iid: String?
-	public let title: String?
-	public let reference: String?
-	public let state: String?
-	public let upvotes: String?
-	public let downvotes: String?
-	public let userNotesCount: String?
-	public let author: ProjectMergeRequests_Project_MergeRequests_Nodes_Author?
-	public let createdAt: String?
-	public let webUrl: String?
-}
-
-public struct ProjectMergeRequests_Project_MergeRequests: Decodable, Sendable {
-	public let nodes: [ProjectMergeRequests_Project_MergeRequests_Nodes]?
+public struct ProjectMergeRequests_MergeRequests: Decodable, Sendable {
+	public let nodes: [SmallMergeRequestStruct]?
 }
 
 public struct UserAssignedMergeRequestsResponse: Decodable, Sendable {
@@ -2756,35 +2644,11 @@ public struct UserAssignedMergeRequestsResponse: Decodable, Sendable {
 }
 
 public struct UserAssignedMergeRequests_CurrentUser: Decodable, Sendable {
-	public let assignedMergeRequests: UserAssignedMergeRequests_CurrentUser_AssignedMergeRequests?
+	public let assignedMergeRequests: UserAssignedMergeRequests_AssignedMergeRequests?
 }
 
-public struct UserAssignedMergeRequests_CurrentUser_AssignedMergeRequests_Nodes_Project: Decodable, Sendable {
-	public let fullPath: String?
-}
-
-public struct UserAssignedMergeRequests_CurrentUser_AssignedMergeRequests_Nodes_Author: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let username: String?
-}
-
-public struct UserAssignedMergeRequests_CurrentUser_AssignedMergeRequests_Nodes: Decodable, Sendable {
-	public let project: UserAssignedMergeRequests_CurrentUser_AssignedMergeRequests_Nodes_Project?
-	public let iid: String?
-	public let title: String?
-	public let reference: String?
-	public let state: String?
-	public let upvotes: String?
-	public let downvotes: String?
-	public let userNotesCount: String?
-	public let author: UserAssignedMergeRequests_CurrentUser_AssignedMergeRequests_Nodes_Author?
-	public let createdAt: String?
-	public let webUrl: String?
-}
-
-public struct UserAssignedMergeRequests_CurrentUser_AssignedMergeRequests: Decodable, Sendable {
-	public let nodes: [UserAssignedMergeRequests_CurrentUser_AssignedMergeRequests_Nodes]?
+public struct UserAssignedMergeRequests_AssignedMergeRequests: Decodable, Sendable {
+	public let nodes: [UserSmallMergeRequestStruct]?
 }
 
 public struct UserAuthoredMergeRequestsResponse: Decodable, Sendable {
@@ -2792,35 +2656,11 @@ public struct UserAuthoredMergeRequestsResponse: Decodable, Sendable {
 }
 
 public struct UserAuthoredMergeRequests_CurrentUser: Decodable, Sendable {
-	public let authoredMergeRequests: UserAuthoredMergeRequests_CurrentUser_AuthoredMergeRequests?
+	public let authoredMergeRequests: UserAuthoredMergeRequests_AuthoredMergeRequests?
 }
 
-public struct UserAuthoredMergeRequests_CurrentUser_AuthoredMergeRequests_Nodes_Project: Decodable, Sendable {
-	public let fullPath: String?
-}
-
-public struct UserAuthoredMergeRequests_CurrentUser_AuthoredMergeRequests_Nodes_Author: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let username: String?
-}
-
-public struct UserAuthoredMergeRequests_CurrentUser_AuthoredMergeRequests_Nodes: Decodable, Sendable {
-	public let project: UserAuthoredMergeRequests_CurrentUser_AuthoredMergeRequests_Nodes_Project?
-	public let iid: String?
-	public let title: String?
-	public let reference: String?
-	public let state: String?
-	public let upvotes: String?
-	public let downvotes: String?
-	public let userNotesCount: String?
-	public let author: UserAuthoredMergeRequests_CurrentUser_AuthoredMergeRequests_Nodes_Author?
-	public let createdAt: String?
-	public let webUrl: String?
-}
-
-public struct UserAuthoredMergeRequests_CurrentUser_AuthoredMergeRequests: Decodable, Sendable {
-	public let nodes: [UserAuthoredMergeRequests_CurrentUser_AuthoredMergeRequests_Nodes]?
+public struct UserAuthoredMergeRequests_AuthoredMergeRequests: Decodable, Sendable {
+	public let nodes: [UserSmallMergeRequestStruct]?
 }
 
 public struct UserReviewRequestedMergeRequestsResponse: Decodable, Sendable {
@@ -2828,35 +2668,11 @@ public struct UserReviewRequestedMergeRequestsResponse: Decodable, Sendable {
 }
 
 public struct UserReviewRequestedMergeRequests_CurrentUser: Decodable, Sendable {
-	public let reviewRequestedMergeRequests: UserReviewRequestedMergeRequests_CurrentUser_ReviewRequestedMergeRequests?
+	public let reviewRequestedMergeRequests: UserReviewRequestedMergeRequests_ReviewRequestedMergeRequests?
 }
 
-public struct UserReviewRequestedMergeRequests_CurrentUser_ReviewRequestedMergeRequests_Nodes_Project: Decodable, Sendable {
-	public let fullPath: String?
-}
-
-public struct UserReviewRequestedMergeRequests_CurrentUser_ReviewRequestedMergeRequests_Nodes_Author: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let username: String?
-}
-
-public struct UserReviewRequestedMergeRequests_CurrentUser_ReviewRequestedMergeRequests_Nodes: Decodable, Sendable {
-	public let project: UserReviewRequestedMergeRequests_CurrentUser_ReviewRequestedMergeRequests_Nodes_Project?
-	public let iid: String?
-	public let title: String?
-	public let reference: String?
-	public let state: String?
-	public let upvotes: String?
-	public let downvotes: String?
-	public let userNotesCount: String?
-	public let author: UserReviewRequestedMergeRequests_CurrentUser_ReviewRequestedMergeRequests_Nodes_Author?
-	public let createdAt: String?
-	public let webUrl: String?
-}
-
-public struct UserReviewRequestedMergeRequests_CurrentUser_ReviewRequestedMergeRequests: Decodable, Sendable {
-	public let nodes: [UserReviewRequestedMergeRequests_CurrentUser_ReviewRequestedMergeRequests_Nodes]?
+public struct UserReviewRequestedMergeRequests_ReviewRequestedMergeRequests: Decodable, Sendable {
+	public let nodes: [UserSmallMergeRequestStruct]?
 }
 
 public struct MergeRequestCommitsResponse: Decodable, Sendable {
@@ -2922,29 +2738,11 @@ public struct GroupMilestonesResponse: Decodable, Sendable {
 }
 
 public struct GroupMilestones_Group: Decodable, Sendable {
-	public let milestones: GroupMilestones_Group_Milestones?
+	public let milestones: GroupMilestones_Milestones?
 }
 
-public struct GroupMilestones_Group_Milestones_Nodes_Stats: Decodable, Sendable {
-	public let closedIssuesCount: String?
-	public let totalIssuesCount: String?
-}
-
-public struct GroupMilestones_Group_Milestones_Nodes: Decodable, Sendable {
-	public let id: String?
-	public let iid: String?
-	public let state: String?
-	public let title: String?
-	public let description: String?
-	public let expired: String?
-	public let startDate: String?
-	public let dueDate: String?
-	public let stats: GroupMilestones_Group_Milestones_Nodes_Stats?
-	public let webPath: String?
-}
-
-public struct GroupMilestones_Group_Milestones: Decodable, Sendable {
-	public let nodes: [GroupMilestones_Group_Milestones_Nodes]?
+public struct GroupMilestones_Milestones: Decodable, Sendable {
+	public let nodes: [MilestoneStruct]?
 }
 
 public struct ProjectMilestonesResponse: Decodable, Sendable {
@@ -2952,29 +2750,11 @@ public struct ProjectMilestonesResponse: Decodable, Sendable {
 }
 
 public struct ProjectMilestones_Project: Decodable, Sendable {
-	public let milestones: ProjectMilestones_Project_Milestones?
+	public let milestones: ProjectMilestones_Milestones?
 }
 
-public struct ProjectMilestones_Project_Milestones_Nodes_Stats: Decodable, Sendable {
-	public let closedIssuesCount: String?
-	public let totalIssuesCount: String?
-}
-
-public struct ProjectMilestones_Project_Milestones_Nodes: Decodable, Sendable {
-	public let id: String?
-	public let iid: String?
-	public let state: String?
-	public let title: String?
-	public let description: String?
-	public let expired: String?
-	public let startDate: String?
-	public let dueDate: String?
-	public let stats: ProjectMilestones_Project_Milestones_Nodes_Stats?
-	public let webPath: String?
-}
-
-public struct ProjectMilestones_Project_Milestones: Decodable, Sendable {
-	public let nodes: [ProjectMilestones_Project_Milestones_Nodes]?
+public struct ProjectMilestones_Milestones: Decodable, Sendable {
+	public let nodes: [MilestoneStruct]?
 }
 
 public struct ProjectPipelinesResponse: Decodable, Sendable {
@@ -3016,67 +2796,11 @@ public struct ProjectReleasesQueryResponse: Decodable, Sendable {
 }
 
 public struct ProjectReleasesQuery_Project: Decodable, Sendable {
-	public let releases: ProjectReleasesQuery_Project_Releases?
+	public let releases: ProjectReleasesQuery_Releases?
 }
 
-public struct ProjectReleasesQuery_Project_Releases_Nodes_Author: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let username: String?
-}
-
-public struct ProjectReleasesQuery_Project_Releases_Nodes_Commit: Decodable, Sendable {
-	public let shortId: String?
-}
-
-public struct ProjectReleasesQuery_Project_Releases_Nodes_Milestones_Nodes: Decodable, Sendable {
-	public let id: String?
-	public let title: String?
-}
-
-public struct ProjectReleasesQuery_Project_Releases_Nodes_Milestones: Decodable, Sendable {
-	public let nodes: ProjectReleasesQuery_Project_Releases_Nodes_Milestones_Nodes?
-}
-
-public struct ProjectReleasesQuery_Project_Releases_Nodes_Assets_Links_Nodes: Decodable, Sendable {
-	public let id: String?
-	public let name: String?
-	public let url: String?
-}
-
-public struct ProjectReleasesQuery_Project_Releases_Nodes_Assets_Links: Decodable, Sendable {
-	public let nodes: [ProjectReleasesQuery_Project_Releases_Nodes_Assets_Links_Nodes]?
-}
-
-public struct ProjectReleasesQuery_Project_Releases_Nodes_Assets_Sources_Nodes: Decodable, Sendable {
-	public let url: String?
-	public let format: String?
-}
-
-public struct ProjectReleasesQuery_Project_Releases_Nodes_Assets_Sources: Decodable, Sendable {
-	public let nodes: [ProjectReleasesQuery_Project_Releases_Nodes_Assets_Sources_Nodes]?
-}
-
-public struct ProjectReleasesQuery_Project_Releases_Nodes_Assets: Decodable, Sendable {
-	public let count: String?
-	public let links: ProjectReleasesQuery_Project_Releases_Nodes_Assets_Links?
-	public let sources: ProjectReleasesQuery_Project_Releases_Nodes_Assets_Sources?
-}
-
-public struct ProjectReleasesQuery_Project_Releases_Nodes: Decodable, Sendable {
-	public let id: String?
-	public let name: String?
-	public let description: String?
-	public let tagName: String?
-	public let releasedAt: String?
-	public let author: ProjectReleasesQuery_Project_Releases_Nodes_Author?
-	public let commit: ProjectReleasesQuery_Project_Releases_Nodes_Commit?
-	public let milestones: ProjectReleasesQuery_Project_Releases_Nodes_Milestones?
-	public let assets: ProjectReleasesQuery_Project_Releases_Nodes_Assets?
-}
-
-public struct ProjectReleasesQuery_Project_Releases: Decodable, Sendable {
-	public let nodes: [ProjectReleasesQuery_Project_Releases_Nodes]?
+public struct ProjectReleasesQuery_Releases: Decodable, Sendable {
+	public let nodes: [ReleaseStruct]?
 }
 
 public struct CurrentUserStarredProjectsResponse: Decodable, Sendable {
@@ -3265,26 +2989,11 @@ public struct CurrentUserSnippetsResponse: Decodable, Sendable {
 }
 
 public struct CurrentUserSnippets_CurrentUser: Decodable, Sendable {
-	public let snippets: CurrentUserSnippets_CurrentUser_Snippets?
+	public let snippets: CurrentUserSnippets_Snippets?
 }
 
-public struct CurrentUserSnippets_CurrentUser_Snippets_Nodes_Author: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let username: String?
-}
-
-public struct CurrentUserSnippets_CurrentUser_Snippets_Nodes: Decodable, Sendable {
-	public let id: String?
-	public let title: String?
-	public let visibilityLevel: String?
-	public let author: CurrentUserSnippets_CurrentUser_Snippets_Nodes_Author?
-	public let createdAt: String?
-	public let webUrl: String?
-}
-
-public struct CurrentUserSnippets_CurrentUser_Snippets: Decodable, Sendable {
-	public let nodes: [CurrentUserSnippets_CurrentUser_Snippets_Nodes]?
+public struct CurrentUserSnippets_Snippets: Decodable, Sendable {
+	public let nodes: [SnippetStruct]?
 }
 
 public struct SnippetResponse: Decodable, Sendable {
@@ -3292,63 +3001,7 @@ public struct SnippetResponse: Decodable, Sendable {
 }
 
 public struct Snippet_Snippets: Decodable, Sendable {
-	public let nodes: Snippet_Snippets_Nodes?
-}
-
-public struct Snippet_Snippets_Nodes_UserPermissions: Decodable, Sendable {
-	public let createNote: String?
-}
-
-public struct Snippet_Snippets_Nodes_Author: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let username: String?
-	public let name: String?
-}
-
-public struct Snippet_Snippets_Nodes_Blobs_Nodes: Decodable, Sendable {
-	public let size: String?
-	public let name: String?
-	public let rawPlainData: String?
-}
-
-public struct Snippet_Snippets_Nodes_Blobs: Decodable, Sendable {
-	public let nodes: [Snippet_Snippets_Nodes_Blobs_Nodes]?
-}
-
-public struct Snippet_Snippets_Nodes_Notes_Nodes_Author: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let username: String?
-}
-
-public struct Snippet_Snippets_Nodes_Notes_Nodes: Decodable, Sendable {
-	public let id: String?
-	public let author: Snippet_Snippets_Nodes_Notes_Nodes_Author?
-	public let maxAccessLevelOfAuthor: String?
-	public let body: String?
-	public let system: String?
-	public let systemNoteIconName: String?
-	public let createdAt: String?
-	public let updatedAt: String?
-}
-
-public struct Snippet_Snippets_Nodes_Notes: Decodable, Sendable {
-	public let nodes: [Snippet_Snippets_Nodes_Notes_Nodes]?
-}
-
-public struct Snippet_Snippets_Nodes: Decodable, Sendable {
-	public let id: String?
-	public let title: String?
-	public let description: String?
-	public let visibilityLevel: String?
-	public let userPermissions: Snippet_Snippets_Nodes_UserPermissions?
-	public let author: Snippet_Snippets_Nodes_Author?
-	public let blobs: Snippet_Snippets_Nodes_Blobs?
-	public let notes: Snippet_Snippets_Nodes_Notes?
-	public let createdAt: String?
-	public let sshUrlToRepo: String?
-	public let httpUrlToRepo: String?
-	public let webUrl: String?
+	public let nodes: [SnippetStruct]?
 }
 
 public struct UserSnippetsResponse: Decodable, Sendable {
@@ -3356,26 +3009,11 @@ public struct UserSnippetsResponse: Decodable, Sendable {
 }
 
 public struct UserSnippets_User: Decodable, Sendable {
-	public let snippets: UserSnippets_User_Snippets?
+	public let snippets: UserSnippets_Snippets?
 }
 
-public struct UserSnippets_User_Snippets_Nodes_Author: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let username: String?
-}
-
-public struct UserSnippets_User_Snippets_Nodes: Decodable, Sendable {
-	public let id: String?
-	public let title: String?
-	public let visibilityLevel: String?
-	public let author: UserSnippets_User_Snippets_Nodes_Author?
-	public let createdAt: String?
-	public let webUrl: String?
-}
-
-public struct UserSnippets_User_Snippets: Decodable, Sendable {
-	public let nodes: [UserSnippets_User_Snippets_Nodes]?
+public struct UserSnippets_Snippets: Decodable, Sendable {
+	public let nodes: [SnippetStruct]?
 }
 
 public struct GroupTimelogsResponse: Decodable, Sendable {
@@ -3383,41 +3021,11 @@ public struct GroupTimelogsResponse: Decodable, Sendable {
 }
 
 public struct GroupTimelogs_Group: Decodable, Sendable {
-	public let timelogs: GroupTimelogs_Group_Timelogs?
+	public let timelogs: GroupTimelogs_Timelogs?
 }
 
-public struct GroupTimelogs_Group_Timelogs_Nodes_User: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let username: String?
-}
-
-public struct GroupTimelogs_Group_Timelogs_Nodes_Project: Decodable, Sendable {
-	public let fullPath: String?
-	public let nameWithNamespace: String?
-}
-
-public struct GroupTimelogs_Group_Timelogs_Nodes_Issue: Decodable, Sendable {
-	public let iid: String?
-}
-
-public struct GroupTimelogs_Group_Timelogs_Nodes_MergeRequest: Decodable, Sendable {
-	public let iid: String?
-}
-
-public struct GroupTimelogs_Group_Timelogs_Nodes: Decodable, Sendable {
-	public let id: String?
-	public let user: GroupTimelogs_Group_Timelogs_Nodes_User?
-	public let spentAt: String?
-	public let summary: String?
-	public let timeSpent: String?
-	public let project: GroupTimelogs_Group_Timelogs_Nodes_Project?
-	public let issue: GroupTimelogs_Group_Timelogs_Nodes_Issue?
-	public let mergeRequest: GroupTimelogs_Group_Timelogs_Nodes_MergeRequest?
-}
-
-public struct GroupTimelogs_Group_Timelogs: Decodable, Sendable {
-	public let nodes: [GroupTimelogs_Group_Timelogs_Nodes]?
+public struct GroupTimelogs_Timelogs: Decodable, Sendable {
+	public let nodes: [TimelogStruct]?
 }
 
 public struct UserTimelogsResponse: Decodable, Sendable {
@@ -3425,41 +3033,11 @@ public struct UserTimelogsResponse: Decodable, Sendable {
 }
 
 public struct UserTimelogs_User: Decodable, Sendable {
-	public let timelogs: UserTimelogs_User_Timelogs?
+	public let timelogs: UserTimelogs_Timelogs?
 }
 
-public struct UserTimelogs_User_Timelogs_Nodes_User: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let username: String?
-}
-
-public struct UserTimelogs_User_Timelogs_Nodes_Project: Decodable, Sendable {
-	public let fullPath: String?
-	public let nameWithNamespace: String?
-}
-
-public struct UserTimelogs_User_Timelogs_Nodes_Issue: Decodable, Sendable {
-	public let iid: String?
-}
-
-public struct UserTimelogs_User_Timelogs_Nodes_MergeRequest: Decodable, Sendable {
-	public let iid: String?
-}
-
-public struct UserTimelogs_User_Timelogs_Nodes: Decodable, Sendable {
-	public let id: String?
-	public let user: UserTimelogs_User_Timelogs_Nodes_User?
-	public let spentAt: String?
-	public let summary: String?
-	public let timeSpent: String?
-	public let project: UserTimelogs_User_Timelogs_Nodes_Project?
-	public let issue: UserTimelogs_User_Timelogs_Nodes_Issue?
-	public let mergeRequest: UserTimelogs_User_Timelogs_Nodes_MergeRequest?
-}
-
-public struct UserTimelogs_User_Timelogs: Decodable, Sendable {
-	public let nodes: [UserTimelogs_User_Timelogs_Nodes]?
+public struct UserTimelogs_Timelogs: Decodable, Sendable {
+	public let nodes: [TimelogStruct]?
 }
 
 public struct CurrentUserTodosResponse: Decodable, Sendable {
@@ -3467,45 +3045,11 @@ public struct CurrentUserTodosResponse: Decodable, Sendable {
 }
 
 public struct CurrentUserTodos_CurrentUser: Decodable, Sendable {
-	public let todos: CurrentUserTodos_CurrentUser_Todos?
+	public let todos: CurrentUserTodos_Todos?
 }
 
-public struct CurrentUserTodos_CurrentUser_Todos_Nodes_Group: Decodable, Sendable {
-	public let id: String?
-}
-
-public struct CurrentUserTodos_CurrentUser_Todos_Nodes_Author: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let username: String?
-}
-
-public struct CurrentUserTodos_CurrentUser_Todos_Nodes_TargetEntity: Decodable, Sendable {
-	public let webUrl: String?
-}
-
-public struct CurrentUserTodos_CurrentUser_Todos_Nodes_Project: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let fullPath: String?
-	public let nameWithNamespace: String?
-	public let visibility: String?
-}
-
-public struct CurrentUserTodos_CurrentUser_Todos_Nodes: Decodable, Sendable {
-	public let id: String?
-	public let body: String?
-	public let group: CurrentUserTodos_CurrentUser_Todos_Nodes_Group?
-	public let state: String?
-	public let action: String?
-	public let author: CurrentUserTodos_CurrentUser_Todos_Nodes_Author?
-	public let targetEntity: CurrentUserTodos_CurrentUser_Todos_Nodes_TargetEntity?
-	public let project: CurrentUserTodos_CurrentUser_Todos_Nodes_Project?
-	public let createdAt: String?
-	public let targetType: String?
-}
-
-public struct CurrentUserTodos_CurrentUser_Todos: Decodable, Sendable {
-	public let nodes: [CurrentUserTodos_CurrentUser_Todos_Nodes]?
+public struct CurrentUserTodos_Todos: Decodable, Sendable {
+	public let nodes: [TodoStruct]?
 }
 
 public struct UserTodosResponse: Decodable, Sendable {
@@ -3513,45 +3057,11 @@ public struct UserTodosResponse: Decodable, Sendable {
 }
 
 public struct UserTodos_User: Decodable, Sendable {
-	public let todos: UserTodos_User_Todos?
+	public let todos: UserTodos_Todos?
 }
 
-public struct UserTodos_User_Todos_Nodes_Group: Decodable, Sendable {
-	public let id: String?
-}
-
-public struct UserTodos_User_Todos_Nodes_Author: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let name: String?
-	public let username: String?
-}
-
-public struct UserTodos_User_Todos_Nodes_TargetEntity: Decodable, Sendable {
-	public let webUrl: String?
-}
-
-public struct UserTodos_User_Todos_Nodes_Project: Decodable, Sendable {
-	public let avatarUrl: String?
-	public let fullPath: String?
-	public let nameWithNamespace: String?
-	public let visibility: String?
-}
-
-public struct UserTodos_User_Todos_Nodes: Decodable, Sendable {
-	public let id: String?
-	public let body: String?
-	public let group: UserTodos_User_Todos_Nodes_Group?
-	public let state: String?
-	public let action: String?
-	public let author: UserTodos_User_Todos_Nodes_Author?
-	public let targetEntity: UserTodos_User_Todos_Nodes_TargetEntity?
-	public let project: UserTodos_User_Todos_Nodes_Project?
-	public let createdAt: String?
-	public let targetType: String?
-}
-
-public struct UserTodos_User_Todos: Decodable, Sendable {
-	public let nodes: [UserTodos_User_Todos_Nodes]?
+public struct UserTodos_Todos: Decodable, Sendable {
+	public let nodes: [TodoStruct]?
 }
 
 public struct CurrentUserResponse: Decodable, Sendable {

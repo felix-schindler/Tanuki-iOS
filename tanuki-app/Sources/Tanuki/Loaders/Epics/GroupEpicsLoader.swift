@@ -15,39 +15,24 @@ struct GroupEpicsLoader: View {
 		self.fullPath = fullPath
 	}
 
-	@State var epics: Result<[GroupEpicsQuery.Data.Group.Epics.Node?], Error>? = nil
+	@State var epics: Result<GroupEpics_Group, Error>? = nil
 
 	private func loadIssues() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: GroupEpicsQuery(fullPath: self.fullPath), cachePolicy: .cacheAndNetwork)
-
-			Task {
-				for try await response in responses {
-					if let epics = response.data?.group?.epics?.nodes {
-						self.epics = .success(epics)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+		Task {
+			do {
+				let payload = try await Network.shared.service.fetchGroupEpics(fullPath: self.fullPath)
+				self.epics = .success(payload)
+			} catch let error {
+				self.epics = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.epics = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadIssues() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: GroupEpicsQuery(fullPath: self.fullPath), cachePolicy: .networkOnly)
-
-			if let epics = response.data?.group?.epics?.nodes {
-				self.epics = .success(epics)
-			}
-
+			let payload = try await Network.shared.service.fetchGroupEpics(fullPath: self.fullPath, strategy: .networkOnly)
+			self.epics = .success(payload)
 			Notify.status(.success)
 		} catch let error {
 			self.epics = .failure(error)
@@ -59,63 +44,63 @@ struct GroupEpicsLoader: View {
 		List {
 			if let epics {
 				switch epics {
-				case .success(let epics):
-					if epics.isEmpty {
+				case .success(let payload):
+					let nodes = payload.epics?.nodes ?? []
+					if nodes.isEmpty {
 						NoContentView("There are no epics", systemImage: "calendar")
 					} else {
-						ForEach(epics, id: \.?.reference) { maybeEpic in
-							if let epic = maybeEpic {
-								// TODO: This is basically the `SmallIssueView` just catching a few NIL cases in properties that Issues always have. Maybe I should just generalize this to `SmallIssueView`?
-								NavigationLink(
-									destination: EpicLoader(
-										fullPath: self.fullPath, iid: epic.iid
-									),
-									label: {
-										VStack(alignment: .leading) {
+						ForEach(nodes, id: \.iid) { epic in
+							NavigationLink(
+								destination: EpicLoader(
+									fullPath: self.fullPath, iid: epic.iid ?? ""
+								),
+								label: {
+									VStack(alignment: .leading) {
+										if let reference = epic.reference {
 											HStack(spacing: 5) {
 												IssueStateIcon(epic.state)
-												Text(epic.reference)
+												Text(reference)
 													.foregroundStyle(.secondary)
 											}.font(.footnote)
+										}
 
-											if let title = epic.title?.emojized() {
-												Text(title)
-											}
+										if let title = epic.title?.emojized() {
+											Text(title)
+										}
 
-											HStack {
-												ScrollView(.horizontal) {
-													HStack {
-														AuthorView(epic._author)
-														if let createdAt = epic.createdAt {
-															HStack(spacing: 2) {
-																Image(systemName: "clock")
-																Text(Date.fromToString(createdAt))
-															}
+										HStack {
+											ScrollView(.horizontal) {
+												HStack {
+													if let author = epic.author {
+														AuthorView(author)
+													}
+													if let createdAt = epic.createdAt {
+														HStack(spacing: 2) {
+															Image(systemName: "clock")
+															Text(Date.fromToString(createdAt))
 														}
 													}
 												}
-												Spacer()
-												HStack {
-													HStack(spacing: 2) {
-														Image(systemName: "hand.thumbsup")
-														Text(String(epic.upvotes))
-													}
-													HStack(spacing: 2) {
-														Image(systemName: "hand.thumbsdown")
-														Text(String(epic.downvotes))
-													}
-													HStack(spacing: 2) {
-														Image(systemName: "note.text")
-														Text(String(epic.userNotesCount))
-													}
+											}
+											Spacer()
+											HStack {
+												HStack(spacing: 2) {
+													Image(systemName: "hand.thumbsup")
+													Text(epic.upvotes ?? "0")
 												}
-											}.font(.footnote)
-										}.swipeActions {
-											ShareButton(URL(string: epic.webUrl)!)
-										}
+												HStack(spacing: 2) {
+													Image(systemName: "hand.thumbsdown")
+													Text(epic.downvotes ?? "0")
+												}
+												HStack(spacing: 2) {
+													Image(systemName: "note.text")
+													Text(epic.userNotesCount ?? "0")
+												}
+											}
+										}.font(.footnote)
 									}
-								)
-							}
+								}
+							)
 						}
 					}
 				case .failure(let error):

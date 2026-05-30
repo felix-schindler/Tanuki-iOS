@@ -20,7 +20,7 @@ struct NewReleaseView: View {
 	}
 
 	@State var tags: [Tag]? = nil
-	@State var milestones: [ProjectMilestonesQuery.Data.Project.Milestones.Node?]? = nil
+	@State var milestones: [Milestone]? = nil
 
 	@State var tagName = ""
 	@State var newTagName = false
@@ -54,15 +54,10 @@ struct NewReleaseView: View {
 
 	private func loadMilestones() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: ProjectMilestonesQuery(
-					fullPath: self.fullPath, state: .none, searchTitle: .none, includeAncestors: .some(false)),
-				cachePolicy: .networkOnly
+			self.milestones = try await Network.shared.service.fetchProjectMilestones(
+				fullPath: self.fullPath,
+				filter: ProjectMilestonesFilter(includeAncestors: false)
 			)
-
-			if let milestones = response.data?.project?.milestones?.nodes {
-				self.milestones = milestones
-			}
 		} catch let error {
 			Notify.status(
 				.error,
@@ -189,20 +184,18 @@ struct NewReleaseView: View {
 			Section("Milestones") {
 				if let milestones, milestones.isNotEmpty {
 					Menu("Milestones") {
-						ForEach(milestones, id: \.?.iid) { milestone in
-							if let milestone {
-								Button {
-									if selectedMilestones.contains(milestone.title) {
-										selectedMilestones.remove(milestone.title)
-									} else {
-										selectedMilestones.insert(milestone.title)
-									}
-								} label: {
-									if selectedMilestones.contains(milestone.title) {
-										Label(milestone.title, systemImage: "checkmark")
-									} else {
-										Text(milestone.title)
-									}
+						ForEach(milestones, id: \.iid) { milestone in
+							Button {
+								if selectedMilestones.contains(milestone.title) {
+									selectedMilestones.remove(milestone.title)
+								} else {
+									selectedMilestones.insert(milestone.title)
+								}
+							} label: {
+								if selectedMilestones.contains(milestone.title) {
+									Label(milestone.title, systemImage: "checkmark")
+								} else {
+									Text(milestone.title)
 								}
 							}
 						}

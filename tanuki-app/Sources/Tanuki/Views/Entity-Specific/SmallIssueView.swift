@@ -5,6 +5,7 @@
 //  Created by Felix Schindler on 07.03.24.
 //
 
+import GitLabAPI
 import SwiftUI
 
 struct SmallIssueView: View {

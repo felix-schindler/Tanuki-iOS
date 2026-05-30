@@ -11,44 +11,28 @@ import SwiftUI
 struct CustomEmojisLoader: View {
 	private var fullPath: String
 
-	@State var emojis: Result<[GroupCustomEmojiQuery.Data.Group.CustomEmoji.Node?], Error>? = nil
+	@State var emojis: Result<GroupCustomEmoji_Group, Error>? = nil
 
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
 
 	private func loadEmojis() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: GroupCustomEmojiQuery(fullPath: self.fullPath), cachePolicy: .cacheAndNetwork
-			)
-
-			Task {
-				for try await response in responses {
-					if let emojis = response.data?.group?.customEmoji?.nodes {
-						self.emojis = .success(emojis)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+		Task {
+			do {
+				let payload = try await Network.shared.service.fetchGroupCustomEmoji(fullPath: self.fullPath)
+				self.emojis = .success(payload)
+			} catch let error {
+				self.emojis = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.emojis = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadEmojis() async {
 		do {
-			let repsonse = try await Network.shared.apollo.fetch(
-				query: GroupCustomEmojiQuery(fullPath: self.fullPath), cachePolicy: .networkOnly)
-
-			if let emojis = repsonse.data?.group?.customEmoji?.nodes {
-				self.emojis = .success(emojis)
-			}
-
+			let payload = try await Network.shared.service.fetchGroupCustomEmoji(fullPath: self.fullPath, strategy: .networkOnly)
+			self.emojis = .success(payload)
 			Notify.status(.success)
 		} catch let error {
 			self.emojis = .failure(error)
@@ -60,22 +44,25 @@ struct CustomEmojisLoader: View {
 		List {
 			if let emojis {
 				switch emojis {
-				case .success(let emojis):
-					if emojis.isEmpty {
+				case .success(let payload):
+					let nodes = payload.customEmoji?.nodes ?? []
+					if nodes.isEmpty {
 						NoContentView(
 							"There are no custom emojis", systemImage: "face.smiling")
 					} else {
-						ForEach(emojis, id: \.?.id) { maybeEmoji in
-							if let emoji = maybeEmoji {
-								HStack {
-									if let url = URL(string: emoji.url) {
-										AvatarImage(url)
+						ForEach(nodes, id: \.id) { emoji in
+							HStack {
+								if let url = URL(string: emoji.url ?? "") {
+									AvatarImage(url)
+								}
+								VStack(alignment: .leading) {
+									if let name = emoji.name {
+										Text(name)
 									}
-									VStack(alignment: .leading) {
-										Text(emoji.name)
+									if let createdAt = emoji.createdAt {
 										HStack(spacing: 2) {
 											Image(systemName: "clock")
-											Text(Date.fromToString(emoji.createdAt))
+											Text(Date.fromToString(createdAt))
 										}.font(.footnote)
 									}
 								}

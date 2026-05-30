@@ -59,7 +59,7 @@ struct SmallCommitView: View {
 			VStack {
 				HStack {
 					if let status = commit._lastPipelineStatus {
-						PipelineStatus(status)
+						PipelineStatus(status.rawValue)
 					}
 
 					if commit._signatureVerificationStatus?.starts(with: "VERIFIED") ?? false {

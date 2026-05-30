@@ -1,16 +1,9 @@
-//
-//  StateIcons.swift
-//  Tanuki
-//
-//  Created by Felix Schindler on 27.02.24.
-//
-
 import GitLabAPI
 import SwiftUI
 
 struct IssueStateHelper {
 	public static func getColorByState(
-		_ state: GraphQLEnum<GitLabAPI.IssueState>
+		_ state: IssueState
 	) -> SwiftUI.Color {
 		switch state {
 		case .opened:
@@ -25,7 +18,7 @@ struct IssueStateHelper {
 	}
 
 	public static func getIconByState(
-		_ state: GraphQLEnum<GitLabAPI.IssueState>
+		_ state: IssueState
 	) -> String {
 		switch state {
 		case .opened:
@@ -40,7 +33,7 @@ struct IssueStateHelper {
 	}
 
 	public static func getIconByState(
-		_ state: GraphQLEnum<GitLabAPI.EpicState>
+		_ state: EpicState
 	) -> String {
 		switch state {
 		case .opened:
@@ -53,7 +46,7 @@ struct IssueStateHelper {
 	}
 
 	public static func getColorByState(
-		_ state: GraphQLEnum<GitLabAPI.EpicState>
+		_ state: EpicState
 	) -> SwiftUI.Color {
 		switch state {
 		case .opened:
@@ -71,45 +64,54 @@ struct IssueStateIcon: View {
 	private let icon: String
 	private let color: SwiftUI.Color
 
-	init(_ state: GraphQLEnum<GitLabAPI.IssueState>) {
+	init(_ state: IssueState) {
 		self.state = state.rawValue
-
 		switch state {
 		case .opened:
 			icon = "smallcircle.circle"
 			color = Color.green
-			break
 		case .closed:
 			icon = "minus.circle"
 			color = Color.blue
-			break
 		case .locked:
 			icon = "lock.circle"
 			color = Color.secondary
-			break
 		default:
 			icon = "smallcircle.circle"
 			color = Color.primary
-			break
 		}
 	}
 
-	init(_ state: GraphQLEnum<GitLabAPI.EpicState>) {
+	init(_ state: EpicState) {
 		self.state = state.rawValue
-
 		switch state {
 		case .opened:
 			icon = "smallcircle.circle"
 			color = Color.green
-			break
 		case .closed:
 			icon = "minus.circle"
 			color = Color.blue
-			break
 		default:
 			icon = "smallcircle.circle"
 			color = Color.primary
-			break
+		}
+	}
+
+	init(_ state: String?) {
+		self.state = state ?? "unknown"
+		switch state?.lowercased() {
+		case "opened":
+			icon = "smallcircle.circle"
+			color = Color.green
+		case "closed":
+			icon = "minus.circle"
+			color = Color.blue
+		case "locked":
+			icon = "lock.circle"
+			color = Color.secondary
+		default:
+			icon = "smallcircle.circle"
+			color = Color.primary
 		}
 	}
 
@@ -122,7 +124,7 @@ struct IssueStateIcon: View {
 
 struct MergeStateHelper {
 	public static func getColorByState(
-		_ state: GraphQLEnum<GitLabAPI.MergeRequestState>
+		_ state: MergeRequestState
 	) -> SwiftUI.Color {
 		switch state {
 		case .opened:
@@ -139,7 +141,7 @@ struct MergeStateHelper {
 	}
 
 	public static func getIconByState(
-		_ state: GraphQLEnum<GitLabAPI.MergeRequestState>
+		_ state: MergeRequestState
 	) -> Image {
 		switch state {
 		case .opened:
@@ -157,12 +159,12 @@ struct MergeStateHelper {
 }
 
 struct MergeStateIcon: View {
-	private let state: GraphQLEnum<GitLabAPI.MergeRequestState>
+	private let state: String
 	private let icon: Image
 	private let color: SwiftUI.Color
 
-	init(_ state: GraphQLEnum<GitLabAPI.MergeRequestState>) {
-		self.state = state
+	init(_ state: MergeRequestState) {
+		self.state = state.rawValue
 		self.icon = MergeStateHelper.getIconByState(state)
 		self.color = MergeStateHelper.getColorByState(state)
 	}
@@ -170,7 +172,7 @@ struct MergeStateIcon: View {
 	public var body: some View {
 		Label(
 			title: {
-				Text(self.state.rawValue)
+				Text(self.state)
 			},
 			icon: {
 				self.icon
@@ -181,14 +183,14 @@ struct MergeStateIcon: View {
 	}
 }
 
-struct MergeStatus: View {
-	private let status: GraphQLEnum<GitLabAPI.MergeStatus>
+struct MergeStatusView: View {
+	private let status: String
 	private let icon: String
 	private let color: SwiftUI.Color
 	private let msg: String
 
-	init(_ status: GraphQLEnum<GitLabAPI.MergeStatus>) {
-		self.status = status
+	init(_ status: GitLabAPI.MergeStatus) {
+		self.status = status.rawValue
 
 		switch status {
 		case .canBeMerged:
@@ -223,7 +225,7 @@ struct MergeStatus: View {
 			title: {
 				VStack(alignment: .leading) {
 					Text(
-						self.status.rawValue
+						self.status
 							.split(separator: "_")
 							.joined(separator: " ")
 							.lowercased()
@@ -243,12 +245,9 @@ struct MergeStatus: View {
 }
 
 struct DetailedMergeStatusView: View {
-	private var detailedStatus: GraphQLEnum<GitLabAPI.DetailedMergeStatus>
 	private var msg: String
 
-	init(_ detailedStatus: GraphQLEnum<GitLabAPI.DetailedMergeStatus>) {
-		self.detailedStatus = detailedStatus
-
+	init(_ detailedStatus: DetailedMergeStatus) {
 		msg =
 			switch detailedStatus {
 			case .unchecked:
@@ -298,39 +297,5 @@ struct DetailedMergeStatusView: View {
 					.foregroundStyle(.red)
 			}
 		)
-	}
-}
-
-#Preview {
-	ScrollView {
-		VStack {
-			HStack {
-				VStack {
-					ForEach(GraphQLEnum<GitLabAPI.IssueState>.allCases, id: \.self) {
-						state in
-						IssueStateIcon(state)
-					}
-				}
-				VStack {
-					ForEach(
-						GraphQLEnum<GitLabAPI.MergeRequestState>.allCases, id: \.self
-					) { state in
-						MergeStateIcon(state)
-					}
-				}
-				VStack {
-					ForEach(GraphQLEnum<GitLabAPI.MergeStatus>.allCases, id: \.self) {
-						status in
-						MergeStatus(status)
-					}
-				}
-			}
-
-			VStack {
-				ForEach(GraphQLEnum<GitLabAPI.DetailedMergeStatus>.allCases, id: \.self) { status in
-					DetailedMergeStatusView(status)
-				}
-			}
-		}
 	}
 }

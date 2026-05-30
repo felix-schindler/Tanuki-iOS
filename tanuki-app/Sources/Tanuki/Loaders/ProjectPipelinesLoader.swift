@@ -11,45 +11,28 @@ import SwiftUI
 struct ProjectPipelinesLoader: View {
 	private var fullPath: String
 
-	@State var pipelines: Result<[ProjectPipelinesQuery.Data.Project.Pipelines.Node?], Error>? =
-		nil
+	@State var pipelines: Result<ProjectPipelines_Project, Error>? = nil
 
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
 
 	private func loadPipelines() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: ProjectPipelinesQuery(fullPath: self.fullPath), cachePolicy: .cacheAndNetwork
-			)
-
-			Task {
-				for try await response in responses {
-					if let pipelines = response.data?.project?.pipelines?.nodes {
-						self.pipelines = .success(pipelines)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+		Task {
+			do {
+				let payload = try await Network.shared.service.fetchProjectPipelines(fullPath: self.fullPath)
+				self.pipelines = .success(payload)
+			} catch let error {
+				self.pipelines = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.pipelines = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadPipelines() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: ProjectPipelinesQuery(fullPath: self.fullPath), cachePolicy: .networkOnly)
-
-			if let pipelines = response.data?.project?.pipelines?.nodes {
-				self.pipelines = .success(pipelines)
-			}
-
+			let payload = try await Network.shared.service.fetchProjectPipelines(fullPath: self.fullPath, strategy: .networkOnly)
+			self.pipelines = .success(payload)
 			Notify.status(.success)
 		} catch let error {
 			self.pipelines = .failure(error)
@@ -61,53 +44,56 @@ struct ProjectPipelinesLoader: View {
 		List {
 			if let pipelines {
 				switch pipelines {
-				case .success(let pipelines):
-					if pipelines.isEmpty {
+				case .success(let payload):
+					let nodes = payload.pipelines?.nodes ?? []
+					if nodes.isEmpty {
 						NoContentView("There are no pipelines", systemImage: "flag")
 					} else {
-						ForEach(pipelines, id: \.?.id) { maybePipeline in
-							if let pipeline = maybePipeline {
-								HStack {
-									VStack(alignment: .leading) {
-										ScrollView(.horizontal) {
-											HStack {
-												if let author = pipeline._author {
-													AuthorView(author)
-												}
+						ForEach(nodes, id: \.id) { pipeline in
+							HStack {
+								VStack(alignment: .leading) {
+									ScrollView(.horizontal) {
+										HStack {
+											if let user = pipeline.user {
+												AuthorView(user)
+											}
 
+											if let iid = pipeline.iid {
 												PillView(
-													String(pipeline.iid),
+													iid,
 													icon: "number"
 												)
+											}
 
-												if let commitId = pipeline.commit?.shortId {
-													PillView(
-														commitId,
-														icon:
-															"text.line.first.and.arrowtriangle.forward"
-													)
-													.textSelection(.enabled)
-													.font(.system(.footnote, design: .monospaced))
-												}
-											}.font(.footnote)
-										}
+											if let commitId = pipeline.commit?.shortId {
+												PillView(
+													commitId,
+													icon:
+														"text.line.first.and.arrowtriangle.forward"
+												)
+												.textSelection(.enabled)
+												.font(.system(.footnote, design: .monospaced))
+											}
+										}.font(.footnote)
+									}
 
+									if let createdAt = pipeline.createdAt {
 										Text(
-											Date.fromToString(pipeline.createdAt, timeStyle: .short)
+											Date.fromToString(createdAt, timeStyle: .short)
 										)
 										.font(.footnote)
-
-										if let ref = pipeline.ref {
-											Text("Branch: \(ref)")
-										}
-
-										if let source = pipeline.source {
-											Text("Source: \(source)")
-										}
 									}
-									Spacer()
-									PipelineStatus(pipeline.status)
+
+									if let ref = pipeline.ref {
+										Text("Branch: \(ref)")
+									}
+
+									if let source = pipeline.source {
+										Text("Source: \(source)")
+									}
 								}
+								Spacer()
+								PipelineStatus(pipeline.status)
 							}
 						}
 					}

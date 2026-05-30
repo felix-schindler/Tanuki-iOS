@@ -36,18 +36,16 @@ extension GitLabServiceType {
 		return data
 	}
 
-	public func fetchGroups(filter: GroupsFilter = GroupsFilter(), strategy: FetchStrategy = .cacheFirst) async throws -> Groups_Groups {
+	public func fetchGroups(filter: GroupsFilter = GroupsFilter(), strategy: FetchStrategy = .cacheFirst) async throws -> [Group] {
 		let q = GroupsQuery(filter: filter)
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.groups else { throw GitLabError.noData }
-		return data
+		return response.groups?.nodes?.compactMap { $0 } ?? []
 	}
 
-	public func fetchUserGroups(username: String, strategy: FetchStrategy = .cacheFirst) async throws -> UserGroups_User {
+	public func fetchUserGroups(username: String, strategy: FetchStrategy = .cacheFirst) async throws -> [Group] {
 		let q = UserGroupsQuery(username: username)
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.user else { throw GitLabError.noData }
-		return data
+		return response.user?.groups?.nodes?.compactMap { $0 } ?? []
 	}
 
 	public func fetchCurrentUserIssues(filter: CurrentUserIssuesFilter = CurrentUserIssuesFilter(), strategy: FetchStrategy = .cacheFirst) async throws -> CurrentUserIssues_CurrentUser {
@@ -64,11 +62,10 @@ extension GitLabServiceType {
 		return data
 	}
 
-	public func fetchGroupIssues(fullPath: String, filter: GroupIssuesFilter = GroupIssuesFilter(), strategy: FetchStrategy = .cacheFirst) async throws -> GroupIssues_Group {
+	public func fetchGroupIssues(fullPath: String, filter: GroupIssuesFilter = GroupIssuesFilter(), strategy: FetchStrategy = .cacheFirst) async throws -> [SmallIssue] {
 		let q = GroupIssuesQuery(fullPath: fullPath, filter: filter)
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.group else { throw GitLabError.noData }
-		return data
+		return response.group?.issues?.nodes?.compactMap { $0 } ?? []
 	}
 
 	public func fetchIssue(fullPath: String, iid: String, strategy: FetchStrategy = .cacheFirst) async throws -> Issue_Project {
@@ -85,11 +82,10 @@ extension GitLabServiceType {
 		return data
 	}
 
-	public func fetchProjectIssues(fullPath: String, filter: ProjectIssuesFilter = ProjectIssuesFilter(), strategy: FetchStrategy = .cacheFirst) async throws -> ProjectIssues_Project {
+	public func fetchProjectIssues(fullPath: String, filter: ProjectIssuesFilter = ProjectIssuesFilter(), strategy: FetchStrategy = .cacheFirst) async throws -> [SmallIssue] {
 		let q = ProjectIssuesQuery(fullPath: fullPath, filter: filter)
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.project else { throw GitLabError.noData }
-		return data
+		return response.project?.issues?.nodes?.compactMap { $0 } ?? []
 	}
 
 	public func fetchUserIssues(username: String, filter: UserIssuesFilter = UserIssuesFilter(), strategy: FetchStrategy = .cacheFirst) async throws -> UserIssues_User {
@@ -111,11 +107,10 @@ extension GitLabServiceType {
 		return response.project?.labels?.nodes?.compactMap { $0 } ?? []
 	}
 
-	public func fetchGroupMergeRequests(fullPath: String, strategy: FetchStrategy = .cacheFirst) async throws -> GroupMergeRequests_Group {
+	public func fetchGroupMergeRequests(fullPath: String, strategy: FetchStrategy = .cacheFirst) async throws -> [SmallMergeRequest] {
 		let q = GroupMergeRequestsQuery(fullPath: fullPath)
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.group else { throw GitLabError.noData }
-		return data
+		return response.group?.mergeRequests?.nodes?.compactMap { $0 } ?? []
 	}
 
 	public func fetchMergeRequest(fullPath: String, iid: String, strategy: FetchStrategy = .cacheFirst) async throws -> MergeRequest_Project {
@@ -125,32 +120,28 @@ extension GitLabServiceType {
 		return data
 	}
 
-	public func fetchProjectMergeRequests(fullPath: String, strategy: FetchStrategy = .cacheFirst) async throws -> ProjectMergeRequests_Project {
+	public func fetchProjectMergeRequests(fullPath: String, strategy: FetchStrategy = .cacheFirst) async throws -> [SmallMergeRequest] {
 		let q = ProjectMergeRequestsQuery(fullPath: fullPath)
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.project else { throw GitLabError.noData }
-		return data
+		return response.project?.mergeRequests?.nodes?.compactMap { $0 } ?? []
 	}
 
-	public func fetchUserAssignedMergeRequests(strategy: FetchStrategy = .cacheFirst) async throws -> UserAssignedMergeRequests_CurrentUser {
+	public func fetchUserAssignedMergeRequests(strategy: FetchStrategy = .cacheFirst) async throws -> [UserSmallMergeRequest] {
 		let q = UserAssignedMergeRequestsQuery()
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.currentUser else { throw GitLabError.noData }
-		return data
+		return response.currentUser?.assignedMergeRequests?.nodes?.compactMap { $0 } ?? []
 	}
 
-	public func fetchUserAuthoredMergeRequests(strategy: FetchStrategy = .cacheFirst) async throws -> UserAuthoredMergeRequests_CurrentUser {
+	public func fetchUserAuthoredMergeRequests(strategy: FetchStrategy = .cacheFirst) async throws -> [UserSmallMergeRequest] {
 		let q = UserAuthoredMergeRequestsQuery()
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.currentUser else { throw GitLabError.noData }
-		return data
+		return response.currentUser?.authoredMergeRequests?.nodes?.compactMap { $0 } ?? []
 	}
 
-	public func fetchUserReviewRequestedMergeRequests(strategy: FetchStrategy = .cacheFirst) async throws -> UserReviewRequestedMergeRequests_CurrentUser {
+	public func fetchUserReviewRequestedMergeRequests(strategy: FetchStrategy = .cacheFirst) async throws -> [UserSmallMergeRequest] {
 		let q = UserReviewRequestedMergeRequestsQuery()
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.currentUser else { throw GitLabError.noData }
-		return data
+		return response.currentUser?.reviewRequestedMergeRequests?.nodes?.compactMap { $0 } ?? []
 	}
 
 	public func fetchMergeRequestCommits(fullPath: String, iid: String, strategy: FetchStrategy = .cacheFirst) async throws -> MergeRequestCommits_Project {
@@ -167,18 +158,16 @@ extension GitLabServiceType {
 		return data
 	}
 
-	public func fetchGroupMilestones(fullPath: String, filter: GroupMilestonesFilter = GroupMilestonesFilter(), strategy: FetchStrategy = .cacheFirst) async throws -> GroupMilestones_Group {
+	public func fetchGroupMilestones(fullPath: String, filter: GroupMilestonesFilter = GroupMilestonesFilter(), strategy: FetchStrategy = .cacheFirst) async throws -> [Milestone] {
 		let q = GroupMilestonesQuery(fullPath: fullPath, filter: filter)
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.group else { throw GitLabError.noData }
-		return data
+		return response.group?.milestones?.nodes?.compactMap { $0 } ?? []
 	}
 
-	public func fetchProjectMilestones(fullPath: String, filter: ProjectMilestonesFilter = ProjectMilestonesFilter(), strategy: FetchStrategy = .cacheFirst) async throws -> ProjectMilestones_Project {
+	public func fetchProjectMilestones(fullPath: String, filter: ProjectMilestonesFilter = ProjectMilestonesFilter(), strategy: FetchStrategy = .cacheFirst) async throws -> [Milestone] {
 		let q = ProjectMilestonesQuery(fullPath: fullPath, filter: filter)
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.project else { throw GitLabError.noData }
-		return data
+		return response.project?.milestones?.nodes?.compactMap { $0 } ?? []
 	}
 
 	public func fetchProjectPipelines(fullPath: String, strategy: FetchStrategy = .cacheFirst) async throws -> ProjectPipelines_Project {
@@ -188,11 +177,10 @@ extension GitLabServiceType {
 		return data
 	}
 
-	public func fetchProjectReleasesQuery(fullPath: String, strategy: FetchStrategy = .cacheFirst) async throws -> ProjectReleasesQuery_Project {
+	public func fetchProjectReleasesQuery(fullPath: String, strategy: FetchStrategy = .cacheFirst) async throws -> [Release] {
 		let q = ProjectReleasesQueryQuery(fullPath: fullPath)
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.project else { throw GitLabError.noData }
-		return data
+		return response.project?.releases?.nodes?.compactMap { $0 } ?? []
 	}
 
 	public func fetchCurrentUserStarredProjects(strategy: FetchStrategy = .cacheFirst) async throws -> [SmallProject] {
@@ -234,53 +222,46 @@ extension GitLabServiceType {
 		return data
 	}
 
-	public func fetchCurrentUserSnippets(strategy: FetchStrategy = .cacheFirst) async throws -> CurrentUserSnippets_CurrentUser {
+	public func fetchCurrentUserSnippets(strategy: FetchStrategy = .cacheFirst) async throws -> [Snippet] {
 		let q = CurrentUserSnippetsQuery()
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.currentUser else { throw GitLabError.noData }
-		return data
+		return response.currentUser?.snippets?.nodes?.compactMap { $0 } ?? []
 	}
 
-	public func fetchSnippet(id: String, strategy: FetchStrategy = .cacheFirst) async throws -> Snippet_Snippets {
+	public func fetchSnippet(id: String, strategy: FetchStrategy = .cacheFirst) async throws -> [Snippet] {
 		let q = SnippetQuery(id: id)
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.snippets else { throw GitLabError.noData }
-		return data
+		return response.snippets?.nodes?.compactMap { $0 } ?? []
 	}
 
-	public func fetchUserSnippets(username: String, strategy: FetchStrategy = .cacheFirst) async throws -> UserSnippets_User {
+	public func fetchUserSnippets(username: String, strategy: FetchStrategy = .cacheFirst) async throws -> [Snippet] {
 		let q = UserSnippetsQuery(username: username)
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.user else { throw GitLabError.noData }
-		return data
+		return response.user?.snippets?.nodes?.compactMap { $0 } ?? []
 	}
 
-	public func fetchGroupTimelogs(fullPath: String, strategy: FetchStrategy = .cacheFirst) async throws -> GroupTimelogs_Group {
+	public func fetchGroupTimelogs(fullPath: String, strategy: FetchStrategy = .cacheFirst) async throws -> [Timelog] {
 		let q = GroupTimelogsQuery(fullPath: fullPath)
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.group else { throw GitLabError.noData }
-		return data
+		return response.group?.timelogs?.nodes?.compactMap { $0 } ?? []
 	}
 
-	public func fetchUserTimelogs(username: String, strategy: FetchStrategy = .cacheFirst) async throws -> UserTimelogs_User {
+	public func fetchUserTimelogs(username: String, strategy: FetchStrategy = .cacheFirst) async throws -> [Timelog] {
 		let q = UserTimelogsQuery(username: username)
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.user else { throw GitLabError.noData }
-		return data
+		return response.user?.timelogs?.nodes?.compactMap { $0 } ?? []
 	}
 
-	public func fetchCurrentUserTodos(strategy: FetchStrategy = .cacheFirst) async throws -> CurrentUserTodos_CurrentUser {
+	public func fetchCurrentUserTodos(strategy: FetchStrategy = .cacheFirst) async throws -> [Todo] {
 		let q = CurrentUserTodosQuery()
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.currentUser else { throw GitLabError.noData }
-		return data
+		return response.currentUser?.todos?.nodes?.compactMap { $0 } ?? []
 	}
 
-	public func fetchUserTodos(username: String, strategy: FetchStrategy = .cacheFirst) async throws -> UserTodos_User {
+	public func fetchUserTodos(username: String, strategy: FetchStrategy = .cacheFirst) async throws -> [Todo] {
 		let q = UserTodosQuery(username: username)
 		let response = try await fetch(q, strategy: strategy)
-		guard let data = response.user else { throw GitLabError.noData }
-		return data
+		return response.user?.todos?.nodes?.compactMap { $0 } ?? []
 	}
 
 	public func fetchCurrentUser(strategy: FetchStrategy = .cacheFirst) async throws -> CurrentUser_CurrentUser {
