@@ -10,39 +10,24 @@ import SwiftUI
 
 struct CurrentUserLoader: View {
 
-	@State var user: Result<CurrentUserQuery.Data.CurrentUser, Error>? = nil
+	@State var user: Result<CurrentUserPayload, Error>? = nil
 
-	private func loadUser() async {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: CurrentUserQuery(), cachePolicy: .cacheAndNetwork)
-
-			Task {
-				for try await response in responses {
-					if let user = response.data?.currentUser {
-						self.user = .success(user)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+	private func loadUser() {
+		Task {
+			do {
+				let user = try await Network.shared.service.fetchCurrentUser()
+				self.user = .success(user)
+			} catch let error {
+				self.user = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.user = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadUser() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: CurrentUserQuery(), cachePolicy: .networkOnly)
-
-			if let user = response.data?.currentUser {
-				self.user = .success(user)
-			}
-
+			let user = try await Network.shared.service.fetchCurrentUser()
+			self.user = .success(user)
 			Notify.status(.success)
 		} catch let error {
 			self.user = .failure(error)
@@ -63,9 +48,7 @@ struct CurrentUserLoader: View {
 				LoadingView("Loading Profile", systemImage: "person")
 			}
 		}.onAppear {
-			Task {
-				await loadUser()
-			}
+			loadUser()
 		}.refreshable {
 			await reloadUser()
 		}.toolbar {

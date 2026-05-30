@@ -18,7 +18,7 @@ struct UserMergeLoader: View {
 	private var userRequestType: UserMergeRequestType
 	private var navTitle: String
 
-	@State var mergeRequests: Result<[UserSmallMergeRequest?], Error>? = nil
+	@State var mergeRequests: Result<[UserSmallMergeRequest], Error>? = nil
 
 	init(_ userRequestType: UserMergeRequestType) {
 		self.userRequestType = userRequestType
@@ -35,63 +35,23 @@ struct UserMergeLoader: View {
 	}
 
 	private func loadMergeRequests() {
-		do {
-			switch self.userRequestType {
-			case .assgined:
-				let responses = try Network.shared.apollo.fetch(
-					query: UserAssignedMergeRequestsQuery(),
-					cachePolicy: .cacheAndNetwork
-				)
-
-				Task {
-					for try await response in responses {
-						if let mrs = response.data?.currentUser?.assignedMergeRequests?.nodes {
-							self.mergeRequests = .success(mrs)
-						} else if let errors = response.errors {
-							for error in errors {
-								Notify.status(.error, error.localizedDescription)
-							}
-						}
-					}
+		Task {
+			do {
+				switch self.userRequestType {
+				case .assgined:
+					let mrs = try await Network.shared.service.fetchUserAssignedMergeRequests()
+					self.mergeRequests = .success(mrs)
+				case .authored:
+					let mrs = try await Network.shared.service.fetchUserAuthoredMergeRequests()
+					self.mergeRequests = .success(mrs)
+				case .reviewRequested:
+					let mrs = try await Network.shared.service.fetchUserReviewRequestedMergeRequests()
+					self.mergeRequests = .success(mrs)
 				}
-			case .authored:
-				let responses = try Network.shared.apollo.fetch(
-					query: UserAuthoredMergeRequestsQuery(),
-					cachePolicy: .cacheAndNetwork
-				)
-
-				Task {
-					for try await response in responses {
-						if let mrs = response.data?.currentUser?.authoredMergeRequests?.nodes {
-							self.mergeRequests = .success(mrs)
-						} else if let errors = response.errors {
-							for error in errors {
-								Notify.status(.error, error.localizedDescription)
-							}
-						}
-					}
-				}
-			case .reviewRequested:
-				let responses = try Network.shared.apollo.fetch(
-					query: UserReviewRequestedMergeRequestsQuery(),
-					cachePolicy: .cacheAndNetwork
-				)
-
-				Task {
-					for try await response in responses {
-						if let mrs = response.data?.currentUser?.reviewRequestedMergeRequests?.nodes {
-							self.mergeRequests = .success(mrs)
-						} else if let errors = response.errors {
-							for error in errors {
-								Notify.status(.error, error.localizedDescription)
-							}
-						}
-					}
-				}
+			} catch let error {
+				self.mergeRequests = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.mergeRequests = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
@@ -99,32 +59,14 @@ struct UserMergeLoader: View {
 		do {
 			switch self.userRequestType {
 			case .assgined:
-				let response = try await Network.shared.apollo.fetch(
-					query: UserAssignedMergeRequestsQuery(),
-					cachePolicy: .networkOnly
-				)
-
-				if let mrs = response.data?.currentUser?.assignedMergeRequests?.nodes {
-					self.mergeRequests = .success(mrs)
-				}
+				let mrs = try await Network.shared.service.fetchUserAssignedMergeRequests()
+				self.mergeRequests = .success(mrs)
 			case .authored:
-				let response = try await Network.shared.apollo.fetch(
-					query: UserAuthoredMergeRequestsQuery(),
-					cachePolicy: .networkOnly
-				)
-
-				if let mrs = response.data?.currentUser?.authoredMergeRequests?.nodes {
-					self.mergeRequests = .success(mrs)
-				}
+				let mrs = try await Network.shared.service.fetchUserAuthoredMergeRequests()
+				self.mergeRequests = .success(mrs)
 			case .reviewRequested:
-				let response = try await Network.shared.apollo.fetch(
-					query: UserReviewRequestedMergeRequestsQuery(),
-					cachePolicy: .networkOnly
-				)
-
-				if let mrs = response.data?.currentUser?.reviewRequestedMergeRequests?.nodes {
-					self.mergeRequests = .success(mrs)
-				}
+				let mrs = try await Network.shared.service.fetchUserReviewRequestedMergeRequests()
+				self.mergeRequests = .success(mrs)
 			}
 
 			Notify.status(.success)
@@ -142,11 +84,8 @@ struct UserMergeLoader: View {
 					if mergeRequests.isEmpty {
 						NoContentView("There are no merge requests", image: "git-mr.symbols")
 					} else {
-						ForEach(mergeRequests, id: \.?.reference) {
-							maybeMerge in
-							if let mr = maybeMerge {
-								SmallMergeView(mr._project.fullPath, mr)
-							}
+						ForEach(mergeRequests, id: \.reference) { mr in
+							SmallMergeView(mr._project.fullPath, mr)
 						}
 					}
 				case .failure(let error):

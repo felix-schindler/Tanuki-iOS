@@ -9,7 +9,7 @@ import GitLabAPI
 import SwiftUI
 
 struct UsersLoader: View {
-	@State var users: Result<[Author?], Error>? = nil
+	@State var users: Result<[Author], Error>? = nil
 
 	@State var showFilters = false
 
@@ -22,12 +22,12 @@ struct UsersLoader: View {
 	@State public private(set) var humans: Bool? = nil
 
 	// MARK: - Data loading
-	private var query: UsersQuery {
-		return UsersQuery(
-			search: GraphFilter.toFilter(self.search),
-			admins: .some(self.admins),
-			active: GraphFilter.toFilter(self.active),
-			humans: GraphFilter.toFilter(self.humans)
+	private var filter: UsersFilter {
+		return UsersFilter(
+			search: self.search,
+			admins: self.admins,
+			active: self.active,
+			humans: self.humans
 		)
 	}
 
@@ -35,20 +35,9 @@ struct UsersLoader: View {
 		self.loadTask?.cancel()
 		self.loadTask = Task {
 			do {
-				let responses = try Network.shared.apollo.fetch(
-					query: self.query,
-					cachePolicy: .cacheAndNetwork
-				)
-
-				for try await response in responses {
-					if Task.isCancelled { return }
-					if let users = response.data?.users?.nodes {
-						self.users = .success(users)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
+				let users = try await Network.shared.service.fetchUsers(filter: self.filter)
+				if !Task.isCancelled {
+					self.users = .success(users)
 				}
 			} catch {
 				if !Task.isCancelled {
@@ -61,15 +50,8 @@ struct UsersLoader: View {
 
 	private func reloadUsers() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: self.query,
-				cachePolicy: .networkOnly
-			)
-
-			if let users = response.data?.users?.nodes {
-				self.users = .success(users)
-			}
-
+			let users = try await Network.shared.service.fetchUsers(filter: self.filter)
+			self.users = .success(users)
 			Notify.status(.success)
 		} catch let error {
 			self.users = .failure(error)
@@ -85,10 +67,8 @@ struct UsersLoader: View {
 					if users.isEmpty {
 						NoContentView("There are no users", systemImage: "person.2")
 					} else {
-						ForEach(users, id: \.self?.username) { user in
-							if let user {
-								AuthorView(user)
-							}
+						ForEach(users, id: \.username) { user in
+							AuthorView(user)
 						}
 					}
 				case .failure(let error):
@@ -139,7 +119,7 @@ struct UsersLoader: View {
 			text: Binding(get: { self.search ?? "" }, set: { self.search = $0.isNotEmpty ? $0 : nil }),
 			prompt: "Name, username, or primary email"
 		).onChange(of: search) { _ in
-			self.users = nil  // Show loading state
+			self.users = nil
 			loadUsers()
 		}.navigationTitle("Users")
 	}

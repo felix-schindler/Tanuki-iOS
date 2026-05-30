@@ -9,39 +9,24 @@ import GitLabAPI
 import SwiftUI
 
 struct CurrentUserTodosLoader: View {
-	@State var todos: Result<[Todo?], Error>? = nil
+	@State var todos: Result<[Todo], Error>? = nil
 
 	private func loadTodos() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: CurrentUserTodosQuery(), cachePolicy: .cacheAndNetwork)
-
-			Task {
-				for try await response in responses {
-					if let todos = response.data?.currentUser?.todos?.nodes {
-						self.todos = .success(todos)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+		Task {
+			do {
+				let todos = try await Network.shared.service.fetchCurrentUserTodos()
+				self.todos = .success(todos)
+			} catch let error {
+				todos = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			todos = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	public func reloadTodos() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: CurrentUserTodosQuery(), cachePolicy: .networkOnly)
-
-			if let todos = response.data?.currentUser?.todos?.nodes {
-				self.todos = .success(todos)
-			}
-
+			let todos = try await Network.shared.service.fetchCurrentUserTodos()
+			self.todos = .success(todos)
 			Notify.status(.success)
 		} catch let error {
 			todos = .failure(error)
@@ -61,10 +46,8 @@ struct CurrentUserTodosLoader: View {
 							description: "There are no Todos"
 						)
 					} else {
-						ForEach(todos, id: \.?.id) { maybeTodo in
-							if let todo = maybeTodo {
-								TodoView(todo)
-							}
+						ForEach(todos, id: \.id) { todo in
+							TodoView(todo)
 						}
 					}
 				case .failure(let error):

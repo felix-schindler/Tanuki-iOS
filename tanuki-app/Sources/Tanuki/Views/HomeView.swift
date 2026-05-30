@@ -9,39 +9,24 @@ import GitLabAPI
 import SwiftUI
 
 struct HomeView: View {
-	@State var starredProjects: Result<[SmallProject?], Error>?
+	@State var starredProjects: Result<[SmallProject], Error>?
 
 	private func loadStarredProjects() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: CurrentUserStarredProjectsQuery(), cachePolicy: .cacheAndNetwork)
-
-			Task {
-				for try await response in responses {
-					if let projects = response.data?.currentUser?.starredProjects?.nodes {
-						starredProjects = .success(projects)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+		Task {
+			do {
+				let projects = try await Network.shared.service.fetchCurrentUserStarredProjects()
+				starredProjects = .success(projects)
+			} catch let error {
+				starredProjects = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			starredProjects = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadStarredProjects() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: CurrentUserStarredProjectsQuery(), cachePolicy: .networkOnly)
-
-			if let projects = response.data?.currentUser?.starredProjects?.nodes {
-				starredProjects = .success(projects)
-			}
-
+			let projects = try await Network.shared.service.fetchCurrentUserStarredProjects()
+			starredProjects = .success(projects)
 			Notify.status(.success)
 		} catch let error {
 			starredProjects = .failure(error)
@@ -152,10 +137,8 @@ struct HomeView: View {
 								"There are no starred projects",
 								systemImage: "star.square.on.square.fill")
 						} else {
-							ForEach(projects, id: \.?.fullPath) { maybeProject in
-								if let project = maybeProject {
-									SmallProjectView(project)
-								}
+							ForEach(projects, id: \.fullPath) { project in
+								SmallProjectView(project)
 							}
 						}
 					case .failure(let error):
@@ -171,11 +154,6 @@ struct HomeView: View {
 		}.refreshable {
 			await reloadStarredProjects()
 		}.toolbar {
-			/*ToolbarItem(placement: .topBarLeading) {
-				Button("Jump", systemImage: getIconName()) {
-					jumpTo()
-				}.tint(.accentColor)
-			}*/
 			ToolbarItemGroup(placement: .topBarTrailing) {
 				NavigationLink(destination: EventsLoader()) {
 					Label("Activity", systemImage: "bell")

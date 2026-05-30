@@ -9,7 +9,7 @@ import GitLabAPI
 import SwiftUI
 
 struct GroupsLoader: View {
-	@State var groups: Result<[GitLabAPI.Group?], Error>? = nil
+	@State var groups: Result<[Group], Error>? = nil
 
 	@State var showFilters = false
 
@@ -24,15 +24,15 @@ struct GroupsLoader: View {
 	@State public private(set) var markedForDeletionOn: SwiftUI.Date? = nil
 	@State public private(set) var active: Bool? = nil
 
-	private var query: GroupsQuery {
-		return GroupsQuery(
-			topLevelOnly: .some(self.topLevelOnly),
-			ownedOnly: .some(self.ownedOnly),
-			search: GraphFilter.toFilter(self.search),
-			parentPath: GraphFilter.toFilter(self.parentPath),
-			allAvailable: GraphFilter.toFilter(allAvailable),
-			markedForDeletionOn: GraphFilter.toFilterDate(self.markedForDeletionOn),
-			active: GraphFilter.toFilter(self.active)
+	private var filter: GroupsFilter {
+		return GroupsFilter(
+			topLevelOnly: self.topLevelOnly,
+			ownedOnly: self.ownedOnly,
+			search: self.search,
+			parentPath: self.parentPath,
+			allAvailable: self.allAvailable,
+			markedForDeletionOn: self.markedForDeletionOn != nil ? ISO8601DateFormatter().string(from: self.markedForDeletionOn!) : nil,
+			active: self.active
 		)
 	}
 
@@ -41,20 +41,9 @@ struct GroupsLoader: View {
 		self.loadTask?.cancel()
 		self.loadTask = Task {
 			do {
-				let responses = try Network.shared.apollo.fetch(
-					query: self.query,
-					cachePolicy: .cacheAndNetwork
-				)
-
-				for try await response in responses {
-					if Task.isCancelled { return }
-					if let groups = response.data?.groups?.nodes {
-						self.groups = .success(groups)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
+				let groups = try await Network.shared.service.fetchGroups(filter: self.filter)
+				if !Task.isCancelled {
+					self.groups = .success(groups)
 				}
 			} catch {
 				if !Task.isCancelled {
@@ -67,15 +56,8 @@ struct GroupsLoader: View {
 
 	private func reloadGroups() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: self.query,
-				cachePolicy: .networkOnly
-			)
-
-			if let groups = response.data?.groups?.nodes {
-				self.groups = .success(groups)
-			}
-
+			let groups = try await Network.shared.service.fetchGroups(filter: self.filter)
+			self.groups = .success(groups)
 			Notify.status(.success)
 		} catch let error {
 			self.groups = .failure(error)
@@ -91,10 +73,8 @@ struct GroupsLoader: View {
 					if groups.isEmpty {
 						NoContentView("There are no groups", systemImage: "scale.3d")
 					} else {
-						ForEach(groups, id: \.self?.fullPath) { group in
-							if let group {
-								SmallGroupView(group: group)
-							}
+						ForEach(groups, id: \.fullPath) { group in
+							SmallGroupView(group: group)
 						}
 					}
 				case .failure(let error):
@@ -178,7 +158,7 @@ struct GroupsLoader: View {
 			text: Binding(get: { self.search ?? "" }, set: { self.search = $0.isNotEmpty ? $0 : nil }),
 			prompt: "Name or full path"
 		).onChange(of: search) { _ in
-			self.groups = nil  // Show loading state
+			self.groups = nil
 			loadGroups()
 		}.navigationTitle("Groups")
 	}

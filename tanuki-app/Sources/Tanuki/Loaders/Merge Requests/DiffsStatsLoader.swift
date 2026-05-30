@@ -12,8 +12,7 @@ struct DiffsStatsLoader: View {
 	private let fullPath: String
 	private let iid: String
 
-	@State var diffs: Result<[MergeRequestDiffsQuery.Data.Project.MergeRequest.DiffStat], Error>? =
-		nil
+	@State var diffs: Result<MergeRequestDiffsPayload, Error>? = nil
 
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
@@ -21,40 +20,21 @@ struct DiffsStatsLoader: View {
 	}
 
 	private func loadDiffs() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: MergeRequestDiffsQuery(fullPath: self.fullPath, iid: self.iid),
-				cachePolicy: .cacheAndNetwork
-			)
-
-			Task {
-				for try await response in responses {
-					if let diffs = response.data?.project?.mergeRequest?.diffStats {
-						self.diffs = .success(diffs)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+		Task {
+			do {
+				let diffs = try await Network.shared.service.fetchMergeRequestDiffs(fullPath: self.fullPath, iid: self.iid)
+				self.diffs = .success(diffs)
+			} catch let error {
+				self.diffs = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.diffs = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadDiffs() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: MergeRequestDiffsQuery(fullPath: self.fullPath, iid: self.iid),
-				cachePolicy: .networkOnly
-			)
-
-			if let diffs = response.data?.project?.mergeRequest?.diffStats {
-				self.diffs = .success(diffs)
-			}
-
+			let diffs = try await Network.shared.service.fetchMergeRequestDiffs(fullPath: self.fullPath, iid: self.iid)
+			self.diffs = .success(diffs)
 			Notify.status(.success)
 		} catch let error {
 			self.diffs = .failure(error)
@@ -67,19 +47,16 @@ struct DiffsStatsLoader: View {
 			if let diffs {
 				switch diffs {
 				case .success(let diffs):
-					if diffs.isEmpty {
-						NoContentView(
-							"There are no files with changed content", systemImage: "plusminus")
-					} else {
-						ForEach(diffs, id: \.path) { diff in
+					if diffs.mergeRequest?.diffStats?.isEmpty ?? true {
+						NoContentView("There are no files with changed content", systemImage: "plusminus")
+					} else if let stats = diffs.mergeRequest?.diffStats {
+						ForEach(stats, id: \.path) { diff in
 							VStack(alignment: .leading) {
 								Text(diff.path)
 								ScrollView(.horizontal) {
 									HStack {
-										PillView(
-											"+\(diff.additions)", bgColor: .green, fgColor: .white)
-										PillView(
-											"-\(diff.deletions)", bgColor: .red, fgColor: .white)
+										PillView("+\(diff.additions)", bgColor: .green, fgColor: .white)
+										PillView("-\(diff.deletions)", bgColor: .red, fgColor: .white)
 									}.font(.system(.body, design: .monospaced))
 								}
 							}

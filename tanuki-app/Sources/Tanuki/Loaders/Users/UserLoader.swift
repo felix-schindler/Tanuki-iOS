@@ -11,43 +11,28 @@ import SwiftUI
 struct UserLoader: View {
 	private let username: String
 
-	@State var user: Result<UserQuery.Data.User, Error>? = nil
+	@State var user: Result<UserPayload, Error>? = nil
 
 	init(username: String) {
 		self.username = username
 	}
 
 	private func loadUser() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: UserQuery(username: self.username), cachePolicy: .cacheAndNetwork)
-
-			Task {
-				for try await response in responses {
-					if let user = response.data?.user {
-						self.user = .success(user)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+		Task {
+			do {
+				let user = try await Network.shared.service.fetchUser(username: self.username)
+				self.user = .success(user)
+			} catch let error {
+				self.user = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.user = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadUser() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: UserQuery(username: self.username), cachePolicy: .networkOnly)
-
-			if let user = response.data?.user {
-				self.user = .success(user)
-			}
-
+			let user = try await Network.shared.service.fetchUser(username: self.username)
+			self.user = .success(user)
 			Notify.status(.success)
 		} catch let error {
 			self.user = .failure(error)

@@ -1,0 +1,13 @@
+{
+	"$schema": "https://deno.land/x/deno/cli/schemas/config-file.v1.json",
+	"tasks": {
+		"dev": "deno run --watch main.ts"
+	},
+	"imports": {
+		"@std/cli": "jsr:@std/cli@^1.0.29",
+		"@std/fs": "jsr:@std/fs@^1.0.23"
+	},
+	"fmt": {
+		"useTabs": true
+	}
+}

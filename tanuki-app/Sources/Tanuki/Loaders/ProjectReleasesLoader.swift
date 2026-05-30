@@ -6,14 +6,13 @@
 //
 
 import GitLabAPI
-//import MarkdownUI
 import SwiftUI
 
 struct ProjectReleasesLoader: View {
 	private var fullPath: String
 	private var projectId: Int?
 
-	@State var releases: Result<[ProjectReleasesQuery.Data.Project.Releases.Node?], Error>? = nil
+	@State var releases: Result<[Release], Error>? = nil
 
 	init(fullPath: String, projectId: Int? = nil) {
 		self.fullPath = fullPath
@@ -21,36 +20,21 @@ struct ProjectReleasesLoader: View {
 	}
 
 	private func loadReleases() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: ProjectReleasesQuery(fullPath: self.fullPath), cachePolicy: .cacheAndNetwork)
-
-			Task {
-				for try await response in responses {
-					if let releases = response.data?.project?.releases?.nodes {
-						self.releases = .success(releases)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+		Task {
+			do {
+				let releases = try await Network.shared.service.fetchProjectReleasesQuery(fullPath: self.fullPath)
+				self.releases = .success(releases)
+			} catch let error {
+				self.releases = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.releases = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadReleases() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: ProjectReleasesQuery(fullPath: self.fullPath), cachePolicy: .networkOnly)
-
-			if let releases = response.data?.project?.releases?.nodes {
-				self.releases = .success(releases)
-			}
-
+			let releases = try await Network.shared.service.fetchProjectReleasesQuery(fullPath: self.fullPath)
+			self.releases = .success(releases)
 			Notify.status(.success)
 		} catch let error {
 			self.releases = .failure(error)
@@ -66,100 +50,98 @@ struct ProjectReleasesLoader: View {
 					if releases.isEmpty {
 						NoContentView("There are no releases", systemImage: "flag")
 					} else {
-						ForEach(releases, id: \.?.id) { maybeRelease in
-							if let release = maybeRelease {
-								Section(
-									content: {
-										VStack(alignment: .leading) {
-											ScrollView(.horizontal) {
-												HStack {
-													if let author = release._author {
-														AuthorView(author)
-													}
+						ForEach(releases, id: \.id) { release in
+							Section(
+								content: {
+									VStack(alignment: .leading) {
+										ScrollView(.horizontal) {
+											HStack {
+												if let author = release._author {
+													AuthorView(author)
+												}
 
-													if let tagName = release.tagName {
-														PillView(tagName, icon: "tag")
-													}
+												if let tagName = release.tagName {
+													PillView(tagName, icon: "tag")
+												}
 
-													if let milestones = release.milestones?.nodes {
-														ForEach(milestones, id: \.?.id) {
-															maybeMilestone in
-															if let milestone = maybeMilestone {
-																PillView(
-																	milestone.title,
-																	icon: "diamond"
-																)
-															}
+												if let milestones = release.milestones?.nodes {
+													ForEach(milestones, id: \.?.id) {
+														maybeMilestone in
+														if let milestone = maybeMilestone {
+															PillView(
+																milestone.title,
+																icon: "diamond"
+															)
 														}
 													}
+												}
 
-													if let commit = release.commit?.shortId {
-														PillView(
-															commit,
-															icon:
-																"text.line.first.and.arrowtriangle.forward"
-														)
-														.textSelection(.enabled)
-														.font(
-															.system(.footnote, design: .monospaced))
-													}
-												}.font(.footnote)
-											}
-
-											if let description = release.description {
-												Markdown(description, baseURL: API.url)
-													.markdownTheme(.gitLab)
-											}
+												if let commit = release.commit?.shortId {
+													PillView(
+														commit,
+														icon:
+															"text.line.first.and.arrowtriangle.forward"
+													)
+													.textSelection(.enabled)
+													.font(
+														.system(.footnote, design: .monospaced))
+												}
+											}.font(.footnote)
 										}
-										if let assets = release.assets {
-											DisclosureGroup(
-												"Assets (\(assets.count ?? 0))",
-												content: {
-													if let links = assets.links?.nodes {
-														ForEach(links, id: \.?.id) { maybeLink in
-															if let link = maybeLink {
-																if let url = URL(
-																	string: link.url ?? "")
-																{
-																	Link(
-																		link.name ?? "Link",
-																		destination: url)
-																}
-															}
-														}
-													}
 
-													if let sources = assets.sources?.nodes {
-														ForEach(sources, id: \.?.url) {
-															maybeSource in
+										if let description = release.description {
+											Markdown(description, baseURL: API.url)
+												.markdownTheme(.gitLab)
+										}
+									}
+									if let assets = release.assets {
+										DisclosureGroup(
+											"Assets (\(assets.count ?? 0))",
+											content: {
+												if let links = assets.links?.nodes {
+													ForEach(links, id: \.?.id) { maybeLink in
+														if let link = maybeLink {
 															if let url = URL(
-																string: maybeSource?.url ?? "")
+																string: link.url ?? "")
 															{
 																Link(
-																	"Source code (\(maybeSource?.format ?? "unknown"))",
+																	link.name ?? "Link",
 																	destination: url)
 															}
 														}
 													}
 												}
-											)
-										}
-										if (release.assets?.count ?? 0) > 0 {
-										}
-									},
-									header: {
-										HStack {
-											Text(release.name ?? release.id)
-											if let releasedAt = release.releasedAt {
-												Spacer()
-												Text(
-													Date.fromToString(releasedAt, timeStyle: .short)
-												)
-												.font(.footnote)
+
+												if let sources = assets.sources?.nodes {
+													ForEach(sources, id: \.?.url) {
+														maybeSource in
+														if let url = URL(
+															string: maybeSource?.url ?? "")
+														{
+															Link(
+																"Source code (\(maybeSource?.format ?? "unknown"))",
+																destination: url)
+														}
+													}
+												}
 											}
+										)
+									}
+									if (release.assets?.count ?? 0) > 0 {
+									}
+								},
+								header: {
+									HStack {
+										Text(release.name ?? release.id)
+										if let releasedAt = release.releasedAt {
+											Spacer()
+											Text(
+												Date.fromToString(releasedAt, timeStyle: .short)
+											)
+											.font(.footnote)
 										}
-									})
-							}
+									}
+								})
 						}
 					}
 				case .failure(let error):

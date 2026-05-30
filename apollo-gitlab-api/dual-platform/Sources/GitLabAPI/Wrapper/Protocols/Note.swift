@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol Note {
+public protocol Note: Sendable {
 	var system: Bool { get }
 	var systemNoteIconName: String? { get }
 	var body: String { get }

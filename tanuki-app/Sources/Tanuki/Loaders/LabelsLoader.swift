@@ -6,7 +6,6 @@
 //
 
 import GitLabAPI
-//import MarkdownUI
 import SwiftUI
 
 enum LabelQueryType {
@@ -19,7 +18,7 @@ struct LabelsLoader: View {
 	private let fullPath: String
 	private let queryType: LabelQueryType
 
-	@State var labels: Result<[MyLabel?], Error>? = nil
+	@State var labels: Result<[MyLabel], Error>? = nil
 
 	init(fullPath: String, id: Int, queryType: LabelQueryType) {
 		self.fullPath = fullPath
@@ -28,43 +27,20 @@ struct LabelsLoader: View {
 	}
 
 	private func loadLabels() {
-		do {
-			switch self.queryType {
-			case .group:
-				let responses = try Network.shared.apollo.fetch(
-					query: GroupLabelsQuery(fullPath: self.fullPath), cachePolicy: .cacheAndNetwork)
-
-				Task {
-					for try await response in responses {
-						if let labels = response.data?.group?.labels?.nodes {
-							self.labels = .success(labels)
-						} else if let errors = response.errors {
-							for error in errors {
-								Notify.status(.error, error.localizedDescription)
-							}
-						}
-					}
+		Task {
+			do {
+				switch self.queryType {
+				case .group:
+					let labels = try await Network.shared.service.fetchGroupLabels(fullPath: self.fullPath)
+					self.labels = .success(labels)
+				case .project:
+					let labels = try await Network.shared.service.fetchProjectLabels(fullPath: self.fullPath)
+					self.labels = .success(labels)
 				}
-			case .project:
-				let responses = try Network.shared.apollo.fetch(
-					query: ProjectLabelsQuery(fullPath: self.fullPath),
-					cachePolicy: .cacheAndNetwork)
-
-				Task {
-					for try await response in responses {
-						if let labels = response.data?.project?.labels?.nodes {
-							self.labels = .success(labels)
-						} else if let errors = response.errors {
-							for error in errors {
-								Notify.status(.error, error.localizedDescription)
-							}
-						}
-					}
-				}
+			} catch let error {
+				self.labels = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.labels = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
@@ -72,21 +48,13 @@ struct LabelsLoader: View {
 		do {
 			switch self.queryType {
 			case .group:
-				let response = try await Network.shared.apollo.fetch(
-					query: GroupLabelsQuery(fullPath: self.fullPath), cachePolicy: .networkOnly)
-
-				if let labels = response.data?.group?.labels?.nodes {
-					self.labels = .success(labels)
-				}
+				let labels = try await Network.shared.service.fetchGroupLabels(fullPath: self.fullPath)
+				self.labels = .success(labels)
 
 				Notify.status(.success)
 			case .project:
-				let response = try await Network.shared.apollo.fetch(
-					query: ProjectLabelsQuery(fullPath: self.fullPath), cachePolicy: .networkOnly)
-
-				if let labels = response.data?.project?.labels?.nodes {
-					self.labels = .success(labels)
-				}
+				let labels = try await Network.shared.service.fetchProjectLabels(fullPath: self.fullPath)
+				self.labels = .success(labels)
 
 				Notify.status(.success)
 			}
@@ -104,23 +72,21 @@ struct LabelsLoader: View {
 					if labels.isEmpty {
 						NoContentView("There are no labels", systemImage: "tag")
 					} else {
-						ForEach(labels, id: \.?.id) { maybeLabel in
-							if let label = maybeLabel {
-								VStack(alignment: .leading) {
-									ScrollView(.horizontal) {
-										PillView(
-											label.title.emojized(),
-											bgColor: Color(hex: label.color),
-											fgColor: Color(hex: label.textColor)
-										)
-									}
+						ForEach(labels, id: \.id) { label in
+							VStack(alignment: .leading) {
+								ScrollView(.horizontal) {
+									PillView(
+										label.title.emojized(),
+										bgColor: Color(hex: label.color),
+										fgColor: Color(hex: label.textColor)
+									)
+								}
 
-									if let description = label.description,
-										description.isNotEmpty
-									{
-										Markdown(description)
-											.markdownTheme(.gitLab)
-									}
+								if let description = label.description,
+									description.isNotEmpty
+								{
+									Markdown(description)
+										.markdownTheme(.gitLab)
 								}
 							}
 						}

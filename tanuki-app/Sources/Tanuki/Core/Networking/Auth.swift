@@ -125,7 +125,7 @@ class Auth {
 	private static func resetSessionCaches() async throws {
 		URLCache.shared.removeAllCachedResponses()
 		URLCache.avatarCache.removeAllCachedResponses()
-		Network.shared.resetApolloClient()
-		try await Network.shared.apollo.store.clearCache()
+		Network.shared.recreateService()
+		try await Network.shared.service.clearCache()
 	}
 }

@@ -11,43 +11,28 @@ import SwiftUI
 struct UserGroupsLoader: View {
 	private let username: String
 
-	@State var groups: Result<[Group?], Error>? = nil
+	@State var groups: Result<[Group], Error>? = nil
 
 	init(_ username: String) {
 		self.username = username
 	}
 
 	private func loadGroups() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: UserGroupsQuery(username: username), cachePolicy: .cacheAndNetwork)
-
-			Task {
-				for try await response in responses {
-					if let groups = response.data?.user?.groups?.nodes {
-						self.groups = .success(groups)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+		Task {
+			do {
+				let groups = try await Network.shared.service.fetchUserGroups(username: username)
+				self.groups = .success(groups)
+			} catch let error {
+				self.groups = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.groups = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadGroups() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: UserGroupsQuery(username: username), cachePolicy: .networkOnly)
-
-			if let groups = response.data?.user?.groups?.nodes {
-				self.groups = .success(groups)
-			}
-
+			let groups = try await Network.shared.service.fetchUserGroups(username: username)
+			self.groups = .success(groups)
 			Notify.status(.success)
 		} catch let error {
 			self.groups = .failure(error)
@@ -63,10 +48,8 @@ struct UserGroupsLoader: View {
 					if groups.isEmpty {
 						NoContentView("There are no groups", systemImage: "scale.3d")
 					} else {
-						ForEach(groups, id: \.self?.fullPath) { group in
-							if let group {
-								SmallGroupView(group: group)
-							}
+						ForEach(groups, id: \.fullPath) { group in
+							SmallGroupView(group: group)
 						}
 					}
 				case .failure(let error):

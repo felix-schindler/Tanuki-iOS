@@ -1,6 +1,6 @@
 import Foundation
 
-public struct UserStatus: Codable {
+public struct UserStatus: Codable, Hashable, Sendable {
 	public let emoji: String?
 	public let message: String?
 

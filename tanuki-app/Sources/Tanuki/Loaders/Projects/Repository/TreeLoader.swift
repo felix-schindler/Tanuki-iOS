@@ -18,7 +18,7 @@ struct TreeLoader: View {
 	@State var refName: String
 
 	// MARK: - Loaded by API
-	@State var tree: Result<RepoTreeQuery.Data.Project.Repository.Tree, Error>? = nil
+	@State var tree: Result<RepoTreePayload, Error>? = nil
 
 	@State var branches: [Branch]? = nil
 
@@ -30,69 +30,23 @@ struct TreeLoader: View {
 	}
 
 	private func loadTree() {
-		let ref: GraphQLNullable<String>
-		let path: GraphQLNullable<String>
-
-		ref = .some(refName)
-
-		if let filePath = self.folderPath {
-			path = .some(filePath)
-		} else {
-			path = .none
-		}
-
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: RepoTreeQuery(
-					fullPath: self.fullPath,
-					ref: ref,
-					path: path
-				),
-				cachePolicy: .cacheAndNetwork
-			)
-
-			Task {
-				for try await response in responses {
-					if let tree = response.data?.project?.repository?.tree {
-						self.tree = .success(tree)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+		let filter = RepoTreeFilter(ref: refName, path: folderPath)
+		Task {
+			do {
+				let payload = try await Network.shared.service.fetchRepoTree(fullPath: self.fullPath, filter: filter)
+				self.tree = .success(payload)
+			} catch let error {
+				self.tree = .failure(error)
+				Notify.status(.error, error.localizedDescription)
 			}
-		} catch let error {
-			Notify.status(.error, error.localizedDescription)
 		}
 	}
 
 	private func reloadTree() async {
-		let ref: GraphQLNullable<String>
-		let path: GraphQLNullable<String>
-
-		ref = .some(refName)
-
-		if let filePath = self.folderPath {
-			path = .some(filePath)
-		} else {
-			path = .none
-		}
-
+		let filter = RepoTreeFilter(ref: refName, path: folderPath)
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: RepoTreeQuery(
-					fullPath: self.fullPath,
-					ref: ref,
-					path: path
-				),
-				cachePolicy: .networkOnly
-			)
-
-			if let tree = response.data?.project?.repository?.tree {
-				self.tree = .success(tree)
-			}
-
+			let payload = try await Network.shared.service.fetchRepoTree(fullPath: self.fullPath, filter: filter)
+			self.tree = .success(payload)
 			Notify.status(.success)
 		} catch let error {
 			self.tree = .failure(error)
@@ -134,38 +88,40 @@ struct TreeLoader: View {
 			Section("Tree") {
 				if let tree {
 					switch tree {
-					case .success(let tree):
-						if let folders = tree.trees.nodes {
-							ForEach(folders, id: \.?.path) { maybeFolder in
-								if let folder = maybeFolder {
-									NavigationLink(
-										destination: TreeLoader(
-											projectId: self.projectId,
-											fullPath: self.fullPath,
-											refName: self.refName,
-											folderPath: folder.path
-										),
-										label: {
-											Label(folder.name, systemImage: "folder")
-										}
-									)
+					case .success(let payload):
+						if let tree = payload.repository?.tree {
+							if let folders = tree.trees.nodes {
+								ForEach(folders, id: \.?.path) { maybeFolder in
+									if let folder = maybeFolder {
+										NavigationLink(
+											destination: TreeLoader(
+												projectId: self.projectId,
+												fullPath: self.fullPath,
+												refName: self.refName,
+												folderPath: folder.path
+											),
+											label: {
+												Label(folder.name, systemImage: "folder")
+											}
+										)
+									}
 								}
 							}
-						}
 
-						if let files = tree.blobs.nodes {
-							ForEach(files, id: \.?.path) { maybeFile in
-								if let file = maybeFile {
-									NavigationLink(
-										destination: FileLoader(
-											id: projectId,
-											filePath: file.path,
-											refName: self.refName
-										),
-										label: {
-											Label(file.name, systemImage: "doc.text")
-										}
-									)
+							if let files = tree.blobs.nodes {
+								ForEach(files, id: \.?.path) { maybeFile in
+									if let file = maybeFile {
+										NavigationLink(
+											destination: FileLoader(
+												id: projectId,
+												filePath: file.path,
+												refName: self.refName
+											),
+											label: {
+												Label(file.name, systemImage: "doc.text")
+											}
+										)
+									}
 								}
 							}
 						}

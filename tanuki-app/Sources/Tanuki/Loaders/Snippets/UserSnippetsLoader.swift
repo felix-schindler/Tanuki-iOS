@@ -11,75 +11,37 @@ import SwiftUI
 struct UserSnippetsLoader: View {
 	private let username: String?
 
-	@State var snippets: Result<[Snippet?], Error>? = nil
+	@State var snippets: Result<[Snippet], Error>? = nil
 
 	init(username: String? = nil) {
 		self.username = username
 	}
 
 	private func loadSnippets() {
-		do {
-			if let username {
-				let responses = try Network.shared.apollo.fetch(
-					query: UserSnippetsQuery(username: username),
-					cachePolicy: .cacheAndNetwork
-				)
-
-				Task {
-					for try await response in responses {
-						if let snippets = response.data?.user?.snippets?.nodes {
-							self.snippets = .success(snippets)
-						} else if let errors = response.errors {
-							for error in errors {
-								Notify.status(.error, error.localizedDescription)
-							}
-						}
-					}
+		Task {
+			do {
+				if let username {
+					let snippets = try await Network.shared.service.fetchUserSnippets(username: username)
+					self.snippets = .success(snippets)
+				} else {
+					let snippets = try await Network.shared.service.fetchCurrentUserSnippets()
+					self.snippets = .success(snippets)
 				}
-			} else {
-				let responses = try Network.shared.apollo.fetch(
-					query: CurrentUserSnippetsQuery(),
-					cachePolicy: .cacheAndNetwork
-				)
-
-				Task {
-					for try await response in responses {
-						if let snippets = response.data?.currentUser?.snippets?.nodes {
-							self.snippets = .success(snippets)
-						} else if let errors = response.errors {
-							for error in errors {
-								Notify.status(.error, error.localizedDescription)
-							}
-						}
-					}
-				}
+			} catch let error {
+				self.snippets = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.snippets = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadSnippets() async {
 		do {
 			if let username {
-				let response = try await Network.shared.apollo.fetch(
-					query: UserSnippetsQuery(username: username),
-					cachePolicy: .networkOnly
-				)
-
-				if let snippets = response.data?.user?.snippets?.nodes {
-					self.snippets = .success(snippets)
-				}
+				let snippets = try await Network.shared.service.fetchUserSnippets(username: username)
+				self.snippets = .success(snippets)
 			} else {
-				let response = try await Network.shared.apollo.fetch(
-					query: CurrentUserSnippetsQuery(),
-					cachePolicy: .networkOnly
-				)
-
-				if let snippets = response.data?.currentUser?.snippets?.nodes {
-					self.snippets = .success(snippets)
-				}
+				let snippets = try await Network.shared.service.fetchCurrentUserSnippets()
+				self.snippets = .success(snippets)
 			}
 
 			Notify.status(.success)
@@ -97,47 +59,45 @@ struct UserSnippetsLoader: View {
 					if snippets.isEmpty {
 						NoContentView("There are no snippets", systemImage: "scissors")
 					} else {
-						ForEach(snippets, id: \.self?.id) { maybeSnippet in
-							if let snippet = maybeSnippet {
-								NavigationLink(
-									destination: SnippetLoader(id: snippet.id),
-									label: {
-										HStack {
-											VStack(alignment: .leading) {
-												HStack {
-													VisibilityIcon(
-														snippet
-															.visibilityLevel
-															.rawValue
-													)
-													Text(snippet.title.emojized())
-												}
-
-												ScrollView(.horizontal) {
-													HStack {
-														if let author = snippet
-															._author
-														{
-															AuthorView(author)
-														}
-
-														HStack(spacing: 2) {
-															Image(
-																systemName: "clock")
-															Text(
-																Date.fromToString(
-																	snippet
-																		.createdAt))
-														}
-													}.font(.footnote)
-												}
+						ForEach(snippets, id: \.id) { snippet in
+							NavigationLink(
+								destination: SnippetLoader(id: snippet.id),
+								label: {
+									HStack {
+										VStack(alignment: .leading) {
+											HStack {
+												VisibilityIcon(
+													snippet
+														.visibilityLevel
+														.rawValue
+												)
+												Text(snippet.title.emojized())
 											}
-										}.swipeActions {
-											ShareButton(URL(string: snippet.webUrl)!)
+
+											ScrollView(.horizontal) {
+												HStack {
+													if let author = snippet
+														._author
+													{
+														AuthorView(author)
+													}
+
+													HStack(spacing: 2) {
+														Image(
+															systemName: "clock")
+														Text(
+															Date.fromToString(
+																snippet
+																	.createdAt))
+													}
+												}.font(.footnote)
+											}
 										}
+									}.swipeActions {
+										ShareButton(URL(string: snippet.webUrl)!)
 									}
-								)
-							}
+								}
+							)
 						}
 					}
 				case .failure(let error):

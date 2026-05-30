@@ -11,47 +11,28 @@ import SwiftUI
 struct GroupMergeLoader: View {
 	private let fullPath: String
 
-	@State var mergeRequests: Result<[SmallMergeRequest?], Error>? = nil
+	@State var mergeRequests: Result<[SmallMergeRequest], Error>? = nil
 
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
 
 	private func loadMergeRequests() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: GroupMergeRequestsQuery(fullPath: self.fullPath),
-				cachePolicy: .cacheAndNetwork
-			)
-
-			Task {
-				for try await response in responses {
-					if let mrs = response.data?.group?.mergeRequests?.nodes {
-						self.mergeRequests = .success(mrs)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+		Task {
+			do {
+				let mrs = try await Network.shared.service.fetchGroupMergeRequests(fullPath: self.fullPath)
+				self.mergeRequests = .success(mrs)
+			} catch let error {
+				self.mergeRequests = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.mergeRequests = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadMergeRequests() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: GroupMergeRequestsQuery(fullPath: self.fullPath),
-				cachePolicy: .networkOnly
-			)
-
-			if let mrs = response.data?.group?.mergeRequests?.nodes {
-				self.mergeRequests = .success(mrs)
-			}
-
+			let mrs = try await Network.shared.service.fetchGroupMergeRequests(fullPath: self.fullPath)
+			self.mergeRequests = .success(mrs)
 			Notify.status(.success)
 		} catch let error {
 			self.mergeRequests = .failure(error)
@@ -67,10 +48,8 @@ struct GroupMergeLoader: View {
 					if mrs.isEmpty {
 						NoContentView("There are no Merge Requests", image: "git-mr.symbols")
 					} else {
-						ForEach(mrs, id: \.?.reference) { maybeMerge in
-							if let mr = maybeMerge,
-								let fullPath = mr.reference.split(separator: "!").first
-							{
+						ForEach(mrs, id: \.reference) { mr in
+							if let fullPath = mr.reference.split(separator: "!").first {
 								SmallMergeView(String(fullPath), mr)
 							}
 						}

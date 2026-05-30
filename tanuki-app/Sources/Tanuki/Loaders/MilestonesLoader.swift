@@ -6,7 +6,6 @@
 //
 
 import GitLabAPI
-//import MarkdownUI
 import SwiftUI
 
 enum MilestoneQueryType {
@@ -19,7 +18,7 @@ struct MilestonesLoader: View {
 	private let fullPath: String
 	private let queryType: MilestoneQueryType
 
-	@State var milestones: Result<[Milestone?], Error>? = nil
+	@State var milestones: Result<[Milestone], Error>? = nil
 
 	@State var showFilters = false
 
@@ -36,58 +35,30 @@ struct MilestonesLoader: View {
 		self.queryType = queryType
 	}
 
-	private var groupQuery: GroupMilestonesQuery {
-		return GroupMilestonesQuery(
-			fullPath: self.fullPath,
-			state: GraphFilter.toFilterEnum(self.state),
-			searchTitle: GraphFilter.toFilter(self.searchTitle),
-			includeAncestors: .some(self.includeAncestors)
-		)
-	}
-
-	private var projectQuery: ProjectMilestonesQuery {
-		return ProjectMilestonesQuery(
-			fullPath: self.fullPath,
-			state: GraphFilter.toFilterEnum(self.state),
-			searchTitle: GraphFilter.toFilter(self.searchTitle),
-			includeAncestors: .some(self.includeAncestors)
-		)
-	}
-
 	private func loadMilestones() {
 		self.loadTask?.cancel()
 		self.loadTask = Task {
 			do {
 				switch self.queryType {
 				case .group:
-					let responses = try Network.shared.apollo.fetch(
-						query: self.groupQuery,
-						cachePolicy: .cacheAndNetwork)
-
-					for try await response in responses {
-						if Task.isCancelled { return }
-						if let milestones = response.data?.group?.milestones?.nodes {
-							self.milestones = .success(milestones)
-						} else if let errors = response.errors {
-							for error in errors {
-								Notify.status(.error, error.localizedDescription)
-							}
-						}
+					let filter = GroupMilestonesFilter(
+						state: self.state,
+						searchTitle: self.searchTitle,
+						includeAncestors: self.includeAncestors
+					)
+					let milestones = try await Network.shared.service.fetchGroupMilestones(fullPath: self.fullPath, filter: filter)
+					if !Task.isCancelled {
+						self.milestones = .success(milestones)
 					}
 				case .project:
-					let responses = try Network.shared.apollo.fetch(
-						query: self.projectQuery,
-						cachePolicy: .cacheAndNetwork)
-
-					for try await response in responses {
-						if Task.isCancelled { return }
-						if let milestones = response.data?.project?.milestones?.nodes {
-							self.milestones = .success(milestones)
-						} else if let errors = response.errors {
-							for error in errors {
-								Notify.status(.error, error.localizedDescription)
-							}
-						}
+					let filter = ProjectMilestonesFilter(
+						state: self.state,
+						searchTitle: self.searchTitle,
+						includeAncestors: self.includeAncestors
+					)
+					let milestones = try await Network.shared.service.fetchProjectMilestones(fullPath: self.fullPath, filter: filter)
+					if !Task.isCancelled {
+						self.milestones = .success(milestones)
 					}
 				}
 			} catch {
@@ -103,25 +74,22 @@ struct MilestonesLoader: View {
 		do {
 			switch self.queryType {
 			case .group:
-				let response = try await Network.shared.apollo.fetch(
-					query: self.groupQuery, cachePolicy: .networkOnly)
-
-				if let milestones = response.data?.group?.milestones?.nodes {
-					self.milestones = .success(milestones)
-				}
-
-				break
-			case .project:
-				let response = try await Network.shared.apollo.fetch(
-					query: self.projectQuery,
-					cachePolicy: .networkOnly
+				let filter = GroupMilestonesFilter(
+					state: self.state,
+					searchTitle: self.searchTitle,
+					includeAncestors: self.includeAncestors
 				)
+				let milestones = try await Network.shared.service.fetchGroupMilestones(fullPath: self.fullPath, filter: filter)
+				self.milestones = .success(milestones)
 
-				if let milestones = response.data?.project?.milestones?.nodes {
-					self.milestones = .success(milestones)
-				}
-
-				break
+			case .project:
+				let filter = ProjectMilestonesFilter(
+					state: self.state,
+					searchTitle: self.searchTitle,
+					includeAncestors: self.includeAncestors
+				)
+				let milestones = try await Network.shared.service.fetchProjectMilestones(fullPath: self.fullPath, filter: filter)
+				self.milestones = .success(milestones)
 			}
 
 			Notify.status(.success)
@@ -139,31 +107,29 @@ struct MilestonesLoader: View {
 					if milestones.isEmpty {
 						NoContentView("There are no milestones", systemImage: "diamond")
 					} else {
-						ForEach(milestones, id: \.?.iid) { milestone in
-							if let milestone {
-								VStack(alignment: .leading, spacing: 10) {
-									Label(
-										title: {
-											Text(milestone.title.emojized())
-										},
-										icon: {
-											Image(systemName: "diamond")
-												.foregroundStyle(
-													milestone.state == .closed
-														? .red
-														: (milestone.expired
-															? .orange
-															: .green)
-												)
-										}
-									)
-
-									if let description = milestone.description?.emojized(),
-										description.isNotEmpty
-									{
-										Markdown(description)
-											.markdownTheme(.gitLab)
+						ForEach(milestones, id: \.iid) { milestone in
+							VStack(alignment: .leading, spacing: 10) {
+								Label(
+									title: {
+										Text(milestone.title.emojized())
+									},
+									icon: {
+										Image(systemName: "diamond")
+											.foregroundStyle(
+												milestone.state == .closed
+													? .red
+													: (milestone.expired
+														? .orange
+														: .green)
+											)
 									}
+								)
+
+								if let description = milestone.description?.emojized(),
+									description.isNotEmpty
+								{
+									Markdown(description)
+										.markdownTheme(.gitLab)
 								}
 							}
 						}
@@ -182,7 +148,7 @@ struct MilestonesLoader: View {
 			text: Binding(get: { self.searchTitle ?? "" }, set: { self.searchTitle = $0.isNotEmpty ? $0 : nil }),
 			prompt: "Title"
 		).onChange(of: searchTitle) { _ in
-			self.milestones = nil  // Show loading state
+			self.milestones = nil
 			loadMilestones()
 		}.toolbar {
 			HStack {

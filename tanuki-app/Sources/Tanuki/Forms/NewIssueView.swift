@@ -27,9 +27,9 @@ struct NewIssueView: View {
 	}
 
 	@State var tags: [Tag]? = nil
-	@State var memberships: Result<[Member?], Error>? = nil
-	@State var milestones: [ProjectMilestonesQuery.Data.Project.Milestones.Node?]? = nil
-	@State var labels: [MyLabel?]? = nil
+	@State var memberships: Result<[Member], Error>? = nil
+	@State var milestones: [Milestone]? = nil
+	@State var labels: [MyLabel]? = nil
 
 	@State var title = ""
 	@State var description = ""
@@ -44,14 +44,8 @@ struct NewIssueView: View {
 
 	private func loadMembers() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: ProjectMembersQuery(fullPath: self.fullPath),
-				cachePolicy: .networkOnly
-			)
-
-			if let memberships = response.data?.project?.projectMembers?.nodes {
-				self.memberships = .success(memberships)
-			}
+			let memberships = try await Network.shared.service.fetchProjectMembers(fullPath: self.fullPath)
+			self.memberships = .success(memberships)
 		} catch let error {
 			self.memberships = .failure(error)
 		}
@@ -59,19 +53,11 @@ struct NewIssueView: View {
 
 	private func loadMilestones() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: ProjectMilestonesQuery(
-					fullPath: self.fullPath,
-					state: .none,
-					searchTitle: .none,
-					includeAncestors: .some(false)
-				),
-				cachePolicy: .networkOnly
+			let filter = ProjectMilestonesFilter(
+				includeAncestors: false
 			)
-
-			if let milestones = response.data?.project?.milestones?.nodes {
-				self.milestones = milestones
-			}
+			let milestones = try await Network.shared.service.fetchProjectMilestones(fullPath: self.fullPath, filter: filter)
+			self.milestones = milestones
 		} catch let error {
 			Notify.status(
 				.error,
@@ -84,12 +70,8 @@ struct NewIssueView: View {
 
 	private func loadLabels() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: ProjectLabelsQuery(fullPath: self.fullPath), cachePolicy: .networkOnly)
-
-			if let labels = response.data?.project?.labels?.nodes {
-				self.labels = labels
-			}
+			let labels = try await Network.shared.service.fetchProjectLabels(fullPath: self.fullPath)
+			self.labels = labels
 		} catch let error {
 			Notify.status(
 				.error,
@@ -183,27 +165,25 @@ struct NewIssueView: View {
 							NoContentView("There are no project members", systemImage: "person.2")
 						} else {
 							Menu("Select Assignees") {
-								ForEach(memberships, id: \.?.id) { member in
-									if let member {
-										Button {
-											if selectedAssignees.contains(member.id) {
-												selectedAssignees.remove(member.id)
+								ForEach(memberships, id: \.id) { member in
+									Button {
+										if selectedAssignees.contains(member.id) {
+											selectedAssignees.remove(member.id)
+										} else {
+											selectedAssignees.insert(member.id)
+										}
+									} label: {
+										if selectedAssignees.contains(member.id) {
+											if let username = member._user?.username {
+												Label("@\(username)", systemImage: "checkmark")
 											} else {
-												selectedAssignees.insert(member.id)
+												Label(member.id, systemImage: "checkmark")
 											}
-										} label: {
-											if selectedAssignees.contains(member.id) {
-												if let username = member._user?.username {
-													Label("@\(username)", systemImage: "checkmark")
-												} else {
-													Label(member.id, systemImage: "checkmark")
-												}
+										} else {
+											if let username = member._user?.username {
+												Text("@\(username)")
 											} else {
-												if let username = member._user?.username {
-													Text("@\(username)")
-												} else {
-													Text(member.id)
-												}
+												Text(member.id)
 											}
 										}
 									}
@@ -240,20 +220,18 @@ struct NewIssueView: View {
 
 				if let labels, labels.isNotEmpty {
 					Menu("Select Labels") {
-						ForEach(labels, id: \.?.title) { label in
-							if let label {
-								Button {
-									if selectedLabels.contains(label.title) {
-										selectedLabels.remove(label.title)
-									} else {
-										selectedLabels.insert(label.title)
-									}
-								} label: {
-									if selectedLabels.contains(label.title) {
-										Label(label.title.emojized(), systemImage: "checkmark")
-									} else {
-										Text(label.title.emojized())
-									}
+						ForEach(labels, id: \.title) { label in
+							Button {
+								if selectedLabels.contains(label.title) {
+									selectedLabels.remove(label.title)
+								} else {
+									selectedLabels.insert(label.title)
+								}
+							} label: {
+								if selectedLabels.contains(label.title) {
+									Label(label.title.emojized(), systemImage: "checkmark")
+								} else {
+									Text(label.title.emojized())
 								}
 							}
 						}
@@ -264,11 +242,9 @@ struct NewIssueView: View {
 
 				if let milestones, milestones.isNotEmpty {
 					Picker("Milestone", selection: $selectedMilestone) {
-						ForEach(milestones, id: \.?.iid) { milestone in
-							if let milestone {
-								Text(milestone.title)
-									.tag(milestone.iid)
-							}
+						ForEach(milestones, id: \.iid) { milestone in
+							Text(milestone.title)
+								.tag(milestone.iid)
 						}
 					}
 				} else {

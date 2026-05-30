@@ -13,7 +13,7 @@ struct EpicIssuesLoader: View {
 	private let fullPath: String
 	private let iid: String
 
-	@State var issues: Result<[SmallIssue?], Error>? = nil
+	@State var issues: Result<[SmallIssue], Error>? = nil
 
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
@@ -21,40 +21,21 @@ struct EpicIssuesLoader: View {
 	}
 
 	private func loadIssues() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: EpicIssuesQuery(fullPath: self.fullPath, iid: self.iid),
-				cachePolicy: .cacheAndNetwork
-			)
-
-			Task {
-				for try await response in responses {
-					if let issues = response.data?.group?.epic?.issues?.nodes {
-						self.issues = .success(issues)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+		Task {
+			do {
+				let issues = try await Network.shared.service.fetchEpicIssues(fullPath: self.fullPath, iid: self.iid)
+				self.issues = .success(issues)
+			} catch let error {
+				self.issues = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.issues = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadIssues() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: EpicIssuesQuery(fullPath: self.fullPath, iid: self.iid),
-				cachePolicy: .networkOnly
-			)
-
-			if let issues = response.data?.group?.epic?.issues?.nodes {
-				self.issues = .success(issues)
-			}
-
+			let issues = try await Network.shared.service.fetchEpicIssues(fullPath: self.fullPath, iid: self.iid)
+			self.issues = .success(issues)
 			Notify.status(.success)
 		} catch let error {
 			self.issues = .failure(error)
@@ -71,13 +52,11 @@ struct EpicIssuesLoader: View {
 						NoContentView(
 							"There are no issues", systemImage: "smallcircle.circle")
 					} else {
-						ForEach(issues, id: \.?.reference) { maybeIssue in
-							if let issue = maybeIssue {
-								SmallIssueView(
-									String(issue.reference.split(separator: "#")[0]),
-									issue
-								)
-							}
+						ForEach(issues, id: \.reference) { issue in
+							SmallIssueView(
+								String(issue.reference.split(separator: "#")[0]),
+								issue
+							)
 						}
 					}
 				case .failure(let error):

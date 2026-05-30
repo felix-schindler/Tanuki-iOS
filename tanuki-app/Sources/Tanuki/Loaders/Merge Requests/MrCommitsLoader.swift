@@ -12,7 +12,7 @@ struct MrCommitsLoader: View {
 	private let fullPath: String
 	private let iid: String
 
-	@State var project: Result<MergeRequestCommitsQuery.Data.Project, Error>? = nil
+	@State var commits: Result<[NewCommit], Error>? = nil
 
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
@@ -20,65 +20,41 @@ struct MrCommitsLoader: View {
 	}
 
 	private func loadCommits() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: MergeRequestCommitsQuery(fullPath: self.fullPath, iid: self.iid),
-				cachePolicy: .cacheAndNetwork
-			)
-
-			Task {
-				for try await response in responses {
-					if let project = response.data?.project {
-						self.project = .success(project)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
-				}
+		Task {
+			do {
+				let commits = try await Network.shared.service.fetchMergeRequestCommits(fullPath: self.fullPath, iid: self.iid)
+				self.commits = .success(commits)
+			} catch let error {
+				self.commits = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.project = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadCommits() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: MergeRequestCommitsQuery(fullPath: self.fullPath, iid: self.iid),
-				cachePolicy: .networkOnly
-			)
-
-			if let project = response.data?.project {
-				self.project = .success(project)
-			}
-
+			let commits = try await Network.shared.service.fetchMergeRequestCommits(fullPath: self.fullPath, iid: self.iid)
+			self.commits = .success(commits)
 			Notify.status(.success)
 		} catch let error {
-			self.project = .failure(error)
+			self.commits = .failure(error)
 			Notify.status(.error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let project {
-				switch project {
-				case .success(let project):
-					if let projectId = project.id.toIntId(),
-						let commits = project.mergeRequest?.commits?.nodes,
-						commits.isNotEmpty
-					{
-						ForEach(commits, id: \.?.shortId) { maybeCommit in
-							if let commit = maybeCommit {
-								SmallCommitView(commit, projectId)
-							}
-						}
-					} else {
+			if let commits {
+				switch commits {
+				case .success(let commits):
+					if commits.isEmpty {
 						NoContentView(
 							"There are no commits in this MR",
 							systemImage: "circle.and.line.horizontal")
+					} else {
+						ForEach(commits, id: \.shortId) { commit in
+							SmallCommitView(commit)
+						}
 					}
 				case .failure(let error):
 					FailedView(error)

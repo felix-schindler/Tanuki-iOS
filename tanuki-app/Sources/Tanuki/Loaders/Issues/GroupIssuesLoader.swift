@@ -23,33 +23,24 @@ struct GroupIssuesLoader: View {
 		self.fullPath = fullPath
 	}
 
-	@State var issues: Result<[SmallIssue?], Error>? = nil
+	@State var issues: Result<[SmallIssue], Error>? = nil
 
 	private func loadIssues() {
 		self.loadTask?.cancel()
 		self.loadTask = Task {
 			do {
-				let responses = try Network.shared.apollo.fetch(
-					query: GroupIssuesQuery(
-						fullPath: self.fullPath,
-						state: GraphFilter.toFilterEnum(self.filter.state),
-						search: GraphFilter.toFilter(self.filter.search),
-						confidential: GraphFilter.toFilter(self.filter.confidential),
-						subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
-						types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
-					),
-					cachePolicy: .cacheAndNetwork
+				let issues = try await Network.shared.service.fetchGroupIssues(
+					fullPath: self.fullPath,
+					filter: GroupIssuesFilter(
+						state: self.filter.state,
+						search: self.filter.search,
+						confidential: self.filter.confidential,
+						subscribed: self.filter.subscribed,
+						types: self.filter.types.map { [$0] }
+					)
 				)
-
-				for try await response in responses {
-					if Task.isCancelled { return }
-					if let issues = response.data?.group?.issues?.nodes {
-						self.issues = .success(issues)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
+				if !Task.isCancelled {
+					self.issues = .success(issues)
 				}
 			} catch {
 				if !Task.isCancelled {
@@ -62,22 +53,17 @@ struct GroupIssuesLoader: View {
 
 	private func reloadIssues() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: GroupIssuesQuery(
-					fullPath: self.fullPath,
-					state: GraphFilter.toFilterEnum(self.filter.state),
-					search: GraphFilter.toFilter(self.filter.search),
-					confidential: GraphFilter.toFilter(self.filter.confidential),
-					subscribed: GraphFilter.toFilterEnum(self.filter.subscribed),
-					types: self.filter.types != nil ? .some([.case(self.filter.types!)]) : .none
-				),
-				cachePolicy: .networkOnly
+			let issues = try await Network.shared.service.fetchGroupIssues(
+				fullPath: self.fullPath,
+				filter: GroupIssuesFilter(
+					state: self.filter.state,
+					search: self.filter.search,
+					confidential: self.filter.confidential,
+					subscribed: self.filter.subscribed,
+					types: self.filter.types.map { [$0] }
+				)
 			)
-
-			if let issues = response.data?.group?.issues?.nodes {
-				self.issues = .success(issues)
-			}
-
+			self.issues = .success(issues)
 			Notify.status(.success)
 		} catch let error {
 			self.issues = .failure(error)
@@ -93,10 +79,8 @@ struct GroupIssuesLoader: View {
 					if issues.isEmpty {
 						Text("There are no issues")
 					} else {
-						ForEach(issues, id: \.?.reference) { maybeIssue in
-							if let issue = maybeIssue {
-								SmallIssueView(self.fullPath, issue)
-							}
+						ForEach(issues, id: \.reference) { issue in
+							SmallIssueView(self.fullPath, issue)
 						}
 					}
 				case .failure(let error):
@@ -127,7 +111,7 @@ struct GroupIssuesLoader: View {
 			text: Binding(get: { self.filter.search ?? "" }, set: { self.filter.search = $0.isNotEmpty ? $0 : nil }),
 			prompt: "Search issues"
 		).onChange(of: filter.search) { _ in
-			self.issues = nil  // Show loading state
+			self.issues = nil
 			loadIssues()
 		}.navigationTitle("Issues")
 	}

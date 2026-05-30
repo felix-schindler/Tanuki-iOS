@@ -1,13 +1,13 @@
 {
-  "originHash" : "a976a17207ebf14634099dfcd676e3555a954a071ac9bcdf41ba312747bb81ea",
+  "originHash" : "ad75e892d6176f2e37540ab0d92ac480366f0c56134beb8411ea636ff40b2eab",
   "pins" : [
     {
-      "identity" : "apollo-ios",
+      "identity" : "alamofire",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apollographql/apollo-ios",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
       "state" : {
-        "revision" : "a5f98b1e5b2e334beffa91c1d91d03ee6aa2d8ef",
-        "version" : "2.1.1"
+        "revision" : "7595cbcf59809f9977c5f6378500de2ad73b7ddb",
+        "version" : "5.12.0"
       }
     },
     {
@@ -56,12 +56,39 @@
       }
     },
     {
+      "identity" : "skip-kit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://source.skip.dev/skip-kit.git",
+      "state" : {
+        "revision" : "9b259682e313e4cac8948997d79938f4aa7f0be5",
+        "version" : "1.0.3"
+      }
+    },
+    {
       "identity" : "skip-lib",
       "kind" : "remoteSourceControl",
       "location" : "https://source.skip.tools/skip-lib.git",
       "state" : {
         "revision" : "76e7da8a870b5b66ea0c3264f648b58b73bcdc0d",
         "version" : "1.4.0"
+      }
+    },
+    {
+      "identity" : "skip-model",
+      "kind" : "remoteSourceControl",
+      "location" : "https://source.skip.tools/skip-model.git",
+      "state" : {
+        "revision" : "1f6ae8b6c9ce37a31c83444314ea527399e8636a",
+        "version" : "1.7.3"
+      }
+    },
+    {
+      "identity" : "skip-ui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://source.skip.tools/skip-ui.git",
+      "state" : {
+        "revision" : "d6c2dadd489a0292dca94c0b96e5b0100fbcdf96",
+        "version" : "1.53.1"
       }
     },
     {

@@ -55,7 +55,7 @@ struct CacheView: View {
 				)
 				AsyncButton("Clear cache", systemImage: "trash", role: .destructive) {
 					do {
-						try await Network.shared.apollo.store.clearCache()
+						try await Network.shared.service.clearCache()
 						Notify.status(.success, "Cleared cache", systemImage: "checkmark")
 					} catch let error {
 						Notify.status(

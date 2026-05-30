@@ -14,47 +14,32 @@ struct SnippetLoader: View {
 
 	private let id: String
 
-	@State var snippet: Result<SnippetQuery.Data.Snippets.Node, Error>? = nil
+	@State var snippet: Result<SnippetPayload.Node, Error>? = nil
 
 	init(id: String) {
 		self.id = id
 	}
 
 	private func loadSnippet() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: SnippetQuery(id: self.id),
-				cachePolicy: .cacheAndNetwork
-			)
-
-			Task {
-				for try await response in responses {
-					if let snippet = response.data?.snippets?.nodes?.first {
-						self.snippet = .success(snippet!)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
+		Task {
+			do {
+				let payload = try await Network.shared.service.fetchSnippet(id: self.id)
+				if let snippet = payload.nodes?.first {
+					self.snippet = .success(snippet)
 				}
+			} catch let error {
+				self.snippet = .failure(error)
+				Notify.status(.error)
 			}
-		} catch let error {
-			self.snippet = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadSnippet() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: SnippetQuery(id: self.id),
-				cachePolicy: .networkOnly
-			)
-
-			if let snippet = response.data?.snippets?.nodes?.first {
-				self.snippet = .success(snippet!)
+			let payload = try await Network.shared.service.fetchSnippet(id: self.id)
+			if let snippet = payload.nodes?.first {
+				self.snippet = .success(snippet)
 			}
-
 			Notify.status(.success)
 		} catch let error {
 			self.snippet = .failure(error)

@@ -9,7 +9,7 @@ import GitLabAPI
 import SwiftUI
 
 struct ProjectsLoader: View {
-	@State var projects: Result<[SmallProject?], Error>? = nil
+	@State var projects: Result<[SmallProject], Error>? = nil
 
 	@State var showFilters = false
 
@@ -30,22 +30,22 @@ struct ProjectsLoader: View {
 	@State public private(set) var active: Bool? = nil
 	@State public private(set) var visibilityLevel: VisibilityLevelsEnum? = nil
 
-	private var query: ProjectsQuery {
-		return ProjectsQuery(
-			membership: .some(self.membership),
-			search: GraphFilter.toFilter(self.search),
-			personal: .some(self.personal),
-			sort: .none,
-			namespacePath: GraphFilter.toFilter(self.namespacePath),
-			withIssuesEnabled: .some(self.withIssuesEnabled),
-			withMergeRequestsEnabled: .some(self.withMergeRequestsEnabled),
-			archived: .some(.case(self.archived)),
-			minAccessLevel: GraphFilter.toFilterEnum(self.accessLevel),
-			aimedForDeletion: .some(self.aimedForDeletion),
-			notAimedForDeletion: .some(self.notAimedForDeletion),
-			markedForDeletionOn: GraphFilter.toFilterDate(self.markedForDeletionOn),
-			active: GraphFilter.toFilter(self.active),
-			visibility: GraphFilter.toFilterEnum(self.visibilityLevel),
+	private var filter: ProjectsFilter {
+		return ProjectsFilter(
+			membership: self.membership,
+			search: self.search,
+			personal: self.personal,
+			sort: nil,
+			namespacePath: self.namespacePath,
+			withIssuesEnabled: self.withIssuesEnabled,
+			withMergeRequestsEnabled: self.withMergeRequestsEnabled,
+			archived: self.archived,
+			minAccessLevel: self.accessLevel,
+			aimedForDeletion: self.aimedForDeletion,
+			notAimedForDeletion: self.notAimedForDeletion,
+			markedForDeletionOn: self.markedForDeletionOn != nil ? ISO8601DateFormatter().string(from: self.markedForDeletionOn!) : nil,
+			active: self.active,
+			visibility: self.visibilityLevel
 		)
 	}
 
@@ -54,20 +54,9 @@ struct ProjectsLoader: View {
 		self.loadTask?.cancel()
 		self.loadTask = Task {
 			do {
-				let responses = try Network.shared.apollo.fetch(
-					query: self.query,
-					cachePolicy: .cacheAndNetwork
-				)
-
-				for try await response in responses {
-					if Task.isCancelled { return }
-					if let projects = response.data?.projects?.nodes {
-						self.projects = .success(projects)
-					} else if let errors = response.errors {
-						for error in errors {
-							Notify.status(.error, error.localizedDescription)
-						}
-					}
+				let projects = try await Network.shared.service.fetchProjects(filter: self.filter)
+				if !Task.isCancelled {
+					self.projects = .success(projects)
 				}
 			} catch {
 				if !Task.isCancelled {
@@ -80,15 +69,8 @@ struct ProjectsLoader: View {
 
 	private func reloadProjects() async {
 		do {
-			let response = try await Network.shared.apollo.fetch(
-				query: self.query,
-				cachePolicy: .networkOnly
-			)
-
-			if let projects = response.data?.projects?.nodes {
-				self.projects = .success(projects)
-			}
-
+			let projects = try await Network.shared.service.fetchProjects(filter: self.filter)
+			self.projects = .success(projects)
 			Notify.status(.success)
 		} catch let error {
 			self.projects = .failure(error)
@@ -104,10 +86,8 @@ struct ProjectsLoader: View {
 					if projects.isEmpty {
 						NoContentView("There are no projects", systemImage: "app.gift.fill")
 					} else {
-						ForEach(projects, id: \.?.fullPath) { project in
-							if let project {
-								SmallProjectView(project)
-							}
+						ForEach(projects, id: \.fullPath) { project in
+							SmallProjectView(project)
 						}
 					}
 				case .failure(let error):
@@ -239,7 +219,7 @@ struct ProjectsLoader: View {
 			text: Binding(get: { self.search ?? "" }, set: { self.search = $0.isNotEmpty ? $0 : nil }),
 			prompt: "Name, path, or description"
 		).onChange(of: search) { _ in
-			self.projects = nil  // Show loading state
+			self.projects = nil
 			loadProjects()
 		}.navigationTitle("Projects")
 	}
