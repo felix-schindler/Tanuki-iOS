@@ -5,7 +5,9 @@
 //  Created by Felix Schindler on 02.11.21.
 //
 
+#if canImport(AVKit)
 import AVKit
+#endif
 //import MarkdownUI
 import SwiftUI
 
@@ -61,9 +63,11 @@ struct FileLoader: View {
 						Text("Can't preview this \(fileExtension) audio file")
 					}
 				} else if Formats.videoFormats.contains(fileExtension) {
+					#if canImport(AVKit)
 					if let url = URL(string: "") {
 						VideoPlayer(player: AVPlayer(url: url))
 					}
+					#endif
 				} else if Formats.imageFormats.contains(fileExtension) {
 					if let url = URL(string: "") {
 						AsyncImage(url: url) { phase in

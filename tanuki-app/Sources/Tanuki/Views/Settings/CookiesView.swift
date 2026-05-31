@@ -5,6 +5,7 @@
 //  Created by Felix Schindler on 03.10.25.
 //
 
+#if canImport(WebKit)
 import SwiftUI
 import WebKit
 
@@ -200,3 +201,4 @@ struct WebViewInternal: UIViewRepresentable {
 extension HTTPCookie {
 	fileprivate var identifier: String { "\(name)|\(domain)|\(path)" }
 }
+#endif
