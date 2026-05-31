@@ -203,11 +203,13 @@ struct UserView: View {
 			}
 		}
 
+		#if canImport(Charts)
 		if #available(iOS 16.0, *) {
 			Section("Contributions") {
 				ContributionsLoader(username: user.username)
 			}
 		}
+		#endif
 
 		Section {
 			NavigationLink(

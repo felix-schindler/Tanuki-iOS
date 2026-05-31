@@ -5,6 +5,7 @@
 //  Created by Felix Schindler on 09.04.24.
 //
 
+#if canImport(Charts)
 import Charts
 import SwiftUI
 
@@ -97,3 +98,4 @@ struct ContributionsLoader: View {
 		}
 	}
 }
+#endif

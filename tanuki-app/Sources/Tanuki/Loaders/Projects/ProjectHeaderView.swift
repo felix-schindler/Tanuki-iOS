@@ -5,7 +5,9 @@
 //  Created by Felix Schindler on 10.09.25.
 //
 
+#if canImport(Charts)
 import Charts
+#endif
 import GitLabAPI
 //import MarkdownUI
 import SwiftUI
@@ -141,6 +143,7 @@ struct ProjectHeaderView: View {
 				.controlSize(.small)
 			}
 
+#if canImport(Charts)
 			if #available(iOS 16.0, *),
 				let languages = project.languages,
 				languages.isNotEmpty
@@ -164,6 +167,7 @@ struct ProjectHeaderView: View {
 				)
 				.frame(height: 30)
 			}
+#endif
 		}
 	}
 }

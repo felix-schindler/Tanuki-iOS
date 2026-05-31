@@ -5,6 +5,7 @@
 //  Created by Felix Schindler on 18.02.26.
 //
 
+#if canImport(StoreKit)
 import StoreKit
 import SwiftUI
 
@@ -26,3 +27,4 @@ struct AppStoreReview: View {
 		Text("Not available on this platform. Update to iOS 16 or later.")
 	}
 }
+#endif

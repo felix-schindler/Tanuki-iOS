@@ -35,6 +35,7 @@ struct SettingsView: View {
 				NavigationLink(destination: CacheView()) {
 					Label("Cache", systemImage: "internaldrive")
 				}
+#if canImport(WebKit)
 				NavigationLink(destination: CookiesView()) {
 					Label(
 						title: { Text("Cookies") },
@@ -44,6 +45,7 @@ struct SettingsView: View {
 								.scaledToFill()
 						})
 				}
+#endif
 				NavigationLink(destination: InstancesView()) {
 					Label("Instances", systemImage: "server.rack")
 				}
@@ -56,9 +58,11 @@ struct SettingsView: View {
 				NavigationLink(destination: FeedbackView()) {
 					Label("Feedback", systemImage: "exclamationmark.bubble")
 				}
+				#if canImport(StoreKit)
 				if #available(iOS 16.0, *) {
 					AppStoreReview()
 				}
+				#endif
 			}
 			
 			Section {

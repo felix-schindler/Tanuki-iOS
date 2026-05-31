@@ -5,7 +5,9 @@
 //  Created by Felix Schindler on 03.10.25.
 //
 
+#if canImport(CryptoKit)
 import CryptoKit
+#endif
 import Foundation
 import SwiftUI
 

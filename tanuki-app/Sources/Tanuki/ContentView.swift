@@ -8,7 +8,9 @@
 //
 
 import SwiftUI
+#if canImport(WebKit)
 import WebKit
+#endif
 
 enum ContentTab: String, Hashable {
 	case home, todos, explore, profile
@@ -17,6 +19,7 @@ enum ContentTab: String, Hashable {
 struct ContentView: View {
 	@AppStorage("tab") var tab = ContentTab.home
 
+#if canImport(WebKit)
 	private func restorePersistedCookies() {
 		guard
 			let data = UserDefaults.standard.data(forKey: "persistedCookies"),
@@ -37,6 +40,7 @@ struct ContentView: View {
 			}
 		}
 	}
+#endif
 
 	public var body: some View {
 		TabView(selection: $tab) {
@@ -61,7 +65,9 @@ struct ContentView: View {
 				Label("Profile", systemImage: "person")
 			}.tag(ContentTab.profile)
 		}.onAppear {
+#if canImport(WebKit)
 			restorePersistedCookies()
+#endif
 		}
 	}
 }
