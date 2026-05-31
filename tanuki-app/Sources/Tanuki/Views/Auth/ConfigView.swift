@@ -100,9 +100,3 @@ struct ConfigView: View {
 		.modifier(ScrollDismissIfAvailable())
 	}
 }
-
-#Preview {
-	NavigationView {
-		ConfigView(showSetup: .constant(true))
-	}
-}

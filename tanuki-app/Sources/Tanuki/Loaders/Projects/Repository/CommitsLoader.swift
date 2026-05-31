@@ -171,9 +171,3 @@ struct CommitsLoader: View {
 		.headerProminence(.increased)
 	}
 }
-
-#Preview {
-	NavigationView {
-		CommitsLoader(33_025_310, refName: "main")
-	}
-}

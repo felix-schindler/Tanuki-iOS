@@ -57,7 +57,3 @@ struct IssueFilterView: View {
 		.navigationTitle("Projects Filter")
 	}
 }
-
-#Preview {
-	IssueFilterView(filter: .constant(IssueFilter()))
-}

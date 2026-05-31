@@ -91,27 +91,3 @@ struct RoundIconButton: View {
 		}
 	}
 }
-
-#Preview {
-	HStack {
-		VStack {
-			ShareButton(URL(string: "https://schindlerfelix.de")!)
-			ShareButton(URL(string: "https://gitlab.com")!)
-			ShareButton(
-				URL(string: "https://gitlab.com/felix-schindler/gitlab-ios")!)
-		}
-		VStack {
-			RoundIconButton("Up", icon: "arrow.up", action: {})
-			RoundIconButton(
-				"Filters", icon: "line.3.horizontal.decrease", action: {})
-			RoundIconButton("Add", icon: "plus") {
-			}
-			RoundIconButton("Events", icon: "bell", action: {})
-			CloseButton({})
-			RoundIconButton("Cancel", icon: "xmark", action: {})
-				.tint(.secondary)
-			RoundIconButton("Cancel", icon: "xmark", action: {})
-				.tint(.red)
-		}
-	}
-}

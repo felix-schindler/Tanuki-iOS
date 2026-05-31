@@ -74,10 +74,3 @@ struct PipelineStatus: View {
 	}
 }
 
-#Preview {
-	VStack {
-		ForEach(GraphQLEnum<GitLabAPI.PipelineStatusEnum>.allCases, id: \.self) { state in
-			PipelineStatus(state)
-		}
-	}
-}

@@ -167,15 +167,3 @@ struct MergeButton: View {
 	}
 }
 
-#Preview {
-	MergeButton(
-		iid: "0",
-		projectId: 0,
-		onMerge: {
-			print("MERGE")
-		},
-		hasConflicts: false,
-		mergeStatusEnum: .case(.canBeMerged),
-		detailedMergeStatus: nil
-	)
-}

@@ -190,9 +190,3 @@ struct HomeView: View {
 		.navigationTitle("Home")
 	}
 }
-
-#Preview {
-	NavigationView {
-		HomeView()
-	}
-}

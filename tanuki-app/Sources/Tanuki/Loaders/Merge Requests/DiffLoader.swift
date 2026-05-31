@@ -163,12 +163,3 @@ struct DiffLoader: View {
 		.navigationTitle("Diffs")
 	}
 }
-
-#Preview {
-	NavigationView {
-		DiffLoader(
-			projectId: 33_025_310,
-			mrIid: 1
-		)
-	}
-}

@@ -153,9 +153,3 @@ struct UserSnippetsLoader: View {
 		}.navigationTitle("Snippets")
 	}
 }
-
-#Preview {
-	NavigationView {
-		UserSnippetsLoader(username: "felix-schindler")
-	}
-}

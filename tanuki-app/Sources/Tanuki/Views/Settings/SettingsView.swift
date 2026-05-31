@@ -73,9 +73,3 @@ struct SettingsView: View {
 		}
 	}
 }
-
-#Preview {
-	NavigationView {
-		SettingsView()
-	}
-}

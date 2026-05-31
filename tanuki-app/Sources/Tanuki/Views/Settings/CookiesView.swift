@@ -113,11 +113,6 @@ struct CookiesView: View {
 	}
 }
 
-#Preview {
-	NavigationView {
-		CookiesView()
-	}
-}
 
 struct WebLoginView: View {
 	@Environment(\.dismiss) var dismiss

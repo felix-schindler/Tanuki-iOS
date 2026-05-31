@@ -78,9 +78,3 @@ struct BranchesLoader: View {
 		}.navigationTitle("Branches")
 	}
 }
-
-#Preview {
-	NavigationView {
-		BranchesLoader(33_025_310)
-	}
-}

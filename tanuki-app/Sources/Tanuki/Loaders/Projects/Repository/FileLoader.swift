@@ -128,18 +128,3 @@ struct FileLoader: View {
 		}.navigationTitle(filePath)
 	}
 }
-
-#Preview {
-	VStack {
-		FileLoader(
-			id: 33_025_310,
-			filePath: "GitLab/GitLabApp.swift",
-			refName: "main"
-		)
-		FileLoader(
-			id: 45_748_717,
-			filePath: "tanuki.svg",
-			refName: "main"
-		)
-	}
-}

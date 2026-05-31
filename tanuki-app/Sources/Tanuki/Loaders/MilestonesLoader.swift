@@ -229,9 +229,3 @@ struct MilestonesLoader: View {
 		}.navigationTitle("Milestones")
 	}
 }
-
-#Preview {
-	NavigationView {
-		MilestonesLoader(fullPath: "gitlab-org", id: 278_964, queryType: .group)
-	}
-}

@@ -144,7 +144,3 @@ struct UsersLoader: View {
 		}.navigationTitle("Users")
 	}
 }
-
-#Preview {
-	UsersLoader()
-}

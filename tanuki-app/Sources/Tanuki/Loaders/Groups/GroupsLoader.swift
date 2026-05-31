@@ -183,9 +183,3 @@ struct GroupsLoader: View {
 		}.navigationTitle("Groups")
 	}
 }
-
-#Preview {
-	NavigationView {
-		GroupsLoader()
-	}
-}

@@ -87,8 +87,3 @@ struct InstancesView: View {
 	}
 }
 
-#Preview {
-	NavigationView {
-		InstancesView()
-	}
-}

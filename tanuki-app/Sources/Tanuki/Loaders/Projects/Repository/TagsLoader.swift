@@ -84,9 +84,3 @@ struct TagsLoader: View {
 		}.navigationTitle("Tags")
 	}
 }
-
-#Preview {
-	NavigationView {
-		TagsLoader(33_025_310)
-	}
-}

@@ -310,8 +310,3 @@ struct GroupLoader: View {
 	}
 }
 
-#Preview {
-	NavigationView {
-		GroupLoader(fullPath: "gitlab-org/production-engineering")
-	}
-}
