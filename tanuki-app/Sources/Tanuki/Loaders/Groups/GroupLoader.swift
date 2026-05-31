@@ -57,191 +57,8 @@ struct GroupLoader: View {
 			if let group {
 				switch group {
 				case .success(let group):
-					VStack(alignment: .leading) {
-						HStack {
-							if let avatarUrl = URL.fromAvatar(group.avatarUrl) {
-								AvatarImage(avatarUrl, size: .medium)
-							}
-							Spacer()
-							if let name = group.name?.emojized() {
-								Text(name)
-									.font(.title)
-									.fontWeight(.bold)
-							}
-							Spacer()
-							if let visibility = group.visibility {
-								VisibilityIcon(visibility)
-							}
-						}
-
-						ScrollView(.horizontal) {
-							HStack {
-								if let groupMembersCount = group.groupMembersCount {
-									PillView(
-										groupMembersCount,
-										icon: "person.2",
-										cornerRadius: 5
-									)
-								}
-
-								if let parent = group.parent {
-									NavigationLink(
-										destination: GroupLoader(
-											fullPath: parent.fullPath ?? ""),
-										label: {
-											PillView(
-												parent.name ?? parent.fullPath ?? "",
-												icon:
-													"figure.and.child.holdinghands",
-												cornerRadius: 5
-											)
-										}
-									)
-								}
-
-								if let fullName = group.fullName, group.name != fullName {
-									PillView(fullName, cornerRadius: 5)
-								} else if let path = group.path, group.name != path {
-									PillView(path, cornerRadius: 5)
-								}
-							}.font(.footnote)
-						}
-
-						if let description = group.description {
-							Markdown(description)
-								.markdownTheme(.gitLab)
-						}
-					}
-
-					Section {
-						HStack {
-							NavigationLink(
-								destination: ProjectsLoader(
-									namespacePath: self.fullPath
-								),
-								label: {
-									Label(
-										title: {
-											HStack {
-												Text("Projects")
-												Spacer()
-												if let projectsCount = group.projectsCount {
-													Text(projectsCount)
-												}
-											}
-										},
-										icon: {
-											Image(systemName: "app.gift.fill")
-												.foregroundStyle(.gray)
-										}
-									)
-								}
-							)
-						}
-						HStack {
-							NavigationLink(
-								destination: GroupsLoader(parentPath: self.fullPath),
-								label: {
-									Label(
-										title: {
-											HStack {
-												Text("Descendant groups")
-												Spacer()
-												if let descendantGroupsCount = group.descendantGroupsCount {
-													Text(descendantGroupsCount)
-												}
-											}
-										},
-										icon: {
-											Image(systemName: "scale.3d")
-												.foregroundStyle(.red)
-										}
-									)
-								})
-						}
-
-						DisclosureGroup(
-							content: {
-								if let groupId = group.id?.toIntId() {
-									NavigationLink(
-										"Members",
-										destination: MembersLoader(
-											fullPath: self.fullPath,
-											id: groupId,
-											type: .group
-										)
-									)
-									NavigationLink(
-										"Labels",
-										destination: LabelsLoader(
-											fullPath: self.fullPath,
-											id: groupId,
-											queryType: .group
-										)
-									)
-								}
-								NavigationLink(
-									"Timelogs",
-									destination: TimelogsLoader(
-										fullPath: self.fullPath,
-										queryType: .group
-									)
-								)
-								NavigationLink(
-									"Custom emojis",
-									destination: CustomEmojisLoader(
-										fullPath: self.fullPath
-									))
-							},
-							label: {
-								Label("Manage", systemImage: "person.2")
-							}
-						)
-
-						DisclosureGroup(
-							content: {
-								NavigationLink(
-									"Issues",
-									destination: GroupIssuesLoader(fullPath: self.fullPath)
-								)
-								NavigationLink(
-									"Epics",
-									destination: GroupEpicsLoader(fullPath: self.fullPath)
-								)
-								if let groupId = group.id?.toIntId() {
-									NavigationLink(
-										"Milestones",
-										destination: MilestonesLoader(
-											fullPath: self.fullPath,
-											id: groupId,
-											queryType: .group
-										)
-									)
-								}
-							},
-							label: {
-								if #available(iOS 17.0, *) {
-									Label("Plan", systemImage: "calendar.badge.checkmark")
-								} else {
-									Label("Plan", systemImage: "calendar")
-								}
-							}
-						)
-
-						DisclosureGroup(
-							content: {
-								NavigationLink(
-									"Merge Requests",
-									destination: GroupMergeLoader(fullPath: self.fullPath))
-							},
-							label: {
-								Label(
-									"Code",
-									systemImage:
-										"chevron.left.forwardslash.chevron.right")
-							}
-						)
-					}.navigationTitle(group.path ?? group.fullPath ?? group.name ?? "")
+					GroupInfoHeader(group: group)
+					GroupSections(group: group, fullPath: fullPath)
 				case .failure(let error):
 					FailedView(error.localizedDescription, icon: "scale.3d")
 				}
@@ -300,6 +117,126 @@ struct GroupLoader: View {
 		}
 		.navigationTitle(fullPath)
 		.navigationBarTitleDisplayMode(.inline)
+	}
+}
+
+struct GroupInfoHeader: View {
+	let group: Group_Group
+
+	var body: some View {
+		VStack(alignment: .leading) {
+			HStack {
+				if let avatarUrl = URL.fromAvatar(group.avatarUrl) {
+					AvatarImage(avatarUrl, size: .medium)
+				}
+				Spacer()
+				if let name = group.name?.emojized() {
+					Text(name)
+						.font(.title)
+						.fontWeight(.bold)
+				}
+				Spacer()
+				if let visibility = group.visibility {
+					VisibilityIcon(visibility)
+				}
+			}
+
+			ScrollView(.horizontal) {
+				HStack {
+					if let groupMembersCount = group.groupMembersCount {
+						PillView(groupMembersCount, icon: "person.2", cornerRadius: 5)
+					}
+
+					if let parent = group.parent {
+						NavigationLink(destination: GroupLoader(fullPath: parent.fullPath ?? "")) {
+							PillView(parent.name ?? parent.fullPath ?? "", icon: "figure.and.child.holdinghands", cornerRadius: 5)
+						}
+					}
+
+					if let fullName = group.fullName, group.name != fullName {
+						PillView(fullName, cornerRadius: 5)
+					} else if let path = group.path, group.name != path {
+						PillView(path, cornerRadius: 5)
+					}
+				}.font(.footnote)
+			}
+
+			if let description = group.description {
+				Markdown(description)
+					.markdownTheme(.gitLab)
+			}
+		}
+	}
+}
+
+struct GroupSections: View {
+	let group: Group_Group
+	let fullPath: String
+
+	var body: some View {
+		Section {
+			HStack {
+				NavigationLink(destination: ProjectsLoader(namespacePath: fullPath)) {
+					Label(title: {
+						HStack {
+							Text("Projects")
+							Spacer()
+							if let projectsCount = group.projectsCount {
+								Text(projectsCount)
+							}
+						}
+					}, icon: {
+						Image(systemName: "app.gift.fill").foregroundStyle(.gray)
+					})
+				}
+			}
+			HStack {
+				NavigationLink(destination: GroupsLoader(parentPath: fullPath)) {
+					Label(title: {
+						HStack {
+							Text("Descendant groups")
+							Spacer()
+							if let descendantGroupsCount = group.descendantGroupsCount {
+								Text(descendantGroupsCount)
+							}
+						}
+					}, icon: {
+						Image(systemName: "scale.3d").foregroundStyle(.red)
+					})
+				}
+			}
+
+			DisclosureGroup(content: {
+				if let groupId = group.id?.toIntId() {
+					NavigationLink("Members", destination: MembersLoader(fullPath: fullPath, id: groupId, type: .group))
+					NavigationLink("Labels", destination: LabelsLoader(fullPath: fullPath, id: groupId, queryType: .group))
+				}
+				NavigationLink("Timelogs", destination: TimelogsLoader(fullPath: fullPath, queryType: .group))
+				NavigationLink("Custom emojis", destination: CustomEmojisLoader(fullPath: fullPath))
+			}, label: {
+				Label("Manage", systemImage: "person.2")
+			})
+
+			DisclosureGroup(content: {
+				NavigationLink("Issues", destination: GroupIssuesLoader(fullPath: fullPath))
+				NavigationLink("Epics", destination: GroupEpicsLoader(fullPath: fullPath))
+				if let groupId = group.id?.toIntId() {
+					NavigationLink("Milestones", destination: MilestonesLoader(fullPath: fullPath, id: groupId, queryType: .group))
+				}
+			}, label: {
+				if #available(iOS 17.0, *) {
+					Label("Plan", systemImage: "calendar.badge.checkmark")
+				} else {
+					Label("Plan", systemImage: "calendar")
+				}
+			})
+
+			DisclosureGroup(content: {
+				NavigationLink("Merge Requests", destination: GroupMergeLoader(fullPath: fullPath))
+			}, label: {
+				Label("Code", systemImage: "chevron.left.forwardslash.chevron.right")
+			})
+		}
 	}
 }
 

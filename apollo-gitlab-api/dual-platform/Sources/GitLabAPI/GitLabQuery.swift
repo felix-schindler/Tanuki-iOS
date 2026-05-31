@@ -8,7 +8,7 @@ public enum FetchStrategy: Sendable {
 
 /// A single GraphQL operation (query or mutation) that can be sent to the GitLab API.
 public protocol GitLabQuery: Sendable {
-    associatedtype Response: Decodable, Sendable
+    associatedtype Response
 
     var operationName: String { get }
     var queryString: String { get }

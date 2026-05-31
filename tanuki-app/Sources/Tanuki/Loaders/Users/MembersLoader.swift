@@ -31,10 +31,30 @@ struct MembersLoader: View {
 			do {
 				switch self.queryType {
 				case .project:
-					let members = try await Network.shared.service.fetchProjectMembers(fullPath: self.fullPath)
+					let response = try await Network.shared.service.fetchProjectMembers(fullPath: self.fullPath)
+					let members = response.projectMembers?.nodes?.map { node -> MemberStruct in
+						MemberStruct(
+							id: node.id ?? "",
+							createdAt: node.createdAt,
+							expiresAt: node.expiresAt,
+							_accessLevel: node.accessLevel?.stringValue,
+							_user: node.user.map { MyAuthor(avatarUrl: $0.avatarUrl, name: $0.name ?? $0.username ?? "", username: $0.username ?? "") },
+							_createdBy: node.createdBy.map { MyAuthor(avatarUrl: $0.avatarUrl, name: $0.name ?? $0.username ?? "", username: $0.username ?? "") }
+						)
+					} ?? []
 					self.memberships = .success(members)
 				case .group:
-					let members = try await Network.shared.service.fetchGroupMembers(fullPath: self.fullPath)
+					let response = try await Network.shared.service.fetchGroupMembers(fullPath: self.fullPath)
+					let members = response.groupMembers?.nodes?.map { node -> MemberStruct in
+						MemberStruct(
+							id: node.id ?? "",
+							createdAt: node.createdAt,
+							expiresAt: node.expiresAt,
+							_accessLevel: node.accessLevel?.stringValue,
+							_user: node.user.map { MyAuthor(avatarUrl: $0.avatarUrl, name: $0.name ?? $0.username ?? "", username: $0.username ?? "") },
+							_createdBy: node.createdBy.map { MyAuthor(avatarUrl: $0.avatarUrl, name: $0.name ?? $0.username ?? "", username: $0.username ?? "") }
+						)
+					} ?? []
 					self.memberships = .success(members)
 				}
 			} catch let error {
@@ -48,10 +68,30 @@ struct MembersLoader: View {
 		do {
 			switch self.queryType {
 			case .project:
-				let members = try await Network.shared.service.fetchProjectMembers(fullPath: self.fullPath)
+				let response = try await Network.shared.service.fetchProjectMembers(fullPath: self.fullPath)
+				let members = response.projectMembers?.nodes?.map { node -> MemberStruct in
+					MemberStruct(
+						id: node.id ?? "",
+						createdAt: node.createdAt,
+						expiresAt: node.expiresAt,
+						_accessLevel: node.accessLevel?.stringValue,
+						_user: node.user.map { MyAuthor(avatarUrl: $0.avatarUrl, name: $0.name ?? $0.username ?? "", username: $0.username ?? "") },
+						_createdBy: node.createdBy.map { MyAuthor(avatarUrl: $0.avatarUrl, name: $0.name ?? $0.username ?? "", username: $0.username ?? "") }
+					)
+				} ?? []
 				self.memberships = .success(members)
 			case .group:
-				let members = try await Network.shared.service.fetchGroupMembers(fullPath: self.fullPath)
+				let response = try await Network.shared.service.fetchGroupMembers(fullPath: self.fullPath)
+				let members = response.groupMembers?.nodes?.map { node -> MemberStruct in
+					MemberStruct(
+						id: node.id ?? "",
+						createdAt: node.createdAt,
+						expiresAt: node.expiresAt,
+						_accessLevel: node.accessLevel?.stringValue,
+						_user: node.user.map { MyAuthor(avatarUrl: $0.avatarUrl, name: $0.name ?? $0.username ?? "", username: $0.username ?? "") },
+						_createdBy: node.createdBy.map { MyAuthor(avatarUrl: $0.avatarUrl, name: $0.name ?? $0.username ?? "", username: $0.username ?? "") }
+					)
+				} ?? []
 				self.memberships = .success(members)
 			}
 

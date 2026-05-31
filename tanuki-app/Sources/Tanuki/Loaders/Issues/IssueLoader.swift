@@ -98,7 +98,7 @@ struct IssueLoader: View {
 		}
 	}
 
-	public var body: some View {
+	private var issueList: some View {
 		List {
 			if let project {
 				switch project {
@@ -152,18 +152,15 @@ struct IssueLoader: View {
 										)
 									}
 
-								if let blockedBy = issue.blockedByIssues?.nodes,
-									blockedBy.isNotEmpty
-								{
-									ForEach(blockedBy, id: \.iid) { parent in
-											if let parent {
+									if let blockedBy = issue.blockedByIssues?.nodes,
+										blockedBy.isNotEmpty
+									{
+										ForEach(blockedBy, id: \.iid) { parent in
 												NavigationLink(
-													destination: {
-														IssueLoader(
-															fullPath: self.fullPath,
-															iid: parent.iid ?? ""
-														)
-													},
+													destination: IssueLoader(
+														fullPath: self.fullPath,
+														iid: parent.iid ?? ""
+													),
 													label: {
 														PillView(
 															"#\(parent.iid ?? "")",
@@ -174,7 +171,6 @@ struct IssueLoader: View {
 														)
 													}
 												)
-											}
 										}
 									}
 								}
@@ -203,25 +199,19 @@ struct IssueLoader: View {
 								content: {
 									if assgineeCount > 0 {
 										ForEach(issue.assignees!.nodes!, id: \.username) { user in
-												NavigationLink(
-													destination: UserLoader(
-														username: user.username ?? ""
-													),
-													label: {
-														HStack {
-															if let url =
-																URL.fromAvatar(
-																	user.avatarUrl)
-															{
-																AvatarImage(
-																	url,
-																	size: .small)
-															}
-															Text(user.username ?? "")
+											NavigationLink(
+												destination: UserLoader(
+													username: user.username ?? ""
+												),
+												label: {
+													HStack {
+														if let url = URL.fromAvatar(user.avatarUrl) {
+															AvatarImage(url, size: .small)
 														}
+														Text(user.username ?? "")
 													}
-												)
-											}
+												}
+											)
 										}
 									} else {
 										Text("There are no assignees")
@@ -247,13 +237,13 @@ struct IssueLoader: View {
 									title: {
 										ScrollView(.horizontal) {
 											HStack {
-											ForEach(labels, id: \.title) { label in
-												PillView(
-													label.title?.emojized() ?? "",
-													bgColor: Color(hex: label.color ?? ""),
-													fgColor: Color(hex: label.textColor ?? "")
-												)
-											}
+												ForEach(labels, id: \.title) { label in
+													PillView(
+														label.title?.emojized() ?? "",
+														bgColor: Color(hex: label.color ?? ""),
+														fgColor: Color(hex: label.textColor ?? "")
+													)
+												}
 											}
 										}
 									},
@@ -276,13 +266,9 @@ struct IssueLoader: View {
 								Label(
 									title: {
 										HStack {
-											Text(
-												"Estimate: \(issue.humanTimeEstimate ?? "none")"
-											)
+											Text("Estimate: \(issue.humanTimeEstimate ?? "none")")
 											Spacer()
-											Text(
-												"Spent: \(issue.humanTotalTimeSpent ?? "none")"
-											)
+											Text("Spent: \(issue.humanTotalTimeSpent ?? "none")")
 										}
 									},
 									icon: {
@@ -338,29 +324,33 @@ struct IssueLoader: View {
 							}
 						}
 					} else {
-						NoContentView(
-							"Issue was not found", systemImage: "smallcircle.circle")
+						NoContentView("Issue was not found", systemImage: "smallcircle.circle")
 					}
 				case .failure(let error):
 					FailedView(error)
 				}
 			} else {
-				LoadingView(
-					"Loading Issue #\(self.iid)", systemImage: "smallcircle.circle", color: .green)
+				LoadingView("Loading Issue #\(self.iid)", systemImage: "smallcircle.circle", color: .green)
 			}
-		}.onAppear {
-			loadIssue()
-		}.refreshable {
-			await reloadIssue()
-		}.toolbar {
-			if let project, case .success(let project) = project,
-				let issue = project.issue
-			{
-				HStack {
-					IssueStateIcon(issue.state)
+		}
+	}
 
-					if let url = URL(string: issue.webUrl ?? "") {
-						ShareButton(url)
+	public var body: some View {
+		issueList
+		.onAppear {
+			loadIssue()
+		}
+		.refreshable {
+			await reloadIssue()
+		}
+		.toolbar {
+			if let project, case .success(let project) = project {
+				if let issue = project.issue {
+					HStack {
+						IssueStateIcon(issue.state)
+						if let url = URL(string: issue.webUrl ?? "") {
+							ShareButton(url)
+						}
 					}
 				}
 			}

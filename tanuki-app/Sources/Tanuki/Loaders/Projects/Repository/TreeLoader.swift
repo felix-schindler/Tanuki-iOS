@@ -18,7 +18,7 @@ struct TreeLoader: View {
 	@State var refName: String
 
 	// MARK: - Loaded by API
-	@State var tree: Result<RepoTreePayload, Error>? = nil
+	@State var tree: Result<RepoTree_Project, Error>? = nil
 
 	@State var branches: [Branch]? = nil
 
@@ -90,38 +90,34 @@ struct TreeLoader: View {
 					switch tree {
 					case .success(let payload):
 						if let tree = payload.repository?.tree {
-							if let folders = tree.trees.nodes {
-								ForEach(folders, id: \.?.path) { maybeFolder in
-									if let folder = maybeFolder {
-										NavigationLink(
-											destination: TreeLoader(
-												projectId: self.projectId,
-												fullPath: self.fullPath,
-												refName: self.refName,
-												folderPath: folder.path
-											),
-											label: {
-												Label(folder.name, systemImage: "folder")
-											}
-										)
-									}
+							if let folders = tree.trees?.nodes {
+								ForEach(folders, id: \.path) { folder in
+									NavigationLink(
+										destination: TreeLoader(
+											projectId: self.projectId,
+											fullPath: self.fullPath,
+											refName: self.refName,
+											folderPath: folder.path
+										),
+										label: {
+											Label(folder.name ?? "?", systemImage: "folder")
+										}
+									)
 								}
 							}
 
-							if let files = tree.blobs.nodes {
-								ForEach(files, id: \.?.path) { maybeFile in
-									if let file = maybeFile {
-										NavigationLink(
-											destination: FileLoader(
-												id: projectId,
-												filePath: file.path,
-												refName: self.refName
-											),
-											label: {
-												Label(file.name, systemImage: "doc.text")
-											}
-										)
-									}
+							if let files = tree.blobs?.nodes {
+								ForEach(files, id: \.path) { file in
+									NavigationLink(
+										destination: FileLoader(
+											id: projectId,
+											filePath: file.path ?? "",
+											refName: self.refName
+										),
+										label: {
+											Label(file.name ?? "?", systemImage: "doc.text")
+										}
+									)
 								}
 							}
 						}

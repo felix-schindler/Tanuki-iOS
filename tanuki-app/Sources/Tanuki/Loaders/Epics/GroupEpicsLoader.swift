@@ -72,7 +72,7 @@ struct GroupEpicsLoader: View {
 											ScrollView(.horizontal) {
 												HStack {
 													if let author = epic.author {
-														AuthorView(author)
+														AuthorView(MyAuthor(avatarUrl: author.avatarUrl, name: author.name ?? author.username ?? "", username: author.username ?? ""))
 													}
 													if let createdAt = epic.createdAt {
 														HStack(spacing: 2) {

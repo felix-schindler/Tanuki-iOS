@@ -11,7 +11,7 @@ import SwiftUI
 struct UserLoader: View {
 	private let username: String
 
-	@State var user: Result<UserPayload, Error>? = nil
+	@State var user: Result<UserStruct, Error>? = nil
 
 	init(username: String) {
 		self.username = username
@@ -21,7 +21,7 @@ struct UserLoader: View {
 		Task {
 			do {
 				let user = try await Network.shared.service.fetchUser(username: self.username)
-				self.user = .success(user)
+				self.user = .success(UserStruct(user: user))
 			} catch let error {
 				self.user = .failure(error)
 				Notify.status(.error)
@@ -32,7 +32,7 @@ struct UserLoader: View {
 	private func reloadUser() async {
 		do {
 			let user = try await Network.shared.service.fetchUser(username: self.username)
-			self.user = .success(user)
+			self.user = .success(UserStruct(user: user))
 			Notify.status(.success)
 		} catch let error {
 			self.user = .failure(error)

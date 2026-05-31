@@ -36,7 +36,7 @@ struct GroupIssuesLoader: View {
 						search: self.filter.search,
 						confidential: self.filter.confidential,
 						subscribed: self.filter.subscribed,
-						types: self.filter.types.map { [$0] }
+						types: self.filter.types.map { $0 }
 					)
 				)
 				if !Task.isCancelled {
@@ -60,7 +60,7 @@ struct GroupIssuesLoader: View {
 					search: self.filter.search,
 					confidential: self.filter.confidential,
 					subscribed: self.filter.subscribed,
-					types: self.filter.types.map { [$0] }
+					types: self.filter.types.map { $0 }
 				)
 			)
 			self.issues = .success(issues)

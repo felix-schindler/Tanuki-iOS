@@ -29,7 +29,7 @@ final class GitLabClient: @unchecked Sendable {
     func fetch<Q: GitLabQuery>(
         _ query: Q,
         strategy: FetchStrategy = .cacheFirst
-    ) async throws -> Q.Response {
+    ) async throws -> Q.Response where Q.Response: Decodable {
         if strategy == .cacheFirst, let cached = cachedResponse(for: query) {
             Task.detached { [weak self] in
                 _ = try? await self?.requestAndCache(query)
@@ -45,12 +45,12 @@ final class GitLabClient: @unchecked Sendable {
 
     // MARK: - Private
 
-    private func cachedResponse<Q: GitLabQuery>(for query: Q) -> Q.Response? {
+    private func cachedResponse<Q: GitLabQuery>(for query: Q) -> Q.Response? where Q.Response: Decodable {
         guard let data = cache.getValue(for: query.cacheKey) else { return nil }
         return try? decoder.decode(GraphQLResponseBody<Q.Response>.self, from: data).data
     }
 
-    private func requestAndCache<Q: GitLabQuery>(_ query: Q) async throws -> Q.Response {
+    private func requestAndCache<Q: GitLabQuery>(_ query: Q) async throws -> Q.Response where Q.Response: Decodable {
         let headers: HTTPHeaders = [
             "Content-Type": "application/json",
             "Authorization": "Bearer \(token)",

@@ -21,6 +21,25 @@ struct CloseButton: View {
 	}
 }
 
+struct ShareButton: View {
+	private let url: URL
+
+	@State var isSharePresented = false
+
+	init(_ url: URL) {
+		self.url = url
+	}
+
+	public var body: some View {
+		if #available(iOS 16.0, macOS 13.0, *) {
+			ShareLink(item: url) {
+				Label("Share", systemImage: "square.and.arrow.up")
+			}
+		}
+	}
+}
+
+#if canImport(UIKit)
 struct ShareSheet: UIViewControllerRepresentable {
 	var items: [Any]  // items to share
 	var excludedActivityTypes: [UIActivity.ActivityType]? = nil
@@ -36,30 +55,7 @@ struct ShareSheet: UIViewControllerRepresentable {
 
 	func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
-
-struct ShareButton: View {
-	private let url: URL
-
-	@State var isSharePresented = false
-
-	init(_ url: URL) {
-		self.url = url
-	}
-
-	public var body: some View {
-		if #available(iOS 16.0, *) {
-			ShareLink(item: url) {
-				Label("Share", systemImage: "square.and.arrow.up")
-			}
-		} else {
-			Button("Share", systemImage: "square.and.arrow.up") {
-				isSharePresented = true
-			}.sheet(isPresented: $isSharePresented) {
-				ShareSheet(items: [url])
-			}
-		}
-	}
-}
+#endif
 
 struct RoundIconButton: View {
 	private let label: String

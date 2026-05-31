@@ -14,7 +14,7 @@ struct SnippetLoader: View {
 
 	private let id: String
 
-	@State var snippet: Result<SnippetPayload.Node, Error>? = nil
+	@State var snippet: Result<SnippetStruct, Error>? = nil
 
 	init(id: String) {
 		self.id = id
@@ -23,8 +23,8 @@ struct SnippetLoader: View {
 	private func loadSnippet() {
 		Task {
 			do {
-				let payload = try await Network.shared.service.fetchSnippet(id: self.id)
-				if let snippet = payload.nodes?.first {
+				let snippets = try await Network.shared.service.fetchSnippet(id: self.id)
+				if let snippet = snippets.first as? SnippetStruct {
 					self.snippet = .success(snippet)
 				}
 			} catch let error {
@@ -36,8 +36,8 @@ struct SnippetLoader: View {
 
 	private func reloadSnippet() async {
 		do {
-			let payload = try await Network.shared.service.fetchSnippet(id: self.id)
-			if let snippet = payload.nodes?.first {
+			let snippets = try await Network.shared.service.fetchSnippet(id: self.id)
+			if let snippet = snippets.first as? SnippetStruct {
 				self.snippet = .success(snippet)
 			}
 			Notify.status(.success)
@@ -74,7 +74,7 @@ struct SnippetLoader: View {
 								)
 								.padding(.horizontal, 8)
 								.padding(.vertical, 3)
-								.background(Color(.systemGray5))
+								.background(Color.gray.opacity(0.15))
 								.foregroundStyle(.primary)
 								.cornerRadius(5)
 							}.font(.footnote)
@@ -106,7 +106,7 @@ struct SnippetLoader: View {
 						}
 					}
 
-					if let notes = snippet.notes.nodes {
+					if let notes = snippet.notes?.nodes {
 						Section("Notes") {
 							/* if snippet.userPermissions.createNote {
 								NewNoteView()

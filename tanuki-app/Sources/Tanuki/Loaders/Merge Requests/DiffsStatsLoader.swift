@@ -12,7 +12,7 @@ struct DiffsStatsLoader: View {
 	private let fullPath: String
 	private let iid: String
 
-	@State var diffs: Result<MergeRequestDiffsPayload, Error>? = nil
+	@State var diffs: Result<MergeRequestDiffs_Project, Error>? = nil
 
 	init(fullPath: String, iid: String) {
 		self.fullPath = fullPath
@@ -47,20 +47,18 @@ struct DiffsStatsLoader: View {
 			if let diffs {
 				switch diffs {
 				case .success(let diffs):
-					if diffs.mergeRequest?.diffStats?.isEmpty ?? true {
-						NoContentView("There are no files with changed content", systemImage: "plusminus")
-					} else if let stats = diffs.mergeRequest?.diffStats {
-						ForEach(stats, id: \.path) { diff in
-							VStack(alignment: .leading) {
-								Text(diff.path)
-								ScrollView(.horizontal) {
-									HStack {
-										PillView("+\(diff.additions)", bgColor: .green, fgColor: .white)
-										PillView("-\(diff.deletions)", bgColor: .red, fgColor: .white)
-									}.font(.system(.body, design: .monospaced))
-								}
+					if let stat = diffs.mergeRequest?.diffStats {
+						VStack(alignment: .leading) {
+							Text(stat.path ?? "?")
+							ScrollView(.horizontal) {
+								HStack {
+									PillView("+\(stat.additions ?? "0")", bgColor: .green, fgColor: .white)
+									PillView("-\(stat.deletions ?? "0")", bgColor: .red, fgColor: .white)
+								}.font(.system(.body, design: .monospaced))
 							}
 						}
+					} else {
+						NoContentView("There are no files with changed content", systemImage: "plusminus")
 					}
 				case .failure(let error):
 					FailedView(error)

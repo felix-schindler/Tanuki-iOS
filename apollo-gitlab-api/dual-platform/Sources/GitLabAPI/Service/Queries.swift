@@ -243,11 +243,11 @@ public struct GroupsQuery: GitLabQuery {
 	public typealias Response = GroupsResponse
 
 	public init(variablesJSON: Data) { self.variablesJSON = variablesJSON }
-	#if !SKIP
+
 	public init(filter: GroupsFilter = GroupsFilter()) {
 		self.variablesJSON = (try? JSONEncoder().encode(filter)) ?? Data()
 	}
-	#endif
+
 }
 
 // MARK: - UserGroups
@@ -327,11 +327,11 @@ public struct CurrentUserIssuesQuery: GitLabQuery {
 	public typealias Response = CurrentUserIssuesResponse
 
 	public init(variablesJSON: Data) { self.variablesJSON = variablesJSON }
-	#if !SKIP
+
 	public init(filter: CurrentUserIssuesFilter = CurrentUserIssuesFilter()) {
 		self.variablesJSON = (try? JSONEncoder().encode(filter)) ?? Data()
 	}
-	#endif
+
 }
 
 // MARK: - EpicIssues
@@ -411,7 +411,7 @@ public struct GroupIssuesQuery: GitLabQuery {
 	public typealias Response = GroupIssuesResponse
 
 	public init(variablesJSON: Data) { self.variablesJSON = variablesJSON }
-	#if !SKIP
+
 	public init(fullPath: String, filter: GroupIssuesFilter = GroupIssuesFilter()) {
 		var dict = ["fullPath": fullPath] as [String: Any]
 		if let filterData = try? JSONEncoder().encode(filter),
@@ -420,7 +420,7 @@ public struct GroupIssuesQuery: GitLabQuery {
 		}
 		self.variablesJSON = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
 	}
-	#endif
+
 }
 
 // MARK: - Issue
@@ -539,7 +539,7 @@ public struct IssueStateQuery: GitLabQuery {
 	public typealias Response = IssueStateResponse
 
 	public init(variablesJSON: Data) { self.variablesJSON = variablesJSON }
-	#if !SKIP
+
 	public init(projectPath: String, iid: String, filter: IssueStateFilter = IssueStateFilter()) {
 		var dict = ["projectPath": projectPath, "iid": iid] as [String: Any]
 		if let filterData = try? JSONEncoder().encode(filter),
@@ -548,7 +548,7 @@ public struct IssueStateQuery: GitLabQuery {
 		}
 		self.variablesJSON = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
 	}
-	#endif
+
 }
 
 // MARK: - ProjectIssues
@@ -594,7 +594,7 @@ public struct ProjectIssuesQuery: GitLabQuery {
 	public typealias Response = ProjectIssuesResponse
 
 	public init(variablesJSON: Data) { self.variablesJSON = variablesJSON }
-	#if !SKIP
+
 	public init(fullPath: String, filter: ProjectIssuesFilter = ProjectIssuesFilter()) {
 		var dict = ["fullPath": fullPath] as [String: Any]
 		if let filterData = try? JSONEncoder().encode(filter),
@@ -603,7 +603,7 @@ public struct ProjectIssuesQuery: GitLabQuery {
 		}
 		self.variablesJSON = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
 	}
-	#endif
+
 }
 
 // MARK: - UserIssues
@@ -653,7 +653,7 @@ public struct UserIssuesQuery: GitLabQuery {
 	public typealias Response = UserIssuesResponse
 
 	public init(variablesJSON: Data) { self.variablesJSON = variablesJSON }
-	#if !SKIP
+
 	public init(username: String, filter: UserIssuesFilter = UserIssuesFilter()) {
 		var dict = ["username": username] as [String: Any]
 		if let filterData = try? JSONEncoder().encode(filter),
@@ -662,7 +662,7 @@ public struct UserIssuesQuery: GitLabQuery {
 		}
 		self.variablesJSON = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
 	}
-	#endif
+
 }
 
 // MARK: - GroupLabels
@@ -1117,7 +1117,7 @@ public struct GroupMilestonesQuery: GitLabQuery {
 	public typealias Response = GroupMilestonesResponse
 
 	public init(variablesJSON: Data) { self.variablesJSON = variablesJSON }
-	#if !SKIP
+
 	public init(fullPath: String, filter: GroupMilestonesFilter = GroupMilestonesFilter()) {
 		var dict = ["fullPath": fullPath] as [String: Any]
 		if let filterData = try? JSONEncoder().encode(filter),
@@ -1126,7 +1126,7 @@ public struct GroupMilestonesQuery: GitLabQuery {
 		}
 		self.variablesJSON = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
 	}
-	#endif
+
 }
 
 // MARK: - ProjectMilestones
@@ -1164,7 +1164,7 @@ public struct ProjectMilestonesQuery: GitLabQuery {
 	public typealias Response = ProjectMilestonesResponse
 
 	public init(variablesJSON: Data) { self.variablesJSON = variablesJSON }
-	#if !SKIP
+
 	public init(fullPath: String, filter: ProjectMilestonesFilter = ProjectMilestonesFilter()) {
 		var dict = ["fullPath": fullPath] as [String: Any]
 		if let filterData = try? JSONEncoder().encode(filter),
@@ -1173,7 +1173,7 @@ public struct ProjectMilestonesQuery: GitLabQuery {
 		}
 		self.variablesJSON = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
 	}
-	#endif
+
 }
 
 // MARK: - ProjectPipelines
@@ -1422,11 +1422,11 @@ public struct ProjectsQuery: GitLabQuery {
 	public typealias Response = ProjectsResponse
 
 	public init(variablesJSON: Data) { self.variablesJSON = variablesJSON }
-	#if !SKIP
+
 	public init(filter: ProjectsFilter = ProjectsFilter()) {
 		self.variablesJSON = (try? JSONEncoder().encode(filter)) ?? Data()
 	}
-	#endif
+
 }
 
 // MARK: - StarProject
@@ -1508,7 +1508,7 @@ public struct RepoTreeQuery: GitLabQuery {
 	public typealias Response = RepoTreeResponse
 
 	public init(variablesJSON: Data) { self.variablesJSON = variablesJSON }
-	#if !SKIP
+
 	public init(fullPath: String, filter: RepoTreeFilter = RepoTreeFilter()) {
 		var dict = ["fullPath": fullPath] as [String: Any]
 		if let filterData = try? JSONEncoder().encode(filter),
@@ -1517,7 +1517,7 @@ public struct RepoTreeQuery: GitLabQuery {
 		}
 		self.variablesJSON = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
 	}
-	#endif
+
 }
 
 // MARK: - CurrentUserSnippets
@@ -1997,11 +1997,11 @@ public struct UsersQuery: GitLabQuery {
 	public typealias Response = UsersResponse
 
 	public init(variablesJSON: Data) { self.variablesJSON = variablesJSON }
-	#if !SKIP
+
 	public init(filter: UsersFilter = UsersFilter()) {
 		self.variablesJSON = (try? JSONEncoder().encode(filter)) ?? Data()
 	}
-	#endif
+
 }
 
 

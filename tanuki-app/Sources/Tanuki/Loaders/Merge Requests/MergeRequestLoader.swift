@@ -158,7 +158,7 @@ struct MergeRequestLoader: View {
 									{
 										NavigationLink(
 											destination: ProjectLoader(
-												fullPath: sourceProject.fullPath
+												fullPath: sourceProject.fullPath ?? ""
 											),
 											label: {
 												PillView(

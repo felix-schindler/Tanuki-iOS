@@ -55,7 +55,8 @@ struct ProjectPipelinesLoader: View {
 									ScrollView(.horizontal) {
 										HStack {
 											if let user = pipeline.user {
-												AuthorView(user)
+												let author = MyAuthor(avatarUrl: user.avatarUrl, name: user.name ?? user.username ?? "", username: user.username ?? "")
+												AuthorView(author)
 											}
 
 											if let iid = pipeline.iid {

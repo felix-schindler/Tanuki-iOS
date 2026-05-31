@@ -22,7 +22,19 @@ struct MrCommitsLoader: View {
 	private func loadCommits() {
 		Task {
 			do {
-				let commits = try await Network.shared.service.fetchMergeRequestCommits(fullPath: self.fullPath, iid: self.iid)
+				let response = try await Network.shared.service.fetchMergeRequestCommits(fullPath: self.fullPath, iid: self.iid)
+				let commits = response.mergeRequest?.commits?.nodes?.map { node in
+					NewCommitStruct(
+						id: node.id ?? "",
+						title: node.title,
+						shortId: node.shortId ?? "",
+						authorName: node.authorName,
+						authoredDate: node.authoredDate,
+						webUrl: node.webUrl ?? "",
+						_signatureVerificationStatus: node.signature?.verificationStatus,
+						_lastPipelineStatus: node.pipelines?.nodes?.status.flatMap(PipelineStatusEnum.init)
+					)
+				} ?? []
 				self.commits = .success(commits)
 			} catch let error {
 				self.commits = .failure(error)
@@ -33,7 +45,19 @@ struct MrCommitsLoader: View {
 
 	private func reloadCommits() async {
 		do {
-			let commits = try await Network.shared.service.fetchMergeRequestCommits(fullPath: self.fullPath, iid: self.iid)
+			let response = try await Network.shared.service.fetchMergeRequestCommits(fullPath: self.fullPath, iid: self.iid)
+			let commits = response.mergeRequest?.commits?.nodes?.map { node in
+				NewCommitStruct(
+					id: node.id ?? "",
+					title: node.title,
+					shortId: node.shortId ?? "",
+					authorName: node.authorName,
+					authoredDate: node.authoredDate,
+					webUrl: node.webUrl ?? "",
+					_signatureVerificationStatus: node.signature?.verificationStatus,
+					_lastPipelineStatus: node.pipelines?.nodes?.status.flatMap(PipelineStatusEnum.init)
+				)
+			} ?? []
 			self.commits = .success(commits)
 			Notify.status(.success)
 		} catch let error {
