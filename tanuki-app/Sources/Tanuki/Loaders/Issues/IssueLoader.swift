@@ -359,9 +359,3 @@ struct IssueLoader: View {
 		.modifier(ScrollDismissIfAvailable())
 	}
 }
-
-#Preview {
-	NavigationView {
-		IssueLoader(fullPath: "felix-schindler/gitlab-ios", iid: "111")
-	}
-}

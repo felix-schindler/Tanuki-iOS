@@ -357,9 +357,3 @@ struct EpicLoader: View {
 		}
 	}
 }
-
-#Preview {
-	NavigationView {
-		EpicLoader(fullPath: "gitlab-org", iid: "12691")
-	}
-}

@@ -67,7 +67,3 @@ struct CacheView: View {
 		}.navigationTitle("Caches")
 	}
 }
-
-#Preview {
-	SettingsView()
-}

@@ -116,9 +116,3 @@ struct GroupEpicsLoader: View {
 		}.navigationTitle("Epics")
 	}
 }
-
-#Preview {
-	NavigationView {
-		GroupEpicsLoader(fullPath: "gitlab-org")
-	}
-}

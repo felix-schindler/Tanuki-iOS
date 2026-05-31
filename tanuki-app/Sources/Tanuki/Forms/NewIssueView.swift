@@ -281,9 +281,3 @@ struct NewIssueView: View {
 		.modifier(ScrollDismissIfAvailable())
 	}
 }
-
-#Preview {
-	NavigationView {
-		NewIssueView(id: 278_964, fullPath: "gitlab-org/gitlab")
-	}
-}

@@ -74,16 +74,3 @@ struct SignatureLoader: View {
 		}
 	}
 }
-
-#Preview {
-	VStack {
-		SignatureLoader(
-			projectId: 33_025_310,
-			commitId: "6335421aa5180cffb0b2c49e805be7724efe25ad"
-		)
-		SignatureLoader(
-			projectId: 278_964,
-			commitId: "b230964dbb178c7c2043ce9de6eabe8e6cf67d5f"
-		)
-	}
-}

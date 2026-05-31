@@ -81,9 +81,3 @@ struct NewLabelView: View {
 		}.navigationBarTitle("New Label")
 	}
 }
-
-#Preview {
-	NavigationView {
-		NewLabelView(id: 33_025_310, groupId: 0)
-	}
-}

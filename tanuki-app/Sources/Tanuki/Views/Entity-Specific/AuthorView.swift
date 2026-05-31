@@ -44,16 +44,3 @@ struct AuthorView: View {
 		.buttonBorderShape(.capsule)
 	}
 }
-
-#Preview {
-	NavigationView {
-		AuthorView(
-			MyAuthor(
-				avatarUrl: nil,
-				name: "Felix",
-				username: "felix-schindler"
-			),
-			showUsername: false
-		)
-	}
-}

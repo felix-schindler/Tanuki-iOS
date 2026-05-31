@@ -224,9 +224,3 @@ struct ProjectsLoader: View {
 		}.navigationTitle("Projects")
 	}
 }
-
-#Preview {
-	NavigationView {
-		ProjectsLoader()
-	}
-}

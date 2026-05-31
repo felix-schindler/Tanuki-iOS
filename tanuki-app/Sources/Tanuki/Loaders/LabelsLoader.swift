@@ -119,9 +119,3 @@ struct LabelsLoader: View {
 		}.navigationTitle("Labels")
 	}
 }
-
-#Preview {
-	NavigationView {
-		LabelsLoader(fullPath: "gitlab-org", id: 278_964, queryType: .group)
-	}
-}

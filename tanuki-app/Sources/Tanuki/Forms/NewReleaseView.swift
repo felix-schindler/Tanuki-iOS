@@ -239,9 +239,3 @@ struct NewReleaseView: View {
 		}.navigationTitle("New Release")
 	}
 }
-
-#Preview {
-	NavigationView {
-		NewReleaseView(id: 278_964, fullPath: "gitlab-org/gitlab")
-	}
-}

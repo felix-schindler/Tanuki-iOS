@@ -43,18 +43,3 @@ struct PillView: View {
 		}
 	}
 }
-
-#Preview {
-	VStack {
-		PillView("Test")
-		PillView("Something")
-		PillView("Sth else")
-		PillView("abc", bgColor: .green, fgColor: .white)
-		PillView("abc", bgColor: .yellow, fgColor: .black)
-		PillView("abc", bgColor: .orange, fgColor: .black)
-		PillView("abc", bgColor: .blue, fgColor: .white)
-		PillView("abc", bgColor: .red, fgColor: .white)
-		PillView("Full width", bgColor: .red, fgColor: .white)
-			.frame(maxWidth: .infinity)
-	}
-}

@@ -65,9 +65,3 @@ struct UserGroupsLoader: View {
 		}.navigationTitle("Groups")
 	}
 }
-
-#Preview {
-	NavigationView {
-		UserGroupsLoader("felix-schindler")
-	}
-}

@@ -102,9 +102,3 @@ struct EventsLoader: View {
 		}.navigationTitle("Activity")
 	}
 }
-
-#Preview {
-	NavigationView {
-		EventsLoader()
-	}
-}

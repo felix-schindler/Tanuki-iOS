@@ -215,9 +215,3 @@ struct UserIssuesLoader: View {
 		}.navigationTitle("Issues")
 	}
 }
-
-#Preview {
-	NavigationView {
-		UserIssuesLoader(username: "felix-schindler")
-	}
-}

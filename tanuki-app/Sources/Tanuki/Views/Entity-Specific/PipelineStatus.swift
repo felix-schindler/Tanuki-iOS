@@ -73,11 +73,3 @@ struct PipelineStatus: View {
 		}
 	}
 }
-
-#Preview {
-	VStack {
-		PipelineStatus("success")
-		PipelineStatus("failed")
-		PipelineStatus("canceled")
-	}
-}

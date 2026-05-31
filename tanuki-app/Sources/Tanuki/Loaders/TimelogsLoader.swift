@@ -151,9 +151,3 @@ struct TimelogsLoader: View {
 		}.navigationTitle("Timelogs")
 	}
 }
-
-#Preview {
-	NavigationView {
-		TimelogsLoader(fullPath: "felix-schindler", queryType: .user)
-	}
-}

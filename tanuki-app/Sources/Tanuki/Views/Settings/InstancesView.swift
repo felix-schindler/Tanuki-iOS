@@ -97,9 +97,3 @@ struct InstanceRowView: View {
 		}
 	}
 }
-
-#Preview {
-	NavigationView {
-		InstancesView()
-	}
-}

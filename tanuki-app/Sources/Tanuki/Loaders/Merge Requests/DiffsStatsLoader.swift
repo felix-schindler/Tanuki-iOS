@@ -73,9 +73,3 @@ struct DiffsStatsLoader: View {
 		}.navigationTitle("Diffs")
 	}
 }
-
-#Preview {
-	NavigationView {
-		DiffsStatsLoader(fullPath: "felix-schindler/gitlab-ios", iid: "1")
-	}
-}

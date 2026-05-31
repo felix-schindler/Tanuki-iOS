@@ -69,9 +69,3 @@ struct UserTodosLoader: View {
 		}.navigationTitle("Todos")
 	}
 }
-
-#Preview {
-	NavigationView {
-		UserTodosLoader(username: "felix-schindler")
-	}
-}

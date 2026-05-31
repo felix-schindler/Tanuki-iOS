@@ -418,9 +418,3 @@ struct ProjectLoader: View {
 		.navigationBarTitleDisplayMode(.inline)
 	}
 }
-
-#Preview {
-	NavigationView {
-		ProjectLoader(fullPath: "felix-schindler/gitlab-ios")
-	}
-}

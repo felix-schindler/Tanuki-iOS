@@ -88,14 +88,3 @@ struct ContributionsLoader: View {
 		}.frame(maxWidth: .infinity, minHeight: self.height)
 	}
 }
-
-#Preview {
-	List {
-		if #available(iOS 16.0, *) {
-			ContributionsLoader(username: "felix-schindler")
-		} else {
-			Text("Contributions available in iOS 16.0+")
-		}
-	}
-}
-#endif

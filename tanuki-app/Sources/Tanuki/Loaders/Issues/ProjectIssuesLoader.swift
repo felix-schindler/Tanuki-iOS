@@ -127,9 +127,3 @@ struct ProjectIssuesLoader: View {
 		}.navigationTitle("Issues")
 	}
 }
-
-#Preview {
-	NavigationView {
-		ProjectIssuesLoader(fullPath: "felix-schindler/gitlab-ios")
-	}
-}

@@ -116,9 +116,3 @@ struct GroupIssuesLoader: View {
 		}.navigationTitle("Issues")
 	}
 }
-
-#Preview {
-	NavigationView {
-		GroupIssuesLoader(fullPath: "gitlab-org")
-	}
-}

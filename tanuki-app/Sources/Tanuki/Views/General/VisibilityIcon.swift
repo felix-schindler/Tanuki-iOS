@@ -42,7 +42,3 @@ struct VisibilityIcon: View {
 		}
 	}
 }
-
-#Preview {
-	VisibilityIcon("public")
-}

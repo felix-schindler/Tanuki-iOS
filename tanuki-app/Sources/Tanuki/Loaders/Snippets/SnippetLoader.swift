@@ -171,9 +171,3 @@ struct SnippetLoader: View {
 		}.modifier(ScrollDismissIfAvailable())
 	}
 }
-
-#Preview {
-	NavigationView {
-		SnippetLoader(id: "gid://gitlab/PersonalSnippet/3681071")
-	}
-}

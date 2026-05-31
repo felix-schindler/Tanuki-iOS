@@ -82,9 +82,3 @@ struct NewNoteView: View {
 		}
 	}
 }
-
-#Preview {
-	List {
-		NewNoteView(33_025_310, iid: "42", type: .issue)
-	}
-}

@@ -65,7 +65,3 @@ struct UserLoader: View {
 		}
 	}
 }
-
-#Preview {
-	UserLoader(username: "felix-schindler")
-}

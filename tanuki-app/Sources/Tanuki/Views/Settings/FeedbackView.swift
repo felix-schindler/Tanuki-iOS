@@ -70,9 +70,3 @@ struct FeedbackView: View {
 		}.navigationTitle("Feedback")
 	}
 }
-
-#Preview {
-	NavigationView {
-		FeedbackView()
-	}
-}

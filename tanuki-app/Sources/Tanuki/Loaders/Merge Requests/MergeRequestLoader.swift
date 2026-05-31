@@ -540,9 +540,3 @@ struct MergeRequestLoader: View {
 		.modifier(ScrollDismissIfAvailable())
 	}
 }
-
-#Preview {
-	NavigationView {
-		MergeRequestLoader(fullPath: "felix-schindler/gitlab-ios", iid: "1")
-	}
-}

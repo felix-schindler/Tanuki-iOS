@@ -103,9 +103,3 @@ struct NewProjectView: View {
 		.modifier(ScrollDismissIfAvailable())
 	}
 }
-
-#Preview {
-	NavigationView {
-		NewProjectView()
-	}
-}

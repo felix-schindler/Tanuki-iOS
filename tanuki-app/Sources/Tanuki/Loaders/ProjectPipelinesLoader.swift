@@ -111,9 +111,3 @@ struct ProjectPipelinesLoader: View {
 		}.navigationTitle("Pipelines")
 	}
 }
-
-#Preview {
-	NavigationView {
-		ProjectPipelinesLoader(fullPath: "felix-schindler/gitlab-ios")
-	}
-}

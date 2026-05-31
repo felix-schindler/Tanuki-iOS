@@ -73,12 +73,3 @@ public struct CodeTextView: View {
 			.textSelection(.enabled)
 	}
 }
-
-#Preview {
-	CodeTextView(
-		"let a = 2;\nconsole.log('Test', a);\n\nfor (const b of c) {\n\tconsole.log(b);\n}\n",
-		language: "javascript",
-		colorScheme: .light,
-		fontSize: 24
-	)
-}

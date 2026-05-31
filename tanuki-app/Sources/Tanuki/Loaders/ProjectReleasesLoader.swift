@@ -144,9 +144,3 @@ struct ReleaseContent: View {
 		}
 	}
 }
-
-#Preview {
-	NavigationView {
-		ProjectReleasesLoader(fullPath: "felix-schindler/gitlab-ios")
-	}
-}
