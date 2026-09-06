@@ -4,8 +4,6 @@
 <dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-<dict>
-</dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
 		<string>group.de.schindlerfelix.GitLab</string>

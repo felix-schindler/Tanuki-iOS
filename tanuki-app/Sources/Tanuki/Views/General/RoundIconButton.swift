@@ -21,22 +21,6 @@ struct CloseButton: View {
 	}
 }
 
-struct ShareSheet: UIViewControllerRepresentable {
-	var items: [Any]  // items to share
-	var excludedActivityTypes: [UIActivity.ActivityType]? = nil
-
-	func makeUIViewController(context: Context) -> UIActivityViewController {
-		let controller = UIActivityViewController(
-			activityItems: items,
-			applicationActivities: nil
-		)
-		controller.excludedActivityTypes = excludedActivityTypes
-		return controller
-	}
-
-	func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
-}
-
 struct ShareButton: View {
 	private let url: URL
 
@@ -47,19 +31,31 @@ struct ShareButton: View {
 	}
 
 	public var body: some View {
-		if #available(iOS 16.0, *) {
+		if #available(iOS 16.0, macOS 13.0, *) {
 			ShareLink(item: url) {
 				Label("Share", systemImage: "square.and.arrow.up")
-			}
-		} else {
-			Button("Share", systemImage: "square.and.arrow.up") {
-				isSharePresented = true
-			}.sheet(isPresented: $isSharePresented) {
-				ShareSheet(items: [url])
 			}
 		}
 	}
 }
+
+#if canImport(UIKit)
+	struct ShareSheet: UIViewControllerRepresentable {
+		var items: [Any]  // items to share
+		var excludedActivityTypes: [UIActivity.ActivityType]? = nil
+
+		func makeUIViewController(context: Context) -> UIActivityViewController {
+			let controller = UIActivityViewController(
+				activityItems: items,
+				applicationActivities: nil
+			)
+			controller.excludedActivityTypes = excludedActivityTypes
+			return controller
+		}
+
+		func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+	}
+#endif
 
 struct RoundIconButton: View {
 	private let label: String
@@ -80,14 +76,20 @@ struct RoundIconButton: View {
 			Button(label, systemImage: iconName, action: action)
 				.frame(minWidth: 30, minHeight: 30)
 				.buttonStyle(.bordered)
-				.buttonBorderShape(.circle)
-				.labelStyle(.iconOnly)
+				#if !SKIP_BRIDGE
+					.buttonBorderShape(.circle)
+				#endif
+				#if !SKIP_BRIDGE
+					.labelStyle(.iconOnly)
+				#endif
 		} else {
 			Button(label, systemImage: iconName, action: action)
 				.frame(minWidth: 30, minHeight: 30)
 				.buttonStyle(.bordered)
 				.clipShape(Circle())
-				.labelStyle(.iconOnly)
+				#if !SKIP_BRIDGE
+					.labelStyle(.iconOnly)
+				#endif
 		}
 	}
 }

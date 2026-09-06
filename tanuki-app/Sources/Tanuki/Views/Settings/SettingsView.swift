@@ -5,8 +5,8 @@
 //  Created by Felix Schindler on 23.11.25.
 //
 
-import SwiftUI
 import SkipKit
+import SwiftUI
 
 struct SettingsView: View {
 	public var body: some View {
@@ -35,17 +35,17 @@ struct SettingsView: View {
 				NavigationLink(destination: CacheView()) {
 					Label("Cache", systemImage: "internaldrive")
 				}
-#if canImport(WebKit)
-				NavigationLink(destination: CookiesView()) {
-					Label(
-						title: { Text("Cookies") },
-						icon: {
-							Image("cookie.symbols")
-								.resizable()
-								.scaledToFill()
-						})
-				}
-#endif
+				#if canImport(WebKit)
+					NavigationLink(destination: CookiesView()) {
+						Label(
+							title: { Text("Cookies") },
+							icon: {
+								Image("cookie.symbols")
+									.resizable()
+									.scaledToFill()
+							})
+					}
+				#endif
 				NavigationLink(destination: InstancesView()) {
 					Label("Instances", systemImage: "server.rack")
 				}
@@ -59,12 +59,12 @@ struct SettingsView: View {
 					Label("Feedback", systemImage: "exclamationmark.bubble")
 				}
 				#if canImport(StoreKit)
-				if #available(iOS 16.0, *) {
-					AppStoreReview()
-				}
+					if #available(iOS 16.0, *) {
+						AppStoreReview()
+					}
 				#endif
 			}
-			
+
 			Section {
 				NavigationLink("Bill of Material") {
 					SBOMView(bundle: .module)

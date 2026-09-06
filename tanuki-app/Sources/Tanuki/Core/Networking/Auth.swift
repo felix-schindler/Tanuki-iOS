@@ -5,11 +5,12 @@
 //  Created by Felix Schindler on 03.10.25.
 //
 
-#if canImport(CryptoKit)
-import CryptoKit
-#endif
 import Foundation
 import SwiftUI
+
+#if canImport(CryptoKit)
+	import CryptoKit
+#endif
 
 class Auth {
 	public static let clientID = "9ee458e1f3cca37c7d9c6651da1caa5d242ce9988e08471e7cba278cbe2eced2"

@@ -8,8 +8,9 @@
 //
 
 import SwiftUI
+
 #if canImport(WebKit)
-import WebKit
+	import WebKit
 #endif
 
 enum ContentTab: String, Hashable {
@@ -19,28 +20,28 @@ enum ContentTab: String, Hashable {
 struct ContentView: View {
 	@AppStorage("tab") var tab = ContentTab.home
 
-#if canImport(WebKit)
-	private func restorePersistedCookies() {
-		guard
-			let data = UserDefaults.standard.data(forKey: "persistedCookies"),
-			let storedCookieDicts = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data)
-				as? [[HTTPCookiePropertyKey: Any]],
-			!storedCookieDicts.isEmpty
-		else {
-			return
-		}
+	#if canImport(WebKit)
+		private func restorePersistedCookies() {
+			guard
+				let data = UserDefaults.standard.data(forKey: "persistedCookies"),
+				let storedCookieDicts = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data)
+					as? [[HTTPCookiePropertyKey: Any]],
+				!storedCookieDicts.isEmpty
+			else {
+				return
+			}
 
-		let webStore = WKWebsiteDataStore.default().httpCookieStore
-		var restoredCookies: [HTTPCookie] = []
-		for dict in storedCookieDicts {
-			if let cookie = HTTPCookie(properties: dict) {
-				restoredCookies.append(cookie)
-				webStore.setCookie(cookie)
-				HTTPCookieStorage.shared.setCookie(cookie)  // sync to URLSession
+			let webStore = WKWebsiteDataStore.default().httpCookieStore
+			var restoredCookies: [HTTPCookie] = []
+			for dict in storedCookieDicts {
+				if let cookie = HTTPCookie(properties: dict) {
+					restoredCookies.append(cookie)
+					webStore.setCookie(cookie)
+					HTTPCookieStorage.shared.setCookie(cookie)  // sync to URLSession
+				}
 			}
 		}
-	}
-#endif
+	#endif
 
 	public var body: some View {
 		TabView(selection: $tab) {
@@ -65,9 +66,9 @@ struct ContentView: View {
 				Label("Profile", systemImage: "person")
 			}.tag(ContentTab.profile)
 		}.onAppear {
-#if canImport(WebKit)
-			restorePersistedCookies()
-#endif
+			#if canImport(WebKit)
+				restorePersistedCookies()
+			#endif
 		}
 	}
 }
