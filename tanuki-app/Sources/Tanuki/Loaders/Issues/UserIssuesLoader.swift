@@ -21,7 +21,10 @@ private struct MappedIssue: SmallIssue {
 	let createdAt: String
 	let webUrl: String
 
-	init(iid: String?, title: String?, reference: String?, state: String?, upvotes: String?, downvotes: String?, userNotesCount: String?, authorAvatarUrl: String?, authorName: String?, authorUsername: String?, createdAt: String?, webUrl: String?) {
+	init(
+		iid: String?, title: String?, reference: String?, state: String?, upvotes: String?, downvotes: String?, userNotesCount: String?, authorAvatarUrl: String?, authorName: String?,
+		authorUsername: String?, createdAt: String?, webUrl: String?
+	) {
 		self.iid = iid ?? ""
 		self.title = title ?? ""
 		self.reference = reference ?? ""

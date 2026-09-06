@@ -6,8 +6,8 @@
 //
 
 import GitLabAPI
-import SwiftUI
 import SkipKit
+import SwiftUI
 
 struct MergeButton: View {
 	private let iid: String

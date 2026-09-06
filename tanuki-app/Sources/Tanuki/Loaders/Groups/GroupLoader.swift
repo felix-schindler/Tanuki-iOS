@@ -177,65 +177,75 @@ struct GroupSections: View {
 		Section {
 			HStack {
 				NavigationLink(destination: ProjectsLoader(namespacePath: fullPath)) {
-					Label(title: {
-						HStack {
-							Text("Projects")
-							Spacer()
-							if let projectsCount = group.projectsCount {
-								Text(projectsCount)
+					Label(
+						title: {
+							HStack {
+								Text("Projects")
+								Spacer()
+								if let projectsCount = group.projectsCount {
+									Text(projectsCount)
+								}
 							}
-						}
-					}, icon: {
-						Image(systemName: "app.gift.fill").foregroundStyle(.gray)
-					})
+						},
+						icon: {
+							Image(systemName: "app.gift.fill").foregroundStyle(.gray)
+						})
 				}
 			}
 			HStack {
 				NavigationLink(destination: GroupsLoader(parentPath: fullPath)) {
-					Label(title: {
-						HStack {
-							Text("Descendant groups")
-							Spacer()
-							if let descendantGroupsCount = group.descendantGroupsCount {
-								Text(descendantGroupsCount)
+					Label(
+						title: {
+							HStack {
+								Text("Descendant groups")
+								Spacer()
+								if let descendantGroupsCount = group.descendantGroupsCount {
+									Text(descendantGroupsCount)
+								}
 							}
-						}
-					}, icon: {
-						Image(systemName: "scale.3d").foregroundStyle(.red)
-					})
+						},
+						icon: {
+							Image(systemName: "scale.3d").foregroundStyle(.red)
+						})
 				}
 			}
 
-			DisclosureGroup(content: {
-				if let groupId = group.id?.toIntId() {
-					NavigationLink("Members", destination: MembersLoader(fullPath: fullPath, id: groupId, type: .group))
-					NavigationLink("Labels", destination: LabelsLoader(fullPath: fullPath, id: groupId, queryType: .group))
-				}
-				NavigationLink("Timelogs", destination: TimelogsLoader(fullPath: fullPath, queryType: .group))
-				NavigationLink("Custom emojis", destination: CustomEmojisLoader(fullPath: fullPath))
-			}, label: {
-				Label("Manage", systemImage: "person.2")
-			})
+			DisclosureGroup(
+				content: {
+					if let groupId = group.id?.toIntId() {
+						NavigationLink("Members", destination: MembersLoader(fullPath: fullPath, id: groupId, type: .group))
+						NavigationLink("Labels", destination: LabelsLoader(fullPath: fullPath, id: groupId, queryType: .group))
+					}
+					NavigationLink("Timelogs", destination: TimelogsLoader(fullPath: fullPath, queryType: .group))
+					NavigationLink("Custom emojis", destination: CustomEmojisLoader(fullPath: fullPath))
+				},
+				label: {
+					Label("Manage", systemImage: "person.2")
+				})
 
-			DisclosureGroup(content: {
-				NavigationLink("Issues", destination: GroupIssuesLoader(fullPath: fullPath))
-				NavigationLink("Epics", destination: GroupEpicsLoader(fullPath: fullPath))
-				if let groupId = group.id?.toIntId() {
-					NavigationLink("Milestones", destination: MilestonesLoader(fullPath: fullPath, id: groupId, queryType: .group))
-				}
-			}, label: {
-				if #available(iOS 17.0, *) {
-					Label("Plan", systemImage: "calendar.badge.checkmark")
-				} else {
-					Label("Plan", systemImage: "calendar")
-				}
-			})
+			DisclosureGroup(
+				content: {
+					NavigationLink("Issues", destination: GroupIssuesLoader(fullPath: fullPath))
+					NavigationLink("Epics", destination: GroupEpicsLoader(fullPath: fullPath))
+					if let groupId = group.id?.toIntId() {
+						NavigationLink("Milestones", destination: MilestonesLoader(fullPath: fullPath, id: groupId, queryType: .group))
+					}
+				},
+				label: {
+					if #available(iOS 17.0, *) {
+						Label("Plan", systemImage: "calendar.badge.checkmark")
+					} else {
+						Label("Plan", systemImage: "calendar")
+					}
+				})
 
-			DisclosureGroup(content: {
-				NavigationLink("Merge Requests", destination: GroupMergeLoader(fullPath: fullPath))
-			}, label: {
-				Label("Code", systemImage: "chevron.left.forwardslash.chevron.right")
-			})
+			DisclosureGroup(
+				content: {
+					NavigationLink("Merge Requests", destination: GroupMergeLoader(fullPath: fullPath))
+				},
+				label: {
+					Label("Code", systemImage: "chevron.left.forwardslash.chevron.right")
+				})
 		}
 	}
 }

@@ -40,21 +40,21 @@ struct ShareButton: View {
 }
 
 #if canImport(UIKit)
-struct ShareSheet: UIViewControllerRepresentable {
-	var items: [Any]  // items to share
-	var excludedActivityTypes: [UIActivity.ActivityType]? = nil
+	struct ShareSheet: UIViewControllerRepresentable {
+		var items: [Any]  // items to share
+		var excludedActivityTypes: [UIActivity.ActivityType]? = nil
 
-	func makeUIViewController(context: Context) -> UIActivityViewController {
-		let controller = UIActivityViewController(
-			activityItems: items,
-			applicationActivities: nil
-		)
-		controller.excludedActivityTypes = excludedActivityTypes
-		return controller
+		func makeUIViewController(context: Context) -> UIActivityViewController {
+			let controller = UIActivityViewController(
+				activityItems: items,
+				applicationActivities: nil
+			)
+			controller.excludedActivityTypes = excludedActivityTypes
+			return controller
+		}
+
+		func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 	}
-
-	func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
-}
 #endif
 
 struct RoundIconButton: View {

@@ -10,15 +10,15 @@ import GitLabAPI
 
 @MainActor
 final class Network {
-    static let shared = Network()
+	static let shared = Network()
 
-    private(set) var service: any GitLabServiceType
+	private(set) var service: any GitLabServiceType
 
-    init() {
-        self.service = GitLabService.make(host: API.host, token: API.token)
-    }
+	init() {
+		self.service = GitLabService.make(host: API.host, token: API.token)
+	}
 
-    func recreateService() {
-        self.service = GitLabService.make(host: API.host, token: API.token)
-    }
+	func recreateService() {
+		self.service = GitLabService.make(host: API.host, token: API.token)
+	}
 }

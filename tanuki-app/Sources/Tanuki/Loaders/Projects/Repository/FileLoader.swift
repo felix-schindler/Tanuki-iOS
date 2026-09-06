@@ -5,11 +5,12 @@
 //  Created by Felix Schindler on 02.11.21.
 //
 
-#if canImport(AVKit)
-import AVKit
-#endif
 //import MarkdownUI
 import SwiftUI
+
+#if canImport(AVKit)
+	import AVKit
+#endif
 
 struct FileLoader: View {
 	private let projectId: Int
@@ -64,9 +65,9 @@ struct FileLoader: View {
 					}
 				} else if Formats.videoFormats.contains(fileExtension) {
 					#if canImport(AVKit)
-					if let url = URL(string: "") {
-						VideoPlayer(player: AVPlayer(url: url))
-					}
+						if let url = URL(string: "") {
+							VideoPlayer(player: AVPlayer(url: url))
+						}
 					#endif
 				} else if Formats.imageFormats.contains(fileExtension) {
 					if let url = URL(string: "") {

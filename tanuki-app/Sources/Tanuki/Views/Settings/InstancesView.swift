@@ -22,10 +22,12 @@ struct InstancesView: View {
 			} else {
 				Section {
 					ForEach(instances) { instance in
-						InstanceRowView(instance: instance, selectedId: selectedId, onUpdate: {
-							instances = InstanceManager.instances
-							selectedId = InstanceManager.selectedId
-						})
+						InstanceRowView(
+							instance: instance, selectedId: selectedId,
+							onUpdate: {
+								instances = InstanceManager.instances
+								selectedId = InstanceManager.selectedId
+							})
 					}
 				} header: {
 					Text("Instances")

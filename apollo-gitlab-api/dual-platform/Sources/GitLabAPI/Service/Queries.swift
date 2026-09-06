@@ -23,45 +23,45 @@ public struct EpicQuery: GitLabQuery {
 		      dueDate
 		      createdAt
 		      webUrl
-		
+
 		      startDate
 		      dueDate
 		      color
 		      textColor
-		
+
 		      upvotes
 		      downvotes
 		      userNotesCount
-		
+
 		      author {
 		        avatarUrl
 		        name
 		        username
 		      }
-		
+
 		      ancestors {
 		        nodes {
 		          iid
 		        }
 		      }
-		
+
 		      blockedByEpics {
 		        nodes {
 		          iid
 		        }
 		      }
-		
+
 		      children {
 		        nodes {
 		          iid
 		        }
 		      }
-		
+
 		      userPermissions {
 		        updateEpic
 		        createNote
 		      }
-		
+
 		      labels {
 		        nodes {
 		          title
@@ -69,7 +69,7 @@ public struct EpicQuery: GitLabQuery {
 		          textColor
 		        }
 		      }
-		
+
 		      notes {
 		        nodes {
 		          id
@@ -171,29 +171,29 @@ public struct GroupQuery: GitLabQuery {
 		query Group($fullPath: ID!) {
 		  group(fullPath:$fullPath) {
 		    id
-		
+
 		    avatarUrl
 		    name
 		    path
 		    fullName
 		    visibility
 		    description
-		
+
 		    descendantGroupsCount
 		    groupMembersCount
 		    projectsCount
-		
+
 		    requestAccessEnabled
 		    webUrl
-		
+
 		    maxAccessLevel {
 		      stringValue
 		    }
-		
+
 		    userPermissions {
 		      createProjects
 		    }
-		
+
 		    parent {
 		      name
 		      fullPath
@@ -415,7 +415,8 @@ public struct GroupIssuesQuery: GitLabQuery {
 	public init(fullPath: String, filter: GroupIssuesFilter = GroupIssuesFilter()) {
 		var dict = ["fullPath": fullPath] as [String: Any]
 		if let filterData = try? JSONEncoder().encode(filter),
-		   let filterDict = try? JSONSerialization.jsonObject(with: filterData) as? [String: Any] {
+			let filterDict = try? JSONSerialization.jsonObject(with: filterData) as? [String: Any]
+		{
 			for (k, v) in filterDict { dict[k] = v }
 		}
 		self.variablesJSON = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
@@ -432,7 +433,7 @@ public struct IssueQuery: GitLabQuery {
 		  project(fullPath: $fullPath) {
 		    id
 		    avatarUrl
-		
+
 		    issue(iid: $iid) {
 		      iid
 		      title
@@ -448,7 +449,7 @@ public struct IssueQuery: GitLabQuery {
 		      }
 		      createdAt
 		      webUrl
-		
+
 		      upvotes
 		      downvotes
 		      userNotesCount
@@ -457,19 +458,19 @@ public struct IssueQuery: GitLabQuery {
 		        name
 		        username
 		      }
-		
+
 		      userPermissions {
 		        updateIssue
 		        createNote
 		      }
-		
+
 		      assignees {
 		        nodes {
 		          avatarUrl
 		          username
 		        }
 		      }
-		
+
 		      labels {
 		        nodes {
 		          title
@@ -477,15 +478,15 @@ public struct IssueQuery: GitLabQuery {
 		          textColor
 		        }
 		      }
-		
+
 		      milestone {
 		        iid
 		        title
 		      }
-		
+
 		      humanTimeEstimate
 		      humanTotalTimeSpent
-		
+
 		      notes {
 		        nodes {
 		          id
@@ -543,7 +544,8 @@ public struct IssueStateQuery: GitLabQuery {
 	public init(projectPath: String, iid: String, filter: IssueStateFilter = IssueStateFilter()) {
 		var dict = ["projectPath": projectPath, "iid": iid] as [String: Any]
 		if let filterData = try? JSONEncoder().encode(filter),
-		   let filterDict = try? JSONSerialization.jsonObject(with: filterData) as? [String: Any] {
+			let filterDict = try? JSONSerialization.jsonObject(with: filterData) as? [String: Any]
+		{
 			for (k, v) in filterDict { dict[k] = v }
 		}
 		self.variablesJSON = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
@@ -598,7 +600,8 @@ public struct ProjectIssuesQuery: GitLabQuery {
 	public init(fullPath: String, filter: ProjectIssuesFilter = ProjectIssuesFilter()) {
 		var dict = ["fullPath": fullPath] as [String: Any]
 		if let filterData = try? JSONEncoder().encode(filter),
-		   let filterDict = try? JSONSerialization.jsonObject(with: filterData) as? [String: Any] {
+			let filterDict = try? JSONSerialization.jsonObject(with: filterData) as? [String: Any]
+		{
 			for (k, v) in filterDict { dict[k] = v }
 		}
 		self.variablesJSON = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
@@ -657,7 +660,8 @@ public struct UserIssuesQuery: GitLabQuery {
 	public init(username: String, filter: UserIssuesFilter = UserIssuesFilter()) {
 		var dict = ["username": username] as [String: Any]
 		if let filterData = try? JSONEncoder().encode(filter),
-		   let filterDict = try? JSONSerialization.jsonObject(with: filterData) as? [String: Any] {
+			let filterDict = try? JSONSerialization.jsonObject(with: filterData) as? [String: Any]
+		{
 			for (k, v) in filterDict { dict[k] = v }
 		}
 		self.variablesJSON = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
@@ -767,7 +771,7 @@ public struct MergeRequestQuery: GitLabQuery {
 		  project(fullPath: $fullPath) {
 		  id
 		  avatarUrl
-		
+
 		    mergeRequest(iid: $iid) {
 		      iid
 		      title
@@ -800,26 +804,26 @@ public struct MergeRequestQuery: GitLabQuery {
 		      }
 		      createdAt
 		      webUrl
-		
+
 		      approved
 		      mergeStatusEnum
 		      conflicts
 		      detailedMergeStatus
-		
+
 		      assignees {
 		        nodes {
 		          avatarUrl
 		          username
 		        }
 		      }
-		
+
 		      reviewers {
 		        nodes {
 		          avatarUrl
 		          username
 		        }
 		      }
-		
+
 		      labels {
 		        nodes {
 		          title
@@ -827,15 +831,15 @@ public struct MergeRequestQuery: GitLabQuery {
 		          textColor
 		        }
 		      }
-		
+
 		      milestone {
 		        iid
 		        title
 		      }
-		
+
 		      humanTimeEstimate
 		      humanTotalTimeSpent
-		
+
 		      notes {
 		        nodes {
 		          id
@@ -873,7 +877,7 @@ public struct ProjectMergeRequestsQuery: GitLabQuery {
 		query ProjectMergeRequests($fullPath: ID!) {
 		  project(fullPath: $fullPath) {
 		    mergeRequestsEnabled
-		
+
 		    mergeRequests(state: opened) {
 		      nodes {
 		        iid
@@ -1121,7 +1125,8 @@ public struct GroupMilestonesQuery: GitLabQuery {
 	public init(fullPath: String, filter: GroupMilestonesFilter = GroupMilestonesFilter()) {
 		var dict = ["fullPath": fullPath] as [String: Any]
 		if let filterData = try? JSONEncoder().encode(filter),
-		   let filterDict = try? JSONSerialization.jsonObject(with: filterData) as? [String: Any] {
+			let filterDict = try? JSONSerialization.jsonObject(with: filterData) as? [String: Any]
+		{
 			for (k, v) in filterDict { dict[k] = v }
 		}
 		self.variablesJSON = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
@@ -1168,7 +1173,8 @@ public struct ProjectMilestonesQuery: GitLabQuery {
 	public init(fullPath: String, filter: ProjectMilestonesFilter = ProjectMilestonesFilter()) {
 		var dict = ["fullPath": fullPath] as [String: Any]
 		if let filterData = try? JSONEncoder().encode(filter),
-		   let filterDict = try? JSONSerialization.jsonObject(with: filterData) as? [String: Any] {
+			let filterDict = try? JSONSerialization.jsonObject(with: filterData) as? [String: Any]
+		{
 			for (k, v) in filterDict { dict[k] = v }
 		}
 		self.variablesJSON = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
@@ -1228,24 +1234,24 @@ public struct ProjectReleasesQueryQuery: GitLabQuery {
 		        description
 		        tagName
 		        releasedAt
-		
+
 		        author {
 		          avatarUrl
 		          name
 		          username
 		        }
-		
+
 		        commit {
 		          shortId
 		        }
-		
+
 		        milestones {
 		          nodes {
 		            id
 		            title
 		          }
 		        }
-		
+
 		        assets {
 		          count
 		          links {
@@ -1485,7 +1491,7 @@ public struct RepoTreeQuery: GitLabQuery {
 		  project(fullPath: $fullPath) {
 		    repository {
 		      rootRef
-		
+
 		      tree(ref: $ref, path: $path) {
 		        blobs {
 		          nodes {
@@ -1512,7 +1518,8 @@ public struct RepoTreeQuery: GitLabQuery {
 	public init(fullPath: String, filter: RepoTreeFilter = RepoTreeFilter()) {
 		var dict = ["fullPath": fullPath] as [String: Any]
 		if let filterData = try? JSONEncoder().encode(filter),
-		   let filterDict = try? JSONSerialization.jsonObject(with: filterData) as? [String: Any] {
+			let filterDict = try? JSONSerialization.jsonObject(with: filterData) as? [String: Any]
+		{
 			for (k, v) in filterDict { dict[k] = v }
 		}
 		self.variablesJSON = (try? JSONSerialization.data(withJSONObject: dict)) ?? Data()
@@ -1834,21 +1841,21 @@ public struct CurrentUserQuery: GitLabQuery {
 		      emoji
 		      message
 		    }
-		
+
 		    bio
 		    location
 		    jobTitle
 		    organization
 		    createdAt
-		
+
 		    # Contact
 		    discord
 		    twitter
 		    linkedin
 		    publicEmail
-		
+
 		    groupCount
-		
+
 		    webUrl
 		  }
 		}
@@ -2003,7 +2010,6 @@ public struct UsersQuery: GitLabQuery {
 	}
 
 }
-
 
 // MARK: - Response types
 
@@ -3201,4 +3207,3 @@ public struct UsersResponse: Decodable, Sendable {
 public struct Users_Users: Decodable, Sendable {
 	public let nodes: [MyAuthor]?
 }
-

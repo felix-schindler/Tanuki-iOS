@@ -5,12 +5,13 @@
 //  Created by Felix Schindler on 10.09.25.
 //
 
-#if canImport(Charts)
-import Charts
-#endif
 import GitLabAPI
 //import MarkdownUI
 import SwiftUI
+
+#if canImport(Charts)
+	import Charts
+#endif
 
 struct ToggleStar: Codable {
 	let starCount: Int
@@ -143,25 +144,25 @@ struct ProjectHeaderView: View {
 				.controlSize(.small)
 			}
 
-#if canImport(Charts)
-			if #available(iOS 16.0, *),
-				let language = project.languages
-			{
-				Chart {
-					BarMark(
-						x: .value(
-							"Percent", Double(language.share ?? "1") ?? 1)
-					).foregroundStyle(
-						by: .value("Language", language.name ?? "")
+			#if canImport(Charts)
+				if #available(iOS 16.0, *),
+					let language = project.languages
+				{
+					Chart {
+						BarMark(
+							x: .value(
+								"Percent", Double(language.share ?? "1") ?? 1)
+						).foregroundStyle(
+							by: .value("Language", language.name ?? "")
+						)
+					}
+					.chartXAxis(.hidden)
+					.chartForegroundStyleScale(
+						range: [Color(hex: language.color ?? Color.accentColor.hex)]
 					)
+					.frame(height: 30)
 				}
-				.chartXAxis(.hidden)
-				.chartForegroundStyleScale(
-					range: [Color(hex: language.color ?? Color.accentColor.hex)]
-				)
-				.frame(height: 30)
-			}
-#endif
+			#endif
 		}
 	}
 }

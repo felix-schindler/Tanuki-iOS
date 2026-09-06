@@ -1,22 +1,22 @@
 import Foundation
 
 public struct MyStats: Codable, Hashable, Sendable {
-    public let closedIssuesCount: Int?
-    public let totalIssuesCount: Int?
-    public init(closedIssuesCount: Int?, totalIssuesCount: Int?) {
-        self.closedIssuesCount = closedIssuesCount
-        self.totalIssuesCount = totalIssuesCount
-    }
+	public let closedIssuesCount: Int?
+	public let totalIssuesCount: Int?
+	public init(closedIssuesCount: Int?, totalIssuesCount: Int?) {
+		self.closedIssuesCount = closedIssuesCount
+		self.totalIssuesCount = totalIssuesCount
+	}
 }
 
 public protocol Milestone: Sendable {
-    var iid: String { get }
-    var state: MilestoneStateEnum { get }
-    var title: String { get }
-    var description: String? { get }
-    var expired: Bool { get }
-    var startDate: String? { get }
-    var dueDate: String? { get }
-    var _stats: MyStats? { get }
-    var webPath: String { get }
+	var iid: String { get }
+	var state: MilestoneStateEnum { get }
+	var title: String { get }
+	var description: String? { get }
+	var expired: Bool { get }
+	var startDate: String? { get }
+	var dueDate: String? { get }
+	var _stats: MyStats? { get }
+	var webPath: String { get }
 }

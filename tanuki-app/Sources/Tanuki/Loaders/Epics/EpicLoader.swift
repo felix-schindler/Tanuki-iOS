@@ -9,14 +9,14 @@ import GitLabAPI
 //import MarkdownUI
 import SwiftUI
 
-private extension Epic_Group_Epic_Author {
-	var toMyAuthor: MyAuthor {
+extension Epic_Group_Epic_Author {
+	fileprivate var toMyAuthor: MyAuthor {
 		MyAuthor(avatarUrl: avatarUrl, name: name ?? username ?? "", username: username ?? "")
 	}
 }
 
-private extension Epic_Group_Epic_Notes_Nodes_Author {
-	var toMyAuthor: MyAuthor {
+extension Epic_Group_Epic_Notes_Nodes_Author {
+	fileprivate var toMyAuthor: MyAuthor {
 		MyAuthor(avatarUrl: avatarUrl, name: name ?? username ?? "", username: username ?? "")
 	}
 }

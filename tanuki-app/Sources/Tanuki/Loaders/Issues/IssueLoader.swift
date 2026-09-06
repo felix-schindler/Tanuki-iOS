@@ -10,14 +10,14 @@ import GitLabAPI
 //import MarkdownUI
 import SwiftUI
 
-private extension Issue_Project_Issue_Author {
-	var toMyAuthor: MyAuthor {
+extension Issue_Project_Issue_Author {
+	fileprivate var toMyAuthor: MyAuthor {
 		MyAuthor(avatarUrl: avatarUrl, name: name ?? username ?? "", username: username ?? "")
 	}
 }
 
-private extension Issue_Project_Issue_Notes_Nodes_Author {
-	var toMyAuthor: MyAuthor {
+extension Issue_Project_Issue_Notes_Nodes_Author {
+	fileprivate var toMyAuthor: MyAuthor {
 		MyAuthor(avatarUrl: avatarUrl, name: name ?? username ?? "", username: username ?? "")
 	}
 }
@@ -156,21 +156,21 @@ struct IssueLoader: View {
 										blockedBy.isNotEmpty
 									{
 										ForEach(blockedBy, id: \.iid) { parent in
-												NavigationLink(
-													destination: IssueLoader(
-														fullPath: self.fullPath,
-														iid: parent.iid ?? ""
-													),
-													label: {
-														PillView(
-															"#\(parent.iid ?? "")",
-															icon: "hand.raised",
-															bgColor: .orange,
-															fgColor: .white,
-															cornerRadius: 5
-														)
-													}
-												)
+											NavigationLink(
+												destination: IssueLoader(
+													fullPath: self.fullPath,
+													iid: parent.iid ?? ""
+												),
+												label: {
+													PillView(
+														"#\(parent.iid ?? "")",
+														icon: "hand.raised",
+														bgColor: .orange,
+														fgColor: .white,
+														cornerRadius: 5
+													)
+												}
+											)
 										}
 									}
 								}
@@ -337,25 +337,25 @@ struct IssueLoader: View {
 
 	public var body: some View {
 		issueList
-		.onAppear {
-			loadIssue()
-		}
-		.refreshable {
-			await reloadIssue()
-		}
-		.toolbar {
-			if let project, case .success(let project) = project {
-				if let issue = project.issue {
-					HStack {
-						IssueStateIcon(issue.state)
-						if let url = URL(string: issue.webUrl ?? "") {
-							ShareButton(url)
+			.onAppear {
+				loadIssue()
+			}
+			.refreshable {
+				await reloadIssue()
+			}
+			.toolbar {
+				if let project, case .success(let project) = project {
+					if let issue = project.issue {
+						HStack {
+							IssueStateIcon(issue.state)
+							if let url = URL(string: issue.webUrl ?? "") {
+								ShareButton(url)
+							}
 						}
 					}
 				}
 			}
-		}
-		.navigationBarTitleDisplayMode(.inline)
-		.modifier(ScrollDismissIfAvailable())
+			.navigationBarTitleDisplayMode(.inline)
+			.modifier(ScrollDismissIfAvailable())
 	}
 }

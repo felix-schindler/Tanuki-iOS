@@ -10,7 +10,8 @@ public struct GroupsFilter: Codable, Sendable {
 	public var allAvailable: Bool? = nil
 	public var markedForDeletionOn: String? = nil
 	public var active: Bool? = nil
-	public init(topLevelOnly: Bool? = nil, ownedOnly: Bool? = nil, search: String? = nil, parentPath: String? = nil, allAvailable: Bool? = nil, markedForDeletionOn: String? = nil, active: Bool? = nil) {
+	public init(topLevelOnly: Bool? = nil, ownedOnly: Bool? = nil, search: String? = nil, parentPath: String? = nil, allAvailable: Bool? = nil, markedForDeletionOn: String? = nil, active: Bool? = nil)
+	{
 		self.topLevelOnly = topLevelOnly
 		self.ownedOnly = ownedOnly
 		self.search = search
@@ -125,7 +126,11 @@ public struct ProjectsFilter: Codable, Sendable {
 	public var markedForDeletionOn: String? = nil
 	public var active: Bool? = nil
 	public var visibility: VisibilityLevelsEnum? = nil
-	public init(membership: Bool? = nil, search: String? = nil, personal: Bool? = nil, sort: String? = nil, namespacePath: String? = nil, withIssuesEnabled: Bool? = nil, withMergeRequestsEnabled: Bool? = nil, archived: ProjectArchived? = nil, minAccessLevel: AccessLevelEnum? = nil, aimedForDeletion: Bool? = nil, notAimedForDeletion: Bool? = nil, markedForDeletionOn: String? = nil, active: Bool? = nil, visibility: VisibilityLevelsEnum? = nil) {
+	public init(
+		membership: Bool? = nil, search: String? = nil, personal: Bool? = nil, sort: String? = nil, namespacePath: String? = nil, withIssuesEnabled: Bool? = nil, withMergeRequestsEnabled: Bool? = nil,
+		archived: ProjectArchived? = nil, minAccessLevel: AccessLevelEnum? = nil, aimedForDeletion: Bool? = nil, notAimedForDeletion: Bool? = nil, markedForDeletionOn: String? = nil,
+		active: Bool? = nil, visibility: VisibilityLevelsEnum? = nil
+	) {
 		self.membership = membership
 		self.search = search
 		self.personal = personal
@@ -164,4 +169,3 @@ public struct UsersFilter: Codable, Sendable {
 		self.humans = humans
 	}
 }
-

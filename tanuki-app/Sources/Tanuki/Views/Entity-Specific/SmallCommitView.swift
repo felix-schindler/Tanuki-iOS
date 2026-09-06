@@ -7,8 +7,8 @@
 
 //import MarkdownUI
 import GitLabAPI
-import SwiftUI
 import SkipKit
+import SwiftUI
 
 struct SmallCommitView: View {
 	private let projectId: Int?

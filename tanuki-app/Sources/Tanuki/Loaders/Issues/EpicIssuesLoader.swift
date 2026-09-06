@@ -24,7 +24,38 @@ struct EpicIssuesLoader: View {
 		Task {
 			do {
 				let response = try await Network.shared.service.fetchEpicIssues(fullPath: self.fullPath, iid: self.iid)
-				let issues = response.epic?.issues?.nodes?.map { node in
+				let issues =
+					response.epic?.issues?.nodes?.map { node in
+						SmallIssueStruct(
+							iid: node.iid ?? "",
+							title: node.title ?? "",
+							reference: node.reference ?? "",
+							state: IssueState(rawValue: node.state ?? "") ?? .opened,
+							upvotes: Int(node.upvotes ?? "") ?? 0,
+							downvotes: Int(node.downvotes ?? "") ?? 0,
+							userNotesCount: Int(node.userNotesCount ?? "") ?? 0,
+							_author: MyAuthor(
+								avatarUrl: node.author?.avatarUrl,
+								name: node.author?.name ?? node.author?.username ?? "",
+								username: node.author?.username ?? ""
+							),
+							createdAt: node.createdAt ?? "",
+							webUrl: node.webUrl ?? ""
+						)
+					} ?? []
+				self.issues = .success(issues)
+			} catch let error {
+				self.issues = .failure(error)
+				Notify.status(.error)
+			}
+		}
+	}
+
+	private func reloadIssues() async {
+		do {
+			let response = try await Network.shared.service.fetchEpicIssues(fullPath: self.fullPath, iid: self.iid)
+			let issues =
+				response.epic?.issues?.nodes?.map { node in
 					SmallIssueStruct(
 						iid: node.iid ?? "",
 						title: node.title ?? "",
@@ -42,35 +73,6 @@ struct EpicIssuesLoader: View {
 						webUrl: node.webUrl ?? ""
 					)
 				} ?? []
-				self.issues = .success(issues)
-			} catch let error {
-				self.issues = .failure(error)
-				Notify.status(.error)
-			}
-		}
-	}
-
-	private func reloadIssues() async {
-		do {
-			let response = try await Network.shared.service.fetchEpicIssues(fullPath: self.fullPath, iid: self.iid)
-			let issues = response.epic?.issues?.nodes?.map { node in
-				SmallIssueStruct(
-					iid: node.iid ?? "",
-					title: node.title ?? "",
-					reference: node.reference ?? "",
-					state: IssueState(rawValue: node.state ?? "") ?? .opened,
-					upvotes: Int(node.upvotes ?? "") ?? 0,
-					downvotes: Int(node.downvotes ?? "") ?? 0,
-					userNotesCount: Int(node.userNotesCount ?? "") ?? 0,
-					_author: MyAuthor(
-						avatarUrl: node.author?.avatarUrl,
-						name: node.author?.name ?? node.author?.username ?? "",
-						username: node.author?.username ?? ""
-					),
-					createdAt: node.createdAt ?? "",
-					webUrl: node.webUrl ?? ""
-				)
-			} ?? []
 			self.issues = .success(issues)
 			Notify.status(.success)
 		} catch let error {

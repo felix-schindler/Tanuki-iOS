@@ -8,14 +8,14 @@
 import GitLabAPI
 import SwiftUI
 
-private extension MergeRequest_Project_MergeRequest_Author {
-	var toMyAuthor: MyAuthor {
+extension MergeRequest_Project_MergeRequest_Author {
+	fileprivate var toMyAuthor: MyAuthor {
 		MyAuthor(avatarUrl: avatarUrl, name: name ?? username ?? "", username: username ?? "")
 	}
 }
 
-private extension MergeRequest_Project_MergeRequest_Notes_Nodes_Author {
-	var toMyAuthor: MyAuthor {
+extension MergeRequest_Project_MergeRequest_Notes_Nodes_Author {
+	fileprivate var toMyAuthor: MyAuthor {
 		MyAuthor(avatarUrl: avatarUrl, name: name ?? username ?? "", username: username ?? "")
 	}
 }
