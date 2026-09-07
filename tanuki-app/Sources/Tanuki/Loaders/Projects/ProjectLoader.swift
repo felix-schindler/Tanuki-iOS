@@ -147,8 +147,8 @@ struct ProjectLoader: View {
 						}
 
 						if let projectId = project.id?.toIntId() {
-							DisclosureGroup(
-								content: {
+							#if SKIP_BRIDGE
+								Section(header: Label("Manage", systemImage: "person.2")) {
 									NavigationLink(
 										destination: EventsLoader(projectId: projectId),
 										label: {
@@ -178,16 +178,50 @@ struct ProjectLoader: View {
 											queryType: .project
 										)
 									)
-								},
-								label: {
-									Label("Manage", systemImage: "person.2")
 								}
-							)
+							#else
+								DisclosureGroup(
+									content: {
+										NavigationLink(
+											destination: EventsLoader(projectId: projectId),
+											label: {
+												Text("Activity")
+											})
+										NavigationLink(
+											"Members",
+											destination: MembersLoader(
+												fullPath: self.fullPath,
+												id: projectId,
+												type: .project
+											)
+										)
+										NavigationLink(
+											"Labels",
+											destination: LabelsLoader(
+												fullPath: self.fullPath,
+												id: projectId,
+												queryType: .project
+											)
+										)
+										NavigationLink(
+											"Milestones",
+											destination: MilestonesLoader(
+												fullPath: self.fullPath,
+												id: projectId,
+												queryType: .project
+											)
+										)
+									},
+									label: {
+										Label("Manage", systemImage: "person.2")
+									}
+								)
+							#endif
 						}
 
 						if let projectId = project.id?.toIntId() {
-							DisclosureGroup(
-								content: {
+							#if SKIP_BRIDGE
+								Section(header: Label("Code", systemImage: "chevron.left.forwardslash.chevron.right")) {
 									if let ref = project.repository?.rootRef {
 										NavigationLink(
 											"Repository",
@@ -213,18 +247,48 @@ struct ProjectLoader: View {
 										"Tags",
 										destination: TagsLoader(projectId)
 									)
-								},
-								label: {
-									Label(
-										"Code",
-										systemImage: "chevron.left.forwardslash.chevron.right"
-									)
 								}
-							)
+							#else
+								DisclosureGroup(
+									content: {
+										if let ref = project.repository?.rootRef {
+											NavigationLink(
+												"Repository",
+												destination: TreeLoader(
+													projectId: projectId,
+													fullPath: self.fullPath,
+													refName: ref
+												)
+											)
+
+											NavigationLink(
+												"Commits",
+												destination: CommitsLoader(projectId, refName: ref)
+											)
+										}
+
+										NavigationLink(
+											"Branches",
+											destination: BranchesLoader(projectId)
+										)
+
+										NavigationLink(
+											"Tags",
+											destination: TagsLoader(projectId)
+										)
+									},
+									label: {
+										Label(
+											"Code",
+											systemImage: "chevron.left.forwardslash.chevron.right"
+										)
+									}
+								)
+							#endif
 						}
 
-						DisclosureGroup(
-							content: {
+						#if SKIP_BRIDGE
+							Section(header: Label("Build", systemImage: "flag")) {
 								NavigationLink(
 									"Pipelines",
 									destination: ProjectPipelinesLoader(fullPath: self.fullPath)
@@ -234,10 +298,24 @@ struct ProjectLoader: View {
 									destination: ProjectReleasesLoader(
 										fullPath: self.fullPath, projectId: project.id?.toIntId() ?? 0)
 								)
-							},
-							label: {
-								Label("Build", systemImage: "flag")
-							})
+							}
+						#else
+							DisclosureGroup(
+								content: {
+									NavigationLink(
+										"Pipelines",
+										destination: ProjectPipelinesLoader(fullPath: self.fullPath)
+									)
+									NavigationLink(
+										"Releases",
+										destination: ProjectReleasesLoader(
+											fullPath: self.fullPath, projectId: project.id?.toIntId() ?? 0)
+									)
+								},
+								label: {
+									Label("Build", systemImage: "flag")
+								})
+						#endif
 					}
 
 					let readme = project.repository?.readme?.nodes?.first?.rawTextBlob?.emojized()
@@ -385,34 +463,36 @@ struct ProjectLoader: View {
 				}
 			}
 		}.background {
-			if let project, case .success(let project) = project,
-				let projectId = project.id?.toIntId()
-			{
-				NavigationLink(
-					isActive: $navigationActive,
-					destination: {
-						if let navigationDestination {
-							switch navigationDestination {
-							case .issue:
-								NewIssueView(id: projectId, fullPath: self.fullPath)
-							case .milestone:
-								NewMilestoneView(id: projectId, groupId: 0)
-							case .release:
-								NewReleaseView(id: projectId, fullPath: self.fullPath)
-							case .member:
-								NewMemberView(id: projectId, groupId: 0)
-							case .label:
-								NewLabelView(id: projectId, groupId: 0)
+			#if !SKIP_BRIDGE
+				if let project, case .success(let project) = project,
+					let projectId = project.id?.toIntId()
+				{
+					NavigationLink(
+						isActive: $navigationActive,
+						destination: {
+							if let navigationDestination {
+								switch navigationDestination {
+								case .issue:
+									NewIssueView(id: projectId, fullPath: self.fullPath)
+								case .milestone:
+									NewMilestoneView(id: projectId, groupId: 0)
+								case .release:
+									NewReleaseView(id: projectId, fullPath: self.fullPath)
+								case .member:
+									NewMemberView(id: projectId, groupId: 0)
+								case .label:
+									NewLabelView(id: projectId, groupId: 0)
+								}
+							} else {
+								EmptyView()
 							}
-						} else {
+						},
+						label: {
 							EmptyView()
 						}
-					},
-					label: {
-						EmptyView()
-					}
-				)
-			}
+					)
+				}
+			#endif
 		}
 		.navigationTitle(self.fullPath)
 		.navigationBarTitleDisplayMode(.inline)

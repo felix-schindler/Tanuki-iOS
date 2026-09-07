@@ -9,6 +9,12 @@
 	import SwiftUI
 	import WebKit
 
+	#if SKIP_BRIDGE
+		private typealias PlatformNavigationView = NavigationStack
+	#else
+		private typealias PlatformNavigationView = NavigationView
+	#endif
+
 	struct CookiesView: View {
 		@State var cookies: [HTTPCookie] = []
 		@State var showingWebView = false
@@ -118,7 +124,7 @@
 		let url: URL
 
 		var body: some View {
-			NavigationView {
+			PlatformNavigationView {
 				WebViewInternal(url: url)
 					.navigationTitle("Login")
 					#if canImport(UIKit)

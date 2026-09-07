@@ -76,14 +76,20 @@ struct RoundIconButton: View {
 			Button(label, systemImage: iconName, action: action)
 				.frame(minWidth: 30, minHeight: 30)
 				.buttonStyle(.bordered)
-				.buttonBorderShape(.circle)
-				.labelStyle(.iconOnly)
+				#if !SKIP_BRIDGE
+					.buttonBorderShape(.circle)
+				#endif
+				#if !SKIP_BRIDGE
+					.labelStyle(.iconOnly)
+				#endif
 		} else {
 			Button(label, systemImage: iconName, action: action)
 				.frame(minWidth: 30, minHeight: 30)
 				.buttonStyle(.bordered)
 				.clipShape(Circle())
-				.labelStyle(.iconOnly)
+				#if !SKIP_BRIDGE
+					.labelStyle(.iconOnly)
+				#endif
 		}
 	}
 }

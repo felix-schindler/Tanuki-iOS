@@ -72,7 +72,9 @@ struct InstanceRowView: View {
 					.foregroundColor(.accentColor)
 			}
 		}
-		.contentShape(.rect)
+		#if !SKIP_BRIDGE
+			.contentShape(.rect)
+		#endif
 		.onTapGesture {
 			Task {
 				await Auth.switchInstance(to: instance)
@@ -94,7 +96,10 @@ struct InstanceRowView: View {
 					}
 				}
 			} label: {
-				Label("Delete", systemImage: "trash").labelStyle(.iconOnly)
+				Label("Delete", systemImage: "trash")
+					#if !SKIP_BRIDGE
+						.labelStyle(.iconOnly)
+					#endif
 			}
 		}
 	}

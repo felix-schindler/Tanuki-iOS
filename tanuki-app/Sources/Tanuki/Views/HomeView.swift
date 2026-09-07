@@ -62,8 +62,8 @@ struct HomeView: View {
 							})
 					})
 
-				DisclosureGroup(
-					content: {
+				#if SKIP_BRIDGE
+					Section(header: Label(title: { Text("Merge Requests") }, icon: { Image("git-mr.symbols").resizable().scaledToFit().foregroundStyle(.blue) })) {
 						NavigationLink(
 							"Assigned", destination: UserMergeLoader(.assgined))
 						NavigationLink(
@@ -71,19 +71,31 @@ struct HomeView: View {
 						NavigationLink(
 							"Review requested",
 							destination: UserMergeLoader(.reviewRequested))
-					},
-					label: {
-						Label(
-							title: {
-								Text("Merge Requests")
-							},
-							icon: {
-								Image("git-mr.symbols")
-									.resizable()
-									.scaledToFit()
-									.foregroundStyle(.blue)
-							})
-					})
+					}
+				#else
+					DisclosureGroup(
+						content: {
+							NavigationLink(
+								"Assigned", destination: UserMergeLoader(.assgined))
+							NavigationLink(
+								"Authored", destination: UserMergeLoader(.authored))
+							NavigationLink(
+								"Review requested",
+								destination: UserMergeLoader(.reviewRequested))
+						},
+						label: {
+							Label(
+								title: {
+									Text("Merge Requests")
+								},
+								icon: {
+									Image("git-mr.symbols")
+										.resizable()
+										.scaledToFit()
+										.foregroundStyle(.blue)
+								})
+						})
+				#endif
 
 				NavigationLink(
 					destination: ProjectsLoader(membership: true),
@@ -163,8 +175,14 @@ struct HomeView: View {
 				}.tint(.accentColor)
 			}
 		}
-		.listStyle(.sidebar)
-		.headerProminence(.increased)
+		#if SKIP_BRIDGE
+			.listStyle(.plain)
+		#else
+			.listStyle(.sidebar)
+		#endif
+		#if !SKIP_BRIDGE
+			.headerProminence(.increased)
+		#endif
 		.navigationTitle("Home")
 	}
 }

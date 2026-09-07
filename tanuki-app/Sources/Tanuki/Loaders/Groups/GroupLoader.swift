@@ -99,21 +99,23 @@ struct GroupLoader: View {
 				}
 			}
 		}.background {
-			NavigationLink(
-				isActive: $navigationActive,
-				destination: {
-					if let group, case .success(let group) = group,
-						let groupId = group.id?.toIntId()
-					{
-						NewProjectView(groupId)
-					} else {
-						FailedView("Form couldn't be opened because the namespace ID is not defined")
+			#if !SKIP_BRIDGE
+				NavigationLink(
+					isActive: $navigationActive,
+					destination: {
+						if let group, case .success(let group) = group,
+							let groupId = group.id?.toIntId()
+						{
+							NewProjectView(groupId)
+						} else {
+							FailedView("Form couldn't be opened because the namespace ID is not defined")
+						}
+					},
+					label: {
+						EmptyView()
 					}
-				},
-				label: {
-					EmptyView()
-				}
-			)
+				)
+			#endif
 		}
 		.navigationTitle(fullPath)
 		.navigationBarTitleDisplayMode(.inline)
@@ -210,42 +212,69 @@ struct GroupSections: View {
 				}
 			}
 
-			DisclosureGroup(
-				content: {
+			#if SKIP_BRIDGE
+				Section(header: Label("Manage", systemImage: "person.2")) {
 					if let groupId = group.id?.toIntId() {
 						NavigationLink("Members", destination: MembersLoader(fullPath: fullPath, id: groupId, type: .group))
 						NavigationLink("Labels", destination: LabelsLoader(fullPath: fullPath, id: groupId, queryType: .group))
 					}
 					NavigationLink("Timelogs", destination: TimelogsLoader(fullPath: fullPath, queryType: .group))
 					NavigationLink("Custom emojis", destination: CustomEmojisLoader(fullPath: fullPath))
-				},
-				label: {
-					Label("Manage", systemImage: "person.2")
-				})
+				}
+			#else
+				DisclosureGroup(
+					content: {
+						if let groupId = group.id?.toIntId() {
+							NavigationLink("Members", destination: MembersLoader(fullPath: fullPath, id: groupId, type: .group))
+							NavigationLink("Labels", destination: LabelsLoader(fullPath: fullPath, id: groupId, queryType: .group))
+						}
+						NavigationLink("Timelogs", destination: TimelogsLoader(fullPath: fullPath, queryType: .group))
+						NavigationLink("Custom emojis", destination: CustomEmojisLoader(fullPath: fullPath))
+					},
+					label: {
+						Label("Manage", systemImage: "person.2")
+					})
+			#endif
 
-			DisclosureGroup(
-				content: {
+			#if SKIP_BRIDGE
+				Section(header: Label("Plan", systemImage: "calendar")) {
 					NavigationLink("Issues", destination: GroupIssuesLoader(fullPath: fullPath))
 					NavigationLink("Epics", destination: GroupEpicsLoader(fullPath: fullPath))
 					if let groupId = group.id?.toIntId() {
 						NavigationLink("Milestones", destination: MilestonesLoader(fullPath: fullPath, id: groupId, queryType: .group))
 					}
-				},
-				label: {
-					if #available(iOS 17.0, *) {
-						Label("Plan", systemImage: "calendar.badge.checkmark")
-					} else {
-						Label("Plan", systemImage: "calendar")
-					}
-				})
+				}
+			#else
+				DisclosureGroup(
+					content: {
+						NavigationLink("Issues", destination: GroupIssuesLoader(fullPath: fullPath))
+						NavigationLink("Epics", destination: GroupEpicsLoader(fullPath: fullPath))
+						if let groupId = group.id?.toIntId() {
+							NavigationLink("Milestones", destination: MilestonesLoader(fullPath: fullPath, id: groupId, queryType: .group))
+						}
+					},
+					label: {
+						if #available(iOS 17.0, *) {
+							Label("Plan", systemImage: "calendar.badge.checkmark")
+						} else {
+							Label("Plan", systemImage: "calendar")
+						}
+					})
+			#endif
 
-			DisclosureGroup(
-				content: {
+			#if SKIP_BRIDGE
+				Section(header: Label("Code", systemImage: "chevron.left.forwardslash.chevron.right")) {
 					NavigationLink("Merge Requests", destination: GroupMergeLoader(fullPath: fullPath))
-				},
-				label: {
-					Label("Code", systemImage: "chevron.left.forwardslash.chevron.right")
-				})
+				}
+			#else
+				DisclosureGroup(
+					content: {
+						NavigationLink("Merge Requests", destination: GroupMergeLoader(fullPath: fullPath))
+					},
+					label: {
+						Label("Code", systemImage: "chevron.left.forwardslash.chevron.right")
+					})
+			#endif
 		}
 	}
 }

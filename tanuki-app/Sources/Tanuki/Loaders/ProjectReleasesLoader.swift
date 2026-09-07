@@ -85,7 +85,9 @@ struct ProjectReleasesLoader: View {
 				).tint(.accentColor)
 			}
 		}
-		.headerProminence(.increased)
+		#if !SKIP_BRIDGE
+			.headerProminence(.increased)
+		#endif
 		.navigationTitle("Releases")
 	}
 }
@@ -112,7 +114,9 @@ struct ReleaseContent: View {
 					}
 					if let commit = release.commit?.shortId {
 						PillView(commit, icon: "text.line.first.and.arrowtriangle.forward")
-							.textSelection(.enabled)
+							#if !SKIP_BRIDGE
+								.textSelection(.enabled)
+							#endif
 							.font(.system(.footnote, design: .monospaced))
 					}
 				}.font(.footnote)
@@ -123,24 +127,45 @@ struct ReleaseContent: View {
 			}
 		}
 		if let assets = release.assets {
-			DisclosureGroup("Assets (\(assets.count ?? 0))") {
-				if let links = assets.links?.nodes {
-					ForEach(links, id: \.?.id) { maybeLink in
-						if let link = maybeLink {
-							if let url = URL(string: link.url ?? "") {
-								Link(link.name ?? "Link", destination: url)
+			#if SKIP_BRIDGE
+				Section(header: Text("Assets (\(assets.count ?? 0))")) {
+					if let links = assets.links?.nodes {
+						ForEach(links, id: \.?.id) { maybeLink in
+							if let link = maybeLink {
+								if let url = URL(string: link.url ?? "") {
+									Link(link.name ?? "Link", destination: url)
+								}
+							}
+						}
+					}
+					if let sources = assets.sources?.nodes {
+						ForEach(sources, id: \.?.url) { maybeSource in
+							if let url = URL(string: maybeSource?.url ?? "") {
+								Link("Source code (\(maybeSource?.format ?? "unknown"))", destination: url)
 							}
 						}
 					}
 				}
-				if let sources = assets.sources?.nodes {
-					ForEach(sources, id: \.?.url) { maybeSource in
-						if let url = URL(string: maybeSource?.url ?? "") {
-							Link("Source code (\(maybeSource?.format ?? "unknown"))", destination: url)
+			#else
+				DisclosureGroup("Assets (\(assets.count ?? 0))") {
+					if let links = assets.links?.nodes {
+						ForEach(links, id: \.?.id) { maybeLink in
+							if let link = maybeLink {
+								if let url = URL(string: link.url ?? "") {
+									Link(link.name ?? "Link", destination: url)
+								}
+							}
+						}
+					}
+					if let sources = assets.sources?.nodes {
+						ForEach(sources, id: \.?.url) { maybeSource in
+							if let url = URL(string: maybeSource?.url ?? "") {
+								Link("Source code (\(maybeSource?.format ?? "unknown"))", destination: url)
+							}
 						}
 					}
 				}
-			}
+			#endif
 		}
 	}
 }

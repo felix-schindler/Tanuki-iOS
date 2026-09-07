@@ -8,68 +8,95 @@
 //import Highlightr
 import SwiftUI
 
-class Highlightr {
-	init?() {
-	}
+#if !SKIP_BRIDGE
+	class Highlightr {
+		init?() {
+		}
 
-	func supportedLanguages() -> [String] {
-		[]
-	}
+		func supportedLanguages() -> [String] {
+			[]
+		}
 
-	func availableThemes() -> [String] {
-		[]
-	}
+		func availableThemes() -> [String] {
+			[]
+		}
 
-	func setTheme(to: String) {
-	}
+		func setTheme(to: String) {
+		}
 
-	func highlight(_ content: String, as: String) -> NSAttributedString? {
-		NSAttributedString()
+		func highlight(_ content: String, as: String) -> NSAttributedString? {
+			NSAttributedString()
+		}
 	}
-}
+#endif
 
 /// Inspiration from: https://github.com/mortenjust/CodeHighlighter
 /// See: https://highlightjs.org and https://github.com/raspu/Highlightr
-public struct CodeTextView: View {
-	private var highlightedCode: AttributedString
+#if SKIP_BRIDGE
+	public struct CodeTextView: View {
+		private let code: String
+		private let fontSize: Double
 
-	public init(
-		_ code: String,
-		language: String,
-		colorScheme: ColorScheme,
-		lightTheme: String = "vs",
-		darkTheme: String = "vs2015",
-		fontSize: Double = 12
-	) {
-		if let highlighter = Highlightr() {
-			let lang = language.lowercased()
-			if !highlighter.supportedLanguages().contains(lang) {
-				print("WARNING: Language \(lang) isn't supported, using auto detect")
-			}
+		public init(
+			_ code: String,
+			language: String,
+			colorScheme: ColorScheme,
+			lightTheme: String = "vs",
+			darkTheme: String = "vs2015",
+			fontSize: Double = 12
+		) {
+			self.code = code
+			self.fontSize = fontSize
+		}
 
-			let theme = colorScheme == .dark ? darkTheme : lightTheme
-			if highlighter.availableThemes().contains(theme) {
-				highlighter.setTheme(to: theme)
-			} else {
-				print("WARNING: Theme \(theme) isn't supported")
-			}
+		public var body: some View {
+			Text(code)
+				.font(.custom("SF Mono", size: fontSize))
+				.lineSpacing(4)
+		}
+	}
+#else
+	public struct CodeTextView: View {
+		private var highlightedCode: AttributedString
 
-			if let nsAtrStr = highlighter.highlight(code, as: lang) {
-				highlightedCode = AttributedString(nsAtrStr)
+		public init(
+			_ code: String,
+			language: String,
+			colorScheme: ColorScheme,
+			lightTheme: String = "vs",
+			darkTheme: String = "vs2015",
+			fontSize: Double = 12
+		) {
+			if let highlighter = Highlightr() {
+				let lang = language.lowercased()
+				if !highlighter.supportedLanguages().contains(lang) {
+					print("WARNING: Language \(lang) isn't supported, using auto detect")
+				}
+
+				let theme = colorScheme == .dark ? darkTheme : lightTheme
+				if highlighter.availableThemes().contains(theme) {
+					highlighter.setTheme(to: theme)
+				} else {
+					print("WARNING: Theme \(theme) isn't supported")
+				}
+
+				if let nsAtrStr = highlighter.highlight(code, as: lang) {
+					highlightedCode = AttributedString(nsAtrStr)
+				} else {
+					highlightedCode = AttributedString(code)
+				}
 			} else {
 				highlightedCode = AttributedString(code)
 			}
-		} else {
-			highlightedCode = AttributedString(code)
+
+			highlightedCode.font = .custom("SF Mono", size: fontSize)
+			highlightedCode.inlinePresentationIntent = .code
 		}
 
-		highlightedCode.font = .custom("SF Mono", size: fontSize)
-		highlightedCode.inlinePresentationIntent = .code
+		public var body: some View {
+			Text(highlightedCode)
+				.lineSpacing(4)
+				.textSelection(.enabled)
+		}
 	}
-
-	public var body: some View {
-		Text(highlightedCode)
-			.lineSpacing(4)
-			.textSelection(.enabled)
-	}
-}
+#endif

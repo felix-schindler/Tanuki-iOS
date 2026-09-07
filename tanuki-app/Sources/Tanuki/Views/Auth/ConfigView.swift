@@ -90,9 +90,13 @@ struct ConfigView: View {
 				}
 			)
 			.tint(.accentColor)
-			.buttonBorderShape(.capsule)
+			#if !SKIP_BRIDGE
+				.buttonBorderShape(.capsule)
+			#endif
 			.buttonStyle(.bordered)
-			.controlSize(.large)
+			#if !SKIP_BRIDGE
+				.controlSize(.large)
+			#endif
 		}
 		.padding()
 		.textFieldStyle(.roundedBorder)

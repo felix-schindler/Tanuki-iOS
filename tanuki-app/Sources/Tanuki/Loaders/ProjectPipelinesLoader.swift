@@ -72,7 +72,9 @@ struct ProjectPipelinesLoader: View {
 													icon:
 														"text.line.first.and.arrowtriangle.forward"
 												)
-												.textSelection(.enabled)
+												#if !SKIP_BRIDGE
+													.textSelection(.enabled)
+												#endif
 												.font(.system(.footnote, design: .monospaced))
 											}
 										}.font(.footnote)

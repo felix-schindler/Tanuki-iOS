@@ -8,6 +8,12 @@
 import GitLabAPI
 import SwiftUI
 
+#if SKIP_BRIDGE
+	private typealias PlatformNavigationView = NavigationStack
+#else
+	private typealias PlatformNavigationView = NavigationView
+#endif
+
 struct ProjectsLoader: View {
 	@State var projects: Result<[SmallProject], Error>? = nil
 
@@ -105,7 +111,7 @@ struct ProjectsLoader: View {
 				showFilters = true
 			}
 		}.sheet(isPresented: $showFilters, onDismiss: { showFilters = false }) {
-			NavigationView {
+			PlatformNavigationView {
 				Form {
 					Section {
 						VStack(alignment: .leading) {

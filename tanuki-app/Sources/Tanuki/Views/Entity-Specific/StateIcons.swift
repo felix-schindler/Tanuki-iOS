@@ -118,7 +118,9 @@ struct IssueStateIcon: View {
 	public var body: some View {
 		Label(self.state, systemImage: self.icon)
 			.foregroundStyle(self.color)
-			.labelStyle(.iconOnly)
+			#if !SKIP_BRIDGE
+				.labelStyle(.iconOnly)
+			#endif
 	}
 }
 
@@ -179,7 +181,9 @@ struct MergeStateIcon: View {
 			}
 		)
 		.foregroundStyle(self.color)
-		.labelStyle(.iconOnly)
+		#if !SKIP_BRIDGE
+			.labelStyle(.iconOnly)
+		#endif
 	}
 }
 

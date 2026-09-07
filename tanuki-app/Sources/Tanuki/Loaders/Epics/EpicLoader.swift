@@ -243,8 +243,8 @@ struct EpicLoader: View {
 							}
 
 							if let ancestors = epic.ancestors?.nodes, ancestors.isNotEmpty {
-								DisclosureGroup(
-									content: {
+								#if SKIP_BRIDGE
+									Section(header: Label("Ancestors", systemImage: "figure.and.child.holdinghands")) {
 										ForEach(ancestors, id: \.iid) { ancestor in
 											NavigationLink(
 												"&\(ancestor.iid ?? "")",
@@ -255,19 +255,34 @@ struct EpicLoader: View {
 													)
 												})
 										}
-									},
-									label: {
-										Label(
-											"Ancestors",
-											systemImage: "figure.and.child.holdinghands"
-										)
 									}
-								)
+								#else
+									DisclosureGroup(
+										content: {
+											ForEach(ancestors, id: \.iid) { ancestor in
+												NavigationLink(
+													"&\(ancestor.iid ?? "")",
+													destination: {
+														EpicLoader(
+															fullPath: self.fullPath,
+															iid: ancestor.iid ?? ""
+														)
+													})
+											}
+										},
+										label: {
+											Label(
+												"Ancestors",
+												systemImage: "figure.and.child.holdinghands"
+											)
+										}
+									)
+								#endif
 							}
 
 							if let children = epic.children?.nodes, children.isNotEmpty {
-								DisclosureGroup(
-									content: {
+								#if SKIP_BRIDGE
+									Section(header: Label("Children", systemImage: "figure.child")) {
 										ForEach(children, id: \.iid) { child in
 											NavigationLink(
 												"&\(child.iid ?? "")",
@@ -278,11 +293,26 @@ struct EpicLoader: View {
 													)
 												})
 										}
-									},
-									label: {
-										Label("Children", systemImage: "figure.child")
 									}
-								)
+								#else
+									DisclosureGroup(
+										content: {
+											ForEach(children, id: \.iid) { child in
+												NavigationLink(
+													"&\(child.iid ?? "")",
+													destination: {
+														EpicLoader(
+															fullPath: self.fullPath,
+															iid: child.iid ?? ""
+														)
+													})
+											}
+										},
+										label: {
+											Label("Children", systemImage: "figure.child")
+										}
+									)
+								#endif
 							}
 						}
 

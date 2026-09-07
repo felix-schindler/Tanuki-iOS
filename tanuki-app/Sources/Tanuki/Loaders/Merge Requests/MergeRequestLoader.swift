@@ -168,7 +168,9 @@ struct MergeRequestLoader: View {
 													cornerRadius: 5
 												)
 												.font(.system(.footnote, design: .monospaced))
-												.textSelection(.enabled)
+												#if !SKIP_BRIDGE
+													.textSelection(.enabled)
+												#endif
 											}
 										)
 									} else {
@@ -179,7 +181,9 @@ struct MergeRequestLoader: View {
 											cornerRadius: 5
 										)
 										.font(.system(.footnote, design: .monospaced))
-										.textSelection(.enabled)
+										#if !SKIP_BRIDGE
+											.textSelection(.enabled)
+										#endif
 									}
 
 									Image(systemName: "arrow.right")
@@ -191,7 +195,9 @@ struct MergeRequestLoader: View {
 										cornerRadius: 5
 									)
 									.font(.system(.footnote, design: .monospaced))
-									.textSelection(.enabled)
+									#if !SKIP_BRIDGE
+										.textSelection(.enabled)
+									#endif
 								}
 							}.font(.footnote)
 
@@ -212,8 +218,17 @@ struct MergeRequestLoader: View {
 
 						Section("Details") {
 							let assgineeCount = mr.assignees?.nodes?.count ?? 0
-							DisclosureGroup(
-								content: {
+							#if SKIP_BRIDGE
+								Section(
+									header: Label(
+										title: {
+											HStack {
+												Text("Assignees")
+												Spacer()
+												Text("\(assgineeCount)")
+											}
+										}, icon: { Image(systemName: "person.crop.circle") })
+								) {
 									if assgineeCount > 0 {
 										ForEach(mr.assignees!.nodes!, id: \.username) { user in
 											NavigationLink(
@@ -237,25 +252,62 @@ struct MergeRequestLoader: View {
 									} else {
 										Text("There are no assignees")
 									}
-								},
-								label: {
-									Label(
-										title: {
-											HStack {
-												Text("Assignees")
-												Spacer()
-												Text("\(assgineeCount)")
-											}
-										},
-										icon: {
-											Image(systemName: "person.crop.circle")
-										})
 								}
-							)
+							#else
+								DisclosureGroup(
+									content: {
+										if assgineeCount > 0 {
+											ForEach(mr.assignees!.nodes!, id: \.username) { user in
+												NavigationLink(
+													destination: UserLoader(
+														username: user.username ?? ""),
+													label: {
+														HStack {
+															if let url =
+																URL.fromAvatar(
+																	user.avatarUrl)
+															{
+																AvatarImage(
+																	url,
+																	size: .small)
+															}
+															Text(user.username ?? "")
+														}
+													}
+												)
+											}
+										} else {
+											Text("There are no assignees")
+										}
+									},
+									label: {
+										Label(
+											title: {
+												HStack {
+													Text("Assignees")
+													Spacer()
+													Text("\(assgineeCount)")
+												}
+											},
+											icon: {
+												Image(systemName: "person.crop.circle")
+											})
+									}
+								)
+							#endif
 
 							let reviewerCount = mr.reviewers?.nodes?.count ?? 0
-							DisclosureGroup(
-								content: {
+							#if SKIP_BRIDGE
+								Section(
+									header: Label(
+										title: {
+											HStack {
+												Text("Reviewers")
+												Spacer()
+												Text("\(reviewerCount)")
+											}
+										}, icon: { Image(systemName: "person.line.dotted.person.fill") })
+								) {
 									if reviewerCount > 0 {
 										ForEach(mr.reviewers!.nodes!, id: \.username) { user in
 											NavigationLink(
@@ -274,24 +326,47 @@ struct MergeRequestLoader: View {
 									} else {
 										Text("There are no reviewers")
 									}
-								},
-								label: {
-									Label(
-										title: {
-											HStack {
-												Text("Reviewers")
-												Spacer()
-												Text("\(reviewerCount)")
-											}
-										},
-										icon: {
-											Image(
-												systemName:
-													"person.line.dotted.person.fill"
-											)
-										})
 								}
-							)
+							#else
+								DisclosureGroup(
+									content: {
+										if reviewerCount > 0 {
+											ForEach(mr.reviewers!.nodes!, id: \.username) { user in
+												NavigationLink(
+													destination: UserLoader(
+														username: user.username ?? ""),
+													label: {
+														HStack {
+															if let url = URL.fromAvatar(user.avatarUrl) {
+																AvatarImage(url, size: .small)
+															}
+															Text(user.username ?? "")
+														}
+													}
+												)
+											}
+										} else {
+											Text("There are no reviewers")
+										}
+									},
+									label: {
+										Label(
+											title: {
+												HStack {
+													Text("Reviewers")
+													Spacer()
+													Text("\(reviewerCount)")
+												}
+											},
+											icon: {
+												Image(
+													systemName:
+														"person.line.dotted.person.fill"
+												)
+											})
+									}
+								)
+							#endif
 
 							if let labels = mr.labels?.nodes, labels.isNotEmpty {
 								Label(
@@ -522,10 +597,18 @@ struct MergeRequestLoader: View {
 							}
 						)
 						.tint(MergeStateHelper.getColorByState(MergeRequestState(rawValue: mr.state ?? "") ?? .opened))
-						.labelStyle(.titleAndIcon)
-						.buttonBorderShape(.roundedRectangle)
-						.buttonStyle(.borderedProminent)
-						.controlSize(.mini)
+						#if !SKIP_BRIDGE
+							.labelStyle(.titleAndIcon)
+						#endif
+						#if !SKIP_BRIDGE
+							.buttonBorderShape(.roundedRectangle)
+						#endif
+						#if !SKIP_BRIDGE
+							.buttonStyle(.borderedProminent)
+						#endif
+						#if !SKIP_BRIDGE
+							.controlSize(.mini)
+						#endif
 
 						if let webUrl = mr.webUrl,
 							let url = URL(string: webUrl)

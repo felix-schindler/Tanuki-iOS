@@ -61,7 +61,9 @@ struct ProjectHeaderView: View {
 				if let topics = project.topics, topics.isNotEmpty {
 					HStack(spacing: 5) {
 						Label("Tags", systemImage: "tag")
-							.labelStyle(.iconOnly)
+							#if !SKIP_BRIDGE
+								.labelStyle(.iconOnly)
+							#endif
 						ScrollView(.horizontal) {
 							HStack {
 								let topicList = topics.components(separatedBy: ",")
@@ -98,7 +100,9 @@ struct ProjectHeaderView: View {
 								}
 							)
 							.tint(.accentColor)
-							.buttonStyle(.borderedProminent)
+							#if !SKIP_BRIDGE
+								.buttonStyle(.borderedProminent)
+							#endif
 						} else {
 							NavigationLink(
 								destination: GroupLoader(fullPath: namespace.fullPath ?? ""),
@@ -110,7 +114,9 @@ struct ProjectHeaderView: View {
 								}
 							)
 							.tint(.accentColor)
-							.buttonStyle(.borderedProminent)
+							#if !SKIP_BRIDGE
+								.buttonStyle(.borderedProminent)
+							#endif
 						}
 					}
 
@@ -141,7 +147,9 @@ struct ProjectHeaderView: View {
 				}
 				.tint(.primary)
 				.buttonStyle(.bordered)
-				.controlSize(.small)
+				#if !SKIP_BRIDGE
+					.controlSize(.small)
+				#endif
 			}
 
 			#if canImport(Charts)
