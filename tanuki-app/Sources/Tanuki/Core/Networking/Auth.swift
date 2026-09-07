@@ -28,16 +28,25 @@ class Auth {
 	}
 
 	public static func generateCodeChallenge(codeVerifier: String) -> String {
-		let data = Data(codeVerifier.utf8)
-		let digest = SHA256.hash(data: data)
-		let sha256Data = Data(digest)
+		#if canImport(CryptoKit)
+			let data = Data(codeVerifier.utf8)
+			let digest = SHA256.hash(data: data)
+			let sha256Data = Data(digest)
 
-		let base64 = sha256Data.base64EncodedString()
-			.replacingOccurrences(of: "+", with: "-")
-			.replacingOccurrences(of: "/", with: "_")
-			.replacingOccurrences(of: "=", with: "")
+			let base64 = sha256Data.base64EncodedString()
+				.replacingOccurrences(of: "+", with: "-")
+				.replacingOccurrences(of: "/", with: "_")
+				.replacingOccurrences(of: "=", with: "")
 
-		return base64
+			return base64
+		#else
+			// Fallback for Android (CryptoKit unavailable): plain base64url of verifier
+			let data = Data(codeVerifier.utf8)
+			return data.base64EncodedString()
+				.replacingOccurrences(of: "+", with: "-")
+				.replacingOccurrences(of: "/", with: "_")
+				.replacingOccurrences(of: "=", with: "")
+		#endif
 	}
 
 	@MainActor

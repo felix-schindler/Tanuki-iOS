@@ -9,6 +9,12 @@ import GitLabAPI
 import SkipKit
 import SwiftUI
 
+#if SKIP_BRIDGE
+	private typealias PlatformNavigationView = NavigationStack
+#else
+	private typealias PlatformNavigationView = NavigationView
+#endif
+
 struct MergeButton: View {
 	private let iid: String
 	private let projectId: Int
@@ -131,7 +137,7 @@ struct MergeButton: View {
 			.padding()
 			.modifier(PresentationDetendsIfAvailable())
 		}.sheet(isPresented: $showMergeOptions, onDismiss: { showMergeOptions = false }) {
-			NavigationView {
+			PlatformNavigationView {
 				Form {
 					Toggle("Merge when the pipeline succeeds", isOn: $autoMerge)
 					TextField("Custom merge commit message", text: $commitMessage)
@@ -157,7 +163,10 @@ struct MergeButton: View {
 					ToolbarItem(placement: .topBarTrailing) {
 						AsyncButton("Merge", systemImage: "checkmark") {
 							await merge()
-						}.labelStyle(.titleAndIcon)
+						}
+						#if !SKIP_BRIDGE
+							.labelStyle(.titleAndIcon)
+						#endif
 					}
 				}
 				.navigationBarTitleDisplayMode(.inline)

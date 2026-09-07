@@ -13,6 +13,12 @@ import SwiftUI
 	import WebKit
 #endif
 
+#if SKIP_BRIDGE
+	private typealias PlatformNavigationView = NavigationStack
+#else
+	private typealias PlatformNavigationView = NavigationView
+#endif
+
 enum ContentTab: String, Hashable {
 	case home, todos, explore, profile
 }
@@ -45,22 +51,22 @@ struct ContentView: View {
 
 	public var body: some View {
 		TabView(selection: $tab) {
-			NavigationView {
+			PlatformNavigationView {
 				HomeView()
 			}.tabItem {
 				Label("Home", systemImage: "house")
 			}.tag(ContentTab.home)
-			NavigationView {
+			PlatformNavigationView {
 				CurrentUserTodosLoader()
 			}.tabItem {
 				Label("Todos", systemImage: "checkmark.square")
 			}.tag(ContentTab.todos)
-			NavigationView {
+			PlatformNavigationView {
 				ExploreView()
 			}.tabItem {
 				Label("Explore", systemImage: "sparkles")
 			}.tag(ContentTab.explore)
-			NavigationView {
+			PlatformNavigationView {
 				CurrentUserLoader()
 			}.tabItem {
 				Label("Profile", systemImage: "person")

@@ -130,7 +130,9 @@ struct IssueLoader: View {
 											cornerRadius: 5
 										)
 										.font(.system(.footnote, design: .monospaced))
-										.textSelection(.enabled)
+										#if !SKIP_BRIDGE
+											.textSelection(.enabled)
+										#endif
 									}
 
 									if let dueDate = issue.dueDate {
@@ -170,7 +172,9 @@ struct IssueLoader: View {
 									}
 								}
 								.font(.footnote)
-								.monospacedDigit()
+								#if !SKIP_BRIDGE
+									.monospacedDigit()
+								#endif
 							}
 
 							if let description = issue.description?.emojized(),
@@ -190,8 +194,17 @@ struct IssueLoader: View {
 
 						Section("Details") {
 							let assgineeCount = issue.assignees?.nodes?.count ?? 0
-							DisclosureGroup(
-								content: {
+							#if SKIP_BRIDGE
+								Section(
+									header: Label(
+										title: {
+											HStack {
+												Text("Assignees")
+												Spacer()
+												Text(String(assgineeCount))
+											}
+										}, icon: { Image(systemName: "person.crop.circle") })
+								) {
 									if assgineeCount > 0 {
 										ForEach(issue.assignees!.nodes!, id: \.self) { maybeUser in
 											if let user = maybeUser {
@@ -218,21 +231,45 @@ struct IssueLoader: View {
 									} else {
 										Text("There are no assignees")
 									}
-								},
-								label: {
-									Label(
-										title: {
-											HStack {
-												Text("Assignees")
-												Spacer()
-												Text(String(assgineeCount))
-											}
-										},
-										icon: {
-											Image(systemName: "person.crop.circle")
-										})
 								}
-							)
+							#else
+								DisclosureGroup(
+									content: {
+										if assgineeCount > 0 {
+											ForEach(issue.assignees!.nodes!, id: \.username) { user in
+												NavigationLink(
+													destination: UserLoader(
+														username: user.username ?? ""
+													),
+													label: {
+														HStack {
+															if let url = URL.fromAvatar(user.avatarUrl) {
+																AvatarImage(url, size: .small)
+															}
+															Text(user.username ?? "")
+														}
+													}
+												)
+											}
+										} else {
+											Text("There are no assignees")
+										}
+									},
+									label: {
+										Label(
+											title: {
+												HStack {
+													Text("Assignees")
+													Spacer()
+													Text(String(assgineeCount))
+												}
+											},
+											icon: {
+												Image(systemName: "person.crop.circle")
+											})
+									}
+								)
+							#endif
 
 							if let labels = issue.labels?.nodes, labels.isNotEmpty {
 								Label(

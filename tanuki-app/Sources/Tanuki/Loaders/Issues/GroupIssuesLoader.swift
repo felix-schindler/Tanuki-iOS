@@ -9,6 +9,12 @@
 import GitLabAPI
 import SwiftUI
 
+#if SKIP_BRIDGE
+	private typealias PlatformNavigationView = NavigationStack
+#else
+	private typealias PlatformNavigationView = NavigationView
+#endif
+
 struct GroupIssuesLoader: View {
 	private let fullPath: String
 
@@ -114,7 +120,7 @@ struct GroupIssuesLoader: View {
 				showFilters = true
 			}
 		}.sheet(isPresented: $showFilters, onDismiss: { self.showFilters = false }) {
-			NavigationView {
+			PlatformNavigationView {
 				IssueFilterView(filter: $filter)
 					.toolbar {
 						AsyncButton("Apply filter", systemImage: "checkmark") {

@@ -29,10 +29,14 @@ struct PresentationDetendsIfAvailable: ViewModifier {
 
 struct LabelSpacingIfAvailable: ViewModifier {
 	func body(content: Content) -> some View {
-		if #available(iOS 26.0, macOS 26.0, *) {
-			content.labelIconToTitleSpacing(5)
-		} else {
+		#if SKIP_BRIDGE
 			content
-		}
+		#else
+			if #available(iOS 26.0, macOS 26.0, *) {
+				content.labelIconToTitleSpacing(5)
+			} else {
+				content
+			}
+		#endif
 	}
 }

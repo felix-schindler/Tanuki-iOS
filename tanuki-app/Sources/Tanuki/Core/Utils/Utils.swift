@@ -14,7 +14,8 @@ import SwiftUI
 extension URLCache {
 	static let avatarCache = URLCache(
 		memoryCapacity: 100 * 1024 * 1024,  // 100 MB in RAM
-		diskCapacity: 300 * 1024 * 1024  // 300 MB on disk
+		diskCapacity: 300 * 1024 * 1024,  // 300 MB on disk
+		diskPath: nil
 	)
 }
 
@@ -145,13 +146,17 @@ extension SwiftUI.Color {
 	}
 
 	var hex: String {
-		guard let components = cgColor?.components, components.count >= 3 else {
+		#if canImport(UIKit)
+			guard let components = cgColor?.components, components.count >= 3 else {
+				return "#000000"
+			}
+			let r = Int(components[0] * 255)
+			let g = Int(components[1] * 255)
+			let b = Int(components[2] * 255)
+			let a = components.count >= 4 ? Int(round(components[3] * 255)) : 255
+			return String(format: "#%02X%02X%02X%02X", r, g, b, a)
+		#else
 			return "#000000"
-		}
-		let r = Int(components[0] * 255)
-		let g = Int(components[1] * 255)
-		let b = Int(components[2] * 255)
-		let a = components.count >= 4 ? Int(round(components[3] * 255)) : 255
-		return String(format: "#%02X%02X%02X%02X", r, g, b, a)
+		#endif
 	}
 }

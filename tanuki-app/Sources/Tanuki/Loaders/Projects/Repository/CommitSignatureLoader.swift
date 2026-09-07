@@ -32,7 +32,9 @@ struct SignatureLoader: View {
 						showDetails = true
 					}
 					.tint(.green)
-					.controlSize(.mini)
+					#if !SKIP_BRIDGE
+						.controlSize(.mini)
+					#endif
 				} else {
 					EmptyView()
 				}

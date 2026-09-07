@@ -9,6 +9,12 @@ import GitLabAPI
 //import MarkdownUI
 import SwiftUI
 
+#if SKIP_BRIDGE
+	private typealias PlatformNavigationView = NavigationStack
+#else
+	private typealias PlatformNavigationView = NavigationView
+#endif
+
 enum MilestoneQueryType {
 	case group,
 		project
@@ -203,7 +209,7 @@ struct MilestonesLoader: View {
 				).tint(.accentColor)
 			}
 		}.sheet(isPresented: $showFilters, onDismiss: { self.showFilters = false }) {
-			NavigationView {
+			PlatformNavigationView {
 				Form {
 					Picker("State", selection: $state) {
 						Text("Any").tag(nil as MilestoneStateEnum?)

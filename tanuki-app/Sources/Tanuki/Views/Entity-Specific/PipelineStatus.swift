@@ -57,7 +57,9 @@ struct PipelineStatus: View {
 				showInfo = true
 			}
 			.tint(self.color)
-			.controlSize(.mini)
+			#if !SKIP_BRIDGE
+				.controlSize(.mini)
+			#endif
 		}.sheet(isPresented: $showInfo) {
 			VStack(alignment: .leading) {
 				PopupHeader(

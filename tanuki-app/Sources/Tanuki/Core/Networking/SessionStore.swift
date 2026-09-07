@@ -7,22 +7,47 @@
 
 import SwiftUI
 
-@MainActor
-final class SessionStore: ObservableObject {
-	static let shared = SessionStore()
+#if canImport(Combine)
+	import Combine
+#endif
 
-	@Published
-	private(set) var needsSetup: Bool
+#if SKIP_BRIDGE
+	@MainActor
+	final class SessionStore {
+		static let shared = SessionStore()
 
-	private init() {
-		needsSetup = InstanceManager.selected == nil
+		private(set) var needsSetup: Bool
+
+		private init() {
+			needsSetup = InstanceManager.selected == nil
+		}
+
+		func setNeedsSetup(_ value: Bool) {
+			needsSetup = value
+		}
+
+		func refresh() {
+			needsSetup = InstanceManager.selected == nil
+		}
 	}
+#else
+	@MainActor
+	final class SessionStore: ObservableObject {
+		static let shared = SessionStore()
 
-	func setNeedsSetup(_ value: Bool) {
-		needsSetup = value
-	}
+		@Published
+		private(set) var needsSetup: Bool
 
-	func refresh() {
-		needsSetup = InstanceManager.selected == nil
+		private init() {
+			needsSetup = InstanceManager.selected == nil
+		}
+
+		func setNeedsSetup(_ value: Bool) {
+			needsSetup = value
+		}
+
+		func refresh() {
+			needsSetup = InstanceManager.selected == nil
+		}
 	}
-}
+#endif
