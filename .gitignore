@@ -2,6 +2,7 @@
 .env
 
 ## Apollo
+schema.graphqls
 apollo-ios-cli
 
 ## User settings

@@ -9,12 +9,35 @@ features.
 
 ## GraphQL
 
-To fetch the latest schema and generate the API code, run:
+To fetch the latest schema and regenerate the API code, run:
 
 ```bash
-./apollo-ios-cli fetch-schema
-./apollo-ios-cli generate
+make generate-apollo
 ```
+
+This downloads `apollo-ios-cli` if it is missing, refreshes `schema.graphqls`
+from the GitLab GraphQL endpoint, and regenerates `apollo-gitlab-api/Sources`.
+Run `make fetch-schema` if you only want to refresh the schema. Commit the
+resulting changes. Set `VERSION=x.y.z` when running
+`make install-apollo-cli` to pin a specific CLI release instead of latest.
+
+## Development
+
+Common tasks are defined in the `Makefile`. Run `make` to list them:
+
+| Target | Description |
+| ------------------ | ---------------------------------------------------- |
+| `make fmt` | Format Swift sources in place |
+| `make lint` | Lint Swift sources without modifying them |
+| `make check` | Format, then lint (pre-commit gate) |
+| `make generate-apollo` | Fetch the GitLab schema and regenerate the API |
+| `make fetch-schema` | Refetch `schema.graphqls` only |
+| `make install-apollo-cli` | Download `apollo-ios-cli` (`VERSION=x.y.z` to pin) |
+| `make check-generated` | Fail if the committed generated code is stale |
+| `make clean` | Remove built artifacts |
+
+`make check-generated` regenerates everything and fails if the committed
+schema or generated sources differ, which is useful as a CI gate.
 
 ## Tokei
 
