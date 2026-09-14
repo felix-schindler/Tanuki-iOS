@@ -1,6 +1,9 @@
 .DS_Store
 .env
 
+## Apollo
+apollo-ios-cli
+
 ## User settings
 xcuserdata/
 

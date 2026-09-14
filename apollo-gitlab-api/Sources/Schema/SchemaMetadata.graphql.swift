@@ -1,0 +1,166 @@
+// @generated
+// This file was automatically generated and should not be edited.
+
+import ApolloAPI
+
+nonisolated public protocol SelectionSet: ApolloAPI.SelectionSet & ApolloAPI.RootSelectionSet
+where Schema == GitLabAPI.SchemaMetadata {}
+
+nonisolated public protocol InlineFragment: ApolloAPI.SelectionSet & ApolloAPI.InlineFragment
+where Schema == GitLabAPI.SchemaMetadata {}
+
+nonisolated public protocol MutableSelectionSet: ApolloAPI.MutableRootSelectionSet
+where Schema == GitLabAPI.SchemaMetadata {}
+
+nonisolated public protocol MutableInlineFragment: ApolloAPI.MutableSelectionSet & ApolloAPI.InlineFragment
+where Schema == GitLabAPI.SchemaMetadata {}
+
+nonisolated public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
+  public static let configuration: any ApolloAPI.SchemaConfiguration.Type = SchemaConfiguration.self
+
+  private static let objectTypeMap: [String: ApolloAPI.Object] = [
+    "AccessLevel": GitLabAPI.Objects.AccessLevel,
+    "AddOnUser": GitLabAPI.Objects.AddOnUser,
+    "AlertManagementAlert": GitLabAPI.Objects.AlertManagementAlert,
+    "AutocompletedUser": GitLabAPI.Objects.AutocompletedUser,
+    "Blob": GitLabAPI.Objects.Blob,
+    "BlobConnection": GitLabAPI.Objects.BlobConnection,
+    "BoardEpic": GitLabAPI.Objects.BoardEpic,
+    "Commit": GitLabAPI.Objects.Commit,
+    "CommitConnection": GitLabAPI.Objects.CommitConnection,
+    "CountableVulnerability": GitLabAPI.Objects.CountableVulnerability,
+    "CurrentUser": GitLabAPI.Objects.CurrentUser,
+    "CustomEmoji": GitLabAPI.Objects.CustomEmoji,
+    "CustomEmojiConnection": GitLabAPI.Objects.CustomEmojiConnection,
+    "Design": GitLabAPI.Objects.Design,
+    "DesignAtVersion": GitLabAPI.Objects.DesignAtVersion,
+    "DiffStats": GitLabAPI.Objects.DiffStats,
+    "DiffStatsSummary": GitLabAPI.Objects.DiffStatsSummary,
+    "Discussion": GitLabAPI.Objects.Discussion,
+    "DuoWorkflow": GitLabAPI.Objects.DuoWorkflow,
+    "Epic": GitLabAPI.Objects.Epic,
+    "EpicConnection": GitLabAPI.Objects.EpicConnection,
+    "EpicIssue": GitLabAPI.Objects.EpicIssue,
+    "EpicIssueConnection": GitLabAPI.Objects.EpicIssueConnection,
+    "EpicPermissions": GitLabAPI.Objects.EpicPermissions,
+    "GpgSignature": GitLabAPI.Objects.GpgSignature,
+    "Group": GitLabAPI.Objects.Group,
+    "GroupConnection": GitLabAPI.Objects.GroupConnection,
+    "GroupMember": GitLabAPI.Objects.GroupMember,
+    "GroupMemberConnection": GitLabAPI.Objects.GroupMemberConnection,
+    "GroupMinimalAccess": GitLabAPI.Objects.GroupMinimalAccess,
+    "GroupPermissions": GitLabAPI.Objects.GroupPermissions,
+    "Issue": GitLabAPI.Objects.Issue,
+    "IssueConnection": GitLabAPI.Objects.IssueConnection,
+    "IssuePermissions": GitLabAPI.Objects.IssuePermissions,
+    "Iteration": GitLabAPI.Objects.Iteration,
+    "Key": GitLabAPI.Objects.Key,
+    "Label": GitLabAPI.Objects.Label,
+    "LabelConnection": GitLabAPI.Objects.LabelConnection,
+    "MemberInterfaceConnection": GitLabAPI.Objects.MemberInterfaceConnection,
+    "MergeRequest": GitLabAPI.Objects.MergeRequest,
+    "MergeRequestAssignee": GitLabAPI.Objects.MergeRequestAssignee,
+    "MergeRequestAssigneeConnection": GitLabAPI.Objects.MergeRequestAssigneeConnection,
+    "MergeRequestAuthor": GitLabAPI.Objects.MergeRequestAuthor,
+    "MergeRequestConnection": GitLabAPI.Objects.MergeRequestConnection,
+    "MergeRequestParticipant": GitLabAPI.Objects.MergeRequestParticipant,
+    "MergeRequestPermissions": GitLabAPI.Objects.MergeRequestPermissions,
+    "MergeRequestReviewer": GitLabAPI.Objects.MergeRequestReviewer,
+    "MergeRequestReviewerConnection": GitLabAPI.Objects.MergeRequestReviewerConnection,
+    "Milestone": GitLabAPI.Objects.Milestone,
+    "MilestoneConnection": GitLabAPI.Objects.MilestoneConnection,
+    "MilestoneStats": GitLabAPI.Objects.MilestoneStats,
+    "Mutation": GitLabAPI.Objects.Mutation,
+    "Namespace": GitLabAPI.Objects.Namespace,
+    "Note": GitLabAPI.Objects.Note,
+    "NoteConnection": GitLabAPI.Objects.NoteConnection,
+    "PendingGroupMember": GitLabAPI.Objects.PendingGroupMember,
+    "PendingProjectMember": GitLabAPI.Objects.PendingProjectMember,
+    "Pipeline": GitLabAPI.Objects.Pipeline,
+    "PipelineConnection": GitLabAPI.Objects.PipelineConnection,
+    "PipelineMinimalAccess": GitLabAPI.Objects.PipelineMinimalAccess,
+    "Project": GitLabAPI.Objects.Project,
+    "ProjectComplianceViolation": GitLabAPI.Objects.ProjectComplianceViolation,
+    "ProjectConnection": GitLabAPI.Objects.ProjectConnection,
+    "ProjectMember": GitLabAPI.Objects.ProjectMember,
+    "ProjectMemberConnection": GitLabAPI.Objects.ProjectMemberConnection,
+    "ProjectMinimalAccess": GitLabAPI.Objects.ProjectMinimalAccess,
+    "ProjectPermissions": GitLabAPI.Objects.ProjectPermissions,
+    "Query": GitLabAPI.Objects.Query,
+    "Release": GitLabAPI.Objects.Release,
+    "ReleaseAssetLink": GitLabAPI.Objects.ReleaseAssetLink,
+    "ReleaseAssetLinkConnection": GitLabAPI.Objects.ReleaseAssetLinkConnection,
+    "ReleaseAssets": GitLabAPI.Objects.ReleaseAssets,
+    "ReleaseConnection": GitLabAPI.Objects.ReleaseConnection,
+    "ReleaseSource": GitLabAPI.Objects.ReleaseSource,
+    "ReleaseSourceConnection": GitLabAPI.Objects.ReleaseSourceConnection,
+    "Repository": GitLabAPI.Objects.Repository,
+    "RepositoryBlob": GitLabAPI.Objects.RepositoryBlob,
+    "RepositoryBlobConnection": GitLabAPI.Objects.RepositoryBlobConnection,
+    "RepositoryLanguage": GitLabAPI.Objects.RepositoryLanguage,
+    "Snippet": GitLabAPI.Objects.Snippet,
+    "SnippetBlob": GitLabAPI.Objects.SnippetBlob,
+    "SnippetBlobConnection": GitLabAPI.Objects.SnippetBlobConnection,
+    "SnippetConnection": GitLabAPI.Objects.SnippetConnection,
+    "SnippetPermissions": GitLabAPI.Objects.SnippetPermissions,
+    "SshSignature": GitLabAPI.Objects.SshSignature,
+    "StarProjectPayload": GitLabAPI.Objects.StarProjectPayload,
+    "Submodule": GitLabAPI.Objects.Submodule,
+    "Timelog": GitLabAPI.Objects.Timelog,
+    "TimelogConnection": GitLabAPI.Objects.TimelogConnection,
+    "Todo": GitLabAPI.Objects.Todo,
+    "TodoConnection": GitLabAPI.Objects.TodoConnection,
+    "Tree": GitLabAPI.Objects.Tree,
+    "TreeEntry": GitLabAPI.Objects.TreeEntry,
+    "TreeEntryConnection": GitLabAPI.Objects.TreeEntryConnection,
+    "UpdateIssuePayload": GitLabAPI.Objects.UpdateIssuePayload,
+    "UserCore": GitLabAPI.Objects.UserCore,
+    "UserCoreConnection": GitLabAPI.Objects.UserCoreConnection,
+    "UserStatus": GitLabAPI.Objects.UserStatus,
+    "Vulnerability": GitLabAPI.Objects.Vulnerability,
+    "WikiPage": GitLabAPI.Objects.WikiPage,
+    "WorkItem": GitLabAPI.Objects.WorkItem,
+    "WorkItemWidgetAgentPlan": GitLabAPI.Objects.WorkItemWidgetAgentPlan,
+    "WorkItemWidgetAiSession": GitLabAPI.Objects.WorkItemWidgetAiSession,
+    "WorkItemWidgetAssignees": GitLabAPI.Objects.WorkItemWidgetAssignees,
+    "WorkItemWidgetAwardEmoji": GitLabAPI.Objects.WorkItemWidgetAwardEmoji,
+    "WorkItemWidgetColor": GitLabAPI.Objects.WorkItemWidgetColor,
+    "WorkItemWidgetCrmContacts": GitLabAPI.Objects.WorkItemWidgetCrmContacts,
+    "WorkItemWidgetCurrentUserTodos": GitLabAPI.Objects.WorkItemWidgetCurrentUserTodos,
+    "WorkItemWidgetCustomFields": GitLabAPI.Objects.WorkItemWidgetCustomFields,
+    "WorkItemWidgetDecisionLog": GitLabAPI.Objects.WorkItemWidgetDecisionLog,
+    "WorkItemWidgetDescription": GitLabAPI.Objects.WorkItemWidgetDescription,
+    "WorkItemWidgetDesigns": GitLabAPI.Objects.WorkItemWidgetDesigns,
+    "WorkItemWidgetDevelopment": GitLabAPI.Objects.WorkItemWidgetDevelopment,
+    "WorkItemWidgetEmailParticipants": GitLabAPI.Objects.WorkItemWidgetEmailParticipants,
+    "WorkItemWidgetErrorTracking": GitLabAPI.Objects.WorkItemWidgetErrorTracking,
+    "WorkItemWidgetHealthStatus": GitLabAPI.Objects.WorkItemWidgetHealthStatus,
+    "WorkItemWidgetHierarchy": GitLabAPI.Objects.WorkItemWidgetHierarchy,
+    "WorkItemWidgetIteration": GitLabAPI.Objects.WorkItemWidgetIteration,
+    "WorkItemWidgetLabels": GitLabAPI.Objects.WorkItemWidgetLabels,
+    "WorkItemWidgetLinkedItems": GitLabAPI.Objects.WorkItemWidgetLinkedItems,
+    "WorkItemWidgetLinkedResources": GitLabAPI.Objects.WorkItemWidgetLinkedResources,
+    "WorkItemWidgetMilestone": GitLabAPI.Objects.WorkItemWidgetMilestone,
+    "WorkItemWidgetNotes": GitLabAPI.Objects.WorkItemWidgetNotes,
+    "WorkItemWidgetNotifications": GitLabAPI.Objects.WorkItemWidgetNotifications,
+    "WorkItemWidgetParticipants": GitLabAPI.Objects.WorkItemWidgetParticipants,
+    "WorkItemWidgetProgress": GitLabAPI.Objects.WorkItemWidgetProgress,
+    "WorkItemWidgetRequirementLegacy": GitLabAPI.Objects.WorkItemWidgetRequirementLegacy,
+    "WorkItemWidgetStartAndDueDate": GitLabAPI.Objects.WorkItemWidgetStartAndDueDate,
+    "WorkItemWidgetStatus": GitLabAPI.Objects.WorkItemWidgetStatus,
+    "WorkItemWidgetTestReports": GitLabAPI.Objects.WorkItemWidgetTestReports,
+    "WorkItemWidgetTimeTracking": GitLabAPI.Objects.WorkItemWidgetTimeTracking,
+    "WorkItemWidgetVerificationStatus": GitLabAPI.Objects.WorkItemWidgetVerificationStatus,
+    "WorkItemWidgetVulnerabilities": GitLabAPI.Objects.WorkItemWidgetVulnerabilities,
+    "WorkItemWidgetWeight": GitLabAPI.Objects.WorkItemWidgetWeight,
+    "X509Signature": GitLabAPI.Objects.X509Signature
+  ]
+
+  @_spi(Execution) public static func objectType(forTypename typename: String) -> ApolloAPI.Object? {
+    objectTypeMap[typename]
+  }
+}
+
+nonisolated public enum Objects {}
+nonisolated public enum Interfaces {}
+nonisolated public enum Unions {}

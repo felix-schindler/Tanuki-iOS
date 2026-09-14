@@ -1,0 +1,24 @@
+{
+  "originHash" : "eaf9b7476d0a4e634247d188780125f71b589a0b0809430a48b16b980c60cf23",
+  "pins" : [
+    {
+      "identity" : "apollo-skip-fuse",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/felix-schindler/apollo-skip-fuse",
+      "state" : {
+        "revision" : "cf6a7eb88aa8a816ebf5b1120e0e7bf7d899437c",
+        "version" : "2.4.0"
+      }
+    },
+    {
+      "identity" : "swift-toolchain-sqlite",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-toolchain-sqlite.git",
+      "state" : {
+        "revision" : "d9b11cb79071d5ab992ff47dfd2e8d6e19418d97",
+        "version" : "1.0.13"
+      }
+    }
+  ],
+  "version" : 3
+}
