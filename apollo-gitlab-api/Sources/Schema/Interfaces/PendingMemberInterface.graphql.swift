@@ -3,13 +3,13 @@
 
 import ApolloAPI
 
-public extension Interfaces {
-  nonisolated static let PendingMemberInterface = ApolloAPI.Interface(
-    name: "PendingMemberInterface",
-    keyFields: nil,
-    implementingObjects: [
-      "PendingGroupMember",
-      "PendingProjectMember"
-    ]
-  )
+extension Interfaces {
+	public nonisolated static let PendingMemberInterface = ApolloAPI.Interface(
+		name: "PendingMemberInterface",
+		keyFields: nil,
+		implementingObjects: [
+			"PendingGroupMember",
+			"PendingProjectMember",
+		]
+	)
 }

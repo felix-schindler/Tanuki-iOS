@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// The connection type for ReleaseAssetLink.
-  nonisolated static let ReleaseAssetLinkConnection = ApolloAPI.Object(
-    typename: "ReleaseAssetLinkConnection",
-    implementedInterfaces: [],
-    keyFields: nil
-  )
+extension Objects {
+	/// The connection type for ReleaseAssetLink.
+	public nonisolated static let ReleaseAssetLinkConnection = ApolloAPI.Object(
+		typename: "ReleaseAssetLinkConnection",
+		implementedInterfaces: [],
+		keyFields: nil
+	)
 }

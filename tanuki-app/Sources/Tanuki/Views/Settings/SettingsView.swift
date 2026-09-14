@@ -5,8 +5,8 @@
 //  Created by Felix Schindler on 23.11.25.
 //
 
-import SwiftUI
 import SkipKit
+import SwiftUI
 
 struct SettingsView: View {
 	public var body: some View {
@@ -60,7 +60,7 @@ struct SettingsView: View {
 					AppStoreReview()
 				}
 			}
-			
+
 			Section {
 				NavigationLink("Bill of Material") {
 					SBOMView(bundle: .module)

@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// GitLab Duo Agent Platform session
-  nonisolated static let DuoWorkflow = ApolloAPI.Object(
-    typename: "DuoWorkflow",
-    implementedInterfaces: [Interfaces.Todoable.self],
-    keyFields: nil
-  )
+extension Objects {
+	/// GitLab Duo Agent Platform session
+	public nonisolated static let DuoWorkflow = ApolloAPI.Object(
+		typename: "DuoWorkflow",
+		implementedInterfaces: [Interfaces.Todoable.self],
+		keyFields: nil
+	)
 }

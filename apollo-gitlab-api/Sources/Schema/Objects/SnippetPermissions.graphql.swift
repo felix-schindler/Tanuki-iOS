@@ -3,10 +3,10 @@
 
 import ApolloAPI
 
-public extension Objects {
-  nonisolated static let SnippetPermissions = ApolloAPI.Object(
-    typename: "SnippetPermissions",
-    implementedInterfaces: [],
-    keyFields: nil
-  )
+extension Objects {
+	public nonisolated static let SnippetPermissions = ApolloAPI.Object(
+		typename: "SnippetPermissions",
+		implementedInterfaces: [],
+		keyFields: nil
+	)
 }

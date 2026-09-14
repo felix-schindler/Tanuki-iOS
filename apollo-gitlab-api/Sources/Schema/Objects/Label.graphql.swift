@@ -3,10 +3,10 @@
 
 import ApolloAPI
 
-public extension Objects {
-  nonisolated static let Label = ApolloAPI.Object(
-    typename: "Label",
-    implementedInterfaces: [Interfaces.LabelInterface.self],
-    keyFields: nil
-  )
+extension Objects {
+	public nonisolated static let Label = ApolloAPI.Object(
+		typename: "Label",
+		implementedInterfaces: [Interfaces.LabelInterface.self],
+		keyFields: nil
+	)
 }

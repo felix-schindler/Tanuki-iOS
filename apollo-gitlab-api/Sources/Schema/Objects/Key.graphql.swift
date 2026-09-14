@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// Represents an SSH key.
-  nonisolated static let Key = ApolloAPI.Object(
-    typename: "Key",
-    implementedInterfaces: [Interfaces.Todoable.self],
-    keyFields: nil
-  )
+extension Objects {
+	/// Represents an SSH key.
+	public nonisolated static let Key = ApolloAPI.Object(
+		typename: "Key",
+		implementedInterfaces: [Interfaces.Todoable.self],
+		keyFields: nil
+	)
 }

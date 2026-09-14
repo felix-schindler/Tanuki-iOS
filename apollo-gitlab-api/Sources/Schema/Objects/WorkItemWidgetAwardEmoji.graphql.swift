@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// Represents the emoji reactions widget
-  nonisolated static let WorkItemWidgetAwardEmoji = ApolloAPI.Object(
-    typename: "WorkItemWidgetAwardEmoji",
-    implementedInterfaces: [Interfaces.WorkItemWidget.self],
-    keyFields: nil
-  )
+extension Objects {
+	/// Represents the emoji reactions widget
+	public nonisolated static let WorkItemWidgetAwardEmoji = ApolloAPI.Object(
+		typename: "WorkItemWidgetAwardEmoji",
+		implementedInterfaces: [Interfaces.WorkItemWidget.self],
+		keyFields: nil
+	)
 }

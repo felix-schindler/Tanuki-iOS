@@ -3,10 +3,10 @@
 
 import ApolloAPI
 
-public extension Objects {
-  nonisolated static let ProjectMinimalAccess = ApolloAPI.Object(
-    typename: "ProjectMinimalAccess",
-    implementedInterfaces: [Interfaces.ProjectInterface.self],
-    keyFields: nil
-  )
+extension Objects {
+	public nonisolated static let ProjectMinimalAccess = ApolloAPI.Object(
+		typename: "ProjectMinimalAccess",
+		implementedInterfaces: [Interfaces.ProjectInterface.self],
+		keyFields: nil
+	)
 }

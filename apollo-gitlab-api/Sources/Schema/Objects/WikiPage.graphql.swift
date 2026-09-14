@@ -3,14 +3,14 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// A wiki page
-  nonisolated static let WikiPage = ApolloAPI.Object(
-    typename: "WikiPage",
-    implementedInterfaces: [
-      Interfaces.NoteableInterface.self,
-      Interfaces.Todoable.self
-    ],
-    keyFields: nil
-  )
+extension Objects {
+	/// A wiki page
+	public nonisolated static let WikiPage = ApolloAPI.Object(
+		typename: "WikiPage",
+		implementedInterfaces: [
+			Interfaces.NoteableInterface.self,
+			Interfaces.Todoable.self,
+		],
+		keyFields: nil
+	)
 }

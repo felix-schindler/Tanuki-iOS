@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// X.509 signature for a signed commit
-  nonisolated static let X509Signature = ApolloAPI.Object(
-    typename: "X509Signature",
-    implementedInterfaces: [Interfaces.CommitSignature.self],
-    keyFields: nil
-  )
+extension Objects {
+	/// X.509 signature for a signed commit
+	public nonisolated static let X509Signature = ApolloAPI.Object(
+		typename: "X509Signature",
+		implementedInterfaces: [Interfaces.CommitSignature.self],
+		keyFields: nil
+	)
 }

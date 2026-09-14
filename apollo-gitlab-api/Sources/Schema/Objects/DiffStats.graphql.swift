@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// Changes to a single file
-  nonisolated static let DiffStats = ApolloAPI.Object(
-    typename: "DiffStats",
-    implementedInterfaces: [],
-    keyFields: nil
-  )
+extension Objects {
+	/// Changes to a single file
+	public nonisolated static let DiffStats = ApolloAPI.Object(
+		typename: "DiffStats",
+		implementedInterfaces: [],
+		keyFields: nil
+	)
 }

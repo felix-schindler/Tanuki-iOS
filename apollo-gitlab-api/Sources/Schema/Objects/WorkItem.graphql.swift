@@ -3,10 +3,10 @@
 
 import ApolloAPI
 
-public extension Objects {
-  nonisolated static let WorkItem = ApolloAPI.Object(
-    typename: "WorkItem",
-    implementedInterfaces: [Interfaces.Todoable.self],
-    keyFields: nil
-  )
+extension Objects {
+	public nonisolated static let WorkItem = ApolloAPI.Object(
+		typename: "WorkItem",
+		implementedInterfaces: [Interfaces.Todoable.self],
+		keyFields: nil
+	)
 }

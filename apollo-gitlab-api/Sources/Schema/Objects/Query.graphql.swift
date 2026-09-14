@@ -3,10 +3,10 @@
 
 import ApolloAPI
 
-public extension Objects {
-  nonisolated static let Query = ApolloAPI.Object(
-    typename: "Query",
-    implementedInterfaces: [],
-    keyFields: nil
-  )
+extension Objects {
+	public nonisolated static let Query = ApolloAPI.Object(
+		typename: "Query",
+		implementedInterfaces: [],
+		keyFields: nil
+	)
 }

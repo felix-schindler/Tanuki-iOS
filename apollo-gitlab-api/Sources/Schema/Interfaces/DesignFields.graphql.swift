@@ -3,13 +3,13 @@
 
 import ApolloAPI
 
-public extension Interfaces {
-  nonisolated static let DesignFields = ApolloAPI.Interface(
-    name: "DesignFields",
-    keyFields: nil,
-    implementingObjects: [
-      "Design",
-      "DesignAtVersion"
-    ]
-  )
+extension Interfaces {
+	public nonisolated static let DesignFields = ApolloAPI.Interface(
+		name: "DesignFields",
+		keyFields: nil,
+		implementingObjects: [
+			"Design",
+			"DesignAtVersion",
+		]
+	)
 }

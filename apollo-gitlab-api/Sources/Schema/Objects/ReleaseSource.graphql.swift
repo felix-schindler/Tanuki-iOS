@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// Represents the source code attached to a release in a particular format
-  nonisolated static let ReleaseSource = ApolloAPI.Object(
-    typename: "ReleaseSource",
-    implementedInterfaces: [],
-    keyFields: nil
-  )
+extension Objects {
+	/// Represents the source code attached to a release in a particular format
+	public nonisolated static let ReleaseSource = ApolloAPI.Object(
+		typename: "ReleaseSource",
+		implementedInterfaces: [],
+		keyFields: nil
+	)
 }

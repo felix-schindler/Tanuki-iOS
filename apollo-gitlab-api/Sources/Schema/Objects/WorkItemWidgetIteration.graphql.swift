@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// Represents an iteration widget
-  nonisolated static let WorkItemWidgetIteration = ApolloAPI.Object(
-    typename: "WorkItemWidgetIteration",
-    implementedInterfaces: [Interfaces.WorkItemWidget.self],
-    keyFields: nil
-  )
+extension Objects {
+	/// Represents an iteration widget
+	public nonisolated static let WorkItemWidgetIteration = ApolloAPI.Object(
+		typename: "WorkItemWidgetIteration",
+		implementedInterfaces: [Interfaces.WorkItemWidget.self],
+		keyFields: nil
+	)
 }

@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// The connection type for Epic.
-  nonisolated static let EpicConnection = ApolloAPI.Object(
-    typename: "EpicConnection",
-    implementedInterfaces: [],
-    keyFields: nil
-  )
+extension Objects {
+	/// The connection type for Epic.
+	public nonisolated static let EpicConnection = ApolloAPI.Object(
+		typename: "EpicConnection",
+		implementedInterfaces: [],
+		keyFields: nil
+	)
 }

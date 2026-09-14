@@ -3,13 +3,13 @@
 
 import ApolloAPI
 
-public extension Objects {
-  nonisolated static let Note = ApolloAPI.Object(
-    typename: "Note",
-    implementedInterfaces: [
-      Interfaces.BaseNoteInterface.self,
-      Interfaces.ResolvableInterface.self
-    ],
-    keyFields: nil
-  )
+extension Objects {
+	public nonisolated static let Note = ApolloAPI.Object(
+		typename: "Note",
+		implementedInterfaces: [
+			Interfaces.BaseNoteInterface.self,
+			Interfaces.ResolvableInterface.self,
+		],
+		keyFields: nil
+	)
 }

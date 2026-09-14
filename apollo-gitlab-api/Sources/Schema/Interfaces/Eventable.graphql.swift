@@ -3,13 +3,13 @@
 
 import ApolloAPI
 
-public extension Interfaces {
-  nonisolated static let Eventable = ApolloAPI.Interface(
-    name: "Eventable",
-    keyFields: nil,
-    implementingObjects: [
-      "BoardEpic",
-      "Epic"
-    ]
-  )
+extension Interfaces {
+	public nonisolated static let Eventable = ApolloAPI.Interface(
+		name: "Eventable",
+		keyFields: nil,
+		implementingObjects: [
+			"BoardEpic",
+			"Epic",
+		]
+	)
 }

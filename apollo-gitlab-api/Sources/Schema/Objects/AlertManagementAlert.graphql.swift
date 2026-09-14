@@ -3,14 +3,14 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// Describes an alert from the project's Alert Management
-  nonisolated static let AlertManagementAlert = ApolloAPI.Object(
-    typename: "AlertManagementAlert",
-    implementedInterfaces: [
-      Interfaces.NoteableInterface.self,
-      Interfaces.Todoable.self
-    ],
-    keyFields: nil
-  )
+extension Objects {
+	/// Describes an alert from the project's Alert Management
+	public nonisolated static let AlertManagementAlert = ApolloAPI.Object(
+		typename: "AlertManagementAlert",
+		implementedInterfaces: [
+			Interfaces.NoteableInterface.self,
+			Interfaces.Todoable.self,
+		],
+		keyFields: nil
+	)
 }

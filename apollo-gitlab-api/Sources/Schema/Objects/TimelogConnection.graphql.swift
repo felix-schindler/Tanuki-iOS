@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// The connection type for Timelog.
-  nonisolated static let TimelogConnection = ApolloAPI.Object(
-    typename: "TimelogConnection",
-    implementedInterfaces: [],
-    keyFields: nil
-  )
+extension Objects {
+	/// The connection type for Timelog.
+	public nonisolated static let TimelogConnection = ApolloAPI.Object(
+		typename: "TimelogConnection",
+		implementedInterfaces: [],
+		keyFields: nil
+	)
 }

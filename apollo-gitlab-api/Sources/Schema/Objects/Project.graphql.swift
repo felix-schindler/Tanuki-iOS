@@ -3,13 +3,13 @@
 
 import ApolloAPI
 
-public extension Objects {
-  nonisolated static let Project = ApolloAPI.Object(
-    typename: "Project",
-    implementedInterfaces: [
-      Interfaces.ProjectInterface.self,
-      Interfaces.Todoable.self
-    ],
-    keyFields: nil
-  )
+extension Objects {
+	public nonisolated static let Project = ApolloAPI.Object(
+		typename: "Project",
+		implementedInterfaces: [
+			Interfaces.ProjectInterface.self,
+			Interfaces.Todoable.self,
+		],
+		keyFields: nil
+	)
 }

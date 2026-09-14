@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// A custom emoji uploaded by user
-  nonisolated static let CustomEmoji = ApolloAPI.Object(
-    typename: "CustomEmoji",
-    implementedInterfaces: [],
-    keyFields: nil
-  )
+extension Objects {
+	/// A custom emoji uploaded by user
+	public nonisolated static let CustomEmoji = ApolloAPI.Object(
+		typename: "CustomEmoji",
+		implementedInterfaces: [],
+		keyFields: nil
+	)
 }

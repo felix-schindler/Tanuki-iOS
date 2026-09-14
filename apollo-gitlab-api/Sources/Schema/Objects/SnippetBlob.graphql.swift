@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// Represents the snippet blob
-  nonisolated static let SnippetBlob = ApolloAPI.Object(
-    typename: "SnippetBlob",
-    implementedInterfaces: [],
-    keyFields: nil
-  )
+extension Objects {
+	/// Represents the snippet blob
+	public nonisolated static let SnippetBlob = ApolloAPI.Object(
+		typename: "SnippetBlob",
+		implementedInterfaces: [],
+		keyFields: nil
+	)
 }

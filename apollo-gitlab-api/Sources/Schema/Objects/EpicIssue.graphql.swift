@@ -3,15 +3,15 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// Relationship between an epic and an issue
-  nonisolated static let EpicIssue = ApolloAPI.Object(
-    typename: "EpicIssue",
-    implementedInterfaces: [
-      Interfaces.CurrentUserTodos.self,
-      Interfaces.NoteableInterface.self,
-      Interfaces.Todoable.self
-    ],
-    keyFields: nil
-  )
+extension Objects {
+	/// Relationship between an epic and an issue
+	public nonisolated static let EpicIssue = ApolloAPI.Object(
+		typename: "EpicIssue",
+		implementedInterfaces: [
+			Interfaces.CurrentUserTodos.self,
+			Interfaces.NoteableInterface.self,
+			Interfaces.Todoable.self,
+		],
+		keyFields: nil
+	)
 }

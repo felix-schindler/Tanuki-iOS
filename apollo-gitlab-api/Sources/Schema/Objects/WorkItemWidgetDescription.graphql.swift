@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// Represents a description widget
-  nonisolated static let WorkItemWidgetDescription = ApolloAPI.Object(
-    typename: "WorkItemWidgetDescription",
-    implementedInterfaces: [Interfaces.WorkItemWidget.self],
-    keyFields: nil
-  )
+extension Objects {
+	/// Represents a description widget
+	public nonisolated static let WorkItemWidgetDescription = ApolloAPI.Object(
+		typename: "WorkItemWidgetDescription",
+		implementedInterfaces: [Interfaces.WorkItemWidget.self],
+		keyFields: nil
+	)
 }

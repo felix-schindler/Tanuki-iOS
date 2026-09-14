@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// The connection type for GroupMember.
-  nonisolated static let GroupMemberConnection = ApolloAPI.Object(
-    typename: "GroupMemberConnection",
-    implementedInterfaces: [],
-    keyFields: nil
-  )
+extension Objects {
+	/// The connection type for GroupMember.
+	public nonisolated static let GroupMemberConnection = ApolloAPI.Object(
+		typename: "GroupMemberConnection",
+		implementedInterfaces: [],
+		keyFields: nil
+	)
 }

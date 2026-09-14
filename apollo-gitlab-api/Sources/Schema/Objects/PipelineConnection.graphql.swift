@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// The connection type for Pipeline.
-  nonisolated static let PipelineConnection = ApolloAPI.Object(
-    typename: "PipelineConnection",
-    implementedInterfaces: [],
-    keyFields: nil
-  )
+extension Objects {
+	/// The connection type for Pipeline.
+	public nonisolated static let PipelineConnection = ApolloAPI.Object(
+		typename: "PipelineConnection",
+		implementedInterfaces: [],
+		keyFields: nil
+	)
 }

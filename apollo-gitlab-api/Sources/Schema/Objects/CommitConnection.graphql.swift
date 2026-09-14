@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// The connection type for Commit.
-  nonisolated static let CommitConnection = ApolloAPI.Object(
-    typename: "CommitConnection",
-    implementedInterfaces: [],
-    keyFields: nil
-  )
+extension Objects {
+	/// The connection type for Commit.
+	public nonisolated static let CommitConnection = ApolloAPI.Object(
+		typename: "CommitConnection",
+		implementedInterfaces: [],
+		keyFields: nil
+	)
 }

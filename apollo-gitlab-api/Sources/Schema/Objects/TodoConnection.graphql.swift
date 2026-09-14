@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// The connection type for Todo.
-  nonisolated static let TodoConnection = ApolloAPI.Object(
-    typename: "TodoConnection",
-    implementedInterfaces: [],
-    keyFields: nil
-  )
+extension Objects {
+	/// The connection type for Todo.
+	public nonisolated static let TodoConnection = ApolloAPI.Object(
+		typename: "TodoConnection",
+		implementedInterfaces: [],
+		keyFields: nil
+	)
 }

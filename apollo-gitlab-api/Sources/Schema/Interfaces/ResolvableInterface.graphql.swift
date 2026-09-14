@@ -3,13 +3,13 @@
 
 import ApolloAPI
 
-public extension Interfaces {
-  nonisolated static let ResolvableInterface = ApolloAPI.Interface(
-    name: "ResolvableInterface",
-    keyFields: nil,
-    implementingObjects: [
-      "Discussion",
-      "Note"
-    ]
-  )
+extension Interfaces {
+	public nonisolated static let ResolvableInterface = ApolloAPI.Interface(
+		name: "ResolvableInterface",
+		keyFields: nil,
+		implementingObjects: [
+			"Discussion",
+			"Note",
+		]
+	)
 }

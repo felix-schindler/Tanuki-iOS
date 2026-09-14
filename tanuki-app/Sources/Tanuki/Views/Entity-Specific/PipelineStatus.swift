@@ -6,8 +6,8 @@
 //
 
 import GitLabAPI
-import SwiftUI
 import SkipKit
+import SwiftUI
 
 struct PipelineStatus: View {
 	private let state: GraphQLEnum<GitLabAPI.PipelineStatusEnum>

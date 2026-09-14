@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// Represents a Project Membership
-  nonisolated static let ProjectMember = ApolloAPI.Object(
-    typename: "ProjectMember",
-    implementedInterfaces: [Interfaces.MemberInterface.self],
-    keyFields: nil
-  )
+extension Objects {
+	/// Represents a Project Membership
+	public nonisolated static let ProjectMember = ApolloAPI.Object(
+		typename: "ProjectMember",
+		implementedInterfaces: [Interfaces.MemberInterface.self],
+		keyFields: nil
+	)
 }

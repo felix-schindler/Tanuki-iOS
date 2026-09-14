@@ -3,10 +3,10 @@
 
 import ApolloAPI
 
-public extension Interfaces {
-  nonisolated static let BaseNoteInterface = ApolloAPI.Interface(
-    name: "BaseNoteInterface",
-    keyFields: nil,
-    implementingObjects: ["Note"]
-  )
+extension Interfaces {
+	public nonisolated static let BaseNoteInterface = ApolloAPI.Interface(
+		name: "BaseNoteInterface",
+		keyFields: nil,
+		implementingObjects: ["Note"]
+	)
 }

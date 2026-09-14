@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// The connection type for MergeRequest.
-  nonisolated static let MergeRequestConnection = ApolloAPI.Object(
-    typename: "MergeRequestConnection",
-    implementedInterfaces: [],
-    keyFields: nil
-  )
+extension Objects {
+	/// The connection type for MergeRequest.
+	public nonisolated static let MergeRequestConnection = ApolloAPI.Object(
+		typename: "MergeRequestConnection",
+		implementedInterfaces: [],
+		keyFields: nil
+	)
 }

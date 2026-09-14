@@ -7,7 +7,7 @@ let package = Package(
 	defaultLocalization: "en",
 	platforms: [.iOS(.v16), .macOS(.v14)],
 	products: [
-		.library(name: "Tanuki", type: .dynamic, targets: ["Tanuki"]),
+		.library(name: "Tanuki", type: .dynamic, targets: ["Tanuki"])
 	],
 	dependencies: [
 		.package(url: "https://source.skip.tools/skip.git", from: "1.8.6"),
@@ -41,6 +41,6 @@ let package = Package(
 				//.product(name: "Toast", package: "toast-swift"),
 				//.product(name: "NVMColor", package: "nvm-color")
 			], resources: [.process("Resources")], plugins: [.plugin(name: "skipstone", package: "skip")]
-		),
+		)
 	]
 )

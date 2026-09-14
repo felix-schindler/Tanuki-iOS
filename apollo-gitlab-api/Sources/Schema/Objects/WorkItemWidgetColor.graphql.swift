@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// Represents a color widget
-  nonisolated static let WorkItemWidgetColor = ApolloAPI.Object(
-    typename: "WorkItemWidgetColor",
-    implementedInterfaces: [Interfaces.WorkItemWidget.self],
-    keyFields: nil
-  )
+extension Objects {
+	/// Represents a color widget
+	public nonisolated static let WorkItemWidgetColor = ApolloAPI.Object(
+		typename: "WorkItemWidgetColor",
+		implementedInterfaces: [Interfaces.WorkItemWidget.self],
+		keyFields: nil
+	)
 }

@@ -3,15 +3,15 @@
 
 import ApolloAPI
 
-public extension Interfaces {
-  /// Represents signing information for a commit
-  nonisolated static let CommitSignature = ApolloAPI.Interface(
-    name: "CommitSignature",
-    keyFields: nil,
-    implementingObjects: [
-      "GpgSignature",
-      "SshSignature",
-      "X509Signature"
-    ]
-  )
+extension Interfaces {
+	/// Represents signing information for a commit
+	public nonisolated static let CommitSignature = ApolloAPI.Interface(
+		name: "CommitSignature",
+		keyFields: nil,
+		implementingObjects: [
+			"GpgSignature",
+			"SshSignature",
+			"X509Signature",
+		]
+	)
 }

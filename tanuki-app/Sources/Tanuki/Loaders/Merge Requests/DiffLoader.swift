@@ -5,8 +5,8 @@
 //  Created by Felix Schindler on 07.04.24.
 //
 
-import SwiftUI
 import SkipKit
+import SwiftUI
 
 struct Diff: Codable {
 	/// Old path of the file.

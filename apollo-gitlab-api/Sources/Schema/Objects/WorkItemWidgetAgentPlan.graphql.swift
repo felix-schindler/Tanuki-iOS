@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-public extension Objects {
-  /// Represents an agent plan widget.
-  nonisolated static let WorkItemWidgetAgentPlan = ApolloAPI.Object(
-    typename: "WorkItemWidgetAgentPlan",
-    implementedInterfaces: [Interfaces.WorkItemWidget.self],
-    keyFields: nil
-  )
+extension Objects {
+	/// Represents an agent plan widget.
+	public nonisolated static let WorkItemWidgetAgentPlan = ApolloAPI.Object(
+		typename: "WorkItemWidgetAgentPlan",
+		implementedInterfaces: [Interfaces.WorkItemWidget.self],
+		keyFields: nil
+	)
 }
