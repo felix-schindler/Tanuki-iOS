@@ -1,13 +1,13 @@
 {
-  "originHash" : "a976a17207ebf14634099dfcd676e3555a954a071ac9bcdf41ba312747bb81ea",
+  "originHash" : "4f3c25def69789bc909f10484fd0458ca6c2f8575d24fe2fc189c8cfb8c61f26",
   "pins" : [
     {
-      "identity" : "apollo-ios",
+      "identity" : "apollo-skip-fuse",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apollographql/apollo-ios",
+      "location" : "https://github.com/felix-schindler/apollo-skip-fuse",
       "state" : {
-        "revision" : "a5f98b1e5b2e334beffa91c1d91d03ee6aa2d8ef",
-        "version" : "2.1.1"
+        "revision" : "cf6a7eb88aa8a816ebf5b1120e0e7bf7d899437c",
+        "version" : "2.4.0"
       }
     },
     {
@@ -89,6 +89,15 @@
       "state" : {
         "revision" : "fe76ac21aca639976833b5ea3e875dc072519ac4",
         "version" : "0.5.0"
+      }
+    },
+    {
+      "identity" : "swift-toolchain-sqlite",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-toolchain-sqlite.git",
+      "state" : {
+        "revision" : "d9b11cb79071d5ab992ff47dfd2e8d6e19418d97",
+        "version" : "1.0.13"
       }
     }
   ],
