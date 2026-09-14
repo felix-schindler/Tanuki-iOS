@@ -8,6 +8,12 @@
 //import MarkdownUI
 import SwiftUI
 
+#if SKIP_BRIDGE
+	private typealias PlatformNavigationView = NavigationStack
+#else
+	private typealias PlatformNavigationView = NavigationView
+#endif
+
 struct SetupView: View {
 	@Environment(\.openURL) var openURL
 
@@ -23,23 +29,25 @@ struct SetupView: View {
 	}
 
 	public var body: some View {
-		NavigationView {
+		PlatformNavigationView {
 			VStack {
 				Spacer()
 
 				HStack {
-					if let icons = Bundle.main.infoDictionary?["CFBundleIcons"] as? [String: Any],
-						let primaryIcon = icons["CFBundlePrimaryIcon"] as? [String: Any],
-						let iconFiles = primaryIcon["CFBundleIconFiles"] as? [String],
-						let lastIcon = iconFiles.last,
-						let iconImage = UIImage(named: lastIcon)
-					{
-						Image(uiImage: iconImage)
-							.resizable()
-							.scaledToFit()
-							.cornerRadius(15)
-							.frame(maxWidth: 70, maxHeight: 70)
-					}
+					#if canImport(UIKit)
+						if let icons = Bundle.main.infoDictionary?["CFBundleIcons"] as? [String: Any],
+							let primaryIcon = icons["CFBundlePrimaryIcon"] as? [String: Any],
+							let iconFiles = primaryIcon["CFBundleIconFiles"] as? [String],
+							let lastIcon = iconFiles.last,
+							let iconImage = UIImage(named: lastIcon)
+						{
+							Image(uiImage: iconImage)
+								.resizable()
+								.scaledToFit()
+								.cornerRadius(15)
+								.frame(maxWidth: 70, maxHeight: 70)
+						}
+					#endif
 					Text("Welcome to \n**Tanuki for GitLab**")
 				}
 
@@ -71,9 +79,15 @@ struct SetupView: View {
 					}
 				)
 				.tint(.accentColor)
-				.buttonBorderShape(.capsule)
-				.buttonStyle(.borderedProminent)
-				.controlSize(.large)
+				#if !SKIP_BRIDGE
+					.buttonBorderShape(.capsule)
+				#endif
+				#if !SKIP_BRIDGE
+					.buttonStyle(.borderedProminent)
+				#endif
+				#if !SKIP_BRIDGE
+					.controlSize(.large)
+				#endif
 
 				NavigationLink(
 					destination: ConfigView(showSetup: nil),
@@ -83,9 +97,13 @@ struct SetupView: View {
 					}
 				)
 				.tint(.accentColor)
-				.buttonBorderShape(.capsule)
+				#if !SKIP_BRIDGE
+					.buttonBorderShape(.capsule)
+				#endif
 				.buttonStyle(.bordered)
-				.controlSize(.large)
+				#if !SKIP_BRIDGE
+					.controlSize(.large)
+				#endif
 
 				Spacer()
 			}
@@ -162,8 +180,4 @@ struct SetupView: View {
 			}
 		}
 	}
-}
-
-#Preview {
-	SetupView()
 }

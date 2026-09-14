@@ -22,7 +22,7 @@ struct NewLabelView: View {
 
 	@State var title: String = ""
 	@State var description: String = ""
-	@State var color: Color = Color(.red)
+	@State var color: Color = Color.red
 	@State var prio: Int = -1
 
 	private func saveNewLabel() async {
@@ -71,7 +71,25 @@ struct NewLabelView: View {
 			}
 
 			Section {
-				ColorPicker("Background color", selection: $color)
+				#if SKIP_BRIDGE
+					HStack {
+						Text("Background color")
+						Spacer()
+						TextField(
+							"#FF0000",
+							text: Binding(
+								get: { color.hex },
+								set: { color = Color(hex: $0) }
+							)
+						)
+						.frame(width: 100)
+						RoundedRectangle(cornerRadius: 4)
+							.fill(color)
+							.frame(width: 24, height: 24)
+					}
+				#else
+					ColorPicker("Background color", selection: $color)
+				#endif
 				Stepper("Priority: \(prio < 0 ? "none" : String(prio))", value: $prio)
 			}
 		}.toolbar {
@@ -79,11 +97,5 @@ struct NewLabelView: View {
 				await saveNewLabel()
 			}.tint(.accentColor)
 		}.navigationBarTitle("New Label")
-	}
-}
-
-#Preview {
-	NavigationView {
-		NewLabelView(id: 33_025_310, groupId: 0)
 	}
 }

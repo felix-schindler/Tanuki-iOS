@@ -167,7 +167,9 @@ struct UserView: View {
 						Link(user.publicEmail!, destination: mailUrl)
 					} else {
 						Text(user.publicEmail!)
-							.textSelection(.enabled)
+							#if !SKIP_BRIDGE
+								.textSelection(.enabled)
+							#endif
 					}
 				}
 
@@ -177,7 +179,9 @@ struct UserView: View {
 						Link("LinkedIn / \(user.linkedin!)", destination: inUrl)
 					} else {
 						Text(inLink)
-							.textSelection(.enabled)
+							#if !SKIP_BRIDGE
+								.textSelection(.enabled)
+							#endif
 					}
 				}
 
@@ -187,7 +191,9 @@ struct UserView: View {
 						Link("𝕏 / \(user.twitter!)", destination: xUrl)
 					} else {
 						Text(xLink)
-							.textSelection(.enabled)
+							#if !SKIP_BRIDGE
+								.textSelection(.enabled)
+							#endif
 					}
 				}
 
@@ -197,17 +203,21 @@ struct UserView: View {
 						Link("Discord / \(user.discord!)", destination: discordUrl)
 					} else {
 						Text(discordLink)
-							.textSelection(.enabled)
+							#if !SKIP_BRIDGE
+								.textSelection(.enabled)
+							#endif
 					}
 				}
 			}
 		}
 
-		if #available(iOS 16.0, *) {
-			Section("Contributions") {
-				ContributionsLoader(username: user.username)
+		#if canImport(Charts)
+			if #available(iOS 16.0, *) {
+				Section("Contributions") {
+					ContributionsLoader(username: user.username)
+				}
 			}
-		}
+		#endif
 
 		Section {
 			NavigationLink(

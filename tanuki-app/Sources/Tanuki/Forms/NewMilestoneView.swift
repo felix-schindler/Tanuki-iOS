@@ -93,9 +93,3 @@ struct NewMilestoneView: View {
 		}.navigationTitle("New Milestone")
 	}
 }
-
-#Preview {
-	NavigationView {
-		NewMilestoneView(id: 33_025_310, groupId: 0)
-	}
-}

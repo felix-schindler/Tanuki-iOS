@@ -7,8 +7,8 @@
 
 //import MarkdownUI
 import GitLabAPI
-import SwiftUI
 import SkipKit
+import SwiftUI
 
 struct SmallCommitView: View {
 	private let projectId: Int?
@@ -70,7 +70,9 @@ struct SmallCommitView: View {
 							showVerified = true
 						}
 						.tint(.green)
-						.controlSize(.mini)
+						#if !SKIP_BRIDGE
+							.controlSize(.mini)
+						#endif
 					}
 				}
 

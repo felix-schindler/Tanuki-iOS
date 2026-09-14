@@ -12,7 +12,3 @@ struct ClipboardAccess: View {
 		NoContentView("There's nothing here yet, come back soon!", systemImage: "testtube.2")
 	}
 }
-
-#Preview {
-	ClipboardAccess()
-}

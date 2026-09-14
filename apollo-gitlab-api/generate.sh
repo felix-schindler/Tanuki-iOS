@@ -1,18 +1,30 @@
 #!/bin/bash
+# Regenerates the Swift library from the .graphql operations in config/.
+#
+# Uses the apollo-ios-cli bundled with the apollo-skip-fuse fork. Run `make` in
+# that checkout once to unpack the CLI if it is missing, or point APOLLO_IOS_CLI
+# at another copy.
+set -e
+cd "$(dirname "$0")"
 
-# Download latest apollo-ios-cli
-./download.sh
+APOLLO_IOS_CLI="${APOLLO_IOS_CLI:-$HOME/Code/apollo-skip-fuse/apollo-ios-cli}"
+if [ ! -x "$APOLLO_IOS_CLI" ]; then
+	echo "apollo-ios-cli not found at $APOLLO_IOS_CLI" >&2
+	echo "Run 'make' in the apollo-skip-fuse checkout, or set APOLLO_IOS_CLI." >&2
+	exit 1
+fi
 
-# Fetch schema
-./apollo-ios-cli fetch-schema
+# Optional: refresh config/schema.graphqls from gitlab.com first.
+if [ "${1:-}" = "--fetch-schema" ]; then
+	"$APOLLO_IOS_CLI" fetch-schema
+fi
 
-# Generate Swift (iOS) library
-./apollo-ios-cli generate
+"$APOLLO_IOS_CLI" generate
 
-# Generate Kotlin (Android) library
-cd ./android
-./gradlew generateApolloSources
-cd ..
+# The CLI rewrites the generated swiftPackage manifest to depend on upstream
+# apollographql/apollo-ios. Restore our committed fork dependency and re-resolve,
+# otherwise resolution mixes upstream and fork copies of the same targets.
+git checkout -- ./ios/Package.swift
+(cd ./ios && swift package resolve)
 
-# Remove apollo-ios-cli
-rm -rf ./apollo-ios-cli
+echo "Done. Generated sources are in ./ios, fork manifest restored."

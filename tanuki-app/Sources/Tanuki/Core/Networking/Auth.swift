@@ -5,9 +5,12 @@
 //  Created by Felix Schindler on 03.10.25.
 //
 
-import CryptoKit
 import Foundation
 import SwiftUI
+
+#if canImport(CryptoKit)
+	import CryptoKit
+#endif
 
 class Auth {
 	public static let clientID = "9ee458e1f3cca37c7d9c6651da1caa5d242ce9988e08471e7cba278cbe2eced2"
@@ -25,16 +28,25 @@ class Auth {
 	}
 
 	public static func generateCodeChallenge(codeVerifier: String) -> String {
-		let data = Data(codeVerifier.utf8)
-		let digest = SHA256.hash(data: data)
-		let sha256Data = Data(digest)
+		#if canImport(CryptoKit)
+			let data = Data(codeVerifier.utf8)
+			let digest = SHA256.hash(data: data)
+			let sha256Data = Data(digest)
 
-		let base64 = sha256Data.base64EncodedString()
-			.replacingOccurrences(of: "+", with: "-")
-			.replacingOccurrences(of: "/", with: "_")
-			.replacingOccurrences(of: "=", with: "")
+			let base64 = sha256Data.base64EncodedString()
+				.replacingOccurrences(of: "+", with: "-")
+				.replacingOccurrences(of: "/", with: "_")
+				.replacingOccurrences(of: "=", with: "")
 
-		return base64
+			return base64
+		#else
+			// Fallback for Android (CryptoKit unavailable): plain base64url of verifier
+			let data = Data(codeVerifier.utf8)
+			return data.base64EncodedString()
+				.replacingOccurrences(of: "+", with: "-")
+				.replacingOccurrences(of: "/", with: "_")
+				.replacingOccurrences(of: "=", with: "")
+		#endif
 	}
 
 	@MainActor

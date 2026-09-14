@@ -11,7 +11,7 @@ import SwiftUI
 struct UserGroupsLoader: View {
 	private let username: String
 
-	@State var groups: Result<[Group?], Error>? = nil
+	@State var groups: Result<[GitLabAPI.Group?], Error>? = nil
 
 	init(_ username: String) {
 		self.username = username
@@ -80,11 +80,5 @@ struct UserGroupsLoader: View {
 		}.refreshable {
 			await reloadGroups()
 		}.navigationTitle("Groups")
-	}
-}
-
-#Preview {
-	NavigationView {
-		UserGroupsLoader("felix-schindler")
 	}
 }

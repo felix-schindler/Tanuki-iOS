@@ -96,9 +96,3 @@ struct ProjectMergeLoader: View {
 		}.navigationTitle("Merge Requests")
 	}
 }
-
-#Preview {
-	NavigationView {
-		ProjectMergeLoader(fullPath: "felix-schindler/gitlab-ios")
-	}
-}

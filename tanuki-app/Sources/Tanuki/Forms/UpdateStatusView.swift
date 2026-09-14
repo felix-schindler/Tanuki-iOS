@@ -81,9 +81,3 @@ struct UpdateStatusView: View {
 		.modifier(ScrollDismissIfAvailable())
 	}
 }
-
-#Preview {
-	NavigationView {
-		UpdateStatusView()
-	}
-}

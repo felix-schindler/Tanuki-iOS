@@ -19,7 +19,7 @@ class GraphFilter {
 	}
 
 	/// Convert date to correct string format (ISO 8601) and wrap it in GraphQLNullable
-	public static func toFilterDate(_ something: Foundation.Date?) -> GraphQLNullable<GitLabAPI.Date> {
+	public static func toFilterDate(_ something: Foundation.Date?) -> GraphQLNullable<String> {
 		if let something {
 			.some(ISO8601DateFormatter().string(from: something))
 		} else {

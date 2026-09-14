@@ -162,9 +162,3 @@ struct UserMergeLoader: View {
 		}.navigationTitle(self.navTitle)
 	}
 }
-
-#Preview {
-	NavigationView {
-		UserMergeLoader(.authored)
-	}
-}

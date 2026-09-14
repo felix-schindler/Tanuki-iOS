@@ -53,9 +53,3 @@ struct ExploreView: View {
 		}.navigationTitle("Explore")
 	}
 }
-
-#Preview {
-	NavigationView {
-		ExploreView()
-	}
-}

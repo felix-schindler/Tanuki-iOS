@@ -6,7 +6,7 @@ public protocol Author {
 	var username: String { get }
 }
 
-public struct MyAuthor: Author {
+public struct MyAuthor: Author, Codable, Hashable, Sendable {
 	public let avatarUrl: String?
 	public let name: String
 	public let username: String

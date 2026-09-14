@@ -5,6 +5,7 @@
 //  Created by Felix Schindler on 28.02.24.
 //
 
+import GitLabAPI
 import SwiftUI
 
 struct SmallProjectView: View {

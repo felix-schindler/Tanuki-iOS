@@ -9,6 +9,12 @@
 import GitLabAPI
 import SwiftUI
 
+#if SKIP_BRIDGE
+	private typealias PlatformNavigationView = NavigationStack
+#else
+	private typealias PlatformNavigationView = NavigationView
+#endif
+
 struct ProjectIssuesLoader: View {
 	/// Path of project to load issues from
 	private let fullPath: String
@@ -137,7 +143,7 @@ struct ProjectIssuesLoader: View {
 				}
 			}
 		}.sheet(isPresented: $showFilters, onDismiss: { self.showFilters = false }) {
-			NavigationView {
+			PlatformNavigationView {
 				IssueFilterView(filter: $filter)
 					.toolbar {
 						AsyncButton("Apply filter", systemImage: "checkmark") {
@@ -153,11 +159,5 @@ struct ProjectIssuesLoader: View {
 			self.project = nil  // Show loading state
 			loadIssues()
 		}.navigationTitle("Issues")
-	}
-}
-
-#Preview {
-	NavigationView {
-		ProjectIssuesLoader(fullPath: "felix-schindler/gitlab-ios")
 	}
 }

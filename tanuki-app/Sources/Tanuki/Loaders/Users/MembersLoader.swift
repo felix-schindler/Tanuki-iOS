@@ -228,9 +228,3 @@ struct MembersLoader: View {
 		}.navigationTitle("Members")
 	}
 }
-
-#Preview {
-	NavigationView {
-		MembersLoader(fullPath: "gitlab-org/gitlab", id: 278_964, type: .project)
-	}
-}

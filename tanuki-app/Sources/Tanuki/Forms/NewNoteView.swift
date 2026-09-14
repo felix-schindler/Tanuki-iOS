@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+#if SKIP_BRIDGE
+	private typealias PlatformNavigationView = NavigationStack
+#else
+	private typealias PlatformNavigationView = NavigationView
+#endif
+
 private struct _Note: Codable {
 	let id: Int
 }
@@ -60,7 +66,7 @@ struct NewNoteView: View {
 		Button("New note", systemImage: "arrow.up") {
 			show = true
 		}.sheet(isPresented: $show) {
-			NavigationView {
+			PlatformNavigationView {
 				Form {
 					Section("Description (Markdown supported)") {
 						TextEditor(text: $content)
@@ -80,11 +86,5 @@ struct NewNoteView: View {
 				.modifier(ScrollDismissIfAvailable())
 			}
 		}
-	}
-}
-
-#Preview {
-	List {
-		NewNoteView(33_025_310, iid: "42", type: .issue)
 	}
 }

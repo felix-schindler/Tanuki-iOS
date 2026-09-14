@@ -131,7 +131,9 @@ struct CommitsLoader: View {
 												SignatureLoader(
 													projectId: self.projectId, commitId: commit.id)
 												Text(commit.shortId)
-													.textSelection(.enabled)
+													#if !SKIP_BRIDGE
+														.textSelection(.enabled)
+													#endif
 													.font(.system(.footnote, design: .monospaced))
 											}
 										}.swipeActions {
@@ -168,12 +170,8 @@ struct CommitsLoader: View {
 			await loadBranches()
 		}
 		.navigationTitle("Commits")
-		.headerProminence(.increased)
-	}
-}
-
-#Preview {
-	NavigationView {
-		CommitsLoader(33_025_310, refName: "main")
+		#if !SKIP_BRIDGE
+			.headerProminence(.increased)
+		#endif
 	}
 }

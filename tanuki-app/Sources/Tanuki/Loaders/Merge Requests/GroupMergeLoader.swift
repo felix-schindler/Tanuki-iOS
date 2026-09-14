@@ -89,9 +89,3 @@ struct GroupMergeLoader: View {
 		}.navigationTitle("Merge Requests")
 	}
 }
-
-#Preview {
-	NavigationView {
-		GroupMergeLoader(fullPath: "gitlab-org")
-	}
-}

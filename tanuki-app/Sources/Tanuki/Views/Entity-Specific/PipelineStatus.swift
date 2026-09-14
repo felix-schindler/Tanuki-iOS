@@ -6,8 +6,8 @@
 //
 
 import GitLabAPI
-import SwiftUI
 import SkipKit
+import SwiftUI
 
 struct PipelineStatus: View {
 	private let state: GraphQLEnum<GitLabAPI.PipelineStatusEnum>
@@ -57,7 +57,9 @@ struct PipelineStatus: View {
 				showInfo = true
 			}
 			.tint(self.color)
-			.controlSize(.mini)
+			#if !SKIP_BRIDGE
+				.controlSize(.mini)
+			#endif
 		}.sheet(isPresented: $showInfo) {
 			VStack(alignment: .leading) {
 				PopupHeader(
@@ -74,10 +76,3 @@ struct PipelineStatus: View {
 	}
 }
 
-#Preview {
-	VStack {
-		ForEach(GraphQLEnum<GitLabAPI.PipelineStatusEnum>.allCases, id: \.self) { state in
-			PipelineStatus(state)
-		}
-	}
-}

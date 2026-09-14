@@ -74,37 +74,3 @@ struct AvatarImage: View {
 		}.frame(width: width, height: height, alignment: .leading)
 	}
 }
-
-#Preview {
-	VStack {
-		AvatarImage(
-			URL(
-				string:
-					"https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png"
-			)!, size: .tiny)
-		AvatarImage(
-			URL(
-				string:
-					"https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png"
-			)!, size: .small)
-		AvatarImage(
-			URL(
-				string:
-					"https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png"
-			)!, size: .medium)
-		AvatarImage(
-			URL(
-				string:
-					"https://gitlab.com/uploads/-/system/project/avatar/33025310/Tanuki-200kb.png"
-			)!, size: .big)
-		AvatarImage(URL(string: "https://schindlerfelix.de/favicon.ico")!)
-		AvatarImage(
-			URL(string: "https://gitlab.com/uploads/-/system/project/avatar/39986149/flexbase.png")!
-		)
-		AvatarImage(
-			URL(
-				string:
-					"https://gitlab.com/uploads/-/system/user/avatar/9005085/avatar.png"
-			)!)
-	}
-}

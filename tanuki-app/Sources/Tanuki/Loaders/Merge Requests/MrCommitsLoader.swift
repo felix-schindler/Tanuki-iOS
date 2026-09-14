@@ -93,9 +93,3 @@ struct MrCommitsLoader: View {
 		}.navigationTitle("Commits")
 	}
 }
-
-#Preview {
-	NavigationView {
-		MrCommitsLoader(fullPath: "felix-schindler/gitlab-ios", iid: "1")
-	}
-}

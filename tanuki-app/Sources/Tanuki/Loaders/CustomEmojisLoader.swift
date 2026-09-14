@@ -95,9 +95,3 @@ struct CustomEmojisLoader: View {
 		}.navigationTitle("Custom Emojis")
 	}
 }
-
-#Preview {
-	NavigationView {
-		CustomEmojisLoader(fullPath: "gitlab-org")
-	}
-}
