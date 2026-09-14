@@ -57,7 +57,12 @@ extension String {
 
 	/// Writes the string to clipboard
 	func copyToClipboard() {
-		UIPasteboard.general.string = self
+		#if canImport(UIKit)
+			UIPasteboard.general.string = self
+		#elseif canImport(AppKit)
+			NSPasteboard.general.clearContents()
+			NSPasteboard.general.setString(self, forType: .string)
+		#endif
 	}
 
 	func replacing(_ target: String, with replacement: String) -> String {

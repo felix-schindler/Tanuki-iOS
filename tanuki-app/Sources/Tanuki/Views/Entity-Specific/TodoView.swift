@@ -72,7 +72,7 @@ struct TodoView: View {
 						SmallProjectView(project, avatarSize: .tiny)
 							.padding(.horizontal, 8)
 							.padding(.vertical, 3)
-							.background(Color(.systemGray5))
+							.background(Color.gray.opacity(0.15))
 							.foregroundStyle(.primary)
 							.cornerRadius(5)
 					}

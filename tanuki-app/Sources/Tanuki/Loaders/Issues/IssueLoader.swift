@@ -236,7 +236,7 @@ struct IssueLoader: View {
 								DisclosureGroup(
 									content: {
 										if assgineeCount > 0 {
-											ForEach(issue.assignees!.nodes!, id: \.username) { user in
+											ForEach(issue.assignees!.nodes!.compactMap { $0 }, id: \.username) { user in
 												NavigationLink(
 													destination: UserLoader(
 														username: user.username ?? ""

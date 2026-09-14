@@ -21,7 +21,7 @@ struct PillView: View {
 		self.label = label
 		self.icon = icon
 		self.fgColor = fgColor ?? .primary
-		self.bgColor = bgColor ?? Color(.systemGray5)
+		self.bgColor = bgColor ?? Color.gray.opacity(0.15)
 		self.cornerRadius = cornerRadius
 	}
 

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import GitLabAPI
 
 // MARK: - Authentication
 struct oAuthToken: Codable {

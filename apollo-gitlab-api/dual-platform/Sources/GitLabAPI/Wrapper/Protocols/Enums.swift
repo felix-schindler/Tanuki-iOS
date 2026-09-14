@@ -6,6 +6,53 @@ import Foundation
 
 	@_exported import ApolloAPI
 
+	// Aliases so app code can keep the `GitLabAPI.<Type>` prefix.
+	public typealias CurrentUserIssuesQuery = IOSGitLabAPI.CurrentUserIssuesQuery
+	public typealias CurrentUserQuery = IOSGitLabAPI.CurrentUserQuery
+	public typealias CurrentUserSnippetsQuery = IOSGitLabAPI.CurrentUserSnippetsQuery
+	public typealias CurrentUserStarredProjectsQuery = IOSGitLabAPI.CurrentUserStarredProjectsQuery
+	public typealias CurrentUserTodosQuery = IOSGitLabAPI.CurrentUserTodosQuery
+	public typealias EpicIssuesQuery = IOSGitLabAPI.EpicIssuesQuery
+	public typealias EpicQuery = IOSGitLabAPI.EpicQuery
+	public typealias GroupCustomEmojiQuery = IOSGitLabAPI.GroupCustomEmojiQuery
+	public typealias GroupEpicsQuery = IOSGitLabAPI.GroupEpicsQuery
+	public typealias GroupIssuesQuery = IOSGitLabAPI.GroupIssuesQuery
+	public typealias GroupLabelsQuery = IOSGitLabAPI.GroupLabelsQuery
+	public typealias GroupMembersQuery = IOSGitLabAPI.GroupMembersQuery
+	public typealias GroupMergeRequestsQuery = IOSGitLabAPI.GroupMergeRequestsQuery
+	public typealias GroupMilestonesQuery = IOSGitLabAPI.GroupMilestonesQuery
+	public typealias GroupQuery = IOSGitLabAPI.GroupQuery
+	public typealias GroupsQuery = IOSGitLabAPI.GroupsQuery
+	public typealias GroupTimelogsQuery = IOSGitLabAPI.GroupTimelogsQuery
+	public typealias IssueQuery = IOSGitLabAPI.IssueQuery
+	public typealias IssueStateMutation = IOSGitLabAPI.IssueStateMutation
+	public typealias MergeRequestCommitsQuery = IOSGitLabAPI.MergeRequestCommitsQuery
+	public typealias MergeRequestDiffsQuery = IOSGitLabAPI.MergeRequestDiffsQuery
+	public typealias MergeRequestQuery = IOSGitLabAPI.MergeRequestQuery
+	public typealias ProjectIssuesQuery = IOSGitLabAPI.ProjectIssuesQuery
+	public typealias ProjectLabelsQuery = IOSGitLabAPI.ProjectLabelsQuery
+	public typealias ProjectMembersQuery = IOSGitLabAPI.ProjectMembersQuery
+	public typealias ProjectMergeRequestsQuery = IOSGitLabAPI.ProjectMergeRequestsQuery
+	public typealias ProjectMilestonesQuery = IOSGitLabAPI.ProjectMilestonesQuery
+	public typealias ProjectPipelinesQuery = IOSGitLabAPI.ProjectPipelinesQuery
+	public typealias ProjectQuery = IOSGitLabAPI.ProjectQuery
+	public typealias ProjectReleasesQuery = IOSGitLabAPI.ProjectReleasesQuery
+	public typealias ProjectsQuery = IOSGitLabAPI.ProjectsQuery
+	public typealias RepoTreeQuery = IOSGitLabAPI.RepoTreeQuery
+	public typealias SnippetQuery = IOSGitLabAPI.SnippetQuery
+	public typealias StarProjectMutation = IOSGitLabAPI.StarProjectMutation
+	public typealias UserAssignedMergeRequestsQuery = IOSGitLabAPI.UserAssignedMergeRequestsQuery
+	public typealias UserAuthoredMergeRequestsQuery = IOSGitLabAPI.UserAuthoredMergeRequestsQuery
+	public typealias UserGroupsQuery = IOSGitLabAPI.UserGroupsQuery
+	public typealias UserIssuesQuery = IOSGitLabAPI.UserIssuesQuery
+	public typealias UserQuery = IOSGitLabAPI.UserQuery
+	public typealias UserReviewRequestedMergeRequestsQuery = IOSGitLabAPI.UserReviewRequestedMergeRequestsQuery
+	public typealias UserSnippetsQuery = IOSGitLabAPI.UserSnippetsQuery
+	public typealias UserStarredProjectsQuery = IOSGitLabAPI.UserStarredProjectsQuery
+	public typealias UserTimelogsQuery = IOSGitLabAPI.UserTimelogsQuery
+	public typealias UserTodosQuery = IOSGitLabAPI.UserTodosQuery
+	public typealias UsersQuery = IOSGitLabAPI.UsersQuery
+
 	// On iOS, the wrapper types are aliases to Apollo-generated types
 	// so existing code that uses switch/case and pattern matching still works.
 	public typealias AccessLevelEnum = IOSGitLabAPI.AccessLevelEnum
