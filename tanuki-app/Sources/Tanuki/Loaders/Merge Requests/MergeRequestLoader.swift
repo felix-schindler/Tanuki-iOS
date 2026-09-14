@@ -608,9 +608,15 @@ struct MergeRequestLoader: View {
 						)
 						.tint(MergeStateHelper.getColorByState(mr.state))
 						.labelStyle(.titleAndIcon)
-						.buttonBorderShape(.roundedRectangle)
-						.buttonStyle(.borderedProminent)
-						.controlSize(.mini)
+						#if !SKIP_BRIDGE
+							.buttonBorderShape(.roundedRectangle)
+						#endif
+						#if !SKIP_BRIDGE
+							.buttonStyle(.borderedProminent)
+						#endif
+						#if !SKIP_BRIDGE
+							.controlSize(.mini)
+						#endif
 
 						if let webUrl = mr.webUrl,
 							let url = URL(string: webUrl)

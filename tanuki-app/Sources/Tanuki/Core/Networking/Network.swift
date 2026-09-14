@@ -11,6 +11,10 @@ import ApolloSQLite
 import Foundation
 import GitLabAPI
 
+#if canImport(FoundationNetworking)
+	import FoundationNetworking
+#endif
+
 @MainActor
 final class Network {
 	static let shared = Network()

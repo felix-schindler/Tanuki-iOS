@@ -396,9 +396,15 @@ struct IssueLoader: View {
 					) {}
 					.tint(IssueStateHelper.getColorByState(issue.state))
 					.labelStyle(.titleAndIcon)
-					.buttonBorderShape(.roundedRectangle)
-					.buttonStyle(.borderedProminent)
-					.controlSize(.mini)
+					#if !SKIP_BRIDGE
+						.buttonBorderShape(.roundedRectangle)
+					#endif
+					#if !SKIP_BRIDGE
+						.buttonStyle(.borderedProminent)
+					#endif
+					#if !SKIP_BRIDGE
+						.controlSize(.mini)
+					#endif
 
 					if let url = URL(string: issue.webUrl) {
 						ShareButton(url)
