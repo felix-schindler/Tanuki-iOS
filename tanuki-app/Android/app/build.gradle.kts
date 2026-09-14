@@ -1,7 +1,6 @@
 import java.util.Properties
 
 plugins {
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.android.application)
     id("skip-build-plugin")
@@ -27,8 +26,8 @@ android {
         jniLibs {
             keepDebugSymbols.add("**/*.so")
             pickFirsts.add("**/*.so")
-            // this option will compress JNI .so files
-            useLegacyPackaging = true
+            // this option would compress JNI .so files and reduce overall size for Skip Fuse apps, but cost more at install time
+            //useLegacyPackaging = true
         }
     }
 
@@ -85,7 +84,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             isDebuggable = false // can be set to true for debugging release build, but needs to be false when uploading to store
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 }

@@ -8,7 +8,16 @@
 //
 
 import SwiftUI
-import WebKit
+
+#if canImport(WebKit)
+	import WebKit
+#endif
+
+#if SKIP_BRIDGE
+	private typealias PlatformNavigationView = NavigationStack
+#else
+	private typealias PlatformNavigationView = NavigationView
+#endif
 
 enum ContentTab: String, Hashable {
 	case home, todos, explore, profile
@@ -17,51 +26,55 @@ enum ContentTab: String, Hashable {
 struct ContentView: View {
 	@AppStorage("tab") var tab = ContentTab.home
 
-	private func restorePersistedCookies() {
-		guard
-			let data = UserDefaults.standard.data(forKey: "persistedCookies"),
-			let storedCookieDicts = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data)
-				as? [[HTTPCookiePropertyKey: Any]],
-			!storedCookieDicts.isEmpty
-		else {
-			return
-		}
+	#if canImport(WebKit)
+		private func restorePersistedCookies() {
+			guard
+				let data = UserDefaults.standard.data(forKey: "persistedCookies"),
+				let storedCookieDicts = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data)
+					as? [[HTTPCookiePropertyKey: Any]],
+				!storedCookieDicts.isEmpty
+			else {
+				return
+			}
 
-		let webStore = WKWebsiteDataStore.default().httpCookieStore
-		var restoredCookies: [HTTPCookie] = []
-		for dict in storedCookieDicts {
-			if let cookie = HTTPCookie(properties: dict) {
-				restoredCookies.append(cookie)
-				webStore.setCookie(cookie)
-				HTTPCookieStorage.shared.setCookie(cookie)  // sync to URLSession
+			let webStore = WKWebsiteDataStore.default().httpCookieStore
+			var restoredCookies: [HTTPCookie] = []
+			for dict in storedCookieDicts {
+				if let cookie = HTTPCookie(properties: dict) {
+					restoredCookies.append(cookie)
+					webStore.setCookie(cookie)
+					HTTPCookieStorage.shared.setCookie(cookie)  // sync to URLSession
+				}
 			}
 		}
-	}
+	#endif
 
 	public var body: some View {
 		TabView(selection: $tab) {
-			NavigationView {
+			PlatformNavigationView {
 				HomeView()
 			}.tabItem {
 				Label("Home", systemImage: "house")
 			}.tag(ContentTab.home)
-			NavigationView {
+			PlatformNavigationView {
 				CurrentUserTodosLoader()
 			}.tabItem {
 				Label("Todos", systemImage: "checkmark.square")
 			}.tag(ContentTab.todos)
-			NavigationView {
+			PlatformNavigationView {
 				ExploreView()
 			}.tabItem {
 				Label("Explore", systemImage: "sparkles")
 			}.tag(ContentTab.explore)
-			NavigationView {
+			PlatformNavigationView {
 				CurrentUserLoader()
 			}.tabItem {
 				Label("Profile", systemImage: "person")
 			}.tag(ContentTab.profile)
 		}.onAppear {
-			restorePersistedCookies()
+			#if canImport(WebKit)
+				restorePersistedCookies()
+			#endif
 		}
 	}
 }

@@ -23,24 +23,3 @@ struct PopupHeader: View {
 		}
 	}
 }
-
-#Preview {
-	NavigationView {
-	}.sheet(isPresented: .constant(true)) {
-		VStack {
-			PopupHeader(title: "Test", onClose: {})
-			Spacer()
-			Button(
-				action: {},
-				label: {
-					Label("Test", systemImage: "checkmark")
-						.frame(maxWidth: .infinity)
-				}
-			)
-			.tint(.green)
-			.buttonStyle(.bordered)
-			.controlSize(.large)
-		}
-		.padding()
-	}
-}

@@ -80,9 +80,3 @@ struct CurrentUserTodosLoader: View {
 		}.navigationTitle("Todos")
 	}
 }
-
-#Preview {
-	NavigationView {
-		CurrentUserTodosLoader()
-	}
-}

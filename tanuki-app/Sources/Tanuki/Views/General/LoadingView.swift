@@ -39,10 +39,3 @@ struct LoadingView: View {
 		}.frame(maxWidth: .infinity, minHeight: 100)
 	}
 }
-
-#Preview {
-	List {
-		LoadingView("Loading Project", systemImage: "app.gift.fill")
-		LoadingView("Loading MR", image: "git-mr.symbols")
-	}
-}

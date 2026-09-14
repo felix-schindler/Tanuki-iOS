@@ -87,9 +87,3 @@ struct CurrentUserLoader: View {
 		}
 	}
 }
-
-#Preview {
-	NavigationView {
-		CurrentUserLoader()
-	}
-}

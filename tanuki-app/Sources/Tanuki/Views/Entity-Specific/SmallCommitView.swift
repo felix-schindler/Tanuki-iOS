@@ -70,7 +70,9 @@ struct SmallCommitView: View {
 							showVerified = true
 						}
 						.tint(.green)
-						.controlSize(.mini)
+						#if !SKIP_BRIDGE
+							.controlSize(.mini)
+						#endif
 					}
 				}
 

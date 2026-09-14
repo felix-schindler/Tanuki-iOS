@@ -35,15 +35,17 @@ struct SettingsView: View {
 				NavigationLink(destination: CacheView()) {
 					Label("Cache", systemImage: "internaldrive")
 				}
-				NavigationLink(destination: CookiesView()) {
-					Label(
-						title: { Text("Cookies") },
-						icon: {
-							Image("cookie.symbols")
-								.resizable()
-								.scaledToFill()
-						})
-				}
+				#if canImport(WebKit)
+					NavigationLink(destination: CookiesView()) {
+						Label(
+							title: { Text("Cookies") },
+							icon: {
+								Image("cookie.symbols")
+									.resizable()
+									.scaledToFill()
+							})
+					}
+				#endif
 				NavigationLink(destination: InstancesView()) {
 					Label("Instances", systemImage: "server.rack")
 				}
@@ -56,9 +58,11 @@ struct SettingsView: View {
 				NavigationLink(destination: FeedbackView()) {
 					Label("Feedback", systemImage: "exclamationmark.bubble")
 				}
-				if #available(iOS 16.0, *) {
-					AppStoreReview()
-				}
+				#if canImport(StoreKit)
+					if #available(iOS 16.0, *) {
+						AppStoreReview()
+					}
+				#endif
 			}
 
 			Section {
@@ -67,11 +71,5 @@ struct SettingsView: View {
 				}
 			}
 		}
-	}
-}
-
-#Preview {
-	NavigationView {
-		SettingsView()
 	}
 }

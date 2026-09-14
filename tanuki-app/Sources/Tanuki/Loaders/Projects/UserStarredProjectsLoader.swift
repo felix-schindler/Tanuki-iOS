@@ -88,9 +88,3 @@ struct UserStarredProjectsLoader: View {
 		}.navigationTitle("Stars of \(username)")
 	}
 }
-
-#Preview {
-	NavigationView {
-		UserStarredProjectsLoader(username: "felix-schindler")
-	}
-}

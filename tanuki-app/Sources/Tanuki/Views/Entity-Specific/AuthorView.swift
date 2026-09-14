@@ -39,21 +39,14 @@ struct AuthorView: View {
 				)
 			}
 		)
-		.controlSize(.mini)
-		.buttonStyle(.borderedProminent)
-		.buttonBorderShape(.capsule)
-	}
-}
-
-#Preview {
-	NavigationView {
-		AuthorView(
-			MyAuthor(
-				avatarUrl: nil,
-				name: "Felix",
-				username: "felix-schindler"
-			),
-			showUsername: false
-		)
+		#if !SKIP_BRIDGE
+			.controlSize(.mini)
+		#endif
+		#if !SKIP_BRIDGE
+			.buttonStyle(.borderedProminent)
+		#endif
+		#if !SKIP_BRIDGE
+			.buttonBorderShape(.capsule)
+		#endif
 	}
 }

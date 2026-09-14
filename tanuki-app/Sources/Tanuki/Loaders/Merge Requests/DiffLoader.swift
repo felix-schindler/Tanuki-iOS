@@ -158,17 +158,16 @@ struct DiffLoader: View {
 		}.refreshable {
 			await loadDiffs()
 		}
-		.listStyle(.grouped)
-		.headerProminence(.increased)
+		#if SKIP_BRIDGE
+			.listStyle(.plain)
+		#elseif canImport(UIKit)
+			.listStyle(.grouped)
+		#else
+			.listStyle(.plain)
+		#endif
+		#if !SKIP_BRIDGE
+			.headerProminence(.increased)
+		#endif
 		.navigationTitle("Diffs")
-	}
-}
-
-#Preview {
-	NavigationView {
-		DiffLoader(
-			projectId: 33_025_310,
-			mrIid: 1
-		)
 	}
 }

@@ -189,13 +189,3 @@ struct TreeLoader: View {
 		}.navigationTitle(folderPath ?? "Files")
 	}
 }
-
-#Preview {
-	NavigationView {
-		TreeLoader(
-			projectId: 33_025_310,
-			fullPath: "felix-schindler/gitlab-ios",
-			refName: "main"
-		)
-	}
-}

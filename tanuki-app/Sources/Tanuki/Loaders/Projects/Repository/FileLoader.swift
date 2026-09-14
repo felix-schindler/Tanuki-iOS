@@ -5,9 +5,12 @@
 //  Created by Felix Schindler on 02.11.21.
 //
 
-import AVKit
 //import MarkdownUI
 import SwiftUI
+
+#if canImport(AVKit)
+	import AVKit
+#endif
 
 struct FileLoader: View {
 	private let projectId: Int
@@ -61,9 +64,11 @@ struct FileLoader: View {
 						Text("Can't preview this \(fileExtension) audio file")
 					}
 				} else if Formats.videoFormats.contains(fileExtension) {
-					if let url = URL(string: "") {
-						VideoPlayer(player: AVPlayer(url: url))
-					}
+					#if canImport(AVKit)
+						if let url = URL(string: "") {
+							VideoPlayer(player: AVPlayer(url: url))
+						}
+					#endif
 				} else if Formats.imageFormats.contains(fileExtension) {
 					if let url = URL(string: "") {
 						AsyncImage(url: url) { phase in
@@ -122,20 +127,5 @@ struct FileLoader: View {
 		}.refreshable {
 			await loadFile()
 		}.navigationTitle(filePath)
-	}
-}
-
-#Preview {
-	VStack {
-		FileLoader(
-			id: 33_025_310,
-			filePath: "GitLab/GitLabApp.swift",
-			refName: "main"
-		)
-		FileLoader(
-			id: 45_748_717,
-			filePath: "tanuki.svg",
-			refName: "main"
-		)
 	}
 }

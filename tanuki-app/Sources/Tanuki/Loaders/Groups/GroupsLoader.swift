@@ -8,6 +8,12 @@
 import GitLabAPI
 import SwiftUI
 
+#if SKIP_BRIDGE
+	private typealias PlatformNavigationView = NavigationStack
+#else
+	private typealias PlatformNavigationView = NavigationView
+#endif
+
 struct GroupsLoader: View {
 	@State var groups: Result<[GitLabAPI.Group?], Error>? = nil
 
@@ -112,7 +118,7 @@ struct GroupsLoader: View {
 				showFilters = true
 			}
 		}.sheet(isPresented: $showFilters, onDismiss: { showFilters = false }) {
-			NavigationView {
+			PlatformNavigationView {
 				Form {
 					Section {
 						VStack(alignment: .leading) {
@@ -181,11 +187,5 @@ struct GroupsLoader: View {
 			self.groups = nil  // Show loading state
 			loadGroups()
 		}.navigationTitle("Groups")
-	}
-}
-
-#Preview {
-	NavigationView {
-		GroupsLoader()
 	}
 }

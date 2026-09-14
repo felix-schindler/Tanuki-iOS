@@ -75,15 +75,3 @@ struct SmallGroupView: View {
 		)
 	}
 }
-
-#Preview {
-	NavigationView {
-		List {
-			SmallGroupView(group: _Group(fullPath: "gitlab-org", groupMembersCount: 1, projectsCount: 1))
-			SmallGroupView(group: _Group(fullPath: "gitlab-org", groupMembersCount: 1, projectsCount: 1))
-			SmallGroupView(
-				group: _Group(fullPath: "gitlab-org", groupMembersCount: 1, projectsCount: 1, _accessLevel: "No_Access")
-			)
-		}.navigationTitle("Groups")
-	}
-}

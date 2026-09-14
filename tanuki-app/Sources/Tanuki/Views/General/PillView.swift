@@ -21,7 +21,7 @@ struct PillView: View {
 		self.label = label
 		self.icon = icon
 		self.fgColor = fgColor ?? .primary
-		self.bgColor = bgColor ?? Color(.systemGray5)
+		self.bgColor = bgColor ?? Color.gray.opacity(0.15)
 		self.cornerRadius = cornerRadius
 	}
 
@@ -41,20 +41,5 @@ struct PillView: View {
 				.foregroundStyle(fgColor)
 				.cornerRadius(cornerRadius)
 		}
-	}
-}
-
-#Preview {
-	VStack {
-		PillView("Test")
-		PillView("Something")
-		PillView("Sth else")
-		PillView("abc", bgColor: .green, fgColor: .white)
-		PillView("abc", bgColor: .yellow, fgColor: .black)
-		PillView("abc", bgColor: .orange, fgColor: .black)
-		PillView("abc", bgColor: .blue, fgColor: .white)
-		PillView("abc", bgColor: .red, fgColor: .white)
-		PillView("Full width", bgColor: .red, fgColor: .white)
-			.frame(maxWidth: .infinity)
 	}
 }

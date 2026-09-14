@@ -93,9 +93,3 @@ struct EpicIssuesLoader: View {
 		}.navigationTitle("Issues")
 	}
 }
-
-#Preview {
-	NavigationView {
-		EpicIssuesLoader(fullPath: "gitlab-org", iid: "12691")
-	}
-}

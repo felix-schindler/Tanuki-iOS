@@ -44,28 +44,3 @@ struct NoContentView: View {
 		.frame(maxWidth: .infinity, minHeight: 100)
 	}
 }
-
-#Preview {
-	List {
-		NoContentView(
-			"All caught up!",
-			systemImage: "checkmark.square",
-			description: "There are no Todos"
-		)
-		NoContentView(
-			"All caught up!",
-			systemImage: "checkmark",
-			description: "There are no Todos"
-		)
-		NoContentView(
-			"All caught up!",
-			image: "git-mr-closed.symbols",
-			description: "There are no Todos"
-		)
-		NoContentView(
-			"All caught up!",
-			image: "git-mr.symbols",
-			description: "There are no Todos"
-		)
-	}
-}

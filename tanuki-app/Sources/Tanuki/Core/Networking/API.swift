@@ -141,6 +141,7 @@ class InstanceManager {
 	}
 }
 
+#if canImport(WatchConnectivity)
 @MainActor
 final class WatchSync: NSObject, WCSessionDelegate {
 	static let shared = WatchSync()
@@ -191,6 +192,16 @@ final class WatchSync: NSObject, WCSessionDelegate {
 		session.activate()
 	}
 }
+#else
+/// No-op fallback for platforms without WatchConnectivity (macOS, Android)
+@MainActor
+final class WatchSync {
+	static let shared = WatchSync()
+
+	func activate() {}
+	func pushInstances() {}
+}
+#endif
 
 @MainActor
 class API {

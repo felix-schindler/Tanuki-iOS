@@ -92,9 +92,3 @@ struct NewMemberView: View {
 		}.navigationTitle("New Member")
 	}
 }
-
-#Preview {
-	NavigationView {
-		NewMemberView(id: 1, groupId: 1)
-	}
-}

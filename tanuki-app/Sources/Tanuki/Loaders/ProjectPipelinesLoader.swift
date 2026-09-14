@@ -86,7 +86,9 @@ struct ProjectPipelinesLoader: View {
 														icon:
 															"text.line.first.and.arrowtriangle.forward"
 													)
+												#if !SKIP_BRIDGE
 													.textSelection(.enabled)
+												#endif
 													.font(.system(.footnote, design: .monospaced))
 												}
 											}.font(.footnote)
@@ -122,11 +124,5 @@ struct ProjectPipelinesLoader: View {
 		}.refreshable {
 			await reloadPipelines()
 		}.navigationTitle("Pipelines")
-	}
-}
-
-#Preview {
-	NavigationView {
-		ProjectPipelinesLoader(fullPath: "felix-schindler/gitlab-ios")
 	}
 }

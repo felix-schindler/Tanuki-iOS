@@ -218,8 +218,8 @@ struct EpicLoader: View {
 							}
 
 							if let ancestors = epic.ancestors?.nodes, ancestors.isNotEmpty {
-								DisclosureGroup(
-									content: {
+								#if SKIP_BRIDGE
+									Section(header: Label("Ancestors", systemImage: "figure.and.child.holdinghands")) {
 										ForEach(ancestors, id: \.?.iid) { ancestor in
 											if let ancestor {
 												NavigationLink(
@@ -232,19 +232,36 @@ struct EpicLoader: View {
 													})
 											}
 										}
-									},
-									label: {
-										Label(
-											"Ancestors",
-											systemImage: "figure.and.child.holdinghands"
-										)
 									}
-								)
+								#else
+									DisclosureGroup(
+										content: {
+											ForEach(ancestors, id: \.?.iid) { ancestor in
+												if let ancestor {
+													NavigationLink(
+														"&\(ancestor.iid)",
+														destination: {
+															EpicLoader(
+																fullPath: self.fullPath,
+																iid: ancestor.iid
+															)
+														})
+												}
+											}
+										},
+										label: {
+											Label(
+												"Ancestors",
+												systemImage: "figure.and.child.holdinghands"
+											)
+										}
+									)
+								#endif
 							}
 
 							if let children = epic.children?.nodes, children.isNotEmpty {
-								DisclosureGroup(
-									content: {
+								#if SKIP_BRIDGE
+									Section(header: Label("Children", systemImage: "figure.child")) {
 										ForEach(children, id: \.?.iid) { child in
 											if let child {
 												NavigationLink(
@@ -257,11 +274,28 @@ struct EpicLoader: View {
 													})
 											}
 										}
-									},
-									label: {
-										Label("Children", systemImage: "figure.child")
 									}
-								)
+								#else
+									DisclosureGroup(
+										content: {
+											ForEach(children, id: \.?.iid) { child in
+												if let child {
+													NavigationLink(
+														"&\(child.iid)",
+														destination: {
+															EpicLoader(
+																fullPath: self.fullPath,
+																iid: child.iid
+															)
+														})
+												}
+											}
+										},
+										label: {
+											Label("Children", systemImage: "figure.child")
+										}
+									)
+								#endif
 							}
 						}
 
@@ -336,11 +370,5 @@ struct EpicLoader: View {
 				ShareButton(url)
 			}
 		}
-	}
-}
-
-#Preview {
-	NavigationView {
-		EpicLoader(fullPath: "gitlab-org", iid: "12691")
 	}
 }

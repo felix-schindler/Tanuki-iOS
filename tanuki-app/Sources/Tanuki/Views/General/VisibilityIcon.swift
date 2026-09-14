@@ -35,14 +35,14 @@ struct VisibilityIcon: View {
 	public var body: some View {
 		if showText {
 			Label(self.visibility.capitalized, systemImage: systemName)
-				.labelStyle(.titleAndIcon)
+				#if !SKIP_BRIDGE
+					.labelStyle(.titleAndIcon)
+				#endif
 		} else {
 			Label(self.visibility.capitalized, systemImage: systemName)
-				.labelStyle(.iconOnly)
+				#if !SKIP_BRIDGE
+					.labelStyle(.iconOnly)
+				#endif
 		}
 	}
-}
-
-#Preview {
-	VisibilityIcon("public")
 }

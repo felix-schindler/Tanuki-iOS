@@ -116,7 +116,9 @@ struct IssueStateIcon: View {
 	public var body: some View {
 		Label(self.state, systemImage: self.icon)
 			.foregroundStyle(self.color)
-			.labelStyle(.iconOnly)
+			#if !SKIP_BRIDGE
+				.labelStyle(.iconOnly)
+			#endif
 	}
 }
 
@@ -177,7 +179,9 @@ struct MergeStateIcon: View {
 			}
 		)
 		.foregroundStyle(self.color)
-		.labelStyle(.iconOnly)
+		#if !SKIP_BRIDGE
+			.labelStyle(.iconOnly)
+		#endif
 	}
 }
 
@@ -301,36 +305,3 @@ struct DetailedMergeStatusView: View {
 	}
 }
 
-#Preview {
-	ScrollView {
-		VStack {
-			HStack {
-				VStack {
-					ForEach(GraphQLEnum<GitLabAPI.IssueState>.allCases, id: \.self) {
-						state in
-						IssueStateIcon(state)
-					}
-				}
-				VStack {
-					ForEach(
-						GraphQLEnum<GitLabAPI.MergeRequestState>.allCases, id: \.self
-					) { state in
-						MergeStateIcon(state)
-					}
-				}
-				VStack {
-					ForEach(GraphQLEnum<GitLabAPI.MergeStatus>.allCases, id: \.self) {
-						status in
-						MergeStatus(status)
-					}
-				}
-			}
-
-			VStack {
-				ForEach(GraphQLEnum<GitLabAPI.DetailedMergeStatus>.allCases, id: \.self) { status in
-					DetailedMergeStatusView(status)
-				}
-			}
-		}
-	}
-}
