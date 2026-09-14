@@ -8,5 +8,17 @@
 	<array>
 		<string>group.de.schindlerfelix.GitLab</string>
 	</array>
+	<!-- OAuth redirect target for Auth.redirectUri (tanuki://oauth/callback). -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>de.schindlerfelix.GitLab</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>tanuki</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

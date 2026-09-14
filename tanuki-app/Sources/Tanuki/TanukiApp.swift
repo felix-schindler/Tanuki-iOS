@@ -18,11 +18,13 @@ let logger: Logger = Logger(subsystem: "de.schindlerfelix.GitLab", category: "Ta
 ///
 /// The default implementation merely loads the `ContentView` for the app and logs a message.
 /* SKIP @bridge */public struct TanukiRootView: View {
-	#if SKIP_BRIDGE
-		@State var sessionStore = SessionStore.shared
-	#else
-		@StateObject var sessionStore = SessionStore.shared
-	#endif
+	/// Presentation state for the setup cover.
+	///
+	/// This has to be plain view state (and a *bridged* one, so the generated Kotlin side gets
+	/// a state box): the Android `SessionStore` cannot be an observable object, so reading a
+	/// property off it in the body would never trigger recomposition. `SessionStore` reports
+	/// changes through `onNeedsSetupChange`, wired up below.
+	@State var needsSetup = SessionStore.shared.needsSetup
 
 	/* SKIP @bridge */public init() {
 		logger.info("Skip app logs are viewable in the Xcode console for iOS; Android logs can be viewed in Studio or using adb logcat")
@@ -33,17 +35,13 @@ let logger: Logger = Logger(subsystem: "de.schindlerfelix.GitLab", category: "Ta
 
 	public var body: some View {
 		ContentView()
-			.fullScreenCover(
-				isPresented: Binding(
-					get: { sessionStore.needsSetup },
-					set: { newValue in
-						if !newValue {
-							sessionStore.setNeedsSetup(false)
-						}
-					}
-				)
-			) {
+			.fullScreenCover(isPresented: $needsSetup) {
 				SetupView()
+			}
+			.onAppear {
+				SessionStore.shared.onNeedsSetupChange = { value in
+					needsSetup = value
+				}
 			}
 	}
 }

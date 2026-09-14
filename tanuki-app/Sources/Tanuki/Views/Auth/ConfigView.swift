@@ -16,6 +16,10 @@ struct ConfigView: View {
 
 	@State var newToken = ""
 
+	/// Login feedback has to be visible inline: the toast layer is disabled and
+	/// `Notify` only reaches the platform log.
+	@State var errorMessage: String?
+
 	var body: some View {
 		VStack {
 			Spacer()
@@ -51,8 +55,16 @@ struct ConfigView: View {
 
 			Spacer()
 
+			if let errorMessage {
+				Text(errorMessage)
+					.foregroundColor(.red)
+					.font(.footnote)
+					.multilineTextAlignment(.center)
+			}
+
 			AsyncButton(
 				action: {
+					errorMessage = nil
 					do {
 						if newHost.contains("/") {
 							if let tempUrl = URL(string: newHost),
@@ -76,6 +88,7 @@ struct ConfigView: View {
 							dismiss: dismiss
 						)
 					} catch let error {
+						errorMessage = String(describing: error)
 						Notify.status(
 							.error,
 							"Failed to log in",

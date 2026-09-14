@@ -46,6 +46,21 @@ class Notify {
 			break
 		}
 
+		// The transient toast UI below is disabled (its dependency is commented out in
+		// Package.swift), so without this every action that fails is completely silent.
+		// Mirror it into the platform log: `adb logcat -s de.schindlerfelix.GitLab.Tanuki`.
+		let message = [title, subtitle].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " — ")
+		if !message.isEmpty {
+			switch feedbackType {
+			case .success:
+				logger.info("ok: \(message)")
+			case .warning:
+				logger.warning("warn: \(message)")
+			case .error:
+				logger.error("error: \(message)")
+			}
+		}
+
 		/*if let title {
 			var toast: Toast
 

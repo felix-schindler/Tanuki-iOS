@@ -203,11 +203,28 @@ final class WatchSync {
 }
 #endif
 
+/// Errors surfaced by the REST layer, kept descriptive so the UI can show something useful.
+enum APIError: LocalizedError {
+	case http(status: Int, message: String?)
+	case emptyResponse
+
+	var errorDescription: String? {
+		switch self {
+		case .http(let status, let message):
+			let detail =
+				message.flatMap { $0.isEmpty ? nil : $0 }
+				?? HTTPURLResponse.localizedString(forStatusCode: status)
+			return "HTTP \(status): \(detail)"
+		case .emptyResponse:
+			return "The server returned an empty response."
+		}
+	}
+}
+
 @MainActor
 class API {
 	/// API endpoint (including version)
 	public static var base: String = "api/v4"
-
 	private static let encoder = JSONEncoder()
 	private static let decoder = JSONDecoder()
 	private static let session: Session = .default
@@ -288,13 +305,43 @@ class API {
 		let encoding: ParameterEncoding =
 			(contentType == .json) ? JSONEncoding.default : URLEncoding.default
 
-		return await session.request(
+		let response = await session.request(
 			url,
 			method: method,
 			parameters: parameters,
 			encoding: encoding,
 			headers: headers
 		).serializingData().response
+
+		// Without this every failure (wrong host, wrong/expired token, missing scope, …)
+		// surfaced as "The data is missing." — the error body decoded as the expected type.
+		if let status = response.response?.statusCode, !(200..<300).contains(status) {
+			throw APIError.http(status: status, message: API.errorMessage(from: response.data))
+		}
+
+		return response
+	}
+
+	/// Best-effort extraction of a human-readable message from a GitLab error body.
+	private static func errorMessage(from data: Data?) -> String? {
+		guard let data,
+			let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+		else {
+			return nil
+		}
+
+		if let message = object["message"] as? String {
+			return message
+		}
+		if let error = object["error"] as? String {
+			return error
+		}
+		if let errors = object["errors"] as? [[String: Any]] {
+			let messages = errors.compactMap { $0["message"] as? String }
+			return messages.isEmpty ? nil : messages.joined(separator: "; ")
+		}
+
+		return nil
 	}
 
 	public static func req<T: Codable>(

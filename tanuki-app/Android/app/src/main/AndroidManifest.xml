@@ -27,6 +27,14 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- OAuth redirect target for Auth.redirectUri (tanuki://oauth/callback).
+                 Without this the browser has no app to hand the ?code= back to. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tanuki" android:host="oauth" android:pathPrefix="/callback" />
+            </intent-filter>
         </activity>
     </application>
 </manifest>
