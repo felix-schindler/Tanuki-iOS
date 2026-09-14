@@ -11,7 +11,7 @@ import SwiftUI
 struct UserGroupsLoader: View {
 	private let username: String
 
-	@State var groups: Result<[GitLabAPI.Group?], Error>? = nil
+	@State var groups: Result<[SmallGroup?], Error>? = nil
 
 	init(_ username: String) {
 		self.username = username

@@ -5,6 +5,7 @@
 //  Created by Felix Schindler on 27.02.24.
 //
 
+import ApolloAPI
 import GitLabAPI
 import SwiftUI
 

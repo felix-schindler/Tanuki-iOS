@@ -15,7 +15,7 @@ import SwiftUI
 #endif
 
 struct GroupsLoader: View {
-	@State var groups: Result<[GitLabAPI.Group?], Error>? = nil
+	@State var groups: Result<[SmallGroup?], Error>? = nil
 
 	@State var showFilters = false
 

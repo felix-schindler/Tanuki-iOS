@@ -8,7 +8,7 @@
 import GitLabAPI
 import SwiftUI
 
-private struct _Group: GitLabAPI.Group {
+private struct _Group: SmallGroup {
 	var avatarUrl: String?
 	var _name: String?
 	var fullPath: String
@@ -19,7 +19,7 @@ private struct _Group: GitLabAPI.Group {
 }
 
 struct SmallGroupView: View {
-	public let group: GitLabAPI.Group
+	public let group: SmallGroup
 
 	public var body: some View {
 		NavigationLink(
