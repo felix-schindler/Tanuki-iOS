@@ -15,7 +15,7 @@ let package = Package(
 		.library(name: "GitLabAPI", targets: ["GitLabAPI"])
 	],
 	dependencies: [
-		.package(url: "https://github.com/felix-schindler/apollo-skip-fuse", exact: "2.4.0")
+		.package(url: "https://github.com/felix-schindler/apollo-skip-fuse", exact: "2.4.1")
 	],
 	targets: [
 		.target(
