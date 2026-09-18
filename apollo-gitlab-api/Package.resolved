@@ -1,13 +1,13 @@
 {
-  "originHash" : "3d0b7b0680881279b38a63aa105435f39ff93bcc394631b63adeeb647233b75a",
+  "originHash" : "b9d3e402d0de181d3abd2fadefc8b12a82d60b549c61b29effee93d84bc1426a",
   "pins" : [
     {
       "identity" : "apollo-skip-fuse",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/felix-schindler/apollo-skip-fuse",
       "state" : {
-        "revision" : "225d89f71883f3892d1dd8197f7e5c58a28438a5",
-        "version" : "2.4.1"
+        "revision" : "b8621da3bcfbe93928084abb6f5cfec7ef005b19",
+        "version" : "2.4.2"
       }
     },
     {
