@@ -40,14 +40,29 @@ let logger: Logger = Logger(subsystem: "de.schindlerfelix.GitLab", category: "Ta
 					await Auth.handleCallback(url)
 				}
 			}
-			.fullScreenCover(isPresented: $needsSetup) {
+			.fullScreenCover(isPresented: setupCover) {
 				SetupView()
+					#if SKIP_BRIDGE
+						.backDismissDisabled()
+					#endif
 			}
 			.onAppear {
 				SessionStore.shared.onNeedsSetupChange = { value in
 					needsSetup = value
 				}
 			}
+	}
+
+	private var setupCover: Binding<Bool> {
+		Binding(
+			get: { needsSetup },
+			set: { isPresented in
+				if !isPresented && InstanceManager.selected == nil {
+					return
+				}
+				needsSetup = isPresented
+			}
+		)
 	}
 }
 
