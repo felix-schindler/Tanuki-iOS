@@ -53,10 +53,7 @@ class Auth {
 		try await resetSessionCaches()
 
 		do {
-			let user = try await API.get(
-				type: RestAPIUser.self,
-				endpoint: "user"
-			)
+			let user = try await currentUser(afterOAuthLogin: instance.isOAuth)
 
 			Notify.status(
 				.success,
@@ -75,6 +72,25 @@ class Auth {
 			SessionStore.shared.refresh()
 			throw error
 		}
+	}
+
+	@MainActor
+	private static func currentUser(afterOAuthLogin isOAuth: Bool) async throws -> RestAPIUser {
+		let attempts = isOAuth ? 4 : 1
+
+		for attempt in 1...attempts {
+			do {
+				return try await API.get(type: RestAPIUser.self, endpoint: "user")
+			} catch let error as APIError {
+				guard case .http(let status, _) = error, status == 401, attempt < attempts else {
+					throw error
+				}
+				logger.warning("oauth: token not visible to the API yet, retry \(attempt)/\(attempts - 1)")
+				try? await Task.sleep(for: .milliseconds(700))
+			}
+		}
+
+		throw APIError.http(status: 401, message: "Unauthorized")
 	}
 
 	@MainActor
