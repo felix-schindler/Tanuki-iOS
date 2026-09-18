@@ -8,6 +8,7 @@
 
 import Alamofire
 import Foundation
+import SkipFuse
 import SwiftUI
 
 #if canImport(WatchConnectivity)
@@ -296,6 +297,17 @@ class API {
 		if auth && token.isNotEmpty {
 			headers.add(.authorization(bearerToken: token))
 		}
+
+		#if SKIP_BRIDGE
+			// Alamofire seeds the session with `Accept-Encoding: br;q=1.0, gzip;q=0.8, deflate;q=0.6`
+			// (its `#available(iOS 11, …)` check is always true once Skip has transpiled it) and
+			// gitlab.com therefore answers with `Content-Encoding: br`. On Android the session is
+			// swift-corelibs-foundation's libcurl, which has no brotli decoder and fails every such
+			// response with "Unrecognized content encoding type. libcurl understands deflate, gzip
+			// content encodings." (NSURLErrorDomain -1). Request headers override the session's
+			// `httpAdditionalHeaders`, so ask for gzip there. Apple platforms keep the default.
+			headers.add(name: "Accept-Encoding", value: "gzip, deflate")
+		#endif
 
 		var parameters: Parameters?
 		if let body {
