@@ -15,29 +15,11 @@ struct NotifyBanner: View {
 		if let systemImage = message.systemImage, !systemImage.isEmpty {
 			return systemImage
 		}
-		switch message.status {
-		case .success:
-			return "checkmark.circle"
-		case .warning:
-			return "exclamationmark.triangle"
-		case .error:
-			return "xmark"
-		}
-	}
-
-	private var tint: Color {
-		switch message.status {
-		case .success:
-			return .green
-		case .warning:
-			return .orange
-		case .error:
-			return .red
-		}
+		return message.status.defaultIcon
 	}
 
 	private var border: Color {
-		tint.opacity(0.4)
+		message.status.color.opacity(0.4)
 	}
 
 	public var body: some View {
@@ -46,13 +28,15 @@ struct NotifyBanner: View {
 				.resizable()
 				.scaledToFit()
 				.frame(width: 20, height: 20)
-				.foregroundStyle(tint)
+				.foregroundStyle(message.status.color)
 				.padding(.top, 1)
 
 			VStack(alignment: .leading, spacing: 2) {
-				Text(message.title)
-					.font(.subheadline.bold())
-				if let subtitle = message.subtitle {
+				if let title = message.displayTitle {
+					Text(title)
+						.font(.subheadline.bold())
+				}
+				if let subtitle = message.subtitle, !subtitle.isEmpty {
 					Text(subtitle)
 						.font(.caption)
 						.foregroundStyle(.secondary)
@@ -88,7 +72,7 @@ struct NotifyBannerHost: ViewModifier {
 					.transition(.move(edge: .top).combined(with: .opacity))
 				}
 			}
-			.animation(.easeInOut(duration: 0.25), value: message)
+			.animation(.easeInOut(duration: 0.25), value: message?.id)
 			.onAppear {
 				observer = NotifyCenter.shared.addObserver { newMessage in
 					message = newMessage
