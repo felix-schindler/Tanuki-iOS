@@ -2,13 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
-	<key>com.apple.security.application-groups</key>
-	<array>
-		<string>group.de.schindlerfelix.GitLab</string>
-	</array>
-	<!-- OAuth redirect target for Auth.redirectUri (tanuki://oauth/callback). -->
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -19,6 +12,10 @@
 				<string>tanuki</string>
 			</array>
 		</dict>
+	</array>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.de.schindlerfelix.GitLab</string>
 	</array>
 </dict>
 </plist>
