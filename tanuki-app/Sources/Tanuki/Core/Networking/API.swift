@@ -313,6 +313,13 @@ class API {
 			headers: headers
 		).serializingData().response
 
+		// A transport failure (offline, DNS, TLS, …) leaves both the body and the HTTP response
+		// nil, so the status check below cannot see it. Rethrow the underlying error — otherwise
+		// every such failure is misreported as a decoding problem by `req`.
+		if let error = response.error {
+			throw error
+		}
+
 		// Without this every failure (wrong host, wrong/expired token, missing scope, …)
 		// surfaced as "The data is missing." — the error body decoded as the expected type.
 		if let status = response.response?.statusCode, !(200..<300).contains(status) {
@@ -368,7 +375,7 @@ class API {
 		)
 
 		guard let data = response.data else {
-			throw AFError.responseValidationFailed(reason: .dataFileNil)
+			throw APIError.emptyResponse
 		}
 
 		decoder.keyDecodingStrategy = .convertFromSnakeCase
