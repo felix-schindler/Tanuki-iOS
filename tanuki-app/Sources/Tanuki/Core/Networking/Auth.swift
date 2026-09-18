@@ -66,6 +66,9 @@ class Auth {
 		} catch {
 			InstanceManager.remove(instance)
 			if let previousInstance {
+				if !InstanceManager.instances.contains(previousInstance) {
+					InstanceManager.add(previousInstance)
+				}
 				InstanceManager.select(previousInstance)
 				try await resetSessionCaches()
 			}
