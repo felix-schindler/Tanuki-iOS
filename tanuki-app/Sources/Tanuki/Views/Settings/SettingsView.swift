@@ -40,9 +40,10 @@ struct SettingsView: View {
 						Label(
 							title: { Text("Cookies") },
 							icon: {
-								Image("cookie.symbols")
+								Image("cookie.symbols", bundle: .module)
 									.resizable()
 									.scaledToFill()
+									.frame(width: 20, height: 20)
 							})
 					}
 				#endif

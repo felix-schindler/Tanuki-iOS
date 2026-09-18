@@ -146,15 +146,15 @@ struct MergeStateHelper {
 	) -> Image {
 		switch state {
 		case .opened:
-			return Image("git-mr.symbols")
+			return Image("git-mr.symbols", bundle: .module)
 		case .merged:
-			return Image("git-mr-merged.symbols")
+			return Image("git-mr-merged.symbols", bundle: .module)
 		case .closed:
-			return Image("git-mr-closed.symbols")
+			return Image("git-mr-closed.symbols", bundle: .module)
 		case .locked:
 			return Image(systemName: "lock")
 		default:
-			return Image("git-mr.symbols")
+			return Image("git-mr.symbols", bundle: .module)
 		}
 	}
 }

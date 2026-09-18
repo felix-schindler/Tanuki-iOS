@@ -141,9 +141,10 @@ struct ProjectLoader: View {
 											}
 										},
 										icon: {
-											Image("git-mr.symbols")
+											Image("git-mr.symbols", bundle: .module)
 												.resizable()
 												.scaledToFit()
+												.frame(width: 20, height: 20)
 												.foregroundStyle(.blue)
 										}
 									)

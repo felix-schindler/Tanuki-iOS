@@ -78,7 +78,17 @@ struct HomeView: View {
 					})
 
 				#if SKIP_BRIDGE
-					Section(header: Label(title: { Text("Merge Requests") }, icon: { Image("git-mr.symbols").resizable().scaledToFit().foregroundStyle(.blue) })) {
+					Section(
+						header: Label(
+							title: { Text("Merge Requests") },
+							icon: {
+								Image("git-mr.symbols", bundle: .module)
+									.resizable()
+									.scaledToFit()
+									.frame(width: 20, height: 20)
+									.foregroundStyle(.blue)
+							})
+					) {
 						NavigationLink(
 							"Assigned", destination: UserMergeLoader(.assgined))
 						NavigationLink(
@@ -104,9 +114,10 @@ struct HomeView: View {
 									Text("Merge Requests")
 								},
 								icon: {
-									Image("git-mr.symbols")
+									Image("git-mr.symbols", bundle: .module)
 										.resizable()
 										.scaledToFit()
+										.frame(width: 20, height: 20)
 										.foregroundStyle(.blue)
 								})
 						})

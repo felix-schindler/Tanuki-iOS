@@ -524,9 +524,10 @@ struct MergeRequestLoader: View {
 														Text("Close MR")
 													},
 													icon: {
-														Image("git-mr-closed.symbols")
+														Image("git-mr-closed.symbols", bundle: .module)
 															.resizable()
 															.scaledToFit()
+															.frame(width: 20, height: 20)
 													})
 											}
 										).tint(.blue)
@@ -541,9 +542,10 @@ struct MergeRequestLoader: View {
 														Text("Reopen MR")
 													},
 													icon: {
-														Image("git-mr.symbols")
+														Image("git-mr.symbols", bundle: .module)
 															.resizable()
 															.scaledToFit()
+															.frame(width: 20, height: 20)
 													})
 											}
 										).tint(.green)
@@ -603,6 +605,7 @@ struct MergeRequestLoader: View {
 										MergeStateHelper.getIconByState(mr.state)
 											.resizable()
 											.scaledToFit()
+											.frame(width: 20, height: 20)
 									})
 							}
 						)

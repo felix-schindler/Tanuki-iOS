@@ -20,7 +20,7 @@ struct LoadingView: View {
 
 	init(_ message: String, image: String, color: Color = .secondary) {
 		self.msg = message
-		self.icon = Image(image)
+		self.icon = Image(image, bundle: .module)
 		self.color = color
 	}
 

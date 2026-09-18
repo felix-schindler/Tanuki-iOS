@@ -19,7 +19,7 @@ APOLLO_CONFIG  := ./apollo-codegen-config.json
 APOLLO_CLI     := ./apollo-ios-cli
 APOLLO_INSTALL := ./download-apollo-cli.sh
 
-.PHONY: help fmt lint check generate-apollo fetch-schema install-apollo-cli \
+.PHONY: help fmt lint check icons generate-apollo fetch-schema install-apollo-cli \
         check-generated clean
 
 # --- Development -------------------------------------------------------------
@@ -40,6 +40,11 @@ lint: ## Lint Swift sources without modifying them
 
 check: fmt lint ## Format, then lint (pre-commit gate)
 	@echo "all checks passed"
+
+# --- Assets ------------------------------------------------------------------
+
+icons: ## Regenerate the bundled Android symbol assets (network)
+	$(SWIFT) scripts/gen-symbolsets.swift
 
 # --- Apollo GraphQL ----------------------------------------------------------
 

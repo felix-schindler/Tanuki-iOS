@@ -20,7 +20,7 @@ struct NoContentView: View {
 
 	init(_ message: String, image: String, description: String? = nil) {
 		self.msg = message
-		self.image = Image(image)
+		self.image = Image(image, bundle: .module)
 		self.description = description
 	}
 
