@@ -317,6 +317,8 @@ class API {
 		let encoding: ParameterEncoding =
 			(contentType == .json) ? JSONEncoding.default : URLEncoding.default
 
+		logger.debug("→ \(method.rawValue) \(url) [\(API.redacted(headers))]")
+
 		let response = await session.request(
 			url,
 			method: method,
@@ -329,16 +331,32 @@ class API {
 		// nil, so the status check below cannot see it. Rethrow the underlying error — otherwise
 		// every such failure is misreported as a decoding problem by `req`.
 		if let error = response.error {
+			logger.error("✗ \(method.rawValue) \(url) — \(error.localizedDescription)")
 			throw error
 		}
 
 		// Without this every failure (wrong host, wrong/expired token, missing scope, …)
 		// surfaced as "The data is missing." — the error body decoded as the expected type.
 		if let status = response.response?.statusCode, !(200..<300).contains(status) {
-			throw APIError.http(status: status, message: API.errorMessage(from: response.data))
+			let message = API.errorMessage(from: response.data)
+			logger.error("✗ \(status) \(method.rawValue) \(url) — \(message ?? "no error message")")
+			throw APIError.http(status: status, message: message)
+		}
+
+		if let status = response.response?.statusCode {
+			logger.info("← \(status) \(method.rawValue) \(url) (\(response.data?.count ?? 0) bytes)")
 		}
 
 		return response
+	}
+
+	/// Renders request headers for the log with the credential removed.
+	private static func redacted(_ headers: HTTPHeaders) -> String {
+		headers.map { header in
+			header.name.lowercased() == "authorization"
+				? "\(header.name): <redacted>"
+				: "\(header.name): \(header.value)"
+		}.joined(separator: ", ")
 	}
 
 	/// Best-effort extraction of a human-readable message from a GitLab error body.
@@ -387,6 +405,7 @@ class API {
 		)
 
 		guard let data = response.data else {
+			logger.error("✗ \(endpoint): empty response body")
 			throw APIError.emptyResponse
 		}
 
@@ -407,7 +426,12 @@ class API {
 			throw DateError.invalidDate
 		})
 
-		return try decoder.decode(T.self, from: data)
+		do {
+			return try decoder.decode(T.self, from: data)
+		} catch let error {
+			logger.error("✗ \(endpoint): decoding \(String(describing: T.self)) failed — \(error.localizedDescription)")
+			throw error
+		}
 	}
 
 	public static func get<T: Codable>(
