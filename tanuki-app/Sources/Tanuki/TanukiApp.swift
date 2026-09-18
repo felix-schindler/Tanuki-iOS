@@ -35,6 +35,7 @@ let logger: Logger = Logger(subsystem: "de.schindlerfelix.GitLab", category: "Ta
 
 	public var body: some View {
 		ContentView()
+			.notifyBanner()
 			.onOpenURL { url in
 				Task {
 					await Auth.handleCallback(url)
@@ -42,6 +43,7 @@ let logger: Logger = Logger(subsystem: "de.schindlerfelix.GitLab", category: "Ta
 			}
 			.fullScreenCover(isPresented: setupCover) {
 				SetupView()
+					.notifyBanner()
 					#if SKIP_BRIDGE
 						.backDismissDisabled()
 					#endif

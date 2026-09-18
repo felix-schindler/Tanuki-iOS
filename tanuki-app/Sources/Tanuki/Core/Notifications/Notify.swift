@@ -5,8 +5,8 @@
 //  Created by Felix Schindler on 22.04.24.
 //
 
-//import Toast
 import SkipKit
+import SwiftUI
 
 enum NotifyStatus: Int {
 	case success = 0
@@ -16,15 +16,67 @@ enum NotifyStatus: Int {
 		error = 2
 }
 
-struct Toast {
+struct NotifyMessage: Equatable {
+	let id: UUID
+	let status: NotifyStatus
+	let title: String
+	let subtitle: String?
+	let systemImage: String?
+}
+
+@MainActor
+final class NotifyCenter {
+	static let shared = NotifyCenter()
+
+	private static let duration: Duration = .seconds(4)
+
+	private(set) var message: NotifyMessage?
+
+	private var observers: [String: (NotifyMessage?) -> Void] = [:]
+	private var dismissTask: Task<Void, Never>?
+
 	private init() {
 	}
 
-	static func text(_ title: String?, subtitle: String?) -> Toast {
-		Toast()
+	func addObserver(_ handler: @escaping (NotifyMessage?) -> Void) -> String {
+		let token = UUID().uuidString
+		observers[token] = handler
+		handler(message)
+		return token
 	}
 
-	func show() {
+	func removeObserver(_ token: String) {
+		observers.removeValue(forKey: token)
+	}
+
+	func show(_ message: NotifyMessage) {
+		self.message = message
+		broadcast()
+
+		dismissTask?.cancel()
+		dismissTask = Task { [weak self] in
+			try? await Task.sleep(for: NotifyCenter.duration)
+			guard !Task.isCancelled else {
+				return
+			}
+			self?.dismiss(message.id)
+		}
+	}
+
+	func dismiss(_ id: UUID? = nil) {
+		if let id, message?.id != id {
+			return
+		}
+		dismissTask?.cancel()
+		dismissTask = nil
+		message = nil
+		broadcast()
+	}
+
+	private func broadcast() {
+		for observer in observers.values {
+			observer(message)
+		}
 	}
 }
 
@@ -46,8 +98,6 @@ class Notify {
 			break
 		}
 
-		// The transient toast UI below is disabled (its dependency is commented out in
-		// Package.swift), so without this every action that fails is completely silent.
 		// Mirror it into the platform log: `adb logcat -s de.schindlerfelix.GitLab.Tanuki`.
 		let message = [title, subtitle].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " — ")
 		if !message.isEmpty {
@@ -61,19 +111,24 @@ class Notify {
 			}
 		}
 
-		/*if let title {
-			var toast: Toast
+		let resolvedTitle: String?
+		if let title, !title.isEmpty {
+			resolvedTitle = title
+		} else if feedbackType == .error {
+			resolvedTitle = "Something went wrong"
+		} else {
+			resolvedTitle = nil
+		}
 
-			if let systemImage, let image = UIImage(systemName: systemImage) {
-				toast = Toast.default(
-					image: image,
-					title: title,
-					subtitle: subtitle
-				)
-			} else {
-				toast = Toast.text(title, subtitle: subtitle)
-			}
-			toast.show()
-		}*/
+		if let resolvedTitle {
+			NotifyCenter.shared.show(
+				NotifyMessage(
+					id: UUID(),
+					status: feedbackType,
+					title: resolvedTitle,
+					subtitle: subtitle.flatMap { $0.isEmpty ? nil : $0 },
+					systemImage: systemImage
+				))
+		}
 	}
 }
