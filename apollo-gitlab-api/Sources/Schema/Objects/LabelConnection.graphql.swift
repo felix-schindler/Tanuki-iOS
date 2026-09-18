@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// The connection type for Label.
-	public nonisolated static let LabelConnection = ApolloAPI.Object(
-		typename: "LabelConnection",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  /// The connection type for Label.
+  nonisolated static let LabelConnection = ApolloAPI.Object(
+    typename: "LabelConnection",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

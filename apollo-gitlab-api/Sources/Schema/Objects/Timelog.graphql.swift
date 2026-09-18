@@ -3,10 +3,10 @@
 
 import ApolloAPI
 
-extension Objects {
-	public nonisolated static let Timelog = ApolloAPI.Object(
-		typename: "Timelog",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  nonisolated static let Timelog = ApolloAPI.Object(
+    typename: "Timelog",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

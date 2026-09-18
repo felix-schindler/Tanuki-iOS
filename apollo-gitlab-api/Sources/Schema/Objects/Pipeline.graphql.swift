@@ -3,10 +3,10 @@
 
 import ApolloAPI
 
-extension Objects {
-	public nonisolated static let Pipeline = ApolloAPI.Object(
-		typename: "Pipeline",
-		implementedInterfaces: [Interfaces.PipelineInterface.self],
-		keyFields: nil
-	)
+public extension Objects {
+  nonisolated static let Pipeline = ApolloAPI.Object(
+    typename: "Pipeline",
+    implementedInterfaces: [Interfaces.PipelineInterface.self],
+    keyFields: nil
+  )
 }

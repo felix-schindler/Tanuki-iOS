@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Represents CRM contacts widget
-	public nonisolated static let WorkItemWidgetCrmContacts = ApolloAPI.Object(
-		typename: "WorkItemWidgetCrmContacts",
-		implementedInterfaces: [Interfaces.WorkItemWidget.self],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Represents CRM contacts widget
+  nonisolated static let WorkItemWidgetCrmContacts = ApolloAPI.Object(
+    typename: "WorkItemWidgetCrmContacts",
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
+  )
 }

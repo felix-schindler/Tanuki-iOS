@@ -3,37 +3,37 @@
 
 import ApolloAPI
 
-extension Interfaces {
-	public nonisolated static let Todoable = ApolloAPI.Interface(
-		name: "Todoable",
-		keyFields: nil,
-		implementingObjects: [
-			"AddOnUser",
-			"AlertManagementAlert",
-			"AutocompletedUser",
-			"BoardEpic",
-			"Commit",
-			"CountableVulnerability",
-			"CurrentUser",
-			"Design",
-			"DuoWorkflow",
-			"Epic",
-			"EpicIssue",
-			"Group",
-			"Issue",
-			"Key",
-			"MergeRequest",
-			"MergeRequestAssignee",
-			"MergeRequestAuthor",
-			"MergeRequestParticipant",
-			"MergeRequestReviewer",
-			"Namespace",
-			"Project",
-			"ProjectComplianceViolation",
-			"UserCore",
-			"Vulnerability",
-			"WikiPage",
-			"WorkItem",
-		]
-	)
+public extension Interfaces {
+  nonisolated static let Todoable = ApolloAPI.Interface(
+    name: "Todoable",
+    keyFields: nil,
+    implementingObjects: [
+      "AddOnUser",
+      "AlertManagementAlert",
+      "AutocompletedUser",
+      "BoardEpic",
+      "Commit",
+      "CountableVulnerability",
+      "CurrentUser",
+      "Design",
+      "DuoWorkflow",
+      "Epic",
+      "EpicIssue",
+      "Group",
+      "Issue",
+      "Key",
+      "MergeRequest",
+      "MergeRequestAssignee",
+      "MergeRequestAuthor",
+      "MergeRequestParticipant",
+      "MergeRequestReviewer",
+      "Namespace",
+      "Project",
+      "ProjectComplianceViolation",
+      "UserCore",
+      "Vulnerability",
+      "WikiPage",
+      "WorkItem"
+    ]
+  )
 }

@@ -24,9 +24,11 @@
 			"none": {}
 		},
 		"schemaTypes": {
-			"path": "./apollo-gitlab-api",
+			"path": "./apollo-gitlab-api/Sources",
 			"moduleType": {
-				"swiftPackage": {}
+				"other": {
+					"moduleName": "GitLabAPI"
+				}
 			}
 		},
 		"operations": {

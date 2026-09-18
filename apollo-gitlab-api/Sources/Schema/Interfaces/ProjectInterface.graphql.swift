@@ -3,13 +3,13 @@
 
 import ApolloAPI
 
-extension Interfaces {
-	public nonisolated static let ProjectInterface = ApolloAPI.Interface(
-		name: "ProjectInterface",
-		keyFields: nil,
-		implementingObjects: [
-			"Project",
-			"ProjectMinimalAccess",
-		]
-	)
+public extension Interfaces {
+  nonisolated static let ProjectInterface = ApolloAPI.Interface(
+    name: "ProjectInterface",
+    keyFields: nil,
+    implementingObjects: [
+      "Project",
+      "ProjectMinimalAccess"
+    ]
+  )
 }

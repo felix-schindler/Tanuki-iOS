@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// The connection type for MemberInterface.
-	public nonisolated static let MemberInterfaceConnection = ApolloAPI.Object(
-		typename: "MemberInterfaceConnection",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  /// The connection type for MemberInterface.
+  nonisolated static let MemberInterfaceConnection = ApolloAPI.Object(
+    typename: "MemberInterfaceConnection",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

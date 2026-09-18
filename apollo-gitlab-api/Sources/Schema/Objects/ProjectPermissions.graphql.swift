@@ -3,10 +3,10 @@
 
 import ApolloAPI
 
-extension Objects {
-	public nonisolated static let ProjectPermissions = ApolloAPI.Object(
-		typename: "ProjectPermissions",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  nonisolated static let ProjectPermissions = ApolloAPI.Object(
+    typename: "ProjectPermissions",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

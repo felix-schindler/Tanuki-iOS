@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// The connection type for Milestone.
-	public nonisolated static let MilestoneConnection = ApolloAPI.Object(
-		typename: "MilestoneConnection",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  /// The connection type for Milestone.
+  nonisolated static let MilestoneConnection = ApolloAPI.Object(
+    typename: "MilestoneConnection",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Represents the access level of a relationship between a User and object that it is related to
-	public nonisolated static let AccessLevel = ApolloAPI.Object(
-		typename: "AccessLevel",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Represents the access level of a relationship between a User and object that it is related to
+  nonisolated static let AccessLevel = ApolloAPI.Object(
+    typename: "AccessLevel",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

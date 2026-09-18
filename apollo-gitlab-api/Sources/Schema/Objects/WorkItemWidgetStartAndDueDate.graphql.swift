@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Represents a start and due date widget
-	public nonisolated static let WorkItemWidgetStartAndDueDate = ApolloAPI.Object(
-		typename: "WorkItemWidgetStartAndDueDate",
-		implementedInterfaces: [Interfaces.WorkItemWidget.self],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Represents a start and due date widget
+  nonisolated static let WorkItemWidgetStartAndDueDate = ApolloAPI.Object(
+    typename: "WorkItemWidgetStartAndDueDate",
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
+  )
 }

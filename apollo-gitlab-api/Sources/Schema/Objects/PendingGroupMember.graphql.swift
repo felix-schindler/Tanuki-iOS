@@ -3,14 +3,14 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Represents a Pending Group Membership
-	public nonisolated static let PendingGroupMember = ApolloAPI.Object(
-		typename: "PendingGroupMember",
-		implementedInterfaces: [
-			Interfaces.MemberInterface.self,
-			Interfaces.PendingMemberInterface.self,
-		],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Represents a Pending Group Membership
+  nonisolated static let PendingGroupMember = ApolloAPI.Object(
+    typename: "PendingGroupMember",
+    implementedInterfaces: [
+      Interfaces.MemberInterface.self,
+      Interfaces.PendingMemberInterface.self
+    ],
+    keyFields: nil
+  )
 }

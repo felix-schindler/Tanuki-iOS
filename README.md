@@ -21,14 +21,20 @@ Run `make fetch-schema` if you only want to refresh the schema. Commit the
 resulting changes. Set `VERSION=x.y.z` when running
 `make install-apollo-cli` to pin a specific CLI release instead of latest.
 
+Codegen writes only `apollo-gitlab-api/Sources`. The package manifest
+`apollo-gitlab-api/Package.swift` is maintained by hand and is deliberately not
+generated: it pins the `apollo-skip-fuse` fork instead of upstream `apollo-ios`.
+Committed generated sources are kept exactly as the generator emits them, so
+`make fmt` and `make lint` cover hand-written sources only.
+
 ## Development
 
 Common tasks are defined in the `Makefile`. Run `make` to list them:
 
 | Target | Description |
 | ------------------ | ---------------------------------------------------- |
-| `make fmt` | Format Swift sources in place |
-| `make lint` | Lint Swift sources without modifying them |
+| `make fmt` | Format hand-written Swift sources in place |
+| `make lint` | Lint hand-written Swift sources without modifying them |
 | `make check` | Format, then lint (pre-commit gate) |
 | `make generate-apollo` | Fetch the GitLab schema and regenerate the API |
 | `make fetch-schema` | Refetch `schema.graphqls` only |

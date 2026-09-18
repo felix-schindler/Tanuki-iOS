@@ -5,10 +5,10 @@
 
 /// Values for the archived argument
 nonisolated public enum ProjectArchived: String, EnumType {
-	/// Only archived projects.
-	case only = "ONLY"
-	/// Include archived projects.
-	case include = "INCLUDE"
-	/// Exclude archived projects.
-	case exclude = "EXCLUDE"
+  /// Only archived projects.
+  case only = "ONLY"
+  /// Include archived projects.
+  case include = "INCLUDE"
+  /// Exclude archived projects.
+  case exclude = "EXCLUDE"
 }

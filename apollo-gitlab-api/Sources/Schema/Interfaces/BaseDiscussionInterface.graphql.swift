@@ -3,10 +3,10 @@
 
 import ApolloAPI
 
-extension Interfaces {
-	public nonisolated static let BaseDiscussionInterface = ApolloAPI.Interface(
-		name: "BaseDiscussionInterface",
-		keyFields: nil,
-		implementingObjects: ["Discussion"]
-	)
+public extension Interfaces {
+  nonisolated static let BaseDiscussionInterface = ApolloAPI.Interface(
+    name: "BaseDiscussionInterface",
+    keyFields: nil,
+    implementingObjects: ["Discussion"]
+  )
 }

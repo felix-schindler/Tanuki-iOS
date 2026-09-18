@@ -9,8 +9,11 @@ SWIFT          := swift
 APPLY          := $(SWIFT) format -p -r -i --configuration $(CONFIG)
 LINT           := $(SWIFT) format lint -p -r --configuration $(CONFIG)
 
+# Hand-written sources only. apollo-gitlab-api/ is generated code: it is
+# committed exactly as apollo-ios-cli emits it (never reformatted), so fmt and
+# lint must not touch it — formatting it made `make fmt` rewrite the generated
+# tree and `make lint` report ~1 600 findings.
 TANUKI_SOURCES := tanuki-app/Package.swift tanuki-app/Sources
-API_SOURCES    := apollo-gitlab-api/Package.swift apollo-gitlab-api/Sources
 
 APOLLO_CONFIG  := ./apollo-codegen-config.json
 # apollo-ios-cli ships as a prebuilt release binary, not as a package product
@@ -30,13 +33,13 @@ help: ## List available targets
 		/^[a-zA-Z0-9_.-]+:.*##/ { printf "  \033[36m%-18s\033[0m %s\n", $$1, $$2 }' \
 		$(MAKEFILE_LIST)
 
-fmt: ## Format Swift sources in place
-	@$(call need,$(TANUKI_SOURCES) $(API_SOURCES))
-	$(APPLY) $(TANUKI_SOURCES) $(API_SOURCES)
+fmt: ## Format hand-written Swift sources in place
+	@$(call need,$(TANUKI_SOURCES))
+	$(APPLY) $(TANUKI_SOURCES)
 
-lint: ## Lint Swift sources without modifying them
-	@$(call need,$(TANUKI_SOURCES) $(API_SOURCES))
-	$(LINT) $(TANUKI_SOURCES) $(API_SOURCES)
+lint: ## Lint hand-written Swift sources without modifying them
+	@$(call need,$(TANUKI_SOURCES))
+	$(LINT) $(TANUKI_SOURCES)
 
 check: fmt lint ## Format, then lint (pre-commit gate)
 	@echo "all checks passed"

@@ -3,13 +3,13 @@
 
 import ApolloAPI
 
-extension Objects {
-	public nonisolated static let Group = ApolloAPI.Object(
-		typename: "Group",
-		implementedInterfaces: [
-			Interfaces.GroupInterface.self,
-			Interfaces.Todoable.self,
-		],
-		keyFields: nil
-	)
+public extension Objects {
+  nonisolated static let Group = ApolloAPI.Object(
+    typename: "Group",
+    implementedInterfaces: [
+      Interfaces.GroupInterface.self,
+      Interfaces.Todoable.self
+    ],
+    keyFields: nil
+  )
 }

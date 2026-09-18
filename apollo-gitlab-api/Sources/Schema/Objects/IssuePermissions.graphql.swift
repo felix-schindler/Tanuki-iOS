@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Check permissions for the current user on a issue
-	public nonisolated static let IssuePermissions = ApolloAPI.Object(
-		typename: "IssuePermissions",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Check permissions for the current user on a issue
+  nonisolated static let IssuePermissions = ApolloAPI.Object(
+    typename: "IssuePermissions",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

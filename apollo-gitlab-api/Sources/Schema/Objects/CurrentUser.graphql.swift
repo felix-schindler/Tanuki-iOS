@@ -3,14 +3,14 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// The currently authenticated GitLab user.
-	public nonisolated static let CurrentUser = ApolloAPI.Object(
-		typename: "CurrentUser",
-		implementedInterfaces: [
-			Interfaces.Todoable.self,
-			Interfaces.User.self,
-		],
-		keyFields: nil
-	)
+public extension Objects {
+  /// The currently authenticated GitLab user.
+  nonisolated static let CurrentUser = ApolloAPI.Object(
+    typename: "CurrentUser",
+    implementedInterfaces: [
+      Interfaces.Todoable.self,
+      Interfaces.User.self
+    ],
+    keyFields: nil
+  )
 }

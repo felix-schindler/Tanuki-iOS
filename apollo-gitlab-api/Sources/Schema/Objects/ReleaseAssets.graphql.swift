@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// A container for all assets associated with a release
-	public nonisolated static let ReleaseAssets = ApolloAPI.Object(
-		typename: "ReleaseAssets",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  /// A container for all assets associated with a release
+  nonisolated static let ReleaseAssets = ApolloAPI.Object(
+    typename: "ReleaseAssets",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

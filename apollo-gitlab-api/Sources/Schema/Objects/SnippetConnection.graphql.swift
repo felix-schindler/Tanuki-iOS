@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// The connection type for Snippet.
-	public nonisolated static let SnippetConnection = ApolloAPI.Object(
-		typename: "SnippetConnection",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  /// The connection type for Snippet.
+  nonisolated static let SnippetConnection = ApolloAPI.Object(
+    typename: "SnippetConnection",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

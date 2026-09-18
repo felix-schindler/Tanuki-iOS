@@ -3,14 +3,14 @@
 
 import ApolloAPI
 
-extension Interfaces {
-	public nonisolated static let Entry = ApolloAPI.Interface(
-		name: "Entry",
-		keyFields: nil,
-		implementingObjects: [
-			"Blob",
-			"Submodule",
-			"TreeEntry",
-		]
-	)
+public extension Interfaces {
+  nonisolated static let Entry = ApolloAPI.Interface(
+    name: "Entry",
+    keyFields: nil,
+    implementingObjects: [
+      "Blob",
+      "Submodule",
+      "TreeEntry"
+    ]
+  )
 }

@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Represents a directory
-	public nonisolated static let TreeEntry = ApolloAPI.Object(
-		typename: "TreeEntry",
-		implementedInterfaces: [Interfaces.Entry.self],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Represents a directory
+  nonisolated static let TreeEntry = ApolloAPI.Object(
+    typename: "TreeEntry",
+    implementedInterfaces: [Interfaces.Entry.self],
+    keyFields: nil
+  )
 }

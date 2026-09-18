@@ -1,6 +1,7 @@
 # Tanuki
 
-This is a [Skip](https://skip.dev) dual-platform app project.
+This is a [Skip](https://skip.dev) app: one Swift codebase that builds the native
+iOS app and the transpiled Android app.
 
 
 <!-- TODO: add iOS screenshots to fastlane metadata
@@ -23,29 +24,17 @@ into a Kotlin Gradle project for Android using the skipstone plugin.
 
 ## Running
 
-Xcode and Android Studio must be downloaded and installed in order to
-run the app in the iOS simulator / Android emulator.
-An Android emulator must already be running, which can be launched from
-Android Studio's Device Manager.
+Open `Project.xcworkspace` in Xcode and run the "Tanuki App" target in the iOS
+Simulator.
 
-The project can be opened and run in Xcode from
-`Project.xcworkspace`, which also enabled parallel
-development of any Skip libary dependencies.
-
-To run both the Swift and Kotlin apps simultaneously,
-launch the "Tanuki App" target from Xcode.
-A build phases runs the "Launch Android APK" script that
-will deploy the Skip app to a running Android emulator or connected device.
-Logging output for the iOS app can be viewed in the Xcode console, and in
-Android Studio's logcat tab for the transpiled Kotlin app, or
-using `adb logcat` from a terminal.
+For Android, run `skip app launch --android` from this directory with a physical
+device connected over ADB. Do not use the Android emulator: the Android app is
+built, installed and verified on the device (`scripts/android-debug.sh` at the
+repo root reads the app log, dumps crashes and demangles symbols).
 
 ## Testing
 
-The module can be tested using the standard `swift test` command
-or by running the test target for the macOS destination in Xcode,
-which will run the Swift tests as well as the transpiled
-Kotlin JUnit tests in the Robolectric Android simulation environment.
-
-Parity testing can be performed with `skip test`,
-which will output a table of the test results for both platforms.
+There is no test target. Verify changes with `make check` from the repo root,
+plus a run on the iOS Simulator and the Android device. `swift test` and
+`swift build` are not usable here — SwiftPM's build of the Skip product graph is
+broken upstream (see `AGENTS.md`, "Known issues").

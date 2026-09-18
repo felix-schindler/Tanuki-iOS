@@ -5,10 +5,10 @@
 
 /// State of an epic
 nonisolated public enum EpicState: String, EnumType {
-	/// All epics.
-	case all = "all"
-	/// Open epics.
-	case opened = "opened"
-	/// Closed epics.
-	case closed = "closed"
+  /// All epics.
+  case all = "all"
+  /// Open epics.
+  case opened = "opened"
+  /// Closed epics.
+  case closed = "closed"
 }

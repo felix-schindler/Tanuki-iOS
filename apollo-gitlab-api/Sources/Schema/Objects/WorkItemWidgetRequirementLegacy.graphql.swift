@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Represents a legacy requirement widget
-	public nonisolated static let WorkItemWidgetRequirementLegacy = ApolloAPI.Object(
-		typename: "WorkItemWidgetRequirementLegacy",
-		implementedInterfaces: [Interfaces.WorkItemWidget.self],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Represents a legacy requirement widget
+  nonisolated static let WorkItemWidgetRequirementLegacy = ApolloAPI.Object(
+    typename: "WorkItemWidgetRequirementLegacy",
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
+  )
 }

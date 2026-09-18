@@ -3,10 +3,10 @@
 
 import ApolloAPI
 
-extension Objects {
-	public nonisolated static let RepositoryBlob = ApolloAPI.Object(
-		typename: "RepositoryBlob",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  nonisolated static let RepositoryBlob = ApolloAPI.Object(
+    typename: "RepositoryBlob",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

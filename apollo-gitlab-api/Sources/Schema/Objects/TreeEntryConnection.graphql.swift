@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// The connection type for TreeEntry.
-	public nonisolated static let TreeEntryConnection = ApolloAPI.Object(
-		typename: "TreeEntryConnection",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  /// The connection type for TreeEntry.
+  nonisolated static let TreeEntryConnection = ApolloAPI.Object(
+    typename: "TreeEntryConnection",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

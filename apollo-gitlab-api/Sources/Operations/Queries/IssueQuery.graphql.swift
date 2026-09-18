@@ -5,497 +5,435 @@
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
 nonisolated public struct IssueQuery: GraphQLQuery {
-	public static let operationName: String = "Issue"
-	public static let operationDocument: ApolloAPI.OperationDocument = .init(
-		definition: .init(
-			#"query Issue($fullPath: ID!, $iid: String!) { project(fullPath: $fullPath) { __typename id avatarUrl issue(iid: $iid) { __typename iid title description reference(full: true) state weight dueDate blockedByIssues { __typename nodes { __typename iid } } createdAt webUrl upvotes downvotes userNotesCount author { __typename avatarUrl name username } userPermissions { __typename updateIssue createNote } assignees { __typename nodes { __typename avatarUrl username } } labels { __typename nodes { __typename title color textColor } } milestone { __typename iid title } humanTimeEstimate humanTotalTimeSpent notes { __typename nodes { __typename id author { __typename avatarUrl name username } maxAccessLevelOfAuthor body system systemNoteIconName createdAt updatedAt } } } } }"#
-		))
+  public static let operationName: String = "Issue"
+  public static let operationDocument: ApolloAPI.OperationDocument = .init(
+    definition: .init(
+      #"query Issue($fullPath: ID!, $iid: String!) { project(fullPath: $fullPath) { __typename id avatarUrl issue(iid: $iid) { __typename iid title description reference(full: true) state weight dueDate blockedByIssues { __typename nodes { __typename iid } } createdAt webUrl upvotes downvotes userNotesCount author { __typename avatarUrl name username } userPermissions { __typename updateIssue createNote } assignees { __typename nodes { __typename avatarUrl username } } labels { __typename nodes { __typename title color textColor } } milestone { __typename iid title } humanTimeEstimate humanTotalTimeSpent notes { __typename nodes { __typename id author { __typename avatarUrl name username } maxAccessLevelOfAuthor body system systemNoteIconName createdAt updatedAt } } } } }"#
+    ))
 
-	public var fullPath: ID
-	public var iid: String
+  public var fullPath: ID
+  public var iid: String
 
-	public init(
-		fullPath: ID,
-		iid: String
-	) {
-		self.fullPath = fullPath
-		self.iid = iid
-	}
+  public init(
+    fullPath: ID,
+    iid: String
+  ) {
+    self.fullPath = fullPath
+    self.iid = iid
+  }
 
-	@_spi(Unsafe) public var __variables: Variables? {
-		[
-			"fullPath": fullPath,
-			"iid": iid,
-		]
-	}
+  @_spi(Unsafe) public var __variables: Variables? { [
+    "fullPath": fullPath,
+    "iid": iid
+  ] }
 
-	nonisolated public struct Data: GitLabAPI.SelectionSet {
-		@_spi(Unsafe) public let __data: DataDict
-		@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+  nonisolated public struct Data: GitLabAPI.SelectionSet {
+    @_spi(Unsafe) public let __data: DataDict
+    @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-		@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
-		@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-			[
-				.field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")])
-			]
-		}
-		@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-			[
-				IssueQuery.Data.self
-			]
-		}
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+      .field("project", Project?.self, arguments: ["fullPath": .variable("fullPath")]),
+    ] }
+    @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+      IssueQuery.Data.self
+    ] }
 
-		/// Find a project.
-		public var project: Project? { __data["project"] }
+    /// Find a project.
+    public var project: Project? { __data["project"] }
 
-		/// Project
-		///
-		/// Parent Type: `Project`
-		nonisolated public struct Project: GitLabAPI.SelectionSet {
-			@_spi(Unsafe) public let __data: DataDict
-			@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+    /// Project
+    ///
+    /// Parent Type: `Project`
+    nonisolated public struct Project: GitLabAPI.SelectionSet {
+      @_spi(Unsafe) public let __data: DataDict
+      @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-			@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
-			@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-				[
-					.field("__typename", String.self),
-					.field("id", GitLabAPI.ID.self),
-					.field("avatarUrl", String?.self),
-					.field("issue", Issue?.self, arguments: ["iid": .variable("iid")]),
-				]
-			}
-			@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-				[
-					IssueQuery.Data.Project.self
-				]
-			}
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+      @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+        .field("__typename", String.self),
+        .field("id", GitLabAPI.ID.self),
+        .field("avatarUrl", String?.self),
+        .field("issue", Issue?.self, arguments: ["iid": .variable("iid")]),
+      ] }
+      @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+        IssueQuery.Data.Project.self
+      ] }
 
-			/// ID of the project.
-			public var id: GitLabAPI.ID { __data["id"] }
-			/// Avatar URL of the project.
-			public var avatarUrl: String? { __data["avatarUrl"] }
-			/// A single issue of the project.
-			public var issue: Issue? { __data["issue"] }
+      /// ID of the project.
+      public var id: GitLabAPI.ID { __data["id"] }
+      /// Avatar URL of the project.
+      public var avatarUrl: String? { __data["avatarUrl"] }
+      /// A single issue of the project.
+      public var issue: Issue? { __data["issue"] }
 
-			/// Project.Issue
-			///
-			/// Parent Type: `Issue`
-			nonisolated public struct Issue: GitLabAPI.SelectionSet {
-				@_spi(Unsafe) public let __data: DataDict
-				@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+      /// Project.Issue
+      ///
+      /// Parent Type: `Issue`
+      nonisolated public struct Issue: GitLabAPI.SelectionSet {
+        @_spi(Unsafe) public let __data: DataDict
+        @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-				@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Issue }
-				@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-					[
-						.field("__typename", String.self),
-						.field("iid", String.self),
-						.field("title", String.self),
-						.field("description", String?.self),
-						.field("reference", String.self, arguments: ["full": true]),
-						.field("state", GraphQLEnum<GitLabAPI.IssueState>.self),
-						.field("weight", Int?.self),
-						.field("dueDate", GitLabAPI.Time?.self),
-						.field("blockedByIssues", BlockedByIssues?.self),
-						.field("createdAt", GitLabAPI.Time.self),
-						.field("webUrl", String.self),
-						.field("upvotes", Int.self),
-						.field("downvotes", Int.self),
-						.field("userNotesCount", Int.self),
-						.field("author", Author.self),
-						.field("userPermissions", UserPermissions.self),
-						.field("assignees", Assignees?.self),
-						.field("labels", Labels?.self),
-						.field("milestone", Milestone?.self),
-						.field("humanTimeEstimate", String?.self),
-						.field("humanTotalTimeSpent", String?.self),
-						.field("notes", Notes.self),
-					]
-				}
-				@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-					[
-						IssueQuery.Data.Project.Issue.self
-					]
-				}
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Issue }
+        @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+          .field("__typename", String.self),
+          .field("iid", String.self),
+          .field("title", String.self),
+          .field("description", String?.self),
+          .field("reference", String.self, arguments: ["full": true]),
+          .field("state", GraphQLEnum<GitLabAPI.IssueState>.self),
+          .field("weight", Int?.self),
+          .field("dueDate", GitLabAPI.Time?.self),
+          .field("blockedByIssues", BlockedByIssues?.self),
+          .field("createdAt", GitLabAPI.Time.self),
+          .field("webUrl", String.self),
+          .field("upvotes", Int.self),
+          .field("downvotes", Int.self),
+          .field("userNotesCount", Int.self),
+          .field("author", Author.self),
+          .field("userPermissions", UserPermissions.self),
+          .field("assignees", Assignees?.self),
+          .field("labels", Labels?.self),
+          .field("milestone", Milestone?.self),
+          .field("humanTimeEstimate", String?.self),
+          .field("humanTotalTimeSpent", String?.self),
+          .field("notes", Notes.self),
+        ] }
+        @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+          IssueQuery.Data.Project.Issue.self
+        ] }
 
-				/// Internal ID of the issue.
-				public var iid: String { __data["iid"] }
-				/// Title of the issue.
-				public var title: String { __data["title"] }
-				/// Description of the issue.
-				public var description: String? { __data["description"] }
-				/// Internal reference of the issue. Returned in shortened format by default.
-				public var reference: String { __data["reference"] }
-				/// State of the issue.
-				public var state: GraphQLEnum<GitLabAPI.IssueState> { __data["state"] }
-				/// Weight of the issue.
-				public var weight: Int? { __data["weight"] }
-				/// Due date of the issue.
-				public var dueDate: GitLabAPI.Time? { __data["dueDate"] }
-				/// Issues blocking the issue.
-				public var blockedByIssues: BlockedByIssues? { __data["blockedByIssues"] }
-				/// Timestamp of when the issue was created.
-				public var createdAt: GitLabAPI.Time { __data["createdAt"] }
-				/// Web URL of the issue.
-				public var webUrl: String { __data["webUrl"] }
-				/// Number of upvotes the issue has received.
-				public var upvotes: Int { __data["upvotes"] }
-				/// Number of downvotes the issue has received.
-				public var downvotes: Int { __data["downvotes"] }
-				/// Number of user notes of the issue.
-				public var userNotesCount: Int { __data["userNotesCount"] }
-				/// User that created the issue.
-				public var author: Author { __data["author"] }
-				/// Permissions for the current user on the resource
-				public var userPermissions: UserPermissions { __data["userPermissions"] }
-				/// Assignees of the issue.
-				public var assignees: Assignees? { __data["assignees"] }
-				/// Labels of the issue.
-				public var labels: Labels? { __data["labels"] }
-				/// Milestone of the issue.
-				public var milestone: Milestone? { __data["milestone"] }
-				/// Human-readable time estimate of the issue.
-				public var humanTimeEstimate: String? { __data["humanTimeEstimate"] }
-				/// Human-readable total time reported as spent on the issue.
-				public var humanTotalTimeSpent: String? { __data["humanTotalTimeSpent"] }
-				/// All notes on this noteable.
-				public var notes: Notes { __data["notes"] }
+        /// Internal ID of the issue.
+        public var iid: String { __data["iid"] }
+        /// Title of the issue.
+        public var title: String { __data["title"] }
+        /// Description of the issue.
+        public var description: String? { __data["description"] }
+        /// Internal reference of the issue. Returned in shortened format by default.
+        public var reference: String { __data["reference"] }
+        /// State of the issue.
+        public var state: GraphQLEnum<GitLabAPI.IssueState> { __data["state"] }
+        /// Weight of the issue.
+        public var weight: Int? { __data["weight"] }
+        /// Due date of the issue.
+        public var dueDate: GitLabAPI.Time? { __data["dueDate"] }
+        /// Issues blocking the issue.
+        public var blockedByIssues: BlockedByIssues? { __data["blockedByIssues"] }
+        /// Timestamp of when the issue was created.
+        public var createdAt: GitLabAPI.Time { __data["createdAt"] }
+        /// Web URL of the issue.
+        public var webUrl: String { __data["webUrl"] }
+        /// Number of upvotes the issue has received.
+        public var upvotes: Int { __data["upvotes"] }
+        /// Number of downvotes the issue has received.
+        public var downvotes: Int { __data["downvotes"] }
+        /// Number of user notes of the issue.
+        public var userNotesCount: Int { __data["userNotesCount"] }
+        /// User that created the issue.
+        public var author: Author { __data["author"] }
+        /// Permissions for the current user on the resource
+        public var userPermissions: UserPermissions { __data["userPermissions"] }
+        /// Assignees of the issue.
+        public var assignees: Assignees? { __data["assignees"] }
+        /// Labels of the issue.
+        public var labels: Labels? { __data["labels"] }
+        /// Milestone of the issue.
+        public var milestone: Milestone? { __data["milestone"] }
+        /// Human-readable time estimate of the issue.
+        public var humanTimeEstimate: String? { __data["humanTimeEstimate"] }
+        /// Human-readable total time reported as spent on the issue.
+        public var humanTotalTimeSpent: String? { __data["humanTotalTimeSpent"] }
+        /// All notes on this noteable.
+        public var notes: Notes { __data["notes"] }
 
-				/// Project.Issue.BlockedByIssues
-				///
-				/// Parent Type: `IssueConnection`
-				nonisolated public struct BlockedByIssues: GitLabAPI.SelectionSet {
-					@_spi(Unsafe) public let __data: DataDict
-					@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+        /// Project.Issue.BlockedByIssues
+        ///
+        /// Parent Type: `IssueConnection`
+        nonisolated public struct BlockedByIssues: GitLabAPI.SelectionSet {
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-					@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.IssueConnection }
-					@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-						[
-							.field("__typename", String.self),
-							.field("nodes", [Node?]?.self),
-						]
-					}
-					@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-						[
-							IssueQuery.Data.Project.Issue.BlockedByIssues.self
-						]
-					}
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.IssueConnection }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("nodes", [Node?]?.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            IssueQuery.Data.Project.Issue.BlockedByIssues.self
+          ] }
 
-					/// A list of nodes.
-					public var nodes: [Node?]? { __data["nodes"] }
+          /// A list of nodes.
+          public var nodes: [Node?]? { __data["nodes"] }
 
-					/// Project.Issue.BlockedByIssues.Node
-					///
-					/// Parent Type: `Issue`
-					nonisolated public struct Node: GitLabAPI.SelectionSet {
-						@_spi(Unsafe) public let __data: DataDict
-						@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+          /// Project.Issue.BlockedByIssues.Node
+          ///
+          /// Parent Type: `Issue`
+          nonisolated public struct Node: GitLabAPI.SelectionSet {
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-						@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Issue }
-						@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-							[
-								.field("__typename", String.self),
-								.field("iid", String.self),
-							]
-						}
-						@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-							[
-								IssueQuery.Data.Project.Issue.BlockedByIssues.Node.self
-							]
-						}
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Issue }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+              .field("__typename", String.self),
+              .field("iid", String.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              IssueQuery.Data.Project.Issue.BlockedByIssues.Node.self
+            ] }
 
-						/// Internal ID of the issue.
-						public var iid: String { __data["iid"] }
-					}
-				}
+            /// Internal ID of the issue.
+            public var iid: String { __data["iid"] }
+          }
+        }
 
-				/// Project.Issue.Author
-				///
-				/// Parent Type: `UserCore`
-				nonisolated public struct Author: GitLabAPI.SelectionSet {
-					@_spi(Unsafe) public let __data: DataDict
-					@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+        /// Project.Issue.Author
+        ///
+        /// Parent Type: `UserCore`
+        nonisolated public struct Author: GitLabAPI.SelectionSet {
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-					@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
-					@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-						[
-							.field("__typename", String.self),
-							.field("avatarUrl", String?.self),
-							.field("name", String.self),
-							.field("username", String.self),
-						]
-					}
-					@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-						[
-							IssueQuery.Data.Project.Issue.Author.self
-						]
-					}
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("avatarUrl", String?.self),
+            .field("name", String.self),
+            .field("username", String.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            IssueQuery.Data.Project.Issue.Author.self
+          ] }
 
-					/// URL of the user's avatar.
-					public var avatarUrl: String? { __data["avatarUrl"] }
-					/// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
-					public var name: String { __data["name"] }
-					/// Username of the user. Unique within the instance of GitLab.
-					public var username: String { __data["username"] }
-				}
+          /// URL of the user's avatar.
+          public var avatarUrl: String? { __data["avatarUrl"] }
+          /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
+          public var name: String { __data["name"] }
+          /// Username of the user. Unique within the instance of GitLab.
+          public var username: String { __data["username"] }
+        }
 
-				/// Project.Issue.UserPermissions
-				///
-				/// Parent Type: `IssuePermissions`
-				nonisolated public struct UserPermissions: GitLabAPI.SelectionSet {
-					@_spi(Unsafe) public let __data: DataDict
-					@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+        /// Project.Issue.UserPermissions
+        ///
+        /// Parent Type: `IssuePermissions`
+        nonisolated public struct UserPermissions: GitLabAPI.SelectionSet {
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-					@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.IssuePermissions }
-					@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-						[
-							.field("__typename", String.self),
-							.field("updateIssue", Bool.self),
-							.field("createNote", Bool.self),
-						]
-					}
-					@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-						[
-							IssueQuery.Data.Project.Issue.UserPermissions.self
-						]
-					}
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.IssuePermissions }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("updateIssue", Bool.self),
+            .field("createNote", Bool.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            IssueQuery.Data.Project.Issue.UserPermissions.self
+          ] }
 
-					/// If `true`, the user can perform `update_issue` on this resource
-					public var updateIssue: Bool { __data["updateIssue"] }
-					/// If `true`, the user can perform `create_note` on this resource
-					public var createNote: Bool { __data["createNote"] }
-				}
+          /// If `true`, the user can perform `update_issue` on this resource
+          public var updateIssue: Bool { __data["updateIssue"] }
+          /// If `true`, the user can perform `create_note` on this resource
+          public var createNote: Bool { __data["createNote"] }
+        }
 
-				/// Project.Issue.Assignees
-				///
-				/// Parent Type: `UserCoreConnection`
-				nonisolated public struct Assignees: GitLabAPI.SelectionSet {
-					@_spi(Unsafe) public let __data: DataDict
-					@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+        /// Project.Issue.Assignees
+        ///
+        /// Parent Type: `UserCoreConnection`
+        nonisolated public struct Assignees: GitLabAPI.SelectionSet {
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-					@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCoreConnection }
-					@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-						[
-							.field("__typename", String.self),
-							.field("nodes", [Node?]?.self),
-						]
-					}
-					@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-						[
-							IssueQuery.Data.Project.Issue.Assignees.self
-						]
-					}
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCoreConnection }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("nodes", [Node?]?.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            IssueQuery.Data.Project.Issue.Assignees.self
+          ] }
 
-					/// A list of nodes.
-					public var nodes: [Node?]? { __data["nodes"] }
+          /// A list of nodes.
+          public var nodes: [Node?]? { __data["nodes"] }
 
-					/// Project.Issue.Assignees.Node
-					///
-					/// Parent Type: `UserCore`
-					nonisolated public struct Node: GitLabAPI.SelectionSet {
-						@_spi(Unsafe) public let __data: DataDict
-						@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+          /// Project.Issue.Assignees.Node
+          ///
+          /// Parent Type: `UserCore`
+          nonisolated public struct Node: GitLabAPI.SelectionSet {
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-						@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
-						@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-							[
-								.field("__typename", String.self),
-								.field("avatarUrl", String?.self),
-								.field("username", String.self),
-							]
-						}
-						@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-							[
-								IssueQuery.Data.Project.Issue.Assignees.Node.self
-							]
-						}
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+              .field("__typename", String.self),
+              .field("avatarUrl", String?.self),
+              .field("username", String.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              IssueQuery.Data.Project.Issue.Assignees.Node.self
+            ] }
 
-						/// URL of the user's avatar.
-						public var avatarUrl: String? { __data["avatarUrl"] }
-						/// Username of the user. Unique within the instance of GitLab.
-						public var username: String { __data["username"] }
-					}
-				}
+            /// URL of the user's avatar.
+            public var avatarUrl: String? { __data["avatarUrl"] }
+            /// Username of the user. Unique within the instance of GitLab.
+            public var username: String { __data["username"] }
+          }
+        }
 
-				/// Project.Issue.Labels
-				///
-				/// Parent Type: `LabelConnection`
-				nonisolated public struct Labels: GitLabAPI.SelectionSet {
-					@_spi(Unsafe) public let __data: DataDict
-					@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+        /// Project.Issue.Labels
+        ///
+        /// Parent Type: `LabelConnection`
+        nonisolated public struct Labels: GitLabAPI.SelectionSet {
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-					@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.LabelConnection }
-					@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-						[
-							.field("__typename", String.self),
-							.field("nodes", [Node?]?.self),
-						]
-					}
-					@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-						[
-							IssueQuery.Data.Project.Issue.Labels.self
-						]
-					}
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.LabelConnection }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("nodes", [Node?]?.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            IssueQuery.Data.Project.Issue.Labels.self
+          ] }
 
-					/// A list of nodes.
-					public var nodes: [Node?]? { __data["nodes"] }
+          /// A list of nodes.
+          public var nodes: [Node?]? { __data["nodes"] }
 
-					/// Project.Issue.Labels.Node
-					///
-					/// Parent Type: `Label`
-					nonisolated public struct Node: GitLabAPI.SelectionSet {
-						@_spi(Unsafe) public let __data: DataDict
-						@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+          /// Project.Issue.Labels.Node
+          ///
+          /// Parent Type: `Label`
+          nonisolated public struct Node: GitLabAPI.SelectionSet {
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-						@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Label }
-						@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-							[
-								.field("__typename", String.self),
-								.field("title", String.self),
-								.field("color", String.self),
-								.field("textColor", String.self),
-							]
-						}
-						@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-							[
-								IssueQuery.Data.Project.Issue.Labels.Node.self
-							]
-						}
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Label }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+              .field("__typename", String.self),
+              .field("title", String.self),
+              .field("color", String.self),
+              .field("textColor", String.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              IssueQuery.Data.Project.Issue.Labels.Node.self
+            ] }
 
-						/// Content of the label.
-						public var title: String { __data["title"] }
-						/// Background color of the label.
-						public var color: String { __data["color"] }
-						/// Text color of the label.
-						public var textColor: String { __data["textColor"] }
-					}
-				}
+            /// Content of the label.
+            public var title: String { __data["title"] }
+            /// Background color of the label.
+            public var color: String { __data["color"] }
+            /// Text color of the label.
+            public var textColor: String { __data["textColor"] }
+          }
+        }
 
-				/// Project.Issue.Milestone
-				///
-				/// Parent Type: `Milestone`
-				nonisolated public struct Milestone: GitLabAPI.SelectionSet {
-					@_spi(Unsafe) public let __data: DataDict
-					@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+        /// Project.Issue.Milestone
+        ///
+        /// Parent Type: `Milestone`
+        nonisolated public struct Milestone: GitLabAPI.SelectionSet {
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-					@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Milestone }
-					@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-						[
-							.field("__typename", String.self),
-							.field("iid", GitLabAPI.ID.self),
-							.field("title", String.self),
-						]
-					}
-					@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-						[
-							IssueQuery.Data.Project.Issue.Milestone.self
-						]
-					}
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Milestone }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("iid", GitLabAPI.ID.self),
+            .field("title", String.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            IssueQuery.Data.Project.Issue.Milestone.self
+          ] }
 
-					/// Internal ID of the milestone.
-					public var iid: GitLabAPI.ID { __data["iid"] }
-					/// Title of the milestone.
-					public var title: String { __data["title"] }
-				}
+          /// Internal ID of the milestone.
+          public var iid: GitLabAPI.ID { __data["iid"] }
+          /// Title of the milestone.
+          public var title: String { __data["title"] }
+        }
 
-				/// Project.Issue.Notes
-				///
-				/// Parent Type: `NoteConnection`
-				nonisolated public struct Notes: GitLabAPI.SelectionSet {
-					@_spi(Unsafe) public let __data: DataDict
-					@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+        /// Project.Issue.Notes
+        ///
+        /// Parent Type: `NoteConnection`
+        nonisolated public struct Notes: GitLabAPI.SelectionSet {
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-					@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.NoteConnection }
-					@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-						[
-							.field("__typename", String.self),
-							.field("nodes", [Node?]?.self),
-						]
-					}
-					@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-						[
-							IssueQuery.Data.Project.Issue.Notes.self
-						]
-					}
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.NoteConnection }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("nodes", [Node?]?.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            IssueQuery.Data.Project.Issue.Notes.self
+          ] }
 
-					/// A list of nodes.
-					public var nodes: [Node?]? { __data["nodes"] }
+          /// A list of nodes.
+          public var nodes: [Node?]? { __data["nodes"] }
 
-					/// Project.Issue.Notes.Node
-					///
-					/// Parent Type: `Note`
-					nonisolated public struct Node: GitLabAPI.SelectionSet {
-						@_spi(Unsafe) public let __data: DataDict
-						@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+          /// Project.Issue.Notes.Node
+          ///
+          /// Parent Type: `Note`
+          nonisolated public struct Node: GitLabAPI.SelectionSet {
+            @_spi(Unsafe) public let __data: DataDict
+            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-						@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Note }
-						@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-							[
-								.field("__typename", String.self),
-								.field("id", GitLabAPI.NoteID.self),
-								.field("author", Author?.self),
-								.field("maxAccessLevelOfAuthor", String?.self),
-								.field("body", String.self),
-								.field("system", Bool.self),
-								.field("systemNoteIconName", String?.self),
-								.field("createdAt", GitLabAPI.Time.self),
-								.field("updatedAt", GitLabAPI.Time.self),
-							]
-						}
-						@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-							[
-								IssueQuery.Data.Project.Issue.Notes.Node.self
-							]
-						}
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Note }
+            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+              .field("__typename", String.self),
+              .field("id", GitLabAPI.NoteID.self),
+              .field("author", Author?.self),
+              .field("maxAccessLevelOfAuthor", String?.self),
+              .field("body", String.self),
+              .field("system", Bool.self),
+              .field("systemNoteIconName", String?.self),
+              .field("createdAt", GitLabAPI.Time.self),
+              .field("updatedAt", GitLabAPI.Time.self),
+            ] }
+            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+              IssueQuery.Data.Project.Issue.Notes.Node.self
+            ] }
 
-						/// ID of the note.
-						public var id: GitLabAPI.NoteID { __data["id"] }
-						/// User who wrote the note.
-						public var author: Author? { __data["author"] }
-						/// Max access level of the note author in the project.
-						public var maxAccessLevelOfAuthor: String? { __data["maxAccessLevelOfAuthor"] }
-						/// Content of the note.
-						public var body: String { __data["body"] }
-						/// Indicates whether the note was created by the system or by a user.
-						public var system: Bool { __data["system"] }
-						/// Name of the icon corresponding to a system note.
-						public var systemNoteIconName: String? { __data["systemNoteIconName"] }
-						/// Timestamp of the note creation.
-						public var createdAt: GitLabAPI.Time { __data["createdAt"] }
-						/// Timestamp of the note's last activity.
-						public var updatedAt: GitLabAPI.Time { __data["updatedAt"] }
+            /// ID of the note.
+            public var id: GitLabAPI.NoteID { __data["id"] }
+            /// User who wrote the note.
+            public var author: Author? { __data["author"] }
+            /// Max access level of the note author in the project.
+            public var maxAccessLevelOfAuthor: String? { __data["maxAccessLevelOfAuthor"] }
+            /// Content of the note.
+            public var body: String { __data["body"] }
+            /// Indicates whether the note was created by the system or by a user.
+            public var system: Bool { __data["system"] }
+            /// Name of the icon corresponding to a system note.
+            public var systemNoteIconName: String? { __data["systemNoteIconName"] }
+            /// Timestamp of the note creation.
+            public var createdAt: GitLabAPI.Time { __data["createdAt"] }
+            /// Timestamp of the note's last activity.
+            public var updatedAt: GitLabAPI.Time { __data["updatedAt"] }
 
-						/// Project.Issue.Notes.Node.Author
-						///
-						/// Parent Type: `UserCore`
-						nonisolated public struct Author: GitLabAPI.SelectionSet {
-							@_spi(Unsafe) public let __data: DataDict
-							@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+            /// Project.Issue.Notes.Node.Author
+            ///
+            /// Parent Type: `UserCore`
+            nonisolated public struct Author: GitLabAPI.SelectionSet {
+              @_spi(Unsafe) public let __data: DataDict
+              @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-							@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
-							@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-								[
-									.field("__typename", String.self),
-									.field("avatarUrl", String?.self),
-									.field("name", String.self),
-									.field("username", String.self),
-								]
-							}
-							@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-								[
-									IssueQuery.Data.Project.Issue.Notes.Node.Author.self
-								]
-							}
+              @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+              @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+                .field("__typename", String.self),
+                .field("avatarUrl", String?.self),
+                .field("name", String.self),
+                .field("username", String.self),
+              ] }
+              @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+                IssueQuery.Data.Project.Issue.Notes.Node.Author.self
+              ] }
 
-							/// URL of the user's avatar.
-							public var avatarUrl: String? { __data["avatarUrl"] }
-							/// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
-							public var name: String { __data["name"] }
-							/// Username of the user. Unique within the instance of GitLab.
-							public var username: String { __data["username"] }
-						}
-					}
-				}
-			}
-		}
-	}
+              /// URL of the user's avatar.
+              public var avatarUrl: String? { __data["avatarUrl"] }
+              /// Human-readable name of the user. Returns `****` if the user is a project bot and the requester does not have permission to view the project.
+              public var name: String { __data["name"] }
+              /// Username of the user. Unique within the instance of GitLab.
+              public var username: String { __data["username"] }
+            }
+          }
+        }
+      }
+    }
+  }
 }

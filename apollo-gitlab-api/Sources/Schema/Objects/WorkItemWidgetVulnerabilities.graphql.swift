@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Represents a vulnerabilities widget
-	public nonisolated static let WorkItemWidgetVulnerabilities = ApolloAPI.Object(
-		typename: "WorkItemWidgetVulnerabilities",
-		implementedInterfaces: [Interfaces.WorkItemWidget.self],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Represents a vulnerabilities widget
+  nonisolated static let WorkItemWidgetVulnerabilities = ApolloAPI.Object(
+    typename: "WorkItemWidgetVulnerabilities",
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
+  )
 }

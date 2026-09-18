@@ -3,10 +3,10 @@
 
 import ApolloAPI
 
-extension Objects {
-	public nonisolated static let Tree = ApolloAPI.Object(
-		typename: "Tree",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  nonisolated static let Tree = ApolloAPI.Object(
+    typename: "Tree",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

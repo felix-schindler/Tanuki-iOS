@@ -3,10 +3,10 @@
 
 import ApolloAPI
 
-extension Objects {
-	public nonisolated static let UserStatus = ApolloAPI.Object(
-		typename: "UserStatus",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  nonisolated static let UserStatus = ApolloAPI.Object(
+    typename: "UserStatus",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

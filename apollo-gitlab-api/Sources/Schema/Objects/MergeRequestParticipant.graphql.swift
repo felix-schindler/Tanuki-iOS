@@ -3,14 +3,14 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// A user participating in a merge request.
-	public nonisolated static let MergeRequestParticipant = ApolloAPI.Object(
-		typename: "MergeRequestParticipant",
-		implementedInterfaces: [
-			Interfaces.Todoable.self,
-			Interfaces.User.self,
-		],
-		keyFields: nil
-	)
+public extension Objects {
+  /// A user participating in a merge request.
+  nonisolated static let MergeRequestParticipant = ApolloAPI.Object(
+    typename: "MergeRequestParticipant",
+    implementedInterfaces: [
+      Interfaces.Todoable.self,
+      Interfaces.User.self
+    ],
+    keyFields: nil
+  )
 }

@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Represents the linked items widget
-	public nonisolated static let WorkItemWidgetLinkedItems = ApolloAPI.Object(
-		typename: "WorkItemWidgetLinkedItems",
-		implementedInterfaces: [Interfaces.WorkItemWidget.self],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Represents the linked items widget
+  nonisolated static let WorkItemWidgetLinkedItems = ApolloAPI.Object(
+    typename: "WorkItemWidgetLinkedItems",
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
+  )
 }

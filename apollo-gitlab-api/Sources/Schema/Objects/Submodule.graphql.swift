@@ -3,10 +3,10 @@
 
 import ApolloAPI
 
-extension Objects {
-	public nonisolated static let Submodule = ApolloAPI.Object(
-		typename: "Submodule",
-		implementedInterfaces: [Interfaces.Entry.self],
-		keyFields: nil
-	)
+public extension Objects {
+  nonisolated static let Submodule = ApolloAPI.Object(
+    typename: "Submodule",
+    implementedInterfaces: [Interfaces.Entry.self],
+    keyFields: nil
+  )
 }

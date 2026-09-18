@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Represents email participants widget
-	public nonisolated static let WorkItemWidgetEmailParticipants = ApolloAPI.Object(
-		typename: "WorkItemWidgetEmailParticipants",
-		implementedInterfaces: [Interfaces.WorkItemWidget.self],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Represents email participants widget
+  nonisolated static let WorkItemWidgetEmailParticipants = ApolloAPI.Object(
+    typename: "WorkItemWidgetEmailParticipants",
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
+  )
 }

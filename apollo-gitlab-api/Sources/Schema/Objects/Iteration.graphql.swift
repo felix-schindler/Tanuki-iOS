@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Represents an iteration object
-	public nonisolated static let Iteration = ApolloAPI.Object(
-		typename: "Iteration",
-		implementedInterfaces: [Interfaces.TimeboxReportInterface.self],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Represents an iteration object
+  nonisolated static let Iteration = ApolloAPI.Object(
+    typename: "Iteration",
+    implementedInterfaces: [Interfaces.TimeboxReportInterface.self],
+    keyFields: nil
+  )
 }

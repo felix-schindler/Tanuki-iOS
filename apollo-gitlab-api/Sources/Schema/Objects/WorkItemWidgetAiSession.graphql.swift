@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Represents an AI session widget
-	public nonisolated static let WorkItemWidgetAiSession = ApolloAPI.Object(
-		typename: "WorkItemWidgetAiSession",
-		implementedInterfaces: [Interfaces.WorkItemWidget.self],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Represents an AI session widget
+  nonisolated static let WorkItemWidgetAiSession = ApolloAPI.Object(
+    typename: "WorkItemWidgetAiSession",
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
+  )
 }

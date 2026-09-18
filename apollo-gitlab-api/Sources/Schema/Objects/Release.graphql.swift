@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Represents a release
-	public nonisolated static let Release = ApolloAPI.Object(
-		typename: "Release",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Represents a release
+  nonisolated static let Release = ApolloAPI.Object(
+    typename: "Release",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

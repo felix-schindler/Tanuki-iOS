@@ -3,14 +3,14 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Compliance violation for a project.
-	public nonisolated static let ProjectComplianceViolation = ApolloAPI.Object(
-		typename: "ProjectComplianceViolation",
-		implementedInterfaces: [
-			Interfaces.NoteableInterface.self,
-			Interfaces.Todoable.self,
-		],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Compliance violation for a project.
+  nonisolated static let ProjectComplianceViolation = ApolloAPI.Object(
+    typename: "ProjectComplianceViolation",
+    implementedInterfaces: [
+      Interfaces.NoteableInterface.self,
+      Interfaces.Todoable.self
+    ],
+    keyFields: nil
+  )
 }

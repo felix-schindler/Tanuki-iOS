@@ -3,13 +3,13 @@
 
 import ApolloAPI
 
-extension Interfaces {
-	public nonisolated static let TimeboxReportInterface = ApolloAPI.Interface(
-		name: "TimeboxReportInterface",
-		keyFields: nil,
-		implementingObjects: [
-			"Iteration",
-			"Milestone",
-		]
-	)
+public extension Interfaces {
+  nonisolated static let TimeboxReportInterface = ApolloAPI.Interface(
+    name: "TimeboxReportInterface",
+    keyFields: nil,
+    implementingObjects: [
+      "Iteration",
+      "Milestone"
+    ]
+  )
 }

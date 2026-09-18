@@ -5,118 +5,102 @@
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
 nonisolated public struct UserStarredProjectsQuery: GraphQLQuery {
-	public static let operationName: String = "UserStarredProjects"
-	public static let operationDocument: ApolloAPI.OperationDocument = .init(
-		definition: .init(
-			#"query UserStarredProjects($username: String!) { user(username: $username) { __typename starredProjects { __typename nodes { __typename avatarUrl nameWithNamespace visibility fullPath } } } }"#
-		))
+  public static let operationName: String = "UserStarredProjects"
+  public static let operationDocument: ApolloAPI.OperationDocument = .init(
+    definition: .init(
+      #"query UserStarredProjects($username: String!) { user(username: $username) { __typename starredProjects { __typename nodes { __typename avatarUrl nameWithNamespace visibility fullPath } } } }"#
+    ))
 
-	public var username: String
+  public var username: String
 
-	public init(username: String) {
-		self.username = username
-	}
+  public init(username: String) {
+    self.username = username
+  }
 
-	@_spi(Unsafe) public var __variables: Variables? { ["username": username] }
+  @_spi(Unsafe) public var __variables: Variables? { ["username": username] }
 
-	nonisolated public struct Data: GitLabAPI.SelectionSet {
-		@_spi(Unsafe) public let __data: DataDict
-		@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+  nonisolated public struct Data: GitLabAPI.SelectionSet {
+    @_spi(Unsafe) public let __data: DataDict
+    @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-		@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
-		@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-			[
-				.field("user", User?.self, arguments: ["username": .variable("username")])
-			]
-		}
-		@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-			[
-				UserStarredProjectsQuery.Data.self
-			]
-		}
+    @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
+    @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+      .field("user", User?.self, arguments: ["username": .variable("username")]),
+    ] }
+    @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+      UserStarredProjectsQuery.Data.self
+    ] }
 
-		/// Find a user.
-		public var user: User? { __data["user"] }
+    /// Find a user.
+    public var user: User? { __data["user"] }
 
-		/// User
-		///
-		/// Parent Type: `UserCore`
-		nonisolated public struct User: GitLabAPI.SelectionSet {
-			@_spi(Unsafe) public let __data: DataDict
-			@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+    /// User
+    ///
+    /// Parent Type: `UserCore`
+    nonisolated public struct User: GitLabAPI.SelectionSet {
+      @_spi(Unsafe) public let __data: DataDict
+      @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-			@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
-			@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-				[
-					.field("__typename", String.self),
-					.field("starredProjects", StarredProjects?.self),
-				]
-			}
-			@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-				[
-					UserStarredProjectsQuery.Data.User.self
-				]
-			}
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+      @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+        .field("__typename", String.self),
+        .field("starredProjects", StarredProjects?.self),
+      ] }
+      @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+        UserStarredProjectsQuery.Data.User.self
+      ] }
 
-			/// Projects starred by the user.
-			public var starredProjects: StarredProjects? { __data["starredProjects"] }
+      /// Projects starred by the user.
+      public var starredProjects: StarredProjects? { __data["starredProjects"] }
 
-			/// User.StarredProjects
-			///
-			/// Parent Type: `ProjectConnection`
-			nonisolated public struct StarredProjects: GitLabAPI.SelectionSet {
-				@_spi(Unsafe) public let __data: DataDict
-				@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+      /// User.StarredProjects
+      ///
+      /// Parent Type: `ProjectConnection`
+      nonisolated public struct StarredProjects: GitLabAPI.SelectionSet {
+        @_spi(Unsafe) public let __data: DataDict
+        @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-				@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ProjectConnection }
-				@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-					[
-						.field("__typename", String.self),
-						.field("nodes", [Node?]?.self),
-					]
-				}
-				@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-					[
-						UserStarredProjectsQuery.Data.User.StarredProjects.self
-					]
-				}
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ProjectConnection }
+        @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+          .field("__typename", String.self),
+          .field("nodes", [Node?]?.self),
+        ] }
+        @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+          UserStarredProjectsQuery.Data.User.StarredProjects.self
+        ] }
 
-				/// A list of nodes.
-				public var nodes: [Node?]? { __data["nodes"] }
+        /// A list of nodes.
+        public var nodes: [Node?]? { __data["nodes"] }
 
-				/// User.StarredProjects.Node
-				///
-				/// Parent Type: `Project`
-				nonisolated public struct Node: GitLabAPI.SelectionSet {
-					@_spi(Unsafe) public let __data: DataDict
-					@_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
+        /// User.StarredProjects.Node
+        ///
+        /// Parent Type: `Project`
+        nonisolated public struct Node: GitLabAPI.SelectionSet {
+          @_spi(Unsafe) public let __data: DataDict
+          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-					@_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
-					@_spi(Execution) public static var __selections: [ApolloAPI.Selection] {
-						[
-							.field("__typename", String.self),
-							.field("avatarUrl", String?.self),
-							.field("nameWithNamespace", String.self),
-							.field("visibility", String?.self),
-							.field("fullPath", GitLabAPI.ID.self),
-						]
-					}
-					@_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] {
-						[
-							UserStarredProjectsQuery.Data.User.StarredProjects.Node.self
-						]
-					}
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
+          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
+            .field("__typename", String.self),
+            .field("avatarUrl", String?.self),
+            .field("nameWithNamespace", String.self),
+            .field("visibility", String?.self),
+            .field("fullPath", GitLabAPI.ID.self),
+          ] }
+          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+            UserStarredProjectsQuery.Data.User.StarredProjects.Node.self
+          ] }
 
-					/// Avatar URL of the project.
-					public var avatarUrl: String? { __data["avatarUrl"] }
-					/// Name of the project including the namespace.
-					public var nameWithNamespace: String { __data["nameWithNamespace"] }
-					/// Visibility of the project.
-					public var visibility: String? { __data["visibility"] }
-					/// Full path of the project.
-					public var fullPath: GitLabAPI.ID { __data["fullPath"] }
-				}
-			}
-		}
-	}
+          /// Avatar URL of the project.
+          public var avatarUrl: String? { __data["avatarUrl"] }
+          /// Name of the project including the namespace.
+          public var nameWithNamespace: String { __data["nameWithNamespace"] }
+          /// Visibility of the project.
+          public var visibility: String? { __data["visibility"] }
+          /// Full path of the project.
+          public var fullPath: GitLabAPI.ID { __data["fullPath"] }
+        }
+      }
+    }
+  }
 }

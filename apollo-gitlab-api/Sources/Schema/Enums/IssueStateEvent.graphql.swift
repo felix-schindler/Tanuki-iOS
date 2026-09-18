@@ -5,8 +5,8 @@
 
 /// Values for issue state events
 nonisolated public enum IssueStateEvent: String, EnumType {
-	/// Reopens the issue.
-	case reopen = "REOPEN"
-	/// Closes the issue.
-	case close = "CLOSE"
+  /// Reopens the issue.
+  case reopen = "REOPEN"
+  /// Closes the issue.
+  case close = "CLOSE"
 }

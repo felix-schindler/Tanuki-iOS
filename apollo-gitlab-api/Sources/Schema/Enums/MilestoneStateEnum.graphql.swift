@@ -5,8 +5,8 @@
 
 /// Current state of milestone
 nonisolated public enum MilestoneStateEnum: String, EnumType {
-	/// Milestone is currently active.
-	case active = "active"
-	/// Milestone is closed.
-	case closed = "closed"
+  /// Milestone is currently active.
+  case active = "active"
+  /// Milestone is closed.
+  case closed = "closed"
 }

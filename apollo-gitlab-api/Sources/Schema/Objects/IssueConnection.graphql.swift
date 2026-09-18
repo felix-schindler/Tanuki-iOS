@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// The connection type for Issue.
-	public nonisolated static let IssueConnection = ApolloAPI.Object(
-		typename: "IssueConnection",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  /// The connection type for Issue.
+  nonisolated static let IssueConnection = ApolloAPI.Object(
+    typename: "IssueConnection",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

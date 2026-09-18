@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Check permissions for the current user on a merge request
-	public nonisolated static let MergeRequestPermissions = ApolloAPI.Object(
-		typename: "MergeRequestPermissions",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Check permissions for the current user on a merge request
+  nonisolated static let MergeRequestPermissions = ApolloAPI.Object(
+    typename: "MergeRequestPermissions",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

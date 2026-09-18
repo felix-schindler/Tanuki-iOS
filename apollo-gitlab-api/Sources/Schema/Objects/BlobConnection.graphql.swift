@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// The connection type for Blob.
-	public nonisolated static let BlobConnection = ApolloAPI.Object(
-		typename: "BlobConnection",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  /// The connection type for Blob.
+  nonisolated static let BlobConnection = ApolloAPI.Object(
+    typename: "BlobConnection",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }

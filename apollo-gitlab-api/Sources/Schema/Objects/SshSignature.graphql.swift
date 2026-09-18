@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// SSH signature for a signed commit
-	public nonisolated static let SshSignature = ApolloAPI.Object(
-		typename: "SshSignature",
-		implementedInterfaces: [Interfaces.CommitSignature.self],
-		keyFields: nil
-	)
+public extension Objects {
+  /// SSH signature for a signed commit
+  nonisolated static let SshSignature = ApolloAPI.Object(
+    typename: "SshSignature",
+    implementedInterfaces: [Interfaces.CommitSignature.self],
+    keyFields: nil
+  )
 }

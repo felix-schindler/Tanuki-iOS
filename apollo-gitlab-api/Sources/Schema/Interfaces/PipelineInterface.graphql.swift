@@ -3,13 +3,13 @@
 
 import ApolloAPI
 
-extension Interfaces {
-	public nonisolated static let PipelineInterface = ApolloAPI.Interface(
-		name: "PipelineInterface",
-		keyFields: nil,
-		implementingObjects: [
-			"Pipeline",
-			"PipelineMinimalAccess",
-		]
-	)
+public extension Interfaces {
+  nonisolated static let PipelineInterface = ApolloAPI.Interface(
+    name: "PipelineInterface",
+    keyFields: nil,
+    implementingObjects: [
+      "Pipeline",
+      "PipelineMinimalAccess"
+    ]
+  )
 }

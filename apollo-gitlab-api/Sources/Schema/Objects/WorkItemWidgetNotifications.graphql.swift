@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Represents the notifications widget
-	public nonisolated static let WorkItemWidgetNotifications = ApolloAPI.Object(
-		typename: "WorkItemWidgetNotifications",
-		implementedInterfaces: [Interfaces.WorkItemWidget.self],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Represents the notifications widget
+  nonisolated static let WorkItemWidgetNotifications = ApolloAPI.Object(
+    typename: "WorkItemWidgetNotifications",
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
+  )
 }

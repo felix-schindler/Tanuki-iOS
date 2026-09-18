@@ -3,11 +3,11 @@
 
 import ApolloAPI
 
-extension Objects {
-	/// Represents a weight widget
-	public nonisolated static let WorkItemWidgetWeight = ApolloAPI.Object(
-		typename: "WorkItemWidgetWeight",
-		implementedInterfaces: [Interfaces.WorkItemWidget.self],
-		keyFields: nil
-	)
+public extension Objects {
+  /// Represents a weight widget
+  nonisolated static let WorkItemWidgetWeight = ApolloAPI.Object(
+    typename: "WorkItemWidgetWeight",
+    implementedInterfaces: [Interfaces.WorkItemWidget.self],
+    keyFields: nil
+  )
 }

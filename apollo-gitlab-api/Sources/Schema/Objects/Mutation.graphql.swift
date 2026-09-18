@@ -3,10 +3,10 @@
 
 import ApolloAPI
 
-extension Objects {
-	public nonisolated static let Mutation = ApolloAPI.Object(
-		typename: "Mutation",
-		implementedInterfaces: [],
-		keyFields: nil
-	)
+public extension Objects {
+  nonisolated static let Mutation = ApolloAPI.Object(
+    typename: "Mutation",
+    implementedInterfaces: [],
+    keyFields: nil
+  )
 }
