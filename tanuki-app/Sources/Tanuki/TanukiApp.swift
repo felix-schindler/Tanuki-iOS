@@ -35,6 +35,11 @@ let logger: Logger = Logger(subsystem: "de.schindlerfelix.GitLab", category: "Ta
 
 	public var body: some View {
 		ContentView()
+			.onOpenURL { url in
+				Task {
+					await Auth.handleCallback(url)
+				}
+			}
 			.fullScreenCover(isPresented: $needsSetup) {
 				SetupView()
 			}

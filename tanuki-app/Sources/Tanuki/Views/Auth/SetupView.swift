@@ -17,15 +17,7 @@ import SwiftUI
 struct SetupView: View {
 	@Environment(\.openURL) var openURL
 
-	/// For CSRF protection
-	private let state: String
-	private let codeVerifier: String
-	private let codeChallenge: String
-
 	public init() {
-		self.state = UUID().uuidString
-		self.codeVerifier = Auth.generateCodeVerifier()
-		self.codeChallenge = Auth.generateCodeChallenge(codeVerifier: self.codeVerifier)
 	}
 
 	public var body: some View {
@@ -55,21 +47,12 @@ struct SetupView: View {
 
 				Button(
 					action: {
-						var components = URLComponents()
-						components.scheme = "https"
-						components.host = "gitlab.com"
-						components.path = "/oauth/authorize"
-						components.queryItems = [
-							URLQueryItem(name: "client_id", value: Auth.clientID),
-							URLQueryItem(name: "code_challenge", value: self.codeChallenge),
-							URLQueryItem(name: "code_challenge_method", value: "S256"),
-							URLQueryItem(name: "redirect_uri", value: Auth.redirectUri),
-							URLQueryItem(name: "response_type", value: "code"),
-							URLQueryItem(name: "scope", value: Auth.scope),
-							URLQueryItem(name: "state", value: self.state),
-						]
-
-						if let authURL = components.url {
+						let request = OAuthRequest.shared.begin()
+						if let authURL = Auth.authorizeUrl(
+							state: request.state,
+							codeChallenge: request.codeChallenge
+						) {
+							logger.debug("oauth: authorize \(authURL.absoluteString)")
 							openURL(authURL)
 						}
 					},
@@ -109,75 +92,6 @@ struct SetupView: View {
 			}
 			.padding()
 			.textFieldStyle(.roundedBorder)
-		}.onOpenURL { url in
-			switch url.relativePath {
-			case "/callback":
-				let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
-				let queryItems = components?.queryItems
-
-				if let code = queryItems?.first(where: { $0.name == "code" })?.value,
-					let state = queryItems?.first(where: { $0.name == "state" })?.value
-				{
-					print(code, state)
-
-					if state == self.state {
-						Task {
-							do {
-								let auth = try await API.req(
-									type: oAuthToken.self,
-									method: .post,
-									endpoint: "oauth/token",
-									body: [
-										"client_id": Auth.clientID,
-										"code": code,
-										"grant_type": "authorization_code",
-										"redirect_uri": Auth.redirectUri,
-										"code_verifier": self.codeVerifier,
-									],
-									contentType: .formUrlEncoded,
-									useBase: false
-								)
-
-								let instance = GitLabInstance(
-									host: "gitlab.com",
-									token: auth.accessToken,
-									isOAuth: true
-								)
-								try await Auth.login(
-									instance: instance
-								)
-							} catch let error {
-								print(error)
-								Notify.status(
-									.error, "Failed to log in",
-									error.localizedDescription,
-									systemImage: "xmark"
-								)
-							}
-						}
-					} else {
-						Notify.status(
-							.error,
-							"Couldn't log in",
-							"State mismatch",
-							systemImage: "exclamationmark.triangle"
-						)
-					}
-				} else {
-					Notify.status(
-						.error,
-						"Couldn't log in",
-						"Malformed URL",
-						systemImage: "exclamationmark.triangle"
-					)
-				}
-			default:
-				Notify.status(
-					.warning,
-					"Can't handle URL", "You need to log in first",
-					systemImage: "exclamationmark.triangle"
-				)
-			}
 		}
 	}
 }

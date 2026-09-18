@@ -42,6 +42,86 @@ class Auth {
 			.replacingOccurrences(of: "=", with: "")
 	}
 
+	public static func authorizeUrl(state: String, codeChallenge: String) -> URL? {
+		var components = URLComponents()
+		components.scheme = "https"
+		components.host = "gitlab.com"
+		components.path = "/oauth/authorize"
+		components.queryItems = [
+			URLQueryItem(name: "client_id", value: clientID),
+			URLQueryItem(name: "code_challenge", value: codeChallenge),
+			URLQueryItem(name: "code_challenge_method", value: "S256"),
+			URLQueryItem(name: "redirect_uri", value: redirectUri),
+			URLQueryItem(name: "response_type", value: "code"),
+			URLQueryItem(name: "scope", value: scope),
+			URLQueryItem(name: "state", value: state),
+		]
+		return components.url
+	}
+
+	@MainActor
+	public static func handleCallback(_ url: URL) async {
+		guard url.relativePath == "/callback" else {
+			Notify.status(
+				.warning,
+				"Can't handle URL", "You need to log in first",
+				systemImage: "exclamationmark.triangle"
+			)
+			return
+		}
+
+		guard let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems,
+			let code = queryItems.first(where: { $0.name == "code" })?.value,
+			let state = queryItems.first(where: { $0.name == "state" })?.value
+		else {
+			Notify.status(
+				.error,
+				"Couldn't log in", "Malformed URL",
+				systemImage: "exclamationmark.triangle"
+			)
+			return
+		}
+
+		guard let codeVerifier = OAuthRequest.shared.takeVerifier(for: state) else {
+			Notify.status(
+				.error,
+				"Couldn't log in", "State mismatch",
+				systemImage: "exclamationmark.triangle"
+			)
+			return
+		}
+
+		do {
+			let auth = try await API.req(
+				type: oAuthToken.self,
+				method: .post,
+				endpoint: "oauth/token",
+				body: [
+					"client_id": clientID,
+					"code": code,
+					"grant_type": "authorization_code",
+					"redirect_uri": redirectUri,
+					"code_verifier": codeVerifier,
+				],
+				contentType: .formUrlEncoded,
+				useBase: false
+			)
+
+			try await login(
+				instance: GitLabInstance(
+					host: "gitlab.com",
+					token: auth.accessToken,
+					isOAuth: true
+				))
+		} catch let error {
+			Notify.status(
+				.error, "Failed to log in",
+				error.localizedDescription,
+				systemImage: "xmark"
+			)
+		}
+	}
+
 	@MainActor
 	public static func login(
 		instance: GitLabInstance,
@@ -151,5 +231,43 @@ class Auth {
 		URLCache.avatarCache.removeAllCachedResponses()
 		Network.shared.resetApolloClient()
 		try await Network.shared.apollo.store.clearCache()
+	}
+}
+
+@MainActor
+final class OAuthRequest {
+	static let shared = OAuthRequest()
+
+	private static let stateKey = "oauthPendingState"
+	private static let verifierKey = "oauthPendingCodeVerifier"
+
+	private let defaults = UserDefaults.standard
+
+	private init() {
+	}
+
+	func begin() -> (state: String, codeChallenge: String) {
+		let state = UUID().uuidString
+		let codeVerifier = Auth.generateCodeVerifier()
+
+		defaults.set(state, forKey: Self.stateKey)
+		defaults.set(codeVerifier, forKey: Self.verifierKey)
+
+		return (state, Auth.generateCodeChallenge(codeVerifier: codeVerifier))
+	}
+
+	func takeVerifier(for state: String) -> String? {
+		guard state.isNotEmpty, state == defaults.string(forKey: Self.stateKey) else {
+			return nil
+		}
+
+		let verifier = defaults.string(forKey: Self.verifierKey)
+		clear()
+		return verifier
+	}
+
+	func clear() {
+		defaults.removeObject(forKey: Self.stateKey)
+		defaults.removeObject(forKey: Self.verifierKey)
 	}
 }
