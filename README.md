@@ -37,6 +37,7 @@ Common tasks are defined in the `Makefile`. Run `make` to list them:
 | `make lint` | Lint hand-written Swift sources without modifying them |
 | `make check` | Format, then lint (pre-commit gate) |
 | `make icons` | Regenerate the bundled Android symbol assets |
+| `make app-icon` | Regenerate the Android launcher icon from the app icon artwork |
 | `make sbom` | Regenerate the bundled SPDX bill of materials |
 | `make generate-apollo` | Fetch the GitLab schema and regenerate the API |
 | `make fetch-schema` | Refetch `schema.graphqls` only |

@@ -22,7 +22,7 @@ APOLLO_CONFIG  := ./apollo-codegen-config.json
 APOLLO_CLI     := ./apollo-ios-cli
 APOLLO_INSTALL := ./download-apollo-cli.sh
 
-.PHONY: help fmt lint check icons sbom generate-apollo fetch-schema install-apollo-cli \
+.PHONY: help fmt lint check icons app-icon sbom generate-apollo fetch-schema install-apollo-cli \
         check-generated clean
 
 # --- Development -------------------------------------------------------------
@@ -48,6 +48,16 @@ check: fmt lint ## Format, then lint (pre-commit gate)
 
 icons: ## Regenerate the bundled Android symbol assets (network)
 	$(SWIFT) scripts/gen-symbolsets.swift
+
+# The iOS app icon is the hand-maintained Icon Composer document
+# tanuki-app/Darwin/TanukiIcon.icon (Xcode compiles it via
+# ASSETCATALOG_COMPILER_APPICON_NAME). Android needs mipmaps, which skip icon
+# renders from the same artwork over the app's orange gradient.
+app-icon: ## Regenerate the Android launcher icon from the app icon artwork
+	@$(call need,tanuki-app/Darwin/TanukiIcon.icon/Assets/tinted.png)
+	cd tanuki-app && skip icon --android --no-darwin \
+		--background '#FF9500-#F07800' --inset 0.06 --shadow 0.0 \
+		Darwin/TanukiIcon.icon/Assets/tinted.png
 
 # --- SBOM --------------------------------------------------------------------
 

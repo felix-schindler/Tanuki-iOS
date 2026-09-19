@@ -14,6 +14,7 @@
     <application
         android:label="${PRODUCT_NAME}"
         android:name=".AndroidAppMain"
+        android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:allowBackup="true"
         >
