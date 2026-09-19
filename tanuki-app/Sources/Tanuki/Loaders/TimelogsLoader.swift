@@ -171,8 +171,7 @@ struct TimelogsLoader: View {
 									Text("\(log.timeSpent / 60) minutes")
 
 									if let summary = log.summary {
-										Markdown(summary.emojized())
-											.markdownTheme(.gitLab)
+										InlineMarkdown(summary.emojized())
 									}
 								}
 							}

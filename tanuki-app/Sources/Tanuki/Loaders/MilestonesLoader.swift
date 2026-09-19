@@ -167,8 +167,7 @@ struct MilestonesLoader: View {
 									if let description = milestone.description?.emojized(),
 										description.isNotEmpty
 									{
-										Markdown(description)
-											.markdownTheme(.gitLab)
+										InlineMarkdown(description)
 									}
 								}
 							}

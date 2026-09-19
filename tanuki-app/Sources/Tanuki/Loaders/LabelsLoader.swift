@@ -118,8 +118,7 @@ struct LabelsLoader: View {
 									if let description = label.description,
 										description.isNotEmpty
 									{
-										Markdown(description)
-											.markdownTheme(.gitLab)
+										InlineMarkdown(description)
 									}
 								}
 							}

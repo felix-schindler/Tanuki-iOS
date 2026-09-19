@@ -105,8 +105,7 @@ struct NoteView: View {
 		} else {
 			Label(
 				title: {
-					Markdown(note.body.emojized(), baseURL: API.url)
-						.markdownTheme(.gitLab)
+					InlineMarkdown(note.body.emojized())
 				},
 				icon: {
 					Image(systemName: convertIconName(note.systemNoteIconName))

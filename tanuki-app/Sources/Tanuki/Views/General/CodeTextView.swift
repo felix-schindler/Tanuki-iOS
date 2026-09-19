@@ -5,98 +5,93 @@
 //  Created by Felix Schindler on 07.04.24.
 //
 
-//import Highlightr
 import SwiftUI
 
-#if !SKIP_BRIDGE
-	class Highlightr {
-		init?() {
-		}
+public struct CodeTextView: View {
+	private let code: String
+	private let language: String
+	private let fontSize: Double
 
-		func supportedLanguages() -> [String] {
-			[]
-		}
+	public init(
+		_ code: String,
+		language: String,
+		colorScheme: ColorScheme,
+		lightTheme: String = "vs",
+		darkTheme: String = "vs2015",
+		fontSize: Double = 12
+	) {
+		self.code = code
+		self.language = language
+		self.fontSize = fontSize
+	}
 
-		func availableThemes() -> [String] {
-			[]
-		}
-
-		func setTheme(to: String) {
-		}
-
-		func highlight(_ content: String, as: String) -> NSAttributedString? {
-			NSAttributedString()
+	public var body: some View {
+		if language.lowercased() == "diff" {
+			DiffTextView(code: code)
+		} else {
+			HTMLWebView(html: MarkdownHTML.codeDocument(code, language: language, fontSize: fontSize))
 		}
 	}
-#endif
+}
 
-/// Inspiration from: https://github.com/mortenjust/CodeHighlighter
-/// See: https://highlightjs.org and https://github.com/raspu/Highlightr
-#if SKIP_BRIDGE
-	public struct CodeTextView: View {
-		private let code: String
-		private let fontSize: Double
+struct DiffTextView: View {
+	let code: String
 
-		public init(
-			_ code: String,
-			language: String,
-			colorScheme: ColorScheme,
-			lightTheme: String = "vs",
-			darkTheme: String = "vs2015",
-			fontSize: Double = 12
-		) {
-			self.code = code
-			self.fontSize = fontSize
-		}
-
-		public var body: some View {
-			Text(code)
-				.font(.custom("SF Mono", size: fontSize))
-				.lineSpacing(4)
-		}
-	}
-#else
-	public struct CodeTextView: View {
-		private var highlightedCode: AttributedString
-
-		public init(
-			_ code: String,
-			language: String,
-			colorScheme: ColorScheme,
-			lightTheme: String = "vs",
-			darkTheme: String = "vs2015",
-			fontSize: Double = 12
-		) {
-			if let highlighter = Highlightr() {
-				let lang = language.lowercased()
-				if !highlighter.supportedLanguages().contains(lang) {
-					print("WARNING: Language \(lang) isn't supported, using auto detect")
-				}
-
-				let theme = colorScheme == .dark ? darkTheme : lightTheme
-				if highlighter.availableThemes().contains(theme) {
-					highlighter.setTheme(to: theme)
-				} else {
-					print("WARNING: Theme \(theme) isn't supported")
-				}
-
-				if let nsAtrStr = highlighter.highlight(code, as: lang) {
-					highlightedCode = AttributedString(nsAtrStr)
-				} else {
-					highlightedCode = AttributedString(code)
-				}
-			} else {
-				highlightedCode = AttributedString(code)
+	var body: some View {
+		let lines = code.components(separatedBy: "\n")
+		VStack(alignment: .leading, spacing: 0) {
+			ForEach(lines.indices, id: \.self) { index in
+				let line = lines[index]
+				Text(line.isEmpty ? " " : line)
+					.font(.caption.monospaced())
+					.foregroundStyle(foreground(for: line))
+					.frame(maxWidth: .infinity, alignment: .leading)
+					.padding(.horizontal, 4)
+					.background(background(for: line))
 			}
-
-			highlightedCode.font = .custom("SF Mono", size: fontSize)
-			highlightedCode.inlinePresentationIntent = .code
-		}
-
-		public var body: some View {
-			Text(highlightedCode)
-				.lineSpacing(4)
-				.textSelection(.enabled)
 		}
 	}
-#endif
+
+	private enum Kind {
+		case header
+		case addition
+		case deletion
+		case hunk
+		case context
+	}
+
+	private func kind(of line: String) -> Kind {
+		if line.hasPrefix("+++") || line.hasPrefix("---") || line.hasPrefix("diff ") || line.hasPrefix("index ") {
+			return .header
+		}
+		if line.hasPrefix("@@") {
+			return .hunk
+		}
+		if line.hasPrefix("+") {
+			return .addition
+		}
+		if line.hasPrefix("-") {
+			return .deletion
+		}
+		return .context
+	}
+
+	private func foreground(for line: String) -> Color {
+		switch kind(of: line) {
+		case .addition: return .green
+		case .deletion: return .red
+		case .hunk: return .accentColor
+		case .header: return .secondary
+		case .context: return .primary
+		}
+	}
+
+	private func background(for line: String) -> Color {
+		switch kind(of: line) {
+		case .addition: return Color.green.opacity(0.12)
+		case .deletion: return Color.red.opacity(0.12)
+		case .hunk: return Color.accentColor.opacity(0.08)
+		case .header, .context: return .clear
+		}
+	}
+}
