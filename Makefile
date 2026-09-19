@@ -22,7 +22,7 @@ APOLLO_CONFIG  := ./apollo-codegen-config.json
 APOLLO_CLI     := ./apollo-ios-cli
 APOLLO_INSTALL := ./download-apollo-cli.sh
 
-.PHONY: help fmt lint check icons generate-apollo fetch-schema install-apollo-cli \
+.PHONY: help fmt lint check icons sbom generate-apollo fetch-schema install-apollo-cli \
         check-generated clean
 
 # --- Development -------------------------------------------------------------
@@ -48,6 +48,23 @@ check: fmt lint ## Format, then lint (pre-commit gate)
 
 icons: ## Regenerate the bundled Android symbol assets (network)
 	$(SWIFT) scripts/gen-symbolsets.swift
+
+# --- SBOM --------------------------------------------------------------------
+
+# `skip meta sbom create` drives Gradle for the Android half, and the default
+# Homebrew `openjdk` (27) is too new for it — Homebrew's Gradle itself targets
+# openjdk@25. Honour a globally exported JAVA_HOME, else fall back to that JDK;
+# override with `make sbom SBOM_JAVA_HOME=/path/to/jdk`.
+SBOM_JAVA_HOME ?= $(if $(JAVA_HOME),$(JAVA_HOME),$(shell p=$$(brew --prefix openjdk@25 2>/dev/null); [ -n "$$p" ] && echo "$$p/libexec/openjdk.jdk/Contents/Home"))
+
+sbom: ## Regenerate the bundled SPDX bill of materials (network; drives Gradle)
+	@$(call need,tanuki-app)
+	@jh="$(SBOM_JAVA_HOME)"; \
+	if [ -n "$$jh" ] && [ ! -x "$$jh/bin/java" ]; then \
+		echo "error: SBOM_JAVA_HOME='$$jh' does not look like a JDK" >&2; exit 1; \
+	fi; \
+	cd tanuki-app && JAVA_HOME="$$jh" skip meta sbom create \
+		-d Sources/Tanuki/Resources $${jh:+--java-home "$$jh"} --project .
 
 # --- Apollo GraphQL ----------------------------------------------------------
 

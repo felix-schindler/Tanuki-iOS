@@ -36,6 +36,8 @@ Common tasks are defined in the `Makefile`. Run `make` to list them:
 | `make fmt` | Format hand-written Swift sources in place |
 | `make lint` | Lint hand-written Swift sources without modifying them |
 | `make check` | Format, then lint (pre-commit gate) |
+| `make icons` | Regenerate the bundled Android symbol assets |
+| `make sbom` | Regenerate the bundled SPDX bill of materials |
 | `make generate-apollo` | Fetch the GitLab schema and regenerate the API |
 | `make fetch-schema` | Refetch `schema.graphqls` only |
 | `make install-apollo-cli` | Download `apollo-ios-cli` (`VERSION=x.y.z` to pin) |
