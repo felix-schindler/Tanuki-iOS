@@ -305,4 +305,3 @@ struct DetailedMergeStatusView: View {
 		)
 	}
 }
-

@@ -5,8 +5,8 @@
 //  Created by Felix Schindler on 12.10.25.
 //
 
-import Foundation
 import ApolloAPI
+import Foundation
 import GitLabAPI
 
 class GraphFilter {

@@ -176,4 +176,3 @@ struct MergeButton: View {
 		}
 	}
 }
-

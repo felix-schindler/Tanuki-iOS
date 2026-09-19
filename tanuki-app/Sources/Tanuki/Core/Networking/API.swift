@@ -143,65 +143,65 @@ class InstanceManager {
 }
 
 #if canImport(WatchConnectivity)
-@MainActor
-final class WatchSync: NSObject, WCSessionDelegate {
-	static let shared = WatchSync()
-	private let encoder = JSONEncoder()
-	private var didActivate = false
+	@MainActor
+	final class WatchSync: NSObject, WCSessionDelegate {
+		static let shared = WatchSync()
+		private let encoder = JSONEncoder()
+		private var didActivate = false
 
-	func activate() {
-		guard WCSession.isSupported() else { return }
-		let session = WCSession.default
-		session.delegate = self
-		session.activate()
-	}
-
-	func pushInstances() {
-		guard WCSession.isSupported() else { return }
-		let session = WCSession.default
-		if !didActivate {
-			activate()
+		func activate() {
+			guard WCSession.isSupported() else { return }
+			let session = WCSession.default
+			session.delegate = self
+			session.activate()
 		}
 
-		guard let data = try? encoder.encode(InstanceManager.instances) else { return }
-		var context: [String: Any] = [
-			"instances": data
-		]
-		if let selectedId = InstanceManager.selectedId {
-			context["selectedId"] = selectedId
+		func pushInstances() {
+			guard WCSession.isSupported() else { return }
+			let session = WCSession.default
+			if !didActivate {
+				activate()
+			}
+
+			guard let data = try? encoder.encode(InstanceManager.instances) else { return }
+			var context: [String: Any] = [
+				"instances": data
+			]
+			if let selectedId = InstanceManager.selectedId {
+				context["selectedId"] = selectedId
+			}
+
+			try? session.updateApplicationContext(context)
 		}
 
-		try? session.updateApplicationContext(context)
-	}
-
-	nonisolated func session(
-		_ session: WCSession,
-		activationDidCompleteWith activationState: WCSessionActivationState,
-		error: Error?
-	) {
-		Task { @MainActor in
-			didActivate = activationState == .activated
-			if didActivate {
-				pushInstances()
+		nonisolated func session(
+			_ session: WCSession,
+			activationDidCompleteWith activationState: WCSessionActivationState,
+			error: Error?
+		) {
+			Task { @MainActor in
+				didActivate = activationState == .activated
+				if didActivate {
+					pushInstances()
+				}
 			}
 		}
-	}
 
-	nonisolated func sessionDidBecomeInactive(_ session: WCSession) {}
+		nonisolated func sessionDidBecomeInactive(_ session: WCSession) {}
 
-	nonisolated func sessionDidDeactivate(_ session: WCSession) {
-		session.activate()
+		nonisolated func sessionDidDeactivate(_ session: WCSession) {
+			session.activate()
+		}
 	}
-}
 #else
-/// No-op fallback for platforms without WatchConnectivity (macOS, Android)
-@MainActor
-final class WatchSync {
-	static let shared = WatchSync()
+	/// No-op fallback for platforms without WatchConnectivity (macOS, Android)
+	@MainActor
+	final class WatchSync {
+		static let shared = WatchSync()
 
-	func activate() {}
-	func pushInstances() {}
-}
+		func activate() {}
+		func pushInstances() {}
+	}
 #endif
 
 /// Errors surfaced by the REST layer, kept descriptive so the UI can show something useful.

@@ -76,4 +76,3 @@ struct PipelineStatus: View {
 		}
 	}
 }
-

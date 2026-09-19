@@ -221,4 +221,3 @@ struct ProjectReleasesLoader: View {
 		.navigationTitle("Releases")
 	}
 }
-
