@@ -171,8 +171,7 @@ struct NewIssueView: View {
 			TextField("Title (required)", text: $title)
 
 			Section("Description (Markdown supported)") {
-				TextEditor(text: $description)
-					.frame(minHeight: 100)
+				MarkdownTextEditor(text: $description)
 			}
 
 			Section {

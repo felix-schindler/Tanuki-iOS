@@ -66,8 +66,7 @@ struct NewLabelView: View {
 			}
 
 			Section("Description (optional)") {
-				TextEditor(text: $description)
-					.frame(minHeight: 100)
+				MarkdownTextEditor(text: $description)
 			}
 
 			Section {

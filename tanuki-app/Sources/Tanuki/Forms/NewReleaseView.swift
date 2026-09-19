@@ -228,8 +228,7 @@ struct NewReleaseView: View {
 			}
 
 			Section("Release notes (Markdown supported)") {
-				TextEditor(text: $description)
-					.frame(minHeight: 100)
+				MarkdownTextEditor(text: $description)
 			}
 		}.toolbar {
 			AsyncButton("Create new release", systemImage: "checkmark") {

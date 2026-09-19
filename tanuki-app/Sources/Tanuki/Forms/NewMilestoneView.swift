@@ -83,8 +83,7 @@ struct NewMilestoneView: View {
 			}
 
 			Section("Description (Markdown supported)") {
-				TextEditor(text: $desc)
-					.frame(minHeight: 100)
+				MarkdownTextEditor(text: $desc)
 			}
 		}.toolbar {
 			AsyncButton("Create milestone", systemImage: "checkmark") {

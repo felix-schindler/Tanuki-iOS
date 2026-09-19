@@ -69,8 +69,7 @@ struct NewNoteView: View {
 			PlatformNavigationView {
 				Form {
 					Section("Description (Markdown supported)") {
-						TextEditor(text: $content)
-							.frame(minHeight: 100)
+						MarkdownTextEditor(text: $content)
 					}
 
 					if type != .snippet {

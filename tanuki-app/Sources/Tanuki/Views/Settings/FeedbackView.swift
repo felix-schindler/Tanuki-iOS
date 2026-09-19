@@ -48,12 +48,7 @@ struct FeedbackView: View {
 					.keyboardType(.emailAddress)
 					.autocorrectionDisabled()
 					.textInputAutocapitalization(.never)
-				VStack(alignment: .leading) {
-					Text("Description")
-						.foregroundStyle(.secondary)
-						.font(.footnote)
-					TextEditor(text: $desc)
-				}
+				MarkdownTextEditor("Description", text: $desc)
 				Toggle("I have read and accept the privacy information", isOn: $accepted)
 			}.toolbar {
 				AsyncButton("Submit", systemImage: "checkmark") {
