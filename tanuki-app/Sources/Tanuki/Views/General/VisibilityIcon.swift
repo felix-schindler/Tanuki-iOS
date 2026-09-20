@@ -38,7 +38,7 @@ struct VisibilityIcon: View {
 				.labelStyle(.titleAndIcon)
 		} else {
 			Image(systemName: systemName)
-				.accessibilityLabel(self.visibility.capitalized)
+				.accessibilityLabel(Text(self.visibility.capitalized))
 		}
 	}
 }

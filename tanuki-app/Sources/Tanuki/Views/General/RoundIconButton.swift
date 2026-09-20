@@ -75,7 +75,7 @@ struct RoundIconButton: View {
 		if #available(iOS 17.0, *) {
 			Button(action: action) {
 				Image(systemName: iconName)
-					.accessibilityLabel(label)
+					.accessibilityLabel(Text(label))
 			}
 			.frame(minWidth: 30, minHeight: 30)
 			.buttonStyle(.bordered)
@@ -85,7 +85,7 @@ struct RoundIconButton: View {
 		} else {
 			Button(action: action) {
 				Image(systemName: iconName)
-					.accessibilityLabel(label)
+					.accessibilityLabel(Text(label))
 			}
 			.frame(minWidth: 30, minHeight: 30)
 			.buttonStyle(.bordered)

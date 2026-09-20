@@ -116,7 +116,7 @@ struct IssueStateIcon: View {
 
 	public var body: some View {
 		Image(systemName: self.icon)
-			.accessibilityLabel(self.state)
+			.accessibilityLabel(Text(self.state))
 			.foregroundStyle(self.color)
 	}
 }
@@ -170,7 +170,7 @@ struct MergeStateIcon: View {
 
 	public var body: some View {
 		self.icon
-			.accessibilityLabel(self.state.rawValue)
+			.accessibilityLabel(Text(self.state.rawValue))
 			.foregroundStyle(self.color)
 	}
 }
