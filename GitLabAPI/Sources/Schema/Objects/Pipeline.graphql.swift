@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Objects {
-  static let Pipeline = ApolloAPI.Object(
+  nonisolated static let Pipeline = ApolloAPI.Object(
     typename: "Pipeline",
     implementedInterfaces: [Interfaces.PipelineInterface.self],
     keyFields: nil

@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// The connection type for Blob.
-  static let BlobConnection = ApolloAPI.Object(
+  nonisolated static let BlobConnection = ApolloAPI.Object(
     typename: "BlobConnection",
     implementedInterfaces: [],
     keyFields: nil

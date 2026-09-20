@@ -4,7 +4,7 @@
 @_exported import ApolloAPI
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public struct GroupCustomEmojiQuery: GraphQLQuery {
+nonisolated public struct GroupCustomEmojiQuery: GraphQLQuery {
   public static let operationName: String = "GroupCustomEmoji"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -19,7 +19,7 @@ public struct GroupCustomEmojiQuery: GraphQLQuery {
 
   @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
 
-  public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -37,7 +37,7 @@ public struct GroupCustomEmojiQuery: GraphQLQuery {
     /// Group
     ///
     /// Parent Type: `Group`
-    public struct Group: GitLabAPI.SelectionSet {
+    nonisolated public struct Group: GitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -56,7 +56,7 @@ public struct GroupCustomEmojiQuery: GraphQLQuery {
       /// Group.CustomEmoji
       ///
       /// Parent Type: `CustomEmojiConnection`
-      public struct CustomEmoji: GitLabAPI.SelectionSet {
+      nonisolated public struct CustomEmoji: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -75,7 +75,7 @@ public struct GroupCustomEmojiQuery: GraphQLQuery {
         /// Group.CustomEmoji.Node
         ///
         /// Parent Type: `CustomEmoji`
-        public struct Node: GitLabAPI.SelectionSet {
+        nonisolated public struct Node: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 

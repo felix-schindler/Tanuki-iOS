@@ -3,7 +3,7 @@
 
 @_spi(Internal) import ApolloAPI
 
-public enum TodoActionEnum: String, EnumType {
+nonisolated public enum TodoActionEnum: String, EnumType {
   /// Todo action name for assigned.
   case assigned = "assigned"
   /// Todo action name for review_requested.

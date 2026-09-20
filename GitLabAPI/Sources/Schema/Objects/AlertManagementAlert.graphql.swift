@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Describes an alert from the project's Alert Management
-  static let AlertManagementAlert = ApolloAPI.Object(
+  nonisolated static let AlertManagementAlert = ApolloAPI.Object(
     typename: "AlertManagementAlert",
     implementedInterfaces: [
       Interfaces.NoteableInterface.self,

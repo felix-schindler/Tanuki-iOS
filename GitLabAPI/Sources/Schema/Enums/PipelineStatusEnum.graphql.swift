@@ -3,7 +3,7 @@
 
 @_spi(Internal) import ApolloAPI
 
-public enum PipelineStatusEnum: String, EnumType {
+nonisolated public enum PipelineStatusEnum: String, EnumType {
   /// Pipeline has been created.
   case created = "CREATED"
   /// A resource (for example, a runner) that the pipeline requires to run is unavailable.

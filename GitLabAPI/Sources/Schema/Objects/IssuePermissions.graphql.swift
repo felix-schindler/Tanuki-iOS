@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Check permissions for the current user on a issue
-  static let IssuePermissions = ApolloAPI.Object(
+  nonisolated static let IssuePermissions = ApolloAPI.Object(
     typename: "IssuePermissions",
     implementedInterfaces: [],
     keyFields: nil

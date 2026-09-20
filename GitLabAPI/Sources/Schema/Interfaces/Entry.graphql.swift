@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let Entry = ApolloAPI.Interface(
+  nonisolated static let Entry = ApolloAPI.Interface(
     name: "Entry",
     keyFields: nil,
     implementingObjects: [

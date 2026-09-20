@@ -1,13 +1,13 @@
 {
-  "originHash" : "49870e0367d8e2c555f8b7900180534ac922e2e06efd537d8885050b6fd56929",
+  "originHash" : "9abdb4c4ed9ea56754504859a95a718df7a7ccff0c1f1d36b72a68deb9faff4a",
   "pins" : [
     {
       "identity" : "alamofire",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Alamofire/Alamofire",
       "state" : {
-        "revision" : "e938f8c66708e7352fc7e3512647fa54255b267a",
-        "version" : "5.11.2"
+        "revision" : "bda9ed57d72988a3a2ada33d824583541f86eac6",
+        "version" : "5.12.2"
       }
     },
     {
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apollographql/apollo-ios",
       "state" : {
-        "revision" : "825e655c41ebe3ebf0e682755f6f7cddcdabe6b4",
-        "version" : "2.0.5"
+        "revision" : "fe14c216aaea3d25274343e80ccb3015fc3fb0b0",
+        "version" : "2.4.0"
       }
     },
     {

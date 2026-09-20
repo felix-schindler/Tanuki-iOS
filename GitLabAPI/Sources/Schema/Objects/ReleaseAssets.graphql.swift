@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// A container for all assets associated with a release
-  static let ReleaseAssets = ApolloAPI.Object(
+  nonisolated static let ReleaseAssets = ApolloAPI.Object(
     typename: "ReleaseAssets",
     implementedInterfaces: [],
     keyFields: nil

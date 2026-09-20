@@ -4,7 +4,7 @@
 @_exported import ApolloAPI
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public struct StarProjectMutation: GraphQLMutation {
+nonisolated public struct StarProjectMutation: GraphQLMutation {
   public static let operationName: String = "StarProject"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -27,7 +27,7 @@ public struct StarProjectMutation: GraphQLMutation {
     "starred": starred
   ] }
 
-  public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -48,7 +48,7 @@ public struct StarProjectMutation: GraphQLMutation {
     /// StarProject
     ///
     /// Parent Type: `StarProjectPayload`
-    public struct StarProject: GitLabAPI.SelectionSet {
+    nonisolated public struct StarProject: GitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 

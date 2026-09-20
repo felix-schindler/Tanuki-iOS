@@ -4,7 +4,7 @@
 @_exported import ApolloAPI
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public struct GroupQuery: GraphQLQuery {
+nonisolated public struct GroupQuery: GraphQLQuery {
   public static let operationName: String = "Group"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -19,7 +19,7 @@ public struct GroupQuery: GraphQLQuery {
 
   @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
 
-  public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -37,7 +37,7 @@ public struct GroupQuery: GraphQLQuery {
     /// Group
     ///
     /// Parent Type: `Group`
-    public struct Group: GitLabAPI.SelectionSet {
+    nonisolated public struct Group: GitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -98,7 +98,7 @@ public struct GroupQuery: GraphQLQuery {
       /// Group.MaxAccessLevel
       ///
       /// Parent Type: `AccessLevel`
-      public struct MaxAccessLevel: GitLabAPI.SelectionSet {
+      nonisolated public struct MaxAccessLevel: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -118,7 +118,7 @@ public struct GroupQuery: GraphQLQuery {
       /// Group.UserPermissions
       ///
       /// Parent Type: `GroupPermissions`
-      public struct UserPermissions: GitLabAPI.SelectionSet {
+      nonisolated public struct UserPermissions: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -138,7 +138,7 @@ public struct GroupQuery: GraphQLQuery {
       /// Group.Parent
       ///
       /// Parent Type: `Group`
-      public struct Parent: GitLabAPI.SelectionSet {
+      nonisolated public struct Parent: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 

@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents the source code attached to a release in a particular format
-  static let ReleaseSource = ApolloAPI.Object(
+  nonisolated static let ReleaseSource = ApolloAPI.Object(
     typename: "ReleaseSource",
     implementedInterfaces: [],
     keyFields: nil

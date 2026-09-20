@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents a description widget
-  static let WorkItemWidgetDescription = ApolloAPI.Object(
+  nonisolated static let WorkItemWidgetDescription = ApolloAPI.Object(
     typename: "WorkItemWidgetDescription",
     implementedInterfaces: [Interfaces.WorkItemWidget.self],
     keyFields: nil

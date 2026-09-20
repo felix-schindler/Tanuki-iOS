@@ -4,7 +4,7 @@
 @_exported import ApolloAPI
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public struct UserMembershipProjectsQuery: GraphQLQuery {
+nonisolated public struct UserMembershipProjectsQuery: GraphQLQuery {
   public static let operationName: String = "UserMembershipProjects"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -19,7 +19,7 @@ public struct UserMembershipProjectsQuery: GraphQLQuery {
 
   @_spi(Unsafe) public var __variables: Variables? { ["username": username] }
 
-  public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -37,7 +37,7 @@ public struct UserMembershipProjectsQuery: GraphQLQuery {
     /// User
     ///
     /// Parent Type: `UserCore`
-    public struct User: GitLabAPI.SelectionSet {
+    nonisolated public struct User: GitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -56,7 +56,7 @@ public struct UserMembershipProjectsQuery: GraphQLQuery {
       /// User.ProjectMemberships
       ///
       /// Parent Type: `ProjectMemberConnection`
-      public struct ProjectMemberships: GitLabAPI.SelectionSet {
+      nonisolated public struct ProjectMemberships: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -75,7 +75,7 @@ public struct UserMembershipProjectsQuery: GraphQLQuery {
         /// User.ProjectMemberships.Node
         ///
         /// Parent Type: `ProjectMember`
-        public struct Node: GitLabAPI.SelectionSet {
+        nonisolated public struct Node: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -94,7 +94,7 @@ public struct UserMembershipProjectsQuery: GraphQLQuery {
           /// User.ProjectMemberships.Node.Project
           ///
           /// Parent Type: `Project`
-          public struct Project: GitLabAPI.SelectionSet {
+          nonisolated public struct Project: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 

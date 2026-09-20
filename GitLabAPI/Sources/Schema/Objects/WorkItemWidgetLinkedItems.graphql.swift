@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents the linked items widget
-  static let WorkItemWidgetLinkedItems = ApolloAPI.Object(
+  nonisolated static let WorkItemWidgetLinkedItems = ApolloAPI.Object(
     typename: "WorkItemWidgetLinkedItems",
     implementedInterfaces: [Interfaces.WorkItemWidget.self],
     keyFields: nil

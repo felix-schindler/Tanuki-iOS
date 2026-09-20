@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Objects {
-  static let Group = ApolloAPI.Object(
+  nonisolated static let Group = ApolloAPI.Object(
     typename: "Group",
     implementedInterfaces: [
       Interfaces.GroupInterface.self,

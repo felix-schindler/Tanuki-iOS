@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents the snippet blob
-  static let SnippetBlob = ApolloAPI.Object(
+  nonisolated static let SnippetBlob = ApolloAPI.Object(
     typename: "SnippetBlob",
     implementedInterfaces: [],
     keyFields: nil

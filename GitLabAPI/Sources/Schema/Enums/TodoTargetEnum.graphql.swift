@@ -3,7 +3,7 @@
 
 @_spi(Internal) import ApolloAPI
 
-public enum TodoTargetEnum: String, EnumType {
+nonisolated public enum TodoTargetEnum: String, EnumType {
   /// Commit.
   case commit = "COMMIT"
   /// Issue.

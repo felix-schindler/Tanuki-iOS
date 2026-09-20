@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let CurrentUserTodos = ApolloAPI.Interface(
+  nonisolated static let CurrentUserTodos = ApolloAPI.Interface(
     name: "CurrentUserTodos",
     keyFields: nil,
     implementingObjects: [

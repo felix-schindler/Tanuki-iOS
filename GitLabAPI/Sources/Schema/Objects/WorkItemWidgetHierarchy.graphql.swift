@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents a hierarchy widget
-  static let WorkItemWidgetHierarchy = ApolloAPI.Object(
+  nonisolated static let WorkItemWidgetHierarchy = ApolloAPI.Object(
     typename: "WorkItemWidgetHierarchy",
     implementedInterfaces: [Interfaces.WorkItemWidget.self],
     keyFields: nil

@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Objects {
-  static let AbuseReportLabel = ApolloAPI.Object(
+  nonisolated static let AbuseReportLabel = ApolloAPI.Object(
     typename: "AbuseReportLabel",
     implementedInterfaces: [Interfaces.LabelInterface.self],
     keyFields: nil

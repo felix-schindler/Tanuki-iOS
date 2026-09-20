@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let LabelInterface = ApolloAPI.Interface(
+  nonisolated static let LabelInterface = ApolloAPI.Interface(
     name: "LabelInterface",
     keyFields: nil,
     implementingObjects: [

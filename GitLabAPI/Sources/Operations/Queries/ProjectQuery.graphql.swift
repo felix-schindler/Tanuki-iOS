@@ -4,7 +4,7 @@
 @_exported import ApolloAPI
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public struct ProjectQuery: GraphQLQuery {
+nonisolated public struct ProjectQuery: GraphQLQuery {
   public static let operationName: String = "Project"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -19,7 +19,7 @@ public struct ProjectQuery: GraphQLQuery {
 
   @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
 
-  public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -37,7 +37,7 @@ public struct ProjectQuery: GraphQLQuery {
     /// Project
     ///
     /// Parent Type: `Project`
-    public struct Project: GitLabAPI.SelectionSet {
+    nonisolated public struct Project: GitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -116,7 +116,7 @@ public struct ProjectQuery: GraphQLQuery {
       /// Project.Namespace
       ///
       /// Parent Type: `Namespace`
-      public struct Namespace: GitLabAPI.SelectionSet {
+      nonisolated public struct Namespace: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -142,7 +142,7 @@ public struct ProjectQuery: GraphQLQuery {
       /// Project.Repository
       ///
       /// Parent Type: `Repository`
-      public struct Repository: GitLabAPI.SelectionSet {
+      nonisolated public struct Repository: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -182,7 +182,7 @@ public struct ProjectQuery: GraphQLQuery {
         /// Project.Repository.Readme
         ///
         /// Parent Type: `RepositoryBlobConnection`
-        public struct Readme: GitLabAPI.SelectionSet {
+        nonisolated public struct Readme: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -201,7 +201,7 @@ public struct ProjectQuery: GraphQLQuery {
           /// Project.Repository.Readme.Node
           ///
           /// Parent Type: `RepositoryBlob`
-          public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -222,7 +222,7 @@ public struct ProjectQuery: GraphQLQuery {
         /// Project.Repository.License
         ///
         /// Parent Type: `RepositoryBlobConnection`
-        public struct License: GitLabAPI.SelectionSet {
+        nonisolated public struct License: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -241,7 +241,7 @@ public struct ProjectQuery: GraphQLQuery {
           /// Project.Repository.License.Node
           ///
           /// Parent Type: `RepositoryBlob`
-          public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -262,7 +262,7 @@ public struct ProjectQuery: GraphQLQuery {
         /// Project.Repository.Contributing
         ///
         /// Parent Type: `RepositoryBlobConnection`
-        public struct Contributing: GitLabAPI.SelectionSet {
+        nonisolated public struct Contributing: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -281,7 +281,7 @@ public struct ProjectQuery: GraphQLQuery {
           /// Project.Repository.Contributing.Node
           ///
           /// Parent Type: `RepositoryBlob`
-          public struct Node: GitLabAPI.SelectionSet {
+          nonisolated public struct Node: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -302,7 +302,7 @@ public struct ProjectQuery: GraphQLQuery {
         /// Project.Repository.Tree
         ///
         /// Parent Type: `Tree`
-        public struct Tree: GitLabAPI.SelectionSet {
+        nonisolated public struct Tree: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -321,7 +321,7 @@ public struct ProjectQuery: GraphQLQuery {
           /// Project.Repository.Tree.LastCommit
           ///
           /// Parent Type: `Commit`
-          public struct LastCommit: GitLabAPI.SelectionSet {
+          nonisolated public struct LastCommit: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -361,7 +361,7 @@ public struct ProjectQuery: GraphQLQuery {
             /// Project.Repository.Tree.LastCommit.Signature
             ///
             /// Parent Type: `CommitSignature`
-            public struct Signature: GitLabAPI.SelectionSet {
+            nonisolated public struct Signature: GitLabAPI.SelectionSet {
               @_spi(Unsafe) public let __data: DataDict
               @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -381,7 +381,7 @@ public struct ProjectQuery: GraphQLQuery {
             /// Project.Repository.Tree.LastCommit.Pipelines
             ///
             /// Parent Type: `PipelineConnection`
-            public struct Pipelines: GitLabAPI.SelectionSet {
+            nonisolated public struct Pipelines: GitLabAPI.SelectionSet {
               @_spi(Unsafe) public let __data: DataDict
               @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -400,7 +400,7 @@ public struct ProjectQuery: GraphQLQuery {
               /// Project.Repository.Tree.LastCommit.Pipelines.Node
               ///
               /// Parent Type: `Pipeline`
-              public struct Node: GitLabAPI.SelectionSet {
+              nonisolated public struct Node: GitLabAPI.SelectionSet {
                 @_spi(Unsafe) public let __data: DataDict
                 @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -424,7 +424,7 @@ public struct ProjectQuery: GraphQLQuery {
       /// Project.Language
       ///
       /// Parent Type: `RepositoryLanguage`
-      public struct Language: GitLabAPI.SelectionSet {
+      nonisolated public struct Language: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -450,7 +450,7 @@ public struct ProjectQuery: GraphQLQuery {
       /// Project.UserPermissions
       ///
       /// Parent Type: `ProjectPermissions`
-      public struct UserPermissions: GitLabAPI.SelectionSet {
+      nonisolated public struct UserPermissions: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 

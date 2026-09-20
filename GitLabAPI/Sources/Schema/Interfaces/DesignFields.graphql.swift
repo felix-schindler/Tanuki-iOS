@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let DesignFields = ApolloAPI.Interface(
+  nonisolated static let DesignFields = ApolloAPI.Interface(
     name: "DesignFields",
     keyFields: nil,
     implementingObjects: [

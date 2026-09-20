@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// X.509 signature for a signed commit
-  static let X509Signature = ApolloAPI.Object(
+  nonisolated static let X509Signature = ApolloAPI.Object(
     typename: "X509Signature",
     implementedInterfaces: [Interfaces.CommitSignature.self],
     keyFields: nil

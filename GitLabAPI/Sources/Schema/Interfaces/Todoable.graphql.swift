@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Interfaces {
-  static let Todoable = ApolloAPI.Interface(
+  nonisolated static let Todoable = ApolloAPI.Interface(
     name: "Todoable",
     keyFields: nil,
     implementingObjects: [

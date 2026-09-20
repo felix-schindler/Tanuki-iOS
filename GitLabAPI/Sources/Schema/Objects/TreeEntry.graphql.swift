@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents a directory
-  static let TreeEntry = ApolloAPI.Object(
+  nonisolated static let TreeEntry = ApolloAPI.Object(
     typename: "TreeEntry",
     implementedInterfaces: [Interfaces.Entry.self],
     keyFields: nil

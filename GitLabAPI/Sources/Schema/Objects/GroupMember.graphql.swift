@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents a Group Membership
-  static let GroupMember = ApolloAPI.Object(
+  nonisolated static let GroupMember = ApolloAPI.Object(
     typename: "GroupMember",
     implementedInterfaces: [Interfaces.MemberInterface.self],
     keyFields: nil

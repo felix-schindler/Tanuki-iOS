@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// A single design
-  static let Design = ApolloAPI.Object(
+  nonisolated static let Design = ApolloAPI.Object(
     typename: "Design",
     implementedInterfaces: [
       Interfaces.CurrentUserTodos.self,

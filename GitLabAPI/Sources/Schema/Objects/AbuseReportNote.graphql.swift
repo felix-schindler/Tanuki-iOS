@@ -4,7 +4,7 @@
 import ApolloAPI
 
 public extension Objects {
-  static let AbuseReportNote = ApolloAPI.Object(
+  nonisolated static let AbuseReportNote = ApolloAPI.Object(
     typename: "AbuseReportNote",
     implementedInterfaces: [
       Interfaces.BaseNoteInterface.self,

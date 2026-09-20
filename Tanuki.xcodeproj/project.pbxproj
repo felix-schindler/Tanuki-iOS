@@ -1236,7 +1236,7 @@
 			repositoryURL = "https://github.com/apollographql/apollo-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.5;
+				minimumVersion = 2.4.0;
 			};
 		};
 		DC5AD7DB2E69D6E50031FC7B /* XCRemoteSwiftPackageReference "toast-swift" */ = {
@@ -1260,7 +1260,7 @@
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.11.2;
+				minimumVersion = 5.12.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

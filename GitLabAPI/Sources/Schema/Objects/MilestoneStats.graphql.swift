@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Contains statistics about a milestone
-  static let MilestoneStats = ApolloAPI.Object(
+  nonisolated static let MilestoneStats = ApolloAPI.Object(
     typename: "MilestoneStats",
     implementedInterfaces: [],
     keyFields: nil

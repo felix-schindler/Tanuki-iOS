@@ -4,7 +4,7 @@
 @_exported import ApolloAPI
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-public struct MergeRequestDiffsQuery: GraphQLQuery {
+nonisolated public struct MergeRequestDiffsQuery: GraphQLQuery {
   public static let operationName: String = "MergeRequestDiffs"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
@@ -27,7 +27,7 @@ public struct MergeRequestDiffsQuery: GraphQLQuery {
     "iid": iid
   ] }
 
-  public struct Data: GitLabAPI.SelectionSet {
+  nonisolated public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
     @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -45,7 +45,7 @@ public struct MergeRequestDiffsQuery: GraphQLQuery {
     /// Project
     ///
     /// Parent Type: `Project`
-    public struct Project: GitLabAPI.SelectionSet {
+    nonisolated public struct Project: GitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -64,7 +64,7 @@ public struct MergeRequestDiffsQuery: GraphQLQuery {
       /// Project.MergeRequest
       ///
       /// Parent Type: `MergeRequest`
-      public struct MergeRequest: GitLabAPI.SelectionSet {
+      nonisolated public struct MergeRequest: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -83,7 +83,7 @@ public struct MergeRequestDiffsQuery: GraphQLQuery {
         /// Project.MergeRequest.DiffStat
         ///
         /// Parent Type: `DiffStats`
-        public struct DiffStat: GitLabAPI.SelectionSet {
+        nonisolated public struct DiffStat: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 

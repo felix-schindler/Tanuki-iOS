@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Represents email participants widget
-  static let WorkItemWidgetEmailParticipants = ApolloAPI.Object(
+  nonisolated static let WorkItemWidgetEmailParticipants = ApolloAPI.Object(
     typename: "WorkItemWidgetEmailParticipants",
     implementedInterfaces: [Interfaces.WorkItemWidget.self],
     keyFields: nil

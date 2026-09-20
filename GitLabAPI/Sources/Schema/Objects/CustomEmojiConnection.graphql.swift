@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// The connection type for CustomEmoji.
-  static let CustomEmojiConnection = ApolloAPI.Object(
+  nonisolated static let CustomEmojiConnection = ApolloAPI.Object(
     typename: "CustomEmojiConnection",
     implementedInterfaces: [],
     keyFields: nil

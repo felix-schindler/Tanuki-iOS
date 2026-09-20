@@ -4,7 +4,7 @@
 @_spi(Internal) import ApolloAPI
 
 /// Possible states of a user
-public enum UserState: String, EnumType {
+nonisolated public enum UserState: String, EnumType {
   /// User is active and can use the system.
   case active = "active"
   /// User has been blocked by an administrator and cannot use the system.

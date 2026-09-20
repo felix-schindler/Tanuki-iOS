@@ -3,7 +3,7 @@
 
 @_spi(Internal) import ApolloAPI
 
-public enum VisibilityLevelsEnum: String, EnumType {
+nonisolated public enum VisibilityLevelsEnum: String, EnumType {
   /// Private visibility level.
   case `private` = "private"
   /// Internal visibility level.

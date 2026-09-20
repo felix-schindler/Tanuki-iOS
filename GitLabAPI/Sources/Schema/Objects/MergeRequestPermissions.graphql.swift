@@ -5,7 +5,7 @@ import ApolloAPI
 
 public extension Objects {
   /// Check permissions for the current user on a merge request
-  static let MergeRequestPermissions = ApolloAPI.Object(
+  nonisolated static let MergeRequestPermissions = ApolloAPI.Object(
     typename: "MergeRequestPermissions",
     implementedInterfaces: [],
     keyFields: nil

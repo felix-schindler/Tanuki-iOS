@@ -3,135 +3,136 @@
 
 import ApolloAPI
 
-public protocol SelectionSet: ApolloAPI.SelectionSet & ApolloAPI.RootSelectionSet
+nonisolated public protocol SelectionSet: ApolloAPI.SelectionSet & ApolloAPI.RootSelectionSet
 where Schema == GitLabAPI.SchemaMetadata {}
 
-public protocol InlineFragment: ApolloAPI.SelectionSet & ApolloAPI.InlineFragment
+nonisolated public protocol InlineFragment: ApolloAPI.SelectionSet & ApolloAPI.InlineFragment
 where Schema == GitLabAPI.SchemaMetadata {}
 
-public protocol MutableSelectionSet: ApolloAPI.MutableRootSelectionSet
+nonisolated public protocol MutableSelectionSet: ApolloAPI.MutableRootSelectionSet
 where Schema == GitLabAPI.SchemaMetadata {}
 
-public protocol MutableInlineFragment: ApolloAPI.MutableSelectionSet & ApolloAPI.InlineFragment
+nonisolated public protocol MutableInlineFragment: ApolloAPI.MutableSelectionSet & ApolloAPI.InlineFragment
 where Schema == GitLabAPI.SchemaMetadata {}
 
-public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
+nonisolated public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
   public static let configuration: any ApolloAPI.SchemaConfiguration.Type = SchemaConfiguration.self
 
+  private static let objectTypeMap: [String: ApolloAPI.Object] = [
+    "AbuseReportDiscussion": GitLabAPI.Objects.AbuseReportDiscussion,
+    "AbuseReportLabel": GitLabAPI.Objects.AbuseReportLabel,
+    "AbuseReportNote": GitLabAPI.Objects.AbuseReportNote,
+    "AccessLevel": GitLabAPI.Objects.AccessLevel,
+    "AlertManagementAlert": GitLabAPI.Objects.AlertManagementAlert,
+    "AutocompletedUser": GitLabAPI.Objects.AutocompletedUser,
+    "Blob": GitLabAPI.Objects.Blob,
+    "BlobConnection": GitLabAPI.Objects.BlobConnection,
+    "Commit": GitLabAPI.Objects.Commit,
+    "CommitConnection": GitLabAPI.Objects.CommitConnection,
+    "CurrentUser": GitLabAPI.Objects.CurrentUser,
+    "CustomEmoji": GitLabAPI.Objects.CustomEmoji,
+    "CustomEmojiConnection": GitLabAPI.Objects.CustomEmojiConnection,
+    "Design": GitLabAPI.Objects.Design,
+    "DesignAtVersion": GitLabAPI.Objects.DesignAtVersion,
+    "DiffStats": GitLabAPI.Objects.DiffStats,
+    "DiffStatsSummary": GitLabAPI.Objects.DiffStatsSummary,
+    "Discussion": GitLabAPI.Objects.Discussion,
+    "GpgSignature": GitLabAPI.Objects.GpgSignature,
+    "Group": GitLabAPI.Objects.Group,
+    "GroupConnection": GitLabAPI.Objects.GroupConnection,
+    "GroupMember": GitLabAPI.Objects.GroupMember,
+    "GroupMemberConnection": GitLabAPI.Objects.GroupMemberConnection,
+    "GroupPermissions": GitLabAPI.Objects.GroupPermissions,
+    "Issue": GitLabAPI.Objects.Issue,
+    "IssueConnection": GitLabAPI.Objects.IssueConnection,
+    "IssuePermissions": GitLabAPI.Objects.IssuePermissions,
+    "Key": GitLabAPI.Objects.Key,
+    "Label": GitLabAPI.Objects.Label,
+    "LabelConnection": GitLabAPI.Objects.LabelConnection,
+    "MemberInterfaceConnection": GitLabAPI.Objects.MemberInterfaceConnection,
+    "MergeRequest": GitLabAPI.Objects.MergeRequest,
+    "MergeRequestAssignee": GitLabAPI.Objects.MergeRequestAssignee,
+    "MergeRequestAssigneeConnection": GitLabAPI.Objects.MergeRequestAssigneeConnection,
+    "MergeRequestAuthor": GitLabAPI.Objects.MergeRequestAuthor,
+    "MergeRequestConnection": GitLabAPI.Objects.MergeRequestConnection,
+    "MergeRequestParticipant": GitLabAPI.Objects.MergeRequestParticipant,
+    "MergeRequestPermissions": GitLabAPI.Objects.MergeRequestPermissions,
+    "MergeRequestReviewer": GitLabAPI.Objects.MergeRequestReviewer,
+    "MergeRequestReviewerConnection": GitLabAPI.Objects.MergeRequestReviewerConnection,
+    "Milestone": GitLabAPI.Objects.Milestone,
+    "MilestoneConnection": GitLabAPI.Objects.MilestoneConnection,
+    "MilestoneStats": GitLabAPI.Objects.MilestoneStats,
+    "Mutation": GitLabAPI.Objects.Mutation,
+    "Namespace": GitLabAPI.Objects.Namespace,
+    "Note": GitLabAPI.Objects.Note,
+    "NoteConnection": GitLabAPI.Objects.NoteConnection,
+    "Pipeline": GitLabAPI.Objects.Pipeline,
+    "PipelineConnection": GitLabAPI.Objects.PipelineConnection,
+    "Project": GitLabAPI.Objects.Project,
+    "ProjectConnection": GitLabAPI.Objects.ProjectConnection,
+    "ProjectMember": GitLabAPI.Objects.ProjectMember,
+    "ProjectMemberConnection": GitLabAPI.Objects.ProjectMemberConnection,
+    "ProjectPermissions": GitLabAPI.Objects.ProjectPermissions,
+    "Query": GitLabAPI.Objects.Query,
+    "Release": GitLabAPI.Objects.Release,
+    "ReleaseAssetLink": GitLabAPI.Objects.ReleaseAssetLink,
+    "ReleaseAssetLinkConnection": GitLabAPI.Objects.ReleaseAssetLinkConnection,
+    "ReleaseAssets": GitLabAPI.Objects.ReleaseAssets,
+    "ReleaseConnection": GitLabAPI.Objects.ReleaseConnection,
+    "ReleaseSource": GitLabAPI.Objects.ReleaseSource,
+    "ReleaseSourceConnection": GitLabAPI.Objects.ReleaseSourceConnection,
+    "Repository": GitLabAPI.Objects.Repository,
+    "RepositoryBlob": GitLabAPI.Objects.RepositoryBlob,
+    "RepositoryBlobConnection": GitLabAPI.Objects.RepositoryBlobConnection,
+    "RepositoryLanguage": GitLabAPI.Objects.RepositoryLanguage,
+    "Snippet": GitLabAPI.Objects.Snippet,
+    "SnippetBlob": GitLabAPI.Objects.SnippetBlob,
+    "SnippetBlobConnection": GitLabAPI.Objects.SnippetBlobConnection,
+    "SnippetConnection": GitLabAPI.Objects.SnippetConnection,
+    "SnippetPermissions": GitLabAPI.Objects.SnippetPermissions,
+    "SshSignature": GitLabAPI.Objects.SshSignature,
+    "StarProjectPayload": GitLabAPI.Objects.StarProjectPayload,
+    "Submodule": GitLabAPI.Objects.Submodule,
+    "Timelog": GitLabAPI.Objects.Timelog,
+    "TimelogConnection": GitLabAPI.Objects.TimelogConnection,
+    "Todo": GitLabAPI.Objects.Todo,
+    "TodoConnection": GitLabAPI.Objects.TodoConnection,
+    "Tree": GitLabAPI.Objects.Tree,
+    "TreeEntry": GitLabAPI.Objects.TreeEntry,
+    "TreeEntryConnection": GitLabAPI.Objects.TreeEntryConnection,
+    "UpdateIssuePayload": GitLabAPI.Objects.UpdateIssuePayload,
+    "UserCore": GitLabAPI.Objects.UserCore,
+    "UserCoreConnection": GitLabAPI.Objects.UserCoreConnection,
+    "UserStatus": GitLabAPI.Objects.UserStatus,
+    "WikiPage": GitLabAPI.Objects.WikiPage,
+    "WorkItem": GitLabAPI.Objects.WorkItem,
+    "WorkItemWidgetAssignees": GitLabAPI.Objects.WorkItemWidgetAssignees,
+    "WorkItemWidgetAwardEmoji": GitLabAPI.Objects.WorkItemWidgetAwardEmoji,
+    "WorkItemWidgetCrmContacts": GitLabAPI.Objects.WorkItemWidgetCrmContacts,
+    "WorkItemWidgetCurrentUserTodos": GitLabAPI.Objects.WorkItemWidgetCurrentUserTodos,
+    "WorkItemWidgetDescription": GitLabAPI.Objects.WorkItemWidgetDescription,
+    "WorkItemWidgetDesigns": GitLabAPI.Objects.WorkItemWidgetDesigns,
+    "WorkItemWidgetDevelopment": GitLabAPI.Objects.WorkItemWidgetDevelopment,
+    "WorkItemWidgetEmailParticipants": GitLabAPI.Objects.WorkItemWidgetEmailParticipants,
+    "WorkItemWidgetErrorTracking": GitLabAPI.Objects.WorkItemWidgetErrorTracking,
+    "WorkItemWidgetHierarchy": GitLabAPI.Objects.WorkItemWidgetHierarchy,
+    "WorkItemWidgetLabels": GitLabAPI.Objects.WorkItemWidgetLabels,
+    "WorkItemWidgetLinkedItems": GitLabAPI.Objects.WorkItemWidgetLinkedItems,
+    "WorkItemWidgetLinkedResources": GitLabAPI.Objects.WorkItemWidgetLinkedResources,
+    "WorkItemWidgetMilestone": GitLabAPI.Objects.WorkItemWidgetMilestone,
+    "WorkItemWidgetNotes": GitLabAPI.Objects.WorkItemWidgetNotes,
+    "WorkItemWidgetNotifications": GitLabAPI.Objects.WorkItemWidgetNotifications,
+    "WorkItemWidgetParticipants": GitLabAPI.Objects.WorkItemWidgetParticipants,
+    "WorkItemWidgetStartAndDueDate": GitLabAPI.Objects.WorkItemWidgetStartAndDueDate,
+    "WorkItemWidgetTimeTracking": GitLabAPI.Objects.WorkItemWidgetTimeTracking,
+    "X509Signature": GitLabAPI.Objects.X509Signature
+  ]
+
   @_spi(Execution) public static func objectType(forTypename typename: String) -> ApolloAPI.Object? {
-    switch typename {
-    case "AbuseReportDiscussion": return GitLabAPI.Objects.AbuseReportDiscussion
-    case "AbuseReportLabel": return GitLabAPI.Objects.AbuseReportLabel
-    case "AbuseReportNote": return GitLabAPI.Objects.AbuseReportNote
-    case "AccessLevel": return GitLabAPI.Objects.AccessLevel
-    case "AlertManagementAlert": return GitLabAPI.Objects.AlertManagementAlert
-    case "AutocompletedUser": return GitLabAPI.Objects.AutocompletedUser
-    case "Blob": return GitLabAPI.Objects.Blob
-    case "BlobConnection": return GitLabAPI.Objects.BlobConnection
-    case "Commit": return GitLabAPI.Objects.Commit
-    case "CommitConnection": return GitLabAPI.Objects.CommitConnection
-    case "CurrentUser": return GitLabAPI.Objects.CurrentUser
-    case "CustomEmoji": return GitLabAPI.Objects.CustomEmoji
-    case "CustomEmojiConnection": return GitLabAPI.Objects.CustomEmojiConnection
-    case "Design": return GitLabAPI.Objects.Design
-    case "DesignAtVersion": return GitLabAPI.Objects.DesignAtVersion
-    case "DiffStats": return GitLabAPI.Objects.DiffStats
-    case "DiffStatsSummary": return GitLabAPI.Objects.DiffStatsSummary
-    case "Discussion": return GitLabAPI.Objects.Discussion
-    case "GpgSignature": return GitLabAPI.Objects.GpgSignature
-    case "Group": return GitLabAPI.Objects.Group
-    case "GroupConnection": return GitLabAPI.Objects.GroupConnection
-    case "GroupMember": return GitLabAPI.Objects.GroupMember
-    case "GroupMemberConnection": return GitLabAPI.Objects.GroupMemberConnection
-    case "GroupPermissions": return GitLabAPI.Objects.GroupPermissions
-    case "Issue": return GitLabAPI.Objects.Issue
-    case "IssueConnection": return GitLabAPI.Objects.IssueConnection
-    case "IssuePermissions": return GitLabAPI.Objects.IssuePermissions
-    case "Key": return GitLabAPI.Objects.Key
-    case "Label": return GitLabAPI.Objects.Label
-    case "LabelConnection": return GitLabAPI.Objects.LabelConnection
-    case "MemberInterfaceConnection": return GitLabAPI.Objects.MemberInterfaceConnection
-    case "MergeRequest": return GitLabAPI.Objects.MergeRequest
-    case "MergeRequestAssignee": return GitLabAPI.Objects.MergeRequestAssignee
-    case "MergeRequestAssigneeConnection": return GitLabAPI.Objects.MergeRequestAssigneeConnection
-    case "MergeRequestAuthor": return GitLabAPI.Objects.MergeRequestAuthor
-    case "MergeRequestConnection": return GitLabAPI.Objects.MergeRequestConnection
-    case "MergeRequestParticipant": return GitLabAPI.Objects.MergeRequestParticipant
-    case "MergeRequestPermissions": return GitLabAPI.Objects.MergeRequestPermissions
-    case "MergeRequestReviewer": return GitLabAPI.Objects.MergeRequestReviewer
-    case "MergeRequestReviewerConnection": return GitLabAPI.Objects.MergeRequestReviewerConnection
-    case "Milestone": return GitLabAPI.Objects.Milestone
-    case "MilestoneConnection": return GitLabAPI.Objects.MilestoneConnection
-    case "MilestoneStats": return GitLabAPI.Objects.MilestoneStats
-    case "Mutation": return GitLabAPI.Objects.Mutation
-    case "Namespace": return GitLabAPI.Objects.Namespace
-    case "Note": return GitLabAPI.Objects.Note
-    case "NoteConnection": return GitLabAPI.Objects.NoteConnection
-    case "Pipeline": return GitLabAPI.Objects.Pipeline
-    case "PipelineConnection": return GitLabAPI.Objects.PipelineConnection
-    case "Project": return GitLabAPI.Objects.Project
-    case "ProjectConnection": return GitLabAPI.Objects.ProjectConnection
-    case "ProjectMember": return GitLabAPI.Objects.ProjectMember
-    case "ProjectMemberConnection": return GitLabAPI.Objects.ProjectMemberConnection
-    case "ProjectPermissions": return GitLabAPI.Objects.ProjectPermissions
-    case "Query": return GitLabAPI.Objects.Query
-    case "Release": return GitLabAPI.Objects.Release
-    case "ReleaseAssetLink": return GitLabAPI.Objects.ReleaseAssetLink
-    case "ReleaseAssetLinkConnection": return GitLabAPI.Objects.ReleaseAssetLinkConnection
-    case "ReleaseAssets": return GitLabAPI.Objects.ReleaseAssets
-    case "ReleaseConnection": return GitLabAPI.Objects.ReleaseConnection
-    case "ReleaseSource": return GitLabAPI.Objects.ReleaseSource
-    case "ReleaseSourceConnection": return GitLabAPI.Objects.ReleaseSourceConnection
-    case "Repository": return GitLabAPI.Objects.Repository
-    case "RepositoryBlob": return GitLabAPI.Objects.RepositoryBlob
-    case "RepositoryBlobConnection": return GitLabAPI.Objects.RepositoryBlobConnection
-    case "RepositoryLanguage": return GitLabAPI.Objects.RepositoryLanguage
-    case "Snippet": return GitLabAPI.Objects.Snippet
-    case "SnippetBlob": return GitLabAPI.Objects.SnippetBlob
-    case "SnippetBlobConnection": return GitLabAPI.Objects.SnippetBlobConnection
-    case "SnippetConnection": return GitLabAPI.Objects.SnippetConnection
-    case "SnippetPermissions": return GitLabAPI.Objects.SnippetPermissions
-    case "SshSignature": return GitLabAPI.Objects.SshSignature
-    case "StarProjectPayload": return GitLabAPI.Objects.StarProjectPayload
-    case "Submodule": return GitLabAPI.Objects.Submodule
-    case "Timelog": return GitLabAPI.Objects.Timelog
-    case "TimelogConnection": return GitLabAPI.Objects.TimelogConnection
-    case "Todo": return GitLabAPI.Objects.Todo
-    case "TodoConnection": return GitLabAPI.Objects.TodoConnection
-    case "Tree": return GitLabAPI.Objects.Tree
-    case "TreeEntry": return GitLabAPI.Objects.TreeEntry
-    case "TreeEntryConnection": return GitLabAPI.Objects.TreeEntryConnection
-    case "UpdateIssuePayload": return GitLabAPI.Objects.UpdateIssuePayload
-    case "UserCore": return GitLabAPI.Objects.UserCore
-    case "UserCoreConnection": return GitLabAPI.Objects.UserCoreConnection
-    case "UserStatus": return GitLabAPI.Objects.UserStatus
-    case "WikiPage": return GitLabAPI.Objects.WikiPage
-    case "WorkItem": return GitLabAPI.Objects.WorkItem
-    case "WorkItemWidgetAssignees": return GitLabAPI.Objects.WorkItemWidgetAssignees
-    case "WorkItemWidgetAwardEmoji": return GitLabAPI.Objects.WorkItemWidgetAwardEmoji
-    case "WorkItemWidgetCrmContacts": return GitLabAPI.Objects.WorkItemWidgetCrmContacts
-    case "WorkItemWidgetCurrentUserTodos": return GitLabAPI.Objects.WorkItemWidgetCurrentUserTodos
-    case "WorkItemWidgetDescription": return GitLabAPI.Objects.WorkItemWidgetDescription
-    case "WorkItemWidgetDesigns": return GitLabAPI.Objects.WorkItemWidgetDesigns
-    case "WorkItemWidgetDevelopment": return GitLabAPI.Objects.WorkItemWidgetDevelopment
-    case "WorkItemWidgetEmailParticipants": return GitLabAPI.Objects.WorkItemWidgetEmailParticipants
-    case "WorkItemWidgetErrorTracking": return GitLabAPI.Objects.WorkItemWidgetErrorTracking
-    case "WorkItemWidgetHierarchy": return GitLabAPI.Objects.WorkItemWidgetHierarchy
-    case "WorkItemWidgetLabels": return GitLabAPI.Objects.WorkItemWidgetLabels
-    case "WorkItemWidgetLinkedItems": return GitLabAPI.Objects.WorkItemWidgetLinkedItems
-    case "WorkItemWidgetLinkedResources": return GitLabAPI.Objects.WorkItemWidgetLinkedResources
-    case "WorkItemWidgetMilestone": return GitLabAPI.Objects.WorkItemWidgetMilestone
-    case "WorkItemWidgetNotes": return GitLabAPI.Objects.WorkItemWidgetNotes
-    case "WorkItemWidgetNotifications": return GitLabAPI.Objects.WorkItemWidgetNotifications
-    case "WorkItemWidgetParticipants": return GitLabAPI.Objects.WorkItemWidgetParticipants
-    case "WorkItemWidgetStartAndDueDate": return GitLabAPI.Objects.WorkItemWidgetStartAndDueDate
-    case "WorkItemWidgetTimeTracking": return GitLabAPI.Objects.WorkItemWidgetTimeTracking
-    case "X509Signature": return GitLabAPI.Objects.X509Signature
-    default: return nil
-    }
+    objectTypeMap[typename]
   }
 }
 
-public enum Objects {}
-public enum Interfaces {}
-public enum Unions {}
+nonisolated public enum Objects {}
+nonisolated public enum Interfaces {}
+nonisolated public enum Unions {}
