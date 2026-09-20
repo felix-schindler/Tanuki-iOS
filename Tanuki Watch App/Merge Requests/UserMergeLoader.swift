@@ -41,7 +41,7 @@ struct UserMergeLoader: View {
 			switch self.userRequestType {
 			case .assigned:
 				let responses = try Network.shared.apollo.fetch(
-					query: UserAssignedMergeRequestsQuery(),
+					query: UserAssignedMergeRequestsQuery(state: .none, search: .none, draft: .none, subscribed: .none),
 					cachePolicy: .cacheAndNetwork
 				)
 
@@ -55,7 +55,7 @@ struct UserMergeLoader: View {
 				}
 			case .authored:
 				let responses = try Network.shared.apollo.fetch(
-					query: UserAuthoredMergeRequestsQuery(),
+					query: UserAuthoredMergeRequestsQuery(state: .none, search: .none, draft: .none, subscribed: .none),
 					cachePolicy: .cacheAndNetwork
 				)
 
@@ -69,7 +69,7 @@ struct UserMergeLoader: View {
 				}
 			case .reviewRequested:
 				let responses = try Network.shared.apollo.fetch(
-					query: UserReviewRequestedMergeRequestsQuery(),
+					query: UserReviewRequestedMergeRequestsQuery(state: .none, search: .none, draft: .none, subscribed: .none),
 					cachePolicy: .cacheAndNetwork
 				)
 
@@ -92,7 +92,7 @@ struct UserMergeLoader: View {
 			switch self.userRequestType {
 			case .assigned:
 				let response = try await Network.shared.apollo.fetch(
-					query: UserAssignedMergeRequestsQuery(),
+					query: UserAssignedMergeRequestsQuery(state: .none, search: .none, draft: .none, subscribed: .none),
 					cachePolicy: .networkOnly
 				)
 
@@ -102,7 +102,7 @@ struct UserMergeLoader: View {
 				}
 			case .authored:
 				let response = try await Network.shared.apollo.fetch(
-					query: UserAuthoredMergeRequestsQuery(),
+					query: UserAuthoredMergeRequestsQuery(state: .none, search: .none, draft: .none, subscribed: .none),
 					cachePolicy: .networkOnly
 				)
 
@@ -112,7 +112,7 @@ struct UserMergeLoader: View {
 				}
 			case .reviewRequested:
 				let response = try await Network.shared.apollo.fetch(
-					query: UserReviewRequestedMergeRequestsQuery(),
+					query: UserReviewRequestedMergeRequestsQuery(state: .none, search: .none, draft: .none, subscribed: .none),
 					cachePolicy: .networkOnly
 				)
 
