@@ -364,15 +364,18 @@ struct ProjectLoader: View {
 										baseURL: baseUrl,
 										imageBaseURL: imgUrl
 									).markdownTheme(.gitLab)
+									.id(selectedFile)
 								} else if selectedFile == 1 && license != nil {
 									Markdown(license!)
 										.markdownTheme(.gitLab)
+										.id(selectedFile)
 								} else if selectedFile == 2 && contributing != nil {
 									Markdown(
 										contributing!,
 										baseURL: baseUrl,
 										imageBaseURL: imgUrl
 									).markdownTheme(.gitLab)
+									.id(selectedFile)
 								}
 							}
 						}
