@@ -57,11 +57,11 @@ extension String {
 
 	/// Writes the string to clipboard
 	func copyToClipboard() {
-		#if canImport(UIKit)
-			UIPasteboard.general.string = self
-		#elseif canImport(AppKit)
+		#if canImport(AppKit)
 			NSPasteboard.general.clearContents()
 			NSPasteboard.general.setString(self, forType: .string)
+		#else
+			UIPasteboard.general.string = self
 		#endif
 	}
 
