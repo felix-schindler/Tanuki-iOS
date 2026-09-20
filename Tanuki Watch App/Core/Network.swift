@@ -182,26 +182,12 @@ final class WatchSync: NSObject, WCSessionDelegate {
 class API {
 	/// GitLab host
 	public static var host: String {
-		get {
-			InstanceManager.selected?.host ?? "gitlab.com"
-		}
-		set {
-			var instance = InstanceManager.selected ?? GitLabInstance(host: "gitlab.com", token: "")
-			instance = GitLabInstance(host: newValue, token: instance.token, isOAuth: instance.isOAuth)
-			InstanceManager.add(instance)
-		}
+		InstanceManager.selected?.host ?? "gitlab.com"
 	}
 	
 	/// GitLab token
 	public static var token: String {
-		get {
-			InstanceManager.selected?.token ?? ""
-		}
-		set {
-			var instance = InstanceManager.selected ?? GitLabInstance(host: "gitlab.com", token: "")
-			instance = GitLabInstance(host: instance.host, token: newValue, isOAuth: instance.isOAuth)
-			InstanceManager.add(instance)
-		}
+		InstanceManager.selected?.token ?? ""
 	}
 	
 	public static var url: URL {

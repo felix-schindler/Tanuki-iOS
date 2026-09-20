@@ -84,26 +84,27 @@ class InstanceManager {
 		let oldHost =
 			legacyStore?.string(forKey: legacyHostKey)
 			?? userDefaults.string(forKey: legacyHostKey)
-		let oldToken =
+		let oldToken = (
 			legacyStore?.string(forKey: legacyTokenKey)
-			?? userDefaults.string(forKey: legacyTokenKey)
+				?? userDefaults.string(forKey: legacyTokenKey)
+		)?.trimmingCharacters(in: .whitespacesAndNewlines)
 
-		// No stored credentials (fresh install) -> don't create a phantom instance.
-		// Previously the host defaulted to "gitlab.com", so the guard below was
-		// always true and every fresh install ended up with an empty-token
-		// instance, which suppressed the login screen.
-		guard let oldToken = oldToken, oldToken.isNotEmpty else {
+		// Only a stored token is worth migrating. Without one this is a fresh
+		// install; previously the host defaulted to "gitlab.com", so the guard was
+		// always true and an empty-token instance suppressed the login screen.
+		guard let oldToken, oldToken.isNotEmpty else {
 			userDefaults.set(true, forKey: migrationDoneKey)
 			return
 		}
 		let host = oldHost?.isNotEmpty == true ? oldHost! : "gitlab.com"
 
-		let instance = GitLabInstance(
-			host: host,
-			token: oldToken,
-			isOAuth: host == "gitlab.com"
+		add(
+			GitLabInstance(
+				host: host,
+				token: oldToken,
+				isOAuth: host == "gitlab.com"
+			)
 		)
-		add(instance)
 
 		userDefaults.removeObject(forKey: legacyHostKey)
 		userDefaults.removeObject(forKey: legacyTokenKey)
@@ -138,22 +139,16 @@ class InstanceManager {
 		WatchSync.shared.pushInstances()
 	}
 
-	/// Removes instances without a token (e.g. phantom instances created by the
-	/// old `migrate()` on fresh installs). Self-heals installs already affected.
+	/// Drops instances without a token (the phantom the old `migrate()` created on
+	/// fresh installs) and points the selection at a valid one. Runs at launch
+	/// before any network client is built, so there are no caches to reset.
 	static func removeInvalid() {
 		let current = instances
 		let valid = current.filter { $0.token.isNotEmpty }
-		guard valid.count != current.count else { return }
+		let selection = valid.contains { $0.id == selectedId } ? selectedId : valid.last?.id
+		guard valid.count != current.count || selection != selectedId else { return }
 		instances = valid
-		if let id = selectedId, !valid.contains(where: { $0.id == id }) {
-			selectedId = valid.last?.id
-		}
-		WatchSync.shared.pushInstances()
-	}
-
-	static func update(_ instance: GitLabInstance) {
-		remove(instance)
-		add(instance)
+		selectedId = selection
 		WatchSync.shared.pushInstances()
 	}
 }
@@ -219,25 +214,11 @@ class API {
 	private static let session: Session = .default
 
 	public static var host: String {
-		get {
-			InstanceManager.selected?.host ?? "gitlab.com"
-		}
-		set {
-			var instance = InstanceManager.selected ?? GitLabInstance(host: "gitlab.com", token: "")
-			instance = GitLabInstance(host: newValue, token: instance.token, isOAuth: instance.isOAuth)
-			InstanceManager.add(instance)
-		}
+		InstanceManager.selected?.host ?? "gitlab.com"
 	}
 
 	public static var token: String {
-		get {
-			InstanceManager.selected?.token ?? ""
-		}
-		set {
-			var instance = InstanceManager.selected ?? GitLabInstance(host: "gitlab.com", token: "")
-			instance = GitLabInstance(host: instance.host, token: newValue, isOAuth: instance.isOAuth)
-			InstanceManager.add(instance)
-		}
+		InstanceManager.selected?.token ?? ""
 	}
 
 	public static var isOAuth: Bool {
