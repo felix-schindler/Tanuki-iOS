@@ -19,6 +19,15 @@ struct UserMergeLoader: View {
 	private var navTitle: String
 
 	@State
+	public var filter = MergeRequestFilter()
+
+	@State
+	private var showFilters = false
+
+	@State
+	private var loadTask: Task<Void, Never>?
+
+	@State
 	private var mergeRequests: Result<[UserSmallMergeRequest?], Error>? = nil
 
 	init(_ userRequestType: UserMergeRequestType) {
@@ -35,17 +44,46 @@ struct UserMergeLoader: View {
 			}
 	}
 
-	private func loadMergeRequests() {
-		do {
-			switch self.userRequestType {
-			case .assgined:
-				let responses = try Network.shared.apollo.fetch(
-					query: UserAssignedMergeRequestsQuery(),
-					cachePolicy: .cacheAndNetwork
-				)
+	private func assignedQuery() -> UserAssignedMergeRequestsQuery {
+		return UserAssignedMergeRequestsQuery(
+			state: GraphFilter.toFilterEnum(self.filter.state),
+			search: GraphFilter.toFilter(self.filter.search),
+			draft: GraphFilter.toFilter(self.filter.draft),
+			subscribed: GraphFilter.toFilterEnum(self.filter.subscribed)
+		)
+	}
 
-				Task {
+	private func authoredQuery() -> UserAuthoredMergeRequestsQuery {
+		return UserAuthoredMergeRequestsQuery(
+			state: GraphFilter.toFilterEnum(self.filter.state),
+			search: GraphFilter.toFilter(self.filter.search),
+			draft: GraphFilter.toFilter(self.filter.draft),
+			subscribed: GraphFilter.toFilterEnum(self.filter.subscribed)
+		)
+	}
+
+	private func reviewRequestedQuery() -> UserReviewRequestedMergeRequestsQuery {
+		return UserReviewRequestedMergeRequestsQuery(
+			state: GraphFilter.toFilterEnum(self.filter.state),
+			search: GraphFilter.toFilter(self.filter.search),
+			draft: GraphFilter.toFilter(self.filter.draft),
+			subscribed: GraphFilter.toFilterEnum(self.filter.subscribed)
+		)
+	}
+
+	private func loadMergeRequests() {
+		self.loadTask?.cancel()
+		self.loadTask = Task {
+			do {
+				switch self.userRequestType {
+				case .assgined:
+					let responses = try Network.shared.apollo.fetch(
+						query: self.assignedQuery(),
+						cachePolicy: .cacheAndNetwork
+					)
+
 					for try await response in responses {
+						if Task.isCancelled { return }
 						if let mrs = response.data?.currentUser?.assignedMergeRequests?.nodes {
 							self.mergeRequests = .success(mrs)
 						} else if let errors = response.errors {
@@ -54,15 +92,14 @@ struct UserMergeLoader: View {
 							}
 						}
 					}
-				}
-			case .authored:
-				let responses = try Network.shared.apollo.fetch(
-					query: UserAuthoredMergeRequestsQuery(),
-					cachePolicy: .cacheAndNetwork
-				)
+				case .authored:
+					let responses = try Network.shared.apollo.fetch(
+						query: self.authoredQuery(),
+						cachePolicy: .cacheAndNetwork
+					)
 
-				Task {
 					for try await response in responses {
+						if Task.isCancelled { return }
 						if let mrs = response.data?.currentUser?.authoredMergeRequests?.nodes {
 							self.mergeRequests = .success(mrs)
 						} else if let errors = response.errors {
@@ -71,15 +108,14 @@ struct UserMergeLoader: View {
 							}
 						}
 					}
-				}
-			case .reviewRequested:
-				let responses = try Network.shared.apollo.fetch(
-					query: UserReviewRequestedMergeRequestsQuery(),
-					cachePolicy: .cacheAndNetwork
-				)
+				case .reviewRequested:
+					let responses = try Network.shared.apollo.fetch(
+						query: self.reviewRequestedQuery(),
+						cachePolicy: .cacheAndNetwork
+					)
 
-				Task {
 					for try await response in responses {
+						if Task.isCancelled { return }
 						if let mrs = response.data?.currentUser?.reviewRequestedMergeRequests?.nodes {
 							self.mergeRequests = .success(mrs)
 						} else if let errors = response.errors {
@@ -89,10 +125,12 @@ struct UserMergeLoader: View {
 						}
 					}
 				}
+			} catch {
+				if !Task.isCancelled {
+					self.mergeRequests = .failure(error)
+					Notify.status(.error)
+				}
 			}
-		} catch let error {
-			self.mergeRequests = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
@@ -101,7 +139,7 @@ struct UserMergeLoader: View {
 			switch self.userRequestType {
 			case .assgined:
 				let response = try await Network.shared.apollo.fetch(
-					query: UserAssignedMergeRequestsQuery(),
+					query: self.assignedQuery(),
 					cachePolicy: .networkOnly
 				)
 
@@ -110,7 +148,7 @@ struct UserMergeLoader: View {
 				}
 			case .authored:
 				let response = try await Network.shared.apollo.fetch(
-					query: UserAuthoredMergeRequestsQuery(),
+					query: self.authoredQuery(),
 					cachePolicy: .networkOnly
 				)
 
@@ -119,7 +157,7 @@ struct UserMergeLoader: View {
 				}
 			case .reviewRequested:
 				let response = try await Network.shared.apollo.fetch(
-					query: UserReviewRequestedMergeRequestsQuery(),
+					query: self.reviewRequestedQuery(),
 					cachePolicy: .networkOnly
 				)
 
@@ -160,6 +198,26 @@ struct UserMergeLoader: View {
 			loadMergeRequests()
 		}.refreshable {
 			await reloadMergeRequests()
+		}.toolbar {
+			Button("Filter", systemImage: "line.3.horizontal.decrease") {
+				showFilters = true
+			}
+		}.sheet(isPresented: $showFilters, onDismiss: { self.showFilters = false }) {
+			NavigationView {
+				MergeRequestFilterView(filter: $filter)
+					.toolbar {
+						AsyncButton("Apply filter", systemImage: "checkmark") {
+							await reloadMergeRequests()
+							showFilters = false
+						}
+					}
+			}
+		}.searchable(
+			text: Binding(get: { self.filter.search ?? "" }, set: { self.filter.search = $0.isNotEmpty ? $0 : nil }),
+			prompt: "Search merge requests"
+		).onChange(of: filter.search) { _ in
+			self.mergeRequests = nil  // Show loading state
+			loadMergeRequests()
 		}.navigationTitle(self.navTitle)
 	}
 }

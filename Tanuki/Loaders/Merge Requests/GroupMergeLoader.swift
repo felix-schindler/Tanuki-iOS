@@ -12,21 +12,42 @@ struct GroupMergeLoader: View {
 	private let fullPath: String
 
 	@State
+	public var filter = MergeRequestFilter()
+
+	@State
+	private var showFilters = false
+
+	@State
+	private var loadTask: Task<Void, Never>?
+
+	@State
 	private var mergeRequests: Result<[SmallMergeRequest?], Error>? = nil
 
 	init(fullPath: String) {
 		self.fullPath = fullPath
 	}
 
-	private func loadMergeRequests() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: GroupMergeRequestsQuery(fullPath: self.fullPath),
-				cachePolicy: .cacheAndNetwork
-			)
+	private var query: GroupMergeRequestsQuery {
+		return GroupMergeRequestsQuery(
+			fullPath: self.fullPath,
+			state: GraphFilter.toFilterEnum(self.filter.state),
+			search: GraphFilter.toFilter(self.filter.search),
+			draft: GraphFilter.toFilter(self.filter.draft),
+			subscribed: GraphFilter.toFilterEnum(self.filter.subscribed)
+		)
+	}
 
-			Task {
+	private func loadMergeRequests() {
+		self.loadTask?.cancel()
+		self.loadTask = Task {
+			do {
+				let responses = try Network.shared.apollo.fetch(
+					query: self.query,
+					cachePolicy: .cacheAndNetwork
+				)
+
 				for try await response in responses {
+					if Task.isCancelled { return }
 					if let mrs = response.data?.group?.mergeRequests?.nodes {
 						self.mergeRequests = .success(mrs)
 					} else if let errors = response.errors {
@@ -35,17 +56,19 @@ struct GroupMergeLoader: View {
 						}
 					}
 				}
+			} catch {
+				if !Task.isCancelled {
+					self.mergeRequests = .failure(error)
+					Notify.status(.error)
+				}
 			}
-		} catch let error {
-			self.mergeRequests = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadMergeRequests() async {
 		do {
 			let response = try await Network.shared.apollo.fetch(
-				query: GroupMergeRequestsQuery(fullPath: self.fullPath),
+				query: self.query,
 				cachePolicy: .networkOnly
 			)
 
@@ -87,6 +110,26 @@ struct GroupMergeLoader: View {
 			loadMergeRequests()
 		}.refreshable {
 			await reloadMergeRequests()
+		}.toolbar {
+			Button("Filter", systemImage: "line.3.horizontal.decrease") {
+				showFilters = true
+			}
+		}.sheet(isPresented: $showFilters, onDismiss: { self.showFilters = false }) {
+			NavigationView {
+				MergeRequestFilterView(filter: $filter)
+					.toolbar {
+						AsyncButton("Apply filter", systemImage: "checkmark") {
+							await reloadMergeRequests()
+							showFilters = false
+						}
+					}
+			}
+		}.searchable(
+			text: Binding(get: { self.filter.search ?? "" }, set: { self.filter.search = $0.isNotEmpty ? $0 : nil }),
+			prompt: "Search merge requests"
+		).onChange(of: filter.search) { _ in
+			self.mergeRequests = nil  // Show loading state
+			loadMergeRequests()
 		}.navigationTitle("Merge Requests")
 	}
 }
