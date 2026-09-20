@@ -9,7 +9,7 @@ import Foundation
 import GitLabAPI
 
 // MARK: - Authentication
-struct oAuthToken: Codable {
+struct OAuthToken: Codable {
 	let accessToken: String
 	let tokenType: String
 	let expiresIn: Int

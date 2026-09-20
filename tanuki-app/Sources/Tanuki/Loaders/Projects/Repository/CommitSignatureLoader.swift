@@ -50,12 +50,7 @@ struct SignatureLoader: View {
 					Notify.status(.error, error.localizedDescription)
 				}
 			}
-		}.sheet(
-			isPresented: $showDetails,
-			onDismiss: {
-				self.showDetails = false
-			}
-		) {
+		}.sheet(isPresented: $showDetails) {
 			VStack(alignment: .leading) {
 				if let signature {
 					if signature.verificationStatus.starts(with: "verified") {

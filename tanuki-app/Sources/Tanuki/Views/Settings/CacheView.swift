@@ -13,8 +13,8 @@ struct CacheView: View {
 	@State var urlMemoryUsage = URLCache.shared.currentMemoryUsage
 	@State var urlDiskUsage = URLCache.shared.currentMemoryUsage
 
-	@State var avatarMemoryUsage = URLCache.avatarCache.currentMemoryUsage
-	@State var avatarDiskUsage = URLCache.avatarCache.currentMemoryUsage
+	@State var avatarMemoryUsage = URLCache.avatar.currentMemoryUsage
+	@State var avatarDiskUsage = URLCache.avatar.currentMemoryUsage
 
 	public init() {
 		self.formatter = ByteCountFormatter()
@@ -43,9 +43,9 @@ struct CacheView: View {
 				Text("On disk \(formatBytes(avatarDiskUsage))")
 
 				Button("Clear cache", systemImage: "trash", role: .destructive) {
-					URLCache.avatarCache.removeAllCachedResponses()
-					avatarMemoryUsage = URLCache.avatarCache.currentMemoryUsage
-					avatarDiskUsage = URLCache.avatarCache.currentMemoryUsage
+					URLCache.avatar.removeAllCachedResponses()
+					avatarMemoryUsage = URLCache.avatar.currentMemoryUsage
+					avatarDiskUsage = URLCache.avatar.currentMemoryUsage
 				}
 			}
 

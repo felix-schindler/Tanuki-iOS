@@ -108,7 +108,7 @@ struct MergeButton: View {
 			label: {
 				MergeStatus(mergeStatusEnum)
 			}
-		).sheet(isPresented: $showMergeStatus, onDismiss: { showMergeStatus = false }) {
+		).sheet(isPresented: $showMergeStatus) {
 			VStack(alignment: .leading) {
 				PopupHeader(
 					title: "Detailed merge status",
@@ -137,7 +137,7 @@ struct MergeButton: View {
 			}
 			.padding()
 			.modifier(PresentationDetendsIfAvailable())
-		}.sheet(isPresented: $showMergeOptions, onDismiss: { showMergeOptions = false }) {
+		}.sheet(isPresented: $showMergeOptions) {
 			PlatformNavigationView {
 				Form {
 					Toggle("Merge when the pipeline succeeds", isOn: $autoMerge)

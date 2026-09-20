@@ -11,7 +11,7 @@ import SwiftUI
 enum IssueType: String, CaseIterable {
 	case issue = "issue"
 	case incident = "incident"
-	case test_case = "test_case"
+	case testCase = "test_case"
 	case task = "task"
 }
 

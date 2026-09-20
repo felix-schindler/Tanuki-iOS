@@ -15,6 +15,7 @@ import SwiftUI
 		case `default`
 		case asciiCapable
 		case numbersAndPunctuation
+		// swift-format-ignore
 		case URL
 		case numberPad
 		case phonePad

@@ -194,11 +194,11 @@ struct HomeView: View {
 		}.refreshable {
 			await reloadStarredProjects()
 		}.toolbar {
-			/*ToolbarItem(placement: .topBarLeading) {
-				Button("Jump", systemImage: getIconName()) {
-					jumpTo()
-				}.tint(.accentColor)
-			}*/
+			//ToolbarItem(placement: .topBarLeading) {
+			//	Button("Jump", systemImage: getIconName()) {
+			//		jumpTo()
+			//	}.tint(.accentColor)
+			//}
 			ToolbarItemGroup(placement: .topBarTrailing) {
 				NavigationLink(destination: EventsLoader()) {
 					Label("Activity", systemImage: "bell")

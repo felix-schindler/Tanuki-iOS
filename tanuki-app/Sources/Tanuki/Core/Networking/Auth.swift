@@ -93,7 +93,7 @@ class Auth {
 
 		do {
 			let auth = try await API.req(
-				type: oAuthToken.self,
+				type: OAuthToken.self,
 				method: .post,
 				endpoint: "oauth/token",
 				body: [
@@ -228,7 +228,7 @@ class Auth {
 	@MainActor
 	private static func resetSessionCaches() async throws {
 		URLCache.shared.removeAllCachedResponses()
-		URLCache.avatarCache.removeAllCachedResponses()
+		URLCache.avatar.removeAllCachedResponses()
 		Network.shared.resetApolloClient()
 		try await Network.shared.apollo.store.clearCache()
 	}
