@@ -18,6 +18,7 @@ query Projects($membership: Boolean, $search: String, $personal: Boolean, $sort:
       nameWithNamespace
       visibility
       fullPath
+      archived
     }
   }
 }

@@ -8,7 +8,7 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
   public static let operationName: String = "Project"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename id avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt namespace { __typename id name fullPath } repository { __typename rootRef readme: blobs(paths: ["README.md", "README", "README.txt"], first: 1) { __typename nodes { __typename rawTextBlob } } license: blobs( paths: ["LICENSE", "LICENSE.txt", "LICENSE.md", "COPYING"] first: 1 ) { __typename nodes { __typename rawTextBlob } } contributing: blobs( paths: ["CONTRIBUTING", "CONTRIBUTING.txt", "CONTRIBUTING.md"] first: 1 ) { __typename nodes { __typename rawTextBlob } } tree { __typename lastCommit { __typename id title shortId authorName authoredDate webUrl signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue forkProject requestAccess } } }"#
+      #"query Project($fullPath: ID!) { project(fullPath: $fullPath) { __typename id avatarUrl name visibility description topics starCount forksCount issuesEnabled openIssuesCount mergeRequestsEnabled jobsEnabled openMergeRequestsCount webUrl httpUrlToRepo sshUrlToRepo createdAt archived namespace { __typename id name fullPath } repository { __typename rootRef readme: blobs(paths: ["README.md", "README", "README.txt"], first: 1) { __typename nodes { __typename rawTextBlob } } license: blobs( paths: ["LICENSE", "LICENSE.txt", "LICENSE.md", "COPYING"] first: 1 ) { __typename nodes { __typename rawTextBlob } } contributing: blobs( paths: ["CONTRIBUTING", "CONTRIBUTING.txt", "CONTRIBUTING.md"] first: 1 ) { __typename nodes { __typename rawTextBlob } } tree { __typename lastCommit { __typename id title shortId authorName authoredDate webUrl signature { __typename verificationStatus } pipelines { __typename nodes { __typename status } } } } } languages { __typename name share color } userPermissions { __typename createIssue forkProject requestAccess } } }"#
     ))
 
   public var fullPath: ID
@@ -61,6 +61,7 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
         .field("httpUrlToRepo", String?.self),
         .field("sshUrlToRepo", String?.self),
         .field("createdAt", GitLabAPI.Time?.self),
+        .field("archived", Bool?.self),
         .field("namespace", Namespace?.self),
         .field("repository", Repository?.self),
         .field("languages", [Language]?.self),
@@ -104,6 +105,8 @@ nonisolated public struct ProjectQuery: GraphQLQuery {
       public var sshUrlToRepo: String? { __data["sshUrlToRepo"] }
       /// Timestamp of the project creation.
       public var createdAt: GitLabAPI.Time? { __data["createdAt"] }
+      /// Indicates the archived status of the project.
+      public var archived: Bool? { __data["archived"] }
       /// Namespace of the project.
       public var namespace: Namespace? { __data["namespace"] }
       /// Git repository of the project.

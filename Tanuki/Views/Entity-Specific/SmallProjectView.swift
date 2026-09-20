@@ -26,7 +26,11 @@ struct SmallProjectView: View {
 					}
 					Text(project.nameWithNamespace)
 					Spacer()
-					if let visibility = project.visibility {
+					if project.archived == true {
+						Image(systemName: "archivebox.fill")
+							.help("Archived")
+							.accessibilityLabel("Archived")
+					} else if let visibility = project.visibility {
 						VisibilityIcon(visibility)
 					}
 				}

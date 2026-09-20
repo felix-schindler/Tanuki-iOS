@@ -8,7 +8,7 @@ nonisolated public struct UserMembershipProjectsQuery: GraphQLQuery {
   public static let operationName: String = "UserMembershipProjects"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query UserMembershipProjects($username: String!) { user(username: $username) { __typename projectMemberships { __typename nodes { __typename project { __typename avatarUrl nameWithNamespace visibility fullPath } } } } }"#
+      #"query UserMembershipProjects($username: String!) { user(username: $username) { __typename projectMemberships { __typename nodes { __typename project { __typename avatarUrl nameWithNamespace visibility fullPath archived } } } } }"#
     ))
 
   public var username: String
@@ -105,6 +105,7 @@ nonisolated public struct UserMembershipProjectsQuery: GraphQLQuery {
               .field("nameWithNamespace", String.self),
               .field("visibility", String?.self),
               .field("fullPath", GitLabAPI.ID.self),
+              .field("archived", Bool?.self),
             ] }
             @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
               UserMembershipProjectsQuery.Data.User.ProjectMemberships.Node.Project.self
@@ -118,6 +119,8 @@ nonisolated public struct UserMembershipProjectsQuery: GraphQLQuery {
             public var visibility: String? { __data["visibility"] }
             /// Full path of the project.
             public var fullPath: GitLabAPI.ID { __data["fullPath"] }
+            /// Indicates the archived status of the project.
+            public var archived: Bool? { __data["archived"] }
           }
         }
       }

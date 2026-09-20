@@ -332,6 +332,7 @@ protocol SmallProject {
 	var nameWithNamespace: String { get }
 	var visibility: String? { get }
 	var fullPath: String { get }
+	var archived: Bool? { get }
 }
 
 struct SmallProjectStruct: SmallProject {
@@ -339,6 +340,7 @@ struct SmallProjectStruct: SmallProject {
 	let nameWithNamespace: String
 	let visibility: String?
 	let fullPath: String
+	let archived: Bool?
 }
 
 extension ProjectsQuery.Data.Projects.Node: SmallProject {
@@ -639,7 +641,8 @@ extension UserTodosQuery.Data.User.Todos.Node: Todo {
 			avatarUrl: projectData.avatarUrl,
 			nameWithNamespace: projectData.nameWithNamespace,
 			visibility: projectData.visibility,
-			fullPath: projectData.fullPath
+			fullPath: projectData.fullPath,
+			archived: projectData.archived
 		)
 	}
 
@@ -667,7 +670,8 @@ extension CurrentUserTodosQuery.Data.CurrentUser.Todos.Node: Todo {
 			avatarUrl: projectData.avatarUrl,
 			nameWithNamespace: projectData.nameWithNamespace,
 			visibility: projectData.visibility,
-			fullPath: projectData.fullPath
+			fullPath: projectData.fullPath,
+			archived: projectData.archived
 		)
 	}
 

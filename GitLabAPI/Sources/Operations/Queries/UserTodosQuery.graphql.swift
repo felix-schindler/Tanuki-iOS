@@ -8,7 +8,7 @@ nonisolated public struct UserTodosQuery: GraphQLQuery {
   public static let operationName: String = "UserTodos"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query UserTodos($username: String!) { user(username: $username) { __typename todos { __typename nodes { __typename id body group { __typename id } state action author { __typename avatarUrl name username } targetEntity { __typename webUrl } project { __typename avatarUrl fullPath nameWithNamespace visibility } createdAt targetType } } } }"#
+      #"query UserTodos($username: String!) { user(username: $username) { __typename todos { __typename nodes { __typename id body group { __typename id } state action author { __typename avatarUrl name username } targetEntity { __typename webUrl } project { __typename avatarUrl fullPath nameWithNamespace visibility archived } createdAt targetType } } } }"#
     ))
 
   public var username: String
@@ -198,6 +198,7 @@ nonisolated public struct UserTodosQuery: GraphQLQuery {
               .field("fullPath", GitLabAPI.ID.self),
               .field("nameWithNamespace", String.self),
               .field("visibility", String?.self),
+              .field("archived", Bool?.self),
             ] }
             @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
               UserTodosQuery.Data.User.Todos.Node.Project.self
@@ -211,6 +212,8 @@ nonisolated public struct UserTodosQuery: GraphQLQuery {
             public var nameWithNamespace: String { __data["nameWithNamespace"] }
             /// Visibility of the project.
             public var visibility: String? { __data["visibility"] }
+            /// Indicates the archived status of the project.
+            public var archived: Bool? { __data["archived"] }
           }
         }
       }

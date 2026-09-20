@@ -8,7 +8,7 @@ nonisolated public struct ProjectsQuery: GraphQLQuery {
   public static let operationName: String = "Projects"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Projects($membership: Boolean, $search: String, $personal: Boolean, $sort: String, $withIssuesEnabled: Boolean, $withMergeRequestsEnabled: Boolean, $archived: ProjectArchived, $minAccessLevel: AccessLevelEnum, $aimedForDeletion: Boolean, $notAimedForDeletion: Boolean, $markedForDeletionOn: Date, $active: Boolean) { projects( membership: $membership search: $search personal: $personal sort: $sort withIssuesEnabled: $withIssuesEnabled withMergeRequestsEnabled: $withMergeRequestsEnabled archived: $archived minAccessLevel: $minAccessLevel aimedForDeletion: $aimedForDeletion notAimedForDeletion: $notAimedForDeletion markedForDeletionOn: $markedForDeletionOn active: $active ) { __typename nodes { __typename avatarUrl nameWithNamespace visibility fullPath } } }"#
+      #"query Projects($membership: Boolean, $search: String, $personal: Boolean, $sort: String, $withIssuesEnabled: Boolean, $withMergeRequestsEnabled: Boolean, $archived: ProjectArchived, $minAccessLevel: AccessLevelEnum, $aimedForDeletion: Boolean, $notAimedForDeletion: Boolean, $markedForDeletionOn: Date, $active: Boolean) { projects( membership: $membership search: $search personal: $personal sort: $sort withIssuesEnabled: $withIssuesEnabled withMergeRequestsEnabled: $withMergeRequestsEnabled archived: $archived minAccessLevel: $minAccessLevel aimedForDeletion: $aimedForDeletion notAimedForDeletion: $notAimedForDeletion markedForDeletionOn: $markedForDeletionOn active: $active ) { __typename nodes { __typename avatarUrl nameWithNamespace visibility fullPath archived } } }"#
     ))
 
   public var membership: GraphQLNullable<Bool>
@@ -128,6 +128,7 @@ nonisolated public struct ProjectsQuery: GraphQLQuery {
           .field("nameWithNamespace", String.self),
           .field("visibility", String?.self),
           .field("fullPath", GitLabAPI.ID.self),
+          .field("archived", Bool?.self),
         ] }
         @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
           ProjectsQuery.Data.Projects.Node.self
@@ -141,6 +142,8 @@ nonisolated public struct ProjectsQuery: GraphQLQuery {
         public var visibility: String? { __data["visibility"] }
         /// Full path of the project.
         public var fullPath: GitLabAPI.ID { __data["fullPath"] }
+        /// Indicates the archived status of the project.
+        public var archived: Bool? { __data["archived"] }
       }
     }
   }

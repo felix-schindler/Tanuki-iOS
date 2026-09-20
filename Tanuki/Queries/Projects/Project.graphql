@@ -17,6 +17,7 @@ query Project($fullPath: ID!) {
     httpUrlToRepo
     sshUrlToRepo
     createdAt
+    archived
     namespace {
       id
       name
