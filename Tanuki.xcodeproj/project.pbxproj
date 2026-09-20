@@ -18,8 +18,6 @@
 		DC0FF5B62B8C7AFB002B4FAE /* ProjectMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0FF5B52B8C7AFB002B4FAE /* ProjectMergeLoader.swift */; };
 		DC13E8A32B8DE32400994E8A /* IssueLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC13E8A22B8DE32400994E8A /* IssueLoader.swift */; };
 		DC13E8A82B8E073300994E8A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC13E8A72B8E073300994E8A /* HomeView.swift */; };
-		DCEA00022ED4000100A1B001 /* GroupProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEA00012ED4000100A1B001 /* GroupProjectsLoader.swift */; };
-		DCEA00042ED4000100A1B002 /* UserProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEA00032ED4000100A1B002 /* UserProjectsLoader.swift */; };
 		DC1C37F62B99BACC005B7D7A /* MilestonesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1C37F52B99BACC005B7D7A /* MilestonesLoader.swift */; };
 		DC1D0FF52B99469900B6F5D7 /* LabelsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D0FF42B99469900B6F5D7 /* LabelsLoader.swift */; };
 		DC1D0FFE2B994FDD00B6F5D7 /* TimelogsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC1D0FFD2B994FDD00B6F5D7 /* TimelogsLoader.swift */; };
@@ -113,6 +111,7 @@
 		DCB6B6372BB70CD8006C8437 /* MrCommitsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6362BB70CD8006C8437 /* MrCommitsLoader.swift */; };
 		DCB6B6392BB70F9C006C8437 /* SmallCommitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */; };
 		DCB9660B2EAEC535004D3CFA /* IssueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB9660A2EAEC535004D3CFA /* IssueFilter.swift */; };
+		DCB9660D2EAEC535004D3CFA /* MergeRequestFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCB9660C2EAEC535004D3CFA /* MergeRequestFilter.swift */; };
 		DCBC8B402F2C01DD00700380 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DCBC8B3F2F2C01DD00700380 /* Settings.bundle */; };
 		DCBC8B412F2C01DD00700380 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = DCBC8B3F2F2C01DD00700380 /* Settings.bundle */; };
 		DCBC8B442F2C05F300700380 /* UpdateStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCBC8B432F2C05F300700380 /* UpdateStatusView.swift */; };
@@ -125,6 +124,8 @@
 		DCD40E1A2BC2C6600055EE4C /* DiffLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E192BC2C6600055EE4C /* DiffLoader.swift */; };
 		DCD40E222BC2E5CC0055EE4C /* CodeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E212BC2E5CC0055EE4C /* CodeTextView.swift */; };
 		DCD4BF722E8F31D200F153B6 /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD4BF712E8F31D000F153B6 /* Auth.swift */; };
+		DCEA00022ED4000100A1B001 /* GroupProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEA00012ED4000100A1B001 /* GroupProjectsLoader.swift */; };
+		DCEA00042ED4000100A1B002 /* UserProjectsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEA00032ED4000100A1B002 /* UserProjectsLoader.swift */; };
 		DCEB20B42BD61A9A00393A44 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEB20B32BD61A9A00393A44 /* Notify.swift */; };
 		DCEF31932E907C4C00337458 /* CacheView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEF31922E907C4C00337458 /* CacheView.swift */; };
 		DCEFB2672B94C29600F4B245 /* EventsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCEFB2662B94C29600F4B245 /* EventsLoader.swift */; };
@@ -167,8 +168,6 @@
 		DC0FF5B52B8C7AFB002B4FAE /* ProjectMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMergeLoader.swift; sourceTree = "<group>"; };
 		DC13E8A22B8DE32400994E8A /* IssueLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueLoader.swift; sourceTree = "<group>"; };
 		DC13E8A72B8E073300994E8A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		DCEA00012ED4000100A1B001 /* GroupProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProjectsLoader.swift; sourceTree = "<group>"; };
-		DCEA00032ED4000100A1B002 /* UserProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProjectsLoader.swift; sourceTree = "<group>"; };
 		DC1C37F52B99BACC005B7D7A /* MilestonesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestonesLoader.swift; sourceTree = "<group>"; };
 		DC1D0FF42B99469900B6F5D7 /* LabelsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelsLoader.swift; sourceTree = "<group>"; };
 		DC1D0FFD2B994FDD00B6F5D7 /* TimelogsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelogsLoader.swift; sourceTree = "<group>"; };
@@ -252,6 +251,7 @@
 		DCB6B6362BB70CD8006C8437 /* MrCommitsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MrCommitsLoader.swift; sourceTree = "<group>"; };
 		DCB6B6382BB70F9C006C8437 /* SmallCommitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCommitView.swift; sourceTree = "<group>"; };
 		DCB9660A2EAEC535004D3CFA /* IssueFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueFilter.swift; sourceTree = "<group>"; };
+		DCB9660C2EAEC535004D3CFA /* MergeRequestFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeRequestFilter.swift; sourceTree = "<group>"; };
 		DCBC8B3F2F2C01DD00700380 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		DCBC8B432F2C05F300700380 /* UpdateStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateStatusView.swift; sourceTree = "<group>"; };
 		DCC54EBE2E9AB16E005B9CE3 /* ProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsLoader.swift; sourceTree = "<group>"; };
@@ -261,6 +261,8 @@
 		DCD40E192BC2C6600055EE4C /* DiffLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffLoader.swift; sourceTree = "<group>"; };
 		DCD40E212BC2E5CC0055EE4C /* CodeTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeTextView.swift; sourceTree = "<group>"; };
 		DCD4BF712E8F31D000F153B6 /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
+		DCEA00012ED4000100A1B001 /* GroupProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProjectsLoader.swift; sourceTree = "<group>"; };
+		DCEA00032ED4000100A1B002 /* UserProjectsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProjectsLoader.swift; sourceTree = "<group>"; };
 		DCEB20B32BD61A9A00393A44 /* Notify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
 		DCEF31922E907C4C00337458 /* CacheView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheView.swift; sourceTree = "<group>"; };
 		DCEFB2662B94C29600F4B245 /* EventsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsLoader.swift; sourceTree = "<group>"; };
@@ -499,6 +501,7 @@
 				DC21AA762B903ECA00976E64 /* UserView.swift */,
 				DC961C6E2E9E9BE80076D49F /* MergeButton.swift */,
 				DCB9660A2EAEC535004D3CFA /* IssueFilter.swift */,
+				DCB9660C2EAEC535004D3CFA /* MergeRequestFilter.swift */,
 			);
 			path = "Entity-Specific";
 			sourceTree = "<group>";
@@ -682,7 +685,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2600;
-				LastUpgradeCheck = 2620;
+				LastUpgradeCheck = 2700;
 				TargetAttributes = {
 					DC2511D72E7F4C7D0021371C = {
 						CreatedOnToolsVersion = 26.0;
@@ -851,6 +854,7 @@
 				DC4B428F2BA56213007A9DB1 /* CommitSignatureLoader.swift in Sources */,
 				DC0A6A412B8D03EC00C53D56 /* StateIcons.swift in Sources */,
 				DCB9660B2EAEC535004D3CFA /* IssueFilter.swift in Sources */,
+				DCB9660D2EAEC535004D3CFA /* MergeRequestFilter.swift in Sources */,
 				DC0FF5B42B8C7892002B4FAE /* ProjectIssuesLoader.swift in Sources */,
 				DC1D100E2B9975E000B6F5D7 /* ProjectPipelinesLoader.swift in Sources */,
 				DC13E8A32B8DE32400994E8A /* IssueLoader.swift in Sources */,
@@ -903,7 +907,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
@@ -937,7 +941,7 @@
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+				WATCHOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
