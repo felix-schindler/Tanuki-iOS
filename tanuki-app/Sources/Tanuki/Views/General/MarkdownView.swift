@@ -73,6 +73,12 @@ struct HTMLWebView: View {
 			}
 		)
 		.frame(height: height)
+		.onChange(of: html) { _, newHTML in
+			height = 1
+			Task { @MainActor in
+				navigator.load(html: newHTML)
+			}
+		}
 	}
 
 	private func didFinishLoading() {
