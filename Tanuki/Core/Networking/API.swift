@@ -77,27 +77,31 @@ class InstanceManager {
 	}
 
 	static func migrate() {
+		removeInvalid()
 		guard !userDefaults.bool(forKey: migrationDoneKey) else { return }
 
 		let legacyStore = legacyUserDefaults
 		let oldHost =
 			legacyStore?.string(forKey: legacyHostKey)
 			?? userDefaults.string(forKey: legacyHostKey)
-			?? "gitlab.com"
 		let oldToken =
 			legacyStore?.string(forKey: legacyTokenKey)
 			?? userDefaults.string(forKey: legacyTokenKey)
-			?? ""
 
-		guard oldHost.isNotEmpty || oldToken.isNotEmpty else {
+		// No stored credentials (fresh install) -> don't create a phantom instance.
+		// Previously the host defaulted to "gitlab.com", so the guard below was
+		// always true and every fresh install ended up with an empty-token
+		// instance, which suppressed the login screen.
+		guard let oldToken = oldToken, oldToken.isNotEmpty else {
 			userDefaults.set(true, forKey: migrationDoneKey)
 			return
 		}
+		let host = oldHost?.isNotEmpty == true ? oldHost! : "gitlab.com"
 
 		let instance = GitLabInstance(
-			host: oldHost,
+			host: host,
 			token: oldToken,
-			isOAuth: oldHost == "gitlab.com" && oldToken.isNotEmpty
+			isOAuth: host == "gitlab.com"
 		)
 		add(instance)
 
@@ -131,6 +135,19 @@ class InstanceManager {
 
 	static func select(_ instance: GitLabInstance) {
 		selectedId = instance.id
+		WatchSync.shared.pushInstances()
+	}
+
+	/// Removes instances without a token (e.g. phantom instances created by the
+	/// old `migrate()` on fresh installs). Self-heals installs already affected.
+	static func removeInvalid() {
+		let current = instances
+		let valid = current.filter { $0.token.isNotEmpty }
+		guard valid.count != current.count else { return }
+		instances = valid
+		if let id = selectedId, !valid.contains(where: { $0.id == id }) {
+			selectedId = valid.last?.id
+		}
 		WatchSync.shared.pushInstances()
 	}
 

@@ -15,7 +15,7 @@ final class SessionStore: ObservableObject {
 	private(set) var needsSetup: Bool
 
 	private init() {
-		needsSetup = InstanceManager.selected == nil
+		needsSetup = Self.requiresSetup
 	}
 
 	func setNeedsSetup(_ value: Bool) {
@@ -23,6 +23,11 @@ final class SessionStore: ObservableObject {
 	}
 
 	func refresh() {
-		needsSetup = InstanceManager.selected == nil
+		needsSetup = Self.requiresSetup
+	}
+
+	/// No instance, or an instance without a token, means the user still has to log in.
+	private static var requiresSetup: Bool {
+		InstanceManager.selected?.token.isEmpty ?? true
 	}
 }
