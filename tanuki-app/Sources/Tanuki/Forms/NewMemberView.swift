@@ -39,7 +39,9 @@ struct NewMemberView: View {
 		do {
 			if let currentUser =
 				(try await API.get(
-					type: [UserSmall?].self, endpoint: "users", query: ["username": username]))[0]
+					type: [UserSmall?].self, endpoint: "users", query: ["username": username]
+				)
+				.first ?? nil)
 			{
 				var memberDict = [
 					"user_id": String(currentUser.id),
@@ -57,6 +59,8 @@ struct NewMemberView: View {
 				_ = try await API.req(
 					type: UserSmall.self, method: .post, endpoint: endpoint, body: memberDict)
 				self.dismiss()
+			} else {
+				Notify.warning("User not found", "No user matches “\(username)”")
 			}
 		} catch let error {
 			Notify.status(.error, error.localizedDescription)

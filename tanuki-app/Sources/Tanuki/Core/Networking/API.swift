@@ -285,13 +285,18 @@ class API {
 
 		var path = useBase ? [base, endpoint] : [endpoint]
 		if let resource {
-			path.append(resource)
+			path.append(API.encodePathComponent(resource))
 		}
 		if let suffix {
-			path.append(suffix)
+			// Callers pass "/raw"; joining already inserts the separator, so trim to avoid the
+			// `//raw` that GitLab answers with a 308 redirect (an extra round trip).
+			path.append(suffix.trimmingCharacters(in: CharacterSet(charactersIn: "/")))
 		}
 
-		let url = "https://\(targetHost)/" + path.joined(separator: "/")
+		var url = "https://\(targetHost)/" + path.joined(separator: "/")
+		if let queryString = API.queryString(query) {
+			url += "?" + queryString
+		}
 
 		var headers: HTTPHeaders = [.contentType(contentType.rawValue)]
 		if auth && token.isNotEmpty {
@@ -348,6 +353,20 @@ class API {
 		}
 
 		return response
+	}
+
+	private static func encodePathComponent(_ value: String) -> String {
+		var allowed = CharacterSet.urlPathAllowed
+		allowed.remove(charactersIn: "/")
+		return value.addingPercentEncoding(withAllowedCharacters: allowed) ?? value
+	}
+
+	private static func queryString(_ query: [String: String]) -> String? {
+		guard !query.isEmpty else { return nil }
+
+		var components = URLComponents()
+		components.queryItems = query.map { URLQueryItem(name: $0.key, value: $0.value) }
+		return components.percentEncodedQuery
 	}
 
 	/// Renders request headers for the log with the credential removed.
