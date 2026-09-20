@@ -123,18 +123,6 @@ struct IssueLoader: View {
 								HStack(spacing: 5) {
 									AuthorView(issue._author)
 
-									if let weight = issue.weight {
-										PillView(
-											String(weight),
-											icon: "scalemass",
-											bgColor: .red,
-											fgColor: .white,
-											cornerRadius: 5
-										)
-										.font(.system(.footnote, design: .monospaced))
-										.textSelection(.enabled)
-									}
-
 									if let dueDate = issue.dueDate {
 										PillView(
 											Date.fromToString(dueDate),
@@ -143,32 +131,6 @@ struct IssueLoader: View {
 											fgColor: .white,
 											cornerRadius: 5
 										)
-									}
-
-									if let blockedBy = issue.blockedByIssues?.nodes,
-										blockedBy.isNotEmpty
-									{
-										ForEach(blockedBy, id: \.?.iid) { parent in
-											if let parent {
-												NavigationLink(
-													destination: {
-														IssueLoader(
-															fullPath: self.fullPath,
-															iid: parent.iid
-														)
-													},
-													label: {
-														PillView(
-															"#\(parent.iid)",
-															icon: "hand.raised",
-															bgColor: .orange,
-															fgColor: .white,
-															cornerRadius: 5
-														)
-													}
-												)
-											}
-										}
 									}
 								}
 								.font(.footnote)
@@ -321,7 +283,8 @@ struct IssueLoader: View {
 						if issue.userPermissions.createNote || noteCount > 0 {
 							Section("Notes (\(issue.userNotesCount))") {
 								if let projectId = project.id.toIntId(),
-								   issue.userPermissions.createNote {
+									issue.userPermissions.createNote
+								{
 									NewNoteView(projectId, iid: issue.iid, type: .issue)
 								}
 

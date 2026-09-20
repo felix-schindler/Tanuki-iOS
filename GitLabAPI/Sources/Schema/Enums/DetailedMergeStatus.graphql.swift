@@ -49,6 +49,4 @@ public enum DetailedMergeStatus: String, EnumType {
   case securityPoliciesViolations = "SECURITY_POLICIES_VIOLATIONS"
   /// Merge request title does not match required regex.
   case titleNotMatching = "TITLE_NOT_MATCHING"
-  /// Indicates a reviewer has requested changes.
-  case requestedChanges = "REQUESTED_CHANGES"
 }

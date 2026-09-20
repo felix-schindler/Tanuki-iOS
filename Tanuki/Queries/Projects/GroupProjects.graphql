@@ -1,0 +1,12 @@
+query GroupProjects($fullPath: ID!) {
+  group(fullPath: $fullPath) {
+    projects {
+      nodes {
+        avatarUrl
+        nameWithNamespace
+        visibility
+        fullPath
+      }
+    }
+  }
+}

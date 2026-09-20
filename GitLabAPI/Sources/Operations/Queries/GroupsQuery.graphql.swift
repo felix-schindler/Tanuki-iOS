@@ -115,7 +115,7 @@ public struct GroupsQuery: GraphQLQuery {
         public var avatarUrl: String? { __data["avatarUrl"] }
         /// Name of the group.
         public var name: String? { __data["name"] }
-        /// Full path of the group.
+        /// Full path of the namespace.
         public var fullPath: GitLabAPI.ID { __data["fullPath"] }
         /// Visibility of the namespace.
         public var visibility: String? { __data["visibility"] }

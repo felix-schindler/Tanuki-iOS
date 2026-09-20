@@ -9,16 +9,10 @@ public extension Interfaces {
     keyFields: nil,
     implementingObjects: [
       "AlertManagementAlert",
-      "BoardEpic",
-      "CountableVulnerability",
       "Design",
-      "Epic",
-      "EpicIssue",
       "Issue",
       "MergeRequest",
-      "ProjectComplianceViolation",
       "Snippet",
-      "Vulnerability",
       "WikiPage"
     ]
   )

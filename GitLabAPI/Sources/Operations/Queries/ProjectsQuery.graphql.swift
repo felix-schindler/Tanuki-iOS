@@ -8,14 +8,13 @@ public struct ProjectsQuery: GraphQLQuery {
   public static let operationName: String = "Projects"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Projects($membership: Boolean, $search: String, $personal: Boolean, $sort: String, $namespacePath: ID, $withIssuesEnabled: Boolean, $withMergeRequestsEnabled: Boolean, $archived: ProjectArchived, $minAccessLevel: AccessLevelEnum, $aimedForDeletion: Boolean, $notAimedForDeletion: Boolean, $markedForDeletionOn: Date, $active: Boolean, $visibility: VisibilityLevelsEnum) { projects( membership: $membership search: $search personal: $personal sort: $sort namespacePath: $namespacePath withIssuesEnabled: $withIssuesEnabled withMergeRequestsEnabled: $withMergeRequestsEnabled archived: $archived minAccessLevel: $minAccessLevel aimedForDeletion: $aimedForDeletion notAimedForDeletion: $notAimedForDeletion markedForDeletionOn: $markedForDeletionOn active: $active visibilityLevel: $visibility ) { __typename nodes { __typename avatarUrl nameWithNamespace visibility fullPath } } }"#
+      #"query Projects($membership: Boolean, $search: String, $personal: Boolean, $sort: String, $withIssuesEnabled: Boolean, $withMergeRequestsEnabled: Boolean, $archived: ProjectArchived, $minAccessLevel: AccessLevelEnum, $aimedForDeletion: Boolean, $notAimedForDeletion: Boolean, $markedForDeletionOn: Date, $active: Boolean) { projects( membership: $membership search: $search personal: $personal sort: $sort withIssuesEnabled: $withIssuesEnabled withMergeRequestsEnabled: $withMergeRequestsEnabled archived: $archived minAccessLevel: $minAccessLevel aimedForDeletion: $aimedForDeletion notAimedForDeletion: $notAimedForDeletion markedForDeletionOn: $markedForDeletionOn active: $active ) { __typename nodes { __typename avatarUrl nameWithNamespace visibility fullPath } } }"#
     ))
 
   public var membership: GraphQLNullable<Bool>
   public var search: GraphQLNullable<String>
   public var personal: GraphQLNullable<Bool>
   public var sort: GraphQLNullable<String>
-  public var namespacePath: GraphQLNullable<ID>
   public var withIssuesEnabled: GraphQLNullable<Bool>
   public var withMergeRequestsEnabled: GraphQLNullable<Bool>
   public var archived: GraphQLNullable<GraphQLEnum<ProjectArchived>>
@@ -24,14 +23,12 @@ public struct ProjectsQuery: GraphQLQuery {
   public var notAimedForDeletion: GraphQLNullable<Bool>
   public var markedForDeletionOn: GraphQLNullable<Date>
   public var active: GraphQLNullable<Bool>
-  public var visibility: GraphQLNullable<GraphQLEnum<VisibilityLevelsEnum>>
 
   public init(
     membership: GraphQLNullable<Bool>,
     search: GraphQLNullable<String>,
     personal: GraphQLNullable<Bool>,
     sort: GraphQLNullable<String>,
-    namespacePath: GraphQLNullable<ID>,
     withIssuesEnabled: GraphQLNullable<Bool>,
     withMergeRequestsEnabled: GraphQLNullable<Bool>,
     archived: GraphQLNullable<GraphQLEnum<ProjectArchived>>,
@@ -39,14 +36,12 @@ public struct ProjectsQuery: GraphQLQuery {
     aimedForDeletion: GraphQLNullable<Bool>,
     notAimedForDeletion: GraphQLNullable<Bool>,
     markedForDeletionOn: GraphQLNullable<Date>,
-    active: GraphQLNullable<Bool>,
-    visibility: GraphQLNullable<GraphQLEnum<VisibilityLevelsEnum>>
+    active: GraphQLNullable<Bool>
   ) {
     self.membership = membership
     self.search = search
     self.personal = personal
     self.sort = sort
-    self.namespacePath = namespacePath
     self.withIssuesEnabled = withIssuesEnabled
     self.withMergeRequestsEnabled = withMergeRequestsEnabled
     self.archived = archived
@@ -55,7 +50,6 @@ public struct ProjectsQuery: GraphQLQuery {
     self.notAimedForDeletion = notAimedForDeletion
     self.markedForDeletionOn = markedForDeletionOn
     self.active = active
-    self.visibility = visibility
   }
 
   @_spi(Unsafe) public var __variables: Variables? { [
@@ -63,7 +57,6 @@ public struct ProjectsQuery: GraphQLQuery {
     "search": search,
     "personal": personal,
     "sort": sort,
-    "namespacePath": namespacePath,
     "withIssuesEnabled": withIssuesEnabled,
     "withMergeRequestsEnabled": withMergeRequestsEnabled,
     "archived": archived,
@@ -71,8 +64,7 @@ public struct ProjectsQuery: GraphQLQuery {
     "aimedForDeletion": aimedForDeletion,
     "notAimedForDeletion": notAimedForDeletion,
     "markedForDeletionOn": markedForDeletionOn,
-    "active": active,
-    "visibility": visibility
+    "active": active
   ] }
 
   public struct Data: GitLabAPI.SelectionSet {
@@ -86,7 +78,6 @@ public struct ProjectsQuery: GraphQLQuery {
         "search": .variable("search"),
         "personal": .variable("personal"),
         "sort": .variable("sort"),
-        "namespacePath": .variable("namespacePath"),
         "withIssuesEnabled": .variable("withIssuesEnabled"),
         "withMergeRequestsEnabled": .variable("withMergeRequestsEnabled"),
         "archived": .variable("archived"),
@@ -94,8 +85,7 @@ public struct ProjectsQuery: GraphQLQuery {
         "aimedForDeletion": .variable("aimedForDeletion"),
         "notAimedForDeletion": .variable("notAimedForDeletion"),
         "markedForDeletionOn": .variable("markedForDeletionOn"),
-        "active": .variable("active"),
-        "visibilityLevel": .variable("visibility")
+        "active": .variable("active")
       ]),
     ] }
     @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [

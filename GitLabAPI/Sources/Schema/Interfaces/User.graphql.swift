@@ -9,7 +9,6 @@ public extension Interfaces {
     name: "User",
     keyFields: nil,
     implementingObjects: [
-      "AddOnUser",
       "AutocompletedUser",
       "CurrentUser",
       "MergeRequestAssignee",

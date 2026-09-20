@@ -9,13 +9,7 @@ query Issue($fullPath: ID!, $iid: String!) {
       description
       reference(full: true)
       state
-      weight
       dueDate
-      blockedByIssues {
-        nodes {
-          iid
-        }
-      }
       createdAt
       webUrl
 

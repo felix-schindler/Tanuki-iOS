@@ -4,10 +4,9 @@
 import ApolloAPI
 
 public extension Objects {
-  /// The connection type for Epic.
-  static let EpicConnection = ApolloAPI.Object(
-    typename: "EpicConnection",
-    implementedInterfaces: [],
+  static let AbuseReportLabel = ApolloAPI.Object(
+    typename: "AbuseReportLabel",
+    implementedInterfaces: [Interfaces.LabelInterface.self],
     keyFields: nil
   )
 }

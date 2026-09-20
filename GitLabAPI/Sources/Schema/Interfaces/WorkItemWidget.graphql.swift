@@ -10,18 +10,14 @@ public extension Interfaces {
     implementingObjects: [
       "WorkItemWidgetAssignees",
       "WorkItemWidgetAwardEmoji",
-      "WorkItemWidgetColor",
       "WorkItemWidgetCrmContacts",
       "WorkItemWidgetCurrentUserTodos",
-      "WorkItemWidgetCustomFields",
       "WorkItemWidgetDescription",
       "WorkItemWidgetDesigns",
       "WorkItemWidgetDevelopment",
       "WorkItemWidgetEmailParticipants",
       "WorkItemWidgetErrorTracking",
-      "WorkItemWidgetHealthStatus",
       "WorkItemWidgetHierarchy",
-      "WorkItemWidgetIteration",
       "WorkItemWidgetLabels",
       "WorkItemWidgetLinkedItems",
       "WorkItemWidgetLinkedResources",
@@ -29,15 +25,8 @@ public extension Interfaces {
       "WorkItemWidgetNotes",
       "WorkItemWidgetNotifications",
       "WorkItemWidgetParticipants",
-      "WorkItemWidgetProgress",
-      "WorkItemWidgetRequirementLegacy",
       "WorkItemWidgetStartAndDueDate",
-      "WorkItemWidgetStatus",
-      "WorkItemWidgetTestReports",
-      "WorkItemWidgetTimeTracking",
-      "WorkItemWidgetVerificationStatus",
-      "WorkItemWidgetVulnerabilities",
-      "WorkItemWidgetWeight"
+      "WorkItemWidgetTimeTracking"
     ]
   )
 }

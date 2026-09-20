@@ -4,12 +4,11 @@
 import ApolloAPI
 
 public extension Objects {
-  /// Represents a vulnerability
-  static let Vulnerability = ApolloAPI.Object(
-    typename: "Vulnerability",
+  static let AbuseReportDiscussion = ApolloAPI.Object(
+    typename: "AbuseReportDiscussion",
     implementedInterfaces: [
-      Interfaces.NoteableInterface.self,
-      Interfaces.Todoable.self
+      Interfaces.BaseDiscussionInterface.self,
+      Interfaces.ResolvableInterface.self
     ],
     keyFields: nil
   )

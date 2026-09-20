@@ -243,17 +243,6 @@ extension SnippetQuery.Data.Snippets.Node.Notes.Node: Note {
 	}
 }
 
-extension EpicQuery.Data.Group.Epic.Notes.Node: Note {
-	var _author: MyAuthor? {
-		guard let authorData = author else { return nil }
-		return MyAuthor(
-			avatarUrl: authorData.avatarUrl,
-			name: authorData.name,
-			username: authorData.username
-		)
-	}
-}
-
 // MARK: - Issues
 protocol SmallIssue {
 	var iid: String { get }
@@ -289,16 +278,6 @@ extension ProjectIssuesQuery.Data.Project.Issues.Node: SmallIssue {
 }
 
 extension GroupIssuesQuery.Data.Group.Issues.Node: SmallIssue {
-	var _author: MyAuthor {
-		return MyAuthor(
-			avatarUrl: author.avatarUrl,
-			name: author.name,
-			username: author.username
-		)
-	}
-}
-
-extension EpicIssuesQuery.Data.Group.Epic.Issues.Node: SmallIssue {
 	var _author: MyAuthor {
 		return MyAuthor(
 			avatarUrl: author.avatarUrl,
@@ -347,19 +326,6 @@ extension CurrentUserIssuesQuery.Data.CurrentUser.ProjectMemberships.Node.Projec
 	}
 }
 
-// MARK: - Epics
-extension EpicQuery.Data.Group.Epic: HasAuthor {
-	var _author: MyAuthor {
-		return MyAuthor(avatarUrl: author.avatarUrl, name: author.name, username: author.username)
-	}
-}
-
-extension GroupEpicsQuery.Data.Group.Epics.Node: HasAuthor {
-	var _author: MyAuthor {
-		return MyAuthor(avatarUrl: author.avatarUrl, name: author.name, username: author.username)
-	}
-}
-
 // MARK: - PROJECTS
 protocol SmallProject {
 	var avatarUrl: String? { get }
@@ -382,6 +348,12 @@ extension CurrentUserStarredProjectsQuery.Data.CurrentUser.StarredProjects.Node:
 }
 
 extension UserStarredProjectsQuery.Data.User.StarredProjects.Node: SmallProject {
+}
+
+extension GroupProjectsQuery.Data.Group.Projects.Node: SmallProject {
+}
+
+extension UserMembershipProjectsQuery.Data.User.ProjectMemberships.Node.Project: SmallProject {
 }
 
 // MARK: - Users

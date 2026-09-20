@@ -19,7 +19,6 @@ struct ProjectsLoader: View {
 	private var loadTask: Task<Void, Never>?
 
 	// MARK: - Filter
-	public private(set) var namespacePath: String? = nil
 	@State public private(set) var search: String? = nil
 	@State public private(set) var membership: Bool = false
 	@State public private(set) var personal: Bool = false
@@ -31,7 +30,6 @@ struct ProjectsLoader: View {
 	@State public private(set) var notAimedForDeletion: Bool = true
 	@State public private(set) var markedForDeletionOn: SwiftUI.Date? = nil
 	@State public private(set) var active: Bool? = nil
-	@State public private(set) var visibilityLevel: VisibilityLevelsEnum? = nil
 
 	private var query: ProjectsQuery {
 		return ProjectsQuery(
@@ -39,7 +37,6 @@ struct ProjectsLoader: View {
 			search: GraphFilter.toFilter(self.search),
 			personal: .some(self.personal),
 			sort: .none,
-			namespacePath: GraphFilter.toFilter(self.namespacePath),
 			withIssuesEnabled: .some(self.withIssuesEnabled),
 			withMergeRequestsEnabled: .some(self.withMergeRequestsEnabled),
 			archived: .some(.case(self.archived)),
@@ -48,7 +45,6 @@ struct ProjectsLoader: View {
 			notAimedForDeletion: .some(self.notAimedForDeletion),
 			markedForDeletionOn: GraphFilter.toFilterDate(self.markedForDeletionOn),
 			active: GraphFilter.toFilter(self.active),
-			visibility: GraphFilter.toFilterEnum(self.visibilityLevel),
 		)
 	}
 
@@ -153,17 +149,6 @@ struct ProjectsLoader: View {
 								}
 							}
 							Text("Return only projects where current user has at least the specified access level.")
-								.foregroundStyle(.secondary)
-								.font(.footnote)
-						}
-						VStack(alignment: .leading) {
-							Picker("Visibility Level", selection: $visibilityLevel) {
-								Text("None").tag(nil as VisibilityLevelsEnum?)
-								ForEach(VisibilityLevelsEnum.allCases, id: \.self) { visibilityLevel in
-									Text(visibilityLevel.rawValue.capitalized).tag(visibilityLevel)
-								}
-							}
-							Text("Filter projects by visibility level.")
 								.foregroundStyle(.secondary)
 								.font(.footnote)
 						}

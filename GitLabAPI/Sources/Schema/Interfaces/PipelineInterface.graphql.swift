@@ -7,9 +7,6 @@ public extension Interfaces {
   static let PipelineInterface = ApolloAPI.Interface(
     name: "PipelineInterface",
     keyFields: nil,
-    implementingObjects: [
-      "Pipeline",
-      "PipelineMinimalAccess"
-    ]
+    implementingObjects: ["Pipeline"]
   )
 }

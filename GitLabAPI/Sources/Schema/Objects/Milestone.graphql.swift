@@ -7,7 +7,7 @@ public extension Objects {
   /// Represents a milestone
   static let Milestone = ApolloAPI.Object(
     typename: "Milestone",
-    implementedInterfaces: [Interfaces.TimeboxReportInterface.self],
+    implementedInterfaces: [],
     keyFields: nil
   )
 }

@@ -21,6 +21,4 @@ public enum AccessLevelEnum: String, EnumType {
   case maintainer = "MAINTAINER"
   /// Owner access.
   case owner = "OWNER"
-  /// Admin access.
-  case admin = "ADMIN"
 }

@@ -8,9 +8,6 @@ public extension Interfaces {
   static let GroupInterface = ApolloAPI.Interface(
     name: "GroupInterface",
     keyFields: nil,
-    implementingObjects: [
-      "Group",
-      "GroupMinimalAccess"
-    ]
+    implementingObjects: ["Group"]
   )
 }

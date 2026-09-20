@@ -129,8 +129,8 @@ struct GroupLoader: View {
 					Section {
 						HStack {
 							NavigationLink(
-								destination: ProjectsLoader(
-									namespacePath: self.fullPath
+								destination: GroupProjectsLoader(
+									fullPath: self.fullPath
 								),
 								label: {
 									Label(
@@ -212,10 +212,6 @@ struct GroupLoader: View {
 								NavigationLink(
 									"Issues",
 									destination: GroupIssuesLoader(fullPath: self.fullPath)
-								)
-								NavigationLink(
-									"Epics",
-									destination: GroupEpicsLoader(fullPath: self.fullPath)
 								)
 								if let groupId = group.id?.toIntId() {
 									NavigationLink(
