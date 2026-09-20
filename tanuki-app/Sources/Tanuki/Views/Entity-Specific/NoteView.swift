@@ -99,7 +99,7 @@ struct NoteView: View {
 						baseURL: API.url,
 						imageBaseURL: URL(
 							string: "\(API.url.absoluteString)/-/project/\(self.projectId)")
-					).markdownTheme(.gitLab)
+					)
 				}
 			}
 		} else {

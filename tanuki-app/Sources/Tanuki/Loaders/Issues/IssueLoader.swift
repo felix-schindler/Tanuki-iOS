@@ -181,7 +181,6 @@ struct IssueLoader: View {
 								description.isNotEmpty
 							{
 								Markdown(description)
-									.markdownTheme(.gitLab)
 							}
 
 							HStack {

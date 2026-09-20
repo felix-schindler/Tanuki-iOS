@@ -97,7 +97,6 @@ struct UserView: View {
 
 			if user.bio?.isNotEmpty ?? false {
 				Markdown(user.bio!)
-					.markdownTheme(.gitLab)
 			}
 		}
 

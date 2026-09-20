@@ -101,7 +101,6 @@ struct FileLoader: View {
 					case .success(let content):
 						if fileExtension == "md" {
 							Markdown(content)
-								.markdownTheme(.gitLab)
 						} else {
 							CodeTextView(
 								content,

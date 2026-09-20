@@ -97,7 +97,6 @@ struct SnippetLoader: View {
 
 						if let description = snippet.description {
 							Markdown(description.emojized())
-								.markdownTheme(.gitLab)
 						}
 					}
 

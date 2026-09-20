@@ -110,7 +110,6 @@ struct ProjectReleasesLoader: View {
 
 											if let description = release.description {
 												Markdown(description, baseURL: API.url)
-													.markdownTheme(.gitLab)
 											}
 										}
 										if let assets = release.assets {

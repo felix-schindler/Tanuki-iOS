@@ -198,7 +198,6 @@ struct MergeRequestLoader: View {
 								description.isNotEmpty
 							{
 								Markdown(description)
-									.markdownTheme(.gitLab)
 							}
 
 							HStack {

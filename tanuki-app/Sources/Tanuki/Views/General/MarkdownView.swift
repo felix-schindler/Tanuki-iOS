@@ -24,13 +24,6 @@ struct Markdown: View {
 	}
 }
 
-extension Markdown {
-	/// No-op: kept so existing call sites keep reading naturally.
-	func markdownTheme(_ theme: MarkdownTheme) -> Markdown {
-		self
-	}
-}
-
 struct InlineMarkdown: View {
 	private let contents: String
 

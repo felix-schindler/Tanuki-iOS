@@ -120,7 +120,6 @@ struct GroupLoader: View {
 
 						if let description = group.description {
 							Markdown(description)
-								.markdownTheme(.gitLab)
 						}
 					}
 

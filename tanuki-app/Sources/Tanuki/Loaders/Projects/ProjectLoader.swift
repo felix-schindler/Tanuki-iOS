@@ -363,16 +363,15 @@ struct ProjectLoader: View {
 										readme!,
 										baseURL: baseUrl,
 										imageBaseURL: imgUrl
-									).markdownTheme(.gitLab)
+									)
 								} else if selectedFile == 1 && license != nil {
 									Markdown(license!)
-										.markdownTheme(.gitLab)
 								} else if selectedFile == 2 && contributing != nil {
 									Markdown(
 										contributing!,
 										baseURL: baseUrl,
 										imageBaseURL: imgUrl
-									).markdownTheme(.gitLab)
+									)
 								}
 							}
 						}
