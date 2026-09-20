@@ -5,9 +5,10 @@ import PackageDescription
 let package = Package(
 	name: "tanuki-app",
 	defaultLocalization: "en",
-	platforms: [.iOS(.v17), .macOS(.v14)],
+	platforms: [.iOS(.v17), .macOS(.v14), .watchOS(.v11)],
 	products: [
-		.library(name: "Tanuki", type: .dynamic, targets: ["Tanuki"])
+		.library(name: "Tanuki", type: .dynamic, targets: ["Tanuki"]),
+		.library(name: "TanukiWatch", targets: ["TanukiWatch"]),
 	],
 	dependencies: [
 		.package(url: "https://source.skip.tools/skip.git", from: "1.9.10"),
@@ -46,6 +47,15 @@ let package = Package(
 				//.product(name: "Toast", package: "toast-swift"),
 				//.product(name: "NVMColor", package: "nvm-color")
 			], resources: [.process("Resources")], plugins: [.plugin(name: "skipstone", package: "skip")]
-		)
+		),
+		// Watch companion app. Deliberately no skipstone plugin: this target is
+		// Darwin-only and is never transpiled into the Android Gradle project.
+		.target(
+			name: "TanukiWatch",
+			dependencies: [
+				.product(name: "Apollo", package: "apollo-skip-fuse"),
+				.product(name: "ApolloAPI", package: "apollo-skip-fuse"),
+				.product(name: "GitLabAPI", package: "apollo-gitlab-api"),
+			]),
 	]
 )

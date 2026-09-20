@@ -1,0 +1,12 @@
+{
+  "assets" : [
+    {
+      "filename" : "AccentColor.colorset",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
