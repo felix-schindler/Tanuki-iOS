@@ -35,14 +35,10 @@ struct VisibilityIcon: View {
 	public var body: some View {
 		if showText {
 			Label(self.visibility.capitalized, systemImage: systemName)
-				#if !SKIP_BRIDGE
-					.labelStyle(.titleAndIcon)
-				#endif
+				.labelStyle(.titleAndIcon)
 		} else {
-			Label(self.visibility.capitalized, systemImage: systemName)
-				#if !SKIP_BRIDGE
-					.labelStyle(.iconOnly)
-				#endif
+			Image(systemName: systemName)
+				.accessibilityLabel(self.visibility.capitalized)
 		}
 	}
 }

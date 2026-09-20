@@ -96,10 +96,8 @@ struct InstanceRowView: View {
 					}
 				}
 			} label: {
-				Label("Delete", systemImage: "trash")
-					#if !SKIP_BRIDGE
-						.labelStyle(.iconOnly)
-					#endif
+				Image(systemName: "trash")
+					.accessibilityLabel("Delete")
 			}
 		}
 	}

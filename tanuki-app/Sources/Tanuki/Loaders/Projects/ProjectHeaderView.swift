@@ -59,10 +59,8 @@ struct ProjectHeaderView: View {
 			HStack {
 				if let topics = project.topics, topics.isNotEmpty {
 					HStack(spacing: 5) {
-						Label("Tags", systemImage: "tag")
-							#if !SKIP_BRIDGE
-								.labelStyle(.iconOnly)
-							#endif
+						Image(systemName: "tag")
+							.accessibilityLabel("Tags")
 						ScrollView(.horizontal) {
 							HStack {
 								ForEach(project.topics!, id: \.self) { topic in

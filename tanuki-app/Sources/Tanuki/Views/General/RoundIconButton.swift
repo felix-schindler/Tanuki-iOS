@@ -73,23 +73,23 @@ struct RoundIconButton: View {
 
 	public var body: some View {
 		if #available(iOS 17.0, *) {
-			Button(label, systemImage: iconName, action: action)
-				.frame(minWidth: 30, minHeight: 30)
-				.buttonStyle(.bordered)
-				#if !SKIP_BRIDGE
-					.buttonBorderShape(.circle)
-				#endif
-				#if !SKIP_BRIDGE
-					.labelStyle(.iconOnly)
-				#endif
+			Button(action: action) {
+				Image(systemName: iconName)
+					.accessibilityLabel(label)
+			}
+			.frame(minWidth: 30, minHeight: 30)
+			.buttonStyle(.bordered)
+			#if !SKIP_BRIDGE
+				.buttonBorderShape(.circle)
+			#endif
 		} else {
-			Button(label, systemImage: iconName, action: action)
-				.frame(minWidth: 30, minHeight: 30)
-				.buttonStyle(.bordered)
-				.clipShape(Circle())
-				#if !SKIP_BRIDGE
-					.labelStyle(.iconOnly)
-				#endif
+			Button(action: action) {
+				Image(systemName: iconName)
+					.accessibilityLabel(label)
+			}
+			.frame(minWidth: 30, minHeight: 30)
+			.buttonStyle(.bordered)
+			.clipShape(Circle())
 		}
 	}
 }
