@@ -8,7 +8,7 @@ nonisolated public struct IssueQuery: GraphQLQuery {
   public static let operationName: String = "Issue"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query Issue($fullPath: ID!, $iid: String!) { project(fullPath: $fullPath) { __typename id avatarUrl issue(iid: $iid) { __typename iid title description reference(full: true) state weight dueDate blockedByIssues { __typename nodes { __typename iid } } createdAt webUrl upvotes downvotes userNotesCount author { __typename avatarUrl name username } userPermissions { __typename updateIssue createNote } assignees { __typename nodes { __typename avatarUrl username } } labels { __typename nodes { __typename title color textColor } } milestone { __typename iid title } humanTimeEstimate humanTotalTimeSpent notes { __typename nodes { __typename id author { __typename avatarUrl name username } maxAccessLevelOfAuthor body system systemNoteIconName createdAt updatedAt } } } } }"#
+      #"query Issue($fullPath: ID!, $iid: String!) { project(fullPath: $fullPath) { __typename id avatarUrl issue(iid: $iid) { __typename iid title description reference(full: true) state dueDate createdAt webUrl upvotes downvotes userNotesCount author { __typename avatarUrl name username } userPermissions { __typename updateIssue createNote } assignees { __typename nodes { __typename avatarUrl username } } labels { __typename nodes { __typename title color textColor } } milestone { __typename iid title } humanTimeEstimate humanTotalTimeSpent notes { __typename nodes { __typename id author { __typename avatarUrl name username } maxAccessLevelOfAuthor body system systemNoteIconName createdAt updatedAt } } } } }"#
     ))
 
   public var fullPath: ID
@@ -82,9 +82,7 @@ nonisolated public struct IssueQuery: GraphQLQuery {
           .field("description", String?.self),
           .field("reference", String.self, arguments: ["full": true]),
           .field("state", GraphQLEnum<GitLabAPI.IssueState>.self),
-          .field("weight", Int?.self),
           .field("dueDate", GitLabAPI.Time?.self),
-          .field("blockedByIssues", BlockedByIssues?.self),
           .field("createdAt", GitLabAPI.Time.self),
           .field("webUrl", String.self),
           .field("upvotes", Int.self),
@@ -113,12 +111,8 @@ nonisolated public struct IssueQuery: GraphQLQuery {
         public var reference: String { __data["reference"] }
         /// State of the issue.
         public var state: GraphQLEnum<GitLabAPI.IssueState> { __data["state"] }
-        /// Weight of the issue.
-        public var weight: Int? { __data["weight"] }
         /// Due date of the issue.
         public var dueDate: GitLabAPI.Time? { __data["dueDate"] }
-        /// Issues blocking the issue.
-        public var blockedByIssues: BlockedByIssues? { __data["blockedByIssues"] }
         /// Timestamp of when the issue was created.
         public var createdAt: GitLabAPI.Time { __data["createdAt"] }
         /// Web URL of the issue.
@@ -145,46 +139,6 @@ nonisolated public struct IssueQuery: GraphQLQuery {
         public var humanTotalTimeSpent: String? { __data["humanTotalTimeSpent"] }
         /// All notes on this noteable.
         public var notes: Notes { __data["notes"] }
-
-        /// Project.Issue.BlockedByIssues
-        ///
-        /// Parent Type: `IssueConnection`
-        nonisolated public struct BlockedByIssues: GitLabAPI.SelectionSet {
-          @_spi(Unsafe) public let __data: DataDict
-          @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
-
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.IssueConnection }
-          @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
-            .field("__typename", String.self),
-            .field("nodes", [Node?]?.self),
-          ] }
-          @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
-            IssueQuery.Data.Project.Issue.BlockedByIssues.self
-          ] }
-
-          /// A list of nodes.
-          public var nodes: [Node?]? { __data["nodes"] }
-
-          /// Project.Issue.BlockedByIssues.Node
-          ///
-          /// Parent Type: `Issue`
-          nonisolated public struct Node: GitLabAPI.SelectionSet {
-            @_spi(Unsafe) public let __data: DataDict
-            @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
-
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Issue }
-            @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
-              .field("__typename", String.self),
-              .field("iid", String.self),
-            ] }
-            @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
-              IssueQuery.Data.Project.Issue.BlockedByIssues.Node.self
-            ] }
-
-            /// Internal ID of the issue.
-            public var iid: String { __data["iid"] }
-          }
-        }
 
         /// Project.Issue.Author
         ///

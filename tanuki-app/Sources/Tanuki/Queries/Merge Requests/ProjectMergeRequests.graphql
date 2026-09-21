@@ -1,8 +1,13 @@
-query ProjectMergeRequests($fullPath: ID!) {
+query ProjectMergeRequests($fullPath: ID!, $state: MergeRequestState, $search: String, $draft: Boolean, $subscribed: SubscriptionStatus) {
   project(fullPath: $fullPath) {
     mergeRequestsEnabled
 
-    mergeRequests(state: opened) {
+    mergeRequests(
+      state: $state
+      search: $search
+      draft: $draft
+      subscribed: $subscribed
+    ) {
       nodes {
         iid
         title

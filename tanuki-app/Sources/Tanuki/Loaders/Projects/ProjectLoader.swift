@@ -95,6 +95,12 @@ struct ProjectLoader: View {
 						ProjectHeaderView(project)
 					}
 
+					if project.archived == true {
+						Section {
+							Label("This project has been archived", systemImage: "archivebox.fill")
+						}
+					}
+
 					if let lastCommit = project.repository?.tree?.lastCommit,
 						let projectId = project.id.toIntId()
 					{

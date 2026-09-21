@@ -15,14 +15,10 @@ nonisolated public enum AccessLevelEnum: String, EnumType {
   case planner = "PLANNER"
   /// Reporter access.
   case reporter = "REPORTER"
-  /// Security manager access.
-  case securityManager = "SECURITY_MANAGER"
   /// Developer access.
   case developer = "DEVELOPER"
   /// Maintainer access.
   case maintainer = "MAINTAINER"
   /// Owner access.
   case owner = "OWNER"
-  /// Admin access.
-  case admin = "ADMIN"
 }

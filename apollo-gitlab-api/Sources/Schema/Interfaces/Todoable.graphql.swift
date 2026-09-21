@@ -8,17 +8,11 @@ public extension Interfaces {
     name: "Todoable",
     keyFields: nil,
     implementingObjects: [
-      "AddOnUser",
       "AlertManagementAlert",
       "AutocompletedUser",
-      "BoardEpic",
       "Commit",
-      "CountableVulnerability",
       "CurrentUser",
       "Design",
-      "DuoWorkflow",
-      "Epic",
-      "EpicIssue",
       "Group",
       "Issue",
       "Key",
@@ -29,9 +23,7 @@ public extension Interfaces {
       "MergeRequestReviewer",
       "Namespace",
       "Project",
-      "ProjectComplianceViolation",
       "UserCore",
-      "Vulnerability",
       "WikiPage",
       "WorkItem"
     ]

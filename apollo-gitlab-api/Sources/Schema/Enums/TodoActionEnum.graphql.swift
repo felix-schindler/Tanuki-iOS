@@ -28,20 +28,4 @@ nonisolated public enum TodoActionEnum: String, EnumType {
   case sshKeyExpired = "ssh_key_expired"
   /// Todo action name for ssh_key_expiring_soon.
   case sshKeyExpiringSoon = "ssh_key_expiring_soon"
-  /// Todo action name for transfer_failed.
-  case transferFailed = "transfer_failed"
-  /// Todo action name for merge_train_removed.
-  case mergeTrainRemoved = "merge_train_removed"
-  /// Todo action name for okr_checkin_requested.
-  case okrCheckinRequested = "okr_checkin_requested"
-  /// Todo action name for added_approver.
-  case addedApprover = "added_approver"
-  /// Todo action name for duo_pro_access_granted.
-  case duoProAccessGranted = "duo_pro_access_granted"
-  /// Todo action name for duo_enterprise_access_granted.
-  case duoEnterpriseAccessGranted = "duo_enterprise_access_granted"
-  /// Todo action name for duo_core_access_granted.
-  case duoCoreAccessGranted = "duo_core_access_granted"
-  /// Todo action name for duo_workflow_input_required.
-  case duoWorkflowInputRequired = "duo_workflow_input_required"
 }

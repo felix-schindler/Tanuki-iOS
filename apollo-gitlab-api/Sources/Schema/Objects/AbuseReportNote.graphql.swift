@@ -4,12 +4,11 @@
 import ApolloAPI
 
 public extension Objects {
-  /// A user with add-on data
-  nonisolated static let AddOnUser = ApolloAPI.Object(
-    typename: "AddOnUser",
+  nonisolated static let AbuseReportNote = ApolloAPI.Object(
+    typename: "AbuseReportNote",
     implementedInterfaces: [
-      Interfaces.Todoable.self,
-      Interfaces.User.self
+      Interfaces.BaseNoteInterface.self,
+      Interfaces.ResolvableInterface.self
     ],
     keyFields: nil
   )

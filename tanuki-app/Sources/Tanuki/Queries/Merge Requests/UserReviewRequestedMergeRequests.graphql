@@ -1,6 +1,11 @@
-query UserReviewRequestedMergeRequests {
+query UserReviewRequestedMergeRequests($state: MergeRequestState, $search: String, $draft: Boolean, $subscribed: SubscriptionStatus) {
   currentUser {
-    reviewRequestedMergeRequests(state: opened) {
+    reviewRequestedMergeRequests(
+      state: $state
+      search: $search
+      draft: $draft
+      subscribed: $subscribed
+    ) {
       count
       nodes {
         project {

@@ -1,6 +1,11 @@
-query UserAuthoredMergeRequests {
+query UserAuthoredMergeRequests($state: MergeRequestState, $search: String, $draft: Boolean, $subscribed: SubscriptionStatus) {
   currentUser {
-    authoredMergeRequests(state: opened) {
+    authoredMergeRequests(
+      state: $state
+      search: $search
+      draft: $draft
+      subscribed: $subscribed
+    ) {
       nodes {
         project {
           fullPath

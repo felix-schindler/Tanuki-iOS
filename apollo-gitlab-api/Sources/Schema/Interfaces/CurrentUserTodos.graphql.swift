@@ -8,10 +8,7 @@ public extension Interfaces {
     name: "CurrentUserTodos",
     keyFields: nil,
     implementingObjects: [
-      "BoardEpic",
       "Design",
-      "Epic",
-      "EpicIssue",
       "Issue",
       "MergeRequest",
       "WorkItemWidgetCurrentUserTodos"

@@ -1,0 +1,15 @@
+query UserMembershipProjects($username: String!) {
+  user(username: $username) {
+    projectMemberships {
+      nodes {
+        project {
+          avatarUrl
+          nameWithNamespace
+          visibility
+          fullPath
+          archived
+        }
+      }
+    }
+  }
+}

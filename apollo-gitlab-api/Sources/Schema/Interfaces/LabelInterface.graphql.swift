@@ -7,6 +7,9 @@ public extension Interfaces {
   nonisolated static let LabelInterface = ApolloAPI.Interface(
     name: "LabelInterface",
     keyFields: nil,
-    implementingObjects: ["Label"]
+    implementingObjects: [
+      "AbuseReportLabel",
+      "Label"
+    ]
   )
 }

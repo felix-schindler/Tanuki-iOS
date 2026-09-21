@@ -1,6 +1,6 @@
-query CurrentUserStarredProjects {
-  currentUser {
-    starredProjects {
+query GroupProjects($fullPath: ID!) {
+  group(fullPath: $fullPath) {
+    projects {
       nodes {
         avatarUrl
         nameWithNamespace

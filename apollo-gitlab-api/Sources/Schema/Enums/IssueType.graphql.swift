@@ -17,16 +17,16 @@ nonisolated public enum IssueType: String, EnumType {
   case task = "TASK"
   /// Ticket issue type
   case ticket = "TICKET"
-  /// Objective issue type. Available only when feature flag `okrs_mvc` is enabled. Introduced in GitLab 15.6: Status: Experiment.
+  /// Objective issue type. Available only when feature flag `okrs_mvc` is enabled. Introduced in GitLab 15.6: **Status**: Experiment.
   ///
-  /// **Deprecated**: Status: Experiment. Introduced in GitLab 15.6.
+  /// **Deprecated**: **Status**: Experiment. Introduced in GitLab 15.6.
   case objective = "OBJECTIVE"
-  /// Key Result issue type. Available only when feature flag `okrs_mvc` is enabled. Introduced in GitLab 15.7: Status: Experiment.
+  /// Key Result issue type. Available only when feature flag `okrs_mvc` is enabled. Introduced in GitLab 15.7: **Status**: Experiment.
   ///
-  /// **Deprecated**: Status: Experiment. Introduced in GitLab 15.7.
+  /// **Deprecated**: **Status**: Experiment. Introduced in GitLab 15.7.
   case keyResult = "KEY_RESULT"
-  /// Epic issue type. Available only when feature epics is available. Introduced in GitLab 16.7: Status: Experiment.
+  /// Epic issue type. Available only when feature epics is available. Introduced in GitLab 16.7: **Status**: Experiment.
   ///
-  /// **Deprecated**: Status: Experiment. Introduced in GitLab 16.7.
+  /// **Deprecated**: **Status**: Experiment. Introduced in GitLab 16.7.
   case epic = "EPIC"
 }

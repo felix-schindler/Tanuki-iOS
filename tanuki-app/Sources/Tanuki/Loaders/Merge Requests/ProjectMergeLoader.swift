@@ -11,6 +11,9 @@ import SwiftUI
 struct ProjectMergeLoader: View {
 	private let fullPath: String
 
+	@State var filter = MergeRequestFilter()
+	@State var showFilters = false
+	@State var loadTask: Task<Void, Never>?
 	@State var project: Result<GitLabAPI.ProjectMergeRequestsQuery.Data.Project, Error>? = nil
 
 	init(fullPath: String) {
@@ -18,15 +21,27 @@ struct ProjectMergeLoader: View {
 		self.project = nil
 	}
 
-	private func loadMergeRequests() {
-		do {
-			let responses = try Network.shared.apollo.fetch(
-				query: ProjectMergeRequestsQuery(fullPath: self.fullPath),
-				cachePolicy: .cacheAndNetwork
-			)
+	private var query: ProjectMergeRequestsQuery {
+		return ProjectMergeRequestsQuery(
+			fullPath: self.fullPath,
+			state: GraphFilter.toFilterEnum(self.filter.state),
+			search: GraphFilter.toFilter(self.filter.search),
+			draft: GraphFilter.toFilter(self.filter.draft),
+			subscribed: GraphFilter.toFilterEnum(self.filter.subscribed)
+		)
+	}
 
-			Task {
+	private func loadMergeRequests() {
+		self.loadTask?.cancel()
+		self.loadTask = Task {
+			do {
+				let responses = try Network.shared.apollo.fetch(
+					query: self.query,
+					cachePolicy: .cacheAndNetwork
+				)
+
 				for try await response in responses {
+					if Task.isCancelled { return }
 					if let project = response.data?.project {
 						self.project = .success(project)
 					} else if let errors = response.errors {
@@ -35,17 +50,19 @@ struct ProjectMergeLoader: View {
 						}
 					}
 				}
+			} catch {
+				if !Task.isCancelled {
+					self.project = .failure(error)
+					Notify.status(.error)
+				}
 			}
-		} catch let error {
-			self.project = .failure(error)
-			Notify.status(.error)
 		}
 	}
 
 	private func reloadMergeRequests() async {
 		do {
 			let response = try await Network.shared.apollo.fetch(
-				query: ProjectMergeRequestsQuery(fullPath: self.fullPath),
+				query: self.query,
 				cachePolicy: .networkOnly
 			)
 
@@ -93,6 +110,26 @@ struct ProjectMergeLoader: View {
 			loadMergeRequests()
 		}.refreshable {
 			await reloadMergeRequests()
+		}.toolbar {
+			Button("Filter", systemImage: "line.3.horizontal.decrease") {
+				showFilters = true
+			}
+		}.sheet(isPresented: $showFilters, onDismiss: { self.showFilters = false }) {
+			NavigationView {
+				MergeRequestFilterView(filter: $filter)
+					.toolbar {
+						AsyncButton("Apply filter", systemImage: "checkmark") {
+							await reloadMergeRequests()
+							showFilters = false
+						}
+					}
+			}
+		}.searchable(
+			text: Binding(get: { self.filter.search ?? "" }, set: { self.filter.search = $0.isNotEmpty ? $0 : nil }),
+			prompt: "Search merge requests"
+		).onChange(of: filter.search) { _ in
+			self.project = nil  // Show loading state
+			loadMergeRequests()
 		}.navigationTitle("Merge Requests")
 	}
 }

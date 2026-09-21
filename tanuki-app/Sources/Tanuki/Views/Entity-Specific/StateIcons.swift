@@ -39,32 +39,6 @@ struct IssueStateHelper {
 			"smallcircle.circle"
 		}
 	}
-
-	public static func getIconByState(
-		_ state: GraphQLEnum<GitLabAPI.EpicState>
-	) -> String {
-		switch state {
-		case .opened:
-			"smallcircle.circle"
-		case .closed:
-			"minus.circle"
-		default:
-			"smallcircle.circle"
-		}
-	}
-
-	public static func getColorByState(
-		_ state: GraphQLEnum<GitLabAPI.EpicState>
-	) -> SwiftUI.Color {
-		switch state {
-		case .opened:
-			Color.green
-		case .closed:
-			Color.blue
-		default:
-			Color.primary
-		}
-	}
 }
 
 struct IssueStateIcon: View {
@@ -87,25 +61,6 @@ struct IssueStateIcon: View {
 		case .locked:
 			icon = "lock.circle"
 			color = Color.secondary
-			break
-		default:
-			icon = "smallcircle.circle"
-			color = Color.primary
-			break
-		}
-	}
-
-	init(_ state: GraphQLEnum<GitLabAPI.EpicState>) {
-		self.state = state.rawValue
-
-		switch state {
-		case .opened:
-			icon = "smallcircle.circle"
-			color = Color.green
-			break
-		case .closed:
-			icon = "minus.circle"
-			color = Color.blue
 			break
 		default:
 			icon = "smallcircle.circle"

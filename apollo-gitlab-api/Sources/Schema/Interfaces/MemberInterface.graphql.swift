@@ -9,8 +9,6 @@ public extension Interfaces {
     keyFields: nil,
     implementingObjects: [
       "GroupMember",
-      "PendingGroupMember",
-      "PendingProjectMember",
       "ProjectMember"
     ]
   )

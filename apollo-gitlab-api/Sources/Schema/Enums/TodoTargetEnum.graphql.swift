@@ -24,14 +24,4 @@ nonisolated public enum TodoTargetEnum: String, EnumType {
   case key = "KEY"
   /// Wiki page.
   case wikipagemeta = "WIKIPAGEMETA"
-  /// An Epic.
-  case epic = "EPIC"
-  /// User.
-  case user = "USER"
-  /// Vulnerability.
-  case vulnerability = "VULNERABILITY"
-  /// Project Compliance Violation.
-  case complianceViolation = "COMPLIANCE_VIOLATION"
-  /// Duo Workflow session.
-  case duoWorkflow = "DUO_WORKFLOW"
 }

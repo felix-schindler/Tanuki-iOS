@@ -8,23 +8,16 @@ public extension Interfaces {
     name: "WorkItemWidget",
     keyFields: nil,
     implementingObjects: [
-      "WorkItemWidgetAgentPlan",
-      "WorkItemWidgetAiSession",
       "WorkItemWidgetAssignees",
       "WorkItemWidgetAwardEmoji",
-      "WorkItemWidgetColor",
       "WorkItemWidgetCrmContacts",
       "WorkItemWidgetCurrentUserTodos",
-      "WorkItemWidgetCustomFields",
-      "WorkItemWidgetDecisionLog",
       "WorkItemWidgetDescription",
       "WorkItemWidgetDesigns",
       "WorkItemWidgetDevelopment",
       "WorkItemWidgetEmailParticipants",
       "WorkItemWidgetErrorTracking",
-      "WorkItemWidgetHealthStatus",
       "WorkItemWidgetHierarchy",
-      "WorkItemWidgetIteration",
       "WorkItemWidgetLabels",
       "WorkItemWidgetLinkedItems",
       "WorkItemWidgetLinkedResources",
@@ -32,15 +25,8 @@ public extension Interfaces {
       "WorkItemWidgetNotes",
       "WorkItemWidgetNotifications",
       "WorkItemWidgetParticipants",
-      "WorkItemWidgetProgress",
-      "WorkItemWidgetRequirementLegacy",
       "WorkItemWidgetStartAndDueDate",
-      "WorkItemWidgetStatus",
-      "WorkItemWidgetTestReports",
-      "WorkItemWidgetTimeTracking",
-      "WorkItemWidgetVerificationStatus",
-      "WorkItemWidgetVulnerabilities",
-      "WorkItemWidgetWeight"
+      "WorkItemWidgetTimeTracking"
     ]
   )
 }

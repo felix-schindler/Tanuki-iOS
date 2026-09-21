@@ -4,11 +4,11 @@
 @_exported import ApolloAPI
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-nonisolated public struct UserGroupsQuery: GraphQLQuery {
-  public static let operationName: String = "UserGroups"
+nonisolated public struct UserMembershipProjectsQuery: GraphQLQuery {
+  public static let operationName: String = "UserMembershipProjects"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query UserGroups($username: String!) { user(username: $username) { __typename groups { __typename nodes { __typename avatarUrl name fullPath visibility groupMembersCount projectsCount maxAccessLevel { __typename stringValue } } } } }"#
+      #"query UserMembershipProjects($username: String!) { user(username: $username) { __typename projectMemberships { __typename nodes { __typename project { __typename avatarUrl nameWithNamespace visibility fullPath archived } } } } }"#
     ))
 
   public var username: String
@@ -28,7 +28,7 @@ nonisolated public struct UserGroupsQuery: GraphQLQuery {
       .field("user", User?.self, arguments: ["username": .variable("username")]),
     ] }
     @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
-      UserGroupsQuery.Data.self
+      UserMembershipProjectsQuery.Data.self
     ] }
 
     /// Find a user.
@@ -44,89 +44,83 @@ nonisolated public struct UserGroupsQuery: GraphQLQuery {
       @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
-        .field("groups", Groups?.self),
+        .field("projectMemberships", ProjectMemberships?.self),
       ] }
       @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
-        UserGroupsQuery.Data.User.self
+        UserMembershipProjectsQuery.Data.User.self
       ] }
 
-      /// Groups where the user has access.
-      public var groups: Groups? { __data["groups"] }
+      /// Project memberships of the user.
+      public var projectMemberships: ProjectMemberships? { __data["projectMemberships"] }
 
-      /// User.Groups
+      /// User.ProjectMemberships
       ///
-      /// Parent Type: `GroupConnection`
-      nonisolated public struct Groups: GitLabAPI.SelectionSet {
+      /// Parent Type: `ProjectMemberConnection`
+      nonisolated public struct ProjectMemberships: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.GroupConnection }
+        @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ProjectMemberConnection }
         @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
           .field("__typename", String.self),
           .field("nodes", [Node?]?.self),
         ] }
         @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
-          UserGroupsQuery.Data.User.Groups.self
+          UserMembershipProjectsQuery.Data.User.ProjectMemberships.self
         ] }
 
         /// A list of nodes.
         public var nodes: [Node?]? { __data["nodes"] }
 
-        /// User.Groups.Node
+        /// User.ProjectMemberships.Node
         ///
-        /// Parent Type: `Group`
+        /// Parent Type: `ProjectMember`
         nonisolated public struct Node: GitLabAPI.SelectionSet {
           @_spi(Unsafe) public let __data: DataDict
           @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
+          @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.ProjectMember }
           @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
             .field("__typename", String.self),
-            .field("avatarUrl", String?.self),
-            .field("name", String?.self),
-            .field("fullPath", GitLabAPI.ID.self),
-            .field("visibility", String?.self),
-            .field("groupMembersCount", Int.self),
-            .field("projectsCount", Int.self),
-            .field("maxAccessLevel", MaxAccessLevel.self),
+            .field("project", Project?.self),
           ] }
           @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
-            UserGroupsQuery.Data.User.Groups.Node.self
+            UserMembershipProjectsQuery.Data.User.ProjectMemberships.Node.self
           ] }
 
-          /// Avatar URL of the group.
-          public var avatarUrl: String? { __data["avatarUrl"] }
-          /// Name of the group.
-          public var name: String? { __data["name"] }
-          /// Full path of the namespace.
-          public var fullPath: GitLabAPI.ID { __data["fullPath"] }
-          /// Visibility of the namespace.
-          public var visibility: String? { __data["visibility"] }
-          /// Count of direct members of the group.
-          public var groupMembersCount: Int { __data["groupMembersCount"] }
-          /// Count of direct projects in the group.
-          public var projectsCount: Int { __data["projectsCount"] }
-          /// Maximum access level of the current user in the group.
-          public var maxAccessLevel: MaxAccessLevel { __data["maxAccessLevel"] }
+          /// Project that User is a member of.
+          public var project: Project? { __data["project"] }
 
-          /// User.Groups.Node.MaxAccessLevel
+          /// User.ProjectMemberships.Node.Project
           ///
-          /// Parent Type: `AccessLevel`
-          nonisolated public struct MaxAccessLevel: GitLabAPI.SelectionSet {
+          /// Parent Type: `Project`
+          nonisolated public struct Project: GitLabAPI.SelectionSet {
             @_spi(Unsafe) public let __data: DataDict
             @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.AccessLevel }
+            @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Project }
             @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
               .field("__typename", String.self),
-              .field("stringValue", GraphQLEnum<GitLabAPI.AccessLevelEnum>?.self),
+              .field("avatarUrl", String?.self),
+              .field("nameWithNamespace", String.self),
+              .field("visibility", String?.self),
+              .field("fullPath", GitLabAPI.ID.self),
+              .field("archived", Bool?.self),
             ] }
             @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
-              UserGroupsQuery.Data.User.Groups.Node.MaxAccessLevel.self
+              UserMembershipProjectsQuery.Data.User.ProjectMemberships.Node.Project.self
             ] }
 
-            /// Enum string of the the access level.
-            public var stringValue: GraphQLEnum<GitLabAPI.AccessLevelEnum>? { __data["stringValue"] }
+            /// Avatar URL of the project.
+            public var avatarUrl: String? { __data["avatarUrl"] }
+            /// Name of the project including the namespace.
+            public var nameWithNamespace: String { __data["nameWithNamespace"] }
+            /// Visibility of the project.
+            public var visibility: String? { __data["visibility"] }
+            /// Full path of the project.
+            public var fullPath: GitLabAPI.ID { __data["fullPath"] }
+            /// Indicates the archived status of the project.
+            public var archived: Bool? { __data["archived"] }
           }
         }
       }

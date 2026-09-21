@@ -8,16 +8,36 @@ nonisolated public struct GroupMergeRequestsQuery: GraphQLQuery {
   public static let operationName: String = "GroupMergeRequests"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query GroupMergeRequests($fullPath: ID!) { group(fullPath: $fullPath) { __typename mergeRequests(state: opened) { __typename nodes { __typename iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename avatarUrl name username } createdAt webUrl } } } }"#
+      #"query GroupMergeRequests($fullPath: ID!, $state: MergeRequestState, $search: String, $draft: Boolean, $subscribed: SubscriptionStatus) { group(fullPath: $fullPath) { __typename mergeRequests( state: $state search: $search draft: $draft subscribed: $subscribed ) { __typename nodes { __typename iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename avatarUrl name username } createdAt webUrl } } } }"#
     ))
 
   public var fullPath: ID
+  public var state: GraphQLNullable<GraphQLEnum<MergeRequestState>>
+  public var search: GraphQLNullable<String>
+  public var draft: GraphQLNullable<Bool>
+  public var subscribed: GraphQLNullable<GraphQLEnum<SubscriptionStatus>>
 
-  public init(fullPath: ID) {
+  public init(
+    fullPath: ID,
+    state: GraphQLNullable<GraphQLEnum<MergeRequestState>>,
+    search: GraphQLNullable<String>,
+    draft: GraphQLNullable<Bool>,
+    subscribed: GraphQLNullable<GraphQLEnum<SubscriptionStatus>>
+  ) {
     self.fullPath = fullPath
+    self.state = state
+    self.search = search
+    self.draft = draft
+    self.subscribed = subscribed
   }
 
-  @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
+  @_spi(Unsafe) public var __variables: Variables? { [
+    "fullPath": fullPath,
+    "state": state,
+    "search": search,
+    "draft": draft,
+    "subscribed": subscribed
+  ] }
 
   nonisolated public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
@@ -44,7 +64,12 @@ nonisolated public struct GroupMergeRequestsQuery: GraphQLQuery {
       @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
-        .field("mergeRequests", MergeRequests?.self, arguments: ["state": "opened"]),
+        .field("mergeRequests", MergeRequests?.self, arguments: [
+          "state": .variable("state"),
+          "search": .variable("search"),
+          "draft": .variable("draft"),
+          "subscribed": .variable("subscribed")
+        ]),
       ] }
       @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
         GroupMergeRequestsQuery.Data.Group.self

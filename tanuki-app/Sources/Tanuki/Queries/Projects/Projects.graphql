@@ -1,10 +1,9 @@
-query Projects($membership: Boolean, $search: String, $personal: Boolean, $sort: String, $namespacePath: ID, $withIssuesEnabled: Boolean, $withMergeRequestsEnabled: Boolean, $archived: ProjectArchived, $minAccessLevel: AccessLevelEnum, $aimedForDeletion: Boolean, $notAimedForDeletion: Boolean, $markedForDeletionOn: Date, $active: Boolean, $visibility: VisibilityLevelsEnum) {
+query Projects($membership: Boolean, $search: String, $personal: Boolean, $sort: String, $withIssuesEnabled: Boolean, $withMergeRequestsEnabled: Boolean, $archived: ProjectArchived, $minAccessLevel: AccessLevelEnum, $aimedForDeletion: Boolean, $notAimedForDeletion: Boolean, $markedForDeletionOn: Date, $active: Boolean) {
   projects(
     membership: $membership
     search: $search
     personal: $personal
     sort: $sort
-    namespacePath: $namespacePath
     withIssuesEnabled: $withIssuesEnabled
     withMergeRequestsEnabled: $withMergeRequestsEnabled
     archived: $archived
@@ -13,13 +12,13 @@ query Projects($membership: Boolean, $search: String, $personal: Boolean, $sort:
     notAimedForDeletion: $notAimedForDeletion
     markedForDeletionOn: $markedForDeletionOn
     active: $active
-    visibilityLevel: $visibility
   ) {
     nodes {
       avatarUrl
       nameWithNamespace
       visibility
       fullPath
+      archived
     }
   }
 }

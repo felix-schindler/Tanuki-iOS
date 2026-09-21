@@ -7,9 +7,6 @@ public extension Interfaces {
   nonisolated static let ProjectInterface = ApolloAPI.Interface(
     name: "ProjectInterface",
     keyFields: nil,
-    implementingObjects: [
-      "Project",
-      "ProjectMinimalAccess"
-    ]
+    implementingObjects: ["Project"]
   )
 }

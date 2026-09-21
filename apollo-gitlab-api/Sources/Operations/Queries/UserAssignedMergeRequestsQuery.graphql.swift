@@ -8,10 +8,32 @@ nonisolated public struct UserAssignedMergeRequestsQuery: GraphQLQuery {
   public static let operationName: String = "UserAssignedMergeRequests"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query UserAssignedMergeRequests { currentUser { __typename assignedMergeRequests(state: opened) { __typename nodes { __typename project { __typename fullPath } iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename avatarUrl name username } createdAt webUrl } } } }"#
+      #"query UserAssignedMergeRequests($state: MergeRequestState, $search: String, $draft: Boolean, $subscribed: SubscriptionStatus) { currentUser { __typename assignedMergeRequests( state: $state search: $search draft: $draft subscribed: $subscribed ) { __typename nodes { __typename project { __typename fullPath } iid title reference(full: true) state upvotes downvotes userNotesCount author { __typename avatarUrl name username } createdAt webUrl } } } }"#
     ))
 
-  public init() {}
+  public var state: GraphQLNullable<GraphQLEnum<MergeRequestState>>
+  public var search: GraphQLNullable<String>
+  public var draft: GraphQLNullable<Bool>
+  public var subscribed: GraphQLNullable<GraphQLEnum<SubscriptionStatus>>
+
+  public init(
+    state: GraphQLNullable<GraphQLEnum<MergeRequestState>>,
+    search: GraphQLNullable<String>,
+    draft: GraphQLNullable<Bool>,
+    subscribed: GraphQLNullable<GraphQLEnum<SubscriptionStatus>>
+  ) {
+    self.state = state
+    self.search = search
+    self.draft = draft
+    self.subscribed = subscribed
+  }
+
+  @_spi(Unsafe) public var __variables: Variables? { [
+    "state": state,
+    "search": search,
+    "draft": draft,
+    "subscribed": subscribed
+  ] }
 
   nonisolated public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
@@ -38,7 +60,12 @@ nonisolated public struct UserAssignedMergeRequestsQuery: GraphQLQuery {
       @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.CurrentUser }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
-        .field("assignedMergeRequests", AssignedMergeRequests?.self, arguments: ["state": "opened"]),
+        .field("assignedMergeRequests", AssignedMergeRequests?.self, arguments: [
+          "state": .variable("state"),
+          "search": .variable("search"),
+          "draft": .variable("draft"),
+          "subscribed": .variable("subscribed")
+        ]),
       ] }
       @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
         UserAssignedMergeRequestsQuery.Data.CurrentUser.self

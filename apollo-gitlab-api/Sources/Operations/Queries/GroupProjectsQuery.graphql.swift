@@ -4,20 +4,20 @@
 @_exported import ApolloAPI
 @_spi(Execution) @_spi(Unsafe) import ApolloAPI
 
-nonisolated public struct UserStarredProjectsQuery: GraphQLQuery {
-  public static let operationName: String = "UserStarredProjects"
+nonisolated public struct GroupProjectsQuery: GraphQLQuery {
+  public static let operationName: String = "GroupProjects"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"query UserStarredProjects($username: String!) { user(username: $username) { __typename starredProjects { __typename nodes { __typename avatarUrl nameWithNamespace visibility fullPath archived } } } }"#
+      #"query GroupProjects($fullPath: ID!) { group(fullPath: $fullPath) { __typename projects { __typename nodes { __typename avatarUrl nameWithNamespace visibility fullPath archived } } } }"#
     ))
 
-  public var username: String
+  public var fullPath: ID
 
-  public init(username: String) {
-    self.username = username
+  public init(fullPath: ID) {
+    self.fullPath = fullPath
   }
 
-  @_spi(Unsafe) public var __variables: Variables? { ["username": username] }
+  @_spi(Unsafe) public var __variables: Variables? { ["fullPath": fullPath] }
 
   nonisolated public struct Data: GitLabAPI.SelectionSet {
     @_spi(Unsafe) public let __data: DataDict
@@ -25,38 +25,38 @@ nonisolated public struct UserStarredProjectsQuery: GraphQLQuery {
 
     @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Query }
     @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
-      .field("user", User?.self, arguments: ["username": .variable("username")]),
+      .field("group", Group?.self, arguments: ["fullPath": .variable("fullPath")]),
     ] }
     @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
-      UserStarredProjectsQuery.Data.self
+      GroupProjectsQuery.Data.self
     ] }
 
-    /// Find a user.
-    public var user: User? { __data["user"] }
+    /// Find a group.
+    public var group: Group? { __data["group"] }
 
-    /// User
+    /// Group
     ///
-    /// Parent Type: `UserCore`
-    nonisolated public struct User: GitLabAPI.SelectionSet {
+    /// Parent Type: `Group`
+    nonisolated public struct Group: GitLabAPI.SelectionSet {
       @_spi(Unsafe) public let __data: DataDict
       @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
-      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.UserCore }
+      @_spi(Execution) public static var __parentType: any ApolloAPI.ParentType { GitLabAPI.Objects.Group }
       @_spi(Execution) public static var __selections: [ApolloAPI.Selection] { [
         .field("__typename", String.self),
-        .field("starredProjects", StarredProjects?.self),
+        .field("projects", Projects.self),
       ] }
       @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
-        UserStarredProjectsQuery.Data.User.self
+        GroupProjectsQuery.Data.Group.self
       ] }
 
-      /// Projects starred by the user.
-      public var starredProjects: StarredProjects? { __data["starredProjects"] }
+      /// Projects within this namespace. Returns projects from the parent group if namespace is project.
+      public var projects: Projects { __data["projects"] }
 
-      /// User.StarredProjects
+      /// Group.Projects
       ///
       /// Parent Type: `ProjectConnection`
-      nonisolated public struct StarredProjects: GitLabAPI.SelectionSet {
+      nonisolated public struct Projects: GitLabAPI.SelectionSet {
         @_spi(Unsafe) public let __data: DataDict
         @_spi(Unsafe) public init(_dataDict: DataDict) { __data = _dataDict }
 
@@ -66,13 +66,13 @@ nonisolated public struct UserStarredProjectsQuery: GraphQLQuery {
           .field("nodes", [Node?]?.self),
         ] }
         @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
-          UserStarredProjectsQuery.Data.User.StarredProjects.self
+          GroupProjectsQuery.Data.Group.Projects.self
         ] }
 
         /// A list of nodes.
         public var nodes: [Node?]? { __data["nodes"] }
 
-        /// User.StarredProjects.Node
+        /// Group.Projects.Node
         ///
         /// Parent Type: `Project`
         nonisolated public struct Node: GitLabAPI.SelectionSet {
@@ -89,7 +89,7 @@ nonisolated public struct UserStarredProjectsQuery: GraphQLQuery {
             .field("archived", Bool?.self),
           ] }
           @_spi(Execution) public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
-            UserStarredProjectsQuery.Data.User.StarredProjects.Node.self
+            GroupProjectsQuery.Data.Group.Projects.Node.self
           ] }
 
           /// Avatar URL of the project.

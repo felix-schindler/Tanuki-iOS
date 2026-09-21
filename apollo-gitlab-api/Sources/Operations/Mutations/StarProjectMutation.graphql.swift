@@ -42,7 +42,7 @@ nonisolated public struct StarProjectMutation: GraphQLMutation {
       StarProjectMutation.Data.self
     ] }
 
-    @available(*, deprecated, message: "Status: Experiment. Introduced in GitLab 16.7.")
+    @available(*, deprecated, message: "**Status**: Experiment. Introduced in GitLab 16.7.")
     public var starProject: StarProject? { __data["starProject"] }
 
     /// StarProject

@@ -3,7 +3,7 @@
 
 @_spi(Internal) import ApolloAPI
 
-/// Verification status of a GPG, X.509, or SSH signature for a commit.
+/// Verification status of a GPG, X.509 or SSH signature for a commit.
 nonisolated public enum VerificationStatus: String, EnumType {
   /// unverified verification status.
   case unverified = "UNVERIFIED"
@@ -25,8 +25,4 @@ nonisolated public enum VerificationStatus: String, EnumType {
   case verifiedSystem = "VERIFIED_SYSTEM"
   /// unverified_author_email verification status.
   case unverifiedAuthorEmail = "UNVERIFIED_AUTHOR_EMAIL"
-  /// expired_key verification status.
-  case expiredKey = "EXPIRED_KEY"
-  /// verified_ca verification status.
-  case verifiedCa = "VERIFIED_CA"
 }

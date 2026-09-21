@@ -1,6 +1,11 @@
-query GroupMergeRequests($fullPath: ID!) {
+query GroupMergeRequests($fullPath: ID!, $state: MergeRequestState, $search: String, $draft: Boolean, $subscribed: SubscriptionStatus) {
   group(fullPath: $fullPath) {
-    mergeRequests(state: opened) {
+    mergeRequests(
+      state: $state
+      search: $search
+      draft: $draft
+      subscribed: $subscribed
+    ) {
       nodes {
         iid
         title
