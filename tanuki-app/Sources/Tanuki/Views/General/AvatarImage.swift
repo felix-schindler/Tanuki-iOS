@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+#if !SKIP_BRIDGE
+	import CachedAsyncImage
+#endif
+
 enum AvatarSize {
 	case tiny,
 		small,
@@ -55,22 +59,42 @@ struct AvatarImage: View {
 	}
 
 	public var body: some View {
-		AsyncImage(url: self.url) { phase in
-			switch phase {
-			case .empty:
-				ProgressView()
-			case .success(let image):
-				image
-					.resizable()
-					.scaledToFit()
-					.cornerRadius(self.radius)
-			case .failure:
-				Image(systemName: "exclamationmark.triangle")
-					.resizable()
-					.scaledToFit()
-			@unknown default:
-				EmptyView()
-			}
-		}.frame(width: width, height: height, alignment: .leading)
+		#if SKIP_BRIDGE
+			AsyncImage(url: self.url) { phase in
+				switch phase {
+				case .empty:
+					ProgressView()
+				case .success(let image):
+					image
+						.resizable()
+						.scaledToFit()
+						.cornerRadius(self.radius)
+				case .failure:
+					Image(systemName: "exclamationmark.triangle")
+						.resizable()
+						.scaledToFit()
+				@unknown default:
+					EmptyView()
+				}
+			}.frame(width: width, height: height, alignment: .leading)
+		#else
+			CachedAsyncImage(url: self.url, urlCache: .avatar) { phase in
+				switch phase {
+				case .empty:
+					ProgressView()
+				case .success(let image):
+					image
+						.resizable()
+						.scaledToFit()
+						.cornerRadius(self.radius)
+				case .failure:
+					Image(systemName: "exclamationmark.triangle")
+						.resizable()
+						.scaledToFit()
+				@unknown default:
+					EmptyView()
+				}
+			}.frame(width: width, height: height, alignment: .leading)
+		#endif
 	}
 }

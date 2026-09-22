@@ -23,7 +23,7 @@ let package = Package(
 		.package(url: "https://github.com/skiptools/skip-web.git", from: "0.12.0"),
 		//.package(url: "https://github.com/gonzalezreal/swift-markdown-ui.git", from: "2.4.1"),
 		//.package(url: "https://github.com/BastiaanJansen/toast-swift.git", from: "2.1.3"),
-		//.package(url: "https://github.com/lorenzofiamingo/swiftui-cached-async-image.git", exact: "2.1.1"),
+		.package(url: "https://github.com/lorenzofiamingo/swiftui-cached-async-image.git", exact: "2.1.1"),
 		//.package(url: "https://github.com/NVMNovem/nvm-color.git", from: "1.2.5")
 	],
 	targets: [
@@ -43,7 +43,7 @@ let package = Package(
 				.product(name: "cmark-gfm-extensions", package: "swift-cmark"),
 				.product(name: "SkipWeb", package: "skip-web"),
 				//.product(name: "MarkdownUI", package: "swift-markdown-ui"),
-				//.product(name: "CachedAsyncImage", package: "swiftui-cached-async-image"),
+				.product(name: "CachedAsyncImage", package: "swiftui-cached-async-image", condition: .when(platforms: [.iOS, .macOS])),
 				//.product(name: "Toast", package: "toast-swift"),
 				//.product(name: "NVMColor", package: "nvm-color")
 			], resources: [.process("Resources")], plugins: [.plugin(name: "skipstone", package: "skip")]
