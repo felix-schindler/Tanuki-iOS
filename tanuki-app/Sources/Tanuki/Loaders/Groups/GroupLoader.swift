@@ -263,10 +263,6 @@ struct GroupLoader: View {
 										"Issues",
 										destination: GroupIssuesLoader(fullPath: self.fullPath)
 									)
-									NavigationLink(
-										"Epics",
-										destination: GroupEpicsLoader(fullPath: self.fullPath)
-									)
 									if let groupId = group.id?.toIntId() {
 										NavigationLink(
 											"Milestones",

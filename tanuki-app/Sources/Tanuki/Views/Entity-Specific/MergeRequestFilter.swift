@@ -48,7 +48,3 @@ struct MergeRequestFilterView: View {
 		.navigationTitle("Merge Requests Filter")
 	}
 }
-
-#Preview {
-	MergeRequestFilterView(filter: .constant(MergeRequestFilter()))
-}

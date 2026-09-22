@@ -91,9 +91,3 @@ struct GroupProjectsLoader: View {
 		}.navigationTitle("Projects")
 	}
 }
-
-#Preview {
-	NavigationView {
-		GroupProjectsLoader(fullPath: "gitlab-org")
-	}
-}

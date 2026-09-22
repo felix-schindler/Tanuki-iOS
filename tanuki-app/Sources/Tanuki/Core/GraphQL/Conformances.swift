@@ -7,6 +7,8 @@ extension GitLabAPI.UsersQuery.Data.Users.Node: Author {}
 extension GitLabAPI.ProjectsQuery.Data.Projects.Node: SmallProject {}
 extension GitLabAPI.CurrentUserStarredProjectsQuery.Data.CurrentUser.StarredProjects.Node: SmallProject {}
 extension GitLabAPI.UserStarredProjectsQuery.Data.User.StarredProjects.Node: SmallProject {}
+extension GitLabAPI.GroupProjectsQuery.Data.Group.Projects.Node: SmallProject {}
+extension GitLabAPI.UserMembershipProjectsQuery.Data.User.ProjectMemberships.Node.Project: SmallProject {}
 
 // MARK: - SmallGroup
 extension GitLabAPI.GroupsQuery.Data.Groups.Node: SmallGroup {
@@ -56,12 +58,6 @@ extension GitLabAPI.MergeRequestQuery.Data.Project.MergeRequest.Notes.Node: Note
 	}
 }
 extension GitLabAPI.SnippetQuery.Data.Snippets.Node.Notes.Node: Note {
-	public var _author: MyAuthor? {
-		guard let a = author else { return nil }
-		return MyAuthor(avatarUrl: a.avatarUrl, name: a.name, username: a.username)
-	}
-}
-extension GitLabAPI.EpicQuery.Data.Group.Epic.Notes.Node: Note {
 	public var _author: MyAuthor? {
 		guard let a = author else { return nil }
 		return MyAuthor(avatarUrl: a.avatarUrl, name: a.name, username: a.username)
@@ -123,11 +119,6 @@ extension GitLabAPI.ProjectIssuesQuery.Data.Project.Issues.Node: SmallIssue {
 	}
 }
 extension GitLabAPI.GroupIssuesQuery.Data.Group.Issues.Node: SmallIssue {
-	public var _author: MyAuthor {
-		MyAuthor(avatarUrl: author.avatarUrl, name: author.name, username: author.username)
-	}
-}
-extension GitLabAPI.EpicIssuesQuery.Data.Group.Epic.Issues.Node: SmallIssue {
 	public var _author: MyAuthor {
 		MyAuthor(avatarUrl: author.avatarUrl, name: author.name, username: author.username)
 	}
@@ -251,7 +242,7 @@ extension GitLabAPI.UserTimelogsQuery.Data.User.Timelogs.Node: Timelog {
 extension GitLabAPI.UserTodosQuery.Data.User.Todos.Node: Todo {
 	public var _project: SmallProject? {
 		guard let p = project else { return nil }
-		return SmallProjectStruct(avatarUrl: p.avatarUrl, nameWithNamespace: p.nameWithNamespace, visibility: p.visibility, fullPath: p.fullPath)
+		return SmallProjectStruct(avatarUrl: p.avatarUrl, nameWithNamespace: p.nameWithNamespace, visibility: p.visibility, fullPath: p.fullPath, archived: p.archived)
 	}
 	public var _groupPath: String? { group?.id }
 	public var _author: MyAuthor {
@@ -262,7 +253,7 @@ extension GitLabAPI.UserTodosQuery.Data.User.Todos.Node: Todo {
 extension GitLabAPI.CurrentUserTodosQuery.Data.CurrentUser.Todos.Node: Todo {
 	public var _project: SmallProject? {
 		guard let p = project else { return nil }
-		return SmallProjectStruct(avatarUrl: p.avatarUrl, nameWithNamespace: p.nameWithNamespace, visibility: p.visibility, fullPath: p.fullPath)
+		return SmallProjectStruct(avatarUrl: p.avatarUrl, nameWithNamespace: p.nameWithNamespace, visibility: p.visibility, fullPath: p.fullPath, archived: p.archived)
 	}
 	public var _groupPath: String? { group?.id }
 	public var _author: MyAuthor {
@@ -292,16 +283,6 @@ extension GitLabAPI.MergeRequestCommitsQuery.Data.Project.MergeRequest.Commits.N
 }
 
 // MARK: - HasAuthor / MaybeHasAuthor
-extension GitLabAPI.EpicQuery.Data.Group.Epic: HasAuthor {
-	public var _author: MyAuthor {
-		MyAuthor(avatarUrl: author.avatarUrl, name: author.name, username: author.username)
-	}
-}
-extension GitLabAPI.GroupEpicsQuery.Data.Group.Epics.Node: HasAuthor {
-	public var _author: MyAuthor {
-		MyAuthor(avatarUrl: author.avatarUrl, name: author.name, username: author.username)
-	}
-}
 extension GitLabAPI.ProjectPipelinesQuery.Data.Project.Pipelines.Node: MaybeHasAuthor {
 	public var _author: MyAuthor? {
 		guard let u = user else { return nil }

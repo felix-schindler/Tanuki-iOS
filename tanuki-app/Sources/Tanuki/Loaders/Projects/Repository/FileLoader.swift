@@ -20,9 +20,8 @@ struct FileLoader: View {
 
 	@Environment(\.colorScheme) var colorScheme: ColorScheme
 
-	@State private var file: Result<Data, Error>? = nil
-
-	@State private var videoURL: URL? = nil
+	@State var file: Result<Data, Error>? = nil
+	@State var videoURL: URL? = nil
 
 	init(
 		id: Int,

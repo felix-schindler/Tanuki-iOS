@@ -89,9 +89,3 @@ struct UserProjectsLoader: View {
 		}.navigationTitle("Projects")
 	}
 }
-
-#Preview {
-	NavigationView {
-		UserProjectsLoader(username: "felix-schindler")
-	}
-}

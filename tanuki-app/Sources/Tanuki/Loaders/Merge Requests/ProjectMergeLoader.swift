@@ -115,7 +115,7 @@ struct ProjectMergeLoader: View {
 				showFilters = true
 			}
 		}.sheet(isPresented: $showFilters, onDismiss: { self.showFilters = false }) {
-			NavigationView {
+			NavigationStack {
 				MergeRequestFilterView(filter: $filter)
 					.toolbar {
 						AsyncButton("Apply filter", systemImage: "checkmark") {
