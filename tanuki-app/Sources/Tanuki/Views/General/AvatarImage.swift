@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-#if !SKIP_BRIDGE
+#if canImport(CachedAsyncImage)
 	import CachedAsyncImage
 #endif
 
@@ -59,8 +59,8 @@ struct AvatarImage: View {
 	}
 
 	public var body: some View {
-		#if SKIP_BRIDGE
-			AsyncImage(url: self.url) { phase in
+		#if canImport(CachedAsyncImage)
+			CachedAsyncImage(url: self.url, urlCache: .avatar) { phase in
 				switch phase {
 				case .empty:
 					ProgressView()
@@ -78,7 +78,7 @@ struct AvatarImage: View {
 				}
 			}.frame(width: width, height: height, alignment: .leading)
 		#else
-			CachedAsyncImage(url: self.url, urlCache: .avatar) { phase in
+			AsyncImage(url: self.url) { phase in
 				switch phase {
 				case .empty:
 					ProgressView()
