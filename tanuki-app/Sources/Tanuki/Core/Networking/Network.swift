@@ -9,7 +9,6 @@ import Apollo
 import ApolloAPI
 import ApolloSQLite
 import Foundation
-import GitLabAPI
 
 #if canImport(FoundationNetworking)
 	import FoundationNetworking

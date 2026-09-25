@@ -22,12 +22,50 @@ struct InstancesView: View {
 			} else {
 				Section {
 					ForEach(instances) { instance in
-						InstanceRowView(
-							instance: instance, selectedId: selectedId,
-							onUpdate: {
-								instances = InstanceManager.instances
-								selectedId = InstanceManager.selectedId
-							})
+						HStack {
+							VStack(alignment: .leading) {
+								Text(instance.host)
+									.font(.headline)
+								Text(instance.isOAuth ? "GitLab.com (OAuth)" : "Self-Hosted")
+									.font(.caption)
+									.foregroundStyle(.secondary)
+							}
+
+							Spacer()
+
+							if instance.id == selectedId {
+								Image(systemName: "checkmark.circle.fill")
+									.foregroundColor(.accentColor)
+							}
+						}
+						#if !SKIP_BRIDGE
+							.contentShape(.rect)
+						#endif
+						.onTapGesture {
+							Task {
+								await Auth.switchInstance(to: instance)
+								refresh()
+							}
+						}
+						.swipeActions(edge: .trailing) {
+							Button(role: .destructive) {
+								let wasSelected = instance.id == InstanceManager.selectedId
+								InstanceManager.remove(instance)
+								refresh()
+								if wasSelected {
+									Task {
+										if let next = InstanceManager.selected {
+											await Auth.switchInstance(to: next)
+										} else {
+											await Auth.logout()
+										}
+									}
+								}
+							} label: {
+								Image(systemName: "trash")
+									.accessibilityLabel("Delete")
+							}
+						}
 					}
 				} header: {
 					Text("Instances")
@@ -40,65 +78,15 @@ struct InstancesView: View {
 				}
 			}
 		}.onAppear {
-			instances = InstanceManager.instances
-			selectedId = InstanceManager.selectedId
+			refresh()
 		}.toolbar {
 			NavigationLink(destination: ConfigView(showSetup: nil)) {
 				Label("Add Instance", systemImage: "plus")
 			}
 		}.navigationTitle("Instances")
 	}
-}
-
-struct InstanceRowView: View {
-	let instance: GitLabInstance
-	let selectedId: String?
-	let onUpdate: () -> Void
-
-	var body: some View {
-		HStack {
-			VStack(alignment: .leading) {
-				Text(instance.host)
-					.font(.headline)
-				Text(instance.isOAuth ? "GitLab.com (OAuth)" : "Self-Hosted")
-					.font(.caption)
-					.foregroundStyle(.secondary)
-			}
-
-			Spacer()
-
-			if instance.id == selectedId {
-				Image(systemName: "checkmark.circle.fill")
-					.foregroundColor(.accentColor)
-			}
-		}
-		#if !SKIP_BRIDGE
-			.contentShape(.rect)
-		#endif
-		.onTapGesture {
-			Task {
-				await Auth.switchInstance(to: instance)
-				onUpdate()
-			}
-		}
-		.swipeActions(edge: .trailing) {
-			Button(role: .destructive) {
-				let wasSelected = instance.id == InstanceManager.selectedId
-				InstanceManager.remove(instance)
-				onUpdate()
-				if wasSelected {
-					Task {
-						if let next = InstanceManager.selected {
-							await Auth.switchInstance(to: next)
-						} else {
-							await Auth.logout()
-						}
-					}
-				}
-			} label: {
-				Image(systemName: "trash")
-					.accessibilityLabel("Delete")
-			}
-		}
+	private func refresh() {
+		instances = InstanceManager.instances
+		selectedId = InstanceManager.selectedId
 	}
 }

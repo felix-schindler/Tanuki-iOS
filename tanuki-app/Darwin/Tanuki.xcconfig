@@ -13,11 +13,6 @@ ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor
 INFOPLIST_FILE = Info.plist
 GENERATE_INFOPLIST_FILE = YES
 
-// The user-visible name of the app (localizable)
-//INFOPLIST_KEY_CFBundleDisplayName = App Name
-//INFOPLIST_KEY_LSApplicationCategoryType = public.app-category.utilities
-//INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app uses your location to …"
-
 // iOS-specific Info.plist property keys
 INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphone*] = YES
 INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphone*] = YES
