@@ -21,14 +21,12 @@ download_and_extract() {
 	need_cmd rm
 	need_cmd tar
 
-	# Determine the latest release version
-	LATEST_VERSION=$(curl -Ls -o /dev/null -w %{url_effective} \
-		"https://github.com/$REPOSITORY_OWNER/$REPOSITORY_NAME/releases/latest")
-	LATEST_VERSION=${LATEST_VERSION##*/tag/}
+	local _release="latest/download"
+	if [ -n "${VERSION:-}" ]; then
+		_release="download/$VERSION"
+	fi
 
-	DOWNLOAD_VERSION="${VERSION:-$LATEST_VERSION}"
-
-	local _url="https://github.com/$REPOSITORY_OWNER/$REPOSITORY_NAME/releases/download/${DOWNLOAD_VERSION}/${ARCHIVE_NAME}"
+	local _url="https://github.com/$REPOSITORY_OWNER/$REPOSITORY_NAME/releases/${_release}/${ARCHIVE_NAME}"
 	local _tmpdir
 	_tmpdir="$(mktemp -d 2>/dev/null || mktemp -d -t "${REPOSITORY_NAME}")"
 	local _file="$_tmpdir/${ARCHIVE_NAME}"
