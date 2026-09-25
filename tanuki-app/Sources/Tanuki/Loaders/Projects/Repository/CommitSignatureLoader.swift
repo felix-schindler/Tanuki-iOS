@@ -47,7 +47,7 @@ struct SignatureLoader: View {
 						endpoint: "projects/\(projectId)/repository/commits/\(commitId)/signature"
 					)
 				} catch let error {
-					Notify.status(.error, error.localizedDescription)
+					logger.error("Ignored error: \(error.localizedDescription)")
 				}
 			}
 		}.sheet(isPresented: $showDetails) {
