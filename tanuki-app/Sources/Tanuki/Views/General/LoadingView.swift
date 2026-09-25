@@ -33,6 +33,9 @@ struct LoadingView: View {
 					},
 					icon: {
 						self.icon
+							.resizable()
+							.scaledToFit()
+							.frame(width: 24, height: 24)
 							.foregroundStyle(self.color)
 					})
 			})

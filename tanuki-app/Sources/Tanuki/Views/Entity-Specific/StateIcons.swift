@@ -125,6 +125,9 @@ struct MergeStateIcon: View {
 
 	public var body: some View {
 		self.icon
+			.resizable()
+			.scaledToFit()
+			.frame(width: 20, height: 20)
 			.accessibilityLabel(Text(self.state.rawValue))
 			.foregroundStyle(self.color)
 	}
