@@ -1,18 +1,20 @@
-import SwiftUI
+#if os(watchOS)
+	import SwiftUI
 
-struct MergeRequestsHomeView: View {
-	public var body: some View {
-		List {
-			NavigationLink("Assigned", destination: UserMergeLoader(.assigned))
-			NavigationLink("Authored", destination: UserMergeLoader(.authored))
-			NavigationLink("Review Requested", destination: UserMergeLoader(.reviewRequested))
+	struct MergeRequestsHomeView: View {
+		public var body: some View {
+			List {
+				NavigationLink("Assigned", destination: UserMergeLoader(.assigned))
+				NavigationLink("Authored", destination: UserMergeLoader(.authored))
+				NavigationLink("Review Requested", destination: UserMergeLoader(.reviewRequested))
+			}
+			.navigationTitle("Merge Requests")
 		}
-		.navigationTitle("Merge Requests")
 	}
-}
 
-#Preview {
-	NavigationStack {
-		MergeRequestsHomeView()
+	#Preview {
+		NavigationStack {
+			MergeRequestsHomeView()
+		}
 	}
-}
+#endif
