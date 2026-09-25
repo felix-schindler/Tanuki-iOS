@@ -6,7 +6,6 @@
 //
 
 import GitLabAPI
-//import MarkdownUI
 import SwiftUI
 
 struct TodoView: View {

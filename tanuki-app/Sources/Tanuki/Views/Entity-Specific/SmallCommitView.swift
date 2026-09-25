@@ -5,7 +5,6 @@
 //  Created by Felix Schindler on 29.03.24.
 //
 
-//import MarkdownUI
 import GitLabAPI
 import SkipKit
 import SwiftUI

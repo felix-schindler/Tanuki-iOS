@@ -5,7 +5,6 @@
 //  Created by Felix Schindler on 16.03.24.
 //
 
-//import MarkdownUI
 import SwiftUI
 
 #if SKIP_BRIDGE

@@ -7,7 +7,6 @@
 //
 
 import GitLabAPI
-//import MarkdownUI
 import SwiftUI
 
 struct IssueLoader: View {
