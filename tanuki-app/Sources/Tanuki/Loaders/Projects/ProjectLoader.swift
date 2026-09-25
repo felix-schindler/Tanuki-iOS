@@ -386,35 +386,14 @@ struct ProjectLoader: View {
 				}
 			}
 		}.background {
-			#if !SKIP_BRIDGE
-				if let project, case .success(let project) = project,
-					let projectId = project.id.toIntId()
-				{
-					NavigationLink(
-						isActive: $navigationActive,
-						destination: {
-							if let navigationDestination {
-								switch navigationDestination {
-								case .issue:
-									NewIssueView(id: projectId, fullPath: self.fullPath)
-								case .milestone:
-									NewMilestoneView(id: projectId, groupId: 0)
-								case .release:
-									NewReleaseView(id: projectId, fullPath: self.fullPath)
-								case .member:
-									NewMemberView(id: projectId, groupId: 0)
-								case .label:
-									NewLabelView(id: projectId, groupId: 0)
-								}
-							} else {
-								EmptyView()
-							}
-						},
-						label: {
-							EmptyView()
-						}
-					)
-				}
+			#if SKIP_BRIDGE
+				navigationDestination(isPresented: $navigationActive) { createDestination }
+			#else
+				NavigationLink(
+					isActive: $navigationActive,
+					destination: { createDestination },
+					label: { EmptyView() }
+				)
 			#endif
 		}
 		.navigationTitle(self.fullPath)
@@ -501,6 +480,26 @@ struct ProjectLoader: View {
 				destination: ProjectReleasesLoader(
 					fullPath: self.fullPath, projectId: project.id.toIntId())
 			)
+		}
+	}
+
+	@ViewBuilder
+	private var createDestination: some View {
+		if let project, case .success(let project) = project, let projectId = project.id.toIntId() {
+			if let navigationDestination {
+				switch navigationDestination {
+				case .issue:
+					NewIssueView(id: projectId, fullPath: self.fullPath)
+				case .milestone:
+					NewMilestoneView(id: projectId, groupId: 0)
+				case .release:
+					NewReleaseView(id: projectId, fullPath: self.fullPath)
+				case .member:
+					NewMemberView(id: projectId, groupId: 0)
+				case .label:
+					NewLabelView(id: projectId, groupId: 0)
+				}
+			}
 		}
 	}
 

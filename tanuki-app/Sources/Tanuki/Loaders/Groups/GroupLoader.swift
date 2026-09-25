@@ -257,21 +257,13 @@ struct GroupLoader: View {
 				}
 			}
 		}.background {
-			#if !SKIP_BRIDGE
+			#if SKIP_BRIDGE
+				navigationDestination(isPresented: $navigationActive) { createDestination }
+			#else
 				NavigationLink(
 					isActive: $navigationActive,
-					destination: {
-						if let group, case .success(let group) = group,
-							let groupId = group.id?.toIntId()
-						{
-							NewProjectView(groupId)
-						} else {
-							FailedView("Form couldn't be opened because the namespace ID is not defined")
-						}
-					},
-					label: {
-						EmptyView()
-					}
+					destination: { createDestination },
+					label: { EmptyView() }
 				)
 			#endif
 		}
@@ -343,6 +335,15 @@ struct GroupLoader: View {
 			NavigationLink(
 				"Merge Requests",
 				destination: GroupMergeLoader(fullPath: self.fullPath))
+		}
+	}
+
+	@ViewBuilder
+	private var createDestination: some View {
+		if let group, case .success(let group) = group, let groupId = group.id?.toIntId() {
+			NewProjectView(groupId)
+		} else {
+			FailedView("Form couldn't be opened because the namespace ID is not defined")
 		}
 	}
 

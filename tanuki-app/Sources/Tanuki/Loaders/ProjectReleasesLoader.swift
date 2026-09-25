@@ -114,63 +114,13 @@ struct ProjectReleasesLoader: View {
 										if let assets = release.assets {
 											#if SKIP_BRIDGE
 												Section(header: Text("Assets (\(assets.count ?? 0))")) {
-													if let links = assets.links?.nodes {
-														ForEach(links, id: \.?.id) { maybeLink in
-															if let link = maybeLink {
-																if let url = URL(
-																	string: link.url ?? "")
-																{
-																	Link(
-																		link.name ?? "Link",
-																		destination: url)
-																}
-															}
-														}
-													}
-
-													if let sources = assets.sources?.nodes {
-														ForEach(sources, id: \.?.url) {
-															maybeSource in
-															if let url = URL(
-																string: maybeSource?.url ?? "")
-															{
-																Link(
-																	"Source code (\(maybeSource?.format ?? "unknown"))",
-																	destination: url)
-															}
-														}
-													}
+													ReleaseAssetsView(release: release)
 												}
 											#else
 												DisclosureGroup(
 													"Assets (\(assets.count ?? 0))",
 													content: {
-														if let links = assets.links?.nodes {
-															ForEach(links, id: \.?.id) { maybeLink in
-																if let link = maybeLink {
-																	if let url = URL(
-																		string: link.url ?? "")
-																	{
-																		Link(
-																			link.name ?? "Link",
-																			destination: url)
-																	}
-																}
-															}
-														}
-
-														if let sources = assets.sources?.nodes {
-															ForEach(sources, id: \.?.url) {
-																maybeSource in
-																if let url = URL(
-																	string: maybeSource?.url ?? "")
-																{
-																	Link(
-																		"Source code (\(maybeSource?.format ?? "unknown"))",
-																		destination: url)
-																}
-															}
-														}
+														ReleaseAssetsView(release: release)
 													}
 												)
 											#endif
@@ -217,5 +167,29 @@ struct ProjectReleasesLoader: View {
 			.headerProminence(.increased)
 		#endif
 		.navigationTitle("Releases")
+	}
+}
+
+private struct ReleaseAssetsView: View {
+	let release: ProjectReleasesQuery.Data.Project.Releases.Node
+
+	var body: some View {
+		if let assets = release.assets {
+			if let links = assets.links?.nodes {
+				ForEach(links, id: \.?.id) { maybeLink in
+					if let link = maybeLink, let url = URL(string: link.url ?? "") {
+						Link(link.name ?? "Link", destination: url)
+					}
+				}
+			}
+
+			if let sources = assets.sources?.nodes {
+				ForEach(sources, id: \.?.url) { maybeSource in
+					if let url = URL(string: maybeSource?.url ?? "") {
+						Link("Source code (\(maybeSource?.format ?? "unknown"))", destination: url)
+					}
+				}
+			}
+		}
 	}
 }

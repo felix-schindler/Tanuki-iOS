@@ -163,55 +163,12 @@ struct IssueLoader: View {
 											}
 										}, icon: { Image(systemName: "person.crop.circle") })
 								) {
-									if assgineeCount > 0 {
-										ForEach(issue.assignees!.nodes!, id: \.self) { maybeUser in
-											if let user = maybeUser {
-												NavigationLink(
-													destination: UserLoader(
-														username: user.username
-													),
-													label: {
-														HStack {
-															if let url =
-																URL.fromAvatar(
-																	user.avatarUrl)
-															{
-																AvatarImage(
-																	url,
-																	size: .small)
-															}
-															Text(user.username)
-														}
-													}
-												)
-											}
-										}
-									} else {
-										Text("There are no assignees")
-									}
+									assigneeLinks
 								}
 							#else
 								DisclosureGroup(
 									content: {
-										if assgineeCount > 0 {
-											ForEach(issue.assignees!.nodes!.compactMap { $0 }, id: \.username) { user in
-												NavigationLink(
-													destination: UserLoader(
-														username: user.username ?? ""
-													),
-													label: {
-														HStack {
-															if let url = URL.fromAvatar(user.avatarUrl) {
-																AvatarImage(url, size: .small)
-															}
-															Text(user.username ?? "")
-														}
-													}
-												)
-											}
-										} else {
-											Text("There are no assignees")
-										}
+										assigneeLinks
 									},
 									label: {
 										Label(
@@ -369,4 +326,30 @@ struct IssueLoader: View {
 		.navigationBarTitleDisplayMode(.inline)
 		.modifier(ScrollDismissIfAvailable())
 	}
+	@ViewBuilder
+	private var assigneeLinks: some View {
+		if let project, case .success(let project) = project, let issue = project.issue {
+			let assgineeCount = issue.assignees?.nodes?.count ?? 0
+			if assgineeCount > 0 {
+				ForEach(issue.assignees!.nodes!, id: \.self) { maybeUser in
+					if let user = maybeUser {
+						NavigationLink(
+							destination: UserLoader(username: user.username),
+							label: {
+								HStack {
+									if let url = URL.fromAvatar(user.avatarUrl) {
+										AvatarImage(url, size: .small)
+									}
+									Text(user.username)
+								}
+							}
+						)
+					}
+				}
+			} else {
+				Text("There are no assignees")
+			}
+		}
+	}
+
 }
