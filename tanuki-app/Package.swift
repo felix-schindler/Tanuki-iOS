@@ -10,8 +10,8 @@ let package = Package(
 		.library(name: "Tanuki", type: .dynamic, targets: ["Tanuki"])
 	],
 	dependencies: [
-		.package(url: "https://source.skip.tools/skip.git", from: "1.9.10"),
-		.package(url: "https://source.skip.tools/skip-fuse-ui.git", from: "1.18.2"),
+		.package(url: "https://source.skip.tools/skip.git", from: "1.9.11"),
+		.package(url: "https://source.skip.tools/skip-fuse-ui.git", from: "1.18.3"),
 		.package(url: "https://source.skip.dev/skip-kit.git", from: "1.1.3"),
 		.package(url: "https://github.com/felix-schindler/apollo-skip-fuse.git", from: "2.4.2"),
 		.package(path: "../apollo-gitlab-api"),
