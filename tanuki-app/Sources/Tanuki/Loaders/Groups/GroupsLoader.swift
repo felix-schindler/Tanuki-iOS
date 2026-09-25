@@ -8,12 +8,6 @@
 import GitLabAPI
 import SwiftUI
 
-#if SKIP_BRIDGE
-	private typealias PlatformNavigationView = NavigationStack
-#else
-	private typealias PlatformNavigationView = NavigationView
-#endif
-
 struct GroupsLoader: View {
 	@State var groups: Result<[SmallGroup?], Error>? = nil
 

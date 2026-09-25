@@ -15,9 +15,6 @@ public struct CodeTextView: View {
 	public init(
 		_ code: String,
 		language: String,
-		colorScheme: ColorScheme,
-		lightTheme: String = "vs",
-		darkTheme: String = "vs2015",
 		fontSize: Double = 12
 	) {
 		self.code = code

@@ -356,11 +356,7 @@ struct IssueLoader: View {
 					.labelStyle(.titleAndIcon)
 					#if !SKIP_BRIDGE
 						.buttonBorderShape(.roundedRectangle)
-					#endif
-					#if !SKIP_BRIDGE
 						.buttonStyle(.borderedProminent)
-					#endif
-					#if !SKIP_BRIDGE
 						.controlSize(.mini)
 					#endif
 

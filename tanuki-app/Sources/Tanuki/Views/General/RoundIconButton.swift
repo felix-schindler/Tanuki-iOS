@@ -24,8 +24,6 @@ struct CloseButton: View {
 struct ShareButton: View {
 	private let url: URL
 
-	@State var isSharePresented = false
-
 	init(_ url: URL) {
 		self.url = url
 	}
@@ -38,24 +36,6 @@ struct ShareButton: View {
 		}
 	}
 }
-
-#if canImport(UIKit)
-	struct ShareSheet: UIViewControllerRepresentable {
-		var items: [Any]  // items to share
-		var excludedActivityTypes: [UIActivity.ActivityType]? = nil
-
-		func makeUIViewController(context: Context) -> UIActivityViewController {
-			let controller = UIActivityViewController(
-				activityItems: items,
-				applicationActivities: nil
-			)
-			controller.excludedActivityTypes = excludedActivityTypes
-			return controller
-		}
-
-		func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
-	}
-#endif
 
 struct RoundIconButton: View {
 	private let label: String

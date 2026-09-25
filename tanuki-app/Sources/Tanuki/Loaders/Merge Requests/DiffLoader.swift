@@ -34,8 +34,6 @@ struct DiffLoader: View {
 	private let mrIid: Int?
 	private let commitSha: String?
 
-	@Environment(\.colorScheme) var colorScheme: ColorScheme
-
 	@State var diffs: Result<[Diff], Error>? = nil
 
 	@AppStorage("diff_unified") var unidiff = false
@@ -110,7 +108,6 @@ struct DiffLoader: View {
 										CodeTextView(
 											diff.diff,
 											language: "diff",
-											colorScheme: self.colorScheme,
 											fontSize: 12
 										)
 									}

@@ -51,13 +51,12 @@ enum NotifyStatus: Int {
 }
 
 struct NotifyMessage {
-	let id: UUID
+	let id = UUID()
 	let status: NotifyStatus
-	let title: String?
-	let subtitle: String?
-	let systemImage: String?
-	let duration: Duration
-	let haptic: HapticPattern?
+	var title: String?
+	var subtitle: String?
+	var systemImage: String?
+	var duration: Duration = .seconds(4)
 
 	/// Messages with no text exist only for their haptic and must not occupy a queue slot.
 	var isDisplayable: Bool {
@@ -71,32 +70,12 @@ struct NotifyMessage {
 		}
 		return status == .error ? "Something went wrong" : nil
 	}
-
-	init(
-		id: UUID = UUID(),
-		status: NotifyStatus,
-		title: String? = nil,
-		subtitle: String? = nil,
-		systemImage: String? = nil,
-		duration: Duration = .seconds(4),
-		haptic: HapticPattern? = nil
-	) {
-		self.id = id
-		self.status = status
-		self.title = title
-		self.subtitle = subtitle
-		self.systemImage = systemImage
-		self.duration = duration
-		self.haptic = haptic
-	}
 }
 
 @MainActor
 final class NotifyCenter {
 	static let shared = NotifyCenter()
 
-	/// How long a message is shown when it does not ask for its own `duration`.
-	static let defaultDuration: Duration = .seconds(4)
 	private static let maxPending = 8
 
 	private(set) var message: NotifyMessage?
@@ -130,8 +109,8 @@ final class NotifyCenter {
 		present(message)
 	}
 
-	func dismiss(_ id: UUID? = nil) {
-		if let id, message?.id != id {
+	func dismiss(_ id: UUID) {
+		guard message?.id == id else {
 			return
 		}
 		guard !pending.isEmpty else {
@@ -144,17 +123,9 @@ final class NotifyCenter {
 		present(pending.removeFirst())
 	}
 
-	func dismissAll() {
-		dismissTask?.cancel()
-		dismissTask = nil
-		pending.removeAll()
-		message = nil
-		broadcast()
-	}
-
 	private func present(_ message: NotifyMessage) {
 		dismissTask?.cancel()
-		HapticFeedback.play(message.haptic ?? message.status.haptic)
+		HapticFeedback.play(message.status.haptic)
 		self.message = message
 		broadcast()
 
@@ -176,39 +147,9 @@ final class NotifyCenter {
 	}
 }
 
-/// The app-wide feedback entry point. `status` is the original API, kept so no call site needs
-/// migrating; `success` / `warning` / `error` are the preferred spelling.
+/// The app-wide feedback entry point.
 @MainActor
 class Notify {
-	public static func success(
-		_ title: String? = nil, _ subtitle: String? = nil, systemImage: String? = nil,
-		withDuration duration: Duration? = nil
-	) {
-		show(
-			NotifyMessage(
-				status: .success, title: title, subtitle: subtitle, systemImage: systemImage,
-				duration: duration ?? NotifyCenter.defaultDuration))
-	}
-
-	public static func warning(
-		_ title: String? = nil, _ subtitle: String? = nil, systemImage: String? = nil,
-		withDuration duration: Duration? = nil
-	) {
-		show(
-			NotifyMessage(
-				status: .warning, title: title, subtitle: subtitle, systemImage: systemImage,
-				duration: duration ?? NotifyCenter.defaultDuration))
-	}
-
-	public static func error(
-		_ title: String? = nil, _ subtitle: String? = nil, systemImage: String? = nil,
-		withDuration duration: Duration? = nil
-	) {
-		show(
-			NotifyMessage(
-				status: .error, title: title, subtitle: subtitle, systemImage: systemImage,
-				duration: duration ?? NotifyCenter.defaultDuration))
-	}
 
 	/// For messages whose status is only known at runtime.
 	public static func show(_ message: NotifyMessage) {
@@ -232,27 +173,12 @@ class Notify {
 		}
 	}
 
-	/// Dismisses the current banner, revealing the next queued message.
-	public static func dismiss() {
-		NotifyCenter.shared.dismiss()
-	}
-
-	/// Drops the queue instead of revealing the next message.
-	public static func dismissAll() {
-		NotifyCenter.shared.dismissAll()
-	}
-
 	public static func status(
 		_ feedbackType: NotifyStatus, _ title: String? = nil, _ subtitle: String? = nil,
 		systemImage: String? = nil
 	) {
-		switch feedbackType {
-		case .success:
-			success(title, subtitle, systemImage: systemImage)
-		case .warning:
-			warning(title, subtitle, systemImage: systemImage)
-		case .error:
-			error(title, subtitle, systemImage: systemImage)
-		}
+		show(
+			NotifyMessage(
+				status: feedbackType, title: title, subtitle: subtitle, systemImage: systemImage))
 	}
 }

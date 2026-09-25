@@ -60,7 +60,7 @@ struct NewMemberView: View {
 					type: UserSmall.self, method: .post, endpoint: endpoint, body: memberDict)
 				self.dismiss()
 			} else {
-				Notify.warning("User not found", "No user matches “\(username)”")
+				Notify.status(.warning, "User not found", "No user matches “\(username)”")
 			}
 		} catch let error {
 			Notify.status(.error, error.localizedDescription)

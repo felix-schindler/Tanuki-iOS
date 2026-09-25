@@ -117,7 +117,7 @@ struct GroupLoader: View {
 							}.font(.footnote)
 						}
 
-                        if let description = group.description?.emojized(), description.isNotEmpty {
+						if let description = group.description?.emojized(), description.isNotEmpty {
 							InlineMarkdown(description)
 						}
 					}
@@ -167,70 +167,12 @@ struct GroupLoader: View {
 
 						#if SKIP_BRIDGE
 							Section(header: Label("Manage", systemImage: "person.2")) {
-								if let groupId = group.id?.toIntId() {
-									NavigationLink(
-										"Members",
-										destination: MembersLoader(
-											fullPath: self.fullPath,
-											id: groupId,
-											type: .group
-										)
-									)
-									NavigationLink(
-										"Labels",
-										destination: LabelsLoader(
-											fullPath: self.fullPath,
-											id: groupId,
-											queryType: .group
-										)
-									)
-								}
-								NavigationLink(
-									"Timelogs",
-									destination: TimelogsLoader(
-										fullPath: self.fullPath,
-										queryType: .group
-									)
-								)
-								NavigationLink(
-									"Custom emojis",
-									destination: CustomEmojisLoader(
-										fullPath: self.fullPath
-									))
+								manageLinks
 							}
 						#else
 							DisclosureGroup(
 								content: {
-									if let groupId = group.id?.toIntId() {
-										NavigationLink(
-											"Members",
-											destination: MembersLoader(
-												fullPath: self.fullPath,
-												id: groupId,
-												type: .group
-											)
-										)
-										NavigationLink(
-											"Labels",
-											destination: LabelsLoader(
-												fullPath: self.fullPath,
-												id: groupId,
-												queryType: .group
-											)
-										)
-									}
-									NavigationLink(
-										"Timelogs",
-										destination: TimelogsLoader(
-											fullPath: self.fullPath,
-											queryType: .group
-										)
-									)
-									NavigationLink(
-										"Custom emojis",
-										destination: CustomEmojisLoader(
-											fullPath: self.fullPath
-										))
+									manageLinks
 								},
 								label: {
 									Label("Manage", systemImage: "person.2")
@@ -240,38 +182,12 @@ struct GroupLoader: View {
 
 						#if SKIP_BRIDGE
 							Section(header: Label("Plan", systemImage: "calendar")) {
-								NavigationLink(
-									"Issues",
-									destination: GroupIssuesLoader(fullPath: self.fullPath)
-								)
-								if let groupId = group.id?.toIntId() {
-									NavigationLink(
-										"Milestones",
-										destination: MilestonesLoader(
-											fullPath: self.fullPath,
-											id: groupId,
-											queryType: .group
-										)
-									)
-								}
+								planLinks
 							}
 						#else
 							DisclosureGroup(
 								content: {
-									NavigationLink(
-										"Issues",
-										destination: GroupIssuesLoader(fullPath: self.fullPath)
-									)
-									if let groupId = group.id?.toIntId() {
-										NavigationLink(
-											"Milestones",
-											destination: MilestonesLoader(
-												fullPath: self.fullPath,
-												id: groupId,
-												queryType: .group
-											)
-										)
-									}
+									planLinks
 								},
 								label: {
 									if #available(iOS 17.0, *) {
@@ -285,16 +201,12 @@ struct GroupLoader: View {
 
 						#if SKIP_BRIDGE
 							Section(header: Label("Code", systemImage: "chevron.left.forwardslash.chevron.right")) {
-								NavigationLink(
-									"Merge Requests",
-									destination: GroupMergeLoader(fullPath: self.fullPath))
+								codeLinks
 							}
 						#else
 							DisclosureGroup(
 								content: {
-									NavigationLink(
-										"Merge Requests",
-										destination: GroupMergeLoader(fullPath: self.fullPath))
+									codeLinks
 								},
 								label: {
 									Label(
@@ -366,4 +278,72 @@ struct GroupLoader: View {
 		.navigationTitle(fullPath)
 		.navigationBarTitleDisplayMode(.inline)
 	}
+	/// Manage links, shared by the Section and DisclosureGroup branches.
+	@ViewBuilder
+	private var manageLinks: some View {
+		if let group, case .success(let group) = group {
+			if let groupId = group.id?.toIntId() {
+				NavigationLink(
+					"Members",
+					destination: MembersLoader(
+						fullPath: self.fullPath,
+						id: groupId,
+						type: .group
+					)
+				)
+				NavigationLink(
+					"Labels",
+					destination: LabelsLoader(
+						fullPath: self.fullPath,
+						id: groupId,
+						queryType: .group
+					)
+				)
+			}
+			NavigationLink(
+				"Timelogs",
+				destination: TimelogsLoader(
+					fullPath: self.fullPath,
+					queryType: .group
+				)
+			)
+			NavigationLink(
+				"Custom emojis",
+				destination: CustomEmojisLoader(
+					fullPath: self.fullPath
+				))
+		}
+	}
+
+	/// Plan links, shared by the Section and DisclosureGroup branches.
+	@ViewBuilder
+	private var planLinks: some View {
+		if let group, case .success(let group) = group {
+			NavigationLink(
+				"Issues",
+				destination: GroupIssuesLoader(fullPath: self.fullPath)
+			)
+			if let groupId = group.id?.toIntId() {
+				NavigationLink(
+					"Milestones",
+					destination: MilestonesLoader(
+						fullPath: self.fullPath,
+						id: groupId,
+						queryType: .group
+					)
+				)
+			}
+		}
+	}
+
+	/// Code links, shared by the Section and DisclosureGroup branches.
+	@ViewBuilder
+	private var codeLinks: some View {
+		if let group, case .success(let group) = group {
+			NavigationLink(
+				"Merge Requests",
+				destination: GroupMergeLoader(fullPath: self.fullPath))
+		}
+	}
+
 }

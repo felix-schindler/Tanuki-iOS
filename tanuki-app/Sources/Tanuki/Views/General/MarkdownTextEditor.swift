@@ -16,17 +16,14 @@ import SwiftUI
 struct MarkdownTextEditor: View {
 	private let label: String?
 	@Binding private var text: String
-	private let minHeight: CGFloat
 
 	/// - Parameters:
 	///   - label: An optional caption shown above the editor. Leave it `nil` when
 	///     the surrounding `Section` already carries the title.
 	///   - text: The Markdown being edited.
-	///   - minHeight: The editor's minimum height in points.
-	init(_ label: String? = nil, text: Binding<String>, minHeight: CGFloat = 100) {
+	init(_ label: String? = nil, text: Binding<String>) {
 		self.label = label
 		self._text = text
-		self.minHeight = minHeight
 	}
 
 	var body: some View {
@@ -39,7 +36,7 @@ struct MarkdownTextEditor: View {
 
 			TextEditor(text: $text)
 				.font(.body.monospaced())
-				.frame(minHeight: minHeight)
+				.frame(minHeight: 100)
 		}
 	}
 }

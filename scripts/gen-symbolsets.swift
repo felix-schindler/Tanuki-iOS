@@ -27,8 +27,7 @@
 //  platforms only.
 //
 //  Usage
-//    swift scripts/gen-symbolsets.swift            # write missing assets
-//    swift scripts/gen-symbolsets.swift --verify   # only check the sources
+//    swift scripts/gen-symbolsets.swift
 //
 
 import Foundation
@@ -215,7 +214,6 @@ func removeIfPresent(_ url: URL) {
 
 // MARK: - Generation
 
-let verifyOnly = CommandLine.arguments.contains("--verify")
 var failures: [String] = []
 
 // 1. `<systemName>.symbolset` for every unmapped SF Symbol.
@@ -224,10 +222,6 @@ for (index, entry) in symbolMapping.sorted(by: { $0.key < $1.key }).enumerated()
 	let position = "[\(index + 1)/\(symbolMapping.count)]"
 	do {
 		let path = try materialPath(forSlug: slug)
-		guard !verifyOnly else {
-			print("\(position) ok   \(systemName) -> \(slug)")
-			continue
-		}
 		let filename = "\(systemName).svg"
 		let directory = catalog.appendingPathComponent("\(systemName).symbolset")
 		try write(template("symbolset-Contents.json").replacingOccurrences(of: "__FILENAME__", with: filename), to: directory.appendingPathComponent("Contents.json"))
@@ -244,10 +238,6 @@ for (index, icon) in namedIcons.enumerated() {
 	let position = "[icon \(index + 1)/\(namedIcons.count)]"
 	do {
 		let svg = try download(icon.url)
-		guard !verifyOnly else {
-			print("\(position) ok   \(icon.name)")
-			continue
-		}
 		let filename = "\(icon.name).svg"
 		let directory = catalog.appendingPathComponent("\(icon.name).imageset")
 		// Replace the old symbolset form so name lookups are unambiguous.
@@ -263,7 +253,7 @@ for (index, icon) in namedIcons.enumerated() {
 }
 
 if failures.isEmpty {
-	print(verifyOnly ? "\nall sources reachable" : "\n\(symbolMapping.count) symbolsets + \(namedIcons.count) imagesets up to date")
+	print("\n\(symbolMapping.count) symbolsets + \(namedIcons.count) imagesets up to date")
 	exit(0)
 }
 

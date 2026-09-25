@@ -17,8 +17,6 @@ struct FileLoader: View {
 	private let fileExtension: String
 	private let refName: String
 
-	@Environment(\.colorScheme) var colorScheme: ColorScheme
-
 	@State var file: Result<Data, Error>? = nil
 	@State var videoURL: URL? = nil
 
@@ -153,7 +151,6 @@ struct FileLoader: View {
 						CodeTextView(
 							content,
 							language: self.fileExtension,
-							colorScheme: self.colorScheme,
 							fontSize: 12
 						)
 					}

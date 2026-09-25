@@ -220,62 +220,12 @@ struct MergeRequestLoader: View {
 											}
 										}, icon: { Image(systemName: "person.crop.circle") })
 								) {
-									if assgineeCount > 0 {
-										ForEach(mr.assignees!.nodes!, id: \.self) {
-											maybeUser in
-											if let user = maybeUser {
-												NavigationLink(
-													destination: UserLoader(
-														username: user.username),
-													label: {
-														HStack {
-															if let url =
-																URL.fromAvatar(
-																	user.avatarUrl)
-															{
-																AvatarImage(
-																	url,
-																	size: .small)
-															}
-															Text(user.username)
-														}
-													}
-												)
-											}
-										}
-									} else {
-										Text("There are no assignees")
-									}
+									assigneesLinks
 								}
 							#else
 								DisclosureGroup(
 									content: {
-										if assgineeCount > 0 {
-											ForEach(mr.assignees!.nodes!, id: \.self) {
-												maybeUser in
-												if let user = maybeUser {
-													NavigationLink(
-														destination: UserLoader(
-															username: user.username),
-														label: {
-															HStack {
-																if let url =
-																	URL.fromAvatar(
-																		user.avatarUrl)
-																{
-																	AvatarImage(
-																		url,
-																		size: .small)
-																}
-																Text(user.username)
-															}
-														}
-													)
-												}
-											}
-										} else {
-											Text("There are no assignees")
-										}
+										assigneesLinks
 									},
 									label: {
 										Label(
@@ -305,52 +255,12 @@ struct MergeRequestLoader: View {
 											}
 										}, icon: { Image(systemName: "person.line.dotted.person.fill") })
 								) {
-									if reviewerCount > 0 {
-										ForEach(mr.reviewers!.nodes!, id: \.self) {
-											maybeUser in
-											if let user = maybeUser {
-												NavigationLink(
-													destination: UserLoader(
-														username: user.username),
-													label: {
-														HStack {
-															if let url = URL.fromAvatar(user.avatarUrl) {
-																AvatarImage(url, size: .small)
-															}
-															Text(user.username)
-														}
-													}
-												)
-											}
-										}
-									} else {
-										Text("There are no reviewers")
-									}
+									reviewersLinks
 								}
 							#else
 								DisclosureGroup(
 									content: {
-										if reviewerCount > 0 {
-											ForEach(mr.reviewers!.nodes!, id: \.self) {
-												maybeUser in
-												if let user = maybeUser {
-													NavigationLink(
-														destination: UserLoader(
-															username: user.username),
-														label: {
-															HStack {
-																if let url = URL.fromAvatar(user.avatarUrl) {
-																	AvatarImage(url, size: .small)
-																}
-																Text(user.username)
-															}
-														}
-													)
-												}
-											}
-										} else {
-											Text("There are no reviewers")
-										}
+										reviewersLinks
 									},
 									label: {
 										Label(
@@ -611,11 +521,7 @@ struct MergeRequestLoader: View {
 						.labelStyle(.titleAndIcon)
 						#if !SKIP_BRIDGE
 							.buttonBorderShape(.roundedRectangle)
-						#endif
-						#if !SKIP_BRIDGE
 							.buttonStyle(.borderedProminent)
-						#endif
-						#if !SKIP_BRIDGE
 							.controlSize(.mini)
 						#endif
 
@@ -631,4 +537,67 @@ struct MergeRequestLoader: View {
 		.navigationBarTitleDisplayMode(.inline)
 		.modifier(ScrollDismissIfAvailable())
 	}
+	/// Assignees links, shared by the Section and DisclosureGroup branches.
+	@ViewBuilder
+	private var assigneesLinks: some View {
+		if let project, case .success(let project) = project, let mr = project.mergeRequest {
+			let assgineeCount = mr.assignees?.nodes?.count ?? 0
+			if assgineeCount > 0 {
+				ForEach(mr.assignees!.nodes!, id: \.self) {
+					maybeUser in
+					if let user = maybeUser {
+						NavigationLink(
+							destination: UserLoader(
+								username: user.username),
+							label: {
+								HStack {
+									if let url =
+										URL.fromAvatar(
+											user.avatarUrl)
+									{
+										AvatarImage(
+											url,
+											size: .small)
+									}
+									Text(user.username)
+								}
+							}
+						)
+					}
+				}
+			} else {
+				Text("There are no assignees")
+			}
+		}
+	}
+
+	/// Reviewers links, shared by the Section and DisclosureGroup branches.
+	@ViewBuilder
+	private var reviewersLinks: some View {
+		if let project, case .success(let project) = project, let mr = project.mergeRequest {
+			let reviewerCount = mr.reviewers?.nodes?.count ?? 0
+			if reviewerCount > 0 {
+				ForEach(mr.reviewers!.nodes!, id: \.self) {
+					maybeUser in
+					if let user = maybeUser {
+						NavigationLink(
+							destination: UserLoader(
+								username: user.username),
+							label: {
+								HStack {
+									if let url = URL.fromAvatar(user.avatarUrl) {
+										AvatarImage(url, size: .small)
+									}
+									Text(user.username)
+								}
+							}
+						)
+					}
+				}
+			} else {
+				Text("There are no reviewers")
+			}
+		}
+	}
+
 }

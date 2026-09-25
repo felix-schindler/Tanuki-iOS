@@ -61,40 +61,32 @@ struct AvatarImage: View {
 	public var body: some View {
 		#if canImport(CachedAsyncImage)
 			CachedAsyncImage(url: self.url, urlCache: .avatar) { phase in
-				switch phase {
-				case .empty:
-					ProgressView()
-				case .success(let image):
-					image
-						.resizable()
-						.scaledToFit()
-						.cornerRadius(self.radius)
-				case .failure:
-					Image(systemName: "exclamationmark.triangle")
-						.resizable()
-						.scaledToFit()
-				@unknown default:
-					EmptyView()
-				}
+				self.phaseView(for: phase)
 			}.frame(width: width, height: height, alignment: .leading)
 		#else
 			AsyncImage(url: self.url) { phase in
-				switch phase {
-				case .empty:
-					ProgressView()
-				case .success(let image):
-					image
-						.resizable()
-						.scaledToFit()
-						.cornerRadius(self.radius)
-				case .failure:
-					Image(systemName: "exclamationmark.triangle")
-						.resizable()
-						.scaledToFit()
-				@unknown default:
-					EmptyView()
-				}
+				self.phaseView(for: phase)
 			}.frame(width: width, height: height, alignment: .leading)
 		#endif
+	}
+
+	/// Both loaders hand back the same `AsyncImagePhase`, so only the loader call differs.
+	@ViewBuilder
+	private func phaseView(for phase: AsyncImagePhase) -> some View {
+		switch phase {
+		case .empty:
+			ProgressView()
+		case .success(let image):
+			image
+				.resizable()
+				.scaledToFit()
+				.cornerRadius(self.radius)
+		case .failure:
+			Image(systemName: "exclamationmark.triangle")
+				.resizable()
+				.scaledToFit()
+		@unknown default:
+			EmptyView()
+		}
 	}
 }

@@ -165,3 +165,18 @@ extension SwiftUI.Color {
 		#endif
 	}
 }
+
+#if canImport(WebKit)
+	/// The cookies `CookiesView` archived for the URLSession half of the app, and for
+	/// re-seeding the login web view. Returns `[]` when nothing has been saved yet.
+	func persistedCookies() -> [HTTPCookie] {
+		guard
+			let data = UserDefaults.standard.data(forKey: "persistedCookies"),
+			let dicts = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data)
+				as? [[HTTPCookiePropertyKey: Any]]
+		else {
+			return []
+		}
+		return dicts.compactMap { HTTPCookie(properties: $0) }
+	}
+#endif

@@ -13,10 +13,11 @@ import SwiftUI
 	import WebKit
 #endif
 
+/// The navigation container differs per platform: SkipUI has no `NavigationView`.
 #if SKIP_BRIDGE
-	private typealias PlatformNavigationView = NavigationStack
+	typealias PlatformNavigationView = NavigationStack
 #else
-	private typealias PlatformNavigationView = NavigationView
+	typealias PlatformNavigationView = NavigationView
 #endif
 
 enum ContentTab: String, Hashable {
@@ -28,23 +29,10 @@ struct ContentView: View {
 
 	#if canImport(WebKit)
 		private func restorePersistedCookies() {
-			guard
-				let data = UserDefaults.standard.data(forKey: "persistedCookies"),
-				let storedCookieDicts = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data)
-					as? [[HTTPCookiePropertyKey: Any]],
-				!storedCookieDicts.isEmpty
-			else {
-				return
-			}
-
 			let webStore = WKWebsiteDataStore.default().httpCookieStore
-			var restoredCookies: [HTTPCookie] = []
-			for dict in storedCookieDicts {
-				if let cookie = HTTPCookie(properties: dict) {
-					restoredCookies.append(cookie)
-					webStore.setCookie(cookie)
-					HTTPCookieStorage.shared.setCookie(cookie)  // sync to URLSession
-				}
+			for cookie in persistedCookies() {
+				webStore.setCookie(cookie)
+				HTTPCookieStorage.shared.setCookie(cookie)  // sync to URLSession
 			}
 		}
 	#endif

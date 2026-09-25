@@ -9,12 +9,6 @@
 	import SwiftUI
 	import WebKit
 
-	#if SKIP_BRIDGE
-		private typealias PlatformNavigationView = NavigationStack
-	#else
-		private typealias PlatformNavigationView = NavigationView
-	#endif
-
 	struct CookiesView: View {
 		@State var cookies: [HTTPCookie] = []
 		@State var showingWebView = false
@@ -168,25 +162,14 @@
 				return webView
 			}
 
-			// Read persisted cookie property dictionaries and set them on the web view's store
 			private func syncPersistedCookies(into webView: WKWebView, completion: @escaping () -> Void) {
-				guard
-					let data = UserDefaults.standard.data(forKey: "persistedCookies"),
-					let storedDicts = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data)
-						as? [[HTTPCookiePropertyKey: Any]],
-					!storedDicts.isEmpty
-				else {
-					completion()
-					return
-				}
-
-				let store = webView.configuration.websiteDataStore.httpCookieStore
-				let cookies = storedDicts.compactMap { HTTPCookie(properties: $0) }
+				let cookies = persistedCookies()
 				guard !cookies.isEmpty else {
 					completion()
 					return
 				}
 
+				let store = webView.configuration.websiteDataStore.httpCookieStore
 				var remaining = cookies.count
 				for cookie in cookies {
 					store.setCookie(cookie) {
@@ -229,23 +212,13 @@
 			}
 
 			private func syncPersistedCookies(into webView: WKWebView, completion: @escaping () -> Void) {
-				guard
-					let data = UserDefaults.standard.data(forKey: "persistedCookies"),
-					let storedDicts = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data)
-						as? [[HTTPCookiePropertyKey: Any]],
-					!storedDicts.isEmpty
-				else {
-					completion()
-					return
-				}
-
-				let store = webView.configuration.websiteDataStore.httpCookieStore
-				let cookies = storedDicts.compactMap { HTTPCookie(properties: $0) }
+				let cookies = persistedCookies()
 				guard !cookies.isEmpty else {
 					completion()
 					return
 				}
 
+				let store = webView.configuration.websiteDataStore.httpCookieStore
 				var remaining = cookies.count
 				for cookie in cookies {
 					store.setCookie(cookie) {

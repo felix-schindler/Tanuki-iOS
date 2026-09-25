@@ -9,7 +9,6 @@ import GitLabAPI
 import SwiftUI
 
 struct SnippetLoader: View {
-	@Environment(\.colorScheme) var colorScheme: ColorScheme
 
 	private let id: String
 
@@ -94,7 +93,7 @@ struct SnippetLoader: View {
 							}.font(.footnote)
 						}
 
-                        if let description = snippet.description?.emojized(), description.isNotEmpty {
+						if let description = snippet.description?.emojized(), description.isNotEmpty {
 							Markdown(description)
 						}
 					}
@@ -110,7 +109,6 @@ struct SnippetLoader: View {
 											contents,
 											language: String(
 												file.name?.split(separator: ".").last ?? "unknown"),
-											colorScheme: self.colorScheme,
 											fontSize: 12
 										)
 									}
@@ -121,10 +119,6 @@ struct SnippetLoader: View {
 
 					if let notes = snippet.notes.nodes {
 						Section("Notes") {
-							// if snippet.userPermissions.createNote {
-							//	NewNoteView()
-							// }
-
 							ForEach(notes, id: \.self?.id) { maybeNote in
 								if let note = maybeNote {
 									NoteView(note)

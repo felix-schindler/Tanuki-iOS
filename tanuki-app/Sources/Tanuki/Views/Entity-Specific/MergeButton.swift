@@ -10,12 +10,6 @@ import GitLabAPI
 import SkipKit
 import SwiftUI
 
-#if SKIP_BRIDGE
-	private typealias PlatformNavigationView = NavigationStack
-#else
-	private typealias PlatformNavigationView = NavigationView
-#endif
-
 struct MergeButton: View {
 	private let iid: String
 	private let projectId: Int

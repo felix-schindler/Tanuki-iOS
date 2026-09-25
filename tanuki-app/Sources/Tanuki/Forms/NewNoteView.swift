@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-#if SKIP_BRIDGE
-	private typealias PlatformNavigationView = NavigationStack
-#else
-	private typealias PlatformNavigationView = NavigationView
-#endif
-
 private struct _Note: Codable {
 	let id: Int
 }

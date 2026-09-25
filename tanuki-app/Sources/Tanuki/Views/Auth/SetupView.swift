@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-#if SKIP_BRIDGE
-	private typealias PlatformNavigationView = NavigationStack
-#else
-	private typealias PlatformNavigationView = NavigationView
-#endif
-
 struct SetupView: View {
 	@Environment(\.openURL) var openURL
 
@@ -63,11 +57,7 @@ struct SetupView: View {
 				.tint(.accentColor)
 				#if !SKIP_BRIDGE
 					.buttonBorderShape(.capsule)
-				#endif
-				#if !SKIP_BRIDGE
 					.buttonStyle(.borderedProminent)
-				#endif
-				#if !SKIP_BRIDGE
 					.controlSize(.large)
 				#endif
 
