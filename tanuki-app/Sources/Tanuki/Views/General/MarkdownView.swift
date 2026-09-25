@@ -12,15 +12,41 @@ struct Markdown: View {
 	private let contents: String
 	private let baseURL: URL?
 	private let imageBaseURL: URL?
+	private let fillsSpace: Bool
 
-	init(_ contents: String, baseURL: URL? = nil, imageBaseURL: URL? = nil) {
+	init(_ contents: String, baseURL: URL? = nil, imageBaseURL: URL? = nil, fillsSpace: Bool = false) {
 		self.contents = contents
+		self.baseURL = baseURL
+		self.imageBaseURL = imageBaseURL
+		self.fillsSpace = fillsSpace
+	}
+
+	var body: some View {
+		HTMLWebView(
+			html: MarkdownHTML.document(contents, baseURL: baseURL, imageBaseURL: imageBaseURL),
+			fillsSpace: fillsSpace
+		)
+	}
+}
+
+struct MarkdownScreen: View {
+	private let contents: String
+	private let title: String
+	private let baseURL: URL?
+	private let imageBaseURL: URL?
+
+	init(_ contents: String, title: String, baseURL: URL? = nil, imageBaseURL: URL? = nil) {
+		self.contents = contents
+		self.title = title
 		self.baseURL = baseURL
 		self.imageBaseURL = imageBaseURL
 	}
 
 	var body: some View {
-		HTMLWebView(html: MarkdownHTML.document(contents, baseURL: baseURL, imageBaseURL: imageBaseURL))
+		Markdown(contents, baseURL: baseURL, imageBaseURL: imageBaseURL, fillsSpace: true)
+			// Full screen, so the document no longer gets its insets from a List row.
+			.padding()
+			.navigationTitle(title)
 	}
 }
 
@@ -51,6 +77,7 @@ struct InlineMarkdown: View {
 
 struct HTMLWebView: View {
 	let html: String
+	var fillsSpace = false
 
 	// Skip bridges these to Android, so they must not be private.
 	@Environment(\.openURL) var openURL
@@ -72,7 +99,8 @@ struct HTMLWebView: View {
 				return true
 			}
 		)
-		.frame(height: height)
+		.frame(maxWidth: .infinity, maxHeight: fillsSpace ? CGFloat.infinity : nil)
+		.frame(height: fillsSpace ? nil : height)
 		.onChange(of: html) { _, newHTML in
 			height = 1
 			Task { @MainActor in
@@ -85,6 +113,9 @@ struct HTMLWebView: View {
 		Task { @MainActor in
 			// highlight.js is inlined only into documents that contain code.
 			_ = try? await navigator.evaluateJavaScript("window.hljs ? hljs.highlightAll() : 0")
+			guard !fillsSpace else {
+				return
+			}
 			await refreshHeight()
 			// Images can finish after the load event; measure again.
 			try? await Task.sleep(for: .milliseconds(300))
