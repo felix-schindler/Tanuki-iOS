@@ -348,41 +348,69 @@ struct ProjectLoader: View {
 					)
 
 					if readme != nil || license != nil || contributing != nil {
-						Section("Special files") {
-							VStack {
-								Picker("", selection: $selectedFile) {
-									if readme != nil {
-										Text("README").tag(0)
-									}
-
-									if license != nil {
-										Text("LICENSE").tag(1)
-									}
-
-									if contributing != nil {
-										Text("CONTRIBUTING").tag(2)
-									}
-								}.pickerStyle(.segmented)
-
-								if selectedFile == 0 && readme != nil {
-									Markdown(
-										readme!,
-										baseURL: baseUrl,
-										imageBaseURL: imgUrl
+						#if SKIP_BRIDGE
+							Section("Special files") {
+								if let readme {
+									NavigationLink(
+										"README",
+										destination: MarkdownScreen(
+											readme, title: "README", baseURL: baseUrl, imageBaseURL: imgUrl)
 									)
-								} else if selectedFile == 1 && license != nil {
-									Markdown(license!)
-										.id(selectedFile)
-								} else if selectedFile == 2 && contributing != nil {
-									Markdown(
-										contributing!,
-										baseURL: baseUrl,
-										imageBaseURL: imgUrl
+								}
+
+								if let license {
+									NavigationLink(
+										"LICENSE",
+										destination: MarkdownScreen(license, title: "LICENSE")
 									)
-									.id(selectedFile)
+								}
+
+								if let contributing {
+									NavigationLink(
+										"CONTRIBUTING",
+										destination: MarkdownScreen(
+											contributing, title: "CONTRIBUTING", baseURL: baseUrl,
+											imageBaseURL: imgUrl)
+									)
 								}
 							}
-						}
+						#else
+							Section("Special files") {
+								VStack {
+									Picker("", selection: $selectedFile) {
+										if readme != nil {
+											Text("README").tag(0)
+										}
+
+										if license != nil {
+											Text("LICENSE").tag(1)
+										}
+
+										if contributing != nil {
+											Text("CONTRIBUTING").tag(2)
+										}
+									}.pickerStyle(.segmented)
+
+									if selectedFile == 0 && readme != nil {
+										Markdown(
+											readme!,
+											baseURL: baseUrl,
+											imageBaseURL: imgUrl
+										)
+									} else if selectedFile == 1 && license != nil {
+										Markdown(license!)
+											.id(selectedFile)
+									} else if selectedFile == 2 && contributing != nil {
+										Markdown(
+											contributing!,
+											baseURL: baseUrl,
+											imageBaseURL: imgUrl
+										)
+										.id(selectedFile)
+									}
+								}
+							}
+						#endif
 					}
 				case .failure(let error):
 					FailedView(error)
