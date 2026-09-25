@@ -50,15 +50,6 @@ let package = Package(
 		),
 		// Watch companion app. Deliberately no skipstone plugin: this target is
 		// Darwin-only and is never transpiled into the Android Gradle project.
-		//
-		// Not having the plugin is not enough to keep it out of the other
-		// builds though: `skip android build` runs `swift build` over the whole
-		// package, and Skip's Xcode step builds the app with `-sdk
-		// iphonesimulator`, which forces the iOS SDK onto every target of the
-		// project — watch app included. That is why every file in
-		// Sources/TanukiWatch is wrapped in `#if os(watchOS)` and the module
-		// compiles to nothing on Android and on iOS. Keep new watch files
-		// inside that guard.
 		.target(
 			name: "TanukiWatch",
 			dependencies: [

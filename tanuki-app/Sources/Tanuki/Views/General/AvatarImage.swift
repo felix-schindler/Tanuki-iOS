@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+#if !SKIP_BRIDGE
+	import CachedAsyncImage
+#endif
+
 enum AvatarSize {
 	case tiny,
 		small,
@@ -74,7 +78,7 @@ struct AvatarImage: View {
 				}
 			}.frame(width: width, height: height, alignment: .leading)
 		#else
-			CachedRemoteImage(url: self.url, urlCache: .avatar) { phase in
+			CachedAsyncImage(url: self.url, urlCache: .avatar) { phase in
 				switch phase {
 				case .empty:
 					ProgressView()
