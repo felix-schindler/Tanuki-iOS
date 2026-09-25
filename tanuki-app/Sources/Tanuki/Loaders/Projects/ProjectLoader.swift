@@ -385,17 +385,18 @@ struct ProjectLoader: View {
 					}
 				}
 			}
-		}.background {
-			#if SKIP_BRIDGE
-				navigationDestination(isPresented: $navigationActive) { createDestination }
-			#else
+		}
+		#if SKIP_BRIDGE
+			.navigationDestination(isPresented: $navigationActive) { createDestination }
+		#else
+			.background {
 				NavigationLink(
 					isActive: $navigationActive,
 					destination: { createDestination },
 					label: { EmptyView() }
 				)
-			#endif
-		}
+			}
+		#endif
 		.navigationTitle(self.fullPath)
 		.navigationBarTitleDisplayMode(.inline)
 	}
