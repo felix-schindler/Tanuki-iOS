@@ -391,18 +391,18 @@ struct ProjectLoader: View {
 										}
 									}.pickerStyle(.segmented)
 
-									if selectedFile == 0 && readme != nil {
+									if selectedFile == 0, let readme {
 										Markdown(
-											readme!,
+											readme,
 											baseURL: baseUrl,
 											imageBaseURL: imgUrl
 										)
-									} else if selectedFile == 1 && license != nil {
-										Markdown(license!)
+									} else if selectedFile == 1, let license {
+										Markdown(license)
 											.id(selectedFile)
-									} else if selectedFile == 2 && contributing != nil {
+									} else if selectedFile == 2, let contributing {
 										Markdown(
-											contributing!,
+											contributing,
 											baseURL: baseUrl,
 											imageBaseURL: imgUrl
 										)
