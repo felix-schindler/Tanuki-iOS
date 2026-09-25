@@ -95,8 +95,8 @@ struct SnippetLoader: View {
 							}.font(.footnote)
 						}
 
-						if let description = snippet.description {
-							Markdown(description.emojized())
+                        if let description = snippet.description?.emojized(), description.isNotEmpty {
+							Markdown(description)
 						}
 					}
 

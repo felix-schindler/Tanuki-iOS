@@ -53,7 +53,7 @@ struct ProjectHeaderView: View {
 			}
 
 			if let description = project.description?.emojized() {
-				Markdown(description)
+				InlineMarkdown(description)
 			}
 
 			HStack {
