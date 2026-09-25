@@ -170,7 +170,7 @@ struct ProjectReleasesLoader: View {
 	}
 }
 
-private struct ReleaseAssetsView: View {
+struct ReleaseAssetsView: View {
 	let release: ProjectReleasesQuery.Data.Project.Releases.Node
 
 	var body: some View {

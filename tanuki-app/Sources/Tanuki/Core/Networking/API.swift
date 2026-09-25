@@ -389,10 +389,6 @@ class API {
 		if let error = object["error"] as? String {
 			return error
 		}
-		if let errors = object["errors"] as? [[String: Any]] {
-			let messages = errors.compactMap { $0["message"] as? String }
-			return messages.isEmpty ? nil : messages.joined(separator: "; ")
-		}
 
 		return nil
 	}
