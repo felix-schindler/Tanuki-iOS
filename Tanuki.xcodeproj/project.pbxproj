@@ -86,13 +86,13 @@
 		DC6C5D9A2B8F089D00587850 /* GraphTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C5D992B8F089D00587850 /* GraphTypes.swift */; };
 		DC6C5DA52B8F0A3300587850 /* SmallMergeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C5DA42B8F0A3300587850 /* SmallMergeView.swift */; };
 		DC6C5DAD2B8F10D500587850 /* UserMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C5DAC2B8F10D500587850 /* UserMergeLoader.swift */; };
-		DC6C5DB32B8F8BBF00587850 /* Emojis.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C5DB22B8F8BBF00587850 /* Emojis.swift */; };
 		DC7A7FA72BA5D0D600E128B1 /* SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */; };
 		DC867DF02ED3255600D4B03C /* CookiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC867DEF2ED3255600D4B03C /* CookiesView.swift */; };
 		DC867DF22ED3258F00D4B03C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC867DF12ED3258F00D4B03C /* SettingsView.swift */; };
 		DC867DF72ED330FA00D4B03C /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC867DF62ED330FA00D4B03C /* FeedbackView.swift */; };
 		DC867DF92ED3346E00D4B03C /* ClipboardAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC867DF82ED3346E00D4B03C /* ClipboardAccess.swift */; };
 		DC8978222E7F514200D42E4C /* GitLabAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC8978212E7F514200D42E4C /* GitLabAPI */; };
+		DC7E3B430000000000000005 /* TanukiEmoji in Frameworks */ = {isa = PBXBuildFile; productRef = DC7E3B430000000000000003 /* TanukiEmoji */; };
 		DC8978242E7F515800D42E4C /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = DC8978232E7F515800D42E4C /* Apollo */; };
 		DC8978262E7F515800D42E4C /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC8978252E7F515800D42E4C /* ApolloAPI */; };
 		DC89783D2E7F558300D42E4C /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = DC89783C2E7F558300D42E4C /* CachedAsyncImage */; };
@@ -119,6 +119,7 @@
 		DCC95E572BC5274B0040D657 /* ContributionsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC95E562BC5274B0040D657 /* ContributionsLoader.swift */; };
 		DCCB5D8D2B9C0E8300D5D70A /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */; };
 		DCD225042E696BC8002256F0 /* GitLabAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DCD225032E696BC8002256F0 /* GitLabAPI */; };
+		DC7E3B430000000000000004 /* TanukiEmoji in Frameworks */ = {isa = PBXBuildFile; productRef = DC7E3B430000000000000002 /* TanukiEmoji */; };
 		DCD2F7032F8AF9740049850E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = DCD2F7022F8AF9740049850E /* Alamofire */; };
 		DCD40E182BC2B2960055EE4C /* FileExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E172BC2B2960055EE4C /* FileExtensions.swift */; };
 		DCD40E1A2BC2C6600055EE4C /* DiffLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E192BC2C6600055EE4C /* DiffLoader.swift */; };
@@ -231,7 +232,6 @@
 		DC6C5D992B8F089D00587850 /* GraphTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphTypes.swift; sourceTree = "<group>"; };
 		DC6C5DA42B8F0A3300587850 /* SmallMergeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallMergeView.swift; sourceTree = "<group>"; };
 		DC6C5DAC2B8F10D500587850 /* UserMergeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMergeLoader.swift; sourceTree = "<group>"; };
-		DC6C5DB22B8F8BBF00587850 /* Emojis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emojis.swift; sourceTree = "<group>"; };
 		DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupView.swift; sourceTree = "<group>"; };
 		DC867DEF2ED3255600D4B03C /* CookiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookiesView.swift; sourceTree = "<group>"; };
 		DC867DF12ED3258F00D4B03C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -282,6 +282,7 @@
 				DC8978262E7F515800D42E4C /* ApolloAPI in Frameworks */,
 				DC89783D2E7F558300D42E4C /* CachedAsyncImage in Frameworks */,
 				DC8978222E7F514200D42E4C /* GitLabAPI in Frameworks */,
+				DC7E3B430000000000000004 /* TanukiEmoji in Frameworks */,
 				DC8978242E7F515800D42E4C /* Apollo in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -292,6 +293,7 @@
 			files = (
 				DC5AD7DD2E69D6E50031FC7B /* Toast in Frameworks */,
 				DCD225042E696BC8002256F0 /* GitLabAPI in Frameworks */,
+				DC7E3B430000000000000005 /* TanukiEmoji in Frameworks */,
 				DC3A24542B8C3F5800DB0E3F /* NVMColor in Frameworks */,
 				DC0A6A552B8D148000C53D56 /* CachedAsyncImage in Frameworks */,
 				DC42A2112C62D36E00B1EA85 /* HighlightedTextEditor in Frameworks */,
@@ -447,7 +449,6 @@
 			isa = PBXGroup;
 			children = (
 				DC3A244E2B8C3B8100DB0E3F /* Utils.swift */,
-				DC6C5DB22B8F8BBF00587850 /* Emojis.swift */,
 				DCD40E172BC2B2960055EE4C /* FileExtensions.swift */,
 				DC33C27A2B9C22F200C99B85 /* MarkdownTheme.swift */,
 				DC39B0FD2E9C45780036F8D7 /* GraphFilter.swift */,
@@ -637,6 +638,7 @@
 			name = "Tanuki Watch App";
 			packageProductDependencies = (
 				DC8978212E7F514200D42E4C /* GitLabAPI */,
+				DC7E3B430000000000000002 /* TanukiEmoji */,
 				DC8978232E7F515800D42E4C /* Apollo */,
 				DC8978252E7F515800D42E4C /* ApolloAPI */,
 				DC89783C2E7F558300D42E4C /* CachedAsyncImage */,
@@ -667,6 +669,7 @@
 				DCAF9D9E2BC3755F001FF2E5 /* Highlightr */,
 				DC42A2102C62D36E00B1EA85 /* HighlightedTextEditor */,
 				DCD225032E696BC8002256F0 /* GitLabAPI */,
+				DC7E3B430000000000000003 /* TanukiEmoji */,
 				DC5AD7CE2E697E4B0031FC7B /* Apollo */,
 				DC5AD7D02E697E4B0031FC7B /* ApolloAPI */,
 				DC5AD7D22E697E4B0031FC7B /* ApolloSQLite */,
@@ -711,6 +714,7 @@
 				DCAF9D9D2BC3755F001FF2E5 /* XCRemoteSwiftPackageReference "Highlightr" */,
 				DC42A20F2C62D36E00B1EA85 /* XCRemoteSwiftPackageReference "HighlightedTextEditor" */,
 				DCD225022E696BC8002256F0 /* XCLocalSwiftPackageReference "GitLabAPI" */,
+				DC7E3B430000000000000001 /* XCLocalSwiftPackageReference "Emoji" */,
 				DC5AD7CD2E697E4B0031FC7B /* XCRemoteSwiftPackageReference "apollo-ios" */,
 				DC5AD7DB2E69D6E50031FC7B /* XCRemoteSwiftPackageReference "toast-swift" */,
 				DCD2F7012F8AF9740049850E /* XCRemoteSwiftPackageReference "Alamofire" */,
@@ -795,7 +799,6 @@
 				DCC95E572BC5274B0040D657 /* ContributionsLoader.swift in Sources */,
 				DC4B428B2BA560B0007A9DB1 /* TreeLoader.swift in Sources */,
 				DCBC8B442F2C05F300700380 /* UpdateStatusView.swift in Sources */,
-				DC6C5DB32B8F8BBF00587850 /* Emojis.swift in Sources */,
 				DCEFB26B2B94C37600F4B245 /* API.swift in Sources */,
 				DC4B429A2BA56EA6007A9DB1 /* TagsLoader.swift in Sources */,
 				DC13E8A82B8E073300994E8A /* HomeView.swift in Sources */,
@@ -1196,6 +1199,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
+		DC7E3B430000000000000001 /* XCLocalSwiftPackageReference "Emoji" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ".";
+		};
 		DCD225022E696BC8002256F0 /* XCLocalSwiftPackageReference "GitLabAPI" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = GitLabAPI;
@@ -1270,6 +1277,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DC7E3B430000000000000002 /* TanukiEmoji */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC7E3B430000000000000001 /* XCLocalSwiftPackageReference "Emoji" */;
+			productName = TanukiEmoji;
+		};
+		DC7E3B430000000000000003 /* TanukiEmoji */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC7E3B430000000000000001 /* XCLocalSwiftPackageReference "Emoji" */;
+			productName = TanukiEmoji;
+		};
 		DC0A6A542B8D148000C53D56 /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DC0A6A532B8D148000C53D56 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;

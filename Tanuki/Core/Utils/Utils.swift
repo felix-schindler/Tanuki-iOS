@@ -10,6 +10,7 @@ import Foundation
 import GitLabAPI
 import NVMColor
 import SwiftUI
+import TanukiEmoji
 
 // MARK: - Cache helpers
 extension URLCache {
