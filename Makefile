@@ -51,13 +51,19 @@ icons: ## Regenerate the bundled Android symbol assets (network)
 
 # The iOS app icon is the hand-maintained Icon Composer document
 # tanuki-app/Darwin/TanukiIcon.icon (Xcode compiles it via
-# ASSETCATALOG_COMPILER_APPICON_NAME). Android needs mipmaps, which skip icon
-# renders from the same artwork over the app's orange gradient.
+# ASSETCATALOG_COMPILER_APPICON_NAME). Android needs mipmaps: skip icon renders
+# the legacy square ones over the app's orange gradient, and the adaptive
+# foreground — the transparent artwork on a 108dp canvas — is resampled straight
+# from the same PNG. Its inset lives in res/drawable/ic_launcher_foreground.xml.
 app-icon: ## Regenerate the Android launcher icon from the app icon artwork
 	@$(call need,tanuki-app/Darwin/TanukiIcon.icon/Assets/tinted.png)
 	cd tanuki-app && skip icon --android --no-darwin \
 		--background '#FF9500-#F07800' --inset 0.06 --shadow 0.0 \
 		Darwin/TanukiIcon.icon/Assets/tinted.png
+	cd tanuki-app && for d in mdpi:108 hdpi:162 xhdpi:216 xxhdpi:324 xxxhdpi:432; do \
+		sips --resampleHeightWidth $${d#*:} $${d#*:} Darwin/TanukiIcon.icon/Assets/tinted.png \
+			--out Android/app/src/main/res/mipmap-$${d%%:*}/ic_launcher_foreground.png >/dev/null; \
+	done
 
 # --- SBOM --------------------------------------------------------------------
 

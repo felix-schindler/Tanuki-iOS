@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Adaptive icons give the foreground a 108dp canvas; only the inner 66dp circle is guaranteed
+     visible under every launcher mask. The artwork (tinted.png) is transparent with the head
+     filling ~91% of it, so 22dp a side lands the head at ~58dp — inside that circle —
+     while still filling the visible area. Regenerate the mipmaps with `make app-icon`. -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@mipmap/ic_launcher_foreground"
+    android:insetBottom="22dp"
+    android:insetLeft="22dp"
+    android:insetRight="22dp"
+    android:insetTop="22dp" />
