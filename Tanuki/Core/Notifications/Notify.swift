@@ -34,10 +34,7 @@ class Notify {
 			break
 		}
 
-		// Most call sites pass no title, and a toast with no title has nothing to
-		// draw, so every one of those failures used to be haptic-only and silent.
-		// A failure always gets a banner; a success or warning with nothing to say
-		// stays haptic-only, which is all it ever was.
+		// Most call sites pass no title, so untitled errors would otherwise be invisible.
 		guard let title, !title.isEmpty else {
 			guard feedbackType == .error else {
 				return

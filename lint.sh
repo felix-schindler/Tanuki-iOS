@@ -1,16 +1,13 @@
 #!/bin/sh
-# Reports swift-format lint findings in the hand-written app sources, and exits
-# non-zero if there are any, so this can gate a commit or a CI job.
-#
-# Scoped to ./Tanuki on purpose: GitLabAPI/ holds generated Apollo code and has
-# to be committed exactly as apollo-ios-cli emits it, never reformatted.
+# Lints the hand-written app sources, exiting non-zero on findings so it can
+# gate a commit. GitLabAPI/ is generated Apollo code and is deliberately left
+# alone.
 set -eu
 
 CONFIG=./format.json
 SOURCES=./Tanuki
 
-# `swift format lint` writes findings to stderr and always exits 0, so capture
-# the output and decide the exit status here.
+# `swift format lint` writes to stderr and always exits 0, so decide it here.
 findings=$(swift format lint -p -r --configuration "$CONFIG" $SOURCES 2>&1 || true)
 
 if [ -n "$findings" ]; then

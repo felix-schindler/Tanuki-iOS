@@ -204,7 +204,6 @@ final class WatchSync: NSObject, WCSessionDelegate {
 	}
 }
 
-/// Errors surfaced by the REST layer, kept descriptive so the UI can show something useful.
 enum APIError: LocalizedError {
 	case http(status: Int, message: String?)
 	case emptyResponse
@@ -275,8 +274,7 @@ class API {
 			path.append(API.encodePathComponent(resource))
 		}
 		if let suffix {
-			// Callers pass "/raw"; joining already inserts the separator, so trim to avoid the
-			// `//raw` that GitLab answers with a 308 redirect (an extra round trip).
+			// Callers pass "/raw"; without trimming, joining yields "//raw" and a 308.
 			path.append(suffix.trimmingCharacters(in: CharacterSet(charactersIn: "/")))
 		}
 
@@ -308,16 +306,13 @@ class API {
 			headers: headers
 		).serializingData().response
 
-		// A transport failure (offline, DNS, TLS, …) leaves both the body and the HTTP response
-		// nil, so the status check below cannot see it. Rethrow the underlying error — otherwise
-		// every such failure is misreported as a decoding problem by `req`.
+		// Must precede the status check: a transport failure leaves the response nil too.
 		if let error = response.error {
 			logger.error("✗ \(method.rawValue) \(url) — \(error.localizedDescription)")
 			throw error
 		}
 
-		// Without this every failure (wrong host, wrong/expired token, missing scope, …)
-		// surfaced as "The data is missing." — the error body decoded as the expected type.
+		// Without this the error body decodes as the expected type and reports "data is missing".
 		if let status = response.response?.statusCode, !(200..<300).contains(status) {
 			let message = API.errorMessage(from: response.data)
 			logger.error("✗ \(status) \(method.rawValue) \(url) — \(message ?? "no error message")")
@@ -345,7 +340,6 @@ class API {
 		return components.percentEncodedQuery
 	}
 
-	/// Renders request headers for the log with the credential removed.
 	private static func redacted(_ headers: HTTPHeaders) -> String {
 		headers.map { header in
 			header.name.lowercased() == "authorization"
@@ -354,7 +348,6 @@ class API {
 		}.joined(separator: ", ")
 	}
 
-	/// Best-effort extraction of a human-readable message from a GitLab error body.
 	private static func errorMessage(from data: Data?) -> String? {
 		guard let data,
 			let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
