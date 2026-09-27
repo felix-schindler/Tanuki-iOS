@@ -5,18 +5,18 @@
 //  Created by Felix Schindler on 18.02.26.
 //
 
-import SwiftUI
 import StoreKit
+import SwiftUI
 
 @available(iOS 16.0, *)
 struct AppStoreReview: View {
 	@Environment(\.requestReview) var requestReview
-	
-    public var body: some View {
+
+	public var body: some View {
 		Button("App Store Review", systemImage: "star") {
 			requestReview()
 		}
-    }
+	}
 }
 
 #Preview {

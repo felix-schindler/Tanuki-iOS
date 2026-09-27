@@ -62,7 +62,7 @@ struct AvatarImage: View {
 	}
 
 	public var body: some View {
-		CachedAsyncImage(urlRequest: self.request, urlCache: .avatarCache) { phase in
+		CachedAsyncImage(urlRequest: self.request, urlCache: .avatar) { phase in
 			switch phase {
 			case .empty:
 				ProgressView()

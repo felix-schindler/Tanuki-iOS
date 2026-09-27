@@ -106,7 +106,7 @@ struct SetupView: View {
 						Task {
 							do {
 								let auth = try await API.req(
-									type: oAuthToken.self,
+									type: OAuthToken.self,
 									method: .post,
 									endpoint: "oauth/token",
 									body: [

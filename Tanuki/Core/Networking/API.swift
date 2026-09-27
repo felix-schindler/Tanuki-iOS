@@ -85,10 +85,9 @@ class InstanceManager {
 		let oldHost =
 			legacyStore?.string(forKey: legacyHostKey)
 			?? userDefaults.string(forKey: legacyHostKey)
-		let oldToken = (
-			legacyStore?.string(forKey: legacyTokenKey)
-				?? userDefaults.string(forKey: legacyTokenKey)
-		)?.trimmingCharacters(in: .whitespacesAndNewlines)
+		let oldToken =
+			(legacyStore?.string(forKey: legacyTokenKey)
+			?? userDefaults.string(forKey: legacyTokenKey))?.trimmingCharacters(in: .whitespacesAndNewlines)
 
 		// Only a stored token is worth migrating. Without one this is a fresh
 		// install; previously the host defaulted to "gitlab.com", so the guard was
