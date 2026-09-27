@@ -1201,7 +1201,7 @@
 /* Begin XCLocalSwiftPackageReference section */
 		DC7E3B430000000000000001 /* XCLocalSwiftPackageReference "Emoji" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ".";
+			relativePath = Emoji;
 		};
 		DCD225022E696BC8002256F0 /* XCLocalSwiftPackageReference "GitLabAPI" */ = {
 			isa = XCLocalSwiftPackageReference;

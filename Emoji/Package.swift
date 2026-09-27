@@ -10,8 +10,7 @@ let package = Package(
 	targets: [
 		.target(
 			name: "TanukiEmoji",
-			path: "Emoji/Sources/TanukiEmoji",
 			resources: [.process("Resources")]
-		),
+		)
 	]
 )

@@ -2,7 +2,7 @@
 
 SWIFT := swift
 CONFIG := {"lineLength":120,"tabWidth":4,"indentation":{"tabs":1}}
-SOURCES := ./Tanuki
+SOURCES := ./Tanuki ./Emoji
 
 .PHONY: help fmt lint check
 
