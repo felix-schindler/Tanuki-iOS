@@ -30,6 +30,16 @@ To fetch the latest schema and generate the API code, run:
 ===============================================================================
 ```
 
+# Release a new version
+
+1. Change app version in Xcode → Targets → Tanuki → Identity → Version
+2. Add changelog in `changelogs/v<verison>.md`
+3. Tag branch `git push origin v<version>`
+
+Pushing the tag triggers `.github/workflows/release.yml` +
+`.gitea/workflows/release.yml`, which create releases with the body from
+`changelogs/v<version>.md`.
+
 # Feature comparison
 
 | Feature                          | Tanuki | Gitblur | Gitblur Pro |
