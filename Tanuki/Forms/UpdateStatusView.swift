@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-private enum Time: String, CaseIterable {
-	case minutes_30 = "30_minutes"
-	case hours_3 = "3_hours"
-	case hours_8 = "8_hours"
-	case days_1 = "1_day"
-	case days_3 = "3_days"
-	case days_7 = "7_days"
-	case days_30 = "30_days"
+private enum TimeSpan: String, CaseIterable {
+	case minutes30 = "30_minutes"
+	case hours3 = "3_hours"
+	case hours8 = "8_hours"
+	case days1 = "1_day"
+	case days3 = "3_days"
+	case days7 = "7_days"
+	case days30 = "30_days"
 }
 
 struct UpdateStatusView: View {
@@ -23,7 +23,7 @@ struct UpdateStatusView: View {
 	@State private var emoji = ""
 	@State private var message = ""
 	@State private var busy = false
-	@State private var time: Time? = nil
+	@State private var time: TimeSpan? = nil
 
 	private func updateStatus() async {
 		var body: [String: String] = [:]
@@ -67,8 +67,8 @@ struct UpdateStatusView: View {
 			TextField("Message", text: $message)
 			Toggle("Busy", isOn: $busy)
 			Picker("Clear after", selection: $time) {
-				Text("Never").tag(nil as Time?)
-				ForEach(Time.allCases, id: \.self) { time in
+				Text("Never").tag(nil as TimeSpan?)
+				ForEach(TimeSpan.allCases, id: \.self) { time in
 					Text(time.rawValue.replacing("_", with: " ")).tag(time)
 				}
 			}

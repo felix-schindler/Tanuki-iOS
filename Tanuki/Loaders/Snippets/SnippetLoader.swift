@@ -125,9 +125,9 @@ struct SnippetLoader: View {
 
 					if let notes = snippet.notes.nodes {
 						Section("Notes") {
-							/* if snippet.userPermissions.createNote {
-								NewNoteView()
-							} */
+							// if snippet.userPermissions.createNote {
+							// 	NewNoteView()
+							// }
 
 							ForEach(notes, id: \.self?.id) { maybeNote in
 								if let note = maybeNote {

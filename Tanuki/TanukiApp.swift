@@ -6,8 +6,11 @@
 //  Rewritten by Felix Schindler on 26.02.24.
 //
 
+import OSLog
 import SwiftUI
 import WebKit
+
+let logger: Logger = Logger(subsystem: "de.schindlerfelix.GitLab", category: "Tanuki")
 
 @main
 struct TanukiApp: App {

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ConfigView: View {
 	@Environment(\.dismiss) var dismiss
-	
+
 	public private(set) var showSetup: Binding<Bool>? = nil
 
 	@State

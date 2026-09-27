@@ -27,7 +27,8 @@ struct ProjectHeaderView: View {
 
 	private func star() async {
 		do {
-			_ = try await Network.shared.apollo.perform(mutation: StarProjectMutation(projectId: project.id, starred: true))
+			_ = try await Network.shared.apollo.perform(
+				mutation: StarProjectMutation(projectId: project.id, starred: true))
 			Notify.status(.success, "Project starred", systemImage: "star")
 		} catch let error {
 			Notify.status(.error, "Starring project failed", error.localizedDescription, systemImage: "xmark")

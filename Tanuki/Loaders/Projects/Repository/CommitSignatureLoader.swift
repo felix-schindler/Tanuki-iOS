@@ -45,15 +45,10 @@ struct SignatureLoader: View {
 						endpoint: "projects/\(projectId)/repository/commits/\(commitId)/signature"
 					)
 				} catch let error {
-					Notify.status(.error, error.localizedDescription)
+					logger.error("Ignored error: \(error.localizedDescription)")
 				}
 			}
-		}.sheet(
-			isPresented: $showDetails,
-			onDismiss: {
-				self.showDetails = false
-			}
-		) {
+		}.sheet(isPresented: $showDetails) {
 			VStack(alignment: .leading) {
 				if let signature {
 					if signature.verificationStatus.starts(with: "verified") {

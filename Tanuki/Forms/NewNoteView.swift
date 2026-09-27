@@ -5,10 +5,10 @@
 //  Created by Felix Schindler on 18.02.26.
 //
 
-import SwiftUI
 import HighlightedTextEditor
+import SwiftUI
 
-fileprivate struct _Note: Codable {
+private struct _Note: Codable {
 	let id: Int
 }
 
@@ -23,25 +23,25 @@ struct NewNoteView: View {
 	private let id: Int
 	private let iid: String
 	private let type: NoteType
-	
+
 	@State private var show = false
 	@State private var content: String = ""
 	@State private var `internal` = false
-	
+
 	init(_ id: Int, iid: String, type: NoteType) {
 		self.id = id
 		self.iid = iid
 		self.type = type
 	}
-	
+
 	private func createNote() async {
 		do {
 			var endpoint = "projects/\(id)/\(type.rawValue)/\(iid)/notes"
-			
+
 			if type == .epic {
 				endpoint = "groups/\(id)/\(type.rawValue)/\(iid)/notes"
 			}
-			
+
 			_ = try await API.req(
 				type: _Note.self,
 				method: .post,
@@ -56,8 +56,8 @@ struct NewNoteView: View {
 			Notify.status(.error, "Couldn't create note", error.localizedDescription, systemImage: "xmark")
 		}
 	}
-	
-    public var body: some View {
+
+	public var body: some View {
 		Button("New note", systemImage: "arrow.up") {
 			show = true
 		}.sheet(isPresented: $show) {
@@ -67,7 +67,7 @@ struct NewNoteView: View {
 						HighlightedTextEditor(text: $content, highlightRules: .markdown)
 							.frame(minHeight: 100)
 					}
-					
+
 					if type != .snippet {
 						Toggle("Internal", isOn: self.$internal)
 					}
@@ -81,7 +81,7 @@ struct NewNoteView: View {
 				.modifier(ScrollDismissIfAvailable())
 			}
 		}
-    }
+	}
 }
 
 #Preview {

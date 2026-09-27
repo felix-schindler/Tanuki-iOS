@@ -88,19 +88,16 @@ struct MergeButton: View {
 	}
 
 	public var body: some View {
-		Button(
-			action: {
-				if mergeStatusEnum != .canBeMerged {
-					showMergeStatus = true
-				} else {
-					showMergeOptions = true
-				}
-				Haptics.shared.play(.light)
-			},
-			label: {
-				MergeStatus(mergeStatusEnum)
+		Button {
+			if mergeStatusEnum != .canBeMerged {
+				showMergeStatus = true
+			} else {
+				showMergeOptions = true
 			}
-		).sheet(isPresented: $showMergeStatus, onDismiss: { showMergeStatus = false }) {
+			Haptics.shared.play(.light)
+		} label: {
+			MergeStatus(mergeStatusEnum)
+		}.sheet(isPresented: $showMergeStatus) {
 			VStack(alignment: .leading) {
 				PopupHeader(
 					title: "Detailed merge status",
@@ -129,7 +126,7 @@ struct MergeButton: View {
 			}
 			.padding()
 			.modifier(PresentationDetendsIfAvailable())
-		}.sheet(isPresented: $showMergeOptions, onDismiss: { showMergeOptions = false }) {
+		}.sheet(isPresented: $showMergeOptions) {
 			NavigationView {
 				Form {
 					Toggle("Merge when the pipeline succeeds", isOn: $autoMerge)

@@ -34,19 +34,41 @@ class Notify {
 			break
 		}
 
-		if let title {
-			var toast: Toast
-
-			if let systemImage, let image = UIImage(systemName: systemImage) {
-				toast = Toast.default(
-					image: image,
-					title: title,
-					subtitle: subtitle
-				)
-			} else {
-				toast = Toast.text(title, subtitle: subtitle)
+		// Most call sites pass no title, so untitled errors would otherwise be invisible.
+		guard let title, !title.isEmpty else {
+			guard feedbackType == .error else {
+				return
 			}
-			toast.show()
+
+			let fallback = "Something went wrong"
+			let image =
+				systemImage.flatMap { UIImage(systemName: $0) }
+				?? UIImage(systemName: "xmark")
+
+			if let image {
+				Notify.show(image: image, title: fallback, subtitle: subtitle)
+			} else {
+				Notify.show(title: fallback, subtitle: subtitle)
+			}
+			return
 		}
+
+		if let systemImage, let image = UIImage(systemName: systemImage) {
+			Notify.show(image: image, title: title, subtitle: subtitle)
+		} else {
+			Notify.show(title: title, subtitle: subtitle)
+		}
+	}
+
+	private static func show(image: UIImage, title: String, subtitle: String?) {
+		Toast.default(
+			image: image,
+			title: title,
+			subtitle: subtitle
+		).show()
+	}
+
+	private static func show(title: String, subtitle: String?) {
+		Toast.text(title, subtitle: subtitle).show()
 	}
 }

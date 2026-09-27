@@ -8,6 +8,7 @@
 
 import Alamofire
 import Foundation
+import OSLog
 import SwiftUI
 
 #if canImport(WatchConnectivity)
@@ -84,10 +85,9 @@ class InstanceManager {
 		let oldHost =
 			legacyStore?.string(forKey: legacyHostKey)
 			?? userDefaults.string(forKey: legacyHostKey)
-		let oldToken = (
-			legacyStore?.string(forKey: legacyTokenKey)
-				?? userDefaults.string(forKey: legacyTokenKey)
-		)?.trimmingCharacters(in: .whitespacesAndNewlines)
+		let oldToken =
+			(legacyStore?.string(forKey: legacyTokenKey)
+			?? userDefaults.string(forKey: legacyTokenKey))?.trimmingCharacters(in: .whitespacesAndNewlines)
 
 		// Only a stored token is worth migrating. Without one this is a fresh
 		// install; previously the host defaulted to "gitlab.com", so the guard was
@@ -204,6 +204,23 @@ final class WatchSync: NSObject, WCSessionDelegate {
 	}
 }
 
+enum APIError: LocalizedError {
+	case http(status: Int, message: String?)
+	case emptyResponse
+
+	var errorDescription: String? {
+		switch self {
+		case .http(let status, let message):
+			let detail =
+				message.flatMap { $0.isEmpty ? nil : $0 }
+				?? HTTPURLResponse.localizedString(forStatusCode: status)
+			return "HTTP \(status): \(detail)"
+		case .emptyResponse:
+			return "The server returned an empty response."
+		}
+	}
+}
+
 @MainActor
 class API {
 	/// API endpoint (including version)
@@ -254,13 +271,17 @@ class API {
 
 		var path = useBase ? [base, endpoint] : [endpoint]
 		if let resource {
-			path.append(resource)
+			path.append(API.encodePathComponent(resource))
 		}
 		if let suffix {
-			path.append(suffix)
+			// Callers pass "/raw"; without trimming, joining yields "//raw" and a 308.
+			path.append(suffix.trimmingCharacters(in: CharacterSet(charactersIn: "/")))
 		}
 
-		let url = "https://\(targetHost)/" + path.joined(separator: "/")
+		var url = "https://\(targetHost)/" + path.joined(separator: "/")
+		if let queryString = API.queryString(query) {
+			url += "?" + queryString
+		}
 
 		var headers: HTTPHeaders = [.contentType(contentType.rawValue)]
 		if auth && token.isNotEmpty {
@@ -275,13 +296,73 @@ class API {
 		let encoding: ParameterEncoding =
 			(contentType == .json) ? JSONEncoding.default : URLEncoding.default
 
-		return await session.request(
+		logger.debug("→ \(method.rawValue) \(url) [\(API.redacted(headers))]")
+
+		let response = await session.request(
 			url,
 			method: method,
 			parameters: parameters,
 			encoding: encoding,
 			headers: headers
 		).serializingData().response
+
+		// Must precede the status check: a transport failure leaves the response nil too.
+		if let error = response.error {
+			logger.error("✗ \(method.rawValue) \(url) — \(error.localizedDescription)")
+			throw error
+		}
+
+		// Without this the error body decodes as the expected type and reports "data is missing".
+		if let status = response.response?.statusCode, !(200..<300).contains(status) {
+			let message = API.errorMessage(from: response.data)
+			logger.error("✗ \(status) \(method.rawValue) \(url) — \(message ?? "no error message")")
+			throw APIError.http(status: status, message: message)
+		}
+
+		if let status = response.response?.statusCode {
+			logger.info("← \(status) \(method.rawValue) \(url) (\(response.data?.count ?? 0) bytes)")
+		}
+
+		return response
+	}
+
+	private static func encodePathComponent(_ value: String) -> String {
+		var allowed = CharacterSet.urlPathAllowed
+		allowed.remove(charactersIn: "/")
+		return value.addingPercentEncoding(withAllowedCharacters: allowed) ?? value
+	}
+
+	private static func queryString(_ query: [String: String]) -> String? {
+		guard !query.isEmpty else { return nil }
+
+		var components = URLComponents()
+		components.queryItems = query.map { URLQueryItem(name: $0.key, value: $0.value) }
+		return components.percentEncodedQuery
+	}
+
+	private static func redacted(_ headers: HTTPHeaders) -> String {
+		headers.map { header in
+			header.name.lowercased() == "authorization"
+				? "\(header.name): <redacted>"
+				: "\(header.name): \(header.value)"
+		}.joined(separator: ", ")
+	}
+
+	private static func errorMessage(from data: Data?) -> String? {
+		guard let data,
+			let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+		else {
+			return nil
+		}
+
+		if let message = object["message"] as? String {
+			return message
+		}
+		if let error = object["error"] as? String {
+			return error
+		}
+
+		return nil
 	}
 
 	public static func req<T: Codable>(
@@ -308,7 +389,8 @@ class API {
 		)
 
 		guard let data = response.data else {
-			throw AFError.responseValidationFailed(reason: .dataFileNil)
+			logger.error("✗ \(endpoint): empty response body")
+			throw APIError.emptyResponse
 		}
 
 		decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -328,7 +410,14 @@ class API {
 			throw DateError.invalidDate
 		})
 
-		return try decoder.decode(T.self, from: data)
+		do {
+			return try decoder.decode(T.self, from: data)
+		} catch let error {
+			logger.error(
+				"✗ \(endpoint): decoding \(String(describing: T.self)) failed — \(error.localizedDescription)"
+			)
+			throw error
+		}
 	}
 
 	public static func get<T: Codable>(
