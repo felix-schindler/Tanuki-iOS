@@ -87,7 +87,7 @@ struct ProjectReleasesLoader: View {
 															maybeMilestone in
 															if let milestone = maybeMilestone {
 																PillView(
-																	milestone.title,
+																	milestone.title.emojized(),
 																	icon: "diamond"
 																)
 															}
@@ -107,7 +107,9 @@ struct ProjectReleasesLoader: View {
 												}.font(.footnote)
 											}
 
-											if let description = release.description {
+											if let description = release.description?.emojized(),
+												description.isNotEmpty
+											{
 												Markdown(description, baseURL: API.url)
 													.markdownTheme(.gitLab)
 											}
@@ -150,7 +152,7 @@ struct ProjectReleasesLoader: View {
 									},
 									header: {
 										HStack {
-											Text(release.name ?? release.id)
+											Text(release.name?.emojized() ?? release.id)
 											if let releasedAt = release.releasedAt {
 												Spacer()
 												Text(

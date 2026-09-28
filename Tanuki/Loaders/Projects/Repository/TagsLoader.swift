@@ -56,7 +56,7 @@ struct TagsLoader: View {
 									.fontWeight(.medium)
 
 								if tag.message.isNotEmpty {
-									Markdown(tag.message)
+									Markdown(tag.message.emojized())
 								}
 
 								VStack(alignment: .leading) {

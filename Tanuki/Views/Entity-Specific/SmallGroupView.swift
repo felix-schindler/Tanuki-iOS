@@ -34,7 +34,7 @@ struct SmallGroupView: View {
 							if let visibility = group.visibility {
 								VisibilityIcon(visibility)
 							}
-							if let groupName = group._name?.emojized() {
+							if let groupName = group._name?.emojized(), groupName.isNotEmpty {
 								Text(groupName)
 							} else {
 								Text(group.fullPath)

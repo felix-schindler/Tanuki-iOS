@@ -150,7 +150,7 @@ struct FileLoader: View {
 			case .success(let data):
 				if let content = String(data: data, encoding: .utf8) {
 					if fileExtension == "md" {
-						Markdown(content)
+						Markdown(content.emojized())
 							.markdownTheme(.gitLab)
 					} else {
 						CodeTextView(

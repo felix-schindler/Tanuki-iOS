@@ -80,7 +80,7 @@ struct GroupLoader: View {
 								AvatarImage(avatarUrl, size: .medium)
 							}
 							Spacer()
-							if let name = group.name?.emojized() {
+							if let name = group.name?.emojized(), name.isNotEmpty {
 								Text(name)
 									.font(.title)
 									.fontWeight(.bold)
@@ -120,7 +120,9 @@ struct GroupLoader: View {
 							}.font(.footnote)
 						}
 
-						if let description = group.description {
+						if let description = group.description?.emojized(),
+							description.isNotEmpty
+						{
 							Markdown(description)
 								.markdownTheme(.gitLab)
 						}

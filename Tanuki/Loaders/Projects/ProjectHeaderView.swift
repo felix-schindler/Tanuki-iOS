@@ -42,7 +42,7 @@ struct ProjectHeaderView: View {
 					AvatarImage(avatarUrl, size: .medium)
 				}
 				Spacer()
-				Text(project.name)
+				Text(project.name.emojized())
 					.font(.title)
 					.fontWeight(.bold)
 				Spacer()
@@ -51,7 +51,9 @@ struct ProjectHeaderView: View {
 				}
 			}
 
-			if let description = project.description?.emojized() {
+			if let description = project.description?.emojized(),
+				description.isNotEmpty
+			{
 				Markdown(description)
 					.markdownTheme(.gitLab)
 			}

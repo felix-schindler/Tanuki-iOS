@@ -116,7 +116,7 @@ struct LabelsLoader: View {
 										)
 									}
 
-									if let description = label.description,
+									if let description = label.description?.emojized(),
 										description.isNotEmpty
 									{
 										Markdown(description)

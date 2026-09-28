@@ -95,8 +95,8 @@ struct UserView: View {
 				}
 			}
 
-			if user.bio?.isNotEmpty ?? false {
-				Markdown(user.bio!)
+			if let bio = user.bio?.emojized(), bio.isNotEmpty {
+				Markdown(bio)
 					.markdownTheme(.gitLab)
 			}
 		}
@@ -137,8 +137,8 @@ struct UserView: View {
 							if let emoji = status.emoji {
 								Text(":\(emoji):".emojized())
 							}
-							if let message = status.message {
-								Text(message.emojized())
+							if let message = status.message?.emojized(), message.isNotEmpty {
+								Text(message)
 							}
 						}
 					}
