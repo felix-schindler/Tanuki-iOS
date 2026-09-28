@@ -87,12 +87,13 @@
 		DC6C5DA52B8F0A3300587850 /* SmallMergeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C5DA42B8F0A3300587850 /* SmallMergeView.swift */; };
 		DC6C5DAD2B8F10D500587850 /* UserMergeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6C5DAC2B8F10D500587850 /* UserMergeLoader.swift */; };
 		DC7A7FA72BA5D0D600E128B1 /* SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7A7FA62BA5D0D600E128B1 /* SetupView.swift */; };
+		DC7E3B430000000000000004 /* TanukiEmoji in Frameworks */ = {isa = PBXBuildFile; productRef = DC7E3B430000000000000002 /* TanukiEmoji */; };
+		DC7E3B430000000000000005 /* TanukiEmoji in Frameworks */ = {isa = PBXBuildFile; productRef = DC7E3B430000000000000003 /* TanukiEmoji */; };
 		DC867DF02ED3255600D4B03C /* CookiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC867DEF2ED3255600D4B03C /* CookiesView.swift */; };
 		DC867DF22ED3258F00D4B03C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC867DF12ED3258F00D4B03C /* SettingsView.swift */; };
 		DC867DF72ED330FA00D4B03C /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC867DF62ED330FA00D4B03C /* FeedbackView.swift */; };
 		DC867DF92ED3346E00D4B03C /* ClipboardAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC867DF82ED3346E00D4B03C /* ClipboardAccess.swift */; };
 		DC8978222E7F514200D42E4C /* GitLabAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC8978212E7F514200D42E4C /* GitLabAPI */; };
-		DC7E3B430000000000000005 /* TanukiEmoji in Frameworks */ = {isa = PBXBuildFile; productRef = DC7E3B430000000000000003 /* TanukiEmoji */; };
 		DC8978242E7F515800D42E4C /* Apollo in Frameworks */ = {isa = PBXBuildFile; productRef = DC8978232E7F515800D42E4C /* Apollo */; };
 		DC8978262E7F515800D42E4C /* ApolloAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DC8978252E7F515800D42E4C /* ApolloAPI */; };
 		DC89783D2E7F558300D42E4C /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = DC89783C2E7F558300D42E4C /* CachedAsyncImage */; };
@@ -119,7 +120,6 @@
 		DCC95E572BC5274B0040D657 /* ContributionsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC95E562BC5274B0040D657 /* ContributionsLoader.swift */; };
 		DCCB5D8D2B9C0E8300D5D70A /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCB5D8C2B9C0E8300D5D70A /* TodoView.swift */; };
 		DCD225042E696BC8002256F0 /* GitLabAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DCD225032E696BC8002256F0 /* GitLabAPI */; };
-		DC7E3B430000000000000004 /* TanukiEmoji in Frameworks */ = {isa = PBXBuildFile; productRef = DC7E3B430000000000000002 /* TanukiEmoji */; };
 		DCD2F7032F8AF9740049850E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = DCD2F7022F8AF9740049850E /* Alamofire */; };
 		DCD40E182BC2B2960055EE4C /* FileExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E172BC2B2960055EE4C /* FileExtensions.swift */; };
 		DCD40E1A2BC2C6600055EE4C /* DiffLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD40E192BC2C6600055EE4C /* DiffLoader.swift */; };
@@ -897,7 +897,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.2.1;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -931,7 +931,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1102,7 +1102,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.2.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1151,7 +1151,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.2.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = de.schindlerfelix.GitLab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1277,16 +1277,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		DC7E3B430000000000000002 /* TanukiEmoji */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DC7E3B430000000000000001 /* XCLocalSwiftPackageReference "Emoji" */;
-			productName = TanukiEmoji;
-		};
-		DC7E3B430000000000000003 /* TanukiEmoji */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DC7E3B430000000000000001 /* XCLocalSwiftPackageReference "Emoji" */;
-			productName = TanukiEmoji;
-		};
 		DC0A6A542B8D148000C53D56 /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DC0A6A532B8D148000C53D56 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
@@ -1326,6 +1316,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DC5AD7DB2E69D6E50031FC7B /* XCRemoteSwiftPackageReference "toast-swift" */;
 			productName = Toast;
+		};
+		DC7E3B430000000000000002 /* TanukiEmoji */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC7E3B430000000000000001 /* XCLocalSwiftPackageReference "Emoji" */;
+			productName = TanukiEmoji;
+		};
+		DC7E3B430000000000000003 /* TanukiEmoji */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC7E3B430000000000000001 /* XCLocalSwiftPackageReference "Emoji" */;
+			productName = TanukiEmoji;
 		};
 		DC8978212E7F514200D42E4C /* GitLabAPI */ = {
 			isa = XCSwiftPackageProductDependency;
