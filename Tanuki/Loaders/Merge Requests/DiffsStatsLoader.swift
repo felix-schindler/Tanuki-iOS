@@ -92,7 +92,7 @@ struct DiffsStatsLoader: View {
 			} else {
 				LoadingView("Loading file diffs", systemImage: "plusminus")
 			}
-		}.onAppear {
+		}.task {
 			loadDiffs()
 		}.refreshable {
 			await reloadDiffs()

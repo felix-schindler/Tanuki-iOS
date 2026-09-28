@@ -76,10 +76,8 @@ struct TagsLoader: View {
 			} else {
 				LoadingView("Loading Tags", systemImage: "chevron.left.forwardslash.chevron.right")
 			}
-		}.onAppear {
-			Task {
-				await loadTags()
-			}
+		}.task {
+			await loadTags()
 		}.refreshable {
 			await loadTags()
 		}.navigationTitle("Tags")

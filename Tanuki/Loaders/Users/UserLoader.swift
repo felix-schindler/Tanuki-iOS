@@ -68,7 +68,7 @@ struct UserLoader: View {
 			} else {
 				LoadingView("Loading user \(self.username)", systemImage: "person")
 			}
-		}.onAppear {
+		}.task {
 			loadUser()
 		}.refreshable {
 			await reloadUser()

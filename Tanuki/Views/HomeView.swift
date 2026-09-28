@@ -168,7 +168,7 @@ struct HomeView: View {
 					LoadingView("Loading starred Projects", systemImage: "star", color: .yellow)
 				}
 			}
-		}.onAppear {
+		}.task {
 			loadStarredProjects()
 		}.refreshable {
 			await reloadStarredProjects()

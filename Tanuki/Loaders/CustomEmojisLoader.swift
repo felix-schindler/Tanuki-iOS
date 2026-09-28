@@ -89,7 +89,7 @@ struct CustomEmojisLoader: View {
 			} else {
 				LoadingView("Loading custom emojis", systemImage: "face.smiling")
 			}
-		}.onAppear {
+		}.task {
 			loadEmojis()
 		}.refreshable {
 			await reloadEmojis()

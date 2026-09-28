@@ -314,7 +314,7 @@ struct ProjectLoader: View {
 			} else {
 				LoadingView("Loading Project \(self.fullPath)", systemImage: "app.gift.fill")
 			}
-		}.onAppear {
+		}.task {
 			loadProject()
 		}.refreshable {
 			await reloadProject()

@@ -118,7 +118,7 @@ struct ProjectPipelinesLoader: View {
 			} else {
 				LoadingView("Loading Pipelines", systemImage: "flag")
 			}
-		}.onAppear {
+		}.task {
 			loadPipelines()
 		}.refreshable {
 			await reloadPipelines()

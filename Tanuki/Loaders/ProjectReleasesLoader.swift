@@ -171,7 +171,7 @@ struct ProjectReleasesLoader: View {
 			} else {
 				LoadingView("Loading Releases", systemImage: "flag")
 			}
-		}.onAppear {
+		}.task {
 			loadReleases()
 		}.refreshable {
 			await reloadReleases()

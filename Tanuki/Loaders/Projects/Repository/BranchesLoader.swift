@@ -70,10 +70,8 @@ struct BranchesLoader: View {
 					systemImage: "chevron.left.forwardslash.chevron.right"
 				)
 			}
-		}.onAppear {
-			Task {
-				await loadBranches()
-			}
+		}.task {
+			await loadBranches()
 		}.refreshable {
 			await loadBranches()
 		}.navigationTitle("Branches")

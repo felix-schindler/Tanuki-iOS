@@ -63,10 +63,8 @@ struct CurrentUserLoader: View {
 			} else {
 				LoadingView("Loading Profile", systemImage: "person")
 			}
-		}.onAppear {
-			Task {
-				await loadUser()
-			}
+		}.task {
+			await loadUser()
 		}.refreshable {
 			await reloadUser()
 		}.toolbar {

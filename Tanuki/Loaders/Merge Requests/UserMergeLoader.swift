@@ -194,7 +194,7 @@ struct UserMergeLoader: View {
 			} else {
 				LoadingView("Loading Merge Requests", image: "git-mr.symbols", color: .blue)
 			}
-		}.onAppear {
+		}.task {
 			loadMergeRequests()
 		}.refreshable {
 			await reloadMergeRequests()

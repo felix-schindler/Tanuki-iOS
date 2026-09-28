@@ -117,7 +117,7 @@ struct ProjectIssuesLoader: View {
 			} else {
 				LoadingView("Loading Issues", systemImage: "smallcircle.circle", color: .green)
 			}
-		}.onAppear {
+		}.task {
 			loadIssues()
 		}.refreshable {
 			await reloadIssues()

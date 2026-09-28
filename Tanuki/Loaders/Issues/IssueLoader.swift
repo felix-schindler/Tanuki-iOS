@@ -308,7 +308,7 @@ struct IssueLoader: View {
 				LoadingView(
 					"Loading Issue #\(self.iid)", systemImage: "smallcircle.circle", color: .green)
 			}
-		}.onAppear {
+		}.task {
 			loadIssue()
 		}.refreshable {
 			await reloadIssue()

@@ -255,7 +255,7 @@ struct GroupLoader: View {
 			} else {
 				LoadingView("Loading Group \(self.fullPath)", systemImage: "scale.3d")
 			}
-		}.onAppear {
+		}.task {
 			loadGroup()
 		}.refreshable {
 			await reloadGroup()

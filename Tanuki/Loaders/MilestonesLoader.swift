@@ -177,7 +177,7 @@ struct MilestonesLoader: View {
 			} else {
 				LoadingView("Loading Milestones", systemImage: "diamond")
 			}
-		}.onAppear {
+		}.task {
 			loadMilestones()
 		}.refreshable {
 			await reloadMilestones()

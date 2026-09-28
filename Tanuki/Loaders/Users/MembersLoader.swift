@@ -209,6 +209,8 @@ struct MembersLoader: View {
 			} else {
 				LoadingView("Loading Members", systemImage: "person.2")
 			}
+		}.task {
+			loadMembers()
 		}.toolbar {
 			NavigationLink(
 				destination: {
@@ -222,8 +224,6 @@ struct MembersLoader: View {
 					Label("Add new Member", systemImage: "person.badge.plus")
 				}
 			).tint(.accentColor)
-		}.onAppear {
-			loadMembers()
 		}.refreshable {
 			await reloadMembers()
 		}.navigationTitle("Members")

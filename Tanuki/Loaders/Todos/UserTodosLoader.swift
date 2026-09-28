@@ -80,7 +80,7 @@ struct UserTodosLoader: View {
 			} else {
 				LoadingView("Loading Todos", systemImage: "checkmark.square")
 			}
-		}.onAppear {
+		}.task {
 			loadTodos()
 		}.refreshable {
 			await reloadTodos()

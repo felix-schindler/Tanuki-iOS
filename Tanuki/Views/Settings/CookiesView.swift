@@ -60,11 +60,11 @@ struct CookiesView: View {
 				}
 			}
 		}
+		.task {
+			loadCookies()
+		}
 		.sheet(isPresented: $showingWebView, onDismiss: loadCookies) {
 			WebLoginView(url: loginUrl)
-		}
-		.onAppear {
-			loadCookies()
 		}
 		.navigationTitle("Cookies")
 	}

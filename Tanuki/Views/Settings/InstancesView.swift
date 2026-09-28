@@ -78,7 +78,7 @@ struct InstancesView: View {
 					Label("Add Instance", systemImage: "plus.circle")
 				}
 			}
-		}.onAppear {
+		}.task {
 			instances = InstanceManager.instances
 			selectedId = InstanceManager.selectedId
 		}.toolbar {

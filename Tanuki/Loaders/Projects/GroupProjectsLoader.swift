@@ -84,7 +84,7 @@ struct GroupProjectsLoader: View {
 			} else {
 				LoadingView("Loading Projects", systemImage: "app.gift.fill")
 			}
-		}.onAppear {
+		}.task {
 			loadProjects()
 		}.refreshable {
 			await reloadProjects()

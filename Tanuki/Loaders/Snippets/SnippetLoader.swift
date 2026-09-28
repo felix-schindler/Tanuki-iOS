@@ -144,7 +144,7 @@ struct SnippetLoader: View {
 			} else {
 				LoadingView("Loading Snippet", systemImage: "scissors")
 			}
-		}.onAppear {
+		}.task {
 			loadSnippet()
 		}.refreshable {
 			await reloadSnippet()

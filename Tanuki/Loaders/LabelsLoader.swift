@@ -132,7 +132,7 @@ struct LabelsLoader: View {
 			} else {
 				LoadingView("Loading Labels", systemImage: "tag")
 			}
-		}.onAppear {
+		}.task {
 			loadLabels()
 		}.refreshable {
 			await reloadLabels()

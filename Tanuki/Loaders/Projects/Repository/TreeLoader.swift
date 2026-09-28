@@ -179,11 +179,9 @@ struct TreeLoader: View {
 					LoadingView("Loading file tree", systemImage: "folder")
 				}
 			}
-		}.onAppear {
-			loadTree()
-			Task {
-				await loadBranches()
-			}
+		}.task {
+			await MainActor.run { loadTree() }
+			await loadBranches()
 		}.refreshable {
 			await reloadTree()
 			if folderPath == nil {

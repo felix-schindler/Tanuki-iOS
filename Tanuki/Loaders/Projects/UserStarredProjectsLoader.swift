@@ -82,7 +82,7 @@ struct UserStarredProjectsLoader: View {
 			} else {
 				LoadingView("Loading starred Projects", systemImage: "star")
 			}
-		}.onAppear {
+		}.task {
 			loadProjects()
 		}.refreshable {
 			await reloadProjects()

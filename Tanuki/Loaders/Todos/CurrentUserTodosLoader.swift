@@ -74,7 +74,7 @@ struct CurrentUserTodosLoader: View {
 			} else {
 				LoadingView("Loading your Todos", systemImage: "checkmark.square")
 			}
-		}.onAppear {
+		}.task {
 			loadTodos()
 		}.refreshable {
 			await reloadTodos()

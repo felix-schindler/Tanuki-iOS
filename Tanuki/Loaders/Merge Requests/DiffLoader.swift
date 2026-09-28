@@ -153,10 +153,8 @@ struct DiffLoader: View {
 			} else {
 				LoadingView("Loading Diffs", systemImage: "plusminus")
 			}
-		}.onAppear {
-			Task {
-				await loadDiffs()
-			}
+		}.task {
+			await loadDiffs()
 		}.refreshable {
 			await loadDiffs()
 		}

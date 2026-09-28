@@ -94,10 +94,8 @@ struct EventsLoader: View {
 			} else {
 				LoadingView("Loading events", systemImage: "bell")
 			}
-		}.onAppear {
-			Task {
-				await getEvents()
-			}
+		}.task {
+			await getEvents()
 		}.refreshable {
 			await getEvents()
 		}.navigationTitle("Activity")

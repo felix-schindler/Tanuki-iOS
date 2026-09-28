@@ -504,7 +504,7 @@ struct MergeRequestLoader: View {
 			} else {
 				LoadingView("Loading Merge Request !\(self.iid)", image: "git-mr.symbols", color: .blue)
 			}
-		}.onAppear {
+		}.task {
 			loadMergeRequest()
 		}.refreshable {
 			await reloadMergeRequest()

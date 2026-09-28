@@ -150,17 +150,15 @@ struct CommitsLoader: View {
 					FailedView(error)
 				}
 			}
-		}.onAppear {
-			Task {
-				isLoading = true
+		}.task {
+			isLoading = true
 
-				defer {
-					isLoading = false
-				}
-
-				await loadCommits()
-				await loadBranches()
+			defer {
+				isLoading = false
 			}
+
+			await loadCommits()
+			await loadBranches()
 		}.refreshable {
 			isLoading = true
 

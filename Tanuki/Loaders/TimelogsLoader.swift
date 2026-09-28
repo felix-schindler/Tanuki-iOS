@@ -185,7 +185,7 @@ struct TimelogsLoader: View {
 			} else {
 				LoadingView("Loading Timelogs", systemImage: "hourglass")
 			}
-		}.onAppear {
+		}.task {
 			loadTimelogs()
 		}.refreshable {
 			await reloadTimelogs()

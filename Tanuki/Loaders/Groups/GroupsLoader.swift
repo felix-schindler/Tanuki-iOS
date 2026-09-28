@@ -106,7 +106,7 @@ struct GroupsLoader: View {
 			} else {
 				LoadingView("Loading Groups", systemImage: "scale.3d")
 			}
-		}.onAppear {
+		}.task {
 			loadGroups()
 		}.refreshable {
 			await reloadGroups()

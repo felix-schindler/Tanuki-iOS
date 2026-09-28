@@ -106,7 +106,7 @@ struct GroupMergeLoader: View {
 				LoadingView(
 					"Loading Merge Requests", image: "git-mr.symbols", color: .blue)
 			}
-		}.onAppear {
+		}.task {
 			loadMergeRequests()
 		}.refreshable {
 			await reloadMergeRequests()

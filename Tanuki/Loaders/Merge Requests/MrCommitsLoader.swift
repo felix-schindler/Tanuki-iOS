@@ -87,7 +87,7 @@ struct MrCommitsLoader: View {
 			} else {
 				LoadingView("Loading Commits", systemImage: "circle.and.line.horizontal")
 			}
-		}.onAppear {
+		}.task {
 			loadCommits()
 		}.refreshable {
 			await reloadCommits()

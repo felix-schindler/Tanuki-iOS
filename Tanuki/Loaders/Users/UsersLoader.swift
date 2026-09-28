@@ -100,7 +100,7 @@ struct UsersLoader: View {
 			} else {
 				LoadingView("Loading Users", systemImage: "person.2")
 			}
-		}.onAppear {
+		}.task {
 			loadUsers()
 		}.refreshable {
 			await reloadUsers()
