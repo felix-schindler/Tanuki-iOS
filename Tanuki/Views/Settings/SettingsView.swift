@@ -40,7 +40,7 @@ struct SettingsView: View {
 						icon: {
 							Image("cookie.symbols")
 								.resizable()
-								.scaledToFill()
+								.scaledToFit()
 						})
 				}
 				NavigationLink(destination: InstancesView()) {

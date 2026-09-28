@@ -28,7 +28,7 @@ struct NoContentView: View {
 		VStack {
 			self.image
 				.resizable()
-				.scaledToFill()
+				.scaledToFit()
 				.foregroundStyle(.secondary)
 				.frame(width: 40, height: 40)
 				.padding(.bottom, 10)
