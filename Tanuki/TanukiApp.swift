@@ -17,6 +17,9 @@ struct TanukiApp: App {
 	@StateObject
 	private var sessionStore = SessionStore.shared
 
+	@Environment(\.scenePhase)
+	private var scenePhase
+
 	init() {
 		InstanceManager.migrate()
 		WatchSync.shared.activate()
@@ -86,6 +89,15 @@ struct TanukiApp: App {
 		}.onAppear {
 			sessionStore.refresh()
 			restorePersistedCookies()
+			Task {
+				await Auth.ensureValidToken()
+			}
+		}.onChange(of: scenePhase) { newPhase in
+			if newPhase == .active {
+				Task {
+					await Auth.ensureValidToken()
+				}
+			}
 		}
 	}
 }

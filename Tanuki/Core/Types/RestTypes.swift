@@ -8,12 +8,16 @@
 import Foundation
 
 // MARK: - Authentication
-struct OAuthToken: Codable {
+struct OAuthToken: Codable, Sendable {
 	let accessToken: String
 	let tokenType: String
 	let expiresIn: Int
 	let refreshToken: String
 	let createdAt: Int
+
+	var expiresAt: Date {
+		Date(timeIntervalSince1970: TimeInterval(createdAt)).addingTimeInterval(TimeInterval(expiresIn))
+	}
 }
 
 struct RestAPIUser: Codable {

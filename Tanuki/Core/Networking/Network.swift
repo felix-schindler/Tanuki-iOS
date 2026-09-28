@@ -61,10 +61,20 @@ final class AuthorizationInterceptor: GraphQLInterceptor {
 		request: Request,
 		next: NextInterceptorFunction<Request>
 	) async throws -> InterceptorResultStream<Request> {
+		await Auth.ensureValidToken()
+
 		var req = request
 		req.addHeader(name: "Authorization", value: "Bearer \(API.token)")
+		let instanceId = API.currentInstance?.id
 
-		return await next(req)
+		let stream = await next(req)
+		return await stream.mapErrors { error in
+			guard Auth.isUnauthorized(error), let instanceId else {
+				throw error
+			}
+			_ = await Auth.handleUnauthorized(instanceId: instanceId)
+			throw error
+		}
 	}
 }
 

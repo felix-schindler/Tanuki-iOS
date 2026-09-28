@@ -24,16 +24,36 @@ enum ContentType: String {
 	case formUrlEncoded = "application/x-www-form-urlencoded"
 }
 
-struct GitLabInstance: Codable, Identifiable, Equatable {
+struct GitLabInstance: Codable, Identifiable, Equatable, Sendable {
 	var id: String { host }
 	let host: String
 	let token: String
 	let isOAuth: Bool
+	let refreshToken: String?
+	let expiresAt: Date?
 
-	init(host: String, token: String, isOAuth: Bool = false) {
+	init(
+		host: String,
+		token: String,
+		isOAuth: Bool = false,
+		refreshToken: String? = nil,
+		expiresAt: Date? = nil
+	) {
 		self.host = host
 		self.token = token
 		self.isOAuth = isOAuth
+		self.refreshToken = refreshToken
+		self.expiresAt = expiresAt
+	}
+
+	var needsTokenRefresh: Bool {
+		guard isOAuth, refreshToken?.isNotEmpty == true else {
+			return false
+		}
+		guard let expiresAt else {
+			return true
+		}
+		return expiresAt < Date().addingTimeInterval(300)
 	}
 }
 
@@ -139,6 +159,17 @@ class InstanceManager {
 		WatchSync.shared.pushInstances()
 	}
 
+	static func update(_ instance: GitLabInstance) {
+		var current = instances
+		guard let index = current.firstIndex(where: { $0.id == instance.id }) else {
+			add(instance)
+			return
+		}
+		current[index] = instance
+		instances = current
+		WatchSync.shared.pushInstances()
+	}
+
 	/// Drops instances without a token (the phantom the old `migrate()` created on
 	/// fresh installs) and points the selection at a valid one. Runs at launch
 	/// before any network client is built, so there are no caches to reset.
@@ -219,6 +250,13 @@ enum APIError: LocalizedError {
 			return "The server returned an empty response."
 		}
 	}
+
+	var isUnauthorized: Bool {
+		if case .http(let status, _) = self {
+			return status == 401
+		}
+		return false
+	}
 }
 
 @MainActor
@@ -256,6 +294,71 @@ class API {
 
 	/// This is only `public` because it's used by `FileLoader` and `FeedbackView`
 	public static func raw(
+		method: HTTPMethod,
+		endpoint: String,
+		resource: String? = nil,
+		suffix: String? = nil,
+		query: [String: String] = [:],
+		body: (any Encodable)? = nil,
+		contentType: ContentType = .json,
+		auth: Bool = true,
+		useBase: Bool = true,
+		host: String? = nil
+	) async throws -> AFDataResponse<Data> {
+		if auth {
+			await Auth.ensureValidToken()
+		}
+		let instanceId = auth ? InstanceManager.selected?.id : nil
+
+		var response = try await API.executeRaw(
+			method: method,
+			endpoint: endpoint,
+			resource: resource,
+			suffix: suffix,
+			query: query,
+			body: body,
+			contentType: contentType,
+			auth: auth,
+			useBase: useBase,
+			host: host
+		)
+
+		if response.response?.statusCode == 401, let instanceId,
+			await Auth.handleUnauthorized(instanceId: instanceId) != nil
+		{
+			response = try await API.executeRaw(
+				method: method,
+				endpoint: endpoint,
+				resource: resource,
+				suffix: suffix,
+				query: query,
+				body: body,
+				contentType: contentType,
+				auth: auth,
+				useBase: useBase,
+				host: host
+			)
+		}
+
+		if let error = response.error {
+			logger.error("✗ \(method.rawValue) \(endpoint) — \(error.localizedDescription)")
+			throw error
+		}
+
+		if let status = response.response?.statusCode, !(200..<300).contains(status) {
+			let message = API.errorMessage(from: response.data)
+			logger.error("✗ \(status) \(method.rawValue) \(endpoint) — \(message ?? "no error message")")
+			throw APIError.http(status: status, message: message)
+		}
+
+		if let status = response.response?.statusCode {
+			logger.info("← \(status) \(method.rawValue) \(endpoint) (\(response.data?.count ?? 0) bytes)")
+		}
+
+		return response
+	}
+
+	private static func executeRaw(
 		method: HTTPMethod,
 		endpoint: String,
 		resource: String? = nil,
@@ -305,23 +408,6 @@ class API {
 			encoding: encoding,
 			headers: headers
 		).serializingData().response
-
-		// Must precede the status check: a transport failure leaves the response nil too.
-		if let error = response.error {
-			logger.error("✗ \(method.rawValue) \(url) — \(error.localizedDescription)")
-			throw error
-		}
-
-		// Without this the error body decodes as the expected type and reports "data is missing".
-		if let status = response.response?.statusCode, !(200..<300).contains(status) {
-			let message = API.errorMessage(from: response.data)
-			logger.error("✗ \(status) \(method.rawValue) \(url) — \(message ?? "no error message")")
-			throw APIError.http(status: status, message: message)
-		}
-
-		if let status = response.response?.statusCode {
-			logger.info("← \(status) \(method.rawValue) \(url) (\(response.data?.count ?? 0) bytes)")
-		}
 
 		return response
 	}
@@ -374,7 +460,9 @@ class API {
 		query: [String: String] = [:],
 		body: (any Encodable)? = nil,
 		contentType: ContentType = .json,
-		useBase: Bool = true
+		auth: Bool = true,
+		useBase: Bool = true,
+		host: String? = nil
 	) async throws -> T {
 		let response = try await API.raw(
 			method: method,
@@ -384,8 +472,9 @@ class API {
 			query: query,
 			body: body,
 			contentType: contentType,
-			auth: true,
-			useBase: useBase
+			auth: auth,
+			useBase: useBase,
+			host: host
 		)
 
 		guard let data = response.data else {

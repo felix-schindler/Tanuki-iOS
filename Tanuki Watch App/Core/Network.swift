@@ -10,16 +10,26 @@ import ApolloAPI
 import SwiftUI
 import WatchConnectivity
 
-struct GitLabInstance: Codable, Identifiable, Equatable {
+struct GitLabInstance: Codable, Identifiable, Equatable, Sendable {
 	var id: String { host }
 	let host: String
 	let token: String
 	let isOAuth: Bool
+	let refreshToken: String?
+	let expiresAt: Date?
 
-	init(host: String, token: String, isOAuth: Bool = false) {
+	init(
+		host: String,
+		token: String,
+		isOAuth: Bool = false,
+		refreshToken: String? = nil,
+		expiresAt: Date? = nil
+	) {
 		self.host = host
 		self.token = token
 		self.isOAuth = isOAuth
+		self.refreshToken = refreshToken
+		self.expiresAt = expiresAt
 	}
 }
 

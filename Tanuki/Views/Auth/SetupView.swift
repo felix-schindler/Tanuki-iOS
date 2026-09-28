@@ -117,13 +117,16 @@ struct SetupView: View {
 										"code_verifier": self.codeVerifier,
 									],
 									contentType: .formUrlEncoded,
+									auth: false,
 									useBase: false
 								)
 
 								let instance = GitLabInstance(
 									host: "gitlab.com",
 									token: auth.accessToken,
-									isOAuth: true
+									isOAuth: true,
+									refreshToken: auth.refreshToken,
+									expiresAt: auth.expiresAt
 								)
 								try await Auth.login(
 									instance: instance
