@@ -100,7 +100,7 @@ struct CommitsLoader: View {
 										Text(branch.name).tag(branch.name)
 									}
 								}.pickerStyle(.menu)
-									.onChange(of: refName) { _ in
+									.onChange(of: refName) {
 										Task {
 											await loadCommits()
 										}
@@ -175,7 +175,7 @@ struct CommitsLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		CommitsLoader(33_025_310, refName: "main")
 	}
 }

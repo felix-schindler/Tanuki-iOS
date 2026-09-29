@@ -140,7 +140,7 @@ struct ProjectIssuesLoader: View {
 				}
 			}
 		}.sheet(isPresented: $showFilters, onDismiss: { self.showFilters = false }) {
-			NavigationView {
+			NavigationStack {
 				IssueFilterView(filter: $filter)
 					.toolbar {
 						AsyncButton("Apply filter", systemImage: "checkmark") {
@@ -152,7 +152,7 @@ struct ProjectIssuesLoader: View {
 		}.searchable(
 			text: Binding(get: { self.filter.search ?? "" }, set: { self.filter.search = $0.isNotEmpty ? $0 : nil }),
 			prompt: "Search issues"
-		).onChange(of: filter.search) { _ in
+		).onChange(of: filter.search) {
 			self.project = nil  // Show loading state
 			loadIssues()
 		}.navigationTitle("Issues")
@@ -160,7 +160,7 @@ struct ProjectIssuesLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		ProjectIssuesLoader(fullPath: "felix-schindler/gitlab-ios")
 	}
 }

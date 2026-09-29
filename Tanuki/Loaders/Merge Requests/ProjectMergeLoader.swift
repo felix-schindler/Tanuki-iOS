@@ -122,7 +122,7 @@ struct ProjectMergeLoader: View {
 				showFilters = true
 			}
 		}.sheet(isPresented: $showFilters, onDismiss: { self.showFilters = false }) {
-			NavigationView {
+			NavigationStack {
 				MergeRequestFilterView(filter: $filter)
 					.toolbar {
 						AsyncButton("Apply filter", systemImage: "checkmark") {
@@ -134,7 +134,7 @@ struct ProjectMergeLoader: View {
 		}.searchable(
 			text: Binding(get: { self.filter.search ?? "" }, set: { self.filter.search = $0.isNotEmpty ? $0 : nil }),
 			prompt: "Search merge requests"
-		).onChange(of: filter.search) { _ in
+		).onChange(of: filter.search) {
 			self.project = nil  // Show loading state
 			loadMergeRequests()
 		}.navigationTitle("Merge Requests")
@@ -142,7 +142,7 @@ struct ProjectMergeLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		ProjectMergeLoader(fullPath: "felix-schindler/gitlab-ios")
 	}
 }

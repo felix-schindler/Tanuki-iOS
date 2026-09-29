@@ -126,7 +126,7 @@ struct TreeLoader: View {
 								}
 							}
 							.pickerStyle(.menu)
-							.onChange(of: refName) { _ in
+							.onChange(of: refName) {
 								loadTree()
 							}
 						}
@@ -192,7 +192,7 @@ struct TreeLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		TreeLoader(
 			projectId: 33_025_310,
 			fullPath: "felix-schindler/gitlab-ios",

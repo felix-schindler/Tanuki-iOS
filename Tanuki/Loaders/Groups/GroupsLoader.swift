@@ -115,7 +115,7 @@ struct GroupsLoader: View {
 				showFilters = true
 			}
 		}.sheet(isPresented: $showFilters, onDismiss: { showFilters = false }) {
-			NavigationView {
+			NavigationStack {
 				Form {
 					Section {
 						VStack(alignment: .leading) {
@@ -180,7 +180,7 @@ struct GroupsLoader: View {
 		}.searchable(
 			text: Binding(get: { self.search ?? "" }, set: { self.search = $0.isNotEmpty ? $0 : nil }),
 			prompt: "Name or full path"
-		).onChange(of: search) { _ in
+		).onChange(of: search) {
 			self.groups = nil  // Show loading state
 			loadGroups()
 		}.navigationTitle("Groups")
@@ -188,7 +188,7 @@ struct GroupsLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		GroupsLoader()
 	}
 }

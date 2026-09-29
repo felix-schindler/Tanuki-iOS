@@ -85,7 +85,7 @@ struct DiffLoader: View {
 		List {
 			Section {
 				Toggle("Unified diff", isOn: $unidiff)
-					.onChange(of: unidiff) { _ in
+					.onChange(of: unidiff) {
 						Task {
 							await loadDiffs()
 							Haptics.shared.play(.soft)
@@ -165,7 +165,7 @@ struct DiffLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		DiffLoader(
 			projectId: 33_025_310,
 			mrIid: 1

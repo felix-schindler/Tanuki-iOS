@@ -166,7 +166,7 @@ struct UserIssuesLoader: View {
 				showFilters = true
 			}
 		}.sheet(isPresented: $showFilters, onDismiss: { self.showFilters = false }) {
-			NavigationView {
+			NavigationStack {
 				IssueFilterView(filter: $filter)
 					.toolbar {
 						AsyncButton("Apply filter", systemImage: "checkmark") {
@@ -178,7 +178,7 @@ struct UserIssuesLoader: View {
 		}.searchable(
 			text: Binding(get: { self.filter.search ?? "" }, set: { self.filter.search = $0.isNotEmpty ? $0 : nil }),
 			prompt: "Search issues"
-		).onChange(of: filter.search) { _ in
+		).onChange(of: filter.search) {
 			self.projectMemberships = nil  // Show loading state
 			loadIssues()
 		}.navigationTitle("Issues")
@@ -186,7 +186,7 @@ struct UserIssuesLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		UserIssuesLoader(username: "felix-schindler")
 	}
 }

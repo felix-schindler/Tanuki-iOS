@@ -124,7 +124,7 @@ struct ProjectsLoader: View {
 				showFilters = true
 			}
 		}.sheet(isPresented: $showFilters, onDismiss: { showFilters = false }) {
-			NavigationView {
+			NavigationStack {
 				Form {
 					Section {
 						VStack(alignment: .leading) {
@@ -226,7 +226,7 @@ struct ProjectsLoader: View {
 		}.searchable(
 			text: Binding(get: { self.search ?? "" }, set: { self.search = $0.isNotEmpty ? $0 : nil }),
 			prompt: "Name, path, or description"
-		).onChange(of: search) { _ in
+		).onChange(of: search) {
 			self.projects = nil  // Show loading state
 			loadProjects()
 		}.navigationTitle("Projects")
@@ -234,7 +234,7 @@ struct ProjectsLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		ProjectsLoader()
 	}
 }

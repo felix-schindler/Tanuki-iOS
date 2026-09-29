@@ -6,7 +6,6 @@
 //
 
 import GitLabAPI
-import MarkdownUI
 import SwiftUI
 
 enum MilestoneQueryType {
@@ -165,7 +164,6 @@ struct MilestonesLoader: View {
 										description.isNotEmpty
 									{
 										Markdown(description)
-											.markdownTheme(.gitLab)
 									}
 								}
 							}
@@ -184,7 +182,7 @@ struct MilestonesLoader: View {
 		}.searchable(
 			text: Binding(get: { self.searchTitle ?? "" }, set: { self.searchTitle = $0.isNotEmpty ? $0 : nil }),
 			prompt: "Title"
-		).onChange(of: searchTitle) { _ in
+		).onChange(of: searchTitle) {
 			self.milestones = nil  // Show loading state
 			loadMilestones()
 		}.toolbar {
@@ -206,7 +204,7 @@ struct MilestonesLoader: View {
 				).tint(.accentColor)
 			}
 		}.sheet(isPresented: $showFilters, onDismiss: { self.showFilters = false }) {
-			NavigationView {
+			NavigationStack {
 				Form {
 					Picker("State", selection: $state) {
 						Text("Any").tag(nil as MilestoneStateEnum?)
@@ -234,7 +232,7 @@ struct MilestonesLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		MilestonesLoader(fullPath: "gitlab-org", id: 278_964, queryType: .group)
 	}
 }
