@@ -201,9 +201,9 @@ struct UserView: View {
 			}
 		}
 
-        Section("Contributions") {
-            ContributionsLoader(username: user.username)
-        }
+		Section("Contributions") {
+			ContributionsLoader(username: user.username)
+		}
 
 		Section {
 			NavigationLink(

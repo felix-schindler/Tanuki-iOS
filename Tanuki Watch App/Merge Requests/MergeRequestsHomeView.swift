@@ -19,7 +19,7 @@ struct MergeRequestsHomeView: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		MergeRequestsHomeView()
 	}
 }

@@ -5,8 +5,10 @@
 //  Created by Felix Schindler on 26.02.24.
 //
 
+
 import Apollo
 import ApolloAPI
+import Foundation
 import SwiftUI
 import WatchConnectivity
 
@@ -31,11 +33,26 @@ struct GitLabInstance: Codable, Identifiable, Equatable, Sendable {
 		self.refreshToken = refreshToken
 		self.expiresAt = expiresAt
 	}
+
+	var isValid: Bool {
+		!token.isEmpty && !host.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+	}
+
+	var needsTokenRefresh: Bool {
+		guard isOAuth, refreshToken?.isNotEmpty == true else {
+			return false
+		}
+		guard let expiresAt else {
+			return true
+		}
+		return expiresAt < Date().addingTimeInterval(300)
+	}
 }
 
 @MainActor
 class InstanceManager {
-	private static let userDefaults = UserDefaults(suiteName: "group.de.schindlerfelix.GitLab")!
+	private static let userDefaults: UserDefaults =
+		UserDefaults(suiteName: "group.de.schindlerfelix.GitLab") ?? .standard
 	private static let instancesKey = "instances"
 	private static let selectedKey = "selectedInstance"
 	private static let watchSelectedKey = "watchSelectedInstance"
@@ -95,6 +112,19 @@ class InstanceManager {
 		if selectedId == instance.id {
 			selectedId = current.last?.id
 		}
+		if watchSelectedId == instance.id {
+			watchSelectedId = current.last?.id
+		}
+	}
+
+	static func update(_ instance: GitLabInstance) {
+		var current = instances
+		guard let index = current.firstIndex(where: { $0.id == instance.id }) else {
+			add(instance)
+			return
+		}
+		current[index] = instance
+		instances = current
 	}
 
 	static func select(_ instance: GitLabInstance) {
@@ -103,24 +133,184 @@ class InstanceManager {
 	}
 
 	static func overwrite(instances: [GitLabInstance], selectedId: String?) {
-		self.instances = instances
-		let watchSelected = watchSelectedId
-		let watchIsValid = watchSelected != nil && instances.contains { $0.id == watchSelected }
-		if watchIsValid {
-			self.selectedId = watchSelected
-			return
-		}
+		let valid = instances.filter { $0.isValid }
+		self.instances = valid
 
-		let phoneIsValid = selectedId != nil && instances.contains { $0.id == selectedId }
-		if phoneIsValid {
+		if let selectedId, valid.contains(where: { $0.id == selectedId }) {
 			self.selectedId = selectedId
 			watchSelectedId = selectedId
 			return
 		}
 
-		let fallback = instances.last?.id
+		let watchSelected = watchSelectedId
+		if let watchSelected, valid.contains(where: { $0.id == watchSelected }) {
+			self.selectedId = watchSelected
+			return
+		}
+
+		let fallback = valid.last?.id
 		self.selectedId = fallback
 		watchSelectedId = fallback
+	}
+}
+
+enum WatchAuthError: LocalizedError {
+	case noInstance
+	case sessionExpired
+
+	var errorDescription: String? {
+		switch self {
+		case .noInstance:
+			return "No instance selected. Add an instance on iPhone first."
+		case .sessionExpired:
+			return "Session expired. Please open Tanuki on iPhone to log in again."
+		}
+	}
+}
+
+private struct WatchOAuthToken: Decodable {
+	let accessToken: String
+	let refreshToken: String
+	let createdAt: Int
+	let expiresIn: Int
+
+	var expiresAt: Date {
+		Date(timeIntervalSince1970: TimeInterval(createdAt))
+			.addingTimeInterval(TimeInterval(expiresIn))
+	}
+}
+
+@MainActor
+final class WatchAuth {
+	static let clientID = "9ee458e1f3cca37c7d9c6651da1caa5d242ce9988e08471e7cba278cbe2eced2"
+	static let redirectUri = "tanuki://oauth/callback"
+
+	private static var refreshTask: Task<String, Error>?
+
+	nonisolated static func isUnauthorized(_ error: Error) -> Bool {
+		if let responseError = error as? ResponseCodeInterceptor.ResponseCodeError {
+			return responseError.response.statusCode == 401
+		}
+		return false
+	}
+
+	static func ensureValidToken() async {
+		guard let instance = InstanceManager.selected, instance.needsTokenRefresh else {
+			return
+		}
+		do {
+			_ = try await refreshAccessToken()
+		} catch {
+			if isUnrecoverable(error) {
+				removeInstance(id: instance.id)
+			}
+		}
+	}
+
+	static func refreshAccessToken() async throws -> String {
+		if let refreshTask {
+			return try await refreshTask.value
+		}
+
+		guard let instance = InstanceManager.selected,
+			instance.isOAuth,
+			let refreshToken = instance.refreshToken,
+			refreshToken.isNotEmpty
+		else {
+			throw WatchAuthError.sessionExpired
+		}
+
+		let instanceId = instance.id
+		let host = instance.host
+		let task = Task<String, Error> {
+			try await performRefresh(host: host, refreshToken: refreshToken)
+		}
+		refreshTask = task
+
+		do {
+			let accessToken = try await task.value
+			refreshTask = nil
+			return accessToken
+		} catch {
+			refreshTask = nil
+			throw error
+		}
+	}
+
+	static func handleUnauthorized(instanceId: String) async -> String? {
+		guard let current = InstanceManager.selected, current.id == instanceId else {
+			return nil
+		}
+		guard current.isOAuth, current.refreshToken?.isNotEmpty == true else {
+			removeInstance(id: instanceId)
+			return nil
+		}
+		do {
+			let token = try await refreshAccessToken()
+			guard InstanceManager.selected?.id == instanceId else { return nil }
+			return token
+		} catch {
+			if isUnrecoverable(error) {
+				removeInstance(id: instanceId)
+			}
+			return nil
+		}
+	}
+
+	private static func performRefresh(host: String, refreshToken: String) async throws -> String {
+		var components = URLComponents()
+		components.queryItems = [
+			URLQueryItem(name: "client_id", value: clientID),
+			URLQueryItem(name: "refresh_token", value: refreshToken),
+			URLQueryItem(name: "grant_type", value: "refresh_token"),
+			URLQueryItem(name: "redirect_uri", value: redirectUri),
+		]
+		guard let tokenURL = URL(string: "https://\(host)/oauth/token"),
+			let body = components.percentEncodedQuery?.data(using: .utf8)
+		else {
+			throw WatchAuthError.sessionExpired
+		}
+
+		var request = URLRequest(url: tokenURL)
+		request.httpMethod = "POST"
+		request.setValue(
+			"application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+		request.httpBody = body
+
+		let (data, response) = try await URLSession.shared.data(for: request)
+		guard let http = response as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
+			throw WatchAuthError.sessionExpired
+		}
+
+		let decoder = JSONDecoder()
+		decoder.keyDecodingStrategy = .convertFromSnakeCase
+		let token = try decoder.decode(WatchOAuthToken.self, from: data)
+
+		if InstanceManager.selected?.host == host {
+			InstanceManager.update(
+				GitLabInstance(
+					host: host,
+					token: token.accessToken,
+					isOAuth: true,
+					refreshToken: token.refreshToken,
+					expiresAt: token.expiresAt
+				)
+			)
+			Network.shared.resetApolloClient()
+		}
+		return token.accessToken
+	}
+
+	private static func removeInstance(id: String) {
+		guard let instance = InstanceManager.instances.first(where: { $0.id == id }) else {
+			return
+		}
+		InstanceManager.remove(instance)
+		Network.shared.resetApolloClient()
+	}
+
+	nonisolated private static func isUnrecoverable(_ error: Error) -> Bool {
+		return error is WatchAuthError
 	}
 }
 
@@ -191,7 +381,7 @@ final class WatchSync: NSObject, WCSessionDelegate {
 class API {
 	/// GitLab host
 	public static var host: String {
-		InstanceManager.selected?.host ?? "gitlab.com"
+		sanitizedHost(InstanceManager.selected?.host) ?? "gitlab.com"
 	}
 
 	/// GitLab token
@@ -199,12 +389,36 @@ class API {
 		InstanceManager.selected?.token ?? ""
 	}
 
+	public static var currentInstance: GitLabInstance? {
+		InstanceManager.selected
+	}
+
 	public static var url: URL {
-		return URL(string: "https://\(host)")!
+		URL(string: "https://\(host)") ?? URL(string: "https://gitlab.com")!
 	}
 
 	public static var graphUrl: URL {
-		return URL(string: "https://\(host)/api/graphql")!
+		URL(string: "https://\(host)/api/graphql")
+			?? URL(string: "https://gitlab.com/api/graphql")!
+	}
+
+	private static func sanitizedHost(_ raw: String?) -> String? {
+		guard var value = raw?.trimmingCharacters(in: .whitespacesAndNewlines),
+			!value.isEmpty
+		else {
+			return nil
+		}
+		if let schemeRange = value.range(of: "://") {
+			value = String(value[schemeRange.upperBound...])
+		}
+		if let slash = value.firstIndex(of: "/") {
+			value = String(value[..<slash])
+		}
+		value = value.lowercased()
+		guard !value.isEmpty, URL(string: "https://\(value)") != nil else {
+			return nil
+		}
+		return value
 	}
 }
 
@@ -242,15 +456,25 @@ final class AuthorizationInterceptor: GraphQLInterceptor {
 		request: Request,
 		next: NextInterceptorFunction<Request>
 	) async throws -> InterceptorResultStream<Request> {
+		await WatchAuth.ensureValidToken()
+
 		var req = request
 		req.addHeader(name: "Authorization", value: "Bearer \(API.token)")
+		let instanceId = API.currentInstance?.id
 
-		return await next(req)
+		let stream = await next(req)
+		return await stream.mapErrors { error in
+			guard WatchAuth.isUnauthorized(error), let instanceId else {
+				throw error
+			}
+			_ = await WatchAuth.handleUnauthorized(instanceId: instanceId)
+			throw error
+		}
 	}
 }
 
 final class NetworkInterceptorProvider: InterceptorProvider {
-	func graphQLInterceptors<Operation: GraphQLOperation>(for operation: Operation)
+	nonisolated func graphQLInterceptors<Operation: GraphQLOperation>(for operation: Operation)
 		-> [any GraphQLInterceptor]
 	{
 		return [

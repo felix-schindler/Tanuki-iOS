@@ -8,8 +8,17 @@
 import Foundation
 import TanukiEmoji
 
+// MARK: - Cache helpers
+extension URLCache {
+	static let avatar = URLCache(
+		memoryCapacity: 20 * 1024 * 1024,  // 20 MB in RAM
+		diskCapacity: 100 * 1024 * 1024  // 100 MB on disk
+	)
+}
+
 // MARK: - URL helpers
 extension URL {
+	@MainActor
 	public static func fromAvatar(_ avatarUrl: String?) -> URL? {
 		if var urlStr = avatarUrl {
 			if !urlStr.contains("://") {
@@ -43,18 +52,34 @@ extension StringProtocol {
 
 // MARK: - Date helpers
 extension Date {
+	@MainActor
+	private static let isoWithoutFractional: ISO8601DateFormatter = {
+		ISO8601DateFormatter()
+	}()
+
+	@MainActor
+	private static let isoWithFractional: ISO8601DateFormatter = {
+		let formatter = ISO8601DateFormatter()
+		formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+		return formatter
+	}()
+
+	@MainActor
 	static func fromToString(
 		_ date: String, dateStyle: DateFormatter.Style = .medium,
 		timeStyle: DateFormatter.Style = .none
 	) -> String {
-		let inFormat = ISO8601DateFormatter()
-		if let dateObj = inFormat.date(from: date) {
+		let dateObj =
+			isoWithFractional.date(from: date)
+			?? isoWithoutFractional.date(from: date)
+		if let dateObj {
 			return dateObj.toString(dateStyle, timeStyle: timeStyle)
 		} else {
 			return date
 		}
 	}
 
+	@MainActor
 	func toString(
 		_ dateStyle: DateFormatter.Style = .medium,
 		timeStyle: DateFormatter.Style = .none

@@ -19,5 +19,5 @@ struct AppStoreReview: View {
 }
 
 #Preview {
-    AppStoreReview()
+	AppStoreReview()
 }

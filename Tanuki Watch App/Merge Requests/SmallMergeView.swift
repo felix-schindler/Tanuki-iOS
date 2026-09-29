@@ -18,41 +18,35 @@ struct SmallMergeView: View {
 	}
 
 	public var body: some View {
-		VStack(alignment: .leading) {
+		VStack(alignment: .leading, spacing: 4) {
 			HStack(spacing: 5) {
 				MergeStateIcon(mr.state)
 				Text(mr.reference)
 					.foregroundStyle(.secondary)
 			}.font(.footnote)
 			Text(mr.title.emojized())
+			if let author = mr._author {
+				AuthorView(author)
+			}
 			HStack {
-				ScrollView(.horizontal) {
-					HStack {
-						if let author = mr._author {
-							AuthorView(author)
-						}
-						HStack(spacing: 2) {
-							Image(systemName: "clock")
-							Text(
-								Date.fromToString(mr.createdAt)
-							)
-						}
-					}
+				HStack(spacing: 2) {
+					Image(systemName: "clock")
+					Text(
+						Date.fromToString(mr.createdAt)
+					)
 				}
 				Spacer()
-				HStack {
-					HStack(spacing: 2) {
-						Image(systemName: "hand.thumbsup")
-						Text(String(mr.upvotes))
-					}
-					HStack(spacing: 2) {
-						Image(systemName: "hand.thumbsdown")
-						Text(String(mr.downvotes))
-					}
-					HStack(spacing: 2) {
-						Image(systemName: "note.text")
-						Text(String(mr.userNotesCount ?? 0))
-					}
+				HStack(spacing: 2) {
+					Image(systemName: "hand.thumbsup")
+					Text(String(mr.upvotes))
+				}
+				HStack(spacing: 2) {
+					Image(systemName: "hand.thumbsdown")
+					Text(String(mr.downvotes))
+				}
+				HStack(spacing: 2) {
+					Image(systemName: "note.text")
+					Text(String(mr.userNotesCount ?? 0))
 				}
 			}.font(.footnote)
 		}

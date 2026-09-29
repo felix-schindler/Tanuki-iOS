@@ -15,15 +15,20 @@ enum UserMergeRequestType {
 	case reviewRequested
 }
 
+private struct DisplayMergeRequest: Identifiable {
+	let id: String
+	let fullPath: String
+	let mr: any SmallMergeRequest
+}
+
 struct UserMergeLoader: View {
 	private var userRequestType: UserMergeRequestType
 	private var navTitle: String
 
-	@State
-	private var mergeRequests: Result<[any SmallMergeRequest], Error>? = nil
+	private static let maxMergeRequests = 100
 
 	@State
-	private var loadTask: Task<Void, Never>?
+	private var mergeRequests: Result<[DisplayMergeRequest], Error>? = nil
 
 	init(_ userRequestType: UserMergeRequestType) {
 		self.userRequestType = userRequestType
@@ -39,47 +44,69 @@ struct UserMergeLoader: View {
 			}
 	}
 
-	private func loadFromCache() async -> Result<[any SmallMergeRequest], Error> {
+	private func display(_ mr: any SmallMergeRequest) -> DisplayMergeRequest {
+		DisplayMergeRequest(
+			id: "\(mr._project.fullPath)#\(mr.iid)",
+			fullPath: mr._project.fullPath,
+			mr: mr
+		)
+	}
+
+	private func capped(_ mrs: [any SmallMergeRequest]) -> [DisplayMergeRequest] {
+		Array(mrs.map(display).prefix(Self.maxMergeRequests))
+	}
+
+	private func load() async {
 		do {
 			switch self.userRequestType {
 			case .assigned:
-				let query = UserAssignedMergeRequestsQuery(
-					state: .none, search: .none, draft: .none, subscribed: .none)
-				let responses = try Network.shared.apollo.fetch(query: query, cachePolicy: .cacheAndNetwork)
+				let responses = try Network.shared.apollo.fetch(
+					query: UserAssignedMergeRequestsQuery(
+						state: .none, search: .none, draft: .none, subscribed: .none),
+					cachePolicy: .cacheAndNetwork
+				)
 				for try await response in responses {
-					if Task.isCancelled { return .success([]) }
-					if let mrs = response.data?.currentUser?.assignedMergeRequests?.nodes {
-						return .success(mrs.compactMap { $0 })
+					try Task.checkCancellation()
+					if let nodes = response.data?.currentUser?.assignedMergeRequests?.nodes {
+						self.mergeRequests = .success(capped(nodes.compactMap { $0 }))
 					}
 				}
 			case .authored:
-				let query = UserAuthoredMergeRequestsQuery(
-					state: .none, search: .none, draft: .none, subscribed: .none)
-				let responses = try Network.shared.apollo.fetch(query: query, cachePolicy: .cacheAndNetwork)
+				let responses = try Network.shared.apollo.fetch(
+					query: UserAuthoredMergeRequestsQuery(
+						state: .none, search: .none, draft: .none, subscribed: .none),
+					cachePolicy: .cacheAndNetwork
+				)
 				for try await response in responses {
-					if Task.isCancelled { return .success([]) }
-					if let mrs = response.data?.currentUser?.authoredMergeRequests?.nodes {
-						return .success(mrs.compactMap { $0 })
+					try Task.checkCancellation()
+					if let nodes = response.data?.currentUser?.authoredMergeRequests?.nodes {
+						self.mergeRequests = .success(capped(nodes.compactMap { $0 }))
 					}
 				}
 			case .reviewRequested:
-				let query = UserReviewRequestedMergeRequestsQuery(
-					state: .none, search: .none, draft: .none, subscribed: .none)
-				let responses = try Network.shared.apollo.fetch(query: query, cachePolicy: .cacheAndNetwork)
+				let responses = try Network.shared.apollo.fetch(
+					query: UserReviewRequestedMergeRequestsQuery(
+						state: .none, search: .none, draft: .none, subscribed: .none),
+					cachePolicy: .cacheAndNetwork
+				)
 				for try await response in responses {
-					if Task.isCancelled { return .success([]) }
-					if let mrs = response.data?.currentUser?.reviewRequestedMergeRequests?.nodes {
-						return .success(mrs.compactMap { $0 })
+					try Task.checkCancellation()
+					if let nodes = response.data?.currentUser?.reviewRequestedMergeRequests?.nodes {
+						self.mergeRequests = .success(capped(nodes.compactMap { $0 }))
 					}
 				}
 			}
-			return .success([])
-		} catch let error {
-			return .failure(error)
+		} catch {
+			// SwiftUI cancels `.task` on disappear; a cancelled load must not
+			// overwrite good data with a failure.
+			if error is CancellationError {
+				return
+			}
+			self.mergeRequests = .failure(error)
 		}
 	}
 
-	private func loadFromNetwork() async -> Result<[any SmallMergeRequest], Error> {
+	private func reload() async {
 		do {
 			switch self.userRequestType {
 			case .assigned:
@@ -87,53 +114,47 @@ struct UserMergeLoader: View {
 					query: UserAssignedMergeRequestsQuery(
 						state: .none, search: .none, draft: .none, subscribed: .none),
 					cachePolicy: .networkOnly)
-				let mrs = response.data?.currentUser?.assignedMergeRequests?.nodes ?? []
-				return .success(mrs.compactMap { $0 })
+				let nodes = response.data?.currentUser?.assignedMergeRequests?.nodes ?? []
+				self.mergeRequests = .success(capped(nodes.compactMap { $0 }))
 			case .authored:
 				let response = try await Network.shared.apollo.fetch(
 					query: UserAuthoredMergeRequestsQuery(
 						state: .none, search: .none, draft: .none, subscribed: .none),
 					cachePolicy: .networkOnly)
-				let mrs = response.data?.currentUser?.authoredMergeRequests?.nodes ?? []
-				return .success(mrs.compactMap { $0 })
+				let nodes = response.data?.currentUser?.authoredMergeRequests?.nodes ?? []
+				self.mergeRequests = .success(capped(nodes.compactMap { $0 }))
 			case .reviewRequested:
 				let response = try await Network.shared.apollo.fetch(
 					query: UserReviewRequestedMergeRequestsQuery(
 						state: .none, search: .none, draft: .none, subscribed: .none),
 					cachePolicy: .networkOnly)
-				let mrs = response.data?.currentUser?.reviewRequestedMergeRequests?.nodes ?? []
-				return .success(mrs.compactMap { $0 })
+				let nodes = response.data?.currentUser?.reviewRequestedMergeRequests?.nodes ?? []
+				self.mergeRequests = .success(capped(nodes.compactMap { $0 }))
 			}
-		} catch let error {
-			return .failure(error)
-		}
-	}
-
-	private func loadMergeRequests() {
-		loadTask?.cancel()
-		loadTask = Task {
-			let result = await loadFromCache()
-			if !Task.isCancelled {
-				self.mergeRequests = result
+		} catch {
+			if error is CancellationError {
+				return
 			}
+			self.mergeRequests = .failure(error)
 		}
-	}
-
-	private func reloadMergeRequests() async {
-		self.mergeRequests = await loadFromNetwork()
 	}
 
 	public var body: some View {
 		List {
-			if let mergeRequests {
+			if InstanceManager.selected == nil {
+				NoContentView(
+					"No instance selected. Add an instance on iPhone first.",
+					systemImage: "server.rack"
+				)
+			} else if let mergeRequests {
 				switch mergeRequests {
 				case .success(let mergeRequests):
 					if mergeRequests.isEmpty {
-						NoContentView("There are no merge requests", systemImage: "arrow.triangle.branch")
+						NoContentView(
+							"There are no merge requests", systemImage: "arrow.triangle.branch")
 					} else {
-						ForEach(0..<mergeRequests.count, id: \.self) { index in
-							let mr = mergeRequests[index]
-							SmallMergeView(mr._project.fullPath, mr)
+						ForEach(mergeRequests) { display in
+							SmallMergeView(display.fullPath, display.mr)
 						}
 					}
 				case .failure(let error):
@@ -143,18 +164,20 @@ struct UserMergeLoader: View {
 				ProgressView("Loading merge requests")
 			}
 		}
-		.task {
-			loadMergeRequests()
+		.task(id: InstanceManager.selected?.id) {
+			mergeRequests = nil
+			WatchSync.shared.requestContextRefresh()
+			await load()
 		}
 		.refreshable {
-			await reloadMergeRequests()
+			await reload()
 		}
 		.navigationTitle(self.navTitle)
 	}
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		UserMergeLoader(.authored)
 	}
 }

@@ -10,21 +10,19 @@ import SwiftUI
 struct ContentView: View {
 	var body: some View {
 		TabView {
-			NavigationView {
+			NavigationStack {
 				InstancesListView()
-					.navigationTitle("Instances")
 			}
 			.tag(0)
 
-			NavigationView {
+			NavigationStack {
 				UserIssuesLoader()
 					.navigationTitle("Issues")
 			}
 			.tag(1)
 
-			NavigationView {
+			NavigationStack {
 				MergeRequestsHomeView()
-					.navigationTitle("Merge Requests")
 			}
 			.tag(2)
 		}

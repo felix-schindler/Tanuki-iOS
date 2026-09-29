@@ -88,6 +88,6 @@ struct ContributionsLoader: View {
 
 #Preview {
 	List {
-        ContributionsLoader(username: "felix-schindler")
+		ContributionsLoader(username: "felix-schindler")
 	}
 }

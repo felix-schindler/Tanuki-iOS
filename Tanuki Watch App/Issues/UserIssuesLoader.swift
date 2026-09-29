@@ -10,86 +10,111 @@ import Apollo
 import GitLabAPI
 import SwiftUI
 
-struct UserIssuesLoader: View {
-	@State
-	private var projectMemberships: Result<[IssueProjectMembership?], Error>? = nil
+private struct DisplayIssue: Identifiable {
+	let id: String
+	let fullPath: String
+	let issue: any SmallIssue
+}
 
-	private func loadIssues() {
+struct UserIssuesLoader: View {
+	private static let maxIssues = 100
+
+	@State
+	private var issues: Result<[DisplayIssue], Error>? = nil
+
+	private func query() -> CurrentUserIssuesQuery {
+		CurrentUserIssuesQuery(
+			state: .some(.case(.opened)),
+			search: .none,
+			confidential: .none,
+			subscribed: .none,
+			types: .none
+		)
+	}
+
+	private func flatten(
+		_ memberships: [IssueProjectMembership?]
+	) -> [DisplayIssue] {
+		var result: [DisplayIssue] = []
+		for membership in memberships.compactMap({ $0 }) {
+			guard let fullPath = membership.fullPath,
+				let nodes = membership._issues
+			else {
+				continue
+			}
+			for issue in nodes.compactMap({ $0 }) {
+				result.append(
+					DisplayIssue(
+						id: "\(fullPath)#\(issue.iid)",
+						fullPath: fullPath,
+						issue: issue
+					)
+				)
+				if result.count >= Self.maxIssues {
+					return result
+				}
+			}
+		}
+		return result
+	}
+
+	private func load() async {
 		do {
+			// NOTE: the literal `.cacheAndNetwork` must stay inline — Apollo
+			// overloads `fetch` on the concrete `CachePolicy.Query.*` types,
+			// so a generic `CachePolicy` parameter does not compile.
 			let responses = try Network.shared.apollo.fetch(
-				query: CurrentUserIssuesQuery(
-					state: .some(.case(.opened)),
-					search: .none,
-					confidential: .none,
-					subscribed: .none,
-					types: .none
-				),
+				query: query(),
 				cachePolicy: .cacheAndNetwork
 			)
 
-			Task {
-				do {
-					for try await response in responses {
-						if let projectMemberships = response.data?.currentUser?.projectMemberships?
-							.nodes
-						{
-							self.projectMemberships = .success(projectMemberships)
-						}
-					}
-				} catch let error {
-					self.projectMemberships = .failure(error)
+			for try await response in responses {
+				try Task.checkCancellation()
+				if let nodes = response.data?.currentUser?.projectMemberships?.nodes {
+					self.issues = .success(flatten(nodes))
 				}
 			}
-		} catch let error {
-			self.projectMemberships = .failure(error)
+		} catch {
+			if error is CancellationError {
+				return
+			}
+			self.issues = .failure(error)
 		}
 	}
 
-	func reloadIssues() async {
+	private func reload() async {
 		do {
 			let response = try await Network.shared.apollo.fetch(
-				query: CurrentUserIssuesQuery(
-					state: .some(.case(.opened)),
-					search: .none,
-					confidential: .none,
-					subscribed: .none,
-					types: .none
-				),
+				query: query(),
 				cachePolicy: .networkOnly
 			)
 
-			if let projectMemberships = response.data?.currentUser?.projectMemberships?.nodes {
-				self.projectMemberships = .success(projectMemberships)
+			if let nodes = response.data?.currentUser?.projectMemberships?.nodes {
+				self.issues = .success(flatten(nodes))
 			}
-		} catch let error {
-			self.projectMemberships = .failure(error)
+		} catch {
+			if error is CancellationError {
+				return
+			}
+			self.issues = .failure(error)
 		}
 	}
 
 	public var body: some View {
 		List {
-			if let projectMemberships {
-				switch projectMemberships {
-				case .success(let projectMemberships):
-					let validMemberships = projectMemberships.compactMap { $0 }
-						.filter {
-							$0.fullPath != nil && ($0._issues?.contains { $0 != nil } ?? false)
-						}
-
-					let issues: [(String, any SmallIssue)] = validMemberships.flatMap {
-						membership in
-						let fullPath = membership.fullPath!
-						return membership._issues!.compactMap { $0 }.map { issue in
-							(fullPath, issue)
-						}
-					}
-
+			if InstanceManager.selected == nil {
+				NoContentView(
+					"No instance selected. Add an instance on iPhone first.",
+					systemImage: "server.rack"
+				)
+			} else if let issues {
+				switch issues {
+				case .success(let issues):
 					if issues.isEmpty {
 						NoContentView("All caught up!", systemImage: "smallcircle.circle")
 					} else {
-						ForEach(0..<issues.count, id: \.self) { index in
-							let (fullPath, issue) = issues[index]
-							SmallIssueView(fullPath, issue)
+						ForEach(issues) { display in
+							SmallIssueView(display.fullPath, display.issue)
 						}
 					}
 				case .failure(let error):
@@ -98,10 +123,14 @@ struct UserIssuesLoader: View {
 			} else {
 				ProgressView("Loading issues")
 			}
-		}.task {
-			loadIssues()
-		}.refreshable {
-			await reloadIssues()
+		}
+		.task(id: InstanceManager.selected?.id) {
+			issues = nil
+			WatchSync.shared.requestContextRefresh()
+			await load()
+		}
+		.refreshable {
+			await reload()
 		}
 	}
 }

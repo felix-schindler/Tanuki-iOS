@@ -13,6 +13,12 @@ struct InstancesListView: View {
 	@State
 	private var selectedId: String? = InstanceManager.selectedId
 
+	private func refresh() {
+		WatchSync.shared.requestContextRefresh()
+		instances = InstanceManager.instances
+		selectedId = InstanceManager.selectedId
+	}
+
 	private func select(_ instance: GitLabInstance) {
 		InstanceManager.select(instance)
 		Network.shared.resetApolloClient()
@@ -29,40 +35,42 @@ struct InstancesListView: View {
 				)
 			} else {
 				ForEach(instances) { instance in
-					HStack {
-						VStack(alignment: .leading) {
-							Text(instance.host)
-								.font(.headline)
-							Text(instance.isOAuth ? "GitLab.com (OAuth)" : "Self-Hosted")
-								.font(.caption)
-								.foregroundStyle(.secondary)
-						}
-
-						Spacer()
-
-						if instance.id == selectedId {
-							Image(systemName: "checkmark.circle.fill")
-								.foregroundStyle(.accent)
-						}
-					}
-					.contentShape(.rect)
-					.onTapGesture {
+					Button {
 						select(instance)
+					} label: {
+						HStack {
+							VStack(alignment: .leading) {
+								Text(instance.host)
+									.font(.headline)
+								Text(instance.isOAuth ? "GitLab.com (OAuth)" : "Self-Hosted")
+									.font(.caption)
+									.foregroundStyle(.secondary)
+							}
+
+							Spacer()
+
+							if instance.id == selectedId {
+								Image(systemName: "checkmark.circle.fill")
+									.foregroundStyle(.accent)
+							}
+						}
 					}
+					.buttonStyle(.plain)
 				}
 			}
 		}
 		.navigationTitle("Instances")
 		.onAppear {
-			WatchSync.shared.requestContextRefresh()
-			instances = InstanceManager.instances
-			selectedId = InstanceManager.selectedId
+			refresh()
+		}
+		.refreshable {
+			refresh()
 		}
 	}
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		InstancesListView()
 	}
 }

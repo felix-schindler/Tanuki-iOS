@@ -41,35 +41,18 @@ struct IssueStateHelper {
 }
 
 struct IssueStateIcon: View {
-	private let state: String
+	private let state: GraphQLEnum<GitLabAPI.IssueState>
 	private let icon: String
 	private let color: SwiftUI.Color
 
 	init(_ state: GraphQLEnum<GitLabAPI.IssueState>) {
-		self.state = state.rawValue
-
-		switch state {
-		case .opened:
-			icon = "smallcircle.circle"
-			color = Color.green
-			break
-		case .closed:
-			icon = "minus.circle"
-			color = Color.blue
-			break
-		case .locked:
-			icon = "lock.circle"
-			color = Color.secondary
-			break
-		default:
-			icon = "smallcircle.circle"
-			color = Color.primary
-			break
-		}
+		self.state = state
+		self.icon = IssueStateHelper.getIconByState(state)
+		self.color = IssueStateHelper.getColorByState(state)
 	}
 
 	public var body: some View {
-		Label(self.state, systemImage: self.icon)
+		Label(self.state.rawValue.firstCapitalized, systemImage: self.icon)
 			.foregroundStyle(self.color)
 			.labelStyle(.iconOnly)
 	}
@@ -95,18 +78,18 @@ struct MergeStateHelper {
 
 	public static func getIconByState(
 		_ state: GraphQLEnum<GitLabAPI.MergeRequestState>
-	) -> Image {
+	) -> String {
 		switch state {
 		case .opened:
-			return Image(systemName: "arrow.triangle.branch")
+			return "arrow.triangle.branch"
 		case .merged:
-			return Image(systemName: "arrow.triangle.merge")
+			return "arrow.triangle.merge"
 		case .closed:
-			return Image(systemName: "xmark.circle")
+			return "xmark.circle"
 		case .locked:
-			return Image(systemName: "lock")
+			return "lock"
 		default:
-			return Image(systemName: "arrow.triangle.branch")
+			return "arrow.triangle.branch"
 		}
 	}
 }
@@ -118,14 +101,14 @@ struct MergeStateIcon: View {
 
 	init(_ state: GraphQLEnum<GitLabAPI.MergeRequestState>) {
 		self.state = state
-		self.icon = MergeStateHelper.getIconByState(state)
+		self.icon = Image(systemName: MergeStateHelper.getIconByState(state))
 		self.color = MergeStateHelper.getColorByState(state)
 	}
 
 	public var body: some View {
 		Label(
 			title: {
-				Text(self.state.rawValue)
+				Text(self.state.rawValue.firstCapitalized)
 			},
 			icon: {
 				self.icon
