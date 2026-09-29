@@ -105,4 +105,6 @@ extension UserAssignedMergeRequestsQuery.Data.CurrentUser.AssignedMergeRequests.
 
 extension UserAuthoredMergeRequestsQuery.Data.CurrentUser.AuthoredMergeRequests.Node.Project: MergeRequestProject {}
 
-extension UserReviewRequestedMergeRequestsQuery.Data.CurrentUser.ReviewRequestedMergeRequests.Node.Project: MergeRequestProject {}
+extension UserReviewRequestedMergeRequestsQuery.Data.CurrentUser.ReviewRequestedMergeRequests.Node.Project:
+	MergeRequestProject
+{}
