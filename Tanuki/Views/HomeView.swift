@@ -93,8 +93,12 @@ struct HomeView: View {
 					switch route {
 					case .issues(let fullPath):
 						ProjectIssuesLoader(fullPath: fullPath)
+					case .issue(let fullPath, let iid):
+						IssueLoader(fullPath: fullPath, iid: iid)
 					case .mergeRequests(let fullPath):
 						ProjectMergeLoader(fullPath: fullPath)
+					case .mergeRequest(let fullPath, let iid):
+						MergeRequestLoader(fullPath: fullPath, iid: iid)
 					case .tree(let projectId, let fullPath, let ref):
 						TreeLoader(projectId: projectId, fullPath: fullPath, refName: ref)
 					case .releases(let fullPath, let projectId):

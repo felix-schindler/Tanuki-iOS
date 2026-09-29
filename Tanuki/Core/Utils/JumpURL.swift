@@ -22,7 +22,9 @@ enum ProjectRoute: Hashable {
 
 enum ResolvedProjectRoute: Hashable {
 	case issues(fullPath: String)
+	case issue(fullPath: String, iid: String)
 	case mergeRequests(fullPath: String)
+	case mergeRequest(fullPath: String, iid: String)
 	case tree(projectId: Int, fullPath: String, ref: String)
 	case releases(fullPath: String, projectId: Int)
 }
@@ -77,7 +79,7 @@ enum JumpURL {
 		let value = rest[1]
 
 		switch kind {
-		case "issues":
+		case "issues", "work_items":
 			return .projectRoute(fullPath: fullPath, route: .issues(iid: value))
 		case "merge_requests":
 			return .projectRoute(fullPath: fullPath, route: .mergeRequests(iid: value))

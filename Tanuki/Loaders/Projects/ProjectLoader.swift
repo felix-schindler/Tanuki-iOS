@@ -53,10 +53,10 @@ struct ProjectLoader: View {
 		guard hasPath, let jumpTo, let projectId else { return }
 		hasPath = false
 		switch jumpTo {
-		case .issues:
-			path.append(ResolvedProjectRoute.issues(fullPath: fullPath))
-		case .mergeRequests:
-			path.append(ResolvedProjectRoute.mergeRequests(fullPath: fullPath))
+		case .issues(let iid):
+			path.append(ResolvedProjectRoute.issue(fullPath: fullPath, iid: iid))
+		case .mergeRequests(let iid):
+			path.append(ResolvedProjectRoute.mergeRequest(fullPath: fullPath, iid: iid))
 		case .tree(let ref):
 			path.append(ResolvedProjectRoute.tree(projectId: projectId, fullPath: fullPath, ref: ref))
 		case .releases:
