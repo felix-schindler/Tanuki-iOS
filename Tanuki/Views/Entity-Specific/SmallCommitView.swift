@@ -5,7 +5,6 @@
 //  Created by Felix Schindler on 29.03.24.
 //
 
-import MarkdownUI
 import SwiftUI
 
 struct SmallCommitView: View {
@@ -40,7 +39,6 @@ struct SmallCommitView: View {
 			VStack(alignment: .leading) {
 				if let title = commit.title?.emojized(), title.isNotEmpty {
 					Markdown(title)
-						.markdownTheme(.gitLab)
 				}
 
 				if commit.authorName != nil
@@ -89,7 +87,7 @@ struct SmallCommitView: View {
 				Spacer()
 			}
 			.padding()
-			.modifier(PresentationDetendsIfAvailable())
+			.presentationDetents([.fraction(0.2), .medium])
 		}.swipeActions {
 			if let url = URL(string: commit.webUrl) {
 				ShareButton(url)

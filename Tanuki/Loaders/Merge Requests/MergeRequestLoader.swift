@@ -6,7 +6,6 @@
 //
 
 import GitLabAPI
-import MarkdownUI
 import SwiftUI
 
 struct MergeRequestLoader: View {
@@ -193,7 +192,6 @@ struct MergeRequestLoader: View {
 								description.isNotEmpty
 							{
 								Markdown(description)
-									.markdownTheme(.gitLab)
 							}
 
 							HStack {
@@ -542,12 +540,12 @@ struct MergeRequestLoader: View {
 			}
 		}
 		.navigationBarTitleDisplayMode(.inline)
-		.modifier(ScrollDismissIfAvailable())
+		.scrollDismissesKeyboard(.interactively)
 	}
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		MergeRequestLoader(fullPath: "felix-schindler/gitlab-ios", iid: "1")
 	}
 }

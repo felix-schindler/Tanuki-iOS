@@ -6,7 +6,6 @@
 //
 
 import GitLabAPI
-import MarkdownUI
 import SwiftUI
 
 struct UserView: View {
@@ -52,7 +51,7 @@ struct UserView: View {
 			let hasJob = user.jobTitle?.isNotEmpty ?? false
 			let hasOrg = user.organization?.isNotEmpty ?? false
 
-			if hasJob || hasOrg || location != nil, location!.isNotEmpty {
+			if hasJob || hasOrg || (location?.isNotEmpty ?? false) {
 				ScrollView(.horizontal) {
 					HStack {
 						if let location, location.isNotEmpty {
@@ -97,7 +96,6 @@ struct UserView: View {
 
 			if let bio = user.bio?.emojized(), bio.isNotEmpty {
 				Markdown(bio)
-					.markdownTheme(.gitLab)
 			}
 		}
 

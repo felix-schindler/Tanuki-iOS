@@ -79,10 +79,8 @@ struct ContributionsLoader: View {
 			} else {
 				LoadingView("Loading Contributions", systemImage: "calendar")
 			}
-		}.onAppear {
-			Task {
-				await loadContributions()
-			}
+		}.task {
+			await loadContributions()
 		}.refreshable {
 			await loadContributions()
 		}.frame(maxWidth: .infinity, minHeight: self.height)

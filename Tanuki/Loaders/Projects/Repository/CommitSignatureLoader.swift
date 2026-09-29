@@ -24,6 +24,17 @@ struct SignatureLoader: View {
 	@State private var signature: CommitSignature? = nil
 	@State private var showDetails = false
 
+	private func loadSignature() async {
+		do {
+			self.signature = try await API.get(
+				type: CommitSignature.self,
+				endpoint: "projects/\(projectId)/repository/commits/\(commitId)/signature"
+			)
+		} catch let error {
+			logger.error("Ignored error: \(error.localizedDescription)")
+		}
+	}
+
 	public var body: some View {
 		VStack {
 			if let signature {
@@ -37,17 +48,8 @@ struct SignatureLoader: View {
 					EmptyView()
 				}
 			}
-		}.onAppear {
-			Task {
-				do {
-					self.signature = try await API.get(
-						type: CommitSignature.self,
-						endpoint: "projects/\(projectId)/repository/commits/\(commitId)/signature"
-					)
-				} catch let error {
-					logger.error("Ignored error: \(error.localizedDescription)")
-				}
-			}
+		}.task {
+			await loadSignature()
 		}.sheet(isPresented: $showDetails) {
 			VStack(alignment: .leading) {
 				if let signature {
@@ -65,7 +67,7 @@ struct SignatureLoader: View {
 				}
 			}
 			.padding()
-			.modifier(PresentationDetendsIfAvailable())
+			.presentationDetents([.fraction(0.2), .medium])
 		}
 	}
 }

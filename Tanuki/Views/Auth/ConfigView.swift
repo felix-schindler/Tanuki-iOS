@@ -99,12 +99,12 @@ struct ConfigView: View {
 		.padding()
 		.textFieldStyle(.roundedBorder)
 		.navigationTitle("Self-Hosted")
-		.modifier(ScrollDismissIfAvailable())
+		.scrollDismissesKeyboard(.interactively)
 	}
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		ConfigView(showSetup: .constant(true))
 	}
 }

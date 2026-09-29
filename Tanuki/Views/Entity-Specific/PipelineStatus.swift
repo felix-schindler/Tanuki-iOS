@@ -69,7 +69,7 @@ struct PipelineStatus: View {
 				Spacer()
 			}
 			.padding()
-			.modifier(PresentationDetendsIfAvailable())
+			.presentationDetents([.fraction(0.2), .medium])
 		}
 	}
 }

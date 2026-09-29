@@ -100,12 +100,12 @@ struct NewProjectView: View {
 			}.tint(.accentColor)
 		}
 		.navigationTitle("New Project")
-		.modifier(ScrollDismissIfAvailable())
+		.scrollDismissesKeyboard(.interactively)
 	}
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		NewProjectView()
 	}
 }

@@ -125,9 +125,9 @@ struct MergeButton: View {
 				Spacer()
 			}
 			.padding()
-			.modifier(PresentationDetendsIfAvailable())
+			.presentationDetents([.fraction(0.2), .medium])
 		}.sheet(isPresented: $showMergeOptions) {
-			NavigationView {
+			NavigationStack {
 				Form {
 					Toggle("Merge when the pipeline succeeds", isOn: $autoMerge)
 					TextField("Custom merge commit message", text: $commitMessage)
