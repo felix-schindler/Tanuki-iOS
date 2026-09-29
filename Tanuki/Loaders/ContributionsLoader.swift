@@ -8,7 +8,6 @@
 import Charts
 import SwiftUI
 
-@available(iOS 16.0, *)
 struct ContributionsLoader: View {
 	private let username: String
 	private let height: CGFloat = 50
@@ -89,10 +88,6 @@ struct ContributionsLoader: View {
 
 #Preview {
 	List {
-		if #available(iOS 16.0, *) {
-			ContributionsLoader(username: "felix-schindler")
-		} else {
-			Text("Contributions available in iOS 16.0+")
-		}
+        ContributionsLoader(username: "felix-schindler")
 	}
 }

@@ -8,7 +8,6 @@
 import StoreKit
 import SwiftUI
 
-@available(iOS 16.0, *)
 struct AppStoreReview: View {
 	@Environment(\.requestReview) var requestReview
 
@@ -20,9 +19,5 @@ struct AppStoreReview: View {
 }
 
 #Preview {
-	if #available(iOS 16.0, *) {
-		AppStoreReview()
-	} else {
-		Text("Not available on this platform. Update to iOS 16 or later.")
-	}
+    AppStoreReview()
 }

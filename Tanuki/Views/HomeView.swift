@@ -55,14 +55,6 @@ struct HomeView: View {
 		}
 	}
 
-	private func getIconName() -> String {
-		if #available(iOS 18.0, *) {
-			"arrow.right.page.on.clipboard"
-		} else {
-			"arrow.right"
-		}
-	}
-
 	private func jumpToClipboard() {
 		let pasted =
 			UIPasteboard.general.string
@@ -223,7 +215,7 @@ struct HomeView: View {
 			await reloadStarredProjects()
 		}.toolbar {
 			ToolbarItem(placement: .topBarLeading) {
-				Button("Jump", systemImage: getIconName()) {
+				Button("Jump", systemImage: "arrow.right.page.on.clipboard") {
 					jumpToClipboard()
 				}.tint(.accentColor)
 			}
