@@ -6,7 +6,6 @@
 //
 
 import GitLabAPI
-import MarkdownUI
 import SwiftUI
 
 enum TimelogsQueryType {
@@ -173,7 +172,6 @@ struct TimelogsLoader: View {
 
 									if let summary = log.summary?.emojized(), summary.isNotEmpty {
 										Markdown(summary)
-											.markdownTheme(.gitLab)
 									}
 								}
 							}
@@ -194,7 +192,7 @@ struct TimelogsLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		TimelogsLoader(fullPath: "felix-schindler", queryType: .user)
 	}
 }

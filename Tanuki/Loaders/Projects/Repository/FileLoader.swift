@@ -6,7 +6,6 @@
 //
 
 import AVKit
-import MarkdownUI
 import SwiftUI
 
 struct FileLoader: View {
@@ -93,10 +92,8 @@ struct FileLoader: View {
 			}
 			.padding(.horizontal)
 			.frame(maxWidth: .infinity)
-		}.onAppear {
-			Task {
-				await loadFile()
-			}
+		}.task {
+			await loadFile()
 		}.refreshable {
 			await loadFile()
 		}.navigationTitle(filePath)
@@ -151,7 +148,6 @@ struct FileLoader: View {
 				if let content = String(data: data, encoding: .utf8) {
 					if fileExtension == "md" {
 						Markdown(content.emojized())
-							.markdownTheme(.gitLab)
 					} else {
 						CodeTextView(
 							content,

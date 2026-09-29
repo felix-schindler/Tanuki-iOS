@@ -5,7 +5,6 @@
 //  Created by Felix Schindler on 05.05.23.
 //
 
-import MarkdownUI
 import SwiftUI
 
 struct Tag: Codable {
@@ -85,7 +84,7 @@ struct TagsLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		TagsLoader(33_025_310)
 	}
 }

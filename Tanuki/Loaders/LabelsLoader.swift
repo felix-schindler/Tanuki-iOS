@@ -6,7 +6,6 @@
 //
 
 import GitLabAPI
-import MarkdownUI
 import SwiftUI
 
 enum LabelQueryType {
@@ -120,7 +119,6 @@ struct LabelsLoader: View {
 										description.isNotEmpty
 									{
 										Markdown(description)
-											.markdownTheme(.gitLab)
 									}
 								}
 							}
@@ -156,7 +154,7 @@ struct LabelsLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		LabelsLoader(fullPath: "gitlab-org", id: 278_964, queryType: .group)
 	}
 }

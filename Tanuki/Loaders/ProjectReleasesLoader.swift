@@ -6,7 +6,6 @@
 //
 
 import GitLabAPI
-import MarkdownUI
 import SwiftUI
 
 struct ProjectReleasesLoader: View {
@@ -111,7 +110,6 @@ struct ProjectReleasesLoader: View {
 												description.isNotEmpty
 											{
 												Markdown(description, baseURL: API.url)
-													.markdownTheme(.gitLab)
 											}
 										}
 										if let assets = release.assets {
@@ -191,7 +189,7 @@ struct ProjectReleasesLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		ProjectReleasesLoader(fullPath: "felix-schindler/gitlab-ios")
 	}
 }

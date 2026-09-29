@@ -16,7 +16,6 @@ enum NoteType: String {
 	case issue = "issues"
 	case snippet = "snippets"
 	case mergeRequest = "merge_requests"
-	case epic = "epics"
 }
 
 struct NewNoteView: View {
@@ -36,11 +35,7 @@ struct NewNoteView: View {
 
 	private func createNote() async {
 		do {
-			var endpoint = "projects/\(id)/\(type.rawValue)/\(iid)/notes"
-
-			if type == .epic {
-				endpoint = "groups/\(id)/\(type.rawValue)/\(iid)/notes"
-			}
+			let endpoint = "projects/\(id)/\(type.rawValue)/\(iid)/notes"
 
 			_ = try await API.req(
 				type: _Note.self,
@@ -49,7 +44,7 @@ struct NewNoteView: View {
 				query: ["body": content, "internal": self.type != .snippet && self.internal ? "true" : "false"]
 			)
 
-			Notify.status(.success)
+			Notify.status(.success, "Note created", systemImage: "checkmark")
 			content = ""
 			show = false
 		} catch {
@@ -61,7 +56,7 @@ struct NewNoteView: View {
 		Button("New note", systemImage: "arrow.up") {
 			show = true
 		}.sheet(isPresented: $show) {
-			NavigationView {
+			NavigationStack {
 				Form {
 					Section("Description (Markdown supported)") {
 						HighlightedTextEditor(text: $content, highlightRules: .markdown)
@@ -72,13 +67,13 @@ struct NewNoteView: View {
 						Toggle("Internal", isOn: self.$internal)
 					}
 				}.toolbar {
-					AsyncButton("Apply filter", systemImage: "checkmark") {
+					AsyncButton("Create note", systemImage: "checkmark") {
 						await createNote()
 					}.tint(.accentColor)
 				}
 				.navigationTitle("New note")
 				.navigationBarTitleDisplayMode(.inline)
-				.modifier(ScrollDismissIfAvailable())
+				.scrollDismissesKeyboard(.interactively)
 			}
 		}
 	}

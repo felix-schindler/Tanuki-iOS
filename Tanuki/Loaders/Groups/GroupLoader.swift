@@ -6,7 +6,6 @@
 //
 
 import GitLabAPI
-import MarkdownUI
 import SwiftUI
 
 struct GroupLoader: View {
@@ -124,7 +123,6 @@ struct GroupLoader: View {
 							description.isNotEmpty
 						{
 							Markdown(description)
-								.markdownTheme(.gitLab)
 						}
 					}
 
@@ -227,11 +225,7 @@ struct GroupLoader: View {
 								}
 							},
 							label: {
-								if #available(iOS 17.0, *) {
-									Label("Plan", systemImage: "calendar.badge.checkmark")
-								} else {
-									Label("Plan", systemImage: "calendar")
-								}
+								Label("Plan", systemImage: "calendar.badge.checkmark")
 							}
 						)
 
@@ -288,22 +282,14 @@ struct GroupLoader: View {
 					}
 				}
 			}
-		}.background {
-			NavigationLink(
-				isActive: $navigationActive,
-				destination: {
-					if let group, case .success(let group) = group,
-						let groupId = group.id?.toIntId()
-					{
-						NewProjectView(groupId)
-					} else {
-						FailedView("Form couldn't be opened because the namespace ID is not defined")
-					}
-				},
-				label: {
-					EmptyView()
-				}
-			)
+		}.navigationDestination(isPresented: $navigationActive) {
+			if let group, case .success(let group) = group,
+				let groupId = group.id?.toIntId()
+			{
+				NewProjectView(groupId)
+			} else {
+				FailedView("Form couldn't be opened because the namespace ID is not defined")
+			}
 		}
 		.navigationTitle(fullPath)
 		.navigationBarTitleDisplayMode(.inline)
@@ -311,7 +297,7 @@ struct GroupLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		GroupLoader(fullPath: "gitlab-org/production-engineering")
 	}
 }

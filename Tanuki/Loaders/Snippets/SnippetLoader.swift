@@ -6,7 +6,6 @@
 //
 
 import GitLabAPI
-import MarkdownUI
 import SwiftUI
 
 struct SnippetLoader: View {
@@ -31,8 +30,8 @@ struct SnippetLoader: View {
 
 			Task {
 				for try await response in responses {
-					if let snippet = response.data?.snippets?.nodes?.first {
-						self.snippet = .success(snippet!)
+					if let snippet = response.data?.snippets?.nodes?.compactMap({ $0 }).first {
+						self.snippet = .success(snippet)
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)
@@ -53,8 +52,8 @@ struct SnippetLoader: View {
 				cachePolicy: .networkOnly
 			)
 
-			if let snippet = response.data?.snippets?.nodes?.first {
-				self.snippet = .success(snippet!)
+			if let snippet = response.data?.snippets?.nodes?.compactMap({ $0 }).first {
+				self.snippet = .success(snippet)
 			}
 
 			Notify.status(.success)
@@ -101,7 +100,6 @@ struct SnippetLoader: View {
 							description.isNotEmpty
 						{
 							Markdown(description)
-								.markdownTheme(.gitLab)
 						}
 					}
 
@@ -127,10 +125,6 @@ struct SnippetLoader: View {
 
 					if let notes = snippet.notes.nodes {
 						Section("Notes") {
-							// if snippet.userPermissions.createNote {
-							// 	NewNoteView()
-							// }
-
 							ForEach(notes, id: \.self?.id) { maybeNote in
 								if let note = maybeNote {
 									NoteView(note)
@@ -152,9 +146,7 @@ struct SnippetLoader: View {
 			if let snippet, case .success(let snippet) = snippet {
 				HStack {
 					if let url = URL(string: snippet.webUrl) {
-						Section {
-							ShareButton(url)
-						}
+						ShareButton(url)
 					}
 
 					let showCloneSection =
@@ -187,12 +179,12 @@ struct SnippetLoader: View {
 					}
 				}
 			}
-		}.modifier(ScrollDismissIfAvailable())
+		}.scrollDismissesKeyboard(.interactively)
 	}
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		SnippetLoader(id: "gid://gitlab/PersonalSnippet/3681071")
 	}
 }
