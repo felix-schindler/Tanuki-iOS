@@ -7,7 +7,6 @@
 //
 
 import GitLabAPI
-import MarkdownUI
 import NVMColor
 import SwiftUI
 
@@ -22,6 +21,14 @@ enum NavDest {
 struct ProjectLoader: View {
 	private let fullPath: String
 
+	@Binding
+	private var path: [AnyHashable]
+
+	private let jumpTo: ProjectRoute?
+
+	@State
+	private var hasPath: Bool
+
 	@State
 	private var project: Result<ProjectQuery.Data.Project, Error>? = nil
 
@@ -35,8 +42,26 @@ struct ProjectLoader: View {
 	@State
 	private var navigationDestination: NavDest? = nil
 
-	init(fullPath: String) {
+	init(fullPath: String, path: Binding<[AnyHashable]> = .constant([]), jumpTo: ProjectRoute? = nil) {
 		self.fullPath = fullPath
+		self._path = path
+		self.jumpTo = jumpTo
+		self._hasPath = State(initialValue: jumpTo != nil)
+	}
+
+	private func followJumpRoute(_ projectId: Int?) {
+		guard hasPath, let jumpTo, let projectId else { return }
+		hasPath = false
+		switch jumpTo {
+		case .issues:
+			path.append(ResolvedProjectRoute.issues(fullPath: fullPath))
+		case .mergeRequests:
+			path.append(ResolvedProjectRoute.mergeRequests(fullPath: fullPath))
+		case .tree(let ref):
+			path.append(ResolvedProjectRoute.tree(projectId: projectId, fullPath: fullPath, ref: ref))
+		case .releases:
+			path.append(ResolvedProjectRoute.releases(fullPath: fullPath, projectId: projectId))
+		}
 	}
 
 	private func loadProject() {
@@ -50,6 +75,7 @@ struct ProjectLoader: View {
 				for try await response in responses {
 					if let project = response.data?.project {
 						self.project = .success(project)
+						self.followJumpRoute(project.id.toIntId())
 					} else if let errors = response.errors {
 						for error in errors {
 							Notify.status(.error, error.localizedDescription)
@@ -72,6 +98,7 @@ struct ProjectLoader: View {
 
 			if let project = response.data?.project {
 				self.project = .success(project)
+				self.followJumpRoute(project.id.toIntId())
 			}
 
 			Notify.status(.success)
@@ -294,16 +321,15 @@ struct ProjectLoader: View {
 										readme,
 										baseURL: baseUrl,
 										imageBaseURL: imgUrl
-									).markdownTheme(.gitLab)
+									)
 								} else if selectedFile == 1, let license {
 									Markdown(license)
-										.markdownTheme(.gitLab)
 								} else if selectedFile == 2, let contributing {
 									Markdown(
 										contributing,
 										baseURL: baseUrl,
 										imageBaseURL: imgUrl
-									).markdownTheme(.gitLab)
+									)
 								}
 							}
 						}
@@ -406,34 +432,23 @@ struct ProjectLoader: View {
 					}
 				}
 			}
-		}.background {
+		}.navigationDestination(isPresented: $navigationActive) {
 			if let project, case .success(let project) = project,
-				let projectId = project.id.toIntId()
+				let projectId = project.id.toIntId(),
+				let navigationDestination
 			{
-				NavigationLink(
-					isActive: $navigationActive,
-					destination: {
-						if let navigationDestination {
-							switch navigationDestination {
-							case .issue:
-								NewIssueView(id: projectId, fullPath: self.fullPath)
-							case .milestone:
-								NewMilestoneView(id: projectId, groupId: 0)
-							case .release:
-								NewReleaseView(id: projectId, fullPath: self.fullPath)
-							case .member:
-								NewMemberView(id: projectId, groupId: 0)
-							case .label:
-								NewLabelView(id: projectId, groupId: 0)
-							}
-						} else {
-							EmptyView()
-						}
-					},
-					label: {
-						EmptyView()
-					}
-				)
+				switch navigationDestination {
+				case .issue:
+					NewIssueView(id: projectId, fullPath: self.fullPath)
+				case .milestone:
+					NewMilestoneView(id: projectId, groupId: 0)
+				case .release:
+					NewReleaseView(id: projectId, fullPath: self.fullPath)
+				case .member:
+					NewMemberView(id: projectId, groupId: 0)
+				case .label:
+					NewLabelView(id: projectId, groupId: 0)
+				}
 			}
 		}
 		.navigationTitle(self.fullPath)
@@ -442,7 +457,7 @@ struct ProjectLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		ProjectLoader(fullPath: "felix-schindler/gitlab-ios")
 	}
 }
