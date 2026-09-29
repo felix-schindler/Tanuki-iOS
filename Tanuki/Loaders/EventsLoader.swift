@@ -103,7 +103,7 @@ struct EventsLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		EventsLoader()
 	}
 }

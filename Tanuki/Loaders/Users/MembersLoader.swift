@@ -231,7 +231,7 @@ struct MembersLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		MembersLoader(fullPath: "gitlab-org/gitlab", id: 278_964, type: .project)
 	}
 }

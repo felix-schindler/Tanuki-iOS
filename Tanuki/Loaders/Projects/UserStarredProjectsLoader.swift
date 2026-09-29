@@ -91,7 +91,7 @@ struct UserStarredProjectsLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		UserStarredProjectsLoader(username: "felix-schindler")
 	}
 }

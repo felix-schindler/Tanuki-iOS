@@ -198,12 +198,9 @@ struct MergeStatus: View {
 }
 
 struct DetailedMergeStatusView: View {
-	private var detailedStatus: GraphQLEnum<GitLabAPI.DetailedMergeStatus>
 	private var msg: String
 
 	init(_ detailedStatus: GraphQLEnum<GitLabAPI.DetailedMergeStatus>) {
-		self.detailedStatus = detailedStatus
-
 		msg =
 			switch detailedStatus {
 			case .unchecked:

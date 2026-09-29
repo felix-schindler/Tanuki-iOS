@@ -127,7 +127,7 @@ struct ProjectPipelinesLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		ProjectPipelinesLoader(fullPath: "felix-schindler/gitlab-ios")
 	}
 }

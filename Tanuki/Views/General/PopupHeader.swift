@@ -25,7 +25,7 @@ struct PopupHeader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 	}.sheet(isPresented: .constant(true)) {
 		VStack {
 			PopupHeader(title: "Test", onClose: {})

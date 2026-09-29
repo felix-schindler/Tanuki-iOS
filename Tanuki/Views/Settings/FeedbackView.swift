@@ -75,7 +75,7 @@ struct FeedbackView: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		FeedbackView()
 	}
 }

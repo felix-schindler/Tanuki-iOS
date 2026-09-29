@@ -79,7 +79,7 @@ struct BranchesLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		BranchesLoader(33_025_310)
 	}
 }

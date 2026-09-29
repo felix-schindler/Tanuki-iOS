@@ -76,7 +76,7 @@ struct SmallGroupView: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		List {
 			SmallGroupView(group: _Group(fullPath: "gitlab-org", groupMembersCount: 1, projectsCount: 1))
 			SmallGroupView(group: _Group(fullPath: "gitlab-org", groupMembersCount: 1, projectsCount: 1))

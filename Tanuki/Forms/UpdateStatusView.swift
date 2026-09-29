@@ -78,12 +78,12 @@ struct UpdateStatusView: View {
 			}.tint(.accentColor)
 		}
 		.navigationTitle("Update Status")
-		.modifier(ScrollDismissIfAvailable())
+		.scrollDismissesKeyboard(.interactively)
 	}
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		UpdateStatusView()
 	}
 }

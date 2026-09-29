@@ -89,7 +89,7 @@ struct UserTodosLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		UserTodosLoader(username: "felix-schindler")
 	}
 }

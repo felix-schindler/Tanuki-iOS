@@ -45,7 +45,7 @@ struct AuthorView: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		AuthorView(
 			MyAuthor(
 				avatarUrl: nil,

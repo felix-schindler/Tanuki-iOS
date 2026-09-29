@@ -60,7 +60,9 @@ struct SmallIssueView: View {
 						}
 					}.font(.footnote)
 				}.swipeActions {
-					ShareButton(URL(string: issue.webUrl)!)
+					if let url = URL(string: issue.webUrl) {
+						ShareButton(url)
+					}
 				}
 			}
 		)

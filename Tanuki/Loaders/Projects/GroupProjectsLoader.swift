@@ -93,7 +93,7 @@ struct GroupProjectsLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		GroupProjectsLoader(fullPath: "gitlab-org")
 	}
 }

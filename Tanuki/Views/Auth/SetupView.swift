@@ -5,8 +5,8 @@
 //  Created by Felix Schindler on 16.03.24.
 //
 
-import MarkdownUI
 import SwiftUI
+import Textual
 
 struct SetupView: View {
 	@Environment(\.openURL) private var openURL
@@ -23,7 +23,7 @@ struct SetupView: View {
 	}
 
 	public var body: some View {
-		NavigationView {
+		NavigationStack {
 			VStack {
 				Spacer()
 
@@ -40,7 +40,7 @@ struct SetupView: View {
 							.cornerRadius(15)
 							.frame(maxWidth: 70, maxHeight: 70)
 					}
-					Text("Welcome to \n**Tanuki for GitLab**")
+					InlineMarkdown("Welcome to \n**Tanuki for GitLab**")
 				}
 
 				Spacer()

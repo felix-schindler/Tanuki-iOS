@@ -90,7 +90,7 @@ struct InstancesView: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		InstancesView()
 	}
 }

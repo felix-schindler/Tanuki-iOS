@@ -6,7 +6,6 @@
 //
 
 import GitLabAPI
-import MarkdownUI
 import SwiftUI
 
 struct NoteView: View {
@@ -99,14 +98,13 @@ struct NoteView: View {
 						baseURL: API.url,
 						imageBaseURL: URL(
 							string: "\(API.url.absoluteString)/-/project/\(self.projectId)")
-					).markdownTheme(.gitLab)
+					)
 				}
 			}
 		} else {
 			Label(
 				title: {
-					Markdown(note.body.emojized(), baseURL: API.url)
-						.markdownTheme(.gitLab)
+					InlineMarkdown(note.body, baseURL: API.url)
 				},
 				icon: {
 					Image(systemName: convertIconName(note.systemNoteIconName))

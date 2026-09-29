@@ -156,7 +156,7 @@ struct UserSnippetsLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		UserSnippetsLoader(username: "felix-schindler")
 	}
 }

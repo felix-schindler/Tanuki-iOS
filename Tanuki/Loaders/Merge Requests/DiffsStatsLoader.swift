@@ -101,7 +101,7 @@ struct DiffsStatsLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		DiffsStatsLoader(fullPath: "felix-schindler/gitlab-ios", iid: "1")
 	}
 }

@@ -85,7 +85,7 @@ struct UserGroupsLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		UserGroupsLoader("felix-schindler")
 	}
 }

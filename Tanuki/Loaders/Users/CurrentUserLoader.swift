@@ -88,7 +88,7 @@ struct CurrentUserLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		CurrentUserLoader()
 	}
 }

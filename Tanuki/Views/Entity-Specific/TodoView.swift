@@ -6,7 +6,6 @@
 //
 
 import GitLabAPI
-import MarkdownUI
 import SwiftUI
 
 struct TodoView: View {
@@ -62,7 +61,6 @@ struct TodoView: View {
 			}.font(.footnote)
 
 			Markdown(todo.body.emojized())
-				.markdownTheme(.gitLab)
 
 			ScrollView(.horizontal) {
 				HStack {

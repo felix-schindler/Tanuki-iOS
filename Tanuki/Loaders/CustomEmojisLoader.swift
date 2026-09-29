@@ -98,7 +98,7 @@ struct CustomEmojisLoader: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		CustomEmojisLoader(fullPath: "gitlab-org")
 	}
 }
