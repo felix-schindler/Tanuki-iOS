@@ -17,15 +17,7 @@ struct NoContentView: View {
 	}
 
 	public var body: some View {
-		if #available(watchOS 10.0, *) {
-			ContentUnavailableView(msg, systemImage: icon)
-		} else {
-			VStack {
-				Image(systemName: icon)
-				Text(msg)
-					.font(.headline)
-			}
-		}
+		ContentUnavailableView(msg, systemImage: icon)
 	}
 }
 

@@ -13,7 +13,7 @@ import SwiftUI
 struct UserIssuesLoader: View {
 	@State
 	private var projectMemberships: Result<[IssueProjectMembership?], Error>? = nil
-	
+
 	private func loadIssues() {
 		do {
 			let responses = try Network.shared.apollo.fetch(
@@ -28,12 +28,16 @@ struct UserIssuesLoader: View {
 			)
 
 			Task {
-				for try await response in responses {
-					if let projectMemberships = response.data?.currentUser?.projectMemberships?
-						.nodes
-					{
-						self.projectMemberships = .success(projectMemberships)
+				do {
+					for try await response in responses {
+						if let projectMemberships = response.data?.currentUser?.projectMemberships?
+							.nodes
+						{
+							self.projectMemberships = .success(projectMemberships)
+						}
 					}
+				} catch let error {
+					self.projectMemberships = .failure(error)
 				}
 			}
 		} catch let error {
@@ -74,7 +78,7 @@ struct UserIssuesLoader: View {
 
 					let issues: [(String, any SmallIssue)] = validMemberships.flatMap {
 						membership in
-						let fullPath = membership.fullPath!  // safe because we filtered nil above
+						let fullPath = membership.fullPath!
 						return membership._issues!.compactMap { $0 }.map { issue in
 							(fullPath, issue)
 						}
@@ -94,7 +98,7 @@ struct UserIssuesLoader: View {
 			} else {
 				ProgressView("Loading issues")
 			}
-		}.onAppear {
+		}.task {
 			loadIssues()
 		}.refreshable {
 			await reloadIssues()

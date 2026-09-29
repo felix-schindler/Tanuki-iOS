@@ -22,6 +22,9 @@ struct UserMergeLoader: View {
 	@State
 	private var mergeRequests: Result<[any SmallMergeRequest], Error>? = nil
 
+	@State
+	private var loadTask: Task<Void, Never>?
+
 	init(_ userRequestType: UserMergeRequestType) {
 		self.userRequestType = userRequestType
 
@@ -36,94 +39,88 @@ struct UserMergeLoader: View {
 			}
 	}
 
-	private func loadMergeRequests() {
+	private func loadFromCache() async -> Result<[any SmallMergeRequest], Error> {
 		do {
 			switch self.userRequestType {
 			case .assigned:
-				let responses = try Network.shared.apollo.fetch(
-					query: UserAssignedMergeRequestsQuery(state: .none, search: .none, draft: .none, subscribed: .none),
-					cachePolicy: .cacheAndNetwork
-				)
-
-				Task {
-					for try await response in responses {
-						if let mrs = response.data?.currentUser?.assignedMergeRequests?.nodes {
-							let mapped: [any SmallMergeRequest] = mrs.compactMap { $0 }
-							self.mergeRequests = .success(mapped)
-						}
+				let query = UserAssignedMergeRequestsQuery(
+					state: .none, search: .none, draft: .none, subscribed: .none)
+				let responses = try Network.shared.apollo.fetch(query: query, cachePolicy: .cacheAndNetwork)
+				for try await response in responses {
+					if Task.isCancelled { return .success([]) }
+					if let mrs = response.data?.currentUser?.assignedMergeRequests?.nodes {
+						return .success(mrs.compactMap { $0 })
 					}
 				}
 			case .authored:
-				let responses = try Network.shared.apollo.fetch(
-					query: UserAuthoredMergeRequestsQuery(state: .none, search: .none, draft: .none, subscribed: .none),
-					cachePolicy: .cacheAndNetwork
-				)
-
-				Task {
-					for try await response in responses {
-						if let mrs = response.data?.currentUser?.authoredMergeRequests?.nodes {
-							let mapped: [any SmallMergeRequest] = mrs.compactMap { $0 }
-							self.mergeRequests = .success(mapped)
-						}
+				let query = UserAuthoredMergeRequestsQuery(
+					state: .none, search: .none, draft: .none, subscribed: .none)
+				let responses = try Network.shared.apollo.fetch(query: query, cachePolicy: .cacheAndNetwork)
+				for try await response in responses {
+					if Task.isCancelled { return .success([]) }
+					if let mrs = response.data?.currentUser?.authoredMergeRequests?.nodes {
+						return .success(mrs.compactMap { $0 })
 					}
 				}
 			case .reviewRequested:
-				let responses = try Network.shared.apollo.fetch(
-					query: UserReviewRequestedMergeRequestsQuery(state: .none, search: .none, draft: .none, subscribed: .none),
-					cachePolicy: .cacheAndNetwork
-				)
-
-				Task {
-					for try await response in responses {
-						if let mrs = response.data?.currentUser?.reviewRequestedMergeRequests?.nodes {
-							let mapped: [any SmallMergeRequest] = mrs.compactMap { $0 }
-							self.mergeRequests = .success(mapped)
-						}
+				let query = UserReviewRequestedMergeRequestsQuery(
+					state: .none, search: .none, draft: .none, subscribed: .none)
+				let responses = try Network.shared.apollo.fetch(query: query, cachePolicy: .cacheAndNetwork)
+				for try await response in responses {
+					if Task.isCancelled { return .success([]) }
+					if let mrs = response.data?.currentUser?.reviewRequestedMergeRequests?.nodes {
+						return .success(mrs.compactMap { $0 })
 					}
 				}
 			}
+			return .success([])
 		} catch let error {
-			self.mergeRequests = .failure(error)
+			return .failure(error)
+		}
+	}
+
+	private func loadFromNetwork() async -> Result<[any SmallMergeRequest], Error> {
+		do {
+			switch self.userRequestType {
+			case .assigned:
+				let response = try await Network.shared.apollo.fetch(
+					query: UserAssignedMergeRequestsQuery(
+						state: .none, search: .none, draft: .none, subscribed: .none),
+					cachePolicy: .networkOnly)
+				let mrs = response.data?.currentUser?.assignedMergeRequests?.nodes ?? []
+				return .success(mrs.compactMap { $0 })
+			case .authored:
+				let response = try await Network.shared.apollo.fetch(
+					query: UserAuthoredMergeRequestsQuery(
+						state: .none, search: .none, draft: .none, subscribed: .none),
+					cachePolicy: .networkOnly)
+				let mrs = response.data?.currentUser?.authoredMergeRequests?.nodes ?? []
+				return .success(mrs.compactMap { $0 })
+			case .reviewRequested:
+				let response = try await Network.shared.apollo.fetch(
+					query: UserReviewRequestedMergeRequestsQuery(
+						state: .none, search: .none, draft: .none, subscribed: .none),
+					cachePolicy: .networkOnly)
+				let mrs = response.data?.currentUser?.reviewRequestedMergeRequests?.nodes ?? []
+				return .success(mrs.compactMap { $0 })
+			}
+		} catch let error {
+			return .failure(error)
+		}
+	}
+
+	private func loadMergeRequests() {
+		loadTask?.cancel()
+		loadTask = Task {
+			let result = await loadFromCache()
+			if !Task.isCancelled {
+				self.mergeRequests = result
+			}
 		}
 	}
 
 	private func reloadMergeRequests() async {
-		do {
-			switch self.userRequestType {
-			case .assigned:
-				let response = try await Network.shared.apollo.fetch(
-					query: UserAssignedMergeRequestsQuery(state: .none, search: .none, draft: .none, subscribed: .none),
-					cachePolicy: .networkOnly
-				)
-
-				if let mrs = response.data?.currentUser?.assignedMergeRequests?.nodes {
-					let mapped: [any SmallMergeRequest] = mrs.compactMap { $0 }
-					self.mergeRequests = .success(mapped)
-				}
-			case .authored:
-				let response = try await Network.shared.apollo.fetch(
-					query: UserAuthoredMergeRequestsQuery(state: .none, search: .none, draft: .none, subscribed: .none),
-					cachePolicy: .networkOnly
-				)
-
-				if let mrs = response.data?.currentUser?.authoredMergeRequests?.nodes {
-					let mapped: [any SmallMergeRequest] = mrs.compactMap { $0 }
-					self.mergeRequests = .success(mapped)
-				}
-			case .reviewRequested:
-				let response = try await Network.shared.apollo.fetch(
-					query: UserReviewRequestedMergeRequestsQuery(state: .none, search: .none, draft: .none, subscribed: .none),
-					cachePolicy: .networkOnly
-				)
-
-				if let mrs = response.data?.currentUser?.reviewRequestedMergeRequests?.nodes {
-					let mapped: [any SmallMergeRequest] = mrs.compactMap { $0 }
-					self.mergeRequests = .success(mapped)
-				}
-			}
-		} catch let error {
-			self.mergeRequests = .failure(error)
-		}
+		self.mergeRequests = await loadFromNetwork()
 	}
 
 	public var body: some View {
@@ -146,7 +143,7 @@ struct UserMergeLoader: View {
 				ProgressView("Loading merge requests")
 			}
 		}
-		.onAppear {
+		.task {
 			loadMergeRequests()
 		}
 		.refreshable {

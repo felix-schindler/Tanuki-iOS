@@ -10,40 +10,27 @@ import SwiftUI
 struct ContentView: View {
 	var body: some View {
 		TabView {
-			if #available(watchOS 9.0, *) {
-				NavigationView {
-					InstancesListView()
-						.navigationTitle("Instances")
-				}
-				.tag(0)
-			} else {
+			NavigationView {
 				InstancesListView()
-					.tag(0)
+					.navigationTitle("Instances")
 			}
-			if #available(watchOS 9.0, *) {
-				NavigationView {
-					UserIssuesLoader()
-						.navigationTitle("Issues")
-				}
-				.tag(1)
-			} else {
+			.tag(0)
+
+			NavigationView {
 				UserIssuesLoader()
-					.tag(1)
+					.navigationTitle("Issues")
 			}
-			if #available(watchOS 9.0, *) {
-				NavigationView {
-					MergeRequestsHomeView()
-						.navigationTitle("Merge Requests")
-				}
-				.tag(2)
-			} else {
+			.tag(1)
+
+			NavigationView {
 				MergeRequestsHomeView()
-					.tag(2)
+					.navigationTitle("Merge Requests")
 			}
+			.tag(2)
 		}
-    }
+	}
 }
 
 #Preview {
-    ContentView()
+	ContentView()
 }
