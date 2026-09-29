@@ -21,9 +21,6 @@ struct TanukiApp: App {
 	private var scenePhase
 
 	init() {
-		#if DEBUG
-			JumpURLSelfCheck.run()
-		#endif
 		InstanceManager.migrate()
 		WatchSync.shared.activate()
 	}
