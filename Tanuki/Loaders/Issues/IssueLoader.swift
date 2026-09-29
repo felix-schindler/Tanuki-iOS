@@ -7,7 +7,6 @@
 //
 
 import GitLabAPI
-import MarkdownUI
 import SwiftUI
 
 struct IssueLoader: View {
@@ -141,7 +140,6 @@ struct IssueLoader: View {
 								description.isNotEmpty
 							{
 								Markdown(description)
-									.markdownTheme(.gitLab)
 							}
 
 							HStack {
@@ -334,12 +332,12 @@ struct IssueLoader: View {
 			}
 		}
 		.navigationBarTitleDisplayMode(.inline)
-		.modifier(ScrollDismissIfAvailable())
+		.scrollDismissesKeyboard(.interactively)
 	}
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		IssueLoader(fullPath: "felix-schindler/gitlab-ios", iid: "111")
 	}
 }

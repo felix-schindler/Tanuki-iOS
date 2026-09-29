@@ -111,17 +111,14 @@ struct NewIssueView: View {
 			body["title"] = .string(title)
 		}
 
-		body["type"] = .string(type.rawValue)
+		body["issue_type"] = .string(type.rawValue)
 
 		if description.isNotEmpty {
 			body["description"] = .string(description)
 		}
 
 		if selectedAssignees.isNotEmpty {
-			let ids =
-				selectedAssignees.map { id in
-					return id.toIntId()
-				}.filter { $0 != nil } as! [Int]
+			let ids = selectedAssignees.compactMap { $0.toIntId() }
 
 			if ids.isNotEmpty {
 				body["assignee_id"] = .int(ids.first!)
@@ -281,24 +278,22 @@ struct NewIssueView: View {
 			AsyncButton("Create issue", systemImage: "checkmark") {
 				await createIssue()
 			}.tint(.accentColor)
-		}.onAppear {
-			Task {
-				await loadMembers()
-				await loadMilestones()
-				await loadLabels()
-			}
+		}.task {
+			await loadMembers()
+			await loadMilestones()
+			await loadLabels()
 		}.refreshable {
 			await loadMembers()
 			await loadMilestones()
 			await loadLabels()
 		}
 		.navigationTitle("New Issue")
-		.modifier(ScrollDismissIfAvailable())
+		.scrollDismissesKeyboard(.interactively)
 	}
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		NewIssueView(id: 278_964, fullPath: "gitlab-org/gitlab")
 	}
 }

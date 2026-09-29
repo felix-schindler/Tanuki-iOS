@@ -44,7 +44,7 @@ struct NewLabelView: View {
 			_ = try await API.req(
 				type: RestAPILabel.self,
 				method: .post,
-				endpoint: (id != 0 ? "projects/\(id)/labels" : "groups/\(id)/labels"),
+				endpoint: (id != 0 ? "projects/\(id)/labels" : "groups/\(groupId)/labels"),
 				body: query,
 				contentType: .formUrlEncoded
 			)
@@ -84,7 +84,7 @@ struct NewLabelView: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		NewLabelView(id: 33_025_310, groupId: 0)
 	}
 }

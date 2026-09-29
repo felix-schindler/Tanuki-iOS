@@ -85,11 +85,11 @@ struct NewReleaseView: View {
 		}
 
 		if newTagName {
-			if newTagRef.isNotEmpty {
-				body["ref"] = .string(newTagRef)
-			} else {
+			guard newTagRef.isNotEmpty else {
 				Notify.status(.error, "There is no ref name")
+				return
 			}
+			body["ref"] = .string(newTagRef)
 
 			if newTagMessage.isNotEmpty {
 				body["tag_message"] = .string(newTagMessage)
@@ -132,7 +132,7 @@ struct NewReleaseView: View {
 		Form {
 			Section("Tag name (required)") {
 				Toggle("Create new tag name", isOn: $newTagName)
-					.onChange(of: newTagName) { newValue in
+					.onChange(of: newTagName) { _, newValue in
 						if newValue {
 							self.tagName = ""
 						} else if let tags, tags.isNotEmpty {
@@ -236,11 +236,9 @@ struct NewReleaseView: View {
 			AsyncButton("Create new release", systemImage: "checkmark") {
 				await createNewRelease()
 			}.tint(.accentColor)
-		}.onAppear {
-			Task {
-				await loadTags()
-				await loadMilestones()
-			}
+		}.task {
+			await loadTags()
+			await loadMilestones()
 		}.refreshable {
 			await loadTags()
 			await loadMilestones()
@@ -249,7 +247,7 @@ struct NewReleaseView: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		NewReleaseView(id: 278_964, fullPath: "gitlab-org/gitlab")
 	}
 }

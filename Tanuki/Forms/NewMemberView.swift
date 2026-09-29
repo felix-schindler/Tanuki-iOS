@@ -37,27 +37,32 @@ struct NewMemberView: View {
 
 	private func addMember() async {
 		do {
-			if let currentUser =
-				(try await API.get(
-					type: [UserSmall?].self, endpoint: "users", query: ["username": username]))[0]
-			{
-				var memberDict = [
-					"user_id": String(currentUser.id),
-					"access_level": String(accessLevel.rawValue),
-				]
+			let users = try await API.get(
+				type: [UserSmall?].self, endpoint: "users", query: ["username": username])
 
-				if setExpDate {
-					let inputFormatter = DateFormatter()
-					inputFormatter.dateFormat = "yyyy-MM-dd"
-					memberDict["expires_at"] = inputFormatter.string(from: expDate)
-				}
-
-				let endpoint: String =
-					(id != 0 ? "projects/\(id)/members" : "groups/\(groupId)/members")
-				_ = try await API.req(
-					type: UserSmall.self, method: .post, endpoint: endpoint, body: memberDict)
-				self.dismiss()
+			guard let currentUser = users.compactMap({ $0 }).first else {
+				Notify.status(
+					.error, "No such user", "No user named \"\(username)\" was found on this instance.",
+					systemImage: "person.badge.plus")
+				return
 			}
+
+			var memberDict = [
+				"user_id": String(currentUser.id),
+				"access_level": String(accessLevel.rawValue),
+			]
+
+			if setExpDate {
+				let inputFormatter = DateFormatter()
+				inputFormatter.dateFormat = "yyyy-MM-dd"
+				memberDict["expires_at"] = inputFormatter.string(from: expDate)
+			}
+
+			let endpoint: String =
+				(id != 0 ? "projects/\(id)/members" : "groups/\(groupId)/members")
+			_ = try await API.req(
+				type: UserSmall.self, method: .post, endpoint: endpoint, body: memberDict)
+			self.dismiss()
 		} catch let error {
 			Notify.status(.error, error.localizedDescription)
 		}
@@ -82,7 +87,7 @@ struct NewMemberView: View {
 			VStack(alignment: .leading) {
 				Toggle("Set expiration", isOn: $setExpDate)
 				if setExpDate {
-					DatePicker("Due Date", selection: $expDate, displayedComponents: .date)
+					DatePicker("Expiration", selection: $expDate, displayedComponents: .date)
 				}
 			}
 		}.toolbar {
@@ -94,7 +99,7 @@ struct NewMemberView: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		NewMemberView(id: 1, groupId: 1)
 	}
 }

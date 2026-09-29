@@ -23,8 +23,6 @@ struct NewMilestoneView: View {
 	@State var startDate = Date()
 	@State var dueDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: Date())!
 
-	@State var showError = false
-
 	private func createMilestone() async {
 		if title.isEmpty {
 			Notify.status(
@@ -45,7 +43,7 @@ struct NewMilestoneView: View {
 
 		if setDates {
 			let inputFormatter = DateFormatter()
-			inputFormatter.dateFormat = "yyyyMMdd"
+			inputFormatter.dateFormat = "yyyy-MM-dd"
 
 			newMilestone["start_date"] = inputFormatter.string(from: startDate)
 			newMilestone["due_date"] = inputFormatter.string(from: dueDate)
@@ -96,7 +94,7 @@ struct NewMilestoneView: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		NewMilestoneView(id: 33_025_310, groupId: 0)
 	}
 }
