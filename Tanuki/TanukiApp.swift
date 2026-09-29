@@ -21,28 +21,18 @@ struct TanukiApp: App {
 	private var scenePhase
 
 	init() {
+		#if DEBUG
+			JumpURLSelfCheck.run()
+		#endif
 		InstanceManager.migrate()
 		WatchSync.shared.activate()
 	}
 
 	private func restorePersistedCookies() {
-		guard
-			let data = UserDefaults.standard.data(forKey: "persistedCookies"),
-			let storedCookieDicts = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data)
-				as? [[HTTPCookiePropertyKey: Any]],
-			!storedCookieDicts.isEmpty
-		else {
-			return
-		}
-
 		let webStore = WKWebsiteDataStore.default().httpCookieStore
-		var restoredCookies: [HTTPCookie] = []
-		for dict in storedCookieDicts {
-			if let cookie = HTTPCookie(properties: dict) {
-				restoredCookies.append(cookie)
-				webStore.setCookie(cookie)
-				HTTPCookieStorage.shared.setCookie(cookie)  // sync to URLSession
-			}
+		for cookie in PersistedCookies.loadCookies() {
+			webStore.setCookie(cookie)
+			HTTPCookieStorage.shared.setCookie(cookie)
 		}
 	}
 
@@ -66,33 +56,30 @@ struct TanukiApp: App {
 
 	public var main: some View {
 		TabView {
-			NavigationView {
-				HomeView()
-			}.tabItem {
-				Label("Home", systemImage: "house")
-			}.tag(0)
-			NavigationView {
+			HomeView()
+				.tabItem {
+					Label("Home", systemImage: "house")
+				}.tag(0)
+			NavigationStack {
 				CurrentUserTodosLoader()
 			}.tabItem {
 				Label("Todos", systemImage: "checkmark.square")
 			}.tag(1)
-			NavigationView {
+			NavigationStack {
 				ExploreView()
 			}.tabItem {
 				Label("Explore", systemImage: "sparkles")
 			}.tag(2)
-			NavigationView {
+			NavigationStack {
 				CurrentUserLoader()
 			}.tabItem {
 				Label("Profile", systemImage: "person")
 			}.tag(3)
-		}.onAppear {
+		}.task {
 			sessionStore.refresh()
 			restorePersistedCookies()
-			Task {
-				await Auth.ensureValidToken()
-			}
-		}.onChange(of: scenePhase) { newPhase in
+			await Auth.ensureValidToken()
+		}.onChange(of: scenePhase) { _, newPhase in
 			if newPhase == .active {
 				Task {
 					await Auth.ensureValidToken()

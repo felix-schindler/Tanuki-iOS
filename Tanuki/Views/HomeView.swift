@@ -8,10 +8,14 @@
 import GitLabAPI
 import SwiftUI
 import Toast
+import UIKit
 
 struct HomeView: View {
 	@State
 	private var starredProjects: Result<[SmallProject?], Error>?
+
+	@State
+	private var path: [AnyHashable] = []
 
 	private func loadStarredProjects() {
 		do {
@@ -51,10 +55,6 @@ struct HomeView: View {
 		}
 	}
 
-	private func jumpTo() {
-		Notify.status(.warning, "Not yet implemented")
-	}
-
 	private func getIconName() -> String {
 		if #available(iOS 18.0, *) {
 			"arrow.right.page.on.clipboard"
@@ -63,7 +63,56 @@ struct HomeView: View {
 		}
 	}
 
+	private func jumpToClipboard() {
+		let pasted =
+			UIPasteboard.general.string
+			?? UIPasteboard.general.url?.absoluteString
+
+		guard let pasted, pasted.isNotEmpty else {
+			Notify.status(.warning, "Nothing to open", "Copy a GitLab link first.", systemImage: "doc.on.clipboard")
+			return
+		}
+
+		do {
+			path.append(try JumpURL.parse(pasted, host: API.host))
+		} catch let error as JumpURLError {
+			Notify.status(
+				.warning, "Can't open that link", error.errorDescription,
+				systemImage: "exclamationmark.triangle")
+		} catch {
+			Notify.status(.error, "Can't open that link", error.localizedDescription)
+		}
+	}
+
 	public var body: some View {
+		NavigationStack(path: $path) {
+			list
+				.navigationDestination(for: JumpTarget.self) { target in
+					switch target {
+					case .project(let fullPath):
+						ProjectLoader(fullPath: fullPath, path: $path)
+					case .group(let fullPath):
+						GroupLoader(fullPath: fullPath)
+					case .projectRoute(let fullPath, let route):
+						ProjectLoader(fullPath: fullPath, path: $path, jumpTo: route)
+					}
+				}
+				.navigationDestination(for: ResolvedProjectRoute.self) { route in
+					switch route {
+					case .issues(let fullPath):
+						ProjectIssuesLoader(fullPath: fullPath)
+					case .mergeRequests(let fullPath):
+						ProjectMergeLoader(fullPath: fullPath)
+					case .tree(let projectId, let fullPath, let ref):
+						TreeLoader(projectId: projectId, fullPath: fullPath, refName: ref)
+					case .releases(let fullPath, let projectId):
+						ProjectReleasesLoader(fullPath: fullPath, projectId: projectId)
+					}
+				}
+		}
+	}
+
+	private var list: some View {
 		List {
 			Section("Your work") {
 				NavigationLink(
@@ -173,11 +222,11 @@ struct HomeView: View {
 		}.refreshable {
 			await reloadStarredProjects()
 		}.toolbar {
-			// ToolbarItem(placement: .topBarLeading) {
-			// 	Button("Jump", systemImage: getIconName()) {
-			// 		jumpTo()
-			// 	}.tint(.accentColor)
-			// }
+			ToolbarItem(placement: .topBarLeading) {
+				Button("Jump", systemImage: getIconName()) {
+					jumpToClipboard()
+				}.tint(.accentColor)
+			}
 			ToolbarItemGroup(placement: .topBarTrailing) {
 				NavigationLink(destination: EventsLoader()) {
 					Label("Activity", systemImage: "bell")
@@ -194,7 +243,7 @@ struct HomeView: View {
 }
 
 #Preview {
-	NavigationView {
+	NavigationStack {
 		HomeView()
 	}
 }
