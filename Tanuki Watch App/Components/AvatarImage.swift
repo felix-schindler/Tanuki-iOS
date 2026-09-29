@@ -55,14 +55,8 @@ struct AvatarImage: View {
 		}
 	}
 
-	var request: URLRequest {
-		var req = URLRequest(url: url)
-		req.setValue("Bearer \(API.token)", forHTTPHeaderField: "Authorization")
-		return req
-	}
-
 	public var body: some View {
-		CachedAsyncImage(urlRequest: self.request) { phase in
+		CachedAsyncImage(url: url) { phase in
 			switch phase {
 			case .empty:
 				ProgressView()
