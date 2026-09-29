@@ -7,22 +7,13 @@
 
 import Charts
 import GitLabAPI
-import MarkdownUI
 import SwiftUI
-
-struct ToggleStar: Codable {
-	let starCount: Int
-}
 
 struct ProjectHeaderView: View {
 	private let project: ProjectQuery.Data.Project
 
-	@State
-	private var starCount: Int
-
 	init(_ project: ProjectQuery.Data.Project) {
 		self.project = project
-		self.starCount = project.starCount
 	}
 
 	private func star() async {
@@ -55,7 +46,6 @@ struct ProjectHeaderView: View {
 				description.isNotEmpty
 			{
 				Markdown(description)
-					.markdownTheme(.gitLab)
 			}
 
 			HStack {
@@ -145,8 +135,7 @@ struct ProjectHeaderView: View {
 				.controlSize(.small)
 			}
 
-			if #available(iOS 16.0, *),
-				let languages = project.languages,
+			if let languages = project.languages,
 				languages.isNotEmpty
 			{
 				Chart {
